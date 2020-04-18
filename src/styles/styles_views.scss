@@ -386,7 +386,8 @@ button {
     }
 
     div:nth-child(2) {
-        min-height: 260px;
+        @extend %scroll;
+        height: 260px;
     }
 
     table {
