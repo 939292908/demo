@@ -43,6 +43,7 @@ const EV_GET_WLT_READY = "EV_GET_WLT_READY"
 const EV_WLT_UPD = "EV_WLT_UPD"
 const EV_GET_ORD_READY = 'EV_GET_ORD_READY';
 const EV_ORD_UPD = 'EV_ORD_UPD';
+const EV_WLTLOG_UPD = 'EV_WLTLOG_UPD'
 
 const EV_ASSETD_UPD = "evAssetDUpd"
 const EV_TICK_UPD = "evTickUpd"
@@ -147,6 +148,7 @@ class Mkt {
     EV_WLT_UPD = EV_WLT_UPD;
     EV_GET_ORD_READY = EV_GET_ORD_READY;
     EV_ORD_UPD = EV_ORD_UPD;
+    EV_WLTLOG_UPD = EV_WLTLOG_UPD;
 
     EV_ASSETD_UPD = EV_ASSETD_UPD;
     EV_PAGETRADESTATUS_UPD = EV_PAGETRADESTATUS_UPD;
@@ -1338,6 +1340,7 @@ class Mkt {
                 break;
             }
             case "onWltLog": {
+                aObj.WltLogUpdate(aObj,d_data)
                 break;
             }
             case "onTrade": {
@@ -1544,6 +1547,7 @@ class Mkt {
         let id = AId.slice(AId.length - 2);
 
         let ords = aTrd.Orders[id]
+        let historyOrd = aTrd.HistoryOrders[id]
         let dType = 1 //1:新增， 2:更新， 3: 删除
         switch (d_data.Status ) {
             case consts.OrdStatus.Queueing:
@@ -1565,6 +1569,7 @@ class Mkt {
                         ords.splice(i,1)
                     }
                 }
+                historyOrd.push(d_data)
                 break;
         }
         if(dType == 1){
@@ -1572,6 +1577,27 @@ class Mkt {
         }
         
         gEVBUS.emit(EV_ORD_UPD, {Ev: EV_ORD_UPD, aType: id, dType: dType, data: d_data})
+    }
+
+    WltLogUpdate(aTrd,aRaw){
+        let aId = aRaw.AId.substr(-2)
+        let wktLog = aTrd.WltLog[aId]
+        let isUpd = false
+        let dType = 1 //dType 1:更新，2:新增
+        for(let item of wktLog){
+            if(aRaw.Seq == item.Seq){
+                isUpd = true;
+                dType = 1
+                item = aRaw
+            }
+        }
+        if(!isUpd){
+            wktLog.push(aRaw)
+            dType = 2
+        }
+
+        
+        gEVBUS.emit(EV_WLTLOG_UPD, {Ev: EV_WLTLOG_UPD, aType: aId, dType: dType, data: aRaw})
     }
 
     MyTradesReplace (aTrd,aRaw,aId) {
