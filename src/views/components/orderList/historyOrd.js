@@ -93,7 +93,7 @@ let obj = {
                 obj.PrzF = Number(obj.PrzF || 0).toFixed2(PrzMinIncSize)
                 //委托数量
                 obj.Qty = Number(obj.Qty).toFixed2(VolMinValSize)
-                //委托数量
+                //成交数量
                 obj.QtyF = Number(obj.QtyF || 0).toFixed2(VolMinValSize)
 
                 if(obj.StopPrz){
@@ -116,6 +116,9 @@ let obj = {
             }
 
         }
+        posList.sort(function(a,b){
+            return b.At - a.At
+        })
         this.posList = posList
     },
 
