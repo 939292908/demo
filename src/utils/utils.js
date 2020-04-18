@@ -683,4 +683,26 @@ utils.getSpotName = function(coin1, coin2, AssetDs){ //用币种获取相关交�
     return `${coin1}/${coin2}`
 }
 
+utils.WltViaStr = function (value, type) {
+    let obj = {
+        '4': '强制平仓',
+        '5': '自动减仓',
+        '6': '交割结算',
+        '7': '普通交易',
+        '8': '手续费',
+        '9': '账户划入',
+        '10': '账户划出',
+        '11': '资金费用',
+        '13': '强制平仓',
+        '14': '平仓结算',
+        '17': '合约赠金'
+    }
+    if(type && type == 'object'){
+        return obj
+    }else{
+        return obj[value] || ''
+    }
+
+}
+
 export default utils

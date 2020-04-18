@@ -283,6 +283,11 @@ class Mkt {
         "02": []
     }
 
+    WltLog = {
+        "01": [],
+        "02": []
+    }
+
     RS = {}
 
     trdInfoStatus = {
