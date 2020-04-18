@@ -74,7 +74,6 @@ let obj = {
     },
     initObj: function(){
         let trade = window.gTrd.MyTrades['01']
-        console.log(trade)
         let list = []
         for(let k of trade){
             let item = {}

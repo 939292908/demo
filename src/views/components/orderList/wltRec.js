@@ -62,7 +62,7 @@ let obj = {
     },
     initObj: function(){
         let WltLog = window.gTrd.WltLog['01']
-        console.log(WltLog)
+        
         let list = []
         for(let k of WltLog){
             let item = {}
