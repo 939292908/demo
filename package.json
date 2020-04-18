@@ -1,0 +1,63 @@
+{
+  "name": "web_admin",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "webpack --config webpack/webpack.conf.js -d --watch",
+    "build": "cross-env BUILD_ENV=prod webpack --config webpack/webpack.conf.js -p",
+    "build_dev": "cross-env BUILD_ENV=dev webpack --config webpack/webpack.conf.js -p",
+    "dev": "cross-env BUILD_ENV=dev webpack-dev-server --config webpack/webpack.conf.js --hot --open",
+    "prod": "cross-env BUILD_ENV=prod webpack-dev-server --config webpack/webpack.conf.js --hot --open"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "accounting": "^0.4.1",
+    "axios": "^0.19.0",
+    "big.js": "^5.2.2",
+    "driver.js": "^0.9.8",
+    "md5": "^2.2.1",
+    "mini.css": "^3.0.1",
+    "mithril": "^2.0.4",
+    "nanoid": "^2.1.7",
+    "qs": "^6.9.1"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.7.0",
+    "@babel/core": "^7.7.2",
+    "@babel/plugin-proposal-class-properties": "^7.7.4",
+    "@babel/plugin-transform-react-jsx": "^7.7.0",
+    "@babel/preset-env": "^7.7.1",
+    "autoprefixer": "^9.7.2",
+    "babel-cli": "^6.26.0",
+    "babel-loader": "^8.0.6",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-es2015-ie": "^6.7.0",
+    "bulma": "^0.8.0",
+    "copy-webpack-plugin": "^5.0.5",
+    "cross-env": "^7.0.2",
+    "css-loader": "^3.2.0",
+    "file-loader": "^6.0.0",
+    "html-loader": "^1.0.0",
+    "html-webpack-plugin": "^3.2.0",
+    "mini-css-extract-plugin": "^0.8.0",
+    "node-sass": "^4.13.0",
+    "postcss-cli": "^6.1.3",
+    "sass-loader": "^8.0.0",
+    "stately.js": "^2.0.0",
+    "style-loader": "^1.0.0",
+    "url-loader": "^4.0.0",
+    "webpack": "^4.41.2",
+    "webpack-cli": "^3.3.10",
+    "webpack-dev-server": "^3.9.0",
+    "webpack-scaffold": "0.0.18"
+  },
+  "应该被逐步去掉的库": {
+    "axios 可以被mithril自带的去掉": "^0.19.0",
+    "mini.css 这个是用来体验的": "^3.0.1",
+    "qs 这个因为服务器不支持OPTIONS指令，导致客户端弄的": "^6.9.1"
+  }
+}

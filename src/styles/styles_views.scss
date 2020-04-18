@@ -1,0 +1,470 @@
+@charset "utf-8";
+
+@import './styles_public.scss';
+
+//此文件主要内容为界面模块相关样式，建议不要直接修改，可在mystyles.scss中进行样式覆盖
+
+//自定义变量 start
+
+$tradingview-bg: #e7ebee;
+
+//自定义变量 end
+
+
+
+
+//html标签样式覆盖 start
+body,
+html {
+    height: 100%;
+}
+
+body {
+    overflow: auto;
+    padding: 0;
+    margin: 0;
+}
+
+body > section {
+    min-width: 1280px;
+    min-height: 100%;
+}
+
+p {
+    margin: 0;
+    padding: 0;
+}
+
+button {
+    outline: none;
+}
+
+//html标签样式覆盖 end
+
+//动画相关 start
+@keyframes sliding-out {
+    from {transform:translateX(100%);}
+    to {transform:translateX(0%);}
+}
+
+//动画相关 end
+
+//消息弹框样式 start
+.window-message-box {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    width: 300px;
+    z-index: 999;
+    
+    article {
+        @extend %pa-0;
+        @extend %side-ma;
+
+        transition: all .2s;
+        animation:sliding-out 0.2s;
+    }
+}
+
+//消息弹框样式 start
+
+
+//header样式 start
+
+.pub-header {
+    @extend %box-shadow;
+}
+
+//header样式 end
+
+//pc端主体结构样式 start
+
+.pub-layout {
+    @extend %pa-2;
+
+    .pub-layout-header-tick {
+        @extend %pa-2;
+    }
+
+    .pub-layout-content {
+        // display: flex;
+        // flex-direction: column;
+        height: 100%;
+        
+        .pub-layout-content-left {
+            width: calc(100% - 350px);
+
+            .pub-layout-content-left-kline {
+                @extend %pa-2;
+                width: calc(100% - 350px);
+                height: 605px;
+            }
+
+            .pub-layout-content-left-dish {
+                @extend %pa-2;
+                width: 350px;
+                height: 605px;
+            }
+
+            .pub-layout-content-left-list {
+                @extend %pa-2;
+                width: 100%;
+                height: calc(100% - 605px);
+            }
+        }
+
+        .pub-layout-content-right {
+            width: 350px;
+
+            .pub-layout-content-right-place-order {
+                @extend %pa-2;
+            }
+
+            .pub-layout-content-right-wallet {
+                @extend %pa-2;
+            }
+
+            .pub-layout-content-right-spot-info {
+                @extend %pa-2;
+            }
+        }
+
+        
+    }
+}
+
+//pc端主体结构样式 end
+
+//头部行情模块样式 start
+.pub-header-tick {
+    @extend %side-pa;
+
+    .pub-header-tick-left {
+
+        > * {
+            @extend %mr-3;
+        }
+        
+
+        .dropdown {
+            button {
+                @extend %py-0;
+                height: auto;
+            }
+        }
+
+        .pub-header-tick-left-pre-prz  {
+            @extend %font-10;
+        }
+
+        .pub-header-tick-left-pre-button {
+            @extend %px-2;
+            @extend %py-2;
+            height: auto;
+        }
+
+        table {
+            @extend %font-2;
+
+            td {
+                @extend %pr-3;
+            }
+        }
+    }
+
+    .pub-header-tick-right {
+
+        .iconfont {
+            @extend %iconfont-large;
+        }
+    }
+}
+//头部行情模块样式 start
+
+
+//tradingview模块 start
+
+.pub-kline  {
+    @extend %side-pa;
+    height: 100%;
+
+    #tv_chart_container {
+        height: 100%;
+        border: 1px solid $tradingview-bg;
+    }
+}
+
+// tradingview模块 end
+
+
+//pc端盘口和最新成交结构样式 start
+
+.pub-dish-and-new-trade  {
+    @extend %pa-0;
+    height: 100%;
+
+    .pub-dish-and-new-trade-tabs {
+        @extend %pa-3;
+        @extend %ma-0;
+    }
+}
+//pc端盘口和最新成交结构样式 end
+
+//盘口相关样式 start
+
+.pub-dish {
+    .pub-dish-list-item {
+        @extend %ma-0;
+        @extend %py-2;
+        @extend %px-3;
+        @extend %font-2;
+        position: relative;
+
+        div {
+            position: relative;
+            z-index: 1;
+            width: 33.33%;
+        }
+
+        div:first-child p{
+            width: 100%;
+            text-align: left;
+        }
+
+        div:nth-child(3) p{
+            width: 100%;
+            text-align: right;
+        }
+
+        .pub-dish-list-item-mode {
+            height: 100%;
+            width: 0;
+            position: absolute;
+            right: 0;
+            z-index: 0;
+            opacity: .2;
+        }
+    }
+
+    .pub-dish-tick {
+        @extend %px-3;
+
+        div {
+            @extend %ma-0;
+        }
+    }
+
+    .pub-dish-bottom {
+        @extend %pa-3;
+        
+        button {
+            @extend %mb-0;
+        }
+    }
+}
+
+//盘口相关样式 end
+
+//最新成交相关样式 start
+.pub-new-trade {
+
+    .pub-new-trade-list {
+
+        .pub-new-trade-list-item {
+            @extend %ma-0;
+            @extend %py-2;
+            @extend %px-3;
+            @extend %font-2;
+
+            div {
+                width: 33.33%;
+            }
+    
+            div:first-child p{
+                width: 100%;
+                text-align: left;
+            }
+    
+            div:last-child p{
+                width: 100%;
+                text-align: right;
+            }
+        }
+    }
+}
+//最新成交相关样式 end
+
+//下单面板相关 start
+.pub-place-order {
+    @extend %side-pa;
+
+    .pub-place-order-tabs {
+        @extend %mb-3;
+    }
+
+    .pub-place-order-form {
+
+        .pub-place-order-form-lever-input {
+            input {
+                cursor: pointer;
+            }
+        }
+
+        .pub-place-order-form-num-input {
+
+
+            .pub-place-order-form-num-input-face-value {
+                @extend %font-2;
+            }
+        }
+
+        .pub-place-order-form-need-mgn {
+            @extend %font-2;
+        }
+
+        .pub-place-order-form-wallet {
+            @extend %font-2;
+        }
+        
+    }
+}
+//下单面板相关 end
+
+// 仓位选择 start
+.pub-select-pos {
+
+    .pub-select-pos-open-btn {
+        @extend %pa-0;
+        width: 100%;
+        height: auto;
+
+        div {
+            width: 100%;
+
+            .icon:last-child:not(:first-child) {
+                @extend %ma-0;
+            }
+        }
+    }
+
+    .pub-select-pos-model {
+
+        .pub-select-pos-model-content {
+
+            table {
+                min-width: 100%;
+
+                td {
+                    white-space:nowrap;
+                }
+            }
+        }
+    }
+}
+// 仓位选择 end
+
+
+// 杠杠调整 start
+.pub-set-lever {
+
+    .pub-set-lever-content {
+
+        .pub-set-lever-content-mm {
+            @extend %my-3;
+        }
+    }
+}
+// 杠杠调整 end
+
+
+// pc端列表 start
+.pub-trade-list {
+    @extend %side-pa;
+
+    .pub-trade-list-tabs {
+        @extend %mb-3;
+    }
+
+    div:nth-child(2) {
+        min-height: 260px;
+    }
+
+    table {
+        min-width: 100%;
+
+        td,th {
+            white-space:nowrap;
+        }
+    }
+}
+// pc端列表 end
+
+// 仓位列表 start
+.pub-pos {
+
+    .pub-pos-change-lever {
+        @extend %font-2;
+
+        cursor: pointer;
+    }
+
+    .pub-pos-stoppl {
+        cursor: pointer;
+
+        button {
+            @extend %pa-0;
+            width: 100%;
+
+            i {
+                @extend %ml-2;
+            }
+        }
+    }
+
+    .pub-pos-buttons {
+        button:not(:last-child) {
+            @extend %mr-3;
+        }
+    }
+}
+// 仓位列表 end
+
+// 委托列表 start 
+// .pub-order {}
+// 委托列表 end
+
+// 合约信息 start
+.pub-spot-info {
+    @extend %side-pa;
+
+    .pub-spot-info-tabs {
+        @extend %mb-3;
+    }
+
+    .pub-spot-info-content {
+        @extend %font-2;
+
+        .level:not(:last-child) {
+            @extend %mb-3;
+        }
+    }
+}
+// 合约信息 end
+
+// 资产模块 start
+.pub-wallet {
+    @extend %side-pa;
+
+    .pub-wallet-tabs {
+        @extend %mb-3;
+    }
+
+    .pub-wallet-content {
+        @extend %font-2;
+
+        .level:not(:last-child) {
+            @extend %mb-3;
+        }
+    }
+}
+// 资产模块 end

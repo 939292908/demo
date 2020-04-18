@@ -1,0 +1,335 @@
+var m = require("mithril")
+
+let dish = {
+    //行情限制数据处理时间间隔
+    TICKCLACTNTERVAL: 100,
+    ORDER20CLACTNTERVAL: 100,
+    //已订阅的行情列表
+    oldSubArr: [],
+    //合约名称列表
+    futureSymList: [],
+    // 现货名称列表
+    spotSymList: [],
+    //行情最后更新时间
+    lastTmForTick: 0,
+    //行情数据接收
+    tickObj: {},
+    //order20最后更新时间
+    lastTmForOrder20: 0,
+    //order20数据接收
+    tickObjForOrder20: {},
+    //需要显示的行情数据
+    lastTick: {},
+    //需要显示的行情数据
+    order20: {},
+    order20_raw: {},
+    //order20界面显示数据
+    order20ForSell: null,
+    order20Forbuy: null,
+    //盘口显示条数
+    order20ListNum: 8,
+    //盘口类型
+    dishType: 0, //0:买卖盘口，1:买盘盘口，2:卖盘盘口
+    //初始化全局广播
+    initEVBUS: function(){
+        let that = this
+        
+
+        //tick行情全局广播
+        if(this.EV_TICK_UPD_unbinder){
+            this.EV_TICK_UPD_unbinder()
+        }
+        this.EV_TICK_UPD_unbinder = window.gEVBUS.on(gMkt.EV_TICK_UPD,arg=> {
+            that.onTick(arg)
+        })
+        
+        //指数行情全局广播
+        if(this.EV_INDEX_UPD_unbinder){
+            this.EV_INDEX_UPD_unbinder()
+        }
+        this.EV_INDEX_UPD_unbinder = window.gEVBUS.on(gMkt.EV_INDEX_UPD,arg=> {
+            that.onTick(arg)
+        })
+
+        //order20行情全局广播
+        if(this.EV_ORDER20_UPD_unbinder){
+            this.EV_ORDER20_UPD_unbinder()
+        }
+        this.EV_ORDER20_UPD_unbinder = window.gEVBUS.on(gMkt.EV_ORDER20_UPD,arg=> {
+            that.onOrder20(arg)
+        })
+    },
+    //删除全局广播
+    rmEVBUS: function(){
+        if(this.EV_TICK_UPD_unbinder){
+            this.EV_TICK_UPD_unbinder()
+        }
+        if(this.EV_INDEX_UPD_unbinder){
+            this.EV_INDEX_UPD_unbinder()
+        }
+        if(this.EV_ORDER20_UPD_unbinder){
+            this.EV_ORDER20_UPD_unbinder()
+        }
+    },
+
+    onTick: function(param){
+        let tm = Date.now()
+        this.tickObj[param.Sym] = param.data
+        if(tm - this.lastTmForTick > this.TICKCLACTNTERVAL){
+            this.updateTick(this.tickObj)
+            this.lastTmForTick = tm
+            this.tickObj = {}
+        }
+    },
+    //更新最新行情
+    updateTick: function(ticks){
+        for(let key in ticks){
+            let item = ticks[key];
+            let gmexCI = utils.getGmexCi(window.gMkt.AssetD, item.Sym)
+            let indexTick = this.lastTick[gmexCI]
+            
+            let obj = utils.getTickObj(window.gMkt.AssetD, window.gMkt.AssetEx, item, this.lastTick[key], indexTick)
+            obj?this.lastTick[key] = obj:''
+        }
+        m.redraw();
+    },
+
+    onOrder20: function(param){
+        let tm = Date.now()
+        this.tickObjForOrder20[param.Sym] = param.data
+        if(tm - this.lastTmForOrder20 > this.ORDER20CLACTNTERVAL){
+            this.order20_raw = Object.assign(this.order20_raw, this.tickObjForOrder20)
+            this.updateOrder20()
+            this.lastTmForOrder20 = tm
+            this.tickObjForOrder20 = {}
+        }
+    },
+    //更新order20
+    updateOrder20: function(){
+        let Sym = window.gMkt.CtxPlaying.Sym
+        let ass = window.gMkt.AssetD[Sym]
+        let PrzMinIncSize = ass?utils.getFloatSize(utils.getFullNum(ass.PrzMinInc)):6;
+        let VolMinValSize = ass?utils.getFloatSize(ass.Mult):6;
+        let order20 = this.order20_raw[Sym]?this.order20_raw[Sym]:null
+        
+        let askNum = 0,bidNum = 0;
+        switch(this.dishType){
+            case 0:
+                askNum = bidNum = this.order20ListNum
+                break;
+            case 1:
+                askNum = 0
+                bidNum = this.order20ListNum * 2
+                break;
+            case 2:
+                askNum = this.order20ListNum * 2
+                bidNum = 0
+                break;
+        }
+        if(order20){
+            let asks = []
+            let volumeSumForAsk = 0
+            
+            let _Asks = order20.Asks.slice(0, askNum)
+            _Asks.map(function(item){
+                volumeSumForAsk+=item[1]
+                asks.push([
+                    Number(item[0]).toCeilFixed(PrzMinIncSize),
+                    Number(item[1]).toCeilFixed(VolMinValSize),
+                    Number(volumeSumForAsk).toCeilFixed(VolMinValSize),
+                ])
+            })
+            
+            asks.sort(function(a,b){
+                return b[0]-a[0]
+            })
+            if (asks.length < askNum && this.dishType != 1) {
+                let n = askNum - asks.length
+                for (let i = 0; i < n; i++) {
+                    asks.unshift(['--', '--', '--'])
+                }
+            }
+            let order20ForSell = {
+                Asks:asks,
+                volumeSumForAsk: volumeSumForAsk
+            }
+            this.order20ForSell = order20ForSell
+
+            let bids = []
+            let volumeSumForBid = 0
+            let _Bids = order20.Bids.slice(0, bidNum)
+            _Bids.map(function(item){
+                volumeSumForBid+=item[1]
+                bids.push([
+                    Number(item[0]).toCeilFixed(PrzMinIncSize),
+                    Number(item[1]).toCeilFixed(VolMinValSize),
+                    Number(volumeSumForBid).toCeilFixed(VolMinValSize),
+                ])
+            })
+            if (bids.length < bidNum && this.dishType != 2) {
+                let n = bidNum - bids.length
+                for (let i = 0; i < n; i++) {
+                    bids.push(['--', '--', '--'])
+                }
+            }
+            let order20ForBuy = {
+                Bids:bids,
+                volumeSumForBid: volumeSumForBid
+            }
+
+            this.order20ForBuy = order20ForBuy
+
+        }else{
+            let asks = [],bids = []
+            if (asks.length < askNum && this.dishType != 1) {
+                let n = askNum - asks.length
+                for (let i = 0; i < n; i++) {
+                    asks.unshift(['--', '--', '--'])
+                }
+            }
+            let order20ForSell = {
+                Asks:asks,
+                volumeSumForAsk: 0
+            }
+            this.order20ForSell = order20ForSell
+
+            if (bids.length < bidNum && this.dishType != 2) {
+                let n = bidNum - bids.length
+                for (let i = 0; i < n; i++) {
+                    bids.push(['--', '--', '--'])
+                }
+            }
+            let order20ForBuy = {
+                Bids:bids,
+                volumeSumForBid: 0
+            }
+
+            this.order20ForBuy = order20ForBuy
+        }
+        m.redraw();
+    },
+
+    //获取当前合约最新行情
+    getLastTick: function(){
+        let Sym = window.gMkt.CtxPlaying.Sym
+        return this.lastTick[Sym] || {}
+    },
+
+    getOrder20ForSellList: function(){
+        let order20ForSell = this.order20ForSell
+        if(!order20ForSell) return ''
+        return order20ForSell.Asks.map(function(item,i){
+            return m("div",{class:"pub-dish-list-item level"},[
+                m('div', {class: "level-item w30"},[
+                    m('p', {class: "w100 has-text-left has-text-danger"},[
+                        item[0]
+                    ]),
+                ]),
+                m('div', {class: "level-item w30"},[
+                    m('p', {class: "w100 has-text-left"},[
+                        item[1]
+                    ]),
+                ]),
+                m('div', {class: "level-item w30"},[
+                    m('p', {class: "w100 has-text-right"},[
+                        item[2]
+                    ]),
+                ]),
+                m('div', {class:"pub-dish-list-item-mode has-background-danger", style:"width:"+(item[2]/order20ForSell.volumeSumForAsk * 100)+"%"})
+            ])
+        })
+    },
+
+    getOrder20ForBuyList: function(){
+        let order20ForBuy = this.order20ForBuy
+        if(!order20ForBuy) return ''
+        return order20ForBuy.Bids.map(function(item,i){
+            return m("div",{class:"pub-dish-list-item level"},[
+                m('div', {class: "level-item w30"},[
+                    m('p', {class: "w100 has-text-left has-text-success"},[
+                        item[0]
+                    ]),
+                ]),
+                m('div', {class: "level-item w30"},[
+                    m('p', {class: "w100 has-text-left"},[
+                        item[1]
+                    ]),
+                ]),
+                m('div', {class: "level-item w30"},[
+                    m('p', {class: "w100 has-text-right"},[
+                        item[2]
+                    ]),
+                ]),
+                m('div', {class:"pub-dish-list-item-mode has-background-success", style:"width:"+(item[2]/order20ForBuy.volumeSumForBid * 100)+"%"})
+            ])
+        })
+    },
+    //设置盘口类型
+    setdishType: function(type){
+        this.dishType = type
+        this.updateOrder20()
+    }
+}
+
+export default {
+    oninit: function(vnode){
+        
+    },
+    oncreate: function(vnode){
+        dish.initEVBUS()
+        dish.updateOrder20()
+    },
+    view: function(vnode) {
+        
+        return m("div",{class:"pub-dish"},[
+            dish.getOrder20ForSellList(),
+            m("div",{class:"pub-dish-tick"},[
+                m("div",{class:"level "},[
+                    m("div",{class:"level-left"},[
+                        m('span', {class:"has-text-weight-semibold is-size-4 "+utils.getColorStr(dish.getLastTick().color, 'font')},[
+                            dish.getLastTick().LastPrz || '--'
+                        ]),
+                    ]),
+                    m("div",{class:"level-right"},[
+                        m('span', {class:"has-text-weight-semibold is-size-5 "+utils.getColorStr(dish.getLastTick().rfpreColor, 'font')},[
+                            dish.getLastTick().rfpre || '--'
+                        ]),
+                    ]),
+                ]),
+                m("div",{class:"level "},[
+                    m("div",{class:"level-left"},[
+                        m('span', {class:" is-size-7 "},[
+                            '指数：'+(dish.getLastTick().indexPrz || '--')
+                        ]),
+                    ]),
+                    m("div",{class:"level-right"},[
+                        m('span', {class:" is-size-7 "},[
+                            '标记：'+(dish.getLastTick().SettPrz || '--')
+                        ]),
+                    ]),
+                ]),
+            ]),
+            dish.getOrder20ForBuyList(),
+            m('div', {class:"pub-dish-bottom buttons are-small"}, [
+                m('button', { class:"button "+(dish.dishType == 0?' is-primary':' is-outlined'), onclick:function(){
+                    dish.setdishType(0)
+                }}, [
+                    '买卖盘口'
+                ]),
+                m('button', { class:"button is-outlined "+(dish.dishType == 1?' is-primary':' is-outlined'), onclick:function(){
+                    dish.setdishType(1)
+                }}, [
+                    '买盘盘口'
+                ]),
+                m('button', { class:"button "+(dish.dishType == 2?' is-primary':' is-outlined'), onclick:function(){
+                    dish.setdishType(2)
+                }}, [
+                    '卖盘盘口'
+                ]),
+            ])
+        ])
+    },
+    onremove: function(vnode) {
+        dish.rmEVBUS()
+    },
+}
