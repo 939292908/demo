@@ -281,6 +281,7 @@ let main = {
             this.lastTmForTick = tm
         }
     },
+    //下单提示
     onOrderMsg: function(ret) {
         let stopErr = ret.Status == 4 && ret.QtyF == 0 && ret.Via == 15
         if (stopErr) {
