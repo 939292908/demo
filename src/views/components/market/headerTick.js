@@ -246,11 +246,11 @@ let spotTick = {
         switch(type){
             case 0: 
                 return m("div",{class:"pub-header-tick-right level-right"},[
-                    m('button', {class: "button is-white is-rounded",}, [
-                        m('span', {class: "icon is-medium"},[
-                            m('i', {class: "iconfont iconshezhi1 fas fa-2x", "aria-hidden": true })
-                        ]),
-                    ]),
+                    // m('button', {class: "button is-white is-rounded",}, [
+                    //     m('span', {class: "icon is-medium"},[
+                    //         m('i', {class: "iconfont iconshezhi1 fas fa-2x", "aria-hidden": true })
+                    //     ]),
+                    // ]),
                 ])
             case 1:
                 return this.customRightTick()
