@@ -1,0 +1,11 @@
+{
+  "presets": ["@babel/preset-env"],
+  "plugins": [
+    ["@babel/plugin-transform-react-jsx", {
+      "pragma": "m",
+      "pragmaFrag": "'['"
+    }]
+    ,["@babel/plugin-proposal-class-properties", { "loose": true }]
+  ]
+  ,"sourceMaps": true
+}
