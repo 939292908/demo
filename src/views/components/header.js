@@ -38,11 +38,7 @@ let header = {
   },
   initUserInfo(){
     let account = window.gWebAPI.CTX.account
-    if(account.loginType == 'email'){
-      this.userName = account.accountName
-    }else if(account.loginType == 'phone'){
-      this.userName = account.accountName
-    }
+    this.userName = account.accountName
   },
   getLoginDom: function(){
     if(this.islogin){
@@ -56,28 +52,52 @@ let header = {
           ])
         ])
       ])
-      
     }else{
-      return m("div",{class:"navbar-item"},[
-        m("div",{class:"buttons"},[
-          header.getLogin()
-        ])
-      ])
+      let loginType = window.$config.loginType
+      switch(loginType){
+        case 0:
+          return m("div",{class:"navbar-item"},[
+            m("div",{class:"buttons"},[
+              header.getLogin()
+            ])
+          ])
+        case 1:
+          return null
+      }
+      
     }
   },
   signOut: function(){
-    window.gWebAPI.ReqSignOut({}, function(res){
-      console.log('ReqSignOut success ==>> ',res)
-      if(res.result.code === 0){
-        window.$message({content: '退出登录成功！', type: 'success'})
-      }else{
-        window.$message({content: '退出登录失败！', type: 'danger'})
-      }
-    }, function(err){
-        that.loginLoading = false
-        window.$message({content: '操作超时', type: 'danger'})
-        console.log('ReqSignOut => ', err)
-    })
+    let loginType = window.$config.loginType
+    switch(loginType){
+      case 0:
+        window.gWebAPI.ReqSignOut({}, function(res){
+          console.log('ReqSignOut success ==>> ',res)
+          if(res.result.code === 0){
+            window.$message({content: '退出登录成功！', type: 'success'})
+          }else{
+            window.$message({content: '退出登录失败！', type: 'danger'})
+          }
+        }, function(err){
+            that.loginLoading = false
+            window.$message({content: '操作超时', type: 'danger'})
+            console.log('ReqSignOut => ', err)
+        })
+        break;
+      case 1:
+        header.customSignOut({onSuc: function(arg){
+          let s = window.gWebAPI
+          s.CleanAccount()
+          gEVBUS.emit(s.EV_WEB_LOGOUT,{d:s.CTX})
+        }})
+        break;
+      default:
+
+    }
+    
+  },
+  customSignOut: function({onSuc}){
+    // 在此处定义退出登录请求处理，退出登录成功后调用onSuc
   },
   getLeftCon: function(){
     let type = window.$config.views.header.left.type
