@@ -293,6 +293,42 @@ let obj = {
         })
         
     },
+    getStopPL: function(){
+        // 根据配置判断下单止盈止损是否显示
+        let tradeType = window.$config.future.tradeType
+        let show = false
+        switch(tradeType){
+            case 0:
+            case 1:
+            case 2:
+                show = false;
+                break;
+            case 3:
+                show = true
+                break;
+            default:
+                show = false
+        }
+        if(show){
+            return m('div', { class: 'pub-place-order-form-stop-pl field' }, [
+                m("label", { class: "pub-place-order-form-stop-pl-label label" }, [
+                    '止盈止损设置（选填）'
+                ]),
+                m("div", { class: "pub-place-order-form-stop-pl-input field has-addons" }, [
+                    
+                    m("div", { class: "pub-place-order-form-stop-pl-input-p control is-expanded" }, [
+                        m("input", { class: "input", type: 'number', placeholder: "止盈价",})
+                    ]),
+                    m("div", { class: "pub-place-order-form-stop-pl-input-center control" }, [
+                        '&'
+                    ]),
+                    m("div", { class: "pub-place-order-form-stop-pl-input-l control is-expanded" }, [
+                        m("input", { class: "input", type: 'number', placeholder: "止损价",})
+                    ])
+                ])
+            ])
+        }
+    }
 }
 export default {
     oninit: function (vnode) {
@@ -304,7 +340,7 @@ export default {
     },
     view: function (vnode) {
 
-        return m("div", { class: "pub-place-order-form has-text-centered" }, [
+        return m("div", { class: "pub-place-order-form" }, [
             m("div", { class: "pub-place-order-form-lever-input field" }, [
                 m("div", { class: "control" }, [
                     m("input", {
@@ -331,11 +367,12 @@ export default {
                     ])
                 ])
             ]),
-            m("div", { class: "pub-place-order-form-trigger-prz-input field" }, [
-                m("div", { class: "control" }, [
-                    m("input", { class: "input opacity-0 ", type: 'number', placeholder: "",readonly: true, })
-                ])
-            ]),
+            // m("div", { class: "pub-place-order-form-trigger-prz-input field" }, [
+            //     m("div", { class: "control" }, [
+            //         m("input", { class: "input opacity-0", type: 'number', placeholder: "",readonly: true, })
+            //     ])
+            // ]),
+            obj.getStopPL(),
             m("div", { class: "pub-place-order-form-buttons field" }, [
                 m("div", { class: "level" }, [
                     m("div", { class: "level-left" }, [

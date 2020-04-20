@@ -327,6 +327,23 @@ button {
             }
         }
 
+        .pub-place-order-form-stop-pl {
+
+            .pub-place-order-form-stop-pl-label {
+                @extend %font-2;
+            }
+
+            .pub-place-order-form-stop-pl-input {
+                .pub-place-order-form-stop-pl-input-center {
+                    width: 30px;
+                    line-height: 40px;
+                    text-align: center;
+                }
+            }
+
+        }
+        
+
         .pub-place-order-form-need-mgn {
             @extend %font-2;
         }
