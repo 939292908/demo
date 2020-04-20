@@ -68,7 +68,7 @@ export default {
     },
     view: function(vnode) {
         
-        return m("div",{class:"pub-place-order box has-text-centered"},[
+        return m("div",{class:"pub-place-order box"},[
             obj.getSelectPos(),
             m("div",{class:"pub-place-order-tabs tabs is-small"},[
                 m("ul",[
