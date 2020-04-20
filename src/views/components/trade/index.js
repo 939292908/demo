@@ -37,7 +37,8 @@ let obj = {
         }
     },
     getSelectPos: function(){
-        let tradeType = window.$config.tradeType
+        // 根据配置判断仓位选择是否显示
+        let tradeType = window.$config.future.tradeType
         let show = false
         switch(tradeType){
             case 0:
