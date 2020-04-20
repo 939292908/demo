@@ -1,6 +1,6 @@
 var m = require("mithril")
 
-import * as clacMgnNeed from '../../../futureCalc/clacMgnNeed'
+import * as clacMgnNeed from '../../../futureCalc/calcMgnNeed.js'
 
 let obj = {
     form: {
