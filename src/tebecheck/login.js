@@ -1,7 +1,5 @@
 // 按照登录配置处理登录
 
-
-
 let loginType = window.$config.loginType
 switch(loginType){
     case 0:
@@ -23,15 +21,7 @@ function getToken(){
             Token: 'LgAAjGeYDMCYRtliJsQzGKGxDM6ZzM64g+FuNmNnMgbL',
         })
      */
-    window.gWebAPI.ReqUserInfo({}, function(arg){
-        let s = window.gWebAPI
-        s.CTX.account = arg.account
-        gEVBUS.emit(s.EV_WEB_LOGIN,{d:s.CTX})
-        loginTrd({
-            UserName: arg.account.accountName, //'324352@qq.com',
-            Token: arg.account.token, //'LgAAjGeYDMCYRtliJsQzGKGxDM6ZzM64g+FuNmNnMgbL',
-        })
-    })
+    
     
 }
 
