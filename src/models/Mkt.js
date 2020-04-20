@@ -386,8 +386,8 @@ class Mkt {
             gEVBUS.on(WEBAPI_EV_WEB_LOGIN,data=> {
                 let ctx = data.d
                 let account = ctx.account
-                s.Conf.UserName = account.loginType == "phone" ? account.phone:account.email;
-                s.Conf.AuthType = 2;
+                s.Conf.UserName = account.accountName;
+                s.Conf.AuthType = account.AuthType || 2;
                 s.Conf.UserCred = account.token
 
                 switch (s.Conf.Type) {

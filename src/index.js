@@ -72,8 +72,8 @@ require('./route');
 
 
 
-//检查是否登录
-window.gWebAPI.ReqUserInfo()
+//登录类型处理
+require('./tebecheck/login')
 
 console.log(process.env.BUILD_ENV)
 

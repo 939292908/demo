@@ -49,6 +49,15 @@ button {
 
 //动画相关 end
 
+// 通用类名 start
+
+.opacity-0{
+    opacity: 0;
+    cursor: default;
+}
+
+// 通用类名 end
+
 //消息弹框样式 start
 .window-message-box {
     position: fixed;
@@ -387,7 +396,7 @@ button {
 
     div:nth-child(2) {
         @extend %scroll;
-        height: 260px;
+        height: 312px;
     }
 
     table {

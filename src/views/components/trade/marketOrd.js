@@ -1,6 +1,6 @@
 var m = require("mithril")
 
-import * as clacMgnNeed from '../../../futureCalc/clacMgnNeed'
+import * as clacMgnNeed from '../../../futureCalc/calcMgnNeed.js'
 
 let obj = {
     form: {
@@ -332,6 +332,11 @@ export default {
                     m('span', {class: 'pub-place-order-form-num-input-face-value'}, [
                         obj.faceValue
                     ])
+                ])
+            ]),
+            m("div", { class: "pub-place-order-form-trigger-prz-input field" }, [
+                m("div", { class: "control" }, [
+                    m("input", { class: "input opacity-0 ", type: 'number', placeholder: "",readonly: true, })
                 ])
             ]),
             m("div", { class: "pub-place-order-form-buttons field" }, [
