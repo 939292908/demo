@@ -1,6 +1,7 @@
 // 请复制一份，命名为config.js
 const config = {
     exchId: 0, //渠道ID
+    loginType: 1, // 登录类型，0:默认,账号密码登录，1: token登录
     future: {
         UPNLPrzActive: '1', // 仓位未实现盈亏计算选择，'1':最新价， '2'：标记价
         MMType: 0, // 仓位保证金率公式选择，0: 默认，1: 开仓价值/杠杆 
