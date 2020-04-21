@@ -31,6 +31,9 @@ let obj = {
             title: '成交数量',
             class: ""
         }, {
+            title: '止盈/止损',
+            class: ""
+        }, {
             title: '触发条件',
             class: ""
         }, {
@@ -189,6 +192,9 @@ let obj = {
                 ]),
                 m("td", { class: " "}, [
                     item.QtyF
+                ]),
+                m("td",{class:""},[
+                    (item.StopP || '--')+'/'+(item.StopL || '--')
                 ]),
                 m("td", { class: "" }, [
                     item.cond
