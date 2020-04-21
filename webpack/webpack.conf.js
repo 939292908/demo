@@ -81,11 +81,11 @@ const config = {
             uglifyOptions: {
                 warnings: false,
                 compress: {
-                    drop_debugger: true,
-                    drop_console: true
+                    drop_debugger: false,
+                    drop_console: false
                 }
             },
-            sourceMap: false,
+            sourceMap: true,
             parallel: true
         }),
         new MiniCssExtractPlugin({
