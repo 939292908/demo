@@ -23,11 +23,6 @@ function getToken(){
         })
      */
 
-    loginTrd({
-        UserName: '324352@qq.com', 
-        uid: '11130460',
-        Token: 'PgAAGTuJgYFMkdkTJjGZwBpswNm5NtlcJzTJjrJnZAaq',
-    })
     
 }
 
