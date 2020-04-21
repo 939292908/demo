@@ -161,17 +161,27 @@ let obj = {
           m("button",{class:"button is-primary "+(item.loading?' is-loading': ''), onclick: function(){
             obj.placeOrder('close', item)
           }},[
-            '市平'
+            '市价平仓'
           ]),
           m("button",{class:"button is-primary "+(item.loading?' is-loading': ''), onclick: function(){
             obj.placeOrder('add', item)
           }},[
-            '加仓'
+            '加倍开仓'
           ]),
           m("button",{class:"button is-primary "+(item.loading?' is-loading': ''), onclick: function(){
             obj.placeOrder('back', item)
           }},[
-            '反向'
+            '反向开仓'
+          ]),
+          m("button",{class:"button is-primary "+(item.loading?' is-loading': ''), onclick: function(){
+            obj.placeOrder('marketAdd', item)
+          }},[
+            '市价加仓'
+          ]),
+          m("button",{class:"button is-primary "+(item.loading?' is-loading': ''), onclick: function(){
+            obj.placeOrder('someClose', item)
+          }},[
+            '平仓'
           ]),
         ])
       ])
@@ -211,56 +221,62 @@ let obj = {
     pos.loading = true
     switch(status){
         case 'add':
-        p = {
-          AId: pos.AId,
-          Sym: pos.Sym,
-          COrdId: new Date().getTime()+'',
-          Dir: pos.Sz>0? 1: -1,
-          OType: 2,
-          Prz: 1,
-          Qty: Math.abs(pos.Sz),
-          QtyDsp: 0,
-          Tif: 1,
-          OrdFlag: 0,
-          PrzChg: 10,
-          PId: pos.PId,
-          isAdd: true
-        }
-        break;
+          p = {
+            AId: pos.AId,
+            Sym: pos.Sym,
+            COrdId: new Date().getTime()+'',
+            Dir: pos.Sz>0? 1: -1,
+            OType: 2,
+            Prz: 1,
+            Qty: Math.abs(pos.Sz),
+            QtyDsp: 0,
+            Tif: 1,
+            OrdFlag: 0,
+            PrzChg: 10,
+            PId: pos.PId,
+            isAdd: true
+          }
+          break;
         case 'back':
-        p = {
-          AId: pos.AId,
-          Sym: pos.Sym,
-          COrdId: new Date().getTime()+'',
-          Dir: pos.Sz>0? -1: 1,
-          OType: 2,
-          Prz: 1,
-          Qty: Math.abs(pos.Sz) * 2,
-          QtyDsp: 0,
-          Tif: 1,
-          OrdFlag: 0,
-          PrzChg: 10,
-          PId: pos.PId,
-          isBack: true
-        }
-        break;
+          p = {
+            AId: pos.AId,
+            Sym: pos.Sym,
+            COrdId: new Date().getTime()+'',
+            Dir: pos.Sz>0? -1: 1,
+            OType: 2,
+            Prz: 1,
+            Qty: Math.abs(pos.Sz) * 2,
+            QtyDsp: 0,
+            Tif: 1,
+            OrdFlag: 0,
+            PrzChg: 10,
+            PId: pos.PId,
+            isBack: true
+          }
+          break;
         case 'close':
-        p = {
-          AId: pos.AId,
-          Sym: pos.Sym,
-          COrdId: new Date().getTime()+'',
-          Dir: pos.Sz>0? -1: 1,
-          OType: 2,
-          Prz: 1,
-          Qty: Math.abs(pos.Sz),
-          QtyDsp: 0,
-          Tif: 1,
-          OrdFlag: 2, //只减仓
-          PrzChg: 10,
-          PId: pos.PId,
-          isClose: true
-        }
-        break;
+          p = {
+            AId: pos.AId,
+            Sym: pos.Sym,
+            COrdId: new Date().getTime()+'',
+            Dir: pos.Sz>0? -1: 1,
+            OType: 2,
+            Prz: 1,
+            Qty: Math.abs(pos.Sz),
+            QtyDsp: 0,
+            Tif: 1,
+            OrdFlag: 2, //只减仓
+            PrzChg: 10,
+            PId: pos.PId,
+            isClose: true
+          }
+          break;
+        case 'marketAdd':
+          window.$openMarketAddMode({pos:pos, cb: function(arg){}})
+          break;
+        case 'someClose':
+          console.log('部分平仓')
+          break;
         default:
 
     }

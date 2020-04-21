@@ -10,10 +10,13 @@ import wallet from './wallet/index'
 import spotInfo from './spotInfo/spotInfo'
 //杠杆调整
 import leverageMode from './trade/leverageMode'
+//市价加仓
+import marketAddMode from './trade/marketAddMode'
 //设置仓位止盈止损
 import stopPLMode from './trade/stopPLMode'
 //二次验证google和sms
 import validateMode from './userCenter/validateMode'
+
 
 let obj = {
 
@@ -143,6 +146,20 @@ let obj = {
   },
   customStopPLMode: function(){
 
+  },
+  marketAddMode: function(){
+    let type = window.$config.views.marketAddMode.type
+    switch(type){
+      case 0:
+        return m(marketAddMode)
+      case 1:
+        return this.custommarketAddMode()
+      default:
+        return null;
+    }
+  },
+  custommarketAddMode: function(){
+
   }
 }
 
@@ -186,6 +203,7 @@ export default {
           obj.getStopPLMode(),
           obj.getLeverageMode(),
           obj.getValidateMode(),
+          obj.marketAddMode()
         ])
     }
 }
