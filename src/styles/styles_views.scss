@@ -166,11 +166,6 @@ button {
             @extend %font-10;
         }
 
-        .pub-header-tick-left-pre-button {
-            @extend %px-2;
-            @extend %py-2;
-            height: auto;
-        }
 
         table {
             @extend %font-2;
