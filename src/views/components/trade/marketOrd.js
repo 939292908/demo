@@ -451,6 +451,11 @@ export default {
                 ])
             ]),
             obj.getStopPL(),
+            m("div", { class: "pub-place-order-form-trigger-prz-input field" }, [
+                m("div", { class: "control" }, [
+                    m("input", { class: "input opacity-0", type: 'number', placeholder: "",readonly: true, })
+                ])
+            ]),
             m("div", { class: "pub-place-order-form-buttons field" }, [
                 m("div", { class: "level" }, [
                     m("div", { class: "level-left" }, [
