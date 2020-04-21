@@ -295,13 +295,13 @@ let obj = {
         let newOrderForSell = {
             Sym: Sym,
             Prz: Prz,
-            Qty: QtyLong,
+            Qty: QtyShort,
             QtyF: 0,
-            Dir: 1,
+            Dir: -1,
             PId: PId, 
             Lvr: Lever,
             MIRMy: 0
-          }
+        }
         clacMgnNeed.calcFutureWltAndPosAndMI(pos, wallet, order, RSdata, assetD, lastTick, '1', newOrderForSell, 0, res => {
             console.log('sell 成本计算结果： ', res)
             that.MgnNeedForSell = Number(res || 0)
