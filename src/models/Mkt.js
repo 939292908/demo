@@ -653,13 +653,13 @@ class Mkt {
                                             },function (aTrd,aRaw) {
                                                 aObj.WltsReplace(aTrd,aRaw,"01")
                                             })
-                                        aObj.ReqTrdGetWallets({
-                                            "AId": aObj.RT["UserId"] + "02"
-                                        }, function (aTrd, aRaw) {
-                                            aObj.WltsReplace(aTrd,aRaw,"02")
-
-                                        })
                                         if (false) {
+                                            aObj.ReqTrdGetWallets({
+                                                "AId": aObj.RT["UserId"] + "02"
+                                            }, function (aTrd, aRaw) {
+                                                aObj.WltsReplace(aTrd,aRaw,"02")
+    
+                                            })
                                             aObj.ReqTrdGetWallets({
                                                 "AId": aObj.RT["UserId"] + "03"
                                             }, function (aTrd, aRaw) {
@@ -674,11 +674,14 @@ class Mkt {
                                             aObj.OrdersReplace(aTrd,aRaw,"01")
                                         })
 
-                                        aObj.ReqTrdGetOrders({
-                                            "AId":aObj.RT["UserId"]+"02"
-                                        },function (aTrd, aRaw) {
-                                            aObj.OrdersReplace(aTrd,aRaw,"02")
-                                        })
+                                        if(false){
+                                            aObj.ReqTrdGetOrders({
+                                                "AId":aObj.RT["UserId"]+"02"
+                                            },function (aTrd, aRaw) {
+                                                aObj.OrdersReplace(aTrd,aRaw,"02")
+                                            })
+                                        }
+                                        
 
                                         aObj.ReqTrdGetPositions({
                                             "AId":aObj.RT["UserId"]+"01"
@@ -689,7 +692,6 @@ class Mkt {
 
                                         
 
-                                        aObj.ReqTrdGetRiskLimits();
                                         return stately.WORKING;
                                     }
                                 }
