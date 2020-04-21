@@ -152,7 +152,7 @@ let obj = {
             PrzChg: 0
         }
 
-        // 根据配置判断处理杠杠修改
+        // 根据配置判断处理
         let tradeType = window.$config.future.tradeType
         switch(tradeType){
             case 0:
