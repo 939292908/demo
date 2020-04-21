@@ -4,6 +4,8 @@ const path = require('path');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const CopyPlugin = require('copy-webpack-plugin');
+const UglifyjsPlugin = require('uglifyjs-webpack-plugin');
+
 
 const config = {
     mode: 'development',
@@ -75,6 +77,17 @@ const config = {
             template: "./src/ejs/index.ejs"
             , filename: "index.html"
         }), 
+        new UglifyjsPlugin({
+            uglifyOptions: {
+                warnings: false,
+                compress: {
+                    drop_debugger: true,
+                    drop_console: true
+                }
+            },
+            sourceMap: false,
+            parallel: true
+        }),
         new MiniCssExtractPlugin({
             filename: 'css/mystyles.css'
         }), 
@@ -86,7 +99,7 @@ const config = {
         ]),
         new webpack.DefinePlugin({
             'process.env.BUILD_ENV': JSON.stringify(process.env.BUILD_ENV)
-          }),
+        }),
     ]
 };
 
