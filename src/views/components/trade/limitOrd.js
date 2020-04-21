@@ -129,7 +129,7 @@ let obj = {
         }
 
         let Sym = window.gMkt.CtxPlaying.Sym
-        let AId = window.gWebAPI.CTX.account.uid+'01'
+        let AId = window.gTrd.RT["UserId"]+'01'
         let PId = window.gTrd.CtxPlaying.activePId
         if(!PId){
             return window.$message({content: '请先选择您要下单的仓位！', type: 'danger'})

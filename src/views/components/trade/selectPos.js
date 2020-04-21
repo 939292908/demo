@@ -174,7 +174,7 @@ let obj = {
   },
   addPos: function(param){
     console.log('add pos')
-    let AId = window.gWebAPI.CTX.account.uid+'01'
+    let AId = window.gTrd.RT["UserId"]+'01'
     let Sym = window.gMkt.CtxPlaying.Sym
     let PId = window.gMkt.CtxPlaying.activePId
     window.gTrd.ReqTrdPosOp({
@@ -194,7 +194,7 @@ let obj = {
   },
   delPos: function(param){
     console.log('del pos', param)
-    let AId = window.gWebAPI.CTX.account.uid+'01'
+    let AId = window.gTrd.RT["UserId"]+'01'
     let Sym = param.Sym
     let PId = param.PId
     window.gTrd.ReqTrdPosOp({
