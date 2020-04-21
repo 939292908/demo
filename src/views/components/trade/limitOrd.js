@@ -3,10 +3,12 @@ import * as clacMgnNeed from '../../../futureCalc/calcMgnNeed.js'
 
 let obj = {
     form: {
-        Prz: '',
-        Num: '',
-        Lever: 0,
-        maxLever: 0,
+        Prz: '',      //委托价格
+        Num: '',      //委托数量
+        Lever: 0,     //杠杠
+        maxLever: 0,  //最大杠杆
+        stopP: '',    //止盈价
+        stopL: ''     // 止损价
     },
     faceValue: '= 0.0000 USDT',
     wlt: {},
@@ -109,20 +111,22 @@ let obj = {
     },
     updateSpotInfo: function(){
         this.form = {
-            Prz: '',
-            Num: '',
-            Lever: 0,
-            maxLever: 0,
+            Prz: '',      //委托价格
+            Num: '',      //委托数量
+            Lever: 0,     //杠杠
+            maxLever: 0,  //最大杠杆
+            stopP: '',    //止盈价
+            stopL: ''     // 止损价
         }
     },
     submit: function(dir){
-        if(this.form.Prz === 0){
+        if(this.form.Prz === '0'){
             return $message({content: '下单价格不能为0', type: 'danger'})
         }else if(!this.form.Prz){
             return $message({content: '下单价格不能为空', type: 'danger'})
         }
 
-        if(this.form.Num === 0){
+        if(this.form.Num === '0'){
             return $message({content: '下单数量不能为0', type: 'danger'})
         }else if(!this.form.Num){
             return $message({content: '下单数量不能为空', type: 'danger'})
@@ -131,18 +135,7 @@ let obj = {
         let Sym = window.gMkt.CtxPlaying.Sym
         let AId = window.gWebAPI.CTX.account.uid+'01'
         let PId = window.gTrd.CtxPlaying.activePId
-        if(!PId){
-            return window.$message({content: '请先选择您要下单的仓位！', type: 'danger'})
-        }
-
-        let aWdrawable = Number(obj.wlt.aWdrawable || 0 )
-        if(aWdrawable == 0){
-            return window.$message({content: '可用资金不足！', type: 'danger'})
-        }else if(dir == 1 && aWdrawable < Number(this.MgnNeedForBuy)){
-            return window.$message({content: '可用资金不足！', type: 'danger'})
-        }else if(dir == -1 && aWdrawable < Number(this.MgnNeedForSell)){
-            return window.$message({content: '可用资金不足！', type: 'danger'})
-        }
+        
 
         let p = {
             Sym: Sym,
@@ -157,6 +150,43 @@ let obj = {
             Tif: 0,
             OrdFlag: 0,
             PrzChg: 0
+        }
+
+        // 根据配置判断处理杠杠修改
+        let tradeType = window.$config.future.tradeType
+        switch(tradeType){
+            case 0:
+            case 1:
+            case 2:
+                if(!PId){
+                    return window.$message({content: '请先选择您要调整的仓位！', type: 'danger'})
+                }
+                break;
+            case 3:
+                p.PId = 'new'
+                // 只开仓标志
+                p.OrdFlag = (p.OrdFlag | 4)
+
+                let stopP = Number(this.form.stopP), stopL = Number(this.form.stopL);
+                stopP > 0 ? p.StopP = stopP : ''
+                stopL > 0 ? p.StopL = stopL : ''
+                if (stopP > 0 || stopL > 0) {
+                    p.StopLPBy = 1
+                }
+                console.log(p)
+                break;
+            default:
+                
+        }
+
+
+        let aWdrawable = Number(obj.wlt.aWdrawable || 0 )
+        if(aWdrawable == 0){
+            return window.$message({content: '可用资金不足！', type: 'danger'})
+        }else if(dir == 1 && aWdrawable < Number(this.MgnNeedForBuy)){
+            return window.$message({content: '可用资金不足！', type: 'danger'})
+        }else if(dir == -1 && aWdrawable < Number(this.MgnNeedForSell)){
+            return window.$message({content: '可用资金不足！', type: 'danger'})
         }
 
         window.gTrd.ReqTrdOrderNew(p, function(arg){
@@ -255,6 +285,26 @@ let obj = {
         }
         this.setMgnNeed()
     },
+    onStopPInput: function(e){
+        let Sym = window.gMkt.CtxPlaying.Sym
+        let ass = window.gMkt.AssetD[Sym]
+        let maxPrz = Number(ass?ass.PrzMax:0)
+        if(Number(e.target.value) > maxPrz){
+            this.form.stopP = maxPrz
+        }else {
+            this.form.stopP = e.target.value
+        }
+    },
+    onStopLInput: function(e){
+        let Sym = window.gMkt.CtxPlaying.Sym
+        let ass = window.gMkt.AssetD[Sym]
+        let maxPrz = Number(ass?ass.PrzMax:0)
+        if(Number(e.target.value) > maxPrz){
+            this.form.stopL = maxPrz
+        }else {
+            this.form.stopL = e.target.value
+        }
+    },
     initWlt: function(arg){
         let Sym = window.gMkt.CtxPlaying.Sym
         let assetD = window.gMkt.AssetD[Sym] || {}
@@ -344,13 +394,17 @@ let obj = {
                 m("div", { class: "pub-place-order-form-stop-pl-input field has-addons" }, [
                     
                     m("div", { class: "pub-place-order-form-stop-pl-input-p control is-expanded" }, [
-                        m("input", { class: "input", type: 'number', placeholder: "止盈价",})
+                        m("input", { class: "input", type: 'number', placeholder: "止盈价", value: obj.form.stopP, oninput: function(e){
+                            obj.onStopPInput(e)
+                        }})
                     ]),
                     m("div", { class: "pub-place-order-form-stop-pl-input-center control" }, [
                         '&'
                     ]),
                     m("div", { class: "pub-place-order-form-stop-pl-input-l control is-expanded" }, [
-                        m("input", { class: "input", type: 'number', placeholder: "止损价",})
+                        m("input", { class: "input", type: 'number', placeholder: "止盈价", value: obj.form.stopL, oninput: function(e){
+                            obj.onStopLInput(e)
+                        }})
                     ])
                 ])
             ])
@@ -394,11 +448,6 @@ export default {
                     ])
                 ])
             ]),
-            // m("div", { class: "pub-place-order-form-trigger-prz-input field" }, [
-            //     m("div", { class: "control" }, [
-            //         m("input", { class: "input opacity-0", type: 'number', placeholder: "",readonly: true, })
-            //     ])
-            // ]),
             obj.getStopPL(),
             m("div", { class: "pub-place-order-form-buttons field" }, [
                 m("div", { class: "level" }, [
