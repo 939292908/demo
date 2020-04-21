@@ -119,13 +119,13 @@ let obj = {
         }
     },
     submit: function(dir){
-        if(this.form.Prz === 0){
+        if(this.form.Prz === '0'){
             return $message({content: '下单价格不能为0', type: 'danger'})
         }else if(!this.form.Prz){
             return $message({content: '下单价格不能为空', type: 'danger'})
         }
 
-        if(this.form.Num === 0){
+        if(this.form.Num === '0'){
             return $message({content: '下单数量不能为0', type: 'danger'})
         }else if(!this.form.Num){
             return $message({content: '下单数量不能为空', type: 'danger'})
