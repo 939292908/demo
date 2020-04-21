@@ -184,7 +184,10 @@ let spotTick = {
                     m('span', {class:"pub-header-tick-left-pre-prz"+utils.getColorStr(spotTick.getLastTick().color, 'font')},[
                         spotTick.getLastTick().LastPrz || '--'
                     ]),
-                    m('button', {class:"pub-header-tick-left-pre-button button"+utils.getColorStr(spotTick.getLastTick().rfpreColor)},[
+                    // m('button', {class:"pub-header-tick-left-pre-button button"+utils.getColorStr(spotTick.getLastTick().rfpreColor)},[
+                    //     spotTick.getLastTick().rfpre || '--'
+                    // ]),
+                    m('span', {class:"pub-header-tick-left-pre-button tag"+utils.getColorStr(spotTick.getLastTick().rfpreColor)},[
                         spotTick.getLastTick().rfpre || '--'
                     ]),
                     m('table', {class:""}, [
