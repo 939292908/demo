@@ -167,22 +167,49 @@ let obj = {
         let that = this
         let Sym = window.gMkt.CtxPlaying.Sym
         let PId = window.gTrd.CtxPlaying.activePId
-        if(!PId){
-            return window.$message({content: '请先选择您要调整的仓位！', type: 'danger'})
+
+        // 根据配置判断处理杠杠修改
+        let tradeType = window.$config.future.tradeType
+        switch(tradeType){
+            case 0:
+            case 1:
+            case 2:
+                if(!PId){
+                    return window.$message({content: '请先选择您要调整的仓位！', type: 'danger'})
+                }
+                window.$openLeverageMode({
+                    Sym: Sym,
+                    PId: PId, //仓位PId
+                    Lever: this.form.Lever, //杠杆
+                    MIRMy: 0, //自定义委托保证金率
+                    needReq: true, //是否需要向服务器发送修改杠杆请求
+                    cb: function(arg){
+                        console.log('change Lever callback', arg)
+                        that.form.Lever = arg.Lever
+                        that.form.MIRMy = arg.MIRMy
+                        that.setMgnNeed()
+                    }
+                })
+                break;
+            case 3:
+                window.$openLeverageMode({
+                    Sym: Sym,
+                    PId: PId, //仓位PId
+                    Lever: this.form.Lever, //杠杆
+                    MIRMy: 0, //自定义委托保证金率
+                    needReq: false, //是否需要向服务器发送修改杠杆请求
+                    cb: function(arg){
+                        console.log('change Lever callback', arg)
+                        that.form.Lever = arg.Lever
+                        that.form.MIRMy = arg.MIRMy
+                        that.setMgnNeed()
+                    }
+                })
+                break;
+            default:
+                
         }
-        window.$openLeverageMode({
-            Sym: Sym,
-            PId: PId, //仓位PId
-            Lever: this.form.Lever, //杠杆
-            MIRMy: 0, //自定义委托保证金率
-            needReq: true, //是否需要向服务器发送修改杠杆请求
-            cb: function(arg){
-                console.log('change Lever callback', arg)
-                that.form.Lever = arg.Lever
-                that.form.MIRMy = arg.MIRMy
-                that.setMgnNeed()
-            }
-        })
+        
     },
     setFaceV: function() {
         let Sym = window.gMkt.CtxPlaying.Sym
