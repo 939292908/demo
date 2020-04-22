@@ -130,7 +130,7 @@ let obj = {
                 if(obj.StopPrz){
                     obj.cond = obj.StopBy==2?'指数价':obj.StopBy==1?'最新价':'标记价'
                     obj.cond += (obj.OrdFlag&8)?'≥':'≤'
-                    obj.cond += obj.StopPrz.toFixed2(VolMinValSize)
+                    obj.cond += obj.StopPrz.toFixed2(PrzMinIncSize)
                 }else{
                     obj.cond = '--'
                 }
