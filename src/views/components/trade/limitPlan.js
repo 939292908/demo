@@ -167,6 +167,12 @@ let obj = {
             StopBy: 1
         }
 
+        if (p.StopPrz >= p.Prz) {
+            p.OrdFlag = (p.OrdFlag | 8)
+        } else {
+            p.OrdFlag = (p.OrdFlag | 16)
+        }
+
         // 根据配置判断处理
         let tradeType = window.$config.future.tradeType
         switch(tradeType){

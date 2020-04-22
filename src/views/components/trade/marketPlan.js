@@ -167,6 +167,24 @@ let obj = {
             StopBy: 1
         }
 
+        let lastTick = window.gMkt.lastTick
+        let assetD = window.gMkt.AssetD
+
+        let prz = (lastTick[Sym] && lastTick[Sym].LastPrz) || (assetD[Sym] && assetD[Sym].PrzLatest) || 0
+        if (prz) {
+            if (p.StopPrz >= prz) {
+                p.OrdFlag = (p.OrdFlag | 8)
+            } else {
+                p.OrdFlag = (p.OrdFlag | 16)
+            }
+        } else {
+            if (dir == 1) {
+                p.OrdFlag = (p.OrdFlag | 8)
+            } else {
+                p.OrdFlag = (p.OrdFlag | 16)
+            }
+        }
+
         // 根据配置判断处理
         let tradeType = window.$config.future.tradeType
         switch(tradeType){
