@@ -61,6 +61,13 @@ let obj = {
             that.initWlt()
         })
 
+        if(this.EV_WEB_LOGOUT_unbinder){
+            this.EV_WEB_LOGOUT_unbinder()
+        }
+        this.EV_WEB_LOGOUT_unbinder = window.gEVBUS.on(gWebAPI.EV_WEB_LOGOUT,arg=> {
+            that.wlt = {}
+        })
+
 
     },
     //删除全局广播
@@ -70,6 +77,9 @@ let obj = {
         }
         if (this.EV_TICK_UPD_unbinder) {
             this.EV_TICK_UPD_unbinder()
+        }
+        if(this.EV_WEB_LOGOUT_unbinder){
+            this.EV_WEB_LOGOUT_unbinder()
         }
     },
     initPos: function (param) {
