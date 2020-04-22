@@ -24,13 +24,6 @@ body {
     padding: 0;
     margin: 0;
 }
-@media screen and (min-width: 1023px){
-    body > section {
-        min-width: 1280px;
-        min-height: 100%;
-    }
-}
-
 
 p {
     margin: 0;
@@ -51,11 +44,36 @@ button {
 
 //动画相关 end
 
+// 屏幕适配相关 start
+@media screen and (min-width: 1023px){
+    body > section {
+        min-width: 1280px;
+        min-height: 100%;
+    }
+}
+@media screen and (max-width: 1023px){
+    .pub-header-tick {
+        .pub-header-tick-left {
+            .dropdown {
+                button {
+                    font-size: inherit;
+                }
+            }
+        }
+    }
+}
+// 
+
 // 通用类名 start
 
 .opacity-0{
     opacity: 0;
     cursor: default;
+}
+
+.spacer {
+    flex-grow: 1!important;
+    -webkit-box-flex: 1!important;
 }
 
 // 通用类名 end
@@ -152,6 +170,9 @@ button {
     z-index: 1;
 
     .pub-header-tick-left {
+        white-space: nowrap;
+        display: flex;
+        align-items: center;
 
         > * {
             @extend %mr-3;
@@ -161,6 +182,7 @@ button {
         .dropdown {
             button {
                 @extend %py-0;
+                @extend %font-11;
                 height: auto;
             }
         }
@@ -172,6 +194,8 @@ button {
 
         table {
             @extend %font-2;
+            display: inline-table;
+
 
             td {
                 @extend %pr-3;

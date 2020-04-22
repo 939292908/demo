@@ -179,7 +179,7 @@ let spotTick = {
         let type = window.$config.views.headerTick.left.type
         switch(type){
             case 0: 
-                return m("div",{class:"pub-header-tick-left navbar-star"},[
+                return m("div",{class:"pub-header-tick-left"},[
                     spotTick.getSymSelect(),
                     m('span', {class:"pub-header-tick-left-pre-prz is-hidden-touch"+utils.getColorStr(spotTick.getLastTick().color, 'font')},[
                         spotTick.getLastTick().LastPrz || '--'
@@ -248,12 +248,12 @@ let spotTick = {
         let type = window.$config.views.headerTick.right.type
         switch(type){
             case 0: 
-                return m("div",{class:"pub-header-tick-right navbar-end"},[
-                    // m('button', {class: "button is-white is-rounded",}, [
-                    //     m('span', {class: "icon is-medium"},[
-                    //         m('i', {class: "iconfont iconshezhi1 fas fa-2x", "aria-hidden": true })
-                    //     ]),
-                    // ]),
+                return m("div",{class:"pub-header-tick-right"},[
+                    m('button', {class: "button is-white is-rounded",}, [
+                        m('span', {class: "icon is-medium"},[
+                            m('i', {class: "iconfont iconshezhi1 fas fa-2x", "aria-hidden": true })
+                        ]),
+                    ]),
                 ])
             case 1:
                 return this.customRightTick()
@@ -271,8 +271,8 @@ let spotTick = {
                 return m('.dropdown.is-hoverable', {}, [
                     m('.dropdown-trigger', {}, [
                         m('button', {class: "button is-primary is-inverted h-auto",'aria-haspopup':true, "aria-controls": "dropdown-menu2"}, [
-                            m('span',{ class: "is-size-4"}, utils.getSymDisplayName(window.gMkt.AssetD, window.gMkt.CtxPlaying.Sym)),
-                            m('span', {class: "icon"},[
+                            m('span',{ class: ""}, utils.getSymDisplayName(window.gMkt.AssetD, window.gMkt.CtxPlaying.Sym)),
+                            m('span', {class: "icon "},[
                                 m('i', {class: "iconfont iconxiala iconfont-medium", "aria-hidden": true })
                             ]),
                         ]),
@@ -306,8 +306,9 @@ export default {
     },
     view: function(vnode) {
         
-        return m("div",{class:"pub-header-tick box navbar "},[
+        return m("div",{class:"pub-header-tick box is-flex"},[
             spotTick.getLeftTick(),
+            m('.spacer'),
             spotTick.getRightTick()
         ])
     },
