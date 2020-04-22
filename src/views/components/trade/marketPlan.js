@@ -4,11 +4,13 @@ import * as clacMgnNeed from '../../../futureCalc/calcMgnNeed.js'
 
 let obj = {
     form: {
-        Prz: '',
-        Num: '',
-        triggerPrz: '',
-        Lever: 0,
-        maxLever: 0,
+        Prz: '',        // 委托价格
+        Num: '',        // 委托数量
+        triggerPrz: '', // 触发价格
+        Lever: 0,       // 杠杠
+        maxLever: 0,    // 最大杠杆
+        stopP: '',      // 止盈价
+        stopL: ''       // 止损价
     },
     faceValue: '= 0.0000 USDT',
     wlt: {},
@@ -62,6 +64,13 @@ let obj = {
             that.initWlt()
         })
 
+        if(this.EV_WEB_LOGOUT_unbinder){
+            this.EV_WEB_LOGOUT_unbinder()
+        }
+        this.EV_WEB_LOGOUT_unbinder = window.gEVBUS.on(gWebAPI.EV_WEB_LOGOUT,arg=> {
+            that.wlt = {}
+        })
+
 
     },
     //删除全局广播
@@ -71,6 +80,9 @@ let obj = {
         }
         if (this.EV_TICK_UPD_unbinder) {
             this.EV_TICK_UPD_unbinder()
+        }
+        if(this.EV_WEB_LOGOUT_unbinder){
+            this.EV_WEB_LOGOUT_unbinder()
         }
     },
     initPos: function (param) {
@@ -112,20 +124,23 @@ let obj = {
     },
     updateSpotInfo: function(){
         this.form = {
-            Prz: '',
-            Num: '',
-            Lever: 0,
-            maxLever: 0,
+            Prz: '',        // 委托价格
+            Num: '',        // 委托数量
+            triggerPrz: '', // 触发价格
+            Lever: 0,       // 杠杠
+            maxLever: 0,    // 最大杠杆
+            stopP: '',      // 止盈价
+            stopL: ''       // 止损价
         }
     },
     submit: function(dir){
-        if(this.form.Prz === 0){
+        if(this.form.Prz === '0'){
             return $message({content: '下单价格不能为0', type: 'danger'})
         }else if(!this.form.Prz){
             return $message({content: '下单价格不能为空', type: 'danger'})
         }
 
-        if(this.form.Num === 0){
+        if(this.form.Num === '0'){
             return $message({content: '下单数量不能为0', type: 'danger'})
         }else if(!this.form.Num){
             return $message({content: '下单数量不能为空', type: 'danger'})
@@ -134,18 +149,6 @@ let obj = {
         let Sym = window.gMkt.CtxPlaying.Sym
         let AId = window.gTrd.RT["UserId"]+'01'
         let PId = window.gTrd.CtxPlaying.activePId
-        if(!PId){
-            return window.$message({content: '请先选择您要下单的仓位！', type: 'danger'})
-        }
-
-        let aWdrawable = Number(obj.wlt.aWdrawable || 0 )
-        if(aWdrawable == 0){
-            return window.$message({content: '可用资金不足！', type: 'danger'})
-        }else if(dir == 1 && aWdrawable < Number(this.MgnNeedForBuy)){
-            return window.$message({content: '可用资金不足！', type: 'danger'})
-        }else if(dir == -1 && aWdrawable < Number(this.MgnNeedForSell)){
-            return window.$message({content: '可用资金不足！', type: 'danger'})
-        }
 
         let p = {
             Sym: Sym,
@@ -164,6 +167,61 @@ let obj = {
             StopBy: 1
         }
 
+        let lastTick = window.gMkt.lastTick
+        let assetD = window.gMkt.AssetD
+
+        let prz = (lastTick[Sym] && lastTick[Sym].LastPrz) || (assetD[Sym] && assetD[Sym].PrzLatest) || 0
+        if (prz) {
+            if (p.StopPrz >= prz) {
+                p.OrdFlag = (p.OrdFlag | 8)
+            } else {
+                p.OrdFlag = (p.OrdFlag | 16)
+            }
+        } else {
+            if (dir == 1) {
+                p.OrdFlag = (p.OrdFlag | 8)
+            } else {
+                p.OrdFlag = (p.OrdFlag | 16)
+            }
+        }
+
+        // 根据配置判断处理
+        let tradeType = window.$config.future.tradeType
+        switch(tradeType){
+            case 0:
+            case 1:
+            case 2:
+                if(!PId){
+                    return window.$message({content: '请先选择您要调整的仓位！', type: 'danger'})
+                }
+                break;
+            case 3:
+                p.PId = 'new'
+                // 只开仓标志
+                p.OrdFlag = (p.OrdFlag | 4)
+
+                let stopP = Number(this.form.stopP), stopL = Number(this.form.stopL);
+                stopP > 0 ? p.StopP = stopP : ''
+                stopL > 0 ? p.StopL = stopL : ''
+                if (stopP > 0 || stopL > 0) {
+                    p.StopLPBy = 1
+                }
+                console.log(p)
+                break;
+            default:
+                
+        }
+
+
+        let aWdrawable = Number(obj.wlt.aWdrawable || 0 )
+        if(aWdrawable == 0){
+            return window.$message({content: '可用资金不足！', type: 'danger'})
+        }else if(dir == 1 && aWdrawable < Number(this.MgnNeedForBuy)){
+            return window.$message({content: '可用资金不足！', type: 'danger'})
+        }else if(dir == -1 && aWdrawable < Number(this.MgnNeedForSell)){
+            return window.$message({content: '可用资金不足！', type: 'danger'})
+        }
+
         window.gTrd.ReqTrdOrderNew(p, function(arg){
             console.log('ReqTrdOrderNew ==> ', arg)
         })
@@ -172,22 +230,49 @@ let obj = {
         let that = this
         let Sym = window.gMkt.CtxPlaying.Sym
         let PId = window.gTrd.CtxPlaying.activePId
-        if(!PId){
-            return window.$message({content: '请先选择您要调整的仓位！', type: 'danger'})
+
+        // 根据配置判断处理杠杠修改
+        let tradeType = window.$config.future.tradeType
+        switch(tradeType){
+            case 0:
+            case 1:
+            case 2:
+                if(!PId){
+                    return window.$message({content: '请先选择您要调整的仓位！', type: 'danger'})
+                }
+                window.$openLeverageMode({
+                    Sym: Sym,
+                    PId: PId, //仓位PId
+                    Lever: this.form.Lever, //杠杆
+                    MIRMy: 0, //自定义委托保证金率
+                    needReq: true, //是否需要向服务器发送修改杠杆请求
+                    cb: function(arg){
+                        console.log('change Lever callback', arg)
+                        that.form.Lever = arg.Lever
+                        that.form.MIRMy = arg.MIRMy
+                        that.setMgnNeed()
+                    }
+                })
+                break;
+            case 3:
+                window.$openLeverageMode({
+                    Sym: Sym,
+                    PId: PId, //仓位PId
+                    Lever: this.form.Lever, //杠杆
+                    MIRMy: 0, //自定义委托保证金率
+                    needReq: false, //是否需要向服务器发送修改杠杆请求
+                    cb: function(arg){
+                        console.log('change Lever callback', arg)
+                        that.form.Lever = arg.Lever
+                        that.form.MIRMy = arg.MIRMy
+                        that.setMgnNeed()
+                    }
+                })
+                break;
+            default:
+                
         }
-        window.$openLeverageMode({
-            Sym: Sym,
-            PId: PId, //仓位PId
-            Lever: this.form.Lever, //杠杆
-            MIRMy: 0, //自定义委托保证金率
-            needReq: true, //是否需要向服务器发送修改杠杆请求
-            cb: function(arg){
-                console.log('change Lever callback', arg)
-                that.form.Lever = arg.Lever
-                that.form.MIRMy = arg.MIRMy
-                that.setMgnNeed()
-            }
-        })
+        
     },
     setFaceV: function() {
         let Sym = window.gMkt.CtxPlaying.Sym
@@ -241,6 +326,26 @@ let obj = {
             this.form.triggerPrz = maxPrz
         }else {
             this.form.triggerPrz = e.target.value
+        }
+    },
+    onStopPInput: function(e){
+        let Sym = window.gMkt.CtxPlaying.Sym
+        let ass = window.gMkt.AssetD[Sym]
+        let maxPrz = Number(ass?ass.PrzMax:0)
+        if(Number(e.target.value) > maxPrz){
+            this.form.stopP = maxPrz
+        }else {
+            this.form.stopP = e.target.value
+        }
+    },
+    onStopLInput: function(e){
+        let Sym = window.gMkt.CtxPlaying.Sym
+        let ass = window.gMkt.AssetD[Sym]
+        let maxPrz = Number(ass?ass.PrzMax:0)
+        if(Number(e.target.value) > maxPrz){
+            this.form.stopL = maxPrz
+        }else {
+            this.form.stopL = e.target.value
         }
     },
     initWlt: function(arg){
@@ -297,19 +402,59 @@ let obj = {
         let newOrderForSell = {
             Sym: Sym,
             Prz: Prz,
-            Qty: QtyLong,
+            Qty: QtyShort,
             QtyF: 0,
-            Dir: 1,
+            Dir: -1,
             PId: PId, 
             Lvr: Lever,
             MIRMy: 0
-          }
+        }
         clacMgnNeed.calcFutureWltAndPosAndMI(pos, wallet, order, RSdata, assetD, lastTick, '1', newOrderForSell, 0, res => {
             console.log('sell 成本计算结果： ', res)
             that.MgnNeedForSell = Number(res || 0)
         })
         
     },
+    getStopPL: function(){
+        // 根据配置判断下单止盈止损是否显示
+        let tradeType = window.$config.future.tradeType
+        let show = false
+        switch(tradeType){
+            case 0:
+            case 1:
+            case 2:
+                show = false;
+                break;
+            case 3:
+                show = true
+                break;
+            default:
+                show = false
+        }
+        if(show){
+            return m('div', { class: 'pub-place-order-form-stop-pl field' }, [
+                m("label", { class: "pub-place-order-form-stop-pl-label label" }, [
+                    '止盈止损设置（选填）'
+                ]),
+                m("div", { class: "pub-place-order-form-stop-pl-input field has-addons" }, [
+                    
+                    m("div", { class: "pub-place-order-form-stop-pl-input-p control is-expanded" }, [
+                        m("input", { class: "input", type: 'number', placeholder: "止盈价", value: obj.form.stopP, oninput: function(e){
+                            obj.onStopPInput(e)
+                        }})
+                    ]),
+                    m("div", { class: "pub-place-order-form-stop-pl-input-center control" }, [
+                        '&'
+                    ]),
+                    m("div", { class: "pub-place-order-form-stop-pl-input-l control is-expanded" }, [
+                        m("input", { class: "input", type: 'number', placeholder: "止盈价", value: obj.form.stopL, oninput: function(e){
+                            obj.onStopLInput(e)
+                        }})
+                    ])
+                ])
+            ])
+        }
+    }
 }
 export default {
     oninit: function (vnode) {
@@ -322,7 +467,7 @@ export default {
     },
     view: function (vnode) {
 
-        return m("div", { class: "pub-place-order-form has-text-centered" }, [
+        return m("div", { class: "pub-place-order-form" }, [
             m("div", { class: "pub-place-order-form-lever-input field" }, [
                 m("div", { class: "control" }, [
                     m("input", {
@@ -347,6 +492,7 @@ export default {
                     ])
                 ])
             ]),
+            obj.getStopPL(),
             m("div", { class: "pub-place-order-form-trigger-prz-input field" }, [
                 m("div", { class: "control" }, [
                     m("input", { class: "input", type: 'number', placeholder: "请输入触发价格", value: obj.form.triggerPrz,oninput: function(e) {

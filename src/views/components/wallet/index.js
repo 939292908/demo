@@ -35,7 +35,12 @@ let obj = {
         this.EV_POSABDWLTCALCOVER_UPD_unbinder = window.gEVBUS.on(window.gTrd.EV_POSABDWLTCALCOVER_UPD,arg=> {
             that.initWlt()
         })
-        
+        if(this.EV_WEB_LOGOUT_unbinder){
+            this.EV_WEB_LOGOUT_unbinder()
+        }
+        this.EV_WEB_LOGOUT_unbinder = window.gEVBUS.on(gWebAPI.EV_WEB_LOGOUT,arg=> {
+            that.wlt = {}
+        })
 
         
     },
@@ -53,6 +58,9 @@ let obj = {
         if(this.EV_POSABDWLTCALCOVER_UPD_unbinder){
             this.EV_POSABDWLTCALCOVER_UPD_unbinder()
         }
+        if(this.EV_WEB_LOGOUT_unbinder){
+            this.EV_WEB_LOGOUT_unbinder()
+        }
     },
 
     initWlt: function(arg){
@@ -62,9 +70,11 @@ let obj = {
         if(assetD.TrdCls == 2 || assetD.TrdCls == 3){
             wallets = window.gTrd.Wlts['01']
         }
+        let isUpdate = false
         for(let i = 0;i < wallets.length; i++){
             let item = wallets[i]
             if(item.AId && item.Coin == assetD.SettleCoin){
+                isUpdate = true
                 this.wlt = item
             }
         }
@@ -154,7 +164,7 @@ export default {
                 ]),
                 m('div', {class: 'level'}, [
                     m('div', {class: 'level-left text--secondary'}, [
-                        '风险度'
+                        '资金使用率'
                     ]),
                     m('div', {class: 'level-right'}, [
                         obj.wlt.walletRate?(Number(obj.wlt.walletRate)*100).toFixed2(2)+'%': (0).toFixed2(2)+'%'

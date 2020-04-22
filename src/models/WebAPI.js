@@ -6,6 +6,7 @@ const DBG_TAG = "API"
 const DBG_STATELY = false
 
 const SV_ACCOUNT = "SV_ACCOUNT"
+const EV_OPENLOGINMODE = "EV_OPENLOGINMODE"
 
 var m = require("mithril")
 let Stately = require('stately.js');
@@ -19,6 +20,8 @@ class CAPI {
     EV_WEB_LOGIN = "EV_WEB_LOGIN"
 
     EV_WEB_LOGOUT = "EV_WEB_LOGOUT"
+
+    EV_OPENLOGINMODE = EV_OPENLOGINMODE
 
     stately = null
 
@@ -62,7 +65,7 @@ class CAPI {
             refBrokerId: "",
             refereeId: "",
             sex:0,
-            token: "aToken",
+            token: "",
             totalRbBtc: 0,
             totalRbEth: 0,
             totalRbTrd: 0,
@@ -105,10 +108,11 @@ class CAPI {
                         if (s.isLogin()) {
                             aObj.ReqUserInfo({},function (result) {
                                 stately.setMachineState("WORKING")
+                                
                             },function (err) {
                                 stately.setMachineState("PRELOGIN")
                             })
-                            aObj.ReqFavoriteSetting({})
+                            // aObj.ReqFavoriteSetting({})
                             return stately.WAITBASEINFO
                         }
                     }
@@ -144,7 +148,7 @@ class CAPI {
 
     isLogin() {
         let s = this;
-        return s.CTX.loginCheck.token && (s.CTX.loginCheck.token.length>0)
+        return s.CTX.account.token && (s.CTX.account.token.length>0)
     }
 
     SaveAccount() {
@@ -384,6 +388,10 @@ class CAPI {
                     aOnError(e)
                 }
             })
+    }
+
+    needLogin(){
+        gEVBUS.emit(EV_OPENLOGINMODE,{})
     }
 }
 

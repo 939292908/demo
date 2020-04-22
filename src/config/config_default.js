@@ -84,16 +84,28 @@ const config = {
         bottomList: {
             type: 0,
         },
+        //登录
         login: {
             type: 0
         },
+        //杠杠设置弹框
         leverageMode: {
             type: 0
         },
+        // 止盈止损弹框
         stopPLMode: {
             type: 0
         },
+        // 登录二次确认弹框
         validateMode:{
+            type: 0,
+        },
+        // 市价加仓弹框
+        marketAddMode: {
+            type: 0,
+        },
+        // 平仓
+        someCloseMode: {
             type: 0,
         }
     }

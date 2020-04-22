@@ -35,6 +35,28 @@ let obj = {
             case 3: 
                 return m(marketPlan)
         }
+    },
+    getSelectPos: function(){
+        // 根据配置判断仓位选择是否显示
+        let tradeType = window.$config.future.tradeType
+        let show = false
+        switch(tradeType){
+            case 0:
+                show = true;
+                break;
+            case 1:
+            case 2:
+            case 3:
+                show = false
+                break;
+            default:
+                show = false
+        }
+        if(show){
+            return m(selectPos)
+        }else{
+            return null
+        }
     }
 }
 export default {
@@ -46,8 +68,8 @@ export default {
     },
     view: function(vnode) {
         
-        return m("div",{class:"pub-place-order box has-text-centered"},[
-            m(selectPos),
+        return m("div",{class:"pub-place-order box"},[
+            obj.getSelectPos(),
             m("div",{class:"pub-place-order-tabs tabs is-small"},[
                 m("ul",[
                     obj.getTabsList()

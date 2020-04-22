@@ -885,6 +885,7 @@ class Mkt {
             
             gEVBUS.EmitDeDuplicate(EV_ASSETD_UPD,50,EV_ASSETD_UPD, {Ev: EV_ASSETD_UPD})
 
+            s.recoverMkt()
 
         });
         s.WSCall_Mkt("GetAssetEx",aArg,function(aMkt, aRaw) {
@@ -899,7 +900,7 @@ class Mkt {
             }
             gEVBUS.EmitDeDuplicate(EV_ASSETD_UPD,50,EV_ASSETD_UPD, {Ev: EV_ASSETD_UPD})
         })
-        s.recoverMkt()
+        
     }
 
     ReqSub(aTpcArray) {
@@ -2215,8 +2216,10 @@ class Mkt {
 
     recoverMkt(){
         let s = this
-        if(s.CtxPlaying.subList.length > 0){
-            s.ReqSub(s.CtxPlaying.subList)
+        let subList = s.CtxPlaying.subList
+        if(subList.length > 0){
+            s.CtxPlaying.subList = []
+            s.ReqSub(subList)
         }
     }
 

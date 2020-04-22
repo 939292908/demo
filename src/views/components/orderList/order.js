@@ -31,6 +31,9 @@ let obj = {
             title: '成交数量',
             class: ""
         }, {
+            title: '止盈/止损',
+            class: ""
+        }, {
             title: '触发条件',
             class: ""
         }, {
@@ -127,7 +130,7 @@ let obj = {
                 if(obj.StopPrz){
                     obj.cond = obj.StopBy==2?'指数价':obj.StopBy==1?'最新价':'标记价'
                     obj.cond += (obj.OrdFlag&8)?'≥':'≤'
-                    obj.cond += obj.StopPrz.toFixed2(VolMinValSize)
+                    obj.cond += obj.StopPrz.toFixed2(PrzMinIncSize)
                 }else{
                     obj.cond = '--'
                 }
@@ -189,6 +192,9 @@ let obj = {
                 ]),
                 m("td", { class: " "}, [
                     item.QtyF
+                ]),
+                m("td",{class:""},[
+                    (item.StopP || '--')+'/'+(item.StopL || '--')
                 ]),
                 m("td", { class: "" }, [
                     item.cond

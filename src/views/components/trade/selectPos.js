@@ -28,7 +28,14 @@ let obj = {
       this.EV_CHANGESYM_UPD_unbinder()
     }
     this.EV_CHANGESYM_UPD_unbinder = window.gEVBUS.on(gMkt.EV_CHANGESYM_UPD,arg=> {
-        that.updateSpotInfo(arg)
+      that.updateSpotInfo(arg)
+    })
+
+    if(this.EV_WEB_LOGOUT_unbinder){
+      this.EV_WEB_LOGOUT_unbinder()
+    }
+    this.EV_WEB_LOGOUT_unbinder = window.gEVBUS.on(gWebAPI.EV_WEB_LOGOUT,arg=> {
+      that.updateSpotInfo(arg)
     })
     
     
@@ -214,6 +221,13 @@ let obj = {
   },
   closeMode: function(){
     this.openSelect = false
+  },
+  openMode: function(){
+    if(window.gWebAPI.isLogin()){
+      this.openSelect = !this.openSelect
+    }else{
+      window.gWebAPI.needLogin()
+    }
   }
 }
 export default {
@@ -227,7 +241,8 @@ export default {
     view: function(vnode) {
         return m("div",{class:"pub-select-pos"},[
           m('button', {class: "pub-select-pos-open-btn button is-primary is-inverted is-small",'aria-haspopup':true, "aria-controls": "dropdown-menu2", onclick: function(){
-            obj.openSelect = !obj.openSelect
+            // obj.openSelect = !obj.openSelect
+            obj.openMode()
           }}, [
               obj.getPosListItem(obj.posList_obj[obj.posActive], true)
           ]),

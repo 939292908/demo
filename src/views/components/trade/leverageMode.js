@@ -74,6 +74,7 @@ let obj = {
         })
       }
     }else{
+      that.open = false
       this.leverageCallback && this.leverageCallback({
         Sym: this.Sym,
         PId: this.PId,
