@@ -275,7 +275,7 @@ let obj = {
           window.$openMarketAddMode({pos:pos, cb: function(arg){}})
           break;
         case 'someClose':
-          console.log('部分平仓')
+          window.$openSomeCloseMode({pos:pos, cb: function(arg){}})
           break;
         default:
 

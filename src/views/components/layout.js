@@ -12,6 +12,8 @@ import spotInfo from './spotInfo/spotInfo'
 import leverageMode from './trade/leverageMode'
 //市价加仓
 import marketAddMode from './trade/marketAddMode'
+//市价加仓
+import someCloseMode from './trade/someCloseMode'
 //设置仓位止盈止损
 import stopPLMode from './trade/stopPLMode'
 //二次验证google和sms
@@ -153,14 +155,28 @@ let obj = {
       case 0:
         return m(marketAddMode)
       case 1:
-        return this.custommarketAddMode()
+        return this.customMarketAddMode()
       default:
         return null;
     }
   },
-  custommarketAddMode: function(){
+  customMarketAddMode: function(){
 
-  }
+  },
+  someCloseMode: function(){
+    let type = window.$config.views.someCloseMode.type
+    switch(type){
+      case 0:
+        return m(someCloseMode)
+      case 1:
+        return this.customSomeCloseMode()
+      default:
+        return null;
+    }
+  },
+  customSomeCloseMode: function(){
+
+  },
 }
 
 
@@ -203,7 +219,8 @@ export default {
           obj.getStopPLMode(),
           obj.getLeverageMode(),
           obj.getValidateMode(),
-          obj.marketAddMode()
+          obj.marketAddMode(),
+          obj.someCloseMode()
         ])
     }
 }

@@ -100,6 +100,10 @@ const config = {
         // 市价加仓弹框
         marketAddMode: {
             type: 0,
+        },
+        // 平仓
+        someCloseMode: {
+            type: 0,
         }
     }
 }

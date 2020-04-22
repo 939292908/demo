@@ -264,6 +264,6 @@ export default {
   },
   onremove: function (vnode) {
     obj.rmEVBUS()
-    window.$openStopPLMode = null
+    window.$openMarketAddMode = null
   },
 }
