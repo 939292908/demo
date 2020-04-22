@@ -79,7 +79,6 @@ let header = {
             window.$message({content: '退出登录失败！', type: 'danger'})
           }
         }, function(err){
-            that.loginLoading = false
             window.$message({content: '操作超时', type: 'danger'})
             console.log('ReqSignOut => ', err)
         })
