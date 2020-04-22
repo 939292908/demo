@@ -52,7 +52,7 @@ let obj = {
     }
     if(this.needReq){
       if(Number(this.Lever) != Number(this.oldParam.Lever) || Number(this.MIRMy) != Number(this.oldParam.MIRMy)){
-        let AId = window.gWebAPI.CTX.account.uid+'01'
+        let AId = window.gTrd.RT["UserId"]+'01'
         window.gTrd.ReqTrdPosLeverage({
           "AId":AId,
           "Sym": param.Sym,

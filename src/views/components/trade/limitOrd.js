@@ -133,7 +133,7 @@ let obj = {
         }
 
         let Sym = window.gMkt.CtxPlaying.Sym
-        let AId = window.gWebAPI.CTX.account.uid+'01'
+        let AId = window.gTrd.RT["UserId"]+'01'
         let PId = window.gTrd.CtxPlaying.activePId
         
 

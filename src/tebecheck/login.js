@@ -17,17 +17,19 @@ function getToken(){
     /**
      * 可在此函数获取需要登录的账号的用户名以及token，获取完成调用loginTrd，示例如下
      * loginTrd({
-            UserName: '324352@qq.com',
-            Token: 'LgAAjGeYDMCYRtliJsQzGKGxDM6ZzM64g+FuNmNnMgbL',
+            UserName: '324352@qq.com', 
+            uid: '11130460',
+            Token: 'PgAAGTuJgYFMkdkTJjGZwBpswNm5NtlcJzTJjrJnZAaq',
         })
      */
-    
+
     
 }
 
 
 function loginTrd({
     UserName,
+    uid,
     Token
 }){
     if(Token && UserName){
@@ -35,6 +37,7 @@ function loginTrd({
         s.CTX.account = {
             accountName: UserName,
             AuthType: 2,
+            uid: uid,
             token: Token
         }
         gEVBUS.emit(gWebAPI.EV_WEB_LOGIN,{d:s.CTX})
