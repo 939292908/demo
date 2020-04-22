@@ -129,7 +129,26 @@ let obj = {
             window.$message({content: '操作超时！', type: 'danger'})
             console.log('ReqUserInfo => ', error)
         })
+    },
+    //初始化全局广播
+  initEVBUS: function(){
+    let that = this
+    
+    if(this.EV_OPENLOGINMODE_unbinder){
+        this.EV_OPENLOGINMODE_unbinder()
     }
+    this.EV_OPENLOGINMODE_unbinder = window.gEVBUS.on(gWebAPI.EV_OPENLOGINMODE,arg=> {
+        that.open = true
+    })
+    
+    
+  },
+  //删除全局广播
+  rmEVBUS: function(){
+      if(this.EV_OPENLOGINMODE_unbinder){
+          this.EV_OPENLOGINMODE_unbinder()
+      }
+  },
 }
 
 export default {
@@ -137,6 +156,7 @@ export default {
         
     },
     oncreate: function(vnode){
+        obj.initEVBUS()
         obj.initGeeTest()
     },
     view: function(vnode) {
@@ -205,6 +225,7 @@ export default {
         
     },
     onremove: function(vnode) {
+        obj.rmEVBUS()
         obj.gt?obj.gt.destroy():''
     },
 }
