@@ -155,33 +155,38 @@ export default {
         
     },
     view: function(vnode) {
-        return m("div",{class: "pub-layout"}, [
-          m("div",{class: "pub-layout-header-tick"}, [
-            m(headerTick)
-          ]),
-          m("div",{class: "pub-layout-content is-clearfix "}, [
-            m("div",{class: "pub-layout-content-left is-pulled-left is-clearfix"}, [
-              m("div",{class: "pub-layout-content-left-kline is-pulled-left "}, [
-                obj.getKline(),
-              ]),
-              m("div",{class: "pub-layout-content-left-dish is-pulled-left "}, [
-                obj.getDishAndNewTrd()
-              ]),
-              m("div",{class: "pub-layout-content-left-list is-pulled-left "}, [
-                obj.getBottomList()
-              ]),
+        return m("div",{class: ""}, [
+          m("div",{class: "pub-layout is-hidden-touch"}, [
+            m("div",{class: "pub-layout-header-tick"}, [
+              m(headerTick)
             ]),
-            m("div",{class: "pub-layout-content-right is-pulled-right"}, [
-              m("div",{class: "pub-layout-content-right-place-order"}, [
-                obj.getPlaceOrd()
+            m("div",{class: "pub-layout-content is-clearfix "}, [
+              m("div",{class: "pub-layout-content-left is-pulled-left is-clearfix"}, [
+                m("div",{class: "pub-layout-content-left-kline is-pulled-left"}, [
+                  obj.getKline(),
+                ]),
+                m("div",{class: "pub-layout-content-left-dish is-pulled-left "}, [
+                  obj.getDishAndNewTrd()
+                ]),
+                m("div",{class: "pub-layout-content-left-list is-pulled-left "}, [
+                  obj.getBottomList()
+                ]),
               ]),
-              m("div",{class: "pub-layout-content-right-wallet"}, [
-                obj.getWallet()
-              ]),
-              m("div",{class: "pub-layout-content-right-spot-info"}, [
-                obj.getSpotInfo()
+              m("div",{class: "pub-layout-content-right is-pulled-right"}, [
+                m("div",{class: "pub-layout-content-right-place-order"}, [
+                  obj.getPlaceOrd()
+                ]),
+                m("div",{class: "pub-layout-content-right-wallet"}, [
+                  obj.getWallet()
+                ]),
+                m("div",{class: "pub-layout-content-right-spot-info"}, [
+                  obj.getSpotInfo()
+                ])
               ])
-            ])
+            ]),
+          ]),
+          m("div",{class: "pub-layout is-hidden-desktop"}, [
+            m(headerTick)
           ]),
           obj.getStopPLMode(),
           obj.getLeverageMode(),

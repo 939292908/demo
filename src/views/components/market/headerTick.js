@@ -179,15 +179,18 @@ let spotTick = {
         let type = window.$config.views.headerTick.left.type
         switch(type){
             case 0: 
-                return m("div",{class:"pub-header-tick-left level-left"},[
+                return m("div",{class:"pub-header-tick-left navbar-star"},[
                     spotTick.getSymSelect(),
-                    m('span', {class:"pub-header-tick-left-pre-prz"+utils.getColorStr(spotTick.getLastTick().color, 'font')},[
+                    m('span', {class:"pub-header-tick-left-pre-prz is-hidden-touch"+utils.getColorStr(spotTick.getLastTick().color, 'font')},[
                         spotTick.getLastTick().LastPrz || '--'
                     ]),
-                    m('button', {class:"pub-header-tick-left-pre-button button"+utils.getColorStr(spotTick.getLastTick().rfpreColor)},[
+                    // m('button', {class:"pub-header-tick-left-pre-button button"+utils.getColorStr(spotTick.getLastTick().rfpreColor)},[
+                    //     spotTick.getLastTick().rfpre || '--'
+                    // ]),
+                    m('span', {class:"pub-header-tick-left-pre-button tag is-hidden-touch"+utils.getColorStr(spotTick.getLastTick().rfpreColor)},[
                         spotTick.getLastTick().rfpre || '--'
                     ]),
-                    m('table', {class:""}, [
+                    m('table', {class:"is-hidden-touch"}, [
                         m('tr', {}, [
                             m('td', {class:""}, [
                                 m('p', {class:""}, [
@@ -245,7 +248,7 @@ let spotTick = {
         let type = window.$config.views.headerTick.right.type
         switch(type){
             case 0: 
-                return m("div",{class:"pub-header-tick-right level-right"},[
+                return m("div",{class:"pub-header-tick-right navbar-end"},[
                     // m('button', {class: "button is-white is-rounded",}, [
                     //     m('span', {class: "icon is-medium"},[
                     //         m('i', {class: "iconfont iconshezhi1 fas fa-2x", "aria-hidden": true })
@@ -303,7 +306,7 @@ export default {
     },
     view: function(vnode) {
         
-        return m("div",{class:"pub-header-tick box level "},[
+        return m("div",{class:"pub-header-tick box navbar "},[
             spotTick.getLeftTick(),
             spotTick.getRightTick()
         ])

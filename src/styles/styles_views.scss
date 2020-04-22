@@ -24,11 +24,13 @@ body {
     padding: 0;
     margin: 0;
 }
-
-body > section {
-    min-width: 1280px;
-    min-height: 100%;
+@media screen and (min-width: 1023px){
+    body > section {
+        min-width: 1280px;
+        min-height: 100%;
+    }
 }
+
 
 p {
     margin: 0;
@@ -147,6 +149,7 @@ button {
 //头部行情模块样式 start
 .pub-header-tick {
     @extend %side-pa;
+    z-index: 1;
 
     .pub-header-tick-left {
 

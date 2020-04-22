@@ -3,6 +3,7 @@ var m = require("mithril")
 let header = {
   islogin: false,
   userName: '',
+  headerMenu: false,
   initEVBUS: function(){
     let that = this
     
@@ -102,17 +103,19 @@ let header = {
   getLeftCon: function(){
     let type = window.$config.views.header.left.type
     if(type == 0){
-      return m("div",{id: "navbarBasicExample",class:"navbar-menu"},[
-        m('a', {class:"navbar-item"+(window.gMkt.CtxPlaying.pageTradeStatus == 1 ?' has-text-primary':''), onclick:function(){
-          header.setTradeStatus(1)
-        }}, [
-          '合约交易',
-        ]),
-        // m('a', {class:"navbar-item"+(window.gMkt.CtxPlaying.pageTradeStatus == 2 ?' has-text-primary':''), onclick:function(){
-        //   header.setTradeStatus(2)
-        // }}, [
-        //   '现货交易',
-        // ]),
+      return m("div",{class:"navbar-menu"},[
+        m("div",{class:"navbar-start"},[
+          m('a', {class:"navbar-item"+(window.gMkt.CtxPlaying.pageTradeStatus == 1 ?' has-text-primary':''), onclick:function(){
+            header.setTradeStatus(1)
+          }}, [
+            '合约交易',
+          ]),
+          // m('a', {class:"navbar-item"+(window.gMkt.CtxPlaying.pageTradeStatus == 2 ?' has-text-primary':''), onclick:function(){
+          //   header.setTradeStatus(2)
+          // }}, [
+          //   '现货交易',
+          // ]),
+        ])
       ])
     }else{
       return this.customLeft()
@@ -124,8 +127,10 @@ let header = {
   getRightCon: function(){
     let type = window.$config.views.header.right.type
     if(type == 0){
-      return m("div",{class:"navbar-end"},[
-        header.getLoginDom()
+      return m("div",{class:"navbar-menu"},[
+        m("div",{class:"navbar-end"},[
+          header.getLoginDom()
+        ])
       ])
     }else{
       return this.customRight()
@@ -141,7 +146,9 @@ let header = {
         m('a', {class:"navbar-item"}, [
           m('img', {src:headerLogo, height: "28"}),
         ]),
-        m('a', {role:"button", class:"navbar-burger burger","aria-label":"menu", "aria-expanded":"false", "data-target":"navbarBasicExample"}, [
+        m('a', {role:"button", class:"navbar-burger burger","aria-label":"menu", "aria-expanded":"false", "data-target":"navbarBasicExample", onclick: function(){
+          header.headerMenu = !header.headerMenu
+        }}, [
           m('span', {"aria-hidden":"true"}, []),
           m('span', {"aria-hidden":"true"}, []),
           m('span', {"aria-hidden":"true"}, []),
@@ -164,7 +171,22 @@ let header = {
   },
   customLogin: function(){
     
-  }
+  },
+  getMenuCon: function(){
+    let type = window.$config.views.login.type
+    if(type == 0){
+      return m("div",{class:"navbar-menu is-hidden-desktop"+(header.headerMenu?' is-active':' is-hidden')},[
+        m("div",{class:"navbar-end"},[
+          header.getLoginDom()
+        ])
+      ])
+    }else{
+      return this.customMenu()
+    }
+  },
+  customMenu: function(){
+    
+  },
 }
 import headerLogo from '../../../tplibs/img/header-logo.png'
 import login from './userCenter/login'
@@ -177,10 +199,11 @@ export default {
     },
     view: function(vnode) {
         
-        return m("nav",{class:"pub-header navbar is-fixed-top", role:"navigation", "aria-label":"main navigation"},[
+        return m("nav",{class:"pub-header navbar is-fixed-top is-transparent", role:"navigation", "aria-label":"main navigation"},[
           header.getLogoCon(),
           header.getLeftCon(),
-          header.getRightCon()
+          header.getRightCon(),
+          header.getMenuCon()
         ])
     },
     onremove: function(vnode) {

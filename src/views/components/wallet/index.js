@@ -68,6 +68,9 @@ let obj = {
                 this.wlt = item
             }
         }
+        if(!isUpdate){
+            this.wlt = {}
+        }
         m.redraw()
     }
 }
