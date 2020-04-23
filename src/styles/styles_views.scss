@@ -49,6 +49,7 @@ button {
     body > section {
         min-width: 1280px;
         min-height: 100%;
+        margin-top: 3.25rem;
     }
 }
 @media screen and (max-width: 1023px){
@@ -122,6 +123,7 @@ button {
         
         .pub-layout-content-left {
             width: calc(100% - 350px);
+            min-width: 900px;
 
             .pub-layout-content-left-kline {
                 @extend %pa-2;
@@ -163,6 +165,33 @@ button {
 }
 
 //pc端主体结构样式 end
+
+//移动端主体结构样式 start
+
+.pub-layout-m {
+    @extend %py-2;
+
+    .pub-layout-m-header-tick {
+        @extend %mb-2;
+    }
+
+    .pub-layout-m-content {
+        @extend %mb-2;
+        
+        .pub-layout-m-content-left {
+            @extend %pr-2;
+            width: 50%;
+        
+        }
+        .pub-layout-m-content-right {
+            @extend %pl-2;
+            width: 50%;
+        
+        }
+    }
+}
+
+//移动端主体结构样式 end
 
 //头部行情模块样式 start
 .pub-header-tick {
@@ -252,19 +281,12 @@ button {
         position: relative;
 
         div {
-            position: relative;
             z-index: 1;
             width: 33.33%;
         }
 
-        div:first-child p{
-            width: 100%;
-            text-align: left;
-        }
-
-        div:nth-child(3) p{
-            width: 100%;
-            text-align: right;
+        div:nth-child(2) {
+            text-align: center;
         }
 
         .pub-dish-list-item-mode {
@@ -293,6 +315,30 @@ button {
         }
     }
 }
+
+.pub-layout-m {
+    .pub-dish {
+        .pub-dish-list-item {
+            @extend %pl-2;
+            @extend %pr-3;
+            div:not(.pub-dish-list-item-mode) {
+                width: 50%;
+            }
+            div:nth-child(2) {
+                text-align: right;
+            }
+        }
+        .pub-dish-tick {
+            @extend %pl-2;
+            @extend %pr-3;
+    
+            div {
+                @extend %ma-0;
+            }
+        }
+    }
+}
+
 
 //盘口相关样式 end
 
@@ -376,6 +422,58 @@ button {
         
     }
 }
+
+.pub-place-order-m {
+    @extend %pl-3;
+    @extend %pr-2;
+
+    .pub-place-order-tabs {
+        @extend %mb-3;
+    }
+
+    .pub-place-order-form {
+
+        .pub-place-order-form-lever-input {
+            input {
+                cursor: pointer;
+            }
+        }
+
+        .pub-place-order-form-num-input {
+
+
+            .pub-place-order-form-num-input-face-value {
+                @extend %font-2;
+            }
+        }
+
+        .pub-place-order-form-stop-pl {
+
+            .pub-place-order-form-stop-pl-label {
+                @extend %font-2;
+            }
+
+            .pub-place-order-form-stop-pl-input {
+                .pub-place-order-form-stop-pl-input-center {
+                    width: 30px;
+                    line-height: 40px;
+                    text-align: center;
+                }
+            }
+
+        }
+        
+
+        .pub-place-order-form-need-mgn {
+            @extend %font-2;
+        }
+
+        .pub-place-order-form-wallet {
+            @extend %font-2;
+        }
+        
+    }
+}
 //下单面板相关 end
 
 // 仓位选择 start
@@ -407,6 +505,11 @@ button {
                 }
             }
         }
+    }
+}
+.pub-layout-m {
+    .pub-select-pos {
+        @extend %px-3;
     }
 }
 // 仓位选择 end

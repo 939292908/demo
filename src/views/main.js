@@ -3,6 +3,7 @@ var m = require("mithril")
 import footer from './components/footer'
 import header from './components/header'
 import layout from './components/layout'
+import layout_m from './components/layout_m'
 
 import * as futureCalc from '../futureCalc/calcFuture'
 
@@ -165,7 +166,7 @@ let main = {
         let type = window.$config.views.header.type
         switch (type) {
             case 0:
-                return m(header)
+                return (!window.isMobile?m(header):'')
             case 1:
                 return this.customHeader()
             default:
@@ -177,9 +178,15 @@ let main = {
     },
     getLayout: function () {
         let type = window.$config.views.layout.type
+        let mobile = window.$config.mobile
         switch (type) {
             case 0:
-                return m(layout)
+                if(window.isMobile && mobile){
+                    return m(layout_m)
+                }else{
+                    return m(layout)
+                }
+                
             case 1:
                 return this.customLayout()
             default:

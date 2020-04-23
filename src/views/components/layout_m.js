@@ -1,13 +1,9 @@
 var m = require("mithril")
 
 
-import dishAndNewTrade from './market/dishAndNewTrade'
-import kline from './market/kline'
 import headerTick from './market/headerTick'
 import orderList from './orderList/index'
-import placeOrder from './trade'
-import wallet from './wallet/index'
-import spotInfo from './spotInfo/spotInfo'
+import placeOrder from './trade/index_m'
 //杠杆调整
 import leverageMode from './trade/leverageMode'
 //市价加仓
@@ -18,6 +14,9 @@ import someCloseMode from './trade/someCloseMode'
 import stopPLMode from './trade/stopPLMode'
 //二次验证google和sms
 import validateMode from './userCenter/validateMode'
+
+import dish from './market/dish'
+import selectPos from './trade/selectPos'
 
 
 let obj = {
@@ -176,6 +175,28 @@ let obj = {
   },
   customSomeCloseMode: function(){
 
+  },
+  getSelectPos: function(){
+    // 根据配置判断仓位选择是否显示
+    let tradeType = window.$config.future.tradeType
+    let show = false
+    switch(tradeType){
+        case 0:
+            show = true;
+            break;
+        case 1:
+        case 2:
+        case 3:
+            show = false
+            break;
+        default:
+            show = false
+    }
+    if(show){
+        return m(selectPos)
+    }else{
+        return null
+    }
   }
 }
 
@@ -189,34 +210,17 @@ export default {
     },
     view: function(vnode) {
         return m("div",{class: ""}, [
-          m("div",{class: "pub-layout"}, [
-            m("div",{class: "pub-layout-header-tick"}, [
-              m(headerTick)
-            ]),
-            m("div",{class: "pub-layout-content is-clearfix "}, [
-              m("div",{class: "pub-layout-content-left is-pulled-left is-clearfix"}, [
-                m("div",{class: "pub-layout-content-left-kline is-pulled-left"}, [
-                  obj.getKline(),
-                ]),
-                m("div",{class: "pub-layout-content-left-dish is-pulled-left "}, [
-                  obj.getDishAndNewTrd()
-                ]),
-                m("div",{class: "pub-layout-content-left-list is-pulled-left"}, [
-                  obj.getBottomList()
-                ]),
+          m("div",{class: "pub-layout-m"}, [
+            obj.getSelectPos(),
+            m('div', {class:"pub-layout-m-content is-flex"},[
+              m('div', {class:"pub-layout-m-content-left"},[
+                obj.getPlaceOrd()
               ]),
-              m("div",{class: "pub-layout-content-right is-pulled-right"}, [
-                m("div",{class: "pub-layout-content-right-place-order"}, [
-                  obj.getPlaceOrd()
-                ]),
-                m("div",{class: "pub-layout-content-right-wallet"}, [
-                  obj.getWallet()
-                ]),
-                m("div",{class: "pub-layout-content-right-spot-info"}, [
-                  obj.getSpotInfo()
-                ])
+              m('.spacer'),
+              m('div', {class:"pub-layout-m-content-right"},[
+                m(dish)
               ])
-            ]),
+            ])
           ]),
           obj.getStopPLMode(),
           obj.getLeverageMode(),

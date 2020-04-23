@@ -219,18 +219,18 @@ let dish = {
         let order20ForSell = this.order20ForSell
         if(!order20ForSell) return ''
         return order20ForSell.Asks.map(function(item,i){
-            return m("div",{class:"pub-dish-list-item level"},[
-                m('div', {class: "level-item w30"},[
+            return m("div",{class:"pub-dish-list-item is-flex"},[
+                m('div', {class: ""},[
                     m('p', {class: "w100 has-text-left has-text-danger"},[
                         item[0]
                     ]),
                 ]),
-                m('div', {class: "level-item w30"},[
-                    m('p', {class: "w100 has-text-left"},[
+                m('div', {class: ""},[
+                    m('p', {class: "w100"},[
                         item[1]
                     ]),
                 ]),
-                m('div', {class: "level-item w30"},[
+                m('div', {class: "is-hidden-touch"},[
                     m('p', {class: "w100 has-text-right"},[
                         item[2]
                     ]),
@@ -244,18 +244,18 @@ let dish = {
         let order20ForBuy = this.order20ForBuy
         if(!order20ForBuy) return ''
         return order20ForBuy.Bids.map(function(item,i){
-            return m("div",{class:"pub-dish-list-item level"},[
-                m('div', {class: "level-item w30"},[
+            return m("div",{class:"pub-dish-list-item is-flex"},[
+                m('div', {class: ""},[
                     m('p', {class: "w100 has-text-left has-text-success"},[
                         item[0]
                     ]),
                 ]),
-                m('div', {class: "level-item w30"},[
-                    m('p', {class: "w100 has-text-left"},[
+                m('div', {class: ""},[
+                    m('p', {class: "w100"},[
                         item[1]
                     ]),
                 ]),
-                m('div', {class: "level-item w30"},[
+                m('div', {class: "is-hidden-touch"},[
                     m('p', {class: "w100 has-text-right"},[
                         item[2]
                     ]),
@@ -284,25 +284,27 @@ export default {
         return m("div",{class:"pub-dish"},[
             dish.getOrder20ForSellList(),
             m("div",{class:"pub-dish-tick"},[
-                m("div",{class:"level "},[
-                    m("div",{class:"level-left"},[
+                m("div",{class:"is-flex"},[
+                    m("div",{class:""},[
                         m('span', {class:"has-text-weight-semibold is-size-4 "+utils.getColorStr(dish.getLastTick().color, 'font')},[
                             dish.getLastTick().LastPrz || '--'
                         ]),
                     ]),
-                    m("div",{class:"level-right"},[
+                    m('.spacer'),
+                    m("div",{class:""},[
                         m('span', {class:"has-text-weight-semibold is-size-5 "+utils.getColorStr(dish.getLastTick().rfpreColor, 'font')},[
                             dish.getLastTick().rfpre || '--'
                         ]),
                     ]),
                 ]),
-                m("div",{class:"level "},[
-                    m("div",{class:"level-left"},[
+                m("div",{class:"is-flex "},[
+                    m("div",{class:""},[
                         m('span', {class:" is-size-7 "},[
                             '指数：'+(dish.getLastTick().indexPrz || '--')
                         ]),
                     ]),
-                    m("div",{class:"level-right"},[
+                    m('.spacer'),
+                    m("div",{class:""},[
                         m('span', {class:" is-size-7 "},[
                             '标记：'+(dish.getLastTick().SettPrz || '--')
                         ]),

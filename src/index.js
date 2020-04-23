@@ -67,7 +67,7 @@ window.$message = function({title = '提示', content = '', type = 'dark'}){
 //////////////////////////////////////////////////////////////////////
 
 // 判断是否是移动端
-window.isModile = utils.isMobile()
+window.isMobile = utils.isMobile()
 
 
 //路由
