@@ -7,8 +7,7 @@ if (true) {
     m.route.prefix='#!'
 }
 //////////////////////////////////////////////////////////////////////
-import EVBUS  from './libs/evbus'
-window.gEVBUS = new EVBUS();
+require('./models/initEVBUS')
 
 import utils from './utils/utils'
 window.utils = utils
