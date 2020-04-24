@@ -312,6 +312,7 @@ button {
             height: 100%;
             width: 0;
             position: absolute;
+            top: 0;
             right: 0;
             z-index: 0;
             opacity: .2;
@@ -448,6 +449,21 @@ button {
 
     .pub-place-order-tabs {
         @extend %mb-3;
+    }
+    
+    .pub-place-order-select {
+        width: 100%;
+        .dropdown-trigger {
+            width: 100%;
+            button {
+                @extend %pa-0;
+                div {
+                    text-align: left;
+                    width: 100%;
+                }
+            }
+        }
+        
     }
 
     .pub-place-order-form {
