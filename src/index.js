@@ -68,6 +68,10 @@ window.$message = function({title = '提示', content = '', type = 'dark'}){
 // 判断是否是移动端
 window.isMobile = utils.isMobile()
 
+window.onresize = function(arg){
+    window.isMobile = utils.isMobile()
+}
+
 
 //路由
 require('./route');
