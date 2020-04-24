@@ -107,7 +107,7 @@ export default {
                     obj.getTabsList()
                 ])
             ]),
-            m('div', {class: "dropdown pub-place-order-select is-hidden-disktop" + (obj.tabsListOpen?' is-active':'')}, [
+            m('div', {class: "dropdown pub-place-order-select is-hidden-desktop" + (obj.tabsListOpen?' is-active':'')}, [
                 m('.dropdown-trigger', {}, [
                     m('button', {class: "button is-white is-fullwidth",'aria-haspopup':true, "aria-controls": "dropdown-menu2", onclick: function(e){
                         obj.tabsListOpen = !obj.tabsListOpen
