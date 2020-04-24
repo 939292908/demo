@@ -18,29 +18,12 @@ let spotTick = {
     //初始化全局广播
     initEVBUS: function(){
         let that = this
-        
-        //assetD合约详情全局广播
-        if(this.EV_ASSETD_UPD_unbinder){
-            this.EV_ASSETD_UPD_unbinder()
-        }
-        this.EV_ASSETD_UPD_unbinder = window.gEVBUS.on(gMkt.EV_ASSETD_UPD,arg=> {
-            that.initSymList()
-        })
-
-        //页面交易类型全局广播
-        if(this.EV_PAGETRADESTATUS_UPD_unbinder){
-            this.EV_PAGETRADESTATUS_UPD_unbinder()
-        }
-        this.EV_PAGETRADESTATUS_UPD_unbinder = window.gEVBUS.on(gMkt.EV_PAGETRADESTATUS_UPD,arg=> {
-            that.initSymList()
-        })
-
         //tick行情全局广播
         if(this.EV_TICK_UPD_unbinder){
             this.EV_TICK_UPD_unbinder()
         }
         this.EV_TICK_UPD_unbinder = window.gEVBUS.on(gMkt.EV_TICK_UPD,arg=> {
-            this.onTick(arg)
+            that.onTick(arg)
         })
         
         //指数行情全局广播
@@ -48,7 +31,16 @@ let spotTick = {
             this.EV_INDEX_UPD_unbinder()
         }
         this.EV_INDEX_UPD_unbinder = window.gEVBUS.on(gMkt.EV_INDEX_UPD,arg=> {
-            this.onTick(arg)
+            that.onTick(arg)
+        })
+
+        //当前选中合约变化全局广播
+        if(this.EV_CHANGESYM_UPD_unbinder){
+            this.EV_CHANGESYM_UPD_unbinder()
+        }
+        this.EV_CHANGESYM_UPD_unbinder = window.gEVBUS.on(gMkt.EV_CHANGESYM_UPD,arg=> {
+            that.unSubTick()
+            that.subTick()
         })
     },
     rmEVBUS: function(){
@@ -64,36 +56,9 @@ let spotTick = {
         if(this.EV_INDEX_UPD_unbinder){
             this.EV_INDEX_UPD_unbinder()
         }
-    },
-    //初始化合约以及现货列表
-    initSymList: function(){
-        let displaySym = window.gMkt.displaySym
-        let assetD = window.gMkt.AssetD
-        let futureSymList = [],spotSymList = []
-        displaySym.map(function(Sym){
-            let ass = assetD[Sym]
-            if (ass.TrdCls == 3) {
-                futureSymList.push(Sym)
-            } else if (ass.TrdCls == 1) {
-                spotSymList.push(Sym)
-            }else if(ass.TrdCls == 2){
-                futureSymList.push(Sym)
-            }
-        })
-        this.futureSymList = futureSymList
-        this.spotSymList = spotSymList
-        if(window.gMkt.CtxPlaying.pageTradeStatus == 1){
-            if(!futureSymList.includes(window.gMkt.CtxPlaying.Sym)){
-                // window.gMkt.CtxPlaying.Sym = futureSymList[0]
-                this.setSym(futureSymList[0])
-            }
-        }else if(window.gMkt.CtxPlaying.pageTradeStatus == 2){
-            if(!spotSymList.includes(window.gMkt.CtxPlaying.Sym)){
-                // window.gMkt.CtxPlaying.Sym = spotSymList[0]
-                this.setSym(spotSymList[0])
-            }
+        if(this.EV_CHANGESYM_UPD_unbinder){
+            this.EV_CHANGESYM_UPD_unbinder()
         }
-        m.redraw();
     },
     //订阅所需行情,pc界面行情订阅除了k线以外，其他所需订阅内容都在这里，各个组件内只是接收数据并渲染
     subTick: function(){
@@ -167,14 +132,6 @@ let spotTick = {
         return this.lastTick[Sym] || {}
     },
 
-    //设置合约
-    setSym: function(Sym){
-        window.gMkt.CtxPlaying.Sym = Sym
-        this.unSubTick()
-        this.subTick()
-        
-        gEVBUS.emit(gMkt.EV_CHANGESYM_UPD, {Ev: gMkt.EV_CHANGESYM_UPD, Sym:Sym})
-    }, 
     getLeftTick: function(){
         let type = window.$config.views.headerTick.left.type
         switch(type){
@@ -274,7 +231,6 @@ export default {
     },
     oncreate: function(vnode){
         spotTick.initEVBUS()
-        spotTick.initSymList()
         spotTick.subTick()
     },
     view: function(vnode) {

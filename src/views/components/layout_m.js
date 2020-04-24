@@ -22,8 +22,25 @@ import selectPos from './trade/selectPos'
 
 
 let obj = {
+  oldSubArr: [],
+  //初始化全局广播
+  initEVBUS: function(){
+    let that = this
 
-
+    //当前选中合约变化全局广播
+    if(this.EV_CHANGESYM_UPD_unbinder){
+        this.EV_CHANGESYM_UPD_unbinder()
+    }
+    this.EV_CHANGESYM_UPD_unbinder = window.gEVBUS.on(gMkt.EV_CHANGESYM_UPD,arg=> {
+        that.unSubTick()
+        that.subTick()
+    })
+  },
+  rmEVBUS: function(){
+    if(this.EV_CHANGESYM_UPD_unbinder){
+        this.EV_CHANGESYM_UPD_unbinder()
+    }
+  },
   getKline: function(){
     let type = window.$config.views.kline.type
     switch(type){
@@ -199,7 +216,24 @@ let obj = {
     }else{
         return null
     }
-  }
+  },
+  //订阅所需行情,pc界面行情订阅除了k线以外，其他所需订阅内容都在这里，各个组件内只是接收数据并渲染
+  subTick: function(){
+    let Sym = window.gMkt.CtxPlaying.Sym
+    if(Sym){
+        let subArr = utils.setSubArrType('tick',[Sym])
+        // subArr = subArr.concat(utils.setSubArrType('trade',[Sym]))
+        subArr = subArr.concat(utils.setSubArrType('order20',[Sym]))
+        subArr = subArr.concat(utils.setSubArrType('index',[utils.getGmexCi(window.gMkt.AssetD, Sym)]))
+        window.gMkt.ReqSub(subArr)
+        this.oldSubArr = subArr
+    }
+    m.redraw();
+  },
+  unSubTick(){
+      let oldSubArr = this.oldSubArr
+      window.gMkt.ReqUnSub(oldSubArr)
+  },
 }
 
 
@@ -208,7 +242,7 @@ export default {
         
     },
     oncreate: function(vnode){
-        
+      obj.initEVBUS()
     },
     view: function(vnode) {
         return m("div",{class: ""}, [
@@ -245,5 +279,8 @@ export default {
           obj.marketAddMode(),
           obj.someCloseMode()
         ])
+    },
+    onremove: function(){
+      obj.rmEVBUS()
     }
 }
