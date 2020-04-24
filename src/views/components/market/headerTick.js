@@ -180,7 +180,7 @@ let spotTick = {
         switch(type){
             case 0: 
                 return m("div",{class:"pub-header-tick-left"},[
-                    spotTick.getSymSelect(),
+                    m(symSelect),
                     m('span', {class:"pub-header-tick-left-pre-prz is-hidden-touch"+utils.getColorStr(spotTick.getLastTick().color, 'font')},[
                         spotTick.getLastTick().LastPrz || '--'
                     ]),
@@ -264,37 +264,10 @@ let spotTick = {
     customRightTick: function(){
 
     },
-    getSymSelect: function(){
-        let type = window.$config.views.headerTick.left.symSelect.type
-        switch(type){
-            case 0: 
-                return m('.dropdown.is-hoverable', {}, [
-                    m('.dropdown-trigger', {}, [
-                        m('button', {class: "button is-primary is-inverted h-auto",'aria-haspopup':true, "aria-controls": "dropdown-menu2"}, [
-                            m('span',{ class: ""}, utils.getSymDisplayName(window.gMkt.AssetD, window.gMkt.CtxPlaying.Sym)),
-                            m('span', {class: "icon "},[
-                                m('i', {class: "iconfont iconxiala iconfont-medium", "aria-hidden": true })
-                            ]),
-                        ]),
-                    ]),
-                    m('.dropdown-menu', {class:"max-height-500 scroll-y", id: "dropdown-menu2", role: "menu"}, [
-                        m('.dropdown-content', {class:"has-text-centered"}, [
-                            spotTick.getSymList()
-                        ]),
-                    ]),
-                ])
-            case 1:
-                return this.customSymSelect()
-            default:
-                return null
-        }
-    },
-    customSymSelect: function(){
-
-    }
 
 }
 
+import symSelect from './symSelect'
 export default {
     oninit: function(vnode){
         

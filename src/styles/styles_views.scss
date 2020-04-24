@@ -167,13 +167,22 @@ button {
 //pc端主体结构样式 end
 
 //移动端主体结构样式 start
+.pub-layout-m-header {
+    // z-index: 1;
+
+    .navbar-item {
+
+        .iconfont {
+            @extend %iconfont-large;
+        }
+    }
+    
+}
 
 .pub-layout-m {
     @extend %py-2;
 
-    .pub-layout-m-header-tick {
-        @extend %mb-2;
-    }
+    
 
     .pub-layout-m-content {
         @extend %mb-2;
@@ -240,6 +249,16 @@ button {
     }
 }
 //头部行情模块样式 start
+
+// 交易对下拉 start
+.pub-sym-select {
+
+    .dropdown-trigger {
+        display: flex;
+        align-items: center;
+    }
+}
+// 交易对下拉 end
 
 
 //tradingview模块 start
