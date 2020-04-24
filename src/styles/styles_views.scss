@@ -44,26 +44,7 @@ button {
 
 //动画相关 end
 
-// 屏幕适配相关 start
-@media screen and (min-width: 1023px){
-    body > section {
-        min-width: 1280px;
-        min-height: 100%;
-        margin-top: 3.25rem;
-    }
-}
-@media screen and (max-width: 1023px){
-    .pub-header-tick {
-        .pub-header-tick-left {
-            .dropdown {
-                button {
-                    font-size: inherit;
-                }
-            }
-        }
-    }
-}
-// 
+
 
 // 通用类名 start
 
@@ -666,3 +647,30 @@ button {
     }
 }
 // 资产模块 end
+
+// 屏幕适配相关 start
+@media screen and (min-width: 1023px){
+    body > section {
+        min-width: 1280px;
+        min-height: 100%;
+        margin-top: 3.25rem;
+    }
+}
+@media screen and (max-width: 1023px){
+    .pub-header-tick {
+        .pub-header-tick-left {
+            .dropdown {
+                button {
+                    font-size: inherit;
+                }
+            }
+        }
+    }
+
+    .pub-trade-list {
+        div:nth-child(2) {
+            height: auto;
+        }
+    }
+}
+// 

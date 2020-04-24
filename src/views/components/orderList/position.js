@@ -187,6 +187,69 @@ let obj = {
       ])
     })
   },
+  getPosListForM: function(){
+    return this.posList.map(function(item, i){
+      return m('.card', {key: "posTableListItemForM"+i}, [
+        m('div', { class: 'card-content' }, [
+
+        ]),
+        m('footer', { class: 'card-footer' }, [
+          m("button",{class:"button is-primary card-footer-item"+(item.loading?' is-loading': ''), onclick: function(){
+            obj.placeOrder('close', item)
+          }},[
+            '市价平仓'
+          ]),
+          m("button",{class:"button is-primary card-footer-item"+(item.loading?' is-loading': ''), onclick: function(){
+            obj.placeOrder('add', item)
+          }},[
+            '加倍开仓'
+          ]),
+          m("button",{class:"button is-primary card-footer-item"+(item.loading?' is-loading': ''), onclick: function(){
+            obj.placeOrder('back', item)
+          }},[
+            '反向开仓'
+          ]),
+          m("button",{class:"button is-primary card-footer-item"+(item.loading?' is-loading': ''), onclick: function(){
+            obj.placeOrder('marketAdd', item)
+          }},[
+            '市价加仓'
+          ]),
+          m("button",{class:"button is-primary card-footer-item"+(item.loading?' is-loading': ''), onclick: function(){
+            obj.placeOrder('someClose', item)
+          }},[
+            '平仓'
+          ]),
+        ]),
+      ])
+      /**
+       * <div class="card">
+          <header class="card-header">
+            <p class="card-header-title">
+              Component
+            </p>
+            <a href="#" class="card-header-icon" aria-label="more options">
+              <span class="icon">
+                <i class="fas fa-angle-down" aria-hidden="true"></i>
+              </span>
+            </a>
+          </header>
+          <div class="card-content">
+            <div class="content">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nec iaculis mauris.
+              <a href="#">@bulmaio</a>. <a href="#">#css</a> <a href="#">#responsive</a>
+              <br>
+              <time datetime="2016-1-1">11:09 PM - 1 Jan 2016</time>
+            </div>
+          </div>
+          <footer class="card-footer">
+            <a href="#" class="card-footer-item">Save</a>
+            <a href="#" class="card-footer-item">Edit</a>
+            <a href="#" class="card-footer-item">Delete</a>
+          </footer>
+        </div>
+       */
+    })
+  },
   subPosNeedSymTick: function(){
     let oldSubList = window.gMkt.CtxPlaying.subList
     let needSub = []
@@ -301,6 +364,22 @@ let obj = {
     if(window.$openStopPLMode){
       window.$openStopPLMode(pos)
     }
+  },
+  getContent: function(){
+    if(window.isMobile){
+      return obj.getPosListForM()
+    }else{
+      return m("table",{class:"table is-hoverable ", cellpadding: 0, cellspacing: 0},[
+        m("thead",{class:""},[
+          m("tr",{class:""},[
+            obj.getTheadList()
+          ])
+        ]),
+        m("tbody",{class:""},[
+          obj.getPosList()
+        ])
+      ])
+    }
   }
 }
 
@@ -315,16 +394,7 @@ export default {
     view: function(vnode) {
         
         return m("div",{class:"pub-pos table-container"},[
-          m("table",{class:"table is-hoverable ", cellpadding: 0, cellspacing: 0},[
-            m("thead",{class:""},[
-              m("tr",{class:""},[
-                obj.getTheadList()
-              ])
-            ]),
-            m("tbody",{class:""},[
-              obj.getPosList()
-            ])
-          ])
+          obj.getContent()
         ])
     },
     onremove: function(){
