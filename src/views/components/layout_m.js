@@ -246,7 +246,7 @@ export default {
     },
     view: function(vnode) {
         return m("div",{class: ""}, [
-          m("nav",{class:"pub-layout-m-header navbar is-transparent is-flex", role:"navigation", "aria-label":"main navigation"},[
+          m("nav",{class:"pub-layout-m-header is-fixed-top navbar is-transparent is-flex", role:"navigation", "aria-label":"main navigation"},[
             m('a', {class:"navbar-item"}, [
               m('span', {class:"icon is-medium"}, [
                 m('i', {class:"iconfont icontoolbar-side"}),
@@ -271,8 +271,10 @@ export default {
               m('div', {class:"pub-layout-m-content-right"},[
                 m(dish)
               ])
-            ])
+            ]),
+            obj.getBottomList(),
           ]),
+
           obj.getStopPLMode(),
           obj.getLeverageMode(),
           obj.getValidateMode(),
