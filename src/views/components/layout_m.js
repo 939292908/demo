@@ -16,7 +16,9 @@ import stopPLMode from './trade/stopPLMode'
 import validateMode from './userCenter/validateMode'
 
 import dish from './market/dish'
+import symSelect from './market/symSelect'
 import selectPos from './trade/selectPos'
+
 
 
 let obj = {
@@ -210,6 +212,21 @@ export default {
     },
     view: function(vnode) {
         return m("div",{class: ""}, [
+          m("nav",{class:"pub-layout-m-header navbar is-transparent is-flex", role:"navigation", "aria-label":"main navigation"},[
+            m('a', {class:"navbar-item"}, [
+              m('span', {class:"icon is-medium"}, [
+                m('i', {class:"iconfont icontoolbar-side"}),
+              ]),
+            ]),
+            m('.spacer'),
+            m(symSelect),
+            m('.spacer'),
+            m('a', {class:"navbar-item"}, [
+              m('span', {class:"icon is-medium"}, [
+                m('i', {class:"iconfont iconhangqing"}),
+              ]),
+            ]),
+          ]),
           m("div",{class: "pub-layout-m"}, [
             obj.getSelectPos(),
             m('div', {class:"pub-layout-m-content is-flex"},[
