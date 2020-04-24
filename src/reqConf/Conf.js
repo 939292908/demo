@@ -9,9 +9,9 @@ export class CConf  {
     M = {
         "dev": {
             Name:"开发89环境",
-            WebAPI:"http://gs.gmex.in:8888",
-            WSMKT:"ws://gs.gmex.in:20080/v1/market",
-            WSTRD:"ws://gs.gmex.in:50301/v1/trade"
+            WebAPI:"http://gs.gmex.io:8888",
+            WSMKT:"ws://gs.gmex.io:20080/v1/market",
+            WSTRD:"ws://gs.gmex.io:50301/v1/trade"
         }
         ,"prod": {
             Name:"www.gmex.io",
