@@ -30,6 +30,8 @@ let dish = {
     order20ListNum: 8,
     //盘口类型
     dishType: 0, //0:买卖盘口，1:买盘盘口，2:卖盘盘口
+    dishTypeList: ['买卖盘口', '买盘盘口', '卖盘盘口'],
+    dishTypeListOpen: false,
     //初始化全局广播
     initEVBUS: function(){
         let that = this
@@ -268,6 +270,26 @@ let dish = {
     setdishType: function(type){
         this.dishType = type
         this.updateOrder20()
+    },
+    getDishTypeBtns: function(){
+        return this.dishTypeList.map(function(item,i){
+            return m('button', { key: 'dish-type-btns'+item+i, class:"button "+(dish.dishType == i?' is-primary':' is-outlined'), onclick:function(){
+                dish.setdishType(i)
+            }}, [
+                item
+            ])
+        })
+    },
+    getMenuDishTypeList: function(){
+        return this.dishTypeList.map(function(item,i){
+            return m('dev', {key: 'dish-type-item'+item+i, class: ""}, [
+                m('a', { class: "dropdown-item"+(dish.dishType == i?' has-text-primary':''), onclick: function(){
+                    dish.setdishType(i)
+                }},[
+                    item
+                ])
+            ])
+        })
     }
 }
 
@@ -312,23 +334,29 @@ export default {
                 ]),
             ]),
             dish.getOrder20ForBuyList(),
-            m('div', {class:"pub-dish-bottom buttons are-small"}, [
-                m('button', { class:"button "+(dish.dishType == 0?' is-primary':' is-outlined'), onclick:function(){
-                    dish.setdishType(0)
-                }}, [
-                    '买卖盘口'
+            m('div', {class:"pub-dish-bottom buttons are-small is-hidden-touch"}, [
+                dish.getDishTypeBtns()
+            ]),
+            m('div', {class: "dropdown pub-dish-select is-hidden-desktop" + (dish.dishTypeListOpen?' is-active':'')}, [
+                m('.dropdown-trigger', {}, [
+                    m('button', {class: "button is-outline is-fullwidth",'aria-haspopup':true, "aria-controls": "dropdown-menu2", onclick: function(e){
+                        dish.dishTypeListOpen = !dish.dishTypeListOpen
+                        window.stopBubble(e)
+                    }}, [
+                        m('div', {}, [
+                            m('span',{ class: ""}, dish.dishTypeList[dish.dishType]),
+                            m('span', {class: "icon "},[
+                                m('i', {class: "iconfont iconxiala has-text-primary", "aria-hidden": true })
+                            ]),
+                        ])
+                    ]),
                 ]),
-                m('button', { class:"button is-outlined "+(dish.dishType == 1?' is-primary':' is-outlined'), onclick:function(){
-                    dish.setdishType(1)
-                }}, [
-                    '买盘盘口'
+                m('.dropdown-menu', {class:"max-height-500 scroll-y", id: "dropdown-menu2", role: "menu"}, [
+                    m('.dropdown-content', {class:"has-text-centered"}, [
+                        dish.getMenuDishTypeList()
+                    ]),
                 ]),
-                m('button', { class:"button "+(dish.dishType == 2?' is-primary':' is-outlined'), onclick:function(){
-                    dish.setdishType(2)
-                }}, [
-                    '卖盘盘口'
-                ]),
-            ])
+            ]),
         ])
     },
     onremove: function(vnode) {

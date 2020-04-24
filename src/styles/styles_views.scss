@@ -181,8 +181,7 @@ button {
 
 .pub-layout-m {
     @extend %py-2;
-
-    
+    margin-top: 3.25rem;
 
     .pub-layout-m-content {
         @extend %mb-2;
@@ -196,6 +195,9 @@ button {
             @extend %pl-2;
             width: 50%;
         
+        }
+        .pub-trade-list {
+            @extend %ma-0;
         }
     }
 }
@@ -354,6 +356,15 @@ button {
     
             div {
                 @extend %ma-0;
+            }
+        }
+        .pub-dish-select {
+            @extend %mt-2;
+            @extend %pr-3;
+            width: 100%;
+
+            .dropdown-trigger {
+                width: 100%;
             }
         }
     }
