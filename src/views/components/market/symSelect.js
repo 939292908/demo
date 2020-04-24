@@ -31,6 +31,15 @@ let symSelect = {
             that.initSymList()
         })
 
+        
+        //body点击事件广播
+        if(this.EV_ClICKBODY_unbinder){
+            this.EV_ClICKBODY_unbinder()
+        }
+        this.EV_ClICKBODY_unbinder = window.gEVBUS.on(gEVBUS.EV_ClICKBODY,arg=> {
+            that.symListOpen = false
+        })
+
     },
     rmEVBUS: function(){
         if(this.EV_ASSETD_UPD_unbinder){
@@ -38,6 +47,9 @@ let symSelect = {
         }
         if(this.EV_PAGETRADESTATUS_UPD_unbinder){
             this.EV_PAGETRADESTATUS_UPD_unbinder()
+        }
+        if(this.EV_ClICKBODY_unbinder){
+            this.EV_ClICKBODY_unbinder()
         }
     },
     //初始化合约以及现货列表
@@ -110,8 +122,9 @@ let symSelect = {
             case 0: 
                 return m('div', {class: "dropdown pub-sym-select" + (symSelect.symListOpen?' is-active':'')}, [
                     m('.dropdown-trigger', {}, [
-                        m('button', {class: "button is-primary is-inverted h-auto",'aria-haspopup':true, "aria-controls": "dropdown-menu2", onclick: function(){
+                        m('button', {class: "button is-primary is-inverted h-auto",'aria-haspopup':true, "aria-controls": "dropdown-menu2", onclick: function(e){
                             symSelect.symListOpen = !symSelect.symListOpen
+                            window.stopBubble(e)
                         }}, [
                             m('span',{ class: ""}, utils.getSymDisplayName(window.gMkt.AssetD, window.gMkt.CtxPlaying.Sym)),
                             m('span', {class: "icon "},[
