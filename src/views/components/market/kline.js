@@ -865,7 +865,7 @@ export default {
             m('#tv_chart_container', {class:""})
         ])
     },
-    onremove: function(vnode) {
+    onbeforeremove: function(vnode) {
         obj.rmEVBUS()
     },
 }

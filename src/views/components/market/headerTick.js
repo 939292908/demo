@@ -241,7 +241,7 @@ export default {
             spotTick.getRightTick()
         ])
     },
-    onremove: function(vnode) {
+    onbeforeremove: function(vnode) {
         obj.rmEVBUS()
     },
     

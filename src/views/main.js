@@ -421,7 +421,7 @@ export default {
             main.getMessage(),
         ])
     },
-    onremove: function () {
+    onbeforeremove: function () {
         main.rmEVBUS()
     }
 }

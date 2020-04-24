@@ -162,7 +162,7 @@ export default {
         
         return symSelect.getSymSelect()
     },
-    onremove: function(vnode) {
+    onbeforeremove: function(vnode) {
         obj.rmEVBUS()
     },
     

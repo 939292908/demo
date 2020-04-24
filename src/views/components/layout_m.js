@@ -282,7 +282,7 @@ export default {
           obj.someCloseMode()
         ])
     },
-    onremove: function(){
+    onbeforeremove: function(){
       obj.rmEVBUS()
     }
 }
