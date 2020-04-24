@@ -2,9 +2,9 @@
 export class CConf  {
     Active = {
         Name:"www.gmex.io",
-        WebAPI:"https://api-v1-01.gmex.io/www",
-        WSMKT:"wss://ws-v1-01.gmex.io/v1/market",
-        WSTRD:"wss://ws-v1-01.gmex.io/v1/trade"
+        WebAPI:"https://ss.abkjl.com/www",
+        WSMKT:"wss://ss.abkjl.com/v1/market",
+        WSTRD:"wss://ss.abkjl.com/v1/trade"
     }
     M = {
         "dev": {
@@ -15,9 +15,9 @@ export class CConf  {
         }
         ,"prod": {
             Name:"www.gmex.io",
-            WebAPI:"https://api-v1-01.gmex.io/www",
-            WSMKT:"wss://ws-v1-01.gmex.io/v1/market",
-            WSTRD:"wss://ws-v1-01.gmex.io/v1/trade"
+            WebAPI:"https://ss.abkjl.com/www",
+            WSMKT:"wss://ss.abkjl.com/v1/market",
+            WSTRD:"wss://ss.abkjl.com/v1/trade"
         }
     }
     GetActive() {
