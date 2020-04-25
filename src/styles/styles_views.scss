@@ -706,6 +706,41 @@ button {
         }
     }
 }
+.pub-layout-m {
+    .pub-trade-list {
+        .pub-plan {
+            overflow: visible;
+
+            .card:not(:last-child) {
+                @extend %mb-3;
+            }
+            .card-content {
+                @extend %pa-3;
+                .pub-plan-m-content-header {
+                    display: flex;
+                    align-items: center;
+            
+                    .pub-plan-change-lever {
+                        @extend %font-2;
+                    }
+                }
+                
+                
+                .pub-plan-m-content {
+                    @extend %font-2;
+                    @extend %py-3;
+                }
+            
+                .pub-plan-m-content-footer {
+                    display: flex;
+                    align-items: center;
+            
+                }
+            }
+            
+        }
+    }
+}
 // 委托列表 end
 
 // 合约信息 start

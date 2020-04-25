@@ -70,7 +70,7 @@ export default {
     },
     view: function(vnode) {
         
-        return m("div",{class:"pub-trade-list box"},[
+        return m("div",{class:"pub-trade-list "+(window.isMobile?'':' box')},[
             m("div",{class:"pub-trade-list-tabs tabs "},[
                 m("ul",[
                     obj.getTabsList()
