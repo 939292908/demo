@@ -583,8 +583,15 @@ button {
 
     .pub-pos-change-lever {
         @extend %font-2;
-
+        display: flex;
+        align-items: center;
         cursor: pointer;
+
+        > *{
+            @extend %pr-2;
+        }
+
+        
     }
 
     .pub-pos-stoppl {
@@ -605,6 +612,51 @@ button {
             @extend %mr-3;
         }
     }
+}
+
+.pub-layout-m {
+    .pub-trade-list {
+        .pub-pos {
+            overflow: visible;
+            .card:not(:last-child) {
+                @extend %mb-3;
+            }
+
+            .card {
+                .card-header {
+                    .card-header-title {
+                        @extend %pa-3;
+                        
+                    }
+                }
+                .card-content {
+                    @extend %pa-3;
+
+                    .pub-pos-m-content-header {
+                        @extend %mb-3;
+                        display: flex;
+                        align-items: center;
+                        > *{
+                            @extend %pr-3;
+                        }
+
+                        // .pub-pos-change-lever {
+                        //     display: flex;
+                        //     align-items: center;
+                        //     > *{
+                        //         @extend %pr-2;
+                        //     }
+                        // }
+                    }
+                    .pub-pos-m-content {
+                        @extend %font-2;
+                    }
+                }
+            }
+            
+        }   
+    }
+    
 }
 // 仓位列表 end
 

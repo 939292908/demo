@@ -594,10 +594,13 @@ utils.getPosInfo = function(pos,assetD){
         obj.aMgnRateforLiqStr = (Number(obj.aMgnRateforLiq || 0)*100).toFixed2(2)+'%'
         //回报率
         obj.aProfitPerStr = (Number(obj.aProfitPer || 0)*100).toFixed2(2)+'%'
+        obj.aProfitPerColor = Number(obj.aProfitPer || 0)>0?1:Number(obj.aProfitPer || 0)<0?-1:0
         //止盈价
         obj.StopP = obj.StopP?Number(obj.StopP || 0).toFixed2(PrzMinIncSize):''
         //止损价
         obj.StopL = obj.StopL?Number(obj.StopL || 0).toFixed2(PrzMinIncSize):''
+
+        obj.SettleCoin = assetD.SettleCoin
 
         obj.loading = false
 

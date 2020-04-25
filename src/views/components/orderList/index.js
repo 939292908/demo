@@ -70,7 +70,7 @@ export default {
     },
     view: function(vnode) {
         
-        return m("div",{class:"pub-trade-list box has-text-centered"},[
+        return m("div",{class:"pub-trade-list box"},[
             m("div",{class:"pub-trade-list-tabs tabs "},[
                 m("ul",[
                     obj.getTabsList()
