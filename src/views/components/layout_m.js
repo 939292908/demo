@@ -23,6 +23,8 @@ import selectPos from './trade/selectPos'
 
 let obj = {
   oldSubArr: [],
+  rightMenu: false,
+  leftMenu: false,
   //初始化全局广播
   initEVBUS: function(){
     let that = this
@@ -246,20 +248,36 @@ export default {
     },
     view: function(vnode) {
         return m("div",{class: ""}, [
-          m("nav",{class:"pub-layout-m-header is-fixed-top navbar is-transparent is-flex", role:"navigation", "aria-label":"main navigation"},[
-            m('a', {class:"navbar-item"}, [
-              m('span', {class:"icon is-medium"}, [
-                m('i', {class:"iconfont icontoolbar-side"}),
+          m("nav",{class:"pub-layout-m-header is-fixed-top navbar is-transparent", role:"navigation", "aria-label":"main navigation"},[
+            m('div', {class:"navbar-brand is-flex"}, [
+              m('a', {class:"navbar-item", onclick: function(){
+                obj.leftMenu = !obj.leftMenu
+              }}, [
+                m('span', {class:"icon is-medium"}, [
+                  m('i', {class:"iconfont icontoolbar-side"}),
+                ]),
+              ]),
+              m('.spacer'),
+              m(symSelect),
+              m('.spacer'),
+              m('a', {class:"navbar-item"}, [
+                m('span', {class:"icon is-medium"}, [
+                  m('i', {class:"iconfont iconhangqing"}),
+                ]),
               ]),
             ]),
-            m('.spacer'),
-            m(symSelect),
-            m('.spacer'),
-            m('a', {class:"navbar-item"}, [
-              m('span', {class:"icon is-medium"}, [
-                m('i', {class:"iconfont iconhangqing"}),
-              ]),
-            ]),
+            
+            m("div",{class:"navbar-menu is-hidden-desktop"+(obj.leftMenu?' is-active':' is-hidden')},[
+              m("div",{class:"navbar-end"},[
+                m("p",{class:"navbar-item"},[
+                  window.gWebAPI.CTX.account.accountName
+                ])
+              ])
+              /*<ul class="menu-list">
+                <li><a>Dashboard</a></li>
+                <li><a>Customers</a></li>
+              </ul>*/
+            ])
           ]),
           m("div",{class: "pub-layout-m"}, [
             obj.getSelectPos(),
@@ -273,6 +291,7 @@ export default {
               ])
             ]),
             obj.getBottomList(),
+            
           ]),
 
           obj.getStopPLMode(),
