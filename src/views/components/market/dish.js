@@ -269,6 +269,7 @@ let dish = {
     //设置盘口类型
     setdishType: function(type){
         this.dishType = type
+        this.dishTypeListOpen = false
         this.updateOrder20()
     },
     getDishTypeBtns: function(){
