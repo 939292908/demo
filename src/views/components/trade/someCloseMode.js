@@ -39,16 +39,16 @@ let obj = {
     console.log('some close submit', this.form)
     if(this.tabsActive == 0){
       if(this.form.prz === '0'){
-        return $message({content: '平仓价格不能为0', type: 'danger'})
+        return $message({title: '平仓价格不能为0', content: '平仓价格不能为0', type: 'danger'})
       }else if(!this.form.prz){
-        return $message({content: '平仓价格不能为空', type: 'danger'})
+        return $message({title: '平仓价格不能为空', content: '平仓价格不能为空', type: 'danger'})
       }
     }
 
     if(this.form.num === '0'){
-      return $message({content: '平仓数量不能为0', type: 'danger'})
+      return $message({title: '平仓数量不能为0', content: '平仓数量不能为0', type: 'danger'})
     }else if(!this.form.num){
-      return $message({content: '平仓数量不能为空', type: 'danger'})
+      return $message({title: '平仓数量不能为空', content: '平仓数量不能为空', type: 'danger'})
     }
 
     let Sym = this.param.pos.Sym

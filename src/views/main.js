@@ -139,7 +139,7 @@ let main = {
             return m('article', { class: "message box " + (' is-' + type), key: tm }, [
                 m('div', { class: "message-header" }, [
                     m('p', { class: "" }, [
-                        content
+                        title
                     ]),
                     m('button', {
                         class: "delete", "aria-label": "delete", onclick: function () {
@@ -409,7 +409,7 @@ let main = {
             }
         }
         if (!_Title && !_Color) return;
-        window.$message({content:_Title, type: _Color})
+        window.$message({title: _Title,content:_Title, type: _Color})
     }
 }
 export default {

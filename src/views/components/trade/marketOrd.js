@@ -135,15 +135,15 @@ let obj = {
             return window.gWebAPI.needLogin()
         }
         if(this.form.Prz === '0'){
-            return $message({content: '下单价格不能为0', type: 'danger'})
+            return $message({title: '下单价格不能为0', content: '下单价格不能为0', type: 'danger'})
         }else if(!this.form.Prz){
-            return $message({content: '下单价格不能为空', type: 'danger'})
+            return $message({title: '下单价格不能为空', content: '下单价格不能为空', type: 'danger'})
         }
 
         if(this.form.Num === '0'){
-            return $message({content: '下单数量不能为0', type: 'danger'})
+            return $message({title: '下单数量不能为0', content: '下单数量不能为0', type: 'danger'})
         }else if(!this.form.Num){
-            return $message({content: '下单数量不能为空', type: 'danger'})
+            return $message({title: '下单数量不能为空', content: '下单数量不能为空', type: 'danger'})
         }
 
         let Sym = window.gMkt.CtxPlaying.Sym
@@ -173,7 +173,7 @@ let obj = {
             case 1:
             case 2:
                 if(!PId){
-                    return window.$message({content: '请先选择您要调整的仓位！', type: 'danger'})
+                    return window.$message({title: '请先选择您要调整的仓位！', content: '请先选择您要调整的仓位！', type: 'danger'})
                 }
                 break;
             case 3:
@@ -196,11 +196,11 @@ let obj = {
 
         let aWdrawable = Number(obj.wlt.aWdrawable || 0 )
         if(aWdrawable == 0){
-            return window.$message({content: '可用资金不足！', type: 'danger'})
+            return window.$message({title: '可用资金不足！', content: '可用资金不足！', type: 'danger'})
         }else if(dir == 1 && aWdrawable < Number(this.MgnNeedForBuy)){
-            return window.$message({content: '可用资金不足！', type: 'danger'})
+            return window.$message({title: '可用资金不足！', content: '可用资金不足！', type: 'danger'})
         }else if(dir == -1 && aWdrawable < Number(this.MgnNeedForSell)){
-            return window.$message({content: '可用资金不足！', type: 'danger'})
+            return window.$message({title: '可用资金不足！', content: '可用资金不足！', type: 'danger'})
         }
 
         window.gTrd.ReqTrdOrderNew(p, function(arg){
@@ -222,7 +222,7 @@ let obj = {
             case 1:
             case 2:
                 if(!PId){
-                    return window.$message({content: '请先选择您要调整的仓位！', type: 'danger'})
+                    return window.$message({title: '请先选择您要调整的仓位！', content: '请先选择您要调整的仓位！', type: 'danger'})
                 }
                 window.$openLeverageMode({
                     Sym: Sym,
