@@ -60,6 +60,13 @@ button {
 
 // 通用类名 end
 
+
+// UI库样式覆盖 start
+.modal-card {
+    max-width: 90%;
+}
+// UI库样式覆盖 end
+
 //消息弹框样式 start
 .window-message-box {
     position: fixed;
