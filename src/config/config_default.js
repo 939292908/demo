@@ -130,11 +130,6 @@ const config = {
             },
             // 市价加仓
             narketAdd: {
-                positionList: 0,
-                positionDes: 0,
-            },
-            // 市价加仓
-            marketAdd: {
                 positionList: 1,
                 positionDes: 1,
             },
@@ -174,10 +169,6 @@ const config = {
             },
             // 市价加仓
             narketAdd: {
-                open: 1,
-            },
-            // 市价加仓
-            marketAdd: {
                 open: 1,
             },
             // 市价平仓（可选择数量平仓）
