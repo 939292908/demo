@@ -130,6 +130,9 @@ let obj = {
         }
     },
     submit: function(dir){
+        if(!window.gWebAPI.isLogin()){
+            return window.gWebAPI.needLogin()
+        }
         if(this.form.Prz === '0'){
             return $message({content: '下单价格不能为0', type: 'danger'})
         }else if(!this.form.Prz){
@@ -205,6 +208,10 @@ let obj = {
     },
     setLeverage: function(){
         let that = this
+
+        if(!window.gWebAPI.isLogin()){
+            return window.gWebAPI.needLogin()
+        }
         let Sym = window.gMkt.CtxPlaying.Sym
         let PId = window.gTrd.CtxPlaying.activePId
 
@@ -464,6 +471,7 @@ export default {
                     m("input", { class: "input opacity-0", type: 'number', placeholder: "",readonly: true, })
                 ])
             ]),
+            m('.spacer'),
             m("div", { class: "pub-place-order-form-buttons field" }, [
                 m("div", { class: "level" }, [
                     m("div", { class: "level-left" }, [

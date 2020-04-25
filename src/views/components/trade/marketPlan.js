@@ -134,6 +134,9 @@ let obj = {
         }
     },
     submit: function(dir){
+        if(!window.gWebAPI.isLogin()){
+            return window.gWebAPI.needLogin()
+        }
         if(this.form.Prz === '0'){
             return $message({content: '下单价格不能为0', type: 'danger'})
         }else if(!this.form.Prz){
@@ -228,6 +231,9 @@ let obj = {
     },
     setLeverage: function(){
         let that = this
+        if(!window.gWebAPI.isLogin()){
+            return window.gWebAPI.needLogin()
+        }
         let Sym = window.gMkt.CtxPlaying.Sym
         let PId = window.gTrd.CtxPlaying.activePId
 
@@ -500,6 +506,7 @@ export default {
                     }})
                 ])
             ]),
+            m('.spacer'),
             m("div", { class: "pub-place-order-form-buttons field" }, [
                 m("div", { class: "level" }, [
                     m("div", { class: "level-left" }, [
@@ -509,11 +516,12 @@ export default {
                             }}, [
                                 "买入/做多(看涨)"
                             ]),
-                            m('div', {class: "pub-place-order-form-need-mgn level"}, [
-                                m('div', {class: "level-left"}, [
+                            m('div', {class: "pub-place-order-form-need-mgn is-flex"}, [
+                                m('div', {class: ""}, [
                                     '所需保证金'
                                 ]),
-                                m('div', {class: "level-right"}, [
+                                m('.spacer'),
+                                m('div', {class: ""}, [
                                     Number(obj.MgnNeedForBuy).toPrecision2(6,8)
                                 ])
                             ])
@@ -526,11 +534,12 @@ export default {
                             }}, [
                                 "卖出/做空(看跌)"
                             ]),
-                            m('div', {class: "pub-place-order-form-need-mgn level"}, [
-                                m('div', {class: "level-left"}, [
+                            m('div', {class: "pub-place-order-form-need-mgn is-flex"}, [
+                                m('div', {class: ""}, [
                                     '所需保证金'
                                 ]),
-                                m('div', {class: "level-right"}, [
+                                m('.spacer'),
+                                m('div', {class: ""}, [
                                     Number(obj.MgnNeedForSell).toPrecision2(6,8)
                                 ])
                             ])
@@ -539,11 +548,12 @@ export default {
                 ]),
             ]),
             
-            m('div', {class: "pub-place-order-form-wallet level field"}, [
-                m('div', {class: "level-left"}, [
+            m('div', {class: "pub-place-order-form-wallet is-flex field"}, [
+                m('div', {class: ""}, [
                     '可用保证金'
                 ]),
-                m('div', {class: "level-right"}, [
+                m('.spacer'),
+                m('div', {class: ""}, [
                     obj.wlt.aWdrawable?Number(obj.wlt.aWdrawable).toFixed2(8): (0).toFixed2(8)
                 ])
             ])

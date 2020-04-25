@@ -445,6 +445,7 @@ button {
 .pub-place-order-m {
     @extend %pl-3;
     @extend %pr-2;
+    height: 100%;
 
     .pub-place-order-tabs {
         @extend %mb-3;
@@ -466,6 +467,10 @@ button {
     }
 
     .pub-place-order-form {
+        height: calc(100% - 40px);
+        display: flex;
+        flex-direction: column;//row-reverse;//row | row-reverse | column | column-reverse;
+
 
         .pub-place-order-form-lever-input {
             input {
