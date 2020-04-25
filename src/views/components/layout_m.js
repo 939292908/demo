@@ -236,7 +236,7 @@ let obj = {
   },
 }
 
-
+import login from './userCenter/login'
 export default {
     oninit: function(vnode){
         
@@ -279,7 +279,8 @@ export default {
           obj.getLeverageMode(),
           obj.getValidateMode(),
           obj.marketAddMode(),
-          obj.someCloseMode()
+          obj.someCloseMode(),
+          m(login)
         ])
     },
     onbeforeremove: function(){

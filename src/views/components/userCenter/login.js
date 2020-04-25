@@ -162,7 +162,7 @@ export default {
     view: function(vnode) {
         
         return m('div', {class:'pub-login'}, [
-            m('button', {class: "pub-login-btn button is-light", onclick: function(){
+            m('button', {class: "pub-login-btn button is-light is-hidden-touch", onclick: function(){
                 obj.open = !obj.open
             }}, [
                 '登录'
