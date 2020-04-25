@@ -37,9 +37,13 @@ button {
 //html标签样式覆盖 end
 
 //动画相关 start
-@keyframes sliding-out {
+@keyframes sliding-out-from-right {
     from {transform:translateX(100%);}
     to {transform:translateX(0%);}
+}
+@keyframes sliding-out-from-top {
+    from {transform:translateY(-100%);}
+    to {transform:translateY(0%);}
 }
 
 //动画相关 end
@@ -70,9 +74,6 @@ button {
 //消息弹框样式 start
 .window-message-box {
     position: fixed;
-    bottom: 0;
-    right: 0;
-    width: 300px;
     z-index: 999;
     
     article {
@@ -80,12 +81,11 @@ button {
         @extend %side-ma;
 
         transition: all .2s;
-        animation:sliding-out 0.2s;
+        animation:sliding-out-from-right 0.2s;
     }
 }
 
-//消息弹框样式 start
-
+//消息弹框样式 end
 
 //header样式 start
 
@@ -791,6 +791,17 @@ button {
         min-height: 100%;
         margin-top: 3.25rem;
     }
+
+    //消息弹框样式 start
+    .window-message-box {
+        position: fixed;
+        bottom: 0;
+        right: 0;
+        width: 300px;
+        z-index: 999;
+    }
+
+    //消息弹框样式 start
 }
 @media screen and (max-width: 1023px){
     .pub-header-tick {
@@ -808,5 +819,29 @@ button {
             height: auto;
         }
     }
+
+    //消息弹框样式 start
+    .window-message-box {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        z-index: 999;
+
+        article {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: calc(100% - 24px);
+            transition: all .2s;
+            animation:sliding-out-from-top 0.2s;
+
+            .message-header {
+                border-radius: 4px;
+            }
+        }
+    }
+
+    //消息弹框样式 start
 }
 // 屏幕适配相关 end

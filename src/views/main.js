@@ -135,21 +135,36 @@ let main = {
     createMsg: function ({ title, content, type }) {
         let that = this
         let tm = Date.now()
-        return m('article', { class: "message box " + (' is-' + type), key: tm }, [
-            m('div', { class: "message-header" }, [
-                m('p', { class: "" }, [
-                    title
-                ]),
-                m('button', {
-                    class: "delete", "aria-label": "delete", onclick: function () {
-                        that.delMsg(tm)
-                    }
-                })
-            ]),
-            m('div', { class: "message-body" }, [
-                content
+        if(window.isMobile){
+            return m('article', { class: "message box " + (' is-' + type), key: tm }, [
+                m('div', { class: "message-header" }, [
+                    m('p', { class: "" }, [
+                        content
+                    ]),
+                    m('button', {
+                        class: "delete", "aria-label": "delete", onclick: function () {
+                            that.delMsg(tm)
+                        }
+                    })
+                ])
             ])
-        ])
+        }else{
+            return m('article', { class: "message box " + (' is-' + type), key: tm }, [
+                m('div', { class: "message-header" }, [
+                    m('p', { class: "" }, [
+                        title
+                    ]),
+                    m('button', {
+                        class: "delete", "aria-label": "delete", onclick: function () {
+                            that.delMsg(tm)
+                        }
+                    })
+                ]),
+                m('div', { class: "message-body" }, [
+                    content
+                ])
+            ])
+        }
     },
     delMsg: function (key) {
         let i = this.messageContent.findIndex(item => {
