@@ -109,6 +109,94 @@ const config = {
         someCloseMode: {
             type: 0,
         }
+    },
+    // 仓位按钮显示开关
+    positionBtns: {
+        mobile: {
+            // 市价平仓
+            marketClose: {
+                positionList: 0,
+                positionDes: 0,
+            },
+            // 反向开仓
+            backOpen: {
+                positionList: 1,
+                positionDes: 1,
+            },
+            // 加倍开仓
+            doubleOpen: {
+                positionList: 0,
+                positionDes: 0,
+            },
+            // 市价加仓
+            narketAdd: {
+                positionList: 0,
+                positionDes: 0,
+            },
+            // 市价加仓
+            marketAdd: {
+                positionList: 1,
+                positionDes: 1,
+            },
+            // 市价平仓（可选择数量平仓）
+            marketSomeClose: {
+                positionList: 1,
+                positionDes: 1,
+            },
+            // 限价平仓（可选择数量平仓）
+            limitSomeClose: {
+                positionList: 1,
+                positionDes: 1,
+            },
+            // 止盈止损设置
+            stopPL: {
+                positionList: 1,
+                positionDes: 1,
+            },
+            // 杠杠调整
+            leverage: {
+                positionList: 1,
+                positionDes: 1,
+            },
+        },
+        desktop: {
+            // 市价平仓
+            marketClose: {
+                open: 1,
+            },
+            // 反向开仓
+            backOpen: {
+                open: 1,
+            },
+            // 加倍开仓
+            doubleOpen: {
+                open: 1,
+            },
+            // 市价加仓
+            narketAdd: {
+                open: 1,
+            },
+            // 市价加仓
+            marketAdd: {
+                open: 1,
+            },
+            // 市价平仓（可选择数量平仓）
+            marketSomeClose: {
+                open: 1,
+            },
+            // 限价平仓（可选择数量平仓）
+            limitSomeClose: {
+                open: 1,
+            },
+            // 止盈止损设置
+            stopPL: {
+                open: 1,
+            },
+            // 杠杠调整
+            leverage: {
+                open: 1,
+            },
+        }
     }
 }
 
