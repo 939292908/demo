@@ -112,6 +112,7 @@ let obj = {
     })
   },
   getPosList: function(){
+    let btnsOpen = window.$config.positionBtns.desktop
     return this.posList.map(function(item, i){
       return m("tr",{key: "posTableListItem"+i, class:""},[
         m("td",{class:""},[
@@ -127,7 +128,7 @@ let obj = {
             m('span', {}, [
               item.displayLever,
             ]),
-            m("i",{class:"iconfont iconotc-editName iconfont-medium"}),
+            m("i",{class:"iconfont iconotc-editName iconfont-medium"+(btnsOpen.leverage.open?'':' is-hidden')}),
           ]),
         ]),
         m("td",{class:""},[
@@ -155,42 +156,46 @@ let obj = {
           obj.setStopPL(item)
         }},[
           
-          m("button",{class:"button is-white"},[
+          m("button",{class:"button is-white"+(btnsOpen.stopPL.open?'':' is-hidden')},[
             (item.StopP || '--')+'/'+(item.StopL || '--'),
             m("i",{class:"iconfont iconotc-editName iconfont-medium"}),
           ]),
+          m('span', {class:""+(btnsOpen.stopPL.open?' is-hidden':'')}, [
+            (item.StopP || '--')+'/'+(item.StopL || '--'),
+          ])
         ]),
         m("td",{class:"pub-pos-buttons"},[
-          m("button",{class:"button is-primary "+(item.loading?' is-loading': ''), onclick: function(){
+          m("button",{class:"button is-primary "+(item.loading?' is-loading': '')+(btnsOpen.marketClose.open?'':' is-hidden'), onclick: function(){
             obj.placeOrder('close', item)
           }},[
             '市价平仓'
           ]),
-          m("button",{class:"button is-primary "+(item.loading?' is-loading': ''), onclick: function(){
+          m("button",{class:"button is-primary "+(item.loading?' is-loading': '')+(btnsOpen.doubleOpen.open?'':' is-hidden'), onclick: function(){
             obj.placeOrder('add', item)
           }},[
             '加倍开仓'
           ]),
-          m("button",{class:"button is-primary "+(item.loading?' is-loading': ''), onclick: function(){
+          m("button",{class:"button is-primary "+(item.loading?' is-loading': '')+(btnsOpen.backOpen.open?'':' is-hidden'), onclick: function(){
             obj.placeOrder('back', item)
           }},[
             '反向开仓'
           ]),
-          m("button",{class:"button is-primary "+(item.loading?' is-loading': ''), onclick: function(){
+          m("button",{class:"button is-primary "+(item.loading?' is-loading': '')+(btnsOpen.narketAdd.open?'':' is-hidden'), onclick: function(){
             obj.placeOrder('marketAdd', item)
           }},[
             '市价加仓'
           ]),
-          m("button",{class:"button is-primary "+(item.loading?' is-loading': ''), onclick: function(){
+          m("button",{class:"button is-primary "+(item.loading?' is-loading': '')+(btnsOpen.marketSomeClose.open || btnsOpen.limitSomeClose.open?'':' is-hidden'), onclick: function(){
             obj.placeOrder('someClose', item)
           }},[
-            '平仓'
+            btnsOpen.marketSomeClose.open && btnsOpen.limitSomeClose.open ?'平仓': btnsOpen.marketSomeClose.open ?'市价平仓':btnsOpen.limitSomeClose.open ?'限价平仓': '平仓'
           ]),
         ])
       ])
     })
   },
   getPosListForM: function(){
+    let btnsOpen = window.$config.positionBtns.mobile
     return this.posList.map(function(item, i){
       return m('.card', {key: "posTableListItemForM"+i}, [
         m('header', { class: 'card-header' }, [
@@ -209,7 +214,7 @@ let obj = {
               m('span', {}, [
                 item.displayLever,
               ]),
-              m("i",{class:"iconfont iconotc-editName iconfont-medium"}),
+              m("i",{class:"iconfont iconotc-editName iconfont-medium"+(btnsOpen.leverage.positionList?'':' is-hidden')}),
             ]),
           ]),
           m('div', { class: 'pub-pos-m-content content is-flex' }, [
@@ -260,60 +265,38 @@ let obj = {
           ]),
         ]),
         m('footer', { class: 'card-footer' }, [
-          m("a",{class:"is-primary card-footer-item"+(item.loading?' is-loading': ''), onclick: function(){
+          m("a",{class:"is-primary card-footer-item"+(item.loading?' is-loading': '')+(btnsOpen.stopPL.positionList?'':' is-hidden'), onclick: function(){
+            obj.setStopPL(item)
+          }},[
+            '止盈止损'
+          ]),
+          m("a",{class:"is-primary card-footer-item"+(item.loading?' is-loading': '')+(btnsOpen.marketClose.positionList?'':' is-hidden'), onclick: function(){
             obj.placeOrder('close', item)
           }},[
             '市价平仓'
           ]),
-          m("a",{class:"is-primary card-footer-item"+(item.loading?' is-loading': ''), onclick: function(){
+          m("a",{class:"is-primary card-footer-item"+(item.loading?' is-loading': '')+(btnsOpen.doubleOpen.positionList?'':' is-hidden'), onclick: function(){
             obj.placeOrder('add', item)
           }},[
             '加倍开仓'
           ]),
-          m("a",{class:"is-primary card-footer-item"+(item.loading?' is-loading': ''), onclick: function(){
+          m("a",{class:"is-primary card-footer-item"+(item.loading?' is-loading': '')+(btnsOpen.backOpen.positionList?'':' is-hidden'), onclick: function(){
             obj.placeOrder('back', item)
           }},[
             '反向开仓'
           ]),
-          // m("a",{class:"is-primary card-footer-item"+(item.loading?' is-loading': ''), onclick: function(){
-          //   obj.placeOrder('marketAdd', item)
-          // }},[
-          //   '市价加仓'
-          // ]),
-          // m("a",{class:"is-primary card-footer-item"+(item.loading?' is-loading': ''), onclick: function(){
-          //   obj.placeOrder('someClose', item)
-          // }},[
-          //   '平仓'
-          // ]),
+          m("a",{class:"is-primary card-footer-item"+(item.loading?' is-loading': '')+(btnsOpen.narketAdd.positionList?'':' is-hidden'), onclick: function(){
+            obj.placeOrder('marketAdd', item)
+          }},[
+            '市价加仓'
+          ]),
+          m("a",{class:"is-primary card-footer-item"+(item.loading?' is-loading': '')+(btnsOpen.marketSomeClose.positionList || btnsOpen.limitSomeClose.positionList?'':' is-hidden'), onclick: function(){
+            obj.placeOrder('someClose', item)
+          }},[
+            btnsOpen.marketSomeClose.positionList && btnsOpen.limitSomeClose.positionList ?'平仓': btnsOpen.marketSomeClose.positionList ?'市价平仓':btnsOpen.limitSomeClose.positionList ?'限价平仓': '平仓'
+          ]),
         ]),
       ])
-      /**
-       * <div class="card">
-          <header class="card-header">
-            <p class="card-header-title">
-              Component
-            </p>
-            <a href="#" class="card-header-icon" aria-label="more options">
-              <span class="icon">
-                <i class="fas fa-angle-down" aria-hidden="true"></i>
-              </span>
-            </a>
-          </header>
-          <div class="card-content">
-            <div class="content">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nec iaculis mauris.
-              <a href="#">@bulmaio</a>. <a href="#">#css</a> <a href="#">#responsive</a>
-              <br>
-              <time datetime="2016-1-1">11:09 PM - 1 Jan 2016</time>
-            </div>
-          </div>
-          <footer class="card-footer">
-            <a href="#" class="card-footer-item">Save</a>
-            <a href="#" class="card-footer-item">Edit</a>
-            <a href="#" class="card-footer-item">Delete</a>
-          </footer>
-        </div>
-       */
     })
   },
   subPosNeedSymTick: function(){
@@ -331,6 +314,8 @@ let obj = {
     }
   },
   setLeverage: function(pos){
+    if(!window.isMobile && !window.$config.positionBtns.desktop.leverage.open) return
+    if(window.isMobile && !window.$config.positionBtns.mobile.leverage.open) return
     let Sym = pos.Sym
     let PId = pos.PId
     window.$openLeverageMode({
@@ -427,6 +412,8 @@ let obj = {
     
   },
   setStopPL: function(pos){
+    if(!window.isMobile && !window.$config.positionBtns.desktop.stopPL.open) return
+    if(window.isMobile && !window.$config.positionBtns.mobile.stopPL.open) return
     if(window.$openStopPLMode){
       window.$openStopPLMode(pos)
     }
