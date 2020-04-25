@@ -866,7 +866,10 @@ export default {
         ])
     },
     onbeforeremove: function(vnode) {
-        window.gTvWidgetFT.remove()
+        if(window.gTvWidgetFT){
+            window.gTvWidgetFT.remove()
+            window.gTvWidgetFT = null
+        }
         obj.rmEVBUS()
     },
 }
