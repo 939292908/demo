@@ -30,6 +30,8 @@ let dish = {
     order20ListNum: 8,
     //盘口类型
     dishType: 0, //0:买卖盘口，1:买盘盘口，2:卖盘盘口
+    dishTypeList: ['买卖盘口', '买盘盘口', '卖盘盘口'],
+    dishTypeListOpen: false,
     //初始化全局广播
     initEVBUS: function(){
         let that = this
@@ -219,18 +221,18 @@ let dish = {
         let order20ForSell = this.order20ForSell
         if(!order20ForSell) return ''
         return order20ForSell.Asks.map(function(item,i){
-            return m("div",{class:"pub-dish-list-item level"},[
-                m('div', {class: "level-item w30"},[
+            return m("div",{class:"pub-dish-list-item is-flex"},[
+                m('div', {class: ""},[
                     m('p', {class: "w100 has-text-left has-text-danger"},[
                         item[0]
                     ]),
                 ]),
-                m('div', {class: "level-item w30"},[
-                    m('p', {class: "w100 has-text-left"},[
+                m('div', {class: ""},[
+                    m('p', {class: "w100"},[
                         item[1]
                     ]),
                 ]),
-                m('div', {class: "level-item w30"},[
+                m('div', {class: "is-hidden-touch"},[
                     m('p', {class: "w100 has-text-right"},[
                         item[2]
                     ]),
@@ -244,18 +246,18 @@ let dish = {
         let order20ForBuy = this.order20ForBuy
         if(!order20ForBuy) return ''
         return order20ForBuy.Bids.map(function(item,i){
-            return m("div",{class:"pub-dish-list-item level"},[
-                m('div', {class: "level-item w30"},[
+            return m("div",{class:"pub-dish-list-item is-flex"},[
+                m('div', {class: ""},[
                     m('p', {class: "w100 has-text-left has-text-success"},[
                         item[0]
                     ]),
                 ]),
-                m('div', {class: "level-item w30"},[
-                    m('p', {class: "w100 has-text-left"},[
+                m('div', {class: ""},[
+                    m('p', {class: "w100"},[
                         item[1]
                     ]),
                 ]),
-                m('div', {class: "level-item w30"},[
+                m('div', {class: "is-hidden-touch"},[
                     m('p', {class: "w100 has-text-right"},[
                         item[2]
                     ]),
@@ -267,7 +269,28 @@ let dish = {
     //设置盘口类型
     setdishType: function(type){
         this.dishType = type
+        this.dishTypeListOpen = false
         this.updateOrder20()
+    },
+    getDishTypeBtns: function(){
+        return this.dishTypeList.map(function(item,i){
+            return m('button', { key: 'dish-type-btns'+item+i, class:"button "+(dish.dishType == i?' is-primary':' is-outlined'), onclick:function(){
+                dish.setdishType(i)
+            }}, [
+                item
+            ])
+        })
+    },
+    getMenuDishTypeList: function(){
+        return this.dishTypeList.map(function(item,i){
+            return m('dev', {key: 'dish-type-item'+item+i, class: ""}, [
+                m('a', { class: "dropdown-item"+(dish.dishType == i?' has-text-primary':''), onclick: function(){
+                    dish.setdishType(i)
+                }},[
+                    item
+                ])
+            ])
+        })
     }
 }
 
@@ -284,25 +307,27 @@ export default {
         return m("div",{class:"pub-dish"},[
             dish.getOrder20ForSellList(),
             m("div",{class:"pub-dish-tick"},[
-                m("div",{class:"level "},[
-                    m("div",{class:"level-left"},[
+                m("div",{class:"is-flex"},[
+                    m("div",{class:""},[
                         m('span', {class:"has-text-weight-semibold is-size-4 "+utils.getColorStr(dish.getLastTick().color, 'font')},[
                             dish.getLastTick().LastPrz || '--'
                         ]),
                     ]),
-                    m("div",{class:"level-right"},[
+                    m('.spacer'),
+                    m("div",{class:""},[
                         m('span', {class:"has-text-weight-semibold is-size-5 "+utils.getColorStr(dish.getLastTick().rfpreColor, 'font')},[
                             dish.getLastTick().rfpre || '--'
                         ]),
                     ]),
                 ]),
-                m("div",{class:"level "},[
-                    m("div",{class:"level-left"},[
+                m("div",{class:"is-flex "},[
+                    m("div",{class:""},[
                         m('span', {class:" is-size-7 "},[
                             '指数：'+(dish.getLastTick().indexPrz || '--')
                         ]),
                     ]),
-                    m("div",{class:"level-right"},[
+                    m('.spacer'),
+                    m("div",{class:""},[
                         m('span', {class:" is-size-7 "},[
                             '标记：'+(dish.getLastTick().SettPrz || '--')
                         ]),
@@ -310,26 +335,32 @@ export default {
                 ]),
             ]),
             dish.getOrder20ForBuyList(),
-            m('div', {class:"pub-dish-bottom buttons are-small"}, [
-                m('button', { class:"button "+(dish.dishType == 0?' is-primary':' is-outlined'), onclick:function(){
-                    dish.setdishType(0)
-                }}, [
-                    '买卖盘口'
+            m('div', {class:"pub-dish-bottom buttons are-small is-hidden-touch"}, [
+                dish.getDishTypeBtns()
+            ]),
+            m('div', {class: "dropdown pub-dish-select is-hidden-desktop" + (dish.dishTypeListOpen?' is-active':'')}, [
+                m('.dropdown-trigger', {}, [
+                    m('button', {class: "button is-outline is-fullwidth",'aria-haspopup':true, "aria-controls": "dropdown-menu2", onclick: function(e){
+                        dish.dishTypeListOpen = !dish.dishTypeListOpen
+                        window.stopBubble(e)
+                    }}, [
+                        m('div', {}, [
+                            m('span',{ class: ""}, dish.dishTypeList[dish.dishType]),
+                            m('span', {class: "icon "},[
+                                m('i', {class: "iconfont iconxiala has-text-primary", "aria-hidden": true })
+                            ]),
+                        ])
+                    ]),
                 ]),
-                m('button', { class:"button is-outlined "+(dish.dishType == 1?' is-primary':' is-outlined'), onclick:function(){
-                    dish.setdishType(1)
-                }}, [
-                    '买盘盘口'
+                m('.dropdown-menu', {class:"max-height-500 scroll-y", id: "dropdown-menu2", role: "menu"}, [
+                    m('.dropdown-content', {class:"has-text-centered"}, [
+                        dish.getMenuDishTypeList()
+                    ]),
                 ]),
-                m('button', { class:"button "+(dish.dishType == 2?' is-primary':' is-outlined'), onclick:function(){
-                    dish.setdishType(2)
-                }}, [
-                    '卖盘盘口'
-                ]),
-            ])
+            ]),
         ])
     },
-    onremove: function(vnode) {
+    onbeforeremove: function(vnode) {
         dish.rmEVBUS()
     },
 }

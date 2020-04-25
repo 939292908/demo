@@ -515,7 +515,7 @@ export default {
             ])
         ])
     },
-    onremove: function () {
+    onbeforeremove: function () {
         obj.rmEVBUS()
     }
 }

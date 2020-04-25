@@ -594,10 +594,13 @@ utils.getPosInfo = function(pos,assetD){
         obj.aMgnRateforLiqStr = (Number(obj.aMgnRateforLiq || 0)*100).toFixed2(2)+'%'
         //回报率
         obj.aProfitPerStr = (Number(obj.aProfitPer || 0)*100).toFixed2(2)+'%'
+        obj.aProfitPerColor = Number(obj.aProfitPer || 0)>0?1:Number(obj.aProfitPer || 0)<0?-1:0
         //止盈价
         obj.StopP = obj.StopP?Number(obj.StopP || 0).toFixed2(PrzMinIncSize):''
         //止损价
         obj.StopL = obj.StopL?Number(obj.StopL || 0).toFixed2(PrzMinIncSize):''
+
+        obj.SettleCoin = assetD.SettleCoin
 
         obj.loading = false
 
@@ -703,6 +706,32 @@ utils.WltViaStr = function (value, type) {
         return obj[value] || ''
     }
 
+}
+
+utils.isMobile = function() {
+    let userAgentInfo = navigator.userAgent;
+ 
+    let mobileAgents = [ "Android", "iPhone", "SymbianOS", "Windows Phone", "iPad","iPod"];
+ 
+    let mobile_flag = false;
+ 
+    //根据userAgent判断是否是手机
+    for (let v = 0; v < mobileAgents.length; v++) {
+        if (userAgentInfo.indexOf(mobileAgents[v]) > 0) {
+            mobile_flag = true;
+            break;
+        }
+    }
+ 
+    let screen_width = window.screen.width;
+    let screen_height = window.screen.height;    
+ 
+    //根据屏幕分辨率判断是否是手机
+    if(screen_width < 500 && screen_height < 800){
+        mobile_flag = true;
+    }
+
+    return mobile_flag;
 }
 
 export default utils

@@ -49,12 +49,12 @@ let obj = {
             this.EV_GET_ORD_READY_unbinder()
         }
         this.EV_GET_ORD_READY_unbinder = window.gEVBUS.on(gTrd.EV_GET_ORD_READY, arg => {
-            console.log('EV_GET_ORD_READY==>>>',arg)
+            console.log('EV_GET_ORD_READY==>>>', arg)
             that.initObj()
             that.subPosNeedSymTick()
 
         })
-        
+
         if (this.EV_ORD_UPD_unbinder) {
             this.EV_ORD_UPD_unbinder()
         }
@@ -64,10 +64,10 @@ let obj = {
         })
 
         //assetD合约详情全局广播
-        if(this.EV_ASSETD_UPD_unbinder){
+        if (this.EV_ASSETD_UPD_unbinder) {
             this.EV_ASSETD_UPD_unbinder()
         }
-        this.EV_ASSETD_UPD_unbinder = window.gEVBUS.on(gMkt.EV_ASSETD_UPD,arg=> {
+        this.EV_ASSETD_UPD_unbinder = window.gEVBUS.on(gMkt.EV_ASSETD_UPD, arg => {
             that.initObj()
         })
 
@@ -81,7 +81,7 @@ let obj = {
         if (this.EV_ORD_UPD_unbinder) {
             this.EV_ORD_UPD_unbinder()
         }
-        if(this.EV_ASSETD_UPD_unbinder){
+        if (this.EV_ASSETD_UPD_unbinder) {
             this.EV_ASSETD_UPD_unbinder()
         }
     },
@@ -115,9 +115,9 @@ let obj = {
                 obj.OTypeStr = utils.getOtypeByStr(obj.OType, ass)
 
                 //委托价格
-                if(obj.OType == 2 || obj.OType == 4){
+                if (obj.OType == 2 || obj.OType == 4) {
                     obj.displayPrz = '市价'
-                }else{
+                } else {
                     obj.displayPrz = Number(obj.Prz).toFixed2(PrzMinIncSize)
                 }
                 // 成交均价
@@ -127,19 +127,19 @@ let obj = {
                 //委托数量
                 obj.QtyF = Number(obj.QtyF).toFixed2(VolMinValSize)
 
-                if(obj.StopPrz){
-                    obj.cond = obj.StopBy==2?'指数价':obj.StopBy==1?'最新价':'标记价'
-                    obj.cond += (obj.OrdFlag&8)?'≥':'≤'
+                if (obj.StopPrz) {
+                    obj.cond = obj.StopBy == 2 ? '指数价' : obj.StopBy == 1 ? '最新价' : '标记价'
+                    obj.cond += (obj.OrdFlag & 8) ? '≥' : '≤'
                     obj.cond += obj.StopPrz.toFixed2(PrzMinIncSize)
-                }else{
+                } else {
                     obj.cond = '--'
                 }
 
                 obj.AtStr = new Date(obj.At).format('MM/dd hh:mm:ss'),
 
 
-                //止盈价
-                obj.StopP = obj.StopP ? Number(obj.StopP || 0).toFixed2(PrzMinIncSize) : '--'
+                    //止盈价
+                    obj.StopP = obj.StopP ? Number(obj.StopP || 0).toFixed2(PrzMinIncSize) : '--'
                 //止损价
                 obj.StopL = obj.StopL ? Number(obj.StopL || 0).toFixed2(PrzMinIncSize) : '--'
 
@@ -154,16 +154,16 @@ let obj = {
 
     getTheadList: function () {
         return this.theadList.map(function (item, i) {
-            return m("th", { key: "ordertHeadItem" + i, class: ""+item.class }, [
+            return m("th", { key: "ordertHeadItem" + i, class: "" + item.class }, [
                 item.title
             ])
         })
     },
-    getPosList: function () {
+    getOrdList: function () {
         return this.posList.map(function (item, i) {
             return m("tr", { key: "orderTableListItem" + i, class: "" }, [
                 m("td", { class: " " }, [
-                    item.PId?item.PId.substr(-4):'--'
+                    item.PId ? item.PId.substr(-4) : '--'
                 ]),
                 m("td", { class: "" }, [
                     m("p", { class: " " }, [
@@ -171,7 +171,7 @@ let obj = {
                     ])
                 ]),
                 m("td", { class: "" }, [
-                    m("p", { class: " "}, [
+                    m("p", { class: " " }, [
                         item.displayLever
                     ]),
                 ]),
@@ -187,14 +187,14 @@ let obj = {
                 m("td", { class: " " }, [
                     item.Qty
                 ]),
-                m("td", { class: " "}, [
+                m("td", { class: " " }, [
                     item.PrzF
                 ]),
-                m("td", { class: " "}, [
+                m("td", { class: " " }, [
                     item.QtyF
                 ]),
-                m("td",{class:""},[
-                    (item.StopP || '--')+'/'+(item.StopL || '--')
+                m("td", { class: "" }, [
+                    (item.StopP || '--') + '/' + (item.StopL || '--')
                 ]),
                 m("td", { class: "" }, [
                     item.cond
@@ -204,7 +204,7 @@ let obj = {
                 ]),
                 m("td", { class: "" }, [
                     m("button", {
-                        class: "button is-primary "+(item.loading?' is-loading':''), 
+                        class: "button is-primary " + (item.loading ? ' is-loading' : ''),
                         onclick: function () {
                             obj.delOrder(item)
                         }
@@ -212,6 +212,70 @@ let obj = {
                         '撤单'
                     ])
                 ])
+            ])
+        })
+    },
+    getOrdListForM: function () {
+        return this.posList.map(function (item, i) {
+            return m('.card', { key: "orderTableListItemForM" + i }, [
+                m('div', { class: 'card-content' }, [
+                    m('div', { class: "pub-order-m-content-header" }, [
+                        m('span', { class: "" }, [
+                            utils.getSymDisplayName(window.gMkt.AssetD, item.Sym)
+                        ]),
+                        m('div', { class: "pub-order-change-lever" + utils.getColorStr(item.Sz > 0 ? 1 : -1, 'font') }, [
+                            m('span', {}, [
+                                item.displayLever,
+                            ]),
+                        ]),
+                        m('.spacer'),
+                        m('p', { class: '' }, [
+                            '仓位ID: ' + item.PId.substr(-4)
+                        ]),
+                    ]),
+                    m('div', { class: 'pub-order-m-content content is-flex' }, [
+                        m('div', {}, [
+                            m('p', {}, [
+                                '成交/委托数量'
+                            ]),
+                            m('p', {}, [
+                                item.QtyF + '/' + item.Qty
+                            ]),
+                        ]),
+                        m('.spacer'),
+                        m('div', {}, [
+                            m('p', {}, [
+                                '成交/委托价格'
+                            ]),
+                            m('p', {}, [
+                                item.PrzF + '/' + item.Prz
+                            ]),
+                        ]),
+                        m('.spacer'),
+                        m('div', { class: "has-text-right" }, [
+                            m('p', {}, [
+                                '触发条件'
+                            ]),
+                            m('p', { class: "" + utils.getColorStr(item.UPNLColor, 'font') }, [
+                                item.cond   
+                            ]),
+                        ]),
+                    ]),
+                    m('div', { class: "pub-order-m-content-footer" }, [
+                        m('span', { class: "" }, [
+                            item.AtStr   
+                        ]),
+                        m('.spacer'),
+                        m("button", {
+                            class: "button is-primary is-small" + (item.loading ? ' is-loading' : ''),
+                            onclick: function () {
+                                obj.delOrder(item)
+                            }
+                        }, [
+                            '撤单'
+                        ])
+                    ]),
+                ]),
             ])
         })
     },
@@ -229,18 +293,45 @@ let obj = {
             window.gMkt.ReqSub(needSub)
         }
     },
-    delOrder: function(param){
+    delOrder: function (param) {
         param.loading = true
         gTrd.ReqTrdOrderDel({
             "AId": param.AId,
             "OrdId": param.OrdId,
             "Sym": param.Sym,
-        }, function(gTrd, arg){
-            if(arg.code != 0){
+        }, function (gTrd, arg) {
+            if (arg.code != 0) {
                 param.loading = false
-                window.$message({content: utils.getTradeErrorCode(arg.code), type: 'danger'})
+                window.$message({ content: utils.getTradeErrorCode(arg.code), type: 'danger' })
             }
         })
+    },
+    getContent: function () {
+        if (window.isMobile) {
+            return obj.getOrdListForM()
+        } else {
+            return m('div', { class: " table-container" }, [
+                m("table", { class: "table is-hoverable ", cellpadding: 0, cellspacing: 0 }, [
+                    m("thead", { class: "" }, [
+                        m("tr", { class: "" }, [
+                            obj.getTheadList(),
+                            m("th", {}, [
+                                // m("button", {
+                                //     class: "button is-white ", onclick: function () {
+                                //         window.$message({ content: "全部撤单", type: 'danger' })
+                                //     }
+                                // }, [
+                                //     '全部撤单'
+                                // ])
+                            ])
+                        ])
+                    ]),
+                    m("tbody", { class: "" }, [
+                        obj.getOrdList()
+                    ])
+                ])
+            ])
+        }
     }
 }
 
@@ -254,29 +345,11 @@ export default {
     },
     view: function (vnode) {
 
-        return m("div", { class: "pub-order table-container " }, [
-            m("table", { class: "table is-hoverable ", cellpadding: 0, cellspacing: 0 }, [
-                m("thead", { class: "" }, [
-                    m("tr", { class: "" }, [
-                        obj.getTheadList(),
-                        m("th", {}, [
-                            // m("button", {
-                            //     class: "button is-white ", onclick: function () {
-                            //         window.$message({ content: "全部撤单", type: 'danger' })
-                            //     }
-                            // }, [
-                            //     '全部撤单'
-                            // ])
-                        ])
-                    ])
-                ]),
-                m("tbody", { class: "" }, [
-                    obj.getPosList()
-                ])
-            ])
+        return m("div", { class: "pub-order" }, [
+            obj.getContent()
         ])
     },
-    onremove: function () {
+    onbeforeremove: function () {
         obj.rmEVBUS()
     }
 }

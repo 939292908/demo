@@ -159,7 +159,7 @@ let obj = {
             ])
         })
     },
-    getPosList: function () {
+    getOrdList: function () {
         return this.posList.map(function (item, i) {
             return m("tr", { key: "planListTableListItem" + i, class: "" }, [
                 m("td", { class: " " }, [
@@ -209,9 +209,73 @@ let obj = {
                             obj.delOrder(item)
                         }
                     }, [
-                        '撤单'
+                        '删除'
                     ])
                 ])
+            ])
+        })
+    },
+    getOrdListForM: function () {
+        return this.posList.map(function (item, i) {
+            return m('.card', { key: "planTableListItemForM" + i }, [
+                m('div', { class: 'card-content' }, [
+                    m('div', { class: "pub-plan-m-content-header" }, [
+                        m('span', { class: "" }, [
+                            utils.getSymDisplayName(window.gMkt.AssetD, item.Sym)
+                        ]),
+                        m('div', { class: "pub-plan-change-lever" + utils.getColorStr(item.Sz > 0 ? 1 : -1, 'font') }, [
+                            m('span', {}, [
+                                item.displayLever,
+                            ]),
+                        ]),
+                        m('.spacer'),
+                        m('p', { class: '' }, [
+                            '仓位ID: ' + item.PId.substr(-4)
+                        ]),
+                    ]),
+                    m('div', { class: 'pub-plan-m-content content is-flex' }, [
+                        m('div', {}, [
+                            m('p', {}, [
+                                '委托数量'
+                            ]),
+                            m('p', {}, [
+                                item.Qty
+                            ]),
+                        ]),
+                        m('.spacer'),
+                        m('div', {}, [
+                            m('p', {}, [
+                                '委托价格'
+                            ]),
+                            m('p', {}, [
+                                item.Prz
+                            ]),
+                        ]),
+                        m('.spacer'),
+                        m('div', { class: "has-text-right" }, [
+                            m('p', {}, [
+                                '触发条件'
+                            ]),
+                            m('p', { class: "" + utils.getColorStr(item.UPNLColor, 'font') }, [
+                                item.cond   
+                            ]),
+                        ]),
+                    ]),
+                    m('div', { class: "pub-plan-m-content-footer" }, [
+                        m('span', { class: "" }, [
+                            item.AtStr   
+                        ]),
+                        m('.spacer'),
+                        m("button", {
+                            class: "button is-primary is-small" + (item.loading ? ' is-loading' : ''),
+                            onclick: function () {
+                                obj.delOrder(item)
+                            }
+                        }, [
+                            '删除'
+                        ])
+                    ]),
+                ]),
             ])
         })
     },
@@ -241,6 +305,33 @@ let obj = {
                 window.$message({content: utils.getTradeErrorCode(arg.code), type: 'danger'})
             }
         })
+    },
+    getContent: function () {
+        if (window.isMobile) {
+            return obj.getOrdListForM()
+        } else {
+            return m('div', { class: " table-container" }, [
+                m("table", { class: "table is-hoverable ", cellpadding: 0, cellspacing: 0 }, [
+                    m("thead", { class: "" }, [
+                        m("tr", { class: "" }, [
+                            obj.getTheadList(),
+                            m("th", {}, [
+                                // m("button", {
+                                //     class: "button is-white ", onclick: function () {
+                                //         window.$message({ content: "全部撤单", type: 'danger' })
+                                //     }
+                                // }, [
+                                //     '全部撤单'
+                                // ])
+                            ])
+                        ])
+                    ]),
+                    m("tbody", { class: "" }, [
+                        obj.getOrdList()
+                    ])
+                ])
+            ])
+        }
     }
 }
 
@@ -254,29 +345,11 @@ export default {
     },
     view: function (vnode) {
 
-        return m("div", { class: "pub-plan-list table-container " }, [
-            m("table", { class: "table is-hoverable ", cellpadding: 0, cellspacing: 0 }, [
-                m("thead", { class: "" }, [
-                    m("tr", { class: "" }, [
-                        obj.getTheadList(),
-                        m("th", {}, [
-                            // m("button", {
-                            //     class: "button is-white ", onclick: function () {
-                            //         window.$message({ content: "全部撤单", type: 'danger' })
-                            //     }
-                            // }, [
-                            //     '全部撤单'
-                            // ])
-                        ])
-                    ])
-                ]),
-                m("tbody", { class: "" }, [
-                    obj.getPosList()
-                ])
-            ])
+        return m("div", { class: "pub-plan " }, [
+            obj.getContent()
         ])
     },
-    onremove: function () {
+    onbeforeremove: function () {
         obj.rmEVBUS()
     }
 }

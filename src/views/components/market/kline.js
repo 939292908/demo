@@ -865,7 +865,11 @@ export default {
             m('#tv_chart_container', {class:""})
         ])
     },
-    onremove: function(vnode) {
+    onbeforeremove: function(vnode) {
+        if(window.gTvWidgetFT){
+            window.gTvWidgetFT.remove()
+            window.gTvWidgetFT = null
+        }
         obj.rmEVBUS()
     },
 }

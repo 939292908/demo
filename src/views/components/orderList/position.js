@@ -112,6 +112,7 @@ let obj = {
     })
   },
   getPosList: function(){
+    let btnsOpen = window.$config.positionBtns.desktop
     return this.posList.map(function(item, i){
       return m("tr",{key: "posTableListItem"+i, class:""},[
         m("td",{class:""},[
@@ -124,7 +125,10 @@ let obj = {
           m("p",{class:"pub-pos-change-lever"+utils.getColorStr(item.Sz > 0?1:-1, 'font'), onclick: function(){
             obj.setLeverage(item)
           }},[
-            item.displayLever
+            m('span', {}, [
+              item.displayLever,
+            ]),
+            m("i",{class:"iconfont iconotc-editName iconfont-medium"+(btnsOpen.leverage.open?'':' is-hidden')}),
           ]),
         ]),
         m("td",{class:""},[
@@ -152,38 +156,146 @@ let obj = {
           obj.setStopPL(item)
         }},[
           
-          m("button",{class:"button is-white"},[
+          m("button",{class:"button is-white"+(btnsOpen.stopPL.open?'':' is-hidden')},[
             (item.StopP || '--')+'/'+(item.StopL || '--'),
             m("i",{class:"iconfont iconotc-editName iconfont-medium"}),
           ]),
+          m('span', {class:""+(btnsOpen.stopPL.open?' is-hidden':'')}, [
+            (item.StopP || '--')+'/'+(item.StopL || '--'),
+          ])
         ]),
         m("td",{class:"pub-pos-buttons"},[
-          m("button",{class:"button is-primary "+(item.loading?' is-loading': ''), onclick: function(){
+          m("button",{class:"button is-primary "+(item.loading?' is-loading': '')+(btnsOpen.marketClose.open?'':' is-hidden'), onclick: function(){
             obj.placeOrder('close', item)
           }},[
             '市价平仓'
           ]),
-          m("button",{class:"button is-primary "+(item.loading?' is-loading': ''), onclick: function(){
+          m("button",{class:"button is-primary "+(item.loading?' is-loading': '')+(btnsOpen.doubleOpen.open?'':' is-hidden'), onclick: function(){
             obj.placeOrder('add', item)
           }},[
             '加倍开仓'
           ]),
-          m("button",{class:"button is-primary "+(item.loading?' is-loading': ''), onclick: function(){
+          m("button",{class:"button is-primary "+(item.loading?' is-loading': '')+(btnsOpen.backOpen.open?'':' is-hidden'), onclick: function(){
             obj.placeOrder('back', item)
           }},[
             '反向开仓'
           ]),
-          m("button",{class:"button is-primary "+(item.loading?' is-loading': ''), onclick: function(){
+          m("button",{class:"button is-primary "+(item.loading?' is-loading': '')+(btnsOpen.narketAdd.open?'':' is-hidden'), onclick: function(){
             obj.placeOrder('marketAdd', item)
           }},[
             '市价加仓'
           ]),
-          m("button",{class:"button is-primary "+(item.loading?' is-loading': ''), onclick: function(){
+          m("button",{class:"button is-primary "+(item.loading?' is-loading': '')+(btnsOpen.marketSomeClose.open || btnsOpen.limitSomeClose.open?'':' is-hidden'), onclick: function(){
             obj.placeOrder('someClose', item)
           }},[
-            '平仓'
+            btnsOpen.marketSomeClose.open && btnsOpen.limitSomeClose.open ?'平仓': btnsOpen.marketSomeClose.open ?'市价平仓':btnsOpen.limitSomeClose.open ?'限价平仓': '平仓'
           ]),
         ])
+      ])
+    })
+  },
+  getPosListForM: function(){
+    let btnsOpen = window.$config.positionBtns.mobile
+    return this.posList.map(function(item, i){
+      return m('.card', {key: "posTableListItemForM"+i}, [
+        m('header', { class: 'card-header' }, [
+          m('p', { class: 'card-header-title' }, [
+            '仓位ID: '+item.PId.substr(-4)
+          ]),
+        ]),
+        m('div', { class: 'card-content' }, [
+          m('div', {class:"pub-pos-m-content-header"}, [
+            m('span', {class:""}, [
+              utils.getSymDisplayName(window.gMkt.AssetD, item.Sym)
+            ]),
+            m('div', {class:"pub-pos-change-lever"+utils.getColorStr(item.Sz > 0?1:-1, 'font'), onclick: function(){
+              obj.setLeverage(item)
+            }}, [
+              m('span', {}, [
+                item.displayLever,
+              ]),
+              m("i",{class:"iconfont iconotc-editName iconfont-medium"+(btnsOpen.leverage.positionList?'':' is-hidden')}),
+            ]),
+          ]),
+          m('div', { class: 'pub-pos-m-content content is-flex' }, [
+            m('div', {}, [
+              m('p', {}, [
+                '持仓数量(张)'
+              ]),
+              m('p', {}, [
+                item.Sz
+              ]),
+              m('p', {}, [
+                '开仓均价('+item.SettleCoin+')'
+              ]),
+              m('p', {}, [
+                item.PrzIni
+              ]),
+            ]),
+            m('.spacer'),
+            m('div', {}, [
+              m('p', {}, [
+                '保证金('+item.SettleCoin+')'
+              ]),
+              m('p', {}, [
+                item.aMM 
+              ]),
+              m('p', {}, [
+                '强平价格('+item.SettleCoin+')'
+              ]),
+              m('p', {}, [
+                item.aPrzLiq
+              ]),
+            ]),
+            m('.spacer'),
+            m('div', { class: "has-text-right"}, [
+              m('p', {}, [
+                '未实现盈亏('+item.SettleCoin+')'
+              ]),
+              m('p', {class:""+utils.getColorStr(item.UPNLColor, 'font')}, [
+                item.aUPNL
+              ]),
+              m('p', {}, [
+                '回报率'
+              ]),
+              m('p', {class:""+utils.getColorStr(item.aProfitPerColor, 'font')}, [
+                item.aProfitPerStr
+              ]),
+            ]),
+          ]),
+        ]),
+        m('footer', { class: 'card-footer' }, [
+          m("a",{class:"is-primary card-footer-item"+(item.loading?' is-loading': '')+(btnsOpen.stopPL.positionList?'':' is-hidden'), onclick: function(){
+            obj.setStopPL(item)
+          }},[
+            '止盈止损'
+          ]),
+          m("a",{class:"is-primary card-footer-item"+(item.loading?' is-loading': '')+(btnsOpen.marketClose.positionList?'':' is-hidden'), onclick: function(){
+            obj.placeOrder('close', item)
+          }},[
+            '市价平仓'
+          ]),
+          m("a",{class:"is-primary card-footer-item"+(item.loading?' is-loading': '')+(btnsOpen.doubleOpen.positionList?'':' is-hidden'), onclick: function(){
+            obj.placeOrder('add', item)
+          }},[
+            '加倍开仓'
+          ]),
+          m("a",{class:"is-primary card-footer-item"+(item.loading?' is-loading': '')+(btnsOpen.backOpen.positionList?'':' is-hidden'), onclick: function(){
+            obj.placeOrder('back', item)
+          }},[
+            '反向开仓'
+          ]),
+          m("a",{class:"is-primary card-footer-item"+(item.loading?' is-loading': '')+(btnsOpen.narketAdd.positionList?'':' is-hidden'), onclick: function(){
+            obj.placeOrder('marketAdd', item)
+          }},[
+            '市价加仓'
+          ]),
+          m("a",{class:"is-primary card-footer-item"+(item.loading?' is-loading': '')+(btnsOpen.marketSomeClose.positionList || btnsOpen.limitSomeClose.positionList?'':' is-hidden'), onclick: function(){
+            obj.placeOrder('someClose', item)
+          }},[
+            btnsOpen.marketSomeClose.positionList && btnsOpen.limitSomeClose.positionList ?'平仓': btnsOpen.marketSomeClose.positionList ?'市价平仓':btnsOpen.limitSomeClose.positionList ?'限价平仓': '平仓'
+          ]),
+        ]),
       ])
     })
   },
@@ -202,6 +314,8 @@ let obj = {
     }
   },
   setLeverage: function(pos){
+    if(!window.isMobile && !window.$config.positionBtns.desktop.leverage.open) return
+    if(window.isMobile && !window.$config.positionBtns.mobile.leverage.open) return
     let Sym = pos.Sym
     let PId = pos.PId
     window.$openLeverageMode({
@@ -298,8 +412,28 @@ let obj = {
     
   },
   setStopPL: function(pos){
+    if(!window.isMobile && !window.$config.positionBtns.desktop.stopPL.open) return
+    if(window.isMobile && !window.$config.positionBtns.mobile.stopPL.open) return
     if(window.$openStopPLMode){
       window.$openStopPLMode(pos)
+    }
+  },
+  getContent: function(){
+    if(window.isMobile){
+      return obj.getPosListForM()
+    }else{
+      return m('div', { class: " table-container"}, [
+        m("table",{class:"table is-hoverable ", cellpadding: 0, cellspacing: 0},[
+          m("thead",{class:""},[
+            m("tr",{class:""},[
+              obj.getTheadList()
+            ])
+          ]),
+          m("tbody",{class:""},[
+            obj.getPosList()
+          ])
+        ])
+      ])
     }
   }
 }
@@ -314,20 +448,11 @@ export default {
     },
     view: function(vnode) {
         
-        return m("div",{class:"pub-pos table-container"},[
-          m("table",{class:"table is-hoverable ", cellpadding: 0, cellspacing: 0},[
-            m("thead",{class:""},[
-              m("tr",{class:""},[
-                obj.getTheadList()
-              ])
-            ]),
-            m("tbody",{class:""},[
-              obj.getPosList()
-            ])
-          ])
+        return m("div",{class:"pub-pos"},[
+          obj.getContent()
         ])
     },
-    onremove: function(){
+    onbeforeremove: function(){
       obj.rmEVBUS()
     }
 }

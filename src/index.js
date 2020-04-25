@@ -7,8 +7,7 @@ if (true) {
     m.route.prefix='#!'
 }
 //////////////////////////////////////////////////////////////////////
-import EVBUS  from './libs/evbus'
-window.gEVBUS = new EVBUS();
+require('./models/initEVBUS')
 
 import utils from './utils/utils'
 window.utils = utils
@@ -66,8 +65,18 @@ window.$message = function({title = '提示', content = '', type = 'dark'}){
 }
 //////////////////////////////////////////////////////////////////////
 
+// 判断是否是移动端
+window.isMobile = utils.isMobile()
+
+window.onresize = function(arg){
+    window.isMobile = utils.isMobile()
+}
+
+
 //路由
 require('./route');
+
+
 
 
 

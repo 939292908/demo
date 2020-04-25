@@ -1,10 +1,31 @@
 {
   "id": "1715108",
-  "name": "gaea_client_pub",
+  "name": "gdo_client_pub",
   "font_family": "iconfont",
   "css_prefix_text": "icon",
   "description": "",
   "glyphs": [
+    {
+      "icon_id": "12250505",
+      "name": "导航icon菜单",
+      "font_class": "daohang",
+      "unicode": "e620",
+      "unicode_decimal": 58912
+    },
+    {
+      "icon_id": "12250522",
+      "name": "趋势icon",
+      "font_class": "hangqing",
+      "unicode": "e623",
+      "unicode_decimal": 58915
+    },
+    {
+      "icon_id": "12250724",
+      "name": "导航icon",
+      "font_class": "toolbar-side",
+      "unicode": "e631",
+      "unicode_decimal": 58929
+    },
     {
       "icon_id": "12250530",
       "name": "删除icon二级",

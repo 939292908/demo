@@ -157,7 +157,7 @@ export default {
             
           ])
     },
-    onremove: function(vnode) {
+    onbeforeremove: function(vnode) {
         obj.rmEVBUS()
     },
 }

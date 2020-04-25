@@ -473,11 +473,12 @@ export default {
                             }}, [
                                 "买入/做多(看涨)"
                             ]),
-                            m('div', {class: "pub-place-order-form-need-mgn level"}, [
-                                m('div', {class: "level-left"}, [
+                            m('div', {class: "pub-place-order-form-need-mgn is-flex"}, [
+                                m('div', {class: ""}, [
                                     '所需保证金'
                                 ]),
-                                m('div', {class: "level-right"}, [
+                                m('.spacer'),
+                                m('div', {class: ""}, [
                                     Number(obj.MgnNeedForBuy).toPrecision2(6,8)
                                 ])
                             ])
@@ -490,11 +491,12 @@ export default {
                             }}, [
                                 "卖出/做空(看跌)"
                             ]),
-                            m('div', {class: "pub-place-order-form-need-mgn level"}, [
-                                m('div', {class: "level-left"}, [
+                            m('div', {class: "pub-place-order-form-need-mgn is-flex"}, [
+                                m('div', {class: ""}, [
                                     '所需保证金'
                                 ]),
-                                m('div', {class: "level-right"}, [
+                                m('.spacer'),
+                                m('div', {class: ""}, [
                                     Number(obj.MgnNeedForSell).toPrecision2(6,8)
                                 ])
                             ])
@@ -503,17 +505,18 @@ export default {
                 ]),
             ]),
             
-            m('div', {class: "pub-place-order-form-wallet level field"}, [
-                m('div', {class: "level-left"}, [
+            m('div', {class: "pub-place-order-form-wallet is-flex field"}, [
+                m('div', {class: ""}, [
                     '可用保证金'
                 ]),
-                m('div', {class: "level-right"}, [
+                m('.spacer'),
+                m('div', {class: ""}, [
                     obj.wlt.aWdrawable?Number(obj.wlt.aWdrawable).toFixed2(8): (0).toFixed2(8)
                 ])
             ])
         ])
     },
-    onremove: function () {
+    onbeforeremove: function () {
         obj.rmEVBUS()
     }
 }

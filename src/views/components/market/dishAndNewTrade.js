@@ -90,7 +90,7 @@ export default {
         obj.getTabsActiveContent()
       ])
   },
-  onremove: function(vnode) {
+  onbeforeremove: function(vnode) {
     obj.rmEVBUS()
   },
 }

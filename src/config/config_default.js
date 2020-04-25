@@ -2,6 +2,7 @@
 const config = {
     exchId: 0, //渠道ID
     loginType: 0, // 登录类型，0:默认,账号密码登录，1: token登录
+    mobile: 1, // 是否适配移动端界面，0: 不适配，1: 开始适配
     future: {
         tradeType: 0, // 下单面板交易模式，0: 默认（仓位选择+下单）， 1: 单仓位交易（暂不支持），2: 买卖双向开仓（暂不支持），3: 下单即开仓（下单面板没有仓位选择）
         UPNLPrzActive: '1', // 仓位未实现盈亏计算选择，'1':最新价， '2'：标记价
@@ -107,6 +108,85 @@ const config = {
         // 平仓
         someCloseMode: {
             type: 0,
+        }
+    },
+    // 仓位按钮显示开关
+    positionBtns: {
+        mobile: {
+            // 市价平仓
+            marketClose: {
+                positionList: 0,
+                positionDes: 0,
+            },
+            // 反向开仓
+            backOpen: {
+                positionList: 1,
+                positionDes: 1,
+            },
+            // 加倍开仓
+            doubleOpen: {
+                positionList: 0,
+                positionDes: 0,
+            },
+            // 市价加仓
+            narketAdd: {
+                positionList: 1,
+                positionDes: 1,
+            },
+            // 市价平仓（可选择数量平仓）
+            marketSomeClose: {
+                positionList: 1,
+                positionDes: 1,
+            },
+            // 限价平仓（可选择数量平仓）
+            limitSomeClose: {
+                positionList: 1,
+                positionDes: 1,
+            },
+            // 止盈止损设置
+            stopPL: {
+                positionList: 1,
+                positionDes: 1,
+            },
+            // 杠杠调整
+            leverage: {
+                positionList: 1,
+                positionDes: 1,
+            },
+        },
+        desktop: {
+            // 市价平仓
+            marketClose: {
+                open: 1,
+            },
+            // 反向开仓
+            backOpen: {
+                open: 1,
+            },
+            // 加倍开仓
+            doubleOpen: {
+                open: 1,
+            },
+            // 市价加仓
+            narketAdd: {
+                open: 1,
+            },
+            // 市价平仓（可选择数量平仓）
+            marketSomeClose: {
+                open: 1,
+            },
+            // 限价平仓（可选择数量平仓）
+            limitSomeClose: {
+                open: 1,
+            },
+            // 止盈止损设置
+            stopPL: {
+                open: 1,
+            },
+            // 杠杠调整
+            leverage: {
+                open: 1,
+            },
         }
     }
 }

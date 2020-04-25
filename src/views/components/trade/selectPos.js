@@ -140,15 +140,17 @@ let obj = {
   },
   getPosListItem: function(pos, isSelect){
     if(pos){
-      return m('div', {key: 'selectPosItem'+pos.PId+(isSelect?'isSelect':''), class: 'level w100 cursor-pointer'+(isSelect?' ':''), onclick: function(){
+      return m('div', {key: 'selectPosItem'+pos.PId+(isSelect?'isSelect':''), class: 'is-flex w100 cursor-pointer'+(isSelect?' ':''), onclick: function(){
         obj.selectPosItem(pos)
       }},[
         m('span', {class: ''},[
           '仓位ID '+pos.PId.substr(-4)
         ]),
+        m('.spacer'),
         m('span', {class: ''},[
           '方向 '+(pos.Sz>0?'多仓':pos.Sz<0?'空仓':'--')
         ]),
+        m('.spacer'),
         m('span', {class: ''},[
           '数量/价格 '+(pos.PrzIni)+'/'+(pos.Sz)
         ]),
@@ -157,16 +159,19 @@ let obj = {
         ]):'')
       ])
     }else{
-      return m('div', {key: 'selectPosItem'+(isSelect?'isSelect':''), class: 'level w100 cursor-pointer'+(isSelect?' ':'')},[
+      return m('div', {key: 'selectPosItem'+(isSelect?'isSelect':''), class: 'is-flex w100 cursor-pointer'+(isSelect?' ':'')},[
         m('span', {class: ''},[
           '仓位ID --'
         ]),
+        m('.spacer'),
         m('span', {class: ''},[
           '方向 --'
         ]),
+        m('.spacer'),
         m('span', {class: ''},[
           '数量/价格 --/--'
         ]),
+        m('.spacer'),
         (isSelect?m('span', {class: "icon"},[
           m('i', {class: "iconfont iconxiala iconfont-medium", "aria-hidden": true })
         ]):'')
@@ -313,7 +318,7 @@ export default {
             // ]),
         ])
     },
-    onremove: function(){
+    onbeforeremove: function(){
       obj.rmEVBUS()
     }
 }

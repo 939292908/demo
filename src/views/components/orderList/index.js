@@ -10,17 +10,35 @@ import wltRec from './wltRec'
 
 let obj = {
     tabsActive: 0,
-    tabsList: ['持有仓位', '当前委托', '当前计划', '历史委托', '成交记录', '合约账单'],
+    tabsList: [{
+        name:'持有仓位',
+        class: '',
+    },{
+        name:'当前委托',
+        class: '',
+    },{
+        name:'当前计划',
+        class: '',
+    },{
+        name:'历史委托',
+        class: ' is-hidden-touch',
+    },{
+        name:'成交记录',
+        class: ' is-hidden-touch',
+    },{
+        name:'合约账单',
+        class: ' is-hidden-touch',
+    }],
     setTabsActive: function(param){
         this.tabsActive = param
     },
     getTabsList: function(){
         return this.tabsList.map(function(item,i){
             return m("li",{class:""+(obj.tabsActive == i?' is-active':'')},[
-                m("a",{key: "orderListTabsItem"+i, class:"", href:"javascript:void(0);", onclick: function(){
+                m("a",{key: "orderListTabsItem"+i, class:""+item.class, href:"javascript:void(0);", onclick: function(){
                     obj.setTabsActive(i)
                 }},[
-                    item
+                    item.name
                 ])
             ])
         })
@@ -52,7 +70,7 @@ export default {
     },
     view: function(vnode) {
         
-        return m("div",{class:"pub-trade-list box has-text-centered"},[
+        return m("div",{class:"pub-trade-list "+(window.isMobile?'':' box')},[
             m("div",{class:"pub-trade-list-tabs tabs "},[
                 m("ul",[
                     obj.getTabsList()
