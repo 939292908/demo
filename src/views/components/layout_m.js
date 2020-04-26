@@ -236,6 +236,32 @@ let obj = {
       let oldSubArr = this.oldSubArr
       window.gMkt.ReqUnSub(oldSubArr)
   },
+  getUserInfoCon: function(){
+    if(window.gWebAPI.isLogin()){
+      return m("ul",{class:"menu-list"},[
+        m("li",{class:""},[
+          m("p",{class:""},[
+            window.gWebAPI.CTX.account.accountName
+          ]),
+          m("p",{class:""},[
+            window.gWebAPI.CTX.account.uid
+          ]),
+        ]),
+      ])
+    }else{
+      return m("ul",{class:"menu-list"},[
+        m("li",{class:"is-flex"},[
+          m("span",{class:""},[
+            '登录'
+          ]),
+          m('.spacer'),
+          m("span",{class:"icon is-large"},[
+            m('i', {class: 'iconfont iconlogin is-size-3'})
+          ]),
+        ]),
+      ])
+    }
+  }
 }
 
 import login from './userCenter/login'
@@ -269,9 +295,45 @@ export default {
             
             m("div",{class:"navbar-menu is-hidden-desktop"+(obj.leftMenu?' is-active':' is-hidden')},[
               m("div",{class:"navbar-end"},[
-                m("p",{class:"navbar-item"},[
-                  window.gWebAPI.CTX.account.accountName
+                m("aside",{class:"menu"},[
+                  obj.getUserInfoCon()
                 ])
+                /**
+                 * <aside class="menu">
+                      <p class="menu-label">
+                        General
+                      </p>
+                      <ul class="menu-list">
+                        <li><a>Dashboard</a></li>
+                        <li><a>Customers</a></li>
+                      </ul>
+                      <p class="menu-label">
+                        Administration
+                      </p>
+                      <ul class="menu-list">
+                        <li><a>Team Settings</a></li>
+                        <li>
+                          <a class="is-active">Manage Your Team</a>
+                          <ul>
+                            <li><a>Members</a></li>
+                            <li><a>Plugins</a></li>
+                            <li><a>Add a member</a></li>
+                          </ul>
+                        </li>
+                        <li><a>Invitations</a></li>
+                        <li><a>Cloud Storage Environment Settings</a></li>
+                        <li><a>Authentication</a></li>
+                      </ul>
+                      <p class="menu-label">
+                        Transactions
+                      </p>
+                      <ul class="menu-list">
+                        <li><a>Payments</a></li>
+                        <li><a>Transfers</a></li>
+                        <li><a>Balance</a></li>
+                      </ul>
+                    </aside>
+                 */
               ])
               /*<ul class="menu-list">
                 <li><a>Dashboard</a></li>
