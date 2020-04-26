@@ -25,6 +25,7 @@ let obj = {
   oldSubArr: [],
   rightMenu: false,
   leftMenu: false,
+  klineOpen: false,
   //初始化全局广播
   initEVBUS: function(){
     let that = this
@@ -335,6 +336,25 @@ export default {
     },
     view: function(vnode) {
         return m("div",{class: ""}, [
+          m('div', {class: 'pub-m-kline-box has-background-white '+(obj.klineOpen?' open':'')}, [
+            m("nav",{class:"pub-layout-m-header is-fixed-top navbar is-transparent", role:"navigation", "aria-label":"main navigation"},[
+              m('div', {class:"navbar-brand is-flex"}, [
+                m('a', {class:"navbar-item", onclick: function(e){
+                  obj.klineOpen = false
+                }}, [
+                  m('span', {class:"icon is-medium"}, [
+                    m('i', {class:"iconfont iconarrow-left"}),
+                  ]),
+                ]),
+                m('.spacer'),
+                m('div', {}, [
+                  'k'
+                ]),
+                m('.spacer'),
+                
+              ]),
+            ]),
+          ]),
           m("nav",{class:"pub-layout-m-header is-fixed-top navbar is-transparent", role:"navigation", "aria-label":"main navigation"},[
             m('div', {class:"navbar-brand is-flex"}, [
               m('a', {class:"navbar-item", onclick: function(e){
@@ -350,7 +370,9 @@ export default {
               m(symSelect),
               m('.spacer'),
               m('a', {class:"navbar-item"}, [
-                m('span', {class:"icon is-medium"}, [
+                m('span', {class:"icon is-medium", onclick: function(){
+                  obj.klineOpen = true
+                }}, [
                   m('i', {class:"iconfont iconhangqing"}),
                 ]),
               ]),

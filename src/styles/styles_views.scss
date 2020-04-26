@@ -809,6 +809,26 @@ hr {
 }
 // 资产模块 end
 
+// 手机端k线页面 start
+.pub-m-kline-box {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 31;
+    transform: translateX(100%);
+    transition: all .2s;
+    overflow: auto;
+}
+
+.pub-m-kline-box.open {
+    transform: translateX(0);
+}
+// 手机端k线页面 end
+
 // 屏幕适配相关 start
 @media screen and (min-width: 1025px){
     body > section {
