@@ -6,6 +6,13 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "6399037",
+      "name": "退出",
+      "font_class": "weibiaoti--",
+      "unicode": "e60b",
+      "unicode_decimal": 58891
+    },
+    {
       "icon_id": "12250498",
       "name": "更多箭头",
       "font_class": "arrow-right",
