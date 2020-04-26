@@ -6,6 +6,27 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "12250498",
+      "name": "更多箭头",
+      "font_class": "arrow-right",
+      "unicode": "e61f",
+      "unicode_decimal": 58911
+    },
+    {
+      "icon_id": "12255667",
+      "name": "复制",
+      "font_class": "copy",
+      "unicode": "e663",
+      "unicode_decimal": 58979
+    },
+    {
+      "icon_id": "12258621",
+      "name": "icon-not_login",
+      "font_class": "login",
+      "unicode": "e605",
+      "unicode_decimal": 58885
+    },
+    {
       "icon_id": "12250505",
       "name": "导航icon菜单",
       "font_class": "daohang",
