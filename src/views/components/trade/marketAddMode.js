@@ -111,7 +111,7 @@ let obj = {
     }*/
     gEVBUS.emit(obj.EV_OPENMARKETADDMODE_UPD, {Ev: obj.EV_OPENMARKETADDMODE_UPD, param: param})
   },
-  closeStopPLMode: function(){
+  closeMode: function(){
     this.open = false
     this.form.num = ''
   },
@@ -205,7 +205,7 @@ export default {
             ]),
             m("button", {
               class: "delete", "aria-label": "close", onclick: function () {
-                obj.closeStopPLMode()
+                obj.closeMode()
               }
             }),
           ]),
@@ -251,7 +251,7 @@ export default {
             ]),
             m("button", {
               class: "button", onclick: function () {
-                obj.closeStopPLMode()
+                obj.closeMode()
               }
             }, [
               '取消'
