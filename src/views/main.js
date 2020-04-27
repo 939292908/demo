@@ -11,6 +11,8 @@ let main = {
     TICKCLACTNTERVAL: 1000,
     lastTmForTick: 0,
     messageContent: [],
+    // 上次获取风险限额的时间
+    getRSLastTm: 0,
     initEVBUS: function () {
         let that = this
 
@@ -249,6 +251,11 @@ let main = {
 
         if (info.pos && info.ord && info.wlt && info.rs) {
 
+            // 距上次获取风险限额的时间超过1小时则重新获取风险限额
+            if(Date.now() - this.getRSLastTm >= 3600 * 1000){
+                this.getRiskLimits()
+            }
+
 
             let posObj = s.Poss
             let pos = []
@@ -293,6 +300,7 @@ let main = {
                 "AId": s.RT["UserId"] + "01",
                 "Sym": SymArr.join(',')
             }, function () {
+                that.getRSLastTm = Date.now()
                 that.setDisplayTrdInfo()
             })
         }
