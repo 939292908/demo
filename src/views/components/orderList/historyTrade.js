@@ -92,7 +92,7 @@ let obj = {
                 item.Sz = Number(item.Sz || 0).toFixed2(VolMinValSize)
 
                 item.PnlCls = Number(item.PnlCls || 0).toPrecision2(6,8)
-                item.Fee = Number(item.Fee || 0).toPrecision2(6,8)
+                item.Fee = Number(-item.Fee || 0).toPrecision2(6,8)
 
                 item.Dir = item.Sz > 0?1:-1
                 item.DirStr = utils.getDirByStr(item.Dir)
