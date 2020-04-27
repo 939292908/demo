@@ -16,7 +16,10 @@ let obj = {
     wlt: {},
     MgnNeedForBuy: 0,
     MgnNeedForSell: 0,
-    
+    // tick行情最后刷新时间
+    lastTmForTick: 0,
+    // tick行情刷新时间间隔
+    TICKCLACTNTERVAL: 1*1000,
     //初始化全局广播
     initEVBUS: function () {
         let that = this
@@ -87,6 +90,13 @@ let obj = {
             }
             that.setMgnNeed()
         })
+        //tick行情全局广播
+        if(this.EV_TICK_UPD_unbinder){
+            this.EV_TICK_UPD_unbinder()
+        }
+        this.EV_TICK_UPD_unbinder = window.gEVBUS.on(gMkt.EV_TICK_UPD,arg=> {
+            that.onTick(arg)
+        })
 
 
     },
@@ -119,6 +129,9 @@ let obj = {
         }
         if(this.EV_CHANGEPLACEORDPRZABDNUM_unbinder){
             this.EV_CHANGEPLACEORDPRZABDNUM_unbinder()
+        }
+        if(this.EV_TICK_UPD_unbinder){
+            this.EV_TICK_UPD_unbinder()
         }
     },
     initPos: function (param) {
@@ -496,7 +509,14 @@ let obj = {
                 ])
             ])
         }
-    }
+    },
+    onTick: function(param){
+        let tm = Date.now()
+        if(tm - this.lastTmForTick > this.TICKCLACTNTERVAL){
+            this.setMgnNeed()
+            this.lastTmForTick = tm
+        }
+    },
 }
 export default {
     oninit: function (vnode) {
