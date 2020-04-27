@@ -122,7 +122,10 @@ let obj = {
         m('td', {class: '', align: 'center'},[
           pos.aQtySell || 0
         ]),
-        m('td', {class: '', align: 'center'},[
+        m('td', {class: '', align: 'center', onclick: function (e) {
+          obj.delPos(pos)
+          window.stopBubble(e)
+        }},[
           m("button", {
             class: "delete"+(obj.checkPosDelShow(pos)?'':' is-hidden'), 
             "aria-label": "close", 
@@ -136,7 +139,7 @@ let obj = {
     } 
   },
   checkPosDelShow: function(pos){
-    return pos.Sz == 0 && !pos.aQtySell && !pos.aQtySell && (pos.Flg&1) == 0
+    return pos.Sz == 0 && !pos.aQtySell && !pos.aQtyBuy && (pos.Flg&1) == 0
   },
   getPosListItem: function(pos, isSelect){
     if(pos){
