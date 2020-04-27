@@ -1196,6 +1196,7 @@ class Mkt {
 
     ReqTrdPosStopLP(aParam,aFunc) {
         /*
+        设置止盈止损 PosStopLP
         {
             "AId": "123456701",  // 账号的AId, 必须有
             "Sym": "BTC.USDT",   // 交易对名称, 必须有
@@ -1208,6 +1209,20 @@ class Mkt {
         */
         let s = this;
         s.WSCall_Trade("PosStopLP",aParam,aFunc);
+    };
+
+    ReqTrdPosTransMgn(aParam,aFunc) {
+        /*
+            调整仓位保证金 PosTransMgn
+        {
+            "AId": "123456701",  // 账号的AId, 必须有
+            "Sym": "BTC.USDT",   // 交易对名称, 必须有
+            "PId": "xxxxxxxx",   // 仓位的ID, 必须有
+            "Param": 8515.5      // float64 值,必须有,正数表示增加，负数表示减少.
+        }
+        */
+        let s = this;
+        s.WSCall_Trade("PosTransMgn",aParam,aFunc);
     };
 
     ws_onopen(aObj,evt) {

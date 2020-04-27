@@ -442,7 +442,7 @@ let obj = {
     if(window.isMobile && !window.$config.positionBtns.mobile.changeMgn.open) return
     if(pos.Lever == 0) return
     if(window.$openChangeMgnMode){
-      window.$openChangeMgnMode(pos)
+      window.$openChangeMgnMode({pos:pos,cb:function(){}})
     }
   }
 }

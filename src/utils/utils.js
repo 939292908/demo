@@ -572,6 +572,8 @@ utils.getPosInfo = function(pos,assetD){
         }else{
           obj.displayLever = '--'
         }
+
+        obj.dirStr = obj.Sz > 0?'多':obj.Sz < 0?'空':''
         
         //开仓均价
         obj.PrzIni = Number(obj.PrzIni).toFixed2(PrzMinIncSize)

@@ -1,5 +1,4 @@
 var m = require("mithril")
-import * as clacMgnNeed from '../../../futureCalc/calcMgnNeed.js'
 
 
 let obj = {
@@ -7,12 +6,15 @@ let obj = {
     open: false,
     tabsActive: 0,
     form: {
-        prz: '',
         num: '',
     },
     param: {},
     wlt: {},
-    MgnNeed: '', //市价加仓所需委托保证金
+    maxAddMgn:'0.00000000',
+    minDelMgn:'0.00000000',
+    LastPrz: '0.00',
+    SettPrz: '0.00',
+    placeholder: '金额(USDT)',
     //初始化全局广播
     initEVBUS: function () {
         let that = this
@@ -31,6 +33,14 @@ let obj = {
         this.EV_WLT_UPD_unbinder = window.gEVBUS.on(gTrd.EV_WLT_UPD, arg => {
             that.initWlt()
         })
+
+        //tick行情全局广播
+        if(this.EV_TICK_UPD_unbinder){
+            this.EV_TICK_UPD_unbinder()
+        }
+        this.EV_TICK_UPD_unbinder = window.gEVBUS.on(gMkt.EV_TICK_UPD,arg=> {
+            that.onTick(arg)
+        })
     },
     //删除全局广播
     rmEVBUS: function () {
@@ -40,48 +50,50 @@ let obj = {
         if (this.EV_WLT_UPD_unbinder) {
             this.EV_WLT_UPD_unbinder()
         }
+        //tick行情全局广播
+        if(this.EV_TICK_UPD_unbinder){
+            this.EV_TICK_UPD_unbinder()
+        }
     },
     submit: function () {
         let that = this
 
+        
         if (this.form.num === '0') {
-            return $message({ title: '加仓数量不能为0', content: '加仓数量不能为0', type: 'danger' })
+            return $message({ title: '调整金额不能为0', content: '调整金额不能为0', type: 'danger' })
         } else if (!this.form.num) {
-            return $message({ title: '加仓数量不能为空', content: '加仓数量不能为空', type: 'danger' })
+            return $message({ title: '调整金额不能为空', content: '调整金额不能为空', type: 'danger' })
         }
 
         let Sym = this.param.pos.Sym
         let AId = this.param.pos.AId
         let PId = this.param.pos.PId
-        let Dir = this.param.pos.Sz > 0 ? 1 : -1
+        let num = this.tabsActive == 0? Number(this.form.num):-Number(this.form.num)
 
 
+        if(this.tabsActive == 0){
+            let aWdrawable = Number(obj.wlt.aWdrawable || 0)
+            if (aWdrawable == 0) {
+                return window.$message({ title: '提示', content: '可用资金不足！', type: 'danger' })
+            } else if (aWdrawable < Number(this.form.num)) {
+                return window.$message({ title: '提示', content: '调整金额不能大于最多可增加资产！', type: 'danger' })
+            }
+        }else{
+            if (Number(this.minDelMgn) < Number(this.form.num)) {
+                return window.$message({ title: '提示', content: '调整金额不能大于最多可减少资产！', type: 'danger' })
+            }
+        }
         let p = {
-            Sym: Sym,
-            PId: PId,
-            AId: AId,
-            COrdId: new Date().getTime() + '',
-            Dir: Dir,
-            OType: 2,
-            Prz: 1,
-            Qty: Number(this.form.num),
-            QtyDsp: 0,
-            Tif: 0,
-            OrdFlag: 0,
-            PrzChg: 0
+            "AId": AId,  // 账号的AId, 必须有
+            "Sym": Sym,   // 交易对名称, 必须有
+            "PId": PId,   // 仓位的ID, 必须有
+            "Param": num      // float64 值,必须有,正数表示增加，负数表示减少.
         }
 
-
-        let aWdrawable = Number(obj.wlt.aWdrawable || 0)
-        if (aWdrawable == 0) {
-            return window.$message({ title: '可用资金不足！', content: '可用资金不足！', type: 'danger' })
-        } else if (aWdrawable < Number(this.MgnNeed)) {
-            return window.$message({ title: '可用资金不足！', content: '可用资金不足！', type: 'danger' })
-        }
-
-        window.gTrd.ReqTrdOrderNew(p, function (aTrd, aArg) {
-            console.log('ReqTrdOrderNew ==> ', aArg)
+        window.gTrd.ReqTrdPosTransMgn(p, function (aTrd, aArg) {
+            console.log('ReqTrdPosTransMgn ==> ', aArg)
             if (aArg.code == 0) {
+                window.$message({ title: '提示', content: '操作成功！', type: 'success' })
                 that.open = false
             }
         })
@@ -91,10 +103,11 @@ let obj = {
     },
     initInfo: function (param) {
         this.form = {
-            prz: '',
             num: '',
         }
         this.param = param
+        this.minDelMgn = Number(param.pos.aAvailMgnISO).toFixed2(8)
+        this.placeholder = `金额(${param.pos.SettleCoin})`
         this.initWlt()
     },
     openMode: function (param) {
@@ -114,15 +127,11 @@ let obj = {
         this.form.num = ''
     },
     onNumInput: function (e) {
-        let Sym = this.param.pos.Sym
-        let ass = window.gMkt.AssetD[Sym]
-        let maxNum = Number(ass ? ass.OrderMaxQty : 0)
-        if (Number(e.target.value) > maxNum) {
-            this.form.num = maxNum
-        } else {
+        if (Number(e.target.value) < 0) {
+            this.form.num = 0
+        }else {
             this.form.num = e.target.value
         }
-        this.setMgnNeed()
     },
     initWlt: function (arg) {
         let Sym = this.param.pos ? this.param.pos.Sym : ''
@@ -136,49 +145,19 @@ let obj = {
             let item = wallets[i]
             if (item.AId && item.Coin == assetD.SettleCoin) {
                 this.wlt = item
+                this.maxAddMgn = Number(item.aWdrawable || 0).toFixed2(8)
             }
         }
         m.redraw()
     },
-    setMgnNeed() {
-        let that = this;
-        let pos = this.param.pos
-        let Sym = pos.Sym
-        let Prz = 0
-        let QtyLong = Number(this.form.num)
-        let QtyShort = Number(this.form.num)
-        let PId = pos.activePId
-        let Lever = pos.Lever
-        let Dir = pos.Sz > 0 ? 1 : -1
-
-        let posObj = window.gTrd.Poss
-        let posArr = []
-        for (let key in posObj) {
-            posArr.push(posObj[key])
+    onTick: function(param){
+        if(obj.open && obj.param.pos && param.Sym == obj.param.pos.Sym){
+            let obj = utils.getTickObj(window.gMkt.AssetD, window.gMkt.AssetEx, param.data)
+            if(obj){
+                this.LastPrz = obj.LastPrz
+                this.SettPrz = obj.SettPrz
+            }
         }
-        let order = window.gTrd.Orders['01']
-        let wallet = window.gTrd.Wlts['01']
-        let lastTick = window.gMkt.lastTick
-        let assetD = window.gMkt.AssetD
-        let RSdata = window.gTrd.RS
-
-        Prz = (lastTick[Sym] && lastTick[Sym].LastPrz) || (assetD[Sym] && assetD[Sym].PrzLatest) || 0
-
-        let newOrderForBuy = {
-            Sym: Sym,
-            Prz: Prz,
-            Qty: QtyLong,
-            QtyF: 0,
-            Dir: Dir,
-            PId: PId,
-            Lvr: Lever,
-            MIRMy: 0
-        }
-        clacMgnNeed.calcFutureWltAndPosAndMI(posArr, wallet, order, RSdata, assetD, lastTick, '1', newOrderForBuy, 0, res => {
-            console.log('成本计算结果： ', res)
-            that.MgnNeed = Number(res || 0)
-        })
-
     },
 }
 
@@ -193,11 +172,11 @@ export default {
     },
     view: function (vnode) {
 
-        return m('div', { class: 'pub-market-add' }, [
+        return m('div', { class: 'pub-change-mgn' }, [
             m("div", { class: "modal" + (obj.open ? " is-active" : ''), }, [
                 m("div", { class: "modal-background" }),
                 m("div", { class: "modal-card" }, [
-                    m("header", { class: "pub-market-add-head modal-card-head" }, [
+                    m("header", { class: "pub-change-mgn-head modal-card-head" }, [
                         m("p", { class: "modal-card-title" }, [
                             '调节保证金'
                         ]),
@@ -207,7 +186,7 @@ export default {
                             }
                         }),
                     ]),
-                    m("section", { class: "pub-market-add-content modal-card-body" }, [
+                    m("section", { class: "pub-change-mgn-content modal-card-body" }, [
                         m("div", { class: "tabs " }, [
                             m("ul", [
                                 m("li", { class: "" + (obj.tabsActive == 0 ? ' is-active' : '') }, [
@@ -216,7 +195,7 @@ export default {
                                             obj.setTabsActive(0)
                                         }
                                     }, [
-                                        '添加保证金'
+                                        '增加保证金'
                                     ])
                                 ]),
                                 m("li", { class: "" + (obj.tabsActive == 1 ? ' is-active' : '') }, [
@@ -230,39 +209,75 @@ export default {
                                 ]),
                             ])
                         ]),
-                        m('div', { class: "pub-market-add-content-stopp-input field" }, [
-                            m('div', { class: "control is-expanded" }, [
-                                m("input", { class: "input", type: 'number', placeholder: "市价", readonly: true })
-                            ])
+
+                        m('div', { class: "is-flex field" }, [
+                            m('div', { class: ""}, [
+                                m('span', { class: ""+utils.getColorStr(obj.param.Sz > 0?1:-1, 'font') }, [
+                                    obj.param.pos && obj.param.pos.dirStr
+                                ]),
+                                m('span', { class: ""}, [
+                                    utils.getSymDisplayName(window.gMkt.AssetD, obj.param.pos && obj.param.pos.Sym),
+                                ]),
+                            ]),
+                            m('.spacer'),
+                            m('div', { class: ""}, [
+                                m('span', { class: ""}, [
+                                    '最新价：'
+                                ]),
+                                m('span', { class: ""}, [
+                                    obj.LastPrz,
+                                ]),
+                            ]),
                         ]),
-                        m('div', { class: "pub-market-add-content-stopl-input field" }, [
+                        m('div', { class: "is-flex field" }, [
+                            m('div', { class: ""}, [
+                                m('span', { class: ""}, [
+                                    '当前保证金：'
+                                ]),
+                                m('span', { class: ""}, [
+                                    obj.param.pos && obj.param.pos.aMM
+                                ]),
+                            ]),
+                            m('.spacer'),
+                            m('div', { class: ""}, [
+                                m('span', { class: ""}, [
+                                    '标记价：'
+                                ]),
+                                m('span', { class: ""}, [
+                                    obj.SettPrz,
+                                ]),
+                            ]),
+                        ]),
+                        m('div', { class: "pub-change-mgn-content-stopl-input field" }, [
                             m('div', { class: "control is-expanded" }, [
                                 m('input', {
-                                    class: "input ", type: 'number', placeholder: "数量(张)", value: obj.form.num, oninput: function (e) {
+                                    class: "input ", type: 'number', placeholder: obj.placeholder, value: obj.form.num, oninput: function (e) {
                                         obj.onNumInput(e)
                                     }
                                 })
                             ])
                         ]),
-                        m('div', { class: "level" }, [
-                            m('div', { class: "level-left" }, [
-                                '委托保证金'
+                        m('div', { class: "is-flex"+(obj.tabsActive == 0?'':' is-hidden') }, [
+                            m('div', { class: ""}, [
+                                '最多可增加资产'
                             ]),
-                            m('div', { class: "level-left" }, [
-                                Number(obj.MgnNeed || 0).toFixed2(8)
+                            m('.spacer'),
+                            m('div', { class: ""}, [
+                                obj.maxAddMgn
                             ]),
                         ]),
-                        m('div', { class: "level" }, [
-                            m('div', { class: "level-left" }, [
-                                '可用保证金'
+                        m('div', { class: "is-flex"+(obj.tabsActive == 1?'':' is-hidden') }, [
+                            m('div', { class: ""}, [
+                                '最多可减少资产'
                             ]),
-                            m('div', { class: "level-left" }, [
-                                obj.wlt.aWdrawable ? Number(obj.wlt.aWdrawable).toFixed2(8) : (0).toFixed2(8)
+                            m('.spacer'),
+                            m('div', { class: ""}, [
+                                obj.minDelMgn
                             ]),
                         ]),
 
                     ]),
-                    m("footer", { class: "pub-market-add-foot modal-card-foot" }, [
+                    m("footer", { class: "pub-change-mgn-foot modal-card-foot" }, [
                         m("button", {
                             class: "button is-success", onclick: function () {
                                 obj.submit()
