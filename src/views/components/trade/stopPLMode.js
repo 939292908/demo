@@ -183,7 +183,7 @@ export default {
                 ]),
               ]),
               m('div', { class: "control is-expanded" }, [
-                m('input', { class: "input ", type: 'number', value:  obj.param.StopP, oninput: function(e){
+                m('input', { class: "input ", type: 'number', value:  obj.param.StopP, readonly: !obj.openStopP, oninput: function(e){
                   obj.onStopPInput(e)
                 }})
               ])
@@ -201,7 +201,7 @@ export default {
                 ]),
               ]),
               m('div', { class: "control is-expanded" }, [
-                m('input', { class: "input ", type: 'number', value:  obj.param.StopL, oninput: function(e){
+                m('input', { class: "input ", type: 'number', value:  obj.param.StopL, readonly: !obj.openStopL,  oninput: function(e){
                   obj.onStopLInput(e)
                 }})
               ])
