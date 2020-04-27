@@ -20,7 +20,8 @@ let obj = {
     lastTmForTick: 0,
     // tick行情刷新时间间隔
     TICKCLACTNTERVAL: 1*1000,
-    
+    PrzStep: 1,
+    NumStep: 1,
     //初始化全局广播
     initEVBUS: function () {
         let that = this
@@ -179,6 +180,12 @@ let obj = {
             maxLever: 0,    // 最大杠杆
             stopP: '',      // 止盈价
             stopL: ''       // 止损价
+        }
+        let Sym = window.gMkt.CtxPlaying.Sym
+        let ass = window.gMkt.AssetD[Sym]
+        if(ass){
+            this.PrzStep = Number(ass.PrzMinInc)
+            this.NumStep = Number(ass.OrderMinQty)
         }
     },
     submit: function(dir){
@@ -355,8 +362,11 @@ let obj = {
         let Sym = window.gMkt.CtxPlaying.Sym
         let ass = window.gMkt.AssetD[Sym]
         let maxNum = Number(ass?ass.OrderMaxQty:0)
+        let minNum = Number(ass?ass.OrderMinQty:0)
         if(Number(e.target.value) > maxNum){
             this.form.Num = maxNum
+        }else if(Number(e.target.value) < 0){
+            this.form.Num = minNum
         }else {
             this.form.Num = e.target.value
         }
@@ -367,29 +377,25 @@ let obj = {
         let Sym = window.gMkt.CtxPlaying.Sym
         let ass = window.gMkt.AssetD[Sym]
         let maxPrz = Number(ass?ass.PrzMax:0)
+        let minPrz = Number(ass?ass.PrzMinInc:0)
         if(Number(e.target.value) > maxPrz){
             this.form.Prz = maxPrz
+        }else if(Number(e.target.value) < 0){
+            this.form.Prz = minPrz
         }else {
             this.form.Prz = e.target.value
         }
         this.setMgnNeed()
     },
-    onInputFortriggerPrz: function(e){
-        let Sym = window.gMkt.CtxPlaying.Sym
-        let ass = window.gMkt.AssetD[Sym]
-        let maxPrz = Number(ass?ass.PrzMax:0)
-        if(Number(e.target.value) > maxPrz){
-            this.form.triggerPrz = maxPrz
-        }else {
-            this.form.triggerPrz = e.target.value
-        }
-    },
     onStopPInput: function(e){
         let Sym = window.gMkt.CtxPlaying.Sym
         let ass = window.gMkt.AssetD[Sym]
         let maxPrz = Number(ass?ass.PrzMax:0)
+        let minPrz = Number(ass?ass.PrzMinInc:0)
         if(Number(e.target.value) > maxPrz){
             this.form.stopP = maxPrz
+        }else if(Number(e.target.value) < 0){
+            this.form.stopP = minPrz
         }else {
             this.form.stopP = e.target.value
         }
@@ -398,10 +404,26 @@ let obj = {
         let Sym = window.gMkt.CtxPlaying.Sym
         let ass = window.gMkt.AssetD[Sym]
         let maxPrz = Number(ass?ass.PrzMax:0)
+        let minPrz = Number(ass?ass.PrzMinInc:0)
         if(Number(e.target.value) > maxPrz){
             this.form.stopL = maxPrz
+        }else if(Number(e.target.value) < 0){
+            this.form.stopL = minPrz
         }else {
             this.form.stopL = e.target.value
+        }
+    },
+    onInputFortriggerPrz: function(e){
+        let Sym = window.gMkt.CtxPlaying.Sym
+        let ass = window.gMkt.AssetD[Sym]
+        let maxPrz = Number(ass?ass.PrzMax:0)
+        let minPrz = Number(ass?ass.PrzMinInc:0)
+        if(Number(e.target.value) > maxPrz){
+            this.form.triggerPrz = maxPrz
+        }else if(Number(e.target.value) < 0){
+            this.form.triggerPrz = minPrz
+        }else {
+            this.form.triggerPrz = e.target.value
         }
     },
     initWlt: function(arg){
@@ -495,7 +517,7 @@ let obj = {
                 m("div", { class: "pub-place-order-form-stop-pl-input field has-addons" }, [
                     
                     m("div", { class: "pub-place-order-form-stop-pl-input-p control is-expanded" }, [
-                        m("input", { class: "input", type: 'number', placeholder: "止盈价", value: obj.form.stopP, oninput: function(e){
+                        m("input", { class: "input", type: 'number', placeholder: "止盈价", step: obj.PrzStep, value: obj.form.stopP, oninput: function(e){
                             obj.onStopPInput(e)
                         }})
                     ]),
@@ -503,7 +525,7 @@ let obj = {
                         '&'
                     ]),
                     m("div", { class: "pub-place-order-form-stop-pl-input-l control is-expanded" }, [
-                        m("input", { class: "input", type: 'number', placeholder: "止盈价", value: obj.form.stopL, oninput: function(e){
+                        m("input", { class: "input", type: 'number', placeholder: "止盈价", step: obj.PrzStep, value: obj.form.stopL, oninput: function(e){
                             obj.onStopLInput(e)
                         }})
                     ])
@@ -518,6 +540,7 @@ export default {
     },
     oncreate: function (vnode) {
         obj.initEVBUS()
+        obj.updateSpotInfo()
         obj.initPos()
         obj.setFaceV()
     },
@@ -540,7 +563,7 @@ export default {
             ]),
             m("div", { class: "pub-place-order-form-num-input field" }, [
                 m("div", { class: "control" }, [
-                    m("input", { class: "input", type: 'number', placeholder: "请输入数量", value: obj.form.Num,oninput: function(e) {
+                    m("input", { class: "input", type: 'number', placeholder: "请输入数量", step: obj.NumStep, value: obj.form.Num,oninput: function(e) {
                         obj.onInputForNum(e)
                     } }),
                     m('span', {class: 'pub-place-order-form-num-input-face-value'}, [
@@ -551,7 +574,7 @@ export default {
             obj.getStopPL(),
             m("div", { class: "pub-place-order-form-trigger-prz-input field" }, [
                 m("div", { class: "control" }, [
-                    m("input", { class: "input", type: 'number', placeholder: "请输入触发价格", value: obj.form.triggerPrz,oninput: function(e) {
+                    m("input", { class: "input", type: 'number', placeholder: "请输入触发价格", step: obj.PrzStep, value: obj.form.triggerPrz,oninput: function(e) {
                         obj.onInputFortriggerPrz(e)
                     }})
                 ])
