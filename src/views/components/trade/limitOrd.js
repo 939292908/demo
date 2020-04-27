@@ -68,6 +68,23 @@ let obj = {
             that.wlt = {}
         })
 
+        if(this.EV_CHANGEPLACEORDPRZABDNUM_unbinder){
+            this.EV_CHANGEPLACEORDPRZABDNUM_unbinder()
+        }
+        this.EV_CHANGEPLACEORDPRZABDNUM_unbinder = window.gEVBUS.on(gEVBUS.EV_CHANGEPLACEORDPRZABDNUM ,arg=> {
+            console.log('EV_CHANGEPLACEORDPRZABDNUM==>>>', arg)
+            switch(arg.type){
+                case 'prz':
+                    that.form.Prz = arg.val
+                    break;
+                case 'num':
+                    that.form.Num = arg.val
+                    break;
+                default:
+
+            }
+            that.setMgnNeed()
+        })
 
     },
     //删除全局广播
@@ -75,11 +92,31 @@ let obj = {
         if (this.EV_CHANGEACTIVEPOS_UPD_unbinder) {
             this.EV_CHANGEACTIVEPOS_UPD_unbinder()
         }
+
+        //tick行情全局广播
         if (this.EV_TICK_UPD_unbinder) {
             this.EV_TICK_UPD_unbinder()
         }
+
+        //当前选中合约变化全局广播
+        if(this.EV_CHANGESYM_UPD_unbinder){
+            this.EV_CHANGESYM_UPD_unbinder()
+        }
+
+        if(this.EV_GET_WLT_READY_unbinder){
+            this.EV_GET_WLT_READY_unbinder()
+        }
+
+        if(this.EV_WLT_UPD_unbinder){
+            this.EV_WLT_UPD_unbinder()
+        }
+
         if(this.EV_WEB_LOGOUT_unbinder){
             this.EV_WEB_LOGOUT_unbinder()
+        }
+
+        if(this.EV_CHANGEPLACEORDPRZABDNUM_unbinder){
+            this.EV_CHANGEPLACEORDPRZABDNUM_unbinder()
         }
     },
     initPos: function (param) {
@@ -342,7 +379,7 @@ let obj = {
         let Prz = Number(this.form.Prz)
         let QtyLong = Number(this.form.Num)
         let QtyShort = Number(this.form.Num)
-        let PId = window.gTrd.CtxPlaying.activePId
+        let PId = window.gTrd.CtxPlaying.activePId || 'new'
         let Lever = this.form.Lever
         
         let posObj = window.gTrd.Poss
@@ -385,6 +422,8 @@ let obj = {
             console.log('sell 成本计算结果： ', res)
             that.MgnNeedForSell = Number(res || 0)
         })
+
+        console.log(newOrderForBuy, newOrderForSell)
         
     },
     getStopPL: function(){

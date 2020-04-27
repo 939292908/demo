@@ -223,17 +223,23 @@ let dish = {
         return order20ForSell.Asks.map(function(item,i){
             return m("div",{class:"pub-dish-list-item is-flex"},[
                 m('div', {class: ""},[
-                    m('p', {class: "w100 has-text-left has-text-danger"},[
+                    m('p', {class: "w100 has-text-left has-text-danger", onclick: function(){
+                        dish.setPlaceOrdPrzAndNum('prz', item[0])
+                    }},[
                         item[0]
                     ]),
                 ]),
                 m('div', {class: ""},[
-                    m('p', {class: "w100"},[
+                    m('p', {class: "w100", onclick: function(){
+                        dish.setPlaceOrdPrzAndNum('num', item[1])
+                    }},[
                         item[1]
                     ]),
                 ]),
                 m('div', {class: "is-hidden-touch"},[
-                    m('p', {class: "w100 has-text-right"},[
+                    m('p', {class: "w100 has-text-right", onclick: function(){
+                        dish.setPlaceOrdPrzAndNum('num', item[2])
+                    }},[
                         item[2]
                     ]),
                 ]),
@@ -248,17 +254,23 @@ let dish = {
         return order20ForBuy.Bids.map(function(item,i){
             return m("div",{class:"pub-dish-list-item is-flex"},[
                 m('div', {class: ""},[
-                    m('p', {class: "w100 has-text-left has-text-success"},[
+                    m('p', {class: "w100 has-text-left has-text-success", onclick: function(){
+                        dish.setPlaceOrdPrzAndNum('prz', item[0])
+                    }},[
                         item[0]
                     ]),
                 ]),
                 m('div', {class: ""},[
-                    m('p', {class: "w100"},[
+                    m('p', {class: "w100", onclick: function(){
+                        dish.setPlaceOrdPrzAndNum('num', item[1])
+                    }},[
                         item[1]
                     ]),
                 ]),
                 m('div', {class: "is-hidden-touch"},[
-                    m('p', {class: "w100 has-text-right"},[
+                    m('p', {class: "w100 has-text-right", onclick: function(){
+                        dish.setPlaceOrdPrzAndNum('num', item[2])
+                    }},[
                         item[2]
                     ]),
                 ]),
@@ -291,6 +303,12 @@ let dish = {
                 ])
             ])
         })
+    },
+    setPlaceOrdPrzAndNum: function(type, val){
+        if(!val || val == '--'){
+            return 
+        }
+        gEVBUS.emit(gEVBUS.EV_CHANGEPLACEORDPRZABDNUM, { ev: gEVBUS.EV_CHANGEPLACEORDPRZABDNUM, type: type, val: val })
     }
 }
 

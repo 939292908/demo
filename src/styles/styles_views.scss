@@ -302,6 +302,9 @@ hr {
         div {
             z-index: 1;
             width: 33.33%;
+            p{
+                cursor: pointer;
+            }
         }
 
         div:nth-child(2) {

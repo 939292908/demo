@@ -70,6 +70,23 @@ let obj = {
         this.EV_WEB_LOGOUT_unbinder = window.gEVBUS.on(gWebAPI.EV_WEB_LOGOUT,arg=> {
             that.wlt = {}
         })
+        if(this.EV_CHANGEPLACEORDPRZABDNUM_unbinder){
+            this.EV_CHANGEPLACEORDPRZABDNUM_unbinder()
+        }
+        this.EV_CHANGEPLACEORDPRZABDNUM_unbinder = window.gEVBUS.on(gEVBUS.EV_CHANGEPLACEORDPRZABDNUM ,arg=> {
+            console.log('EV_CHANGEPLACEORDPRZABDNUM==>>>', arg)
+            switch(arg.type){
+                case 'prz':
+                    that.form.Prz = arg.val
+                    break;
+                case 'num':
+                    that.form.Num = arg.val
+                    break;
+                default:
+
+            }
+            that.setMgnNeed()
+        })
 
 
     },
@@ -78,11 +95,30 @@ let obj = {
         if (this.EV_CHANGEACTIVEPOS_UPD_unbinder) {
             this.EV_CHANGEACTIVEPOS_UPD_unbinder()
         }
+
+        //tick行情全局广播
         if (this.EV_TICK_UPD_unbinder) {
             this.EV_TICK_UPD_unbinder()
         }
+
+        //当前选中合约变化全局广播
+        if(this.EV_CHANGESYM_UPD_unbinder){
+            this.EV_CHANGESYM_UPD_unbinder()
+        }
+
+        if(this.EV_GET_WLT_READY_unbinder){
+            this.EV_GET_WLT_READY_unbinder()
+        }
+
+        if(this.EV_WLT_UPD_unbinder){
+            this.EV_WLT_UPD_unbinder()
+        }
+
         if(this.EV_WEB_LOGOUT_unbinder){
             this.EV_WEB_LOGOUT_unbinder()
+        }
+        if(this.EV_CHANGEPLACEORDPRZABDNUM_unbinder){
+            this.EV_CHANGEPLACEORDPRZABDNUM_unbinder()
         }
     },
     initPos: function (param) {
