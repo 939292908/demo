@@ -45,21 +45,68 @@ let obj = {
     let that = this
     this.TradeObj.push(param.data)
     let tm = Date.now()
-
+    console.log(this.TradeObj)
     if(!this.updateTradeTimer){
       this.updateTradeTimer = setTimeout(()=>{
+        console.log('updateTrade timer==>>>', this.TradeObj, this.updateTradeTimer)
         that.updateTrade(that.TradeObj)
         that.TradeObj = []
         that.lastTmForTrade = tm
+        this.updateTradeTimer = null
       }, this.TRADECLACTNTERVAL+50)
     }
     
     if(tm - this.lastTmForTrade > this.TRADECLACTNTERVAL){
+      console.log('updateTrade==>>>', this.TradeObj, this.updateTradeTimer)
       this.updateTrade(this.TradeObj)
       this.TradeObj = []
       this.lastTmForTrade = tm
       if(this.updateTradeTimer){
         clearTimeout(this.updateTradeTimer)
+        this.updateTradeTimer = null
+      }
+    }
+  },
+  initTrade(){
+    let that = this
+    let Sym = window.gMkt.CtxPlaying.Sym
+    let trades = window.gMkt.trades[Sym] || []
+    for(let item of trades){
+      let ass = window.gMkt.AssetD[item.Sym]
+      let PrzMinIncSize = ass?utils.getFloatSize(utils.getFullNum(ass.PrzMinInc)):6;
+      let VolMinValSize = ass?utils.getFloatSize(ass.Mult):6;
+
+      let trdObj = {
+        Sym: item.Sym,
+        At: item.At,
+        AtStr: new Date(item.At).format('hh:mm:ss'),
+        Prz: Number(item.Prz).toFixed(PrzMinIncSize),
+        Dir: item.Dir,
+        Sz: Number(item.Sz).toFixed(VolMinValSize),
+        Val: item.Val,
+        MatchID: item.MatchID,
+      }
+      if(item.Sym == window.gMkt.CtxPlaying.Sym){
+        that.tradeList.push(trdObj)
+        if(that.tradeList.length >= that.maxTradeListNum){
+          that.tradeList = that.tradeList.slice(0, that.maxTradeListNum)
+        }
+      }
+    }
+
+    if (that.tradeList.length < that.maxTradeListNum) {
+      let n = that.maxTradeListNum - that.tradeList.length
+      for (let i = 0; i < n; i++) {
+        that.tradeList.push({
+            Sym: '--',
+            At: '--',
+            AtStr: '--',
+            Prz: '--',
+            Dir: '--',
+            Sz: '--',
+            Val: '--',
+            MatchID: '--',
+          })
       }
     }
   },
@@ -105,7 +152,7 @@ let obj = {
             MatchID: '--',
           })
       }
-  }
+    }
     // tradeList
   },
   getTradeList: function(){
@@ -133,7 +180,7 @@ let obj = {
   },
   onChangeSym: function(param){
     this.tradeList = []
-    this.updateTrade()
+    this.initTrade()
   }
 }
 export default {
@@ -142,7 +189,7 @@ export default {
     },
     oncreate: function(vnode){
       obj.initEVBUS()
-      obj.updateTrade()
+      obj.initTrade()
     },
     view: function(vnode) {
         
