@@ -119,6 +119,7 @@ let obj = {
                 that.loginLoading = false
                 that.open = false
                 window.$message({title: '登录成功！', content: '登录成功！', type: 'success'})
+                utils.setItem('login-user-name', param.account.accountName)
             }else{
                 window.$message({title: utils.getWebApiErrorCode(res.result.code), content: utils.getWebApiErrorCode(res.result.code), type: 'danger'})
             }
@@ -131,24 +132,31 @@ let obj = {
         })
     },
     //初始化全局广播
-  initEVBUS: function(){
-    let that = this
-    
-    if(this.EV_OPENLOGINMODE_unbinder){
-        this.EV_OPENLOGINMODE_unbinder()
+    initEVBUS: function(){
+        let that = this
+        
+        if(this.EV_OPENLOGINMODE_unbinder){
+            this.EV_OPENLOGINMODE_unbinder()
+        }
+        this.EV_OPENLOGINMODE_unbinder = window.gEVBUS.on(gWebAPI.EV_OPENLOGINMODE,arg=> {
+            that.open = true
+        })
+        
+        
+    },
+    //删除全局广播
+    rmEVBUS: function(){
+        if(this.EV_OPENLOGINMODE_unbinder){
+            this.EV_OPENLOGINMODE_unbinder()
+        }
+    },
+    openLoginMode: function(){
+        this.open = !this.open
+        let userName = utils.getItem('login-user-name')
+        if(userName){
+            this.userName = userName
+        }
     }
-    this.EV_OPENLOGINMODE_unbinder = window.gEVBUS.on(gWebAPI.EV_OPENLOGINMODE,arg=> {
-        that.open = true
-    })
-    
-    
-  },
-  //删除全局广播
-  rmEVBUS: function(){
-      if(this.EV_OPENLOGINMODE_unbinder){
-          this.EV_OPENLOGINMODE_unbinder()
-      }
-  },
 }
 
 export default {
@@ -163,7 +171,7 @@ export default {
         
         return m('div', {class:'pub-login'}, [
             m('button', {class: "pub-login-btn button is-light is-hidden-touch", onclick: function(){
-                obj.open = !obj.open
+                obj.openLoginMode()
             }}, [
                 '登录'
             ]),
