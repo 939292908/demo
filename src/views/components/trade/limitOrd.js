@@ -503,6 +503,7 @@ export default {
         obj.updateSpotInfo()
         obj.initPos()
         obj.setFaceV()
+        obj.initWlt()
     },
     view: function (vnode) {
 
