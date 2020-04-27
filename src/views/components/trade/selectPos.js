@@ -197,10 +197,10 @@ let obj = {
     },function(gTrd, arg){
       console.log("ReqTrdPosOp ==>>> ", arg)
       if(arg.code == 0){
-        window.$message({content: '新增仓位成功！', type: 'success'})
+        window.$message({title: '新增仓位成功！', content: '新增仓位成功！', type: 'success'})
       }else{
         console.log(arg)
-        window.$message({content: utils.getTradeErrorCode(arg.code), type: 'danger'})
+        window.$message({title: utils.getTradeErrorCode(arg.code), content: utils.getTradeErrorCode(arg.code), type: 'danger'})
       }
     })
   },
@@ -217,10 +217,10 @@ let obj = {
     },function(gTrd, arg){
       console.log("ReqTrdPosOp ==>>> ", arg)
       if(arg.code == 0){
-        window.$message({content: '仓位删除成功！', type: 'success'})
+        window.$message({title: '仓位删除成功！', content: '仓位删除成功！', type: 'success'})
       }else{
         console.log(arg)
-        window.$message({content: utils.getTradeErrorCode(arg.code), type: 'danger'})
+        window.$message({title: utils.getTradeErrorCode(arg.code), content: utils.getTradeErrorCode(arg.code), type: 'danger'})
       }
     })
   },

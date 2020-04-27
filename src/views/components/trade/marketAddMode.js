@@ -47,9 +47,9 @@ let obj = {
     let that = this
 
     if(this.form.num === '0'){
-        return $message({content: '加仓数量不能为0', type: 'danger'})
+        return $message({title: '加仓数量不能为0', content: '加仓数量不能为0', type: 'danger'})
     }else if(!this.form.num){
-        return $message({content: '加仓数量不能为空', type: 'danger'})
+        return $message({title: '加仓数量不能为空', content: '加仓数量不能为空', type: 'danger'})
     }
 
     let Sym = this.param.pos.Sym
@@ -76,9 +76,9 @@ let obj = {
 
     let aWdrawable = Number(obj.wlt.aWdrawable || 0 )
     if(aWdrawable == 0){
-        return window.$message({content: '可用资金不足！', type: 'danger'})
+        return window.$message({title: '可用资金不足！', content: '可用资金不足！', type: 'danger'})
     }else if(aWdrawable < Number(this.MgnNeed)){
-        return window.$message({content: '可用资金不足！', type: 'danger'})
+        return window.$message({title: '可用资金不足！', content: '可用资金不足！', type: 'danger'})
     }
 
     window.gTrd.ReqTrdOrderNew(p, function(aTrd, aArg){

@@ -34,16 +34,16 @@ let obj = {
 
     if(this.openStopP){
       if(this.param.StopP === '0'){
-        return window.$message({content: '止盈价不能为0', type: 'danger'})
+        return window.$message({title: '止盈价不能为0', content: '止盈价不能为0', type: 'danger'})
       }else if(!this.param.StopP){
-        return window.$message({content: '请输入止盈价', type: 'danger'})
+        return window.$message({title: '请输入止盈价', content: '请输入止盈价', type: 'danger'})
       }
     }
     if(this.openStopL){
       if(this.param.StopL === '0'){
-        return window.$message({content: '止损价不能为0', type: 'danger'})
+        return window.$message({title: '止损价不能为0', content: '止损价不能为0', type: 'danger'})
       }else if(!this.param.StopL){
-        return window.$message({content: '请输入止损价', type: 'danger'})
+        return window.$message({title: '请输入止损价', content: '请输入止损价', type: 'danger'})
       }
     }
     
@@ -60,9 +60,9 @@ let obj = {
       if(arg.code == 0){
         that.open = false
         that.stopPLCallback && that.stopPLCallback(arg)
-        window.$message({content: '止盈止损设置成功！', type: 'success'})
+        window.$message({title: '止盈止损设置成功！', content: '止盈止损设置成功！', type: 'success'})
       }else{
-        window.$message({content: utils.getTradeErrorCode(arg.code), type: 'danger'})
+        window.$message({title: utils.getTradeErrorCode(arg.code), content: utils.getTradeErrorCode(arg.code), type: 'danger'})
       }
     })
   },

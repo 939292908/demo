@@ -53,7 +53,7 @@ let obj = {
             that.open = false
             that.validateCallback && that.validateCallback()
           }else{
-            window.$message({content: utils.getWebApiErrorCode(arg.result.code), type: 'danger'})
+            window.$message({title: utils.getWebApiErrorCode(arg.result.code), content: utils.getWebApiErrorCode(arg.result.code), type: 'danger'})
           }
         },function(err){
           that.submitLoading = false
@@ -74,7 +74,7 @@ let obj = {
             that.open = false
             that.validateCallback && that.validateCallback()
           }else{
-            window.$message({content: utils.getWebApiErrorCode(arg.result.code || arg.result), type: 'danger'})
+            window.$message({title: utils.getWebApiErrorCode(arg.result.code), content: utils.getWebApiErrorCode(arg.result.code || arg.result), type: 'danger'})
           }
         },function(err){
           that.submitLoading = false
@@ -147,16 +147,16 @@ let obj = {
     }, function(param){
         if(param.result.code == 0){
             that.getSMSLoading = false
-            window.$message({content: '验证码发送成功！', type: 'success'})
+            window.$message({title: '验证码发送成功！', content: '验证码发送成功！', type: 'success'})
             console.log(that)
             that.setCountDown()
         }else{
-            window.$message({content: utils.getWebApiErrorCode(res.result.code), type: 'danger'})
+            window.$message({title: utils.getWebApiErrorCode(arg.result.code), content: utils.getWebApiErrorCode(res.result.code), type: 'danger'})
         }
         console.log('ReqSMSVerifyCode success ==>',param)
     }, function(error){
         that.getSMSLoading = false
-        window.$message({content: '操作超时！', type: 'danger'})
+        window.$message({title: '操作超时！', content: '操作超时！', type: 'danger'})
         console.log('ReqSMSVerifyCode => ', error)
     })
   },

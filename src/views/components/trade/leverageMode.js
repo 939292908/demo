@@ -39,9 +39,9 @@ let obj = {
 
     if(this.tabsActive == 1){
       if(this.Lever === '0'){
-        return window.$message({content: '逐仓杠杆不能为0', type: 'danger'})
+        return window.$message({title: '逐仓杠杆不能为0',content: '逐仓杠杆不能为0', type: 'danger'})
       }else if(!this.Lever){
-        return window.$message({content: '请输入杠杆数量', type: 'danger'})
+        return window.$message({title: '请输入杠杆数量',content: '请输入杠杆数量', type: 'danger'})
       }
     }
     let param = {
@@ -67,9 +67,9 @@ let obj = {
               Lever: Number(that.Lever),
               MIRMy: Number(that.MIRMy),
             })
-            window.$message({content: '杠杆已调整！', type: 'success'})
+            window.$message({title: '杠杆已调整！',content: '杠杆已调整！', type: 'success'})
           }else{
-            window.$message({content: utils.getTradeErrorCode(arg.code), type: 'danger'})
+            window.$message({title: utils.getTradeErrorCode(arg.code), content: utils.getTradeErrorCode(arg.code), type: 'danger'})
           }
         })
       }

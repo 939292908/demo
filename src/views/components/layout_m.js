@@ -23,6 +23,9 @@ import selectPos from './trade/selectPos'
 
 let obj = {
   oldSubArr: [],
+  rightMenu: false,
+  leftMenu: false,
+  klineOpen: false,
   //初始化全局广播
   initEVBUS: function(){
     let that = this
@@ -35,10 +38,33 @@ let obj = {
         that.unSubTick()
         that.subTick()
     })
+    //body点击事件广播
+    if(this.EV_ClICKBODY_unbinder){
+      this.EV_ClICKBODY_unbinder()
+    }
+    this.EV_ClICKBODY_unbinder = window.gEVBUS.on(gEVBUS.EV_ClICKBODY,arg=> {
+        that.leftMenu = false
+        that.rightMenu = false
+    })
+
+    if(this.EV_ClOSEHEADERMENU_unbinder){
+      this.EV_ClOSEHEADERMENU_unbinder()
+    }
+    this.EV_ClOSEHEADERMENU_unbinder = window.gEVBUS.on(gEVBUS.EV_ClOSEHEADERMENU,arg=> {
+        if(arg.from != 'rightMenu'){
+            that.rightMenu = false
+        }
+        if(arg.from != 'leftMenu'){
+          that.leftMenu = false
+        }
+    })
   },
   rmEVBUS: function(){
     if(this.EV_CHANGESYM_UPD_unbinder){
         this.EV_CHANGESYM_UPD_unbinder()
+    }
+    if(this.EV_ClICKBODY_unbinder){
+      this.EV_ClICKBODY_unbinder()
     }
   },
   getKline: function(){
@@ -234,9 +260,73 @@ let obj = {
       let oldSubArr = this.oldSubArr
       window.gMkt.ReqUnSub(oldSubArr)
   },
+  getUserInfoCon: function(){
+    if(window.gWebAPI.isLogin()){
+      return m("ul",{class:"menu-list pub-layout-m-header-menu-user-info"},[
+        m("li",{class:"is-flex"},[
+          m("div",{class:""},[
+            m("p",{class:"is-size-3"},[
+              window.gWebAPI.CTX.account.accountName
+            ]),
+            m("p",{class:"is-size-7"},[
+              'UID:'+window.gWebAPI.CTX.account.uid
+            ]),
+          ]),
+          m('.spacer'),
+          
+          m("button",{class:"button is-white is-large", onclick: obj.signOut},[
+            m("span",{class:"icon is-large"},[
+              m('i', {class: 'iconfont iconweibiaoti-- is-size-3'})
+            ]),
+          ]),
+        ]),
+      ])
+    }else{
+      return m("ul",{class:"menu-list pub-layout-m-header-menu-login"},[
+        m("li",{class:"is-flex", onclick: function(){
+          window.gWebAPI.needLogin()
+        }},[
+          m("span",{class:"is-size-3"},[
+            '登录'
+          ]),
+          m('.spacer'),
+          m("span",{class:"icon is-large"},[
+            m('i', {class: 'iconfont iconlogin is-size-3'})
+          ]),
+        ]),
+      ])
+    }
+  },
+  signOut: function(){
+    let loginType = window.$config.loginType
+    switch(loginType){
+      case 0:
+        window.gWebAPI.ReqSignOut({}, function(res){
+          console.log('ReqSignOut success ==>> ',res)
+          if(res.result.code === 0){
+            window.$message({title: '退出登录成功！',content: '退出登录成功！', type: 'success'})
+          }else{
+            window.$message({title: '退出登录失败！',content: '退出登录失败！', type: 'danger'})
+          }
+        }, function(err){
+            window.$message({title: '操作超时',content: '操作超时', type: 'danger'})
+            console.log('ReqSignOut => ', err)
+        })
+        break;
+      case 1:
+        header.customSignOut({onSuc: function(arg){
+          let s = window.gWebAPI
+          s.CleanAccount()
+          gEVBUS.emit(s.EV_WEB_LOGOUT,{d:s.CTX})
+        }})
+        break;
+      default:
+
+    }
+  }
 }
 
-
+import login from './userCenter/login'
 export default {
     oninit: function(vnode){
         
@@ -246,20 +336,73 @@ export default {
     },
     view: function(vnode) {
         return m("div",{class: ""}, [
-          m("nav",{class:"pub-layout-m-header is-fixed-top navbar is-transparent is-flex", role:"navigation", "aria-label":"main navigation"},[
-            m('a', {class:"navbar-item"}, [
-              m('span', {class:"icon is-medium"}, [
-                m('i', {class:"iconfont icontoolbar-side"}),
+          m('div', {class: 'pub-m-kline-box has-background-white '+(obj.klineOpen?' open':'')}, [
+            m("nav",{class:"pub-layout-m-header is-fixed-top navbar is-transparent", role:"navigation", "aria-label":"main navigation"},[
+              m('div', {class:"navbar-brand is-flex"}, [
+                m('a', {class:"navbar-item", onclick: function(e){
+                  obj.klineOpen = false
+                }}, [
+                  m('span', {class:"icon is-medium"}, [
+                    m('i', {class:"iconfont iconarrow-left"}),
+                  ]),
+                ]),
+                m('.spacer'),
+                m('div', {}, [
+                  'k'
+                ]),
+                m('.spacer'),
+                
               ]),
             ]),
-            m('.spacer'),
-            m(symSelect),
-            m('.spacer'),
-            m('a', {class:"navbar-item"}, [
-              m('span', {class:"icon is-medium"}, [
-                m('i', {class:"iconfont iconhangqing"}),
+          ]),
+          m("nav",{class:"pub-layout-m-header is-fixed-top navbar is-transparent", role:"navigation", "aria-label":"main navigation"},[
+            m('div', {class:"navbar-brand is-flex"}, [
+              m('a', {class:"navbar-item", onclick: function(e){
+                obj.leftMenu = !obj.leftMenu
+                gEVBUS.emit(gEVBUS.EV_ClOSEHEADERMENU, {ev: gEVBUS.EV_ClOSEHEADERMENU, from: 'leftMenu'})
+                window.stopBubble(e)
+              }}, [
+                m('span', {class:"icon is-medium"}, [
+                  m('i', {class:"iconfont icontoolbar-side"}),
+                ]),
+              ]),
+              m('.spacer'),
+              m(symSelect),
+              m('.spacer'),
+              m('a', {class:"navbar-item"}, [
+                m('span', {class:"icon is-medium", onclick: function(){
+                  obj.klineOpen = true
+                }}, [
+                  m('i', {class:"iconfont iconhangqing"}),
+                ]),
               ]),
             ]),
+            
+            m("div",{class:"pub-layout-m-header-menu navbar-menu is-hidden-desktop"+(obj.leftMenu?' is-active':' is-hidden')},[
+              m("div",{class:"navbar-end"},[
+                m("aside",{class:"menu"},[
+                  obj.getUserInfoCon()
+                ]),
+                m('hr'),
+                m("div",{class:"navbar-item has-dropdown is-hoverable"},[
+                  m("a",{class:"navbar-link"},[
+                    '合约记录'
+                  ]),
+                  m("div",{class:"navbar-dropdown"},[
+                    m("a",{class:"navbar-item", onclick: this.signOut},[
+                      '历史委托'
+                    ]),
+                    m("a",{class:"navbar-item", onclick: this.signOut},[
+                      '历史成交'
+                    ]),
+                    m("a",{class:"navbar-item", onclick: this.signOut},[
+                      '合约账单'
+                    ])
+                  ])
+                ])
+                
+              ])
+            ])
           ]),
           m("div",{class: "pub-layout-m"}, [
             obj.getSelectPos(),
@@ -273,13 +416,15 @@ export default {
               ])
             ]),
             obj.getBottomList(),
+            
           ]),
 
           obj.getStopPLMode(),
           obj.getLeverageMode(),
           obj.getValidateMode(),
           obj.marketAddMode(),
-          obj.someCloseMode()
+          obj.someCloseMode(),
+          m(login)
         ])
     },
     onbeforeremove: function(){

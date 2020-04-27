@@ -296,7 +296,22 @@ let dish = {
 
 export default {
     oninit: function(vnode){
-        
+        if(window.isMobile){
+            // 手机端根据合约模式调整盘口
+            let tradeType = window.$config.future.tradeType
+            switch(tradeType){
+                case 0:
+                    dish.order20ListNum = 7
+                    break;
+                case 1:
+                case 2:
+                case 3:
+                    dish.order20ListNum = 8
+                    break;
+                default:
+                    dish.order20ListNum = 8
+            }
+        }
     },
     oncreate: function(vnode){
         dish.initEVBUS()

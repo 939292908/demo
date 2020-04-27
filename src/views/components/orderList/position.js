@@ -406,7 +406,7 @@ let obj = {
     window.gTrd.ReqTrdOrderNew(p, function(gTrd, arg){
       pos.loading = false
       if(arg.code!=0){
-          window.$message({content: utils.getTradeErrorCode(msg.code), type: 'danger'})
+          window.$message({title: utils.getTradeErrorCode(msg.code),content: utils.getTradeErrorCode(msg.code), type: 'danger'})
       }
     })
     

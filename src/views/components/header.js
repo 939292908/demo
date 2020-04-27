@@ -75,12 +75,12 @@ let header = {
         window.gWebAPI.ReqSignOut({}, function(res){
           console.log('ReqSignOut success ==>> ',res)
           if(res.result.code === 0){
-            window.$message({content: '退出登录成功！', type: 'success'})
+            window.$message({title: '退出登录成功！',content: '退出登录成功！', type: 'success'})
           }else{
-            window.$message({content: '退出登录失败！', type: 'danger'})
+            window.$message({title: '退出登录失败！',content: '退出登录失败！', type: 'danger'})
           }
         }, function(err){
-            window.$message({content: '操作超时', type: 'danger'})
+            window.$message({title: '操作超时',content: '操作超时', type: 'danger'})
             console.log('ReqSignOut => ', err)
         })
         break;

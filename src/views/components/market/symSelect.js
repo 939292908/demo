@@ -2,15 +2,23 @@ var m = require("mithril")
 
 let symSelect = {
     //行情限制数据处理时间间隔
-    TICKCLACTNTERVAL: 100,
+    TICKCLACTNTERVAL: 1000,
     //已订阅的行情列表
     oldSubArr: [],
     //合约名称列表
-    futureSymList: [],
+    futureSymList: {},
+    futureSymObj: {},
+    // 合约对应的ToC列表
+    futureCoin: [],
     // 现货名称列表
     spotSymList: [],
     // 是否显示列表
     symListOpen: false,
+
+    tickObj: {},
+    lastTmForTick: 0,
+    lastTick: {},
+
     //初始化全局广播
     initEVBUS: function(){
         let that = this
@@ -40,6 +48,24 @@ let symSelect = {
             that.symListOpen = false
         })
 
+        //tick行情全局广播
+        if(this.EV_TICK_UPD_unbinder){
+            this.EV_TICK_UPD_unbinder()
+        }
+        this.EV_TICK_UPD_unbinder = window.gEVBUS.on(gMkt.EV_TICK_UPD,arg=> {
+            that.onTick(arg)
+        })
+        
+
+        if(this.EV_ClOSEHEADERMENU_unbinder){
+            this.EV_ClOSEHEADERMENU_unbinder()
+        }
+        this.EV_ClOSEHEADERMENU_unbinder = window.gEVBUS.on(gEVBUS.EV_ClOSEHEADERMENU,arg=> {
+            if(arg.from != 'symSelect'){
+                that.symListOpen = false
+            }
+        })
+
     },
     rmEVBUS: function(){
         if(this.EV_ASSETD_UPD_unbinder){
@@ -50,6 +76,12 @@ let symSelect = {
         }
         if(this.EV_ClICKBODY_unbinder){
             this.EV_ClICKBODY_unbinder()
+        }
+        if(this.EV_TICK_UPD_unbinder){
+            this.EV_TICK_UPD_unbinder()
+        }
+        if(this.EV_ClOSEHEADERMENU_unbinder){
+            this.EV_ClOSEHEADERMENU_unbinder()
         }
     },
     //初始化合约以及现货列表
@@ -67,6 +99,7 @@ let symSelect = {
                 futureSymList.push(Sym)
             }
         })
+        this.setFutureSymList(futureSymList)
         this.futureSymList = futureSymList
         this.spotSymList = spotSymList
         if(window.gMkt.CtxPlaying.pageTradeStatus == 1){
@@ -83,30 +116,112 @@ let symSelect = {
         m.redraw();
     },
 
+    setFutureSymList: function(list){
+        let CoinList = [], PTSymList = [], NTSymList = [],symList = [];
+        for(let sym of list){
+            let ass = window.gMkt.AssetD[sym]
+            if(ass.TrdCls == 2){
+                // 定期合约
+                symList.push(sym)
+            }else if(ass.TrdCls == 3){
+                if(ass.Flag&1){
+                    // 反向永续
+                    NTSymList.push(sym)
+                }else{
+                    // 正向永续
+                    PTSymList.push(sym)
+                }
+            }
+            if(!CoinList.includes(ass.ToC)){
+                CoinList.push(ass.ToC)
+            }
+        }
+        let futureList = {}
+        for(let coin of CoinList){
+            futureList[coin] = []
+            for(let sym of PTSymList){
+                let ass = window.gMkt.AssetD[sym]
+                if(ass.ToC == coin){
+                    futureList[coin].push(sym)
+                }
+            }
+            for(let sym of NTSymList){
+                let ass = window.gMkt.AssetD[sym]
+                if(ass.ToC == coin){
+                    futureList[coin].push(sym)
+                }
+            }
+            for(let sym of symList){
+                let ass = window.gMkt.AssetD[sym]
+                if(ass.ToC == coin){
+                    futureList[coin].push(sym)
+                }
+            }
+        }
+        console.log(CoinList, PTSymList, NTSymList, symList, futureList)
+        this.futureCoin = CoinList
+        this.futureSymObj = futureList
+    },
+
     //合约列表渲染
     getSymList: function(){
         let that = this
         let SymList = []
         switch(window.gMkt.CtxPlaying.pageTradeStatus){
             case 1: 
-                SymList = this.futureSymList
-                break;
+                SymList = this.futureSymObj
+                let coinList = this.futureCoin
+                return coinList.map((coin, i)=>{
+                    let list = SymList[coin].map(function(Sym, i){
+                        return m('div', {key: 'dropdown-item'+Sym+i,  href: "javascript:void(0);", class: "dropdown-item is-flex", onclick: function(){
+                                that.setSym(Sym)
+                            }},[
+                                m('div',{class:""}, [
+                                    utils.getSymDisplayName(window.gMkt.AssetD, Sym)
+                                ]),
+                                m('.spacer'),
+                                m('div',{class:"has-text-centered"+utils.getColorStr(that.lastTick[Sym] && that.lastTick[Sym].color, 'font')}, [
+                                    that.lastTick[Sym] && that.lastTick[Sym].LastPrz || '--'
+                                ]),
+                                m('.spacer'),
+                                m('div',{class:"has-text-right"+utils.getColorStr(that.lastTick[Sym] && that.lastTick[Sym].rfpreColor, 'font')}, [
+                                    that.lastTick[Sym] && that.lastTick[Sym].rfpre || '--'
+                                ]),
+                            ])
+                    })
+                    return m('dev', {key: 'dropdown-item'+coin+i, class: ""}, [
+                        m('div',{class:"dropdown-item"}, [
+                            m('span',{class:"tag is-rounded"}, [
+                                coin
+                            ]),
+                        ]),
+                        list
+                    ])
+                    
+                })
             case 2: 
                 SymList = this.spotSymList
-                break;
+                return SymList.map((Sym, i)=>{
+                    return m('div', {key: 'dropdown-item'+Sym+i,  href: "javascript:void(0);", class: "dropdown-item is-flex", onclick: function(){
+                        that.setSym(Sym)
+                    }},[
+                        m('div',{class:""}, [
+                            utils.getSymDisplayName(window.gMkt.AssetD, Sym)
+                        ]),
+                        m('.spacer'),
+                        m('div',{class:""+utils.getColorStr(that.lastTick[Sym] && that.lastTick[Sym].color, 'font')}, [
+                            that.lastTick[Sym] && that.lastTick[Sym].LastPrz || '--'
+                        ]),
+                        m('.spacer'),
+                        m('div',{class:""+utils.getColorStr(that.lastTick[Sym] && that.lastTick[Sym].rfpreColor, 'font')}, [
+                            that.lastTick[Sym] && that.lastTick[Sym].rfpre || '--'
+                        ]),
+                    ])
+                    
+                })
                 
         }
-        return SymList.map((Sym, i)=>{
-            return m('dev', {key: 'dropdown-item'+Sym+i, class: ""}, [
-                // m('hr', {class: "dropdown-divider "}),
-                m('a', { href: "javascript:void(0);", class: "dropdown-item", onclick: function(){
-                    that.setSym(Sym)
-                }},[
-                    utils.getSymDisplayName(window.gMkt.AssetD, Sym)
-                ])
-            ])
-            
-        })
+        
     },
 
     //设置合约
@@ -123,8 +238,7 @@ let symSelect = {
                 return m('div', {class: "dropdown pub-sym-select" + (symSelect.symListOpen?' is-active':'')}, [
                     m('.dropdown-trigger', {}, [
                         m('button', {class: "button is-primary is-inverted h-auto",'aria-haspopup':true, "aria-controls": "dropdown-menu2", onclick: function(e){
-                            symSelect.symListOpen = !symSelect.symListOpen
-                            window.stopBubble(e)
+                            symSelect.openSelect(e)
                         }}, [
                             m('span',{ class: ""}, utils.getSymDisplayName(window.gMkt.AssetD, window.gMkt.CtxPlaying.Sym)),
                             m('span', {class: "icon "},[
@@ -132,8 +246,8 @@ let symSelect = {
                             ]),
                         ]),
                     ]),
-                    m('.dropdown-menu', {class:"max-height-500 scroll-y", id: "dropdown-menu2", role: "menu"}, [
-                        m('.dropdown-content', {class:"has-text-centered"}, [
+                    m('.dropdown-menu', {class:"", id: "dropdown-menu2", role: "menu"}, [
+                        m('.dropdown-content', {class:""}, [
                             symSelect.getSymList()
                         ]),
                     ]),
@@ -146,6 +260,72 @@ let symSelect = {
     },
     customSymSelect: function(){
 
+    },
+    openSelect: function(e){
+        symSelect.symListOpen = !symSelect.symListOpen
+        if(symSelect.symListOpen){
+            this.subSym()
+        }else{
+            this.unSubSym()
+        }
+        gEVBUS.emit(gEVBUS.EV_ClOSEHEADERMENU, {ev: gEVBUS.EV_ClOSEHEADERMENU, from: 'symSelect'})
+        window.stopBubble(e)
+    },
+    subSym: function(){
+        let SymList = []
+        switch(window.gMkt.CtxPlaying.pageTradeStatus){
+            case 1: 
+                SymList = this.futureSymList
+                break;
+            case 2: 
+                SymList = this.spotSymList
+                break;
+            default:
+                
+        }
+        if(SymList.length > 0){
+            let subArr = utils.setSubArrType('tick',SymList)
+            window.gMkt.ReqSub(subArr)
+        }
+    },
+    unSubSym: function(){
+        let SymList = []
+        switch(window.gMkt.CtxPlaying.pageTradeStatus){
+            case 1: 
+                SymList = this.futureSymList
+                break;
+            case 2: 
+                SymList = this.spotSymList
+                break;
+            default:
+                
+        }
+        if(SymList.length > 0){
+            let subArr = utils.setSubArrType('tick',SymList)
+            window.gMkt.ReqUnSub(subArr)
+        }
+    },
+    onTick: function(param){
+        if(!this.symListOpen) return
+        let tm = Date.now()
+        this.tickObj[param.Sym] = param.data
+        if(tm - this.lastTmForTick > this.TICKCLACTNTERVAL){
+            this.updateTick(this.tickObj)
+            this.lastTmForTick = tm
+            this.tickObj = {}
+        }
+    },
+    updateTick: function(ticks){
+        console.log(ticks)
+        for(let key in ticks){
+            let item = ticks[key];
+            let gmexCI = utils.getGmexCi(window.gMkt.AssetD, item.Sym)
+            let indexTick = this.lastTick[gmexCI]
+            
+            let obj = utils.getTickObj(window.gMkt.AssetD, window.gMkt.AssetEx, item, this.lastTick[key], indexTick)
+            obj?this.lastTick[key] = obj:''
+        }
+        m.redraw();
     }
 
 }
@@ -163,7 +343,8 @@ export default {
         return symSelect.getSymSelect()
     },
     onbeforeremove: function(vnode) {
-        obj.rmEVBUS()
+        symSelect.unSubSym()
+        symSelect.rmEVBUS()
     },
     
 }

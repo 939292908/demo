@@ -81,12 +81,12 @@ let obj = {
                         })
                         break;
                     default:
-                        $message({content: '未知错误'});
+                        $message({title: '未知错误', content: '未知错误', type: 'danger'});
                         that.loginLoading = false;
                 }
             }else{
                 that.loginLoading = false
-                window.$message({content: utils.getWebApiErrorCode(res.result.code), type: 'danger'})
+                window.$message({title: utils.getWebApiErrorCode(res.result.code), content: utils.getWebApiErrorCode(res.result.code), type: 'danger'})
             }
         }, function(err){
             that.loginLoading = false
@@ -106,7 +106,7 @@ let obj = {
             if(arg.result.code == 0){
                 that.getUserInfo()
             }else{
-                window.$message({content: utils.getWebApiErrorCode(res.result.code), type: 'danger'})
+                window.$message({title: utils.getWebApiErrorCode(res.result.code), content: utils.getWebApiErrorCode(res.result.code), type: 'danger'})
             }
         }, function(err){
             console.log('ReqUserLoginWeb => ', err)
@@ -118,15 +118,15 @@ let obj = {
             if(param.result.code == 0){
                 that.loginLoading = false
                 that.open = false
-                window.$message({content: '登录成功！', type: 'success'})
+                window.$message({title: '登录成功！', content: '登录成功！', type: 'success'})
             }else{
-                window.$message({content: utils.getWebApiErrorCode(res.result.code), type: 'danger'})
+                window.$message({title: utils.getWebApiErrorCode(res.result.code), content: utils.getWebApiErrorCode(res.result.code), type: 'danger'})
             }
             
             console.log('ReqUserInfo success ==>',param)
         }, function(error){
             that.loginLoading = false
-            window.$message({content: '操作超时！', type: 'danger'})
+            window.$message({title: '操作超时！', content: '操作超时！', type: 'danger'})
             console.log('ReqUserInfo => ', error)
         })
     },
@@ -162,7 +162,7 @@ export default {
     view: function(vnode) {
         
         return m('div', {class:'pub-login'}, [
-            m('button', {class: "pub-login-btn button is-light", onclick: function(){
+            m('button', {class: "pub-login-btn button is-light is-hidden-touch", onclick: function(){
                 obj.open = !obj.open
             }}, [
                 '登录'

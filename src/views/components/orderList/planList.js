@@ -302,7 +302,7 @@ let obj = {
         }, function(gTrd, arg){
             if(arg.code != 0){
                 param.loading = false
-                window.$message({content: utils.getTradeErrorCode(arg.code), type: 'danger'})
+                window.$message({title: utils.getTradeErrorCode(arg.code),content: utils.getTradeErrorCode(arg.code), type: 'danger'})
             }
         })
     },
@@ -318,7 +318,7 @@ let obj = {
                             m("th", {}, [
                                 // m("button", {
                                 //     class: "button is-white ", onclick: function () {
-                                //         window.$message({ content: "全部撤单", type: 'danger' })
+                                //         window.$message({ title: "全部撤单", content: "全部撤单", type: 'danger' })
                                 //     }
                                 // }, [
                                 //     '全部撤单'
