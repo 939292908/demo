@@ -623,19 +623,22 @@ hr {
     .pub-pos-stoppl {
         cursor: pointer;
 
-        button {
-            @extend %pa-0;
-            width: 100%;
-
-            i {
-                @extend %ml-2;
-            }
+        > *{
+            @extend %pr-2;
         }
     }
 
     .pub-pos-buttons {
         button:not(:last-child) {
             @extend %mr-3;
+        }
+    }
+
+    .pub-pos-changeMgn {
+        cursor: pointer;
+
+        > *{
+            @extend %pr-2;
         }
     }
 }

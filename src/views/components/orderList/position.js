@@ -143,8 +143,13 @@ let obj = {
         m("td",{class:""},[
           item.aMgnRateforPrzMStr+'/'+item.aMgnRateforLiqStr
         ]),
-        m("td",{class:""},[
-          item.aMM 
+        m("td",{class:"pub-pos-changeMgn", onclick: function(){
+          obj.changeMgn(item)
+        }},[
+          m('span', {class:""}, [
+            item.aMM 
+          ]),
+          m("i",{class:"iconfont iconotc-editName iconfont-medium"+(btnsOpen.changeMgn.open && item.Lever != 0?'':' is-hidden')}),
         ]),
         m("td",{class:""+utils.getColorStr(item.UPNLColor, 'font')},[
           item.aUPNL+'('+item.aProfitPerStr+')'
@@ -155,14 +160,10 @@ let obj = {
         m("td",{class:"pub-pos-stoppl", onclick: function(){
           obj.setStopPL(item)
         }},[
-          
-          m("button",{class:"button is-white"+(btnsOpen.stopPL.open?'':' is-hidden')},[
+          m('span', {class:""}, [
             (item.StopP || '--')+'/'+(item.StopL || '--'),
-            m("i",{class:"iconfont iconotc-editName iconfont-medium"}),
           ]),
-          m('span', {class:""+(btnsOpen.stopPL.open?' is-hidden':'')}, [
-            (item.StopP || '--')+'/'+(item.StopL || '--'),
-          ])
+          m("i",{class:"iconfont iconotc-editName iconfont-medium"+(btnsOpen.stopPL.open?'':' is-hidden')}),
         ]),
         m("td",{class:"pub-pos-buttons"},[
           m("button",{class:"button is-primary "+(item.loading?' is-loading': '')+(btnsOpen.marketClose.open?'':' is-hidden'), onclick: function(){
@@ -434,6 +435,14 @@ let obj = {
           ])
         ])
       ])
+    }
+  },
+  changeMgn: function(pos){
+    if(!window.isMobile && !window.$config.positionBtns.desktop.changeMgn.open) return
+    if(window.isMobile && !window.$config.positionBtns.mobile.changeMgn.open) return
+    if(pos.Lever == 0) return
+    if(window.$openChangeMgnMode){
+      window.$openChangeMgnMode(pos)
     }
   }
 }
