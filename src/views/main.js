@@ -26,6 +26,7 @@ let main = {
         }
         this.EV_GET_POS_READY_unbinder = window.gEVBUS.on(gTrd.EV_GET_POS_READY, arg => {
             that.setDisplayTrdInfo()
+            that.getRiskLimits()
         })
 
         if (this.EV_POS_UPD_unbinder) {
