@@ -142,7 +142,7 @@ let main = {
             return m('article', { class: "message box " + (' is-' + type), key: tm }, [
                 m('div', { class: "message-header" }, [
                     m('p', { class: "" }, [
-                        title
+                        content
                     ]),
                     m('button', {
                         class: "delete", "aria-label": "delete", onclick: function () {
