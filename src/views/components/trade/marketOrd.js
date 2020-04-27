@@ -89,13 +89,6 @@ let obj = {
             }
             that.setMgnNeed()
         })
-        //tick行情全局广播
-        if(this.EV_TICK_UPD_unbinder){
-            this.EV_TICK_UPD_unbinder()
-        }
-        this.EV_TICK_UPD_unbinder = window.gEVBUS.on(gMkt.EV_TICK_UPD,arg=> {
-            that.onTick(arg)
-        })
 
 
     },
@@ -165,6 +158,11 @@ let obj = {
                 let lastTick = window.gMkt.lastTick[arg.Sym]
                 this.form.Prz = Number(lastTick && lastTick.LastPrz || 0)
             }
+        }
+        let tm = Date.now()
+        if(tm - this.lastTmForTick > this.TICKCLACTNTERVAL){
+            this.setMgnNeed()
+            this.lastTmForTick = tm
         }
     },
     updateSpotInfo: function(){
@@ -476,13 +474,6 @@ let obj = {
                     ])
                 ])
             ])
-        }
-    },
-    onTick: function(param){
-        let tm = Date.now()
-        if(tm - this.lastTmForTick > this.TICKCLACTNTERVAL){
-            this.setMgnNeed()
-            this.lastTmForTick = tm
         }
     },
 }

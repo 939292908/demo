@@ -14,6 +14,8 @@ let obj = {
     wlt: {},
     MgnNeedForBuy: 0,
     MgnNeedForSell: 0,
+    // 是否已经自动填入价格
+    isAutoPrz: false,
     //初始化全局广播
     initEVBUS: function () {
         let that = this
@@ -149,10 +151,11 @@ let obj = {
         }
     },
     onTick: function (arg) {
-        if (arg.Sym == window.gMkt.CtxPlaying.Sym ) {
+        if (arg.Sym == window.gMkt.CtxPlaying.Sym && !this.isAutoPrz) {
             if(!this.form.Prz){
                 let lastTick = window.gMkt.lastTick[arg.Sym]
                 this.form.Prz = Number(lastTick && lastTick.LastPrz || 0)
+                this.isAutoPrz = true
             }
         }
     },
