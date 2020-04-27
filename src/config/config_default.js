@@ -108,6 +108,10 @@ const config = {
         // 平仓
         someCloseMode: {
             type: 0,
+        },
+        // 调节保证金
+        changeMgnMode: {
+            type: 0,
         }
     },
     // 仓位按钮显示开关
@@ -153,6 +157,11 @@ const config = {
                 positionList: 1,
                 positionDes: 1,
             },
+            // 调节保证金
+            changeMgn: {
+                positionList: 1,
+                positionDes: 1,
+            }
         },
         desktop: {
             // 市价平仓
@@ -187,6 +196,10 @@ const config = {
             leverage: {
                 open: 1,
             },
+            // 调节保证金
+            changeMgn: {
+                open: 1,
+            }
         }
     }
 }
