@@ -194,9 +194,30 @@ let obj = {
             return $message({title: '下单数量不能为空', content: '下单数量不能为空', type: 'danger'})
         }
 
+        
+        
+
         let Sym = window.gMkt.CtxPlaying.Sym
         let AId = window.gTrd.RT["UserId"]+'01'
         let PId = window.gTrd.CtxPlaying.activePId
+
+        let Orders = window.gTrd.Orders['01']
+        if(PId){
+            let planList = Orders.filter(function(item){
+                return (item.OType == 3 || item.OType == 4) && item.PId == PId
+            })
+            console.log(planList)
+            if(planList.length >= 5){
+                return $message({title: '同一仓位ID计划单最多5条！', content: '同一仓位ID计划单最多5条！', type: 'danger'})
+            }
+        }else{
+            let planList = Orders.filter(function(item){
+                return (item.OType == 3 || item.OType == 4) && item.Sym == Sym
+            })
+            if(planList.length >= 10){
+                return $message({title: '同一合约计划单最多10条！', content: '同一合约计划单最多10条！', type: 'danger'})
+            }
+        }
 
         let p = {
             Sym: Sym,
