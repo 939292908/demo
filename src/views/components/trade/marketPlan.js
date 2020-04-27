@@ -252,6 +252,8 @@ let obj = {
                 // 只开仓标志
                 p.OrdFlag = (p.OrdFlag | 4)
 
+                p.lvr = this.form.Lever
+
                 let stopP = Number(this.form.stopP), stopL = Number(this.form.stopL);
                 stopP > 0 ? p.StopP = stopP : ''
                 stopL > 0 ? p.StopL = stopL : ''
