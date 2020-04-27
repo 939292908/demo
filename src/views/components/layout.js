@@ -18,6 +18,8 @@ import someCloseMode from './trade/someCloseMode'
 import stopPLMode from './trade/stopPLMode'
 //二次验证google和sms
 import validateMode from './userCenter/validateMode'
+//二次验证google和sms
+import changeMgnMode from './orderList/changeMgnMode'
 
 
 let obj = {
@@ -176,7 +178,22 @@ let obj = {
   },
   customSomeCloseMode: function(){
 
-  }
+  },
+  changeMgnMode: function(){
+    let type = window.$config.views.changeMgnMode.type
+    switch(type){
+      case 0:
+        return m(changeMgnMode)
+      case 1:
+        return this.customChangeMgnMode()
+      default:
+        return null;
+    }
+  },
+  customChangeMgnMode: function(){
+
+  },
+  
 }
 
 
@@ -222,7 +239,8 @@ export default {
           obj.getLeverageMode(),
           obj.getValidateMode(),
           obj.marketAddMode(),
-          obj.someCloseMode()
+          obj.someCloseMode(),
+          obj.changeMgnMode()
         ])
     }
 }
