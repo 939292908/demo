@@ -44,6 +44,10 @@ let obj = {
         return window.$message({title: '请输入杠杆数量',content: '请输入杠杆数量', type: 'danger'})
       }
     }
+    if(this.changeLeverInfo.hasOwnProperty('code') && this.changeLeverInfo.code != 0){
+      console.log(this.changeLeverInfo)
+      return window.$message({title: '提示',content: this.changeLeverInfo.errorText, type: 'danger'})
+    }
     let param = {
       Sym: this.Sym,
       PId: this.PId,
