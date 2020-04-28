@@ -64,6 +64,12 @@ let obj = {
         this.EV_ASSETD_UPD_unbinder = window.gEVBUS.on(gMkt.EV_ASSETD_UPD, arg => {
             that.initObj()
         })
+        if (this.EV_WEB_LOGOUT_unbinder) {
+            this.EV_WEB_LOGOUT_unbinder()
+        }
+        this.EV_WEB_LOGOUT_unbinder = window.gEVBUS.on(gWebAPI.EV_WEB_LOGOUT, arg => {
+            that.initObj()
+        })
 
 
     },
@@ -78,6 +84,9 @@ let obj = {
         if (this.EV_ASSETD_UPD_unbinder) {
             this.EV_ASSETD_UPD_unbinder()
         }
+        if (this.EV_WEB_LOGOUT_unbinder) {
+            this.EV_WEB_LOGOUT_unbinder()
+        }  
     },
     initObj() {
         let Orders = window.gTrd.Orders['01']

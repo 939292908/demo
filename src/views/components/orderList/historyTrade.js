@@ -40,12 +40,20 @@ let obj = {
         //     that.subPosNeedSymTick()
         // })
 
-
+        if (this.EV_WEB_LOGOUT_unbinder) {
+            this.EV_WEB_LOGOUT_unbinder()
+        }
+        this.EV_WEB_LOGOUT_unbinder = window.gEVBUS.on(gWebAPI.EV_WEB_LOGOUT, arg => {
+            that.initObj()
+        })
     },
     //删除全局广播
     rmEVBUS: function () {
         if (this.EV_WLT_POS_ORDER_UPD_unbinder) {
             this.EV_WLT_POS_ORDER_UPD_unbinder()
+        }
+        if (this.EV_WEB_LOGOUT_unbinder) {
+            this.EV_WEB_LOGOUT_unbinder()
         }
     },
     getHistoryList: function(){
