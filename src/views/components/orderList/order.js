@@ -315,6 +315,7 @@ let obj = {
             "AId": param.AId,
             "OrdId": param.OrdId,
             "Sym": param.Sym,
+            "PId": param.PId,
         }, function (gTrd, arg) {
             if (arg.code != 0) {
                 param.loading = false
