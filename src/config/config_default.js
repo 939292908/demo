@@ -9,6 +9,7 @@ const config = {
         MMType: 0, // 仓位保证金率公式选择，0: 默认，1: 开仓价值/杠杆 
         PrzLiqType: 0, // 仓位强平价计算公式选择，0: 默认，1: 默认公式中的MMR风险修改为MAX(MIRMy，MIR风险)/2
         maxPosNum: 10, // 同合约最大仓位数量
+        setMIRMy: 1, // 全仓杠杠调节，0:关闭，1:开启
     },
     views: {
         // type 0:默认， 1: 自定义
