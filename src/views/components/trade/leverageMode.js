@@ -8,11 +8,19 @@ let obj = {
   Sym: '',
   needReq: false,
   Lever: 0,
+  LeverForMy: 0,
+  MIRMy: 0, //自定义全仓杠杠(自定义委托保证金)
   maxLever: 0,
   leverageCallback: null,
   posInfo: null,
   oldParam: {},
   changeLeverInfo: {},
+  leverList: {
+    20:[5,10,15,20],
+    25:[5,10,20,25],
+    50:[5,10,20,50],
+    100:[5,10,20,50,100],
+  },
   //初始化全局广播
   initEVBUS: function () {
     let that = this
@@ -37,11 +45,23 @@ let obj = {
   submit: function () {
     let that = this
 
-    if(this.tabsActive == 1){
+    if(this.tabsActive == 0){
+      if(window.$config.future.setMIRMy){
+        if(this.LeverForMy === '0'){
+          return window.$message({title: '全仓杠杆不能为0',content: '全仓杠杆不能为0', type: 'danger'})
+        }else if(!this.LeverForMy){
+          return window.$message({title: '请输入全仓杠杆数量',content: '请输入全仓杠杆数量', type: 'danger'})
+        }else if(Number(this.LeverForMy) < 1){
+          return window.$message({title: '全仓最小杠杠为1',content: '全仓最小杠杠为1', type: 'danger'})
+        }
+      }
+    }else if(this.tabsActive == 1){
       if(this.Lever === '0'){
         return window.$message({title: '逐仓杠杆不能为0',content: '逐仓杠杆不能为0', type: 'danger'})
       }else if(!this.Lever){
         return window.$message({title: '请输入杠杆数量',content: '请输入杠杆数量', type: 'danger'})
+      }else if(Number(this.Lever) < 1){
+        return window.$message({title: '最小杠杠为1',content: '最小杠杠为1', type: 'danger'})
       }
     }
     if(this.changeLeverInfo.hasOwnProperty('code') && this.changeLeverInfo.code != 0){
@@ -64,14 +84,37 @@ let obj = {
           "Param": param.Lever,
         },function(gTrd, arg){
           if(arg.code == 0){
-            that.open = false
-            that.leverageCallback && that.leverageCallback({
-              Sym: that.Sym,
-              PId: that.PId,
-              Lever: Number(that.Lever),
-              MIRMy: Number(that.MIRMy),
-            })
-            window.$message({title: '杠杆已调整！',content: '杠杆已调整！', type: 'success'})
+            if(window.$config.future.setMIRMy && param.Lever == 0){
+              window.gTrd.ReqTrdPosOp({
+                "AId":AId,
+                "Sym": param.Sym,
+                "PId": param.PId,
+                "Op": 2,
+                "Param": param.MIRMy,
+              },function(gTrd, arg){
+                if(arg.code == 0){
+                  that.open = false
+                  that.leverageCallback && that.leverageCallback({
+                    Sym: that.Sym,
+                    PId: that.PId,
+                    Lever: Number(that.Lever),
+                    MIRMy: Number(that.MIRMy),
+                  })
+                  window.$message({title: '杠杆已调整！',content: '杠杆已调整！', type: 'success'})
+                }else{
+                  window.$message({title: utils.getTradeErrorCode(arg.code), content: utils.getTradeErrorCode(arg.code), type: 'danger'})
+                }
+              })
+            }else{
+              that.open = false
+              that.leverageCallback && that.leverageCallback({
+                Sym: that.Sym,
+                PId: that.PId,
+                Lever: Number(that.Lever),
+                MIRMy: Number(that.MIRMy),
+              })
+              window.$message({title: '杠杆已调整！',content: '杠杆已调整！', type: 'success'})
+            }
           }else{
             window.$message({title: utils.getTradeErrorCode(arg.code), content: utils.getTradeErrorCode(arg.code), type: 'danger'})
           }
@@ -91,6 +134,9 @@ let obj = {
     this.tabsActive = param
     if(param == 0){
       this.Lever = 0
+      if(window.$config.future.setMIRMy){
+        this.LeverForMy = Number(param.MIRMy?1/param.MIRMy: maxLever).toFixed2(0)
+      }
     }else if(param == 1){
       this.Lever = this.maxLever
     }
@@ -110,6 +156,9 @@ let obj = {
       this.tabsActive = 0
     }else{
       this.tabsActive = 1
+    }
+    if(window.$config.future.setMIRMy){
+      this.LeverForMy = param.MIRMy?1/param.MIRMy: maxLever
     }
     this.Sym = Sym
     this.PId = PId
@@ -162,11 +211,43 @@ let obj = {
   onLeverInput: function(e){
     if(Number(e.target.value) > Number(this.maxLever)){
       obj.Lever = Number(this.maxLever)
+    }else if(Number(e.target.value) < 0){
+      obj.Lever = 1
     }else{
       obj.Lever = e.target.value
     }
     obj.calcNeedMgn()
   },
+  onLeverForMyInput: function(e){
+    if(Number(e.target.value) > Number(this.maxLever)){
+      obj.LeverForMy = Number(this.maxLever)
+    }else if(Number(e.target.value) < 0){
+      obj.LeverForMy = 1
+    }else{
+      obj.LeverForMy = e.target.value
+    }
+    this.MIRMy = Number(1/Number(obj.LeverForMy || 0).toFixed2(8))
+    obj.calcNeedMgn()
+  },
+  getQuickLeverBtns: function(){
+    let LeverList = this.leverList[this.maxLever] || []
+    return LeverList.map(function(item,i){
+      return m('button', {key: "leverBtnsItem"+i,class:"button level-item",onclick: function(){
+        obj.setQuickLever(item)
+      }}, [
+        item
+      ])
+    })
+
+  },
+  setQuickLever: function(param){
+    if(this.tabsActive == 0){
+      this.LeverForMy = param
+      this.MIRMy = Number(1/Number(obj.LeverForMy || 0).toFixed2(8))
+    }else if(this.tabsActive == 1){
+      this.Lever = param
+    }
+  }
 }
 
 export default {
@@ -219,9 +300,24 @@ export default {
             ]),
 
             m('div', { class: "pub-set-lever-content-risk-warning has-text-danger" + (obj.tabsActive != 0 ? " is-hidden" : '') }, [
-              m('div', { class: "" }, [
+              m('div', { class: "field" }, [
                 '全仓模式下所有仓位将共享合约账户的可用保证金，若发生强平，可能损失所有仓位和可用保证金。请注意仓位风险！'
               ]),
+              m('div', { class: "field has-addons"+(window.$config.future.setMIRMy?'':' is-hidden') }, [
+                m('div', { class: "control" }, [
+                  m('button', { class: "button is-static" }, [
+                    '最高'+obj.maxLever+'X'
+                  ]),
+                ]),
+                m('div', { class: "control is-expanded" }, [
+                  m('input', { class: "input ", type: 'number', step: 1, value:  obj.LeverForMy, oninput: function(e){
+                    obj.onLeverForMyInput(e)
+                  }})
+                ])
+              ]),
+              m('div', { class: "field buttons level"+(window.$config.future.setMIRMy?'':' is-hidden') }, [
+                obj.getQuickLeverBtns()
+              ])
             ]),
             m('div', { class: "" + (obj.tabsActive != 1 ? " is-hidden" : '') }, [
               m('div', { class: "field has-addons" }, [
@@ -231,10 +327,13 @@ export default {
                   ]),
                 ]),
                 m('div', { class: "control is-expanded" }, [
-                  m('input', { class: "input ", type: 'number', value:  obj.Lever, oninput: function(e){
+                  m('input', { class: "input ", type: 'number', step: 1, value:  obj.Lever, oninput: function(e){
                     obj.onLeverInput(e)
                   }})
                 ])
+              ]),
+              m('div', { class: "field buttons level" }, [
+                obj.getQuickLeverBtns()
               ])
             ]),
             m('div', { class: "pub-set-lever-content-mm level" }, [

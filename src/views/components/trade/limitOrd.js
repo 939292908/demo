@@ -8,10 +8,12 @@ let obj = {
         Lever: 0,     //杠杠
         maxLever: 0,  //最大杠杆
         stopP: '',    //止盈价
-        stopL: ''     // 止损价
+        stopL: '',     // 止损价
+        MIRMy: 0,     // 自定义委托保证金率
     },
     faceValue: '= 0.0000 USDT',
     wlt: {},
+    LeverInputValue: '杠杠',
     MgnNeedForBuy: 0,
     MgnNeedForSell: 0,
     // 是否已经自动填入价格
@@ -128,12 +130,13 @@ let obj = {
         let PId = window.gTrd.CtxPlaying.activePId
         let pos = window.gTrd.Poss[PId]
 
-        let Lever = 0, maxLever = 0
+        let Lever = 0, maxLever = 0,MIRMy = 0;
         if (pos) {
             let ass = window.gMkt.AssetD[pos.Sym]
             if (ass) {
-                maxLever = 1 / ass.MIR
+                maxLever = 1 / Math.max(ass.MIR, pos.MIRMy || 0)
             }
+            MIRMy = pos.MIRMy
             Lever = pos.Lever
         } else {
             let Sym = window.gMkt.CtxPlaying.Sym
@@ -142,15 +145,17 @@ let obj = {
                 maxLever = 1 / ass.MIR
             }
         }
+        this.form.MIRMy = MIRMy
         this.form.Lever = Lever
         this.form.maxLever = maxLever
+        this.setLever()
         
     },
-    getLever: function () {
+    setLever: function () {
         if (this.form.Lever == 0) {
-            return (this.form.maxLever ? '全仓' + this.form.maxLever + 'X' : '杠杆')
+            this.LeverInputValue = (this.form.maxLever ? '全仓' + this.form.maxLever + 'X' : '杠杆')
         } else {
-            return '逐仓' + Number(this.form.Lever).toFixed2(2) + 'X'
+            this.LeverInputValue = '逐仓' + Number(this.form.Lever).toFixed2(2) + 'X'
         }
     },
     onTick: function (arg) {
@@ -177,6 +182,7 @@ let obj = {
             this.PrzStep = Number(ass.PrzMinInc)
             this.NumStep = Number(ass.OrderMinQty)
         }
+        this.setLever()
 
     },
     submit: function(dir){
@@ -257,6 +263,12 @@ let obj = {
                 
         }
 
+        // 判断是否开启了全仓杠杠调节 start
+        if(window.$config.future.setMIRMy){
+            p.MIRMy = this.form.MIRMy
+        }
+        // 判断是否开启了全仓杠杠调节 end
+
 
         let aWdrawable = Number(obj.wlt.aWdrawable || 0 )
         if(aWdrawable == 0){
@@ -279,6 +291,8 @@ let obj = {
         }
         let Sym = window.gMkt.CtxPlaying.Sym
         let PId = window.gTrd.CtxPlaying.activePId
+        let ass = window.gMkt.AssetD[Sym]
+        if(!ass) return 
 
         // 根据配置判断处理杠杠修改
         let tradeType = window.$config.future.tradeType
@@ -293,13 +307,15 @@ let obj = {
                     Sym: Sym,
                     PId: PId, //仓位PId
                     Lever: this.form.Lever, //杠杆
-                    MIRMy: 0, //自定义委托保证金率
+                    MIRMy: this.form.MIRMy, //自定义委托保证金率
                     needReq: true, //是否需要向服务器发送修改杠杆请求
                     cb: function(arg){
                         console.log('change Lever callback', arg)
                         that.form.Lever = arg.Lever
                         that.form.MIRMy = arg.MIRMy
+                        that.form.maxLever = 1/Math.max(arg.MIRMy || 0, ass.MIR)
                         that.setMgnNeed()
+                        that.setLever()
                     }
                 })
                 break;
@@ -308,13 +324,15 @@ let obj = {
                     Sym: Sym,
                     PId: PId, //仓位PId
                     Lever: this.form.Lever, //杠杆
-                    MIRMy: 0, //自定义委托保证金率
+                    MIRMy: this.form.MIRMy, //自定义委托保证金率
                     needReq: false, //是否需要向服务器发送修改杠杆请求
                     cb: function(arg){
                         console.log('change Lever callback', arg)
                         that.form.Lever = arg.Lever
                         that.form.MIRMy = arg.MIRMy
+                        that.form.maxLever = 1/Math.max(arg.MIRMy || 0, ass.MIR)
                         that.setMgnNeed()
+                        that.setLever()
                     }
                 })
                 break;
@@ -421,6 +439,7 @@ let obj = {
         let QtyShort = Number(this.form.Num)
         let PId = window.gTrd.CtxPlaying.activePId || 'new'
         let Lever = this.form.Lever
+        let MIRMy = this.form.MIRMy
         
         let posObj = window.gTrd.Poss
         let pos = []
@@ -445,7 +464,7 @@ let obj = {
             Dir: 1,
             PId: PId, 
             Lvr: Lever,
-            MIRMy: 0
+            MIRMy: MIRMy
         }
         clacMgnNeed.calcFutureWltAndPosAndMI(pos, wallet, _order, RSdata, assetD, lastTick, '1', newOrderForBuy, 0, res => {
             console.log('bug 成本计算结果： ', res)
@@ -460,7 +479,7 @@ let obj = {
             Dir: -1,
             PId: PId, 
             Lvr: Lever,
-            MIRMy: 0
+            MIRMy: MIRMy
         }
         clacMgnNeed.calcFutureWltAndPosAndMI(pos, wallet, _order, RSdata, assetD, lastTick, '1', newOrderForSell, 0, res => {
             console.log('sell 成本计算结果： ', res)
@@ -528,7 +547,7 @@ export default {
             m("div", { class: "pub-place-order-form-lever-input field" }, [
                 m("div", { class: "control" }, [
                     m("input", {
-                        class: " input", type: 'text', placeholder: obj.getLever(), readonly: true, onclick: function () {
+                        class: " input", type: 'text', placeholder: obj.LeverInputValue, readonly: true, onclick: function () {
                             obj.setLeverage()
                         }
                     })
