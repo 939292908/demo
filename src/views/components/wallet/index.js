@@ -101,7 +101,7 @@ export default {
                     m("a",{class:"", href:"javascript:void(0);", onclick: function(){
                       
                     }},[
-                      '合约资产'
+                      (obj.wlt.Coin || '')+'合约资产'
                     ])
                   ]),
                 //   m("li",{class:""},[
