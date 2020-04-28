@@ -194,6 +194,12 @@ let obj = {
             return $message({title: '下单数量不能为空', content: '下单数量不能为空', type: 'danger'})
         }
 
+        if(this.form.triggerPrz === '0'){
+            return $message({title: '触发价格不能为0', content: '触发价格不能为0', type: 'danger'})
+        }else if(!this.form.triggerPrz){
+            return $message({title: '触发价格不能为空', content: '触发价格不能为空', type: 'danger'})
+        }
+
         
         
 
