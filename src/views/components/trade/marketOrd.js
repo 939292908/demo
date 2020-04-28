@@ -430,6 +430,10 @@ let obj = {
             pos.push(posObj[key])
         }
         let order = window.gTrd.Orders['01']
+        // 筛选出当前委托，不要计划委托
+        let _order = order.filter(function(item){
+            return item.OType == 1 || item.OType == 2
+        })
         let wallet = window.gTrd.Wlts['01']
         let lastTick = window.gMkt.lastTick
         let assetD = window.gMkt.AssetD
@@ -447,7 +451,7 @@ let obj = {
             Lvr: Lever,
             MIRMy: 0
         }
-        clacMgnNeed.calcFutureWltAndPosAndMI(pos, wallet, order, RSdata, assetD, lastTick, '1', newOrderForBuy, 0, res => {
+        clacMgnNeed.calcFutureWltAndPosAndMI(pos, wallet, _order, RSdata, assetD, lastTick, '1', newOrderForBuy, 0, res => {
             console.log('bug 成本计算结果： ', res)
             that.MgnNeedForBuy = Number(res || 0)
         })
@@ -462,7 +466,7 @@ let obj = {
             Lvr: Lever,
             MIRMy: 0
         }
-        clacMgnNeed.calcFutureWltAndPosAndMI(pos, wallet, order, RSdata, assetD, lastTick, '1', newOrderForSell, 0, res => {
+        clacMgnNeed.calcFutureWltAndPosAndMI(pos, wallet, _order, RSdata, assetD, lastTick, '1', newOrderForSell, 0, res => {
             console.log('sell 成本计算结果： ', res)
             that.MgnNeedForSell = Number(res || 0)
         })
@@ -500,7 +504,7 @@ let obj = {
                         '&'
                     ]),
                     m("div", { class: "pub-place-order-form-stop-pl-input-l control is-expanded" }, [
-                        m("input", { class: "input", type: 'number', placeholder: "止盈价", step: obj.PrzStep, value: obj.form.stopL, oninput: function(e){
+                        m("input", { class: "input", type: 'number', placeholder: "止损价", step: obj.PrzStep, value: obj.form.stopL, oninput: function(e){
                             obj.onStopLInput(e)
                         }})
                     ])

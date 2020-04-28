@@ -159,6 +159,10 @@ let obj = {
       posArr.push(posObj[key])
     }
     let order = window.gTrd.Orders['01']
+    // 筛选出当前委托，不要计划委托
+    let _order = order.filter(function(item){
+      return item.OType == 1 || item.OType == 2
+    })
     let wallet = window.gTrd.Wlts['01']
     let lastTick = window.gMkt.lastTick
     let assetD = window.gMkt.AssetD
@@ -176,7 +180,7 @@ let obj = {
         Lvr: Lever,
         MIRMy: 0
     }
-    clacMgnNeed.calcFutureWltAndPosAndMI(posArr, wallet, order, RSdata, assetD, lastTick, '1', newOrderForBuy, 0, res => {
+    clacMgnNeed.calcFutureWltAndPosAndMI(posArr, wallet, _order, RSdata, assetD, lastTick, '1', newOrderForBuy, 0, res => {
         console.log('成本计算结果： ', res)
         that.MgnNeed = Number(res || 0)
     })
