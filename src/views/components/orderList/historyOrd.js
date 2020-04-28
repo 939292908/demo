@@ -96,19 +96,19 @@ let obj = {
                 //成交数量
                 obj.QtyF = Number(obj.QtyF || 0).toFixed2(VolMinValSize)
 
-                if(obj.StopPrz){
-                    obj.cond = obj.StopBy==2?'指数价':obj.StopBy==1?'最新价':'标记价'
-                    obj.cond += (obj.OrdFlag&8)?'≥':'≤'
+                if (obj.StopPrz) {
+                    obj.cond = obj.StopBy == 2 ? '指数价' : obj.StopBy == 1 ? '最新价' : '标记价'
+                    obj.cond += (obj.OrdFlag & 8) ? '≥' : '≤'
                     obj.cond += obj.StopPrz.toFixed2(PrzMinIncSize)
-                }else{
+                } else {
                     obj.cond = '--'
                 }
 
                 obj.AtStr = new Date(obj.At).format('MM/dd hh:mm:ss'),
 
 
-                //止盈价
-                obj.StopP = obj.StopP ? Number(obj.StopP || 0).toFixed2(PrzMinIncSize) : '--'
+                    //止盈价
+                    obj.StopP = obj.StopP ? Number(obj.StopP || 0).toFixed2(PrzMinIncSize) : '--'
                 //止损价
                 obj.StopL = obj.StopL ? Number(obj.StopL || 0).toFixed2(PrzMinIncSize) : '--'
 
@@ -116,7 +116,7 @@ let obj = {
             }
 
         }
-        posList.sort(function(a,b){
+        posList.sort(function (a, b) {
             return b.At - a.At
         })
         this.posList = posList
@@ -124,7 +124,7 @@ let obj = {
 
     getTheadList: function () {
         return this.theadList.map(function (item, i) {
-            return m("th", { key: "historyOrdtHeadItem" + i, class: ""+item.class }, [
+            return m("th", { key: "historyOrdtHeadItem" + i, class: "" + item.class }, [
                 item.title
             ])
         })
@@ -141,7 +141,7 @@ let obj = {
                     ])
                 ]),
                 m("td", { class: "" }, [
-                    m("p", { class: " "}, [
+                    m("p", { class: " " }, [
                         item.displayLever
                     ]),
                 ]),
@@ -157,10 +157,10 @@ let obj = {
                 m("td", { class: " " }, [
                     item.Qty
                 ]),
-                m("td", { class: " "}, [
+                m("td", { class: " " }, [
                     item.PrzF
                 ]),
-                m("td", { class: " "}, [
+                m("td", { class: " " }, [
                     item.QtyF
                 ]),
                 m("td", { class: "" }, [
@@ -186,30 +186,63 @@ let obj = {
             window.gMkt.ReqSub(needSub)
         }
     },
-    getHistoryOrd: function(){
+    getHistoryOrd: function () {
         let that = this
         let s = window.gTrd
         let aType = '01'
         let Sym = window.gMkt.CtxPlaying.Sym
         let AssetD = window.gMkt.AssetD[Sym] || {}
-        if(AssetD.TrdCls == 1){
+        if (AssetD.TrdCls == 1) {
             aType = '02'
-        }else{
+        } else {
             aType = '01'
         }
         let uid = s.RT["UserId"]
         let isReq = s.trdInfoStatus.historyOrd[aType]
-        if(!uid || !s || isReq) return
+        if (!uid || !s || isReq) return
         s.ReqTrdGetHistOrders({
-            AId: uid+aType,
-        }, function(aTrd, aArg){
-            if(aArg.code == 0){
+            AId: uid + aType,
+        }, function (aTrd, aArg) {
+            if (aArg.code == 0) {
                 s.trdInfoStatus.historyOrd[aType] = 1
                 s.HistoryOrders[aType] = aArg.data
                 that.initObj()
             }
         })
-    }
+    },
+    getContent: function () {
+        if (window.isMobile) {
+            return null
+        } else {
+            let colgroup = m('colgroup', {}, [
+                m('col', { name: "pub-table-1", width: 70 }),
+                m('col', { name: "pub-table-2", width: 160 }),
+                m('col', { name: "pub-table-3", width: 130 }),
+                m('col', { name: "pub-table-4", width: 80 }),
+                m('col', { name: "pub-table-5", width: 80 }),
+                m('col', { name: "pub-table-6", width: 100 }),
+                m('col', { name: "pub-table-7", width: 100 }),
+                m('col', { name: "pub-table-8", width: 100 }),
+                m('col', { name: "pub-table-9", width: 100 }),
+                m('col', { name: "pub-table-10", width: 150 }),
+                m('col', { name: "pub-table-10", width: 150 })
+            ])
+            return m('div', { class: " table-container" }, [
+                m("table", { class: "table is-hoverable ", width: '1230px', cellpadding: 0, cellspacing: 0 }, [
+                    colgroup,
+                    m("tr", { class: "" }, [
+                        obj.getTheadList()
+                    ])
+                ]),
+                m('div', { class: "pub-table-body-box", style: "width: 1230px" }, [
+                    m("table", { class: "table is-hoverable ", width: '1230px', cellpadding: 0, cellspacing: 0 }, [
+                        colgroup,
+                        obj.getPosList()
+                    ])
+                ]),
+            ])
+        }
+    },
 }
 
 export default {
@@ -223,17 +256,8 @@ export default {
     },
     view: function (vnode) {
 
-        return m("div", { class: "pub-history-order table-container " }, [
-            m("table", { class: "table is-hoverable ", cellpadding: 0, cellspacing: 0 }, [
-                m("thead", { class: "" }, [
-                    m("tr", { class: "" }, [
-                        obj.getTheadList()
-                    ])
-                ]),
-                m("tbody", { class: "" }, [
-                    obj.getPosList()
-                ])
-            ])
+        return m("div", { class: "pub-history-order" }, [
+            obj.getContent()
         ])
     },
     onbeforeremove: function () {

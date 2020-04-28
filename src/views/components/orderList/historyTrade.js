@@ -147,6 +147,36 @@ let obj = {
             ])
         })
     },
+    getContent: function () {
+        if (window.isMobile) {
+            return null
+        } else {
+            let colgroup = m('colgroup', {}, [
+                m('col', { name: "pub-table-1", width: 160 }),
+                m('col', { name: "pub-table-2", width: 100 }),
+                m('col', { name: "pub-table-3", width: 100 }),
+                m('col', { name: "pub-table-4", width: 100 }),
+                m('col', { name: "pub-table-5", width: 100 }),
+                m('col', { name: "pub-table-6", width: 100 }),
+                m('col', { name: "pub-table-7", width: 150 }),
+                m('col', { name: "pub-table-8", width: 80 }),
+            ])
+            return m('div', { class: " table-container" }, [
+                m("table", { class: "table is-hoverable ", width: '890px', cellpadding: 0, cellspacing: 0 }, [
+                    colgroup,
+                    m("tr", { class: "" }, [
+                        obj.getTheadItem()
+                    ])
+                ]),
+                m('div', { class: "pub-table-body-box", style: "width: 890px" }, [
+                    m("table", { class: "table is-hoverable ", width: '890px', cellpadding: 0, cellspacing: 0 }, [
+                        colgroup,
+                        obj.getListItem()
+                    ])
+                ]),
+            ])
+        }
+    },
 }
 
 export default {
@@ -160,17 +190,8 @@ export default {
     },
     view: function(vnode) {
         
-        return m("div", { class: "pub-history-trade table-container " }, [
-            m("table", { class: "table is-hoverable ", cellpadding: 0, cellspacing: 0 }, [
-                m("thead", { class: "" }, [
-                    m("tr", { class: "" }, [
-                        obj.getTheadItem()
-                    ])
-                ]),
-                m("tbody", { class: "" }, [
-                    obj.getListItem()
-                ])
-            ])
+        return m("div", { class: "pub-history-trade " }, [
+            obj.getContent()
         ])
     },
     onbeforeremove: function(){

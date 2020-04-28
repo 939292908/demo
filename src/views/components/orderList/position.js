@@ -5,37 +5,37 @@ let obj = {
   theadList: [
     {
       title: '仓位ID',
-      class: "position-pid"
+      class: "position-pid pub-table-1"
     }, {
       title: '合约',
-      class: "position-sym"
+      class: "position-sym pub-table-2"
     }, {
       title: '数量',
-      class: "position-sz"
+      class: "position-sz pub-table-3"
     }, {
       title: '开仓均价',
-      class: "position-prz"
+      class: "position-prz pub-table-4"
     }, {
       title: '强平价格',
-      class: "position-przLiq"
+      class: "position-przLiq pub-table-5"
     }, {
       title: '风险度',
-      class: "position-rate"
+      class: "position-rate pub-table-6"
     }, {
       title: '保证金',
-      class: "position-mm"
+      class: "position-mm pub-table-7"
     }, {
       title: '未实现盈亏(回报率)',
-      class: "position-upnl"
+      class: "position-upnl pub-table-8"
     }, {
       title: '已实现盈亏',
-      class: "position-pnl"
+      class: "position-pnl pub-table-9"
     }, {
       title: '止盈/止损',
-      class: "position-stoppl"
+      class: "position-stoppl pub-table-10"
     }, {
       title: '策略',
-      class: "position-buttons"
+      class: "position-buttons pub-table-11"
     } 
   ],
   //初始化全局广播
@@ -423,17 +423,32 @@ let obj = {
     if(window.isMobile){
       return obj.getPosListForM()
     }else{
+      let colgroup = m('colgroup', {},[
+        m('col', {name: "pub-table-1",width: 100}),
+        m('col', {name: "pub-table-2",width: 160}),
+        m('col', {name: "pub-table-3",width: 70}),
+        m('col', {name: "pub-table-4",width: 150}),
+        m('col', {name: "pub-table-5",width: 150}),
+        m('col', {name: "pub-table-6",width: 160}),
+        m('col', {name: "pub-table-7",width: 150}),
+        m('col', {name: "pub-table-8",width: 200}),
+        m('col', {name: "pub-table-9",width: 150}),
+        m('col', {name: "pub-table-10",width: 200}),
+        m('col', {name: "pub-table-11",width: 590}),
+      ])
       return m('div', { class: " table-container"}, [
-        m("table",{class:"table is-hoverable ", cellpadding: 0, cellspacing: 0},[
-          m("thead",{class:""},[
-            m("tr",{class:""},[
-              obj.getTheadList()
-            ])
-          ]),
-          m("tbody",{class:""},[
+        m("table",{class:"table is-hoverable ", width: '2080px', cellpadding: 0, cellspacing: 0},[
+          colgroup,
+          m("tr",{class:""},[
+            obj.getTheadList()
+          ])
+        ]),
+        m('div', {class: "pub-table-body-box", style:"width: 2080px"}, [
+          m("table",{class:"table is-hoverable ", width: '2080px', cellpadding: 0, cellspacing: 0},[
+            colgroup,
             obj.getPosList()
           ])
-        ])
+        ]),
       ])
     }
   },

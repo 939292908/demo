@@ -590,17 +590,31 @@ hr {
 
     
     .table-container {
-        @extend %scroll;
-        height: 364px;
-    }
-
-    table {
-        min-width: 100%;
-
-        td,th {
-            white-space:nowrap;
+        overflow-x: auto;
+        overflow-y: hidden;
+        width: 100%;
+        height: 363px;
+        table {
+            min-width: 100%;
+            @extend %ma-0;
+            tr{
+                td,th {
+                    @extend %px-0;
+                }
+            }
+        }
+        .pub-table-body-box {
+            overflow-x: hidden;
+            overflow-y: auto;
+            height: 307px;
+            min-width: 100%;
+            table {
+                min-width: 100%;
+            }
         }
     }
+
+    
 }
 // pc端列表 end
 
