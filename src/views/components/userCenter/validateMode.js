@@ -51,6 +51,8 @@ let obj = {
           that.submitLoading = false
           if(arg.result.code == 0){
             that.open = false
+            that.google = ''
+            that.sms = ''
             that.validateCallback && that.validateCallback()
           }else{
             window.$message({title: utils.getWebApiErrorCode(arg.result.code), content: utils.getWebApiErrorCode(arg.result.code), type: 'danger'})
@@ -72,6 +74,8 @@ let obj = {
           that.submitLoading = false
           if(arg.result == 0 || arg.result.code == 0){
             that.open = false
+            that.google = ''
+            that.sms = ''
             that.validateCallback && that.validateCallback()
           }else{
             window.$message({title: utils.getWebApiErrorCode(arg.result.code), content: utils.getWebApiErrorCode(arg.result.code || arg.result), type: 'danger'})
@@ -120,6 +124,11 @@ let obj = {
   },
   closeValidateMode: function(){
     this.open = false
+    this.google = ''
+    this.sms = ''
+    this.inputMaxLength = 6
+    this.submitLoading = false
+    this.getSMSLoading = false
     this.validateCloseCallback && this.validateCloseCallback()
   },
   onSMSInput: function(e){

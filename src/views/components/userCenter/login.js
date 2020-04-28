@@ -116,8 +116,7 @@ let obj = {
         let that = this
         window.gWebAPI.ReqUserInfo({}, function(param){
             if(param.result.code == 0){
-                that.loginLoading = false
-                that.open = false
+                that.closeMode()
                 window.$message({title: '登录成功！', content: '登录成功！', type: 'success'})
                 utils.setItem('login-user-name', param.account.accountName)
             }else{
@@ -156,6 +155,12 @@ let obj = {
         if(userName){
             this.userName = userName
         }
+    },
+    closeMode: function(){
+        this.open = false
+        this.loginLoading = false
+        this.userName = ''
+        this.password = ''
     }
 }
 
@@ -183,8 +188,7 @@ export default {
                             '登录'
                         ]),
                         m("button",{class:"delete", "aria-label":"close", onclick: function(){
-                            obj.open = false
-                            obj.loginLoading = false
+                            obj.closeMode()
                         }}),
                     ]),
                     m("section",{class:"pub-login-content modal-card-body"},[
@@ -222,7 +226,7 @@ export default {
                             '登录'
                         ]),
                         m("button",{class:"button border-4", onclick: function(){
-                            obj.open = false
+                            obj.closeMode()
                         }},[
                             '取消'
                         ]),
