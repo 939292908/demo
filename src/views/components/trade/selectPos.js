@@ -192,6 +192,39 @@ let obj = {
     let AId = window.gTrd.RT["UserId"]+'01'
     let Sym = window.gMkt.CtxPlaying.Sym
     let PId = window.gMkt.CtxPlaying.activePId
+    // 判断资金情况 start
+    let ass = window.gMkt.AssetD[Sym]
+    if(!ass) return
+    let SettleCoin = ass.SettleCoin
+    let Wlts = window.gTrd.Wlts['01']
+    let aWdrawable = 0
+    if(Wlts){
+      for(let item of Wlts){
+        if(item.Coin == SettleCoin){
+          aWdrawable = item.aWdrawable || 0
+        }
+      }
+    }
+    if(!Wlts || aWdrawable == 0){
+        return window.$message({title: '可用资金不足！', content: '可用资金不足！', type: 'danger'})
+    }
+    // 判断资金情况 end
+
+
+    // 模式3判断仓位数量是否超限 start
+    let Poss = window.gTrd.Poss
+    let posArr = []
+    for(let key in Poss){
+        let pos = Poss[key]
+        if(pos.Sym == Sym && pos.Sz != 0){
+            posArr.push(pos)
+        }
+    }
+    if(posArr.length >= window.$config.future.maxPosNum){
+        return window.$message({title: '提示', content: '同一合约最多同时存在'+window.$config.future.maxPosNum+'个仓位!', type: 'danger'})
+    }
+    // 判断仓位数量是否超限 end
+
     window.gTrd.ReqTrdPosOp({
       "AId":AId,
       "Sym": Sym,

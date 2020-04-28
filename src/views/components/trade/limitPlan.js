@@ -271,7 +271,19 @@ let obj = {
                 if (stopP > 0 || stopL > 0) {
                     p.StopLPBy = 1
                 }
-                console.log(p)
+                // 模式3判断仓位数量是否超限 start
+                let Poss = window.gTrd.Poss
+                let posArr = []
+                for(let key in Poss){
+                    let pos = Poss[key]
+                    if(pos.Sym == Sym && pos.Sz != 0){
+                        posArr.push(pos)
+                    }
+                }
+                if(posArr.length >= window.$config.future.maxPosNum){
+                    return window.$message({title: '提示', content: '同一合约最多同时存在'+window.$config.future.maxPosNum+'个仓位!', type: 'danger'})
+                }
+            // 判断仓位数量是否超限 end
                 break;
             default:
                 
