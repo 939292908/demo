@@ -264,7 +264,11 @@ let main = {
             }
 
             let wallet = s.Wlts['01']
-            let order = s.Orders['01']
+            let order = s.Orders['01'] || []
+            // 筛选出当前委托，不要计划委托
+            let _order = order.filter(function(item){
+                return item.OType == 1 || item.OType == 2
+            })
             let RS = s.RS
             let assetD = window.gMkt.AssetD
             let lastTick = window.gMkt.lastTick
@@ -275,7 +279,7 @@ let main = {
             let cb = function (arg) {
                 gEVBUS.emit(window.gTrd.EV_POSABDWLTCALCOVER_UPD, { Ev: window.gTrd.EV_POSABDWLTCALCOVER_UPD, data: arg })
             }
-            futureCalc.calcFutureWltAndPosAndMI(pos, wallet, order, RS, assetD, lastTick, UPNLPrzActive, MMType, PrzLiqType, cb)
+            futureCalc.calcFutureWltAndPosAndMI(pos, wallet, _order, RS, assetD, lastTick, UPNLPrzActive, MMType, PrzLiqType, cb)
 
         }
     },
