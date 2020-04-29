@@ -4,9 +4,6 @@ let obj = {
     posList: [],
     theadList: [
         {
-            title: '仓位ID',
-            class: ""
-        }, {
             title: '合约',
             class: ""
         }, {
@@ -36,20 +33,21 @@ let obj = {
         }, {
             title: '委托时间',
             class: ""
-        }
+        }, {
+            title: '仓位ID',
+            class: ""
+        }, 
     ],
     //初始化全局广播
     initEVBUS: function () {
         let that = this
 
-        // if (this.EV_WLT_POS_ORDER_UPD_unbinder) {
-        //     this.EV_WLT_POS_ORDER_UPD_unbinder()
-        // }
-        // this.EV_WLT_POS_ORDER_UPD_unbinder = window.gEVBUS.on(gTrd.EV_WLT_POS_ORDER_UPD, arg => {
-        //     that.initObj()
-        //     that.subPosNeedSymTick()
-
-        // })
+        if (this.EV_GET_HISTORY_ORD_READY_unbinder) {
+            this.EV_GET_HISTORY_ORD_READY_unbinder()
+        }
+        this.EV_GET_HISTORY_ORD_READY_unbinder = window.gEVBUS.on(gTrd.EV_GET_HISTORY_ORD_READY, arg => {
+            that.initObj()
+        })
 
         if (this.EV_WEB_LOGOUT_unbinder) {
             this.EV_WEB_LOGOUT_unbinder()
@@ -60,8 +58,8 @@ let obj = {
     },
     //删除全局广播
     rmEVBUS: function () {
-        if (this.EV_WLT_POS_ORDER_UPD_unbinder) {
-            this.EV_WLT_POS_ORDER_UPD_unbinder()
+        if (this.EV_GET_HISTORY_ORD_READY_unbinder) {
+            this.EV_GET_HISTORY_ORD_READY_unbinder()
         }
         if (this.EV_WEB_LOGOUT_unbinder) {
             this.EV_WEB_LOGOUT_unbinder()
@@ -140,9 +138,6 @@ let obj = {
     getPosList: function () {
         return this.posList.map(function (item, i) {
             return m("tr", { key: "historyOrdTableListItem" + i, class: "" }, [
-                m("td", { class: " " }, [
-                    item.PId.substr(-4)
-                ]),
                 m("td", { class: "" }, [
                     m("p", { class: " " }, [
                         utils.getSymDisplayName(window.gMkt.AssetD, item.Sym)
@@ -176,7 +171,14 @@ let obj = {
                 ]),
                 m("td", { class: "" }, [
                     item.AtStr
-                ])
+                ]),
+                m("td",{class:"cursor-pointer"+(" historyOrdTableListItemCopy"+i), "data-clipboard-text": item.PId, onclick: function(e){
+                    window.$copy(".historyOrdTableListItemCopy"+i)
+                }},[
+                    item.PId.substr(-4),
+                    ' ',
+                    m("i",{class:"iconfont iconcopy"}),
+                ]),
             ])
         })
     },
@@ -208,14 +210,8 @@ let obj = {
         let uid = s.RT["UserId"]
         let isReq = s.trdInfoStatus.historyOrd[aType]
         if (!uid || !s || isReq) return
-        s.ReqTrdGetHistOrders({
+        s.getHistoryOrdAndTrdAndWltlog({
             AId: uid + aType,
-        }, function (aTrd, aArg) {
-            if (aArg.code == 0) {
-                s.trdInfoStatus.historyOrd[aType] = 1
-                s.HistoryOrders[aType] = aArg.data
-                that.initObj()
-            }
         })
     },
     getContent: function () {
@@ -223,7 +219,6 @@ let obj = {
             return null
         } else {
             let colgroup = m('colgroup', {}, [
-                m('col', { name: "pub-table-1", width: 70 }),
                 m('col', { name: "pub-table-2", width: 160 }),
                 m('col', { name: "pub-table-3", width: 130 }),
                 m('col', { name: "pub-table-4", width: 80 }),
@@ -233,17 +228,18 @@ let obj = {
                 m('col', { name: "pub-table-8", width: 100 }),
                 m('col', { name: "pub-table-9", width: 100 }),
                 m('col', { name: "pub-table-10", width: 150 }),
-                m('col', { name: "pub-table-10", width: 150 })
+                m('col', { name: "pub-table-10", width: 150 }),
+                m('col', { name: "pub-table-1", width: 100 }),
             ])
             return m('div', { class: " table-container" }, [
-                m("table", { class: "table is-hoverable ", width: '1230px', cellpadding: 0, cellspacing: 0 }, [
+                m("table", { class: "table is-hoverable ", width: '1260px', cellpadding: 0, cellspacing: 0 }, [
                     colgroup,
                     m("tr", { class: "" }, [
                         obj.getTheadList()
                     ])
                 ]),
-                m('div', { class: "pub-table-body-box", style: "width: 1230px" }, [
-                    m("table", { class: "table is-hoverable ", width: '1230px', cellpadding: 0, cellspacing: 0 }, [
+                m('div', { class: "pub-table-body-box", style: "width: 1260px" }, [
+                    m("table", { class: "table is-hoverable ", width: '1260px', cellpadding: 0, cellspacing: 0 }, [
                         colgroup,
                         obj.getPosList()
                     ])

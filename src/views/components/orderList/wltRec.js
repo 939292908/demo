@@ -20,13 +20,12 @@ let obj = {
     initEVBUS: function () {
         let that = this
 
-        // if (this.EV_WLT_POS_ORDER_UPD_unbinder) {
-        //     this.EV_WLT_POS_ORDER_UPD_unbinder()
-        // }
-        // this.EV_WLT_POS_ORDER_UPD_unbinder = window.gEVBUS.on(gTrd.EV_WLT_POS_ORDER_UPD, arg => {
-        //     that.initObj()
-        //     that.subPosNeedSymTick()
-        // })
+        if (this.EV_GET_WLT_LOG_READY_unbinder) {
+            this.EV_GET_WLT_LOG_READY_unbinder()
+        }
+        this.EV_GET_WLT_LOG_READY_unbinder = window.gEVBUS.on(gTrd.EV_GET_WLT_LOG_READY, arg => {
+            that.initObj()
+        })
         if (this.EV_WEB_LOGOUT_unbinder) {
             this.EV_WEB_LOGOUT_unbinder()
         }
@@ -37,8 +36,8 @@ let obj = {
     },
     //删除全局广播
     rmEVBUS: function () {
-        if (this.EV_WLT_POS_ORDER_UPD_unbinder) {
-            this.EV_WLT_POS_ORDER_UPD_unbinder()
+        if (this.EV_GET_WLT_LOG_READY_unbinder) {
+            this.EV_GET_WLT_LOG_READY_unbinder()
         }
         if (this.EV_WEB_LOGOUT_unbinder) {
             this.EV_WEB_LOGOUT_unbinder()
@@ -58,14 +57,8 @@ let obj = {
         let uid = s.RT["UserId"]
         let isReq = s.trdInfoStatus.wltLog[aType]
         if(!uid || !s || isReq) return
-        s.ReqTrdGetWalletsLog({
-            AId: uid+aType,
-        }, function(aTrd, aArg){
-            if(aArg.code == 0){
-                s.trdInfoStatus.wltLog[aType] = 1
-                s.WltLog[aType] = aArg.data
-                that.initObj()
-            }
+        s.getHistoryOrdAndTrdAndWltlog({
+            AId: uid + aType,
         })
     },
     initObj: function(){

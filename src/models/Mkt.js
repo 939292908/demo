@@ -43,6 +43,9 @@ const EV_GET_WLT_READY = "EV_GET_WLT_READY"
 const EV_WLT_UPD = "EV_WLT_UPD"
 const EV_GET_ORD_READY = 'EV_GET_ORD_READY';
 const EV_ORD_UPD = 'EV_ORD_UPD';
+const EV_GET_HISTORY_ORD_READY = 'EV_GET_HISTORY_ORD_READY';
+const EV_GET_HISTORY_TRD_READY = 'EV_GET_HISTORY_TRD_READY';
+const EV_GET_WLT_LOG_READY = 'EV_GET_WLT_LOG_READY';
 const EV_WLTLOG_UPD = 'EV_WLTLOG_UPD'
 
 const EV_ASSETD_UPD = "evAssetDUpd"
@@ -148,6 +151,9 @@ class Mkt {
     EV_WLT_UPD = EV_WLT_UPD;
     EV_GET_ORD_READY = EV_GET_ORD_READY;
     EV_ORD_UPD = EV_ORD_UPD;
+    EV_GET_HISTORY_ORD_READY = EV_GET_HISTORY_ORD_READY;
+    EV_GET_HISTORY_TRD_READY = EV_GET_HISTORY_TRD_READY;
+    EV_GET_WLT_LOG_READY = EV_GET_WLT_LOG_READY;
     EV_WLTLOG_UPD = EV_WLTLOG_UPD;
 
     EV_ASSETD_UPD = EV_ASSETD_UPD;
@@ -283,6 +289,11 @@ class Mkt {
     MyTrades = {
         "01": [],
         "02": []
+    }
+
+    MyTrades_Obj = {
+        "01": {},
+        "02": {},
     }
 
     WltLog = {
@@ -1633,6 +1644,13 @@ class Mkt {
             aTrd.MyTrades[aId] = trades
         }
         aTrd.MyTrades[aId] = aRaw.data.concat(trades);
+        for(let item of aRaw.data){
+            if(!aTrd.MyTrades_Obj[aId][item.OrdId]){
+                aTrd.MyTrades_Obj[aId][item.OrdId] = []
+            }
+            aTrd.MyTrades_Obj[aId][item.OrdId].push(item)
+        }
+        
         gEVBUS.EmitDeDuplicate(EV_WLT_POS_ORDER_UPD,50,EV_WLT_POS_ORDER_UPD, {Ev: EV_WLT_POS_ORDER_UPD})
     }
 
@@ -2244,6 +2262,46 @@ class Mkt {
             s.CtxPlaying.subList = []
             s.ReqSub(subList)
         }
+    }
+
+    getHistoryOrdAndTrdAndWltlog({AId}){
+        let s = this
+        let aType = AId.substr(-2)
+        s.ReqTrdGetHistOrders({
+            AId: AId,
+        }, function (aTrd, aArg) {
+            if (aArg.code == 0) {
+                s.trdInfoStatus.historyOrd[aType] = 1
+                s.HistoryOrders[aType] = aArg.data
+                gEVBUS.emit(EV_GET_HISTORY_ORD_READY, {ev:EV_GET_HISTORY_ORD_READY, aType: aType, data: aArg.data})
+            }
+        })
+
+        s.ReqTrdGetTrades({
+            AId: AId,
+        }, function(aTrd, aArg){
+            if(aArg.code == 0){
+                s.trdInfoStatus.trade[aType] = 1
+                s.MyTrades[aType] = aArg.data
+                for(let item of aArg.data){
+                    if(!s.MyTrades_Obj[aType][item.OrdId]){
+                        s.MyTrades_Obj[aType][item.OrdId] = []
+                    }
+                    s.MyTrades_Obj[aType][item.OrdId].push(item)
+                }
+                gEVBUS.emit(EV_GET_HISTORY_TRD_READY, {ev:EV_GET_HISTORY_TRD_READY, aType: aType, data: aArg.data})
+            }
+        })
+
+        s.ReqTrdGetWalletsLog({
+            AId: AId,
+        }, function(aTrd, aArg){
+            if(aArg.code == 0){
+                s.trdInfoStatus.wltLog[aType] = 1
+                s.WltLog[aType] = aArg.data
+                gEVBUS.emit(EV_GET_WLT_LOG_READY, {ev:EV_GET_WLT_LOG_READY, aType: aType, data: aArg.data})
+            }
+        })
     }
 
 

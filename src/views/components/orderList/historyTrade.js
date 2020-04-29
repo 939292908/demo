@@ -32,13 +32,12 @@ let obj = {
     initEVBUS: function () {
         let that = this
 
-        // if (this.EV_WLT_POS_ORDER_UPD_unbinder) {
-        //     this.EV_WLT_POS_ORDER_UPD_unbinder()
-        // }
-        // this.EV_WLT_POS_ORDER_UPD_unbinder = window.gEVBUS.on(gTrd.EV_WLT_POS_ORDER_UPD, arg => {
-        //     that.initObj()
-        //     that.subPosNeedSymTick()
-        // })
+        if (this.EV_GET_HISTORY_TRD_READY_unbinder) {
+            this.EV_GET_HISTORY_TRD_READY_unbinder()
+        }
+        this.EV_GET_HISTORY_TRD_READY_unbinder = window.gEVBUS.on(gTrd.EV_GET_HISTORY_TRD_READY, arg => {
+            that.initObj()
+        })
 
         if (this.EV_WEB_LOGOUT_unbinder) {
             this.EV_WEB_LOGOUT_unbinder()
@@ -49,8 +48,8 @@ let obj = {
     },
     //删除全局广播
     rmEVBUS: function () {
-        if (this.EV_WLT_POS_ORDER_UPD_unbinder) {
-            this.EV_WLT_POS_ORDER_UPD_unbinder()
+        if (this.EV_GET_HISTORY_TRD_READY_unbinder) {
+            this.EV_GET_HISTORY_TRD_READY_unbinder()
         }
         if (this.EV_WEB_LOGOUT_unbinder) {
             this.EV_WEB_LOGOUT_unbinder()
@@ -70,14 +69,8 @@ let obj = {
         let uid = s.RT["UserId"]
         let isReq = s.trdInfoStatus.trade[aType]
         if(!uid || !s || isReq) return
-        s.ReqTrdGetTrades({
-            AId: uid+aType,
-        }, function(aTrd, aArg){
-            if(aArg.code == 0){
-                s.trdInfoStatus.trade[aType] = 1
-                s.MyTrades[aType] = aArg.data
-                that.initObj()
-            }
+        s.getHistoryOrdAndTrdAndWltlog({
+            AId: uid + aType,
         })
     },
     initObj: function(){
@@ -124,7 +117,7 @@ let obj = {
     },
     getListItem: function () {
         return this.list.map(function (item, i) {
-            return m("tr", { key: "historyOrdTableListItem" + i, class: "" }, [
+            return m("tr", { key: "historyTrdTableListItem" + i, class: "" }, [
                 
                 m("td", { class: "" }, [
                     m("p", { class: " " }, [
@@ -149,8 +142,12 @@ let obj = {
                 m("td", { class: "" }, [
                     item.AtStr
                 ]),
-                m("td", { class: " " }, [
-                    item.PId.substr(-4)
+                m("td",{class:"cursor-pointer"+(" historyTrdTableListItemCopy"+i), "data-clipboard-text": item.PId, onclick: function(e){
+                    window.$copy(".historyTrdTableListItemCopy"+i)
+                }},[
+                    item.PId.substr(-4),
+                    ' ',
+                    m("i",{class:"iconfont iconcopy"}),
                 ]),
             ])
         })
