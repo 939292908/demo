@@ -153,7 +153,6 @@ class TDataFeeder {
         let _Typ = gMkt.Res2Typ[resolution];
         
         let assetD = window.gMkt.AssetD
-        console.error(Sym, symbolInfo.name, Typ, _Typ, assetD, assetD[symbolInfo.name])
 
         if (gMkt&& (Sym != symbolInfo.name || Typ != _Typ)) {
             if (Sym && Typ) {
