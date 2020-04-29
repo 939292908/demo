@@ -11,7 +11,7 @@ const MY_TIMEZONE = "Asia/Shanghai"
 const EV_FUNC_PTR = "evFuncPtr"
 
 class TDataFeeder {
-    onReady (cb) {
+    onReady(cb) {
         var cfgdata = {
             supported_resolutions: gMkt.Getsupported_resolutions()
         }
@@ -19,7 +19,7 @@ class TDataFeeder {
             cb(cfgdata)
         }, 0)
     }
-    searchSymbols (userInput, exchange, symbolType, onResultReadyCallback) {
+    searchSymbols(userInput, exchange, symbolType, onResultReadyCallback) {
         /*
         ### searchSymbols(userInput, exchange, symbolType, onResultReadyCallback)
 
@@ -48,7 +48,7 @@ class TDataFeeder {
         ]
         If no symbols are found, then callback should be called with an empty array. See more details about `ticker` value [here](Symbology#ticker)
         */
-        if (DBG_TDataFeeder) {console.log(__filename, "TDataFeeder.searchSymbols", userInput, exchange, symbolType)}
+        if (DBG_TDataFeeder) { console.log(__filename, "TDataFeeder.searchSymbols", userInput, exchange, symbolType) }
 
     }
     resolveSymbol(symbolName, onSymbolResolvedCallback, onResolveErrorCallback) {
@@ -61,10 +61,10 @@ class TDataFeeder {
 
         Charting Library will call this function when it needs to get [SymbolInfo](Symbology#symbolinfo-structure) by symbol name.
         */
-       
+
         var info = {
             "name": symbolName,//utils.getSymDisplayName(window.gMkt.AssetD, symbolName),
-            "full_name":utils.getSymDisplayName(window.gMkt.AssetD, symbolName),
+            "full_name": utils.getSymDisplayName(window.gMkt.AssetD, symbolName),
             "exchange-traded": symbolName,
             //"exchange-listed": symbolName,
             "timezone": MY_TIMEZONE,
@@ -89,7 +89,7 @@ class TDataFeeder {
             onSymbolResolvedCallback(info)
         }, 0)
 
-        if (DBG_TDataFeeder) {console.log(__filename, "TDataFeeder.resolveSymbol", symbolName)}
+        if (DBG_TDataFeeder) { console.log(__filename, "TDataFeeder.resolveSymbol", symbolName) }
 
     }
 
@@ -150,16 +150,21 @@ class TDataFeeder {
         volume_precision: 1
         }
         */
-       let _Typ = gMkt.Res2Typ[resolution];
-       console.log(Sym, symbolInfo.name , Typ, _Typ)
-        if (gMkt && (Sym != symbolInfo.name || Typ != _Typ) ) {
-            if(Sym && Typ){
-                let assetD = window.gMkt.AssetD
-                if(assetD[assetD]){
-                    gMkt.ReqUnSub(["kline_"+Typ+"_" + Sym,"trade_"+Sym])
+        let _Typ = gMkt.Res2Typ[resolution];
+        
+        let assetD = window.gMkt.AssetD
+        console.error(Sym, symbolInfo.name, Typ, _Typ, assetD, assetD[symbolInfo.name])
+
+        if (gMkt&& (Sym != symbolInfo.name || Typ != _Typ)) {
+            if (Sym && Typ) {
+                if (assetD[Sym]) {
+                    gMkt.ReqUnSub(["kline_" + Typ + "_" + Sym, "trade_" + Sym])
                 }
             }
-            gMkt.ReqSub(["kline_"+_Typ+"_" + symbolInfo.name,"trade_"+symbolInfo.name])
+            if (assetD[symbolInfo.name]) {
+                gMkt.ReqSub(["kline_" + _Typ + "_" + symbolInfo.name, "trade_" + symbolInfo.name])
+            }
+            
             Typ = _Typ
             gMkt.CtxPlaying.Typ = _Typ
             Sym = symbolInfo.name
@@ -173,8 +178,8 @@ class TDataFeeder {
         let start = Math.floor(fromSec / interval) * interval;
         let end = Math.ceil(toSec / interval) * interval;
         let bars = gMkt.AffirmKlineReqIfNeeded(symbolInfo.name, Typ, start, end, Math.floor((end - start) / interval))
-//        onHistoryCallback(bars,{noData:!firstDataRequest} );
-        onHistoryCallback(bars, {noData: false});
+        //        onHistoryCallback(bars,{noData:!firstDataRequest} );
+        onHistoryCallback(bars, { noData: false });
     }
 
     subscribeBars(symbolInfo, resolution, onRealtimeCallback, subscriberUID, onResetCacheNeededCallback) {
@@ -204,13 +209,13 @@ class TDataFeeder {
 
         **Remark 3**: There is no way to change historical bars once they've been received by the chart currently.
        */
-        if (DBG_TDataFeeder){console.log(__filename,"TDataFeeder.subscribeBars",symbolInfo.name,resolution)}
-        gEVBUS.emit(EV_FUNC_PTR,{Ev:EV_FUNC_PTR,Name:"onResetCacheNeededCallback",Func:onResetCacheNeededCallback})
-        gEVBUS.emit(EV_FUNC_PTR,{Ev:EV_FUNC_PTR,Name:"onRealtimeCallback",Func:onRealtimeCallback})
+        if (DBG_TDataFeeder) { console.log(__filename, "TDataFeeder.subscribeBars", symbolInfo.name, resolution) }
+        gEVBUS.emit(EV_FUNC_PTR, { Ev: EV_FUNC_PTR, Name: "onResetCacheNeededCallback", Func: onResetCacheNeededCallback })
+        gEVBUS.emit(EV_FUNC_PTR, { Ev: EV_FUNC_PTR, Name: "onRealtimeCallback", Func: onRealtimeCallback })
 
     }
     unsubscribeBars(subscriberUID) {
-        if (DBG_TDataFeeder){console.log(__filename,"TDataFeeder.unsubscribeBars",subscriberUID)}
+        if (DBG_TDataFeeder) { console.log(__filename, "TDataFeeder.unsubscribeBars", subscriberUID) }
 
         /*
         ### unsubscribeBars(subscriberUID)
@@ -349,21 +354,21 @@ let obj = {
     },
     //平均线指标信息
     targetAverage: {
-        MA5:{},
-        MA10:{},
-        MA60:{}
+        MA5: {},
+        MA10: {},
+        MA60: {}
     },
     //初始化全局广播
-    initEVBUS: function(){
+    initEVBUS: function () {
         let that = this
         this.onResetCacheNeededCallback = null;
         this.onRealtimeCallback = null;
 
         //当前选中合约变化全局广播
-        if(this.EV_CHANGESYM_UPD_unbinder){
+        if (this.EV_CHANGESYM_UPD_unbinder) {
             this.EV_CHANGESYM_UPD_unbinder()
         }
-        this.EV_CHANGESYM_UPD_unbinder = window.gEVBUS.on(gMkt.EV_CHANGESYM_UPD,arg=> {
+        this.EV_CHANGESYM_UPD_unbinder = window.gEVBUS.on(gMkt.EV_CHANGESYM_UPD, arg => {
             that.setSymbol()
         })
 
@@ -371,7 +376,7 @@ let obj = {
         if (this.EV_HIST_UPD_unbinder) {
             this.EV_HIST_UPD_unbinder();
         }
-        this.EV_HIST_UPD_unbinder = gEVBUS.on(gMkt.EV_HIST_UPD,arg=> {
+        this.EV_HIST_UPD_unbinder = gEVBUS.on(gMkt.EV_HIST_UPD, arg => {
             let tv = window.gTvWidgetFT
             if (tv) {
                 try {
@@ -393,7 +398,7 @@ let obj = {
         if (this.EV_FUNC_PTR_unbinder) {
             this.EV_FUNC_PTR_unbinder();
         }
-        this.EV_FUNC_PTR_unbinder = gEVBUS.on(EV_FUNC_PTR,arg=> {
+        this.EV_FUNC_PTR_unbinder = gEVBUS.on(EV_FUNC_PTR, arg => {
             switch (arg.Name) {
                 case "onResetCacheNeededCallback":
                     this.onResetCacheNeededCallback = arg.Func
@@ -407,7 +412,7 @@ let obj = {
         if (this.EV_REALTIME_UPD_unbinder) {
             this.EV_REALTIME_UPD_unbinder();
         }
-        this.EV_REALTIME_UPD_unbinder = gEVBUS.on(gMkt.EV_REALTIME_UPD,arg=> {
+        this.EV_REALTIME_UPD_unbinder = gEVBUS.on(gMkt.EV_REALTIME_UPD, arg => {
             /*
             {"subj":"trade","data":{"Sym":"BTC.USDT","At":1574573589537,"Prz":7182.5,"Dir":-1,"Sz":87,"Val":-3124.3875,"MatchID":"01DTDYCFZV3DCMX20744BQF5WW"}}
             */
@@ -419,15 +424,15 @@ let obj = {
                         let d_d = arg.data;
                         if (tv && tv.symbolExt().symbol == d_d.Sym) {
                             let typ = gMkt.Res2Typ[tv.resolution()]
-                            let kline = gMkt.AffirmKline(tv.symbolExt().symbol,typ)
+                            let kline = gMkt.AffirmKline(tv.symbolExt().symbol, typ)
                             let intervalInSec = gMkt.Typ2Sec[typ]
-                            if (kline && kline.length>0) {
+                            if (kline && kline.length > 0) {
                                 let knode = kline[kline.length - 1]
-                                let roundedAtInSec = Math.floor(d_d.At/(intervalInSec*1000))*intervalInSec
-                                let rounded_knode_timeInSec = Math.floor(knode.time/(intervalInSec*1000))*intervalInSec;
+                                let roundedAtInSec = Math.floor(d_d.At / (intervalInSec * 1000)) * intervalInSec
+                                let rounded_knode_timeInSec = Math.floor(knode.time / (intervalInSec * 1000)) * intervalInSec;
                                 let roundedAtInMS = roundedAtInSec * 1000
-                                
-                                if (rounded_knode_timeInSec  == roundedAtInSec) {
+
+                                if (rounded_knode_timeInSec == roundedAtInSec) {
                                     this.onRealtimeCallback({
                                         Sec: roundedAtInMS,
                                         Turnover: knode.Turnover,
@@ -441,7 +446,7 @@ let obj = {
                                     });
                                 } else if (rounded_knode_timeInSec + intervalInSec == roundedAtInSec) {
                                     // 啥也别干了，直接等就是了。
-                                    if(false) {
+                                    if (false) {
                                         // TODO 这里实际上需要取1条。
                                         gMkt.FillAndReqHistKLine2(d_d.Sym, typ, rounded_knode_timeInSec + intervalInSec, intervalInSec, (roundedAtInSec - rounded_knode_timeInSec) / intervalInSec);
                                         let roundedAtInMS = roundedAtInSec * 1000
@@ -465,7 +470,7 @@ let obj = {
                                 }
                             }
                         }
-                    } catch(e) {}
+                    } catch (e) { }
                 }
             }
         })
@@ -473,7 +478,7 @@ let obj = {
         if (this.EV_KLINE_UPD_unbinder) {
             this.EV_KLINE_UPD_unbinder();
         }
-        this.EV_KLINE_UPD_unbinder = gEVBUS.on(gMkt.EV_KLINE_UPD,arg=> {
+        this.EV_KLINE_UPD_unbinder = gEVBUS.on(gMkt.EV_KLINE_UPD, arg => {
             /*
             {"subj":"trade","data":{"Sym":"BTC.USDT","At":1574573589537,"Prz":7182.5,"Dir":-1,"Sz":87,"Val":-3124.3875,"MatchID":"01DTDYCFZV3DCMX20744BQF5WW"}}
             */
@@ -486,16 +491,16 @@ let obj = {
                         if (tv && tv.symbolExt().symbol == d_d.Sym) {
                             this.onRealtimeCallback(arg.data);
                         }
-                    } catch(e) {}
+                    } catch (e) { }
                 }
             }
         })
-        
+
 
     },
     //删除全局广播
-    rmEVBUS: function(){
-        if(this.EV_CHANGESYM_UPD_unbinder){
+    rmEVBUS: function () {
+        if (this.EV_CHANGESYM_UPD_unbinder) {
             this.EV_CHANGESYM_UPD_unbinder()
         }
         if (this.EV_HIST_UPD_unbinder) {
@@ -511,13 +516,13 @@ let obj = {
             this.EV_KLINE_UPD_unbinder();
         }
     },
-    initKline: function(){
+    initKline: function () {
         let that = this
         window.gTvWidgetFT = new TradingView.widget({
             debug: false, // uncomment this line to see Library errors and warnings in the console
             fullscreen: false,
             autosize: true,
-            symbol: gMkt.CtxPlaying.Sym || "BTC.USDT",
+            symbol: gMkt.CtxPlaying.Sym || "new",
             interval: gMkt.Typ2Res[Typ],
             container_id: "tv_chart_container",
 
@@ -567,22 +572,22 @@ let obj = {
                 'mainSeriesProperties.candleStyle.wickDownColor': '#FF5935',
             },
             favorites: {
-                intervals: ["1", "5", "15", "30", "60", "120","240", "D", "3D", "W"],
+                intervals: ["1", "5", "15", "30", "60", "120", "240", "D", "3D", "W"],
                 chartTypes: [],//["candles", "Line"]
             },
         });
-        window.gTvWidgetFT.onChartReady(function() {
+        window.gTvWidgetFT.onChartReady(function () {
             that.tradingviewReady = true
-            if(that.Sym){
+            if (that.Sym) {
                 that.setSymbol()
             }
             that.setMA()
         })
-        window.gTvWidgetFT.headerReady().then(function() {
+        window.gTvWidgetFT.headerReady().then(function () {
             function createHeaderButton(text, title, clickHandler, options) {
                 var button = window.gTvWidgetFT.createButton(options);
                 button.setAttribute('title', title);
-                button.textContent =  text;
+                button.textContent = text;
                 button.addEventListener('click', clickHandler);
             }
 
@@ -592,7 +597,7 @@ let obj = {
             //         that.setKCrossTime(item.type)
             //     });
             // }
-            createHeaderButton(that.timeList[0].name, that.timeList[0].title, function() {
+            createHeaderButton(that.timeList[0].name, that.timeList[0].title, function () {
                 that.setKCrossTime(that.timeList[0].type)
             });
 
@@ -606,30 +611,30 @@ let obj = {
             // }
 
         });
-        
+
     },
-    getParameterByName: function(name) {
+    getParameterByName: function (name) {
         name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
         var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
             results = regex.exec(location.search);
         return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
     },
-    setSymbol: function(){
+    setSymbol: function () {
         let that = this
         console.log(Sym)
         that.Sym = window.gMkt.CtxPlaying.Sym
         that.Typ = window.gMkt.CtxPlaying.Typ || '1m'
-        if(window.gTvWidgetFT && that.tradingviewReady){
-            window.gTvWidgetFT.chart().setSymbol(that.Sym, function(){
+        if (window.gTvWidgetFT && that.tradingviewReady) {
+            window.gTvWidgetFT.chart().setSymbol(that.Sym, function () {
 
             })
-            console.log("tvWidget.setResolution",window.gTvWidgetFT.setResolution)
-    
-            window.gTvWidgetFT.chart().setResolution(gMkt.Typ2Res[that.Typ],function(){
+            console.log("tvWidget.setResolution", window.gTvWidgetFT.setResolution)
+
+            window.gTvWidgetFT.chart().setResolution(gMkt.Typ2Res[that.Typ], function () {
             })
         }
     },
-    createTarget: function(param) {
+    createTarget: function (param) {
         if (this.targetActive.id) {
             gTvWidgetFT.chart().removeEntity(this.targetActive.id)
         }
@@ -659,7 +664,7 @@ let obj = {
             case 'MACD':
                 gTvWidgetFT.chart().createStudy("MACD", false, false, [14, 30, "close", 9], (data) => {
                     this.targetActive.id = data;
-                },{
+                }, {
                     "Histogram.color": '#D04B65',
                     "MACD.color": '#84aad5',
                     "Signal.color": '#02AE8D',
@@ -700,7 +705,7 @@ let obj = {
             case 'EMA':
                 gTvWidgetFT.chart().createStudy('Moving Average Exponential', false, false, [26], (data) => {
                     this.targetActive.id = data;
-                },{
+                }, {
                     "Plot.color": '#84aad5',
                     'Plot.linewidth': 4
                 })
@@ -792,56 +797,56 @@ let obj = {
                 break;
         }
     },
-    setKCrossTime: function(val, oldVal) {
+    setKCrossTime: function (val, oldVal) {
         let that = this;
-        
-        if(!window.gTvWidgetFT) return
-        if(val != '0'){
+
+        if (!window.gTvWidgetFT) return
+        if (val != '0') {
             window.gTvWidgetFT.chart().setChartType(1)
             this.setMA();
         }
         switch (val) {
             case '0':
-                if(window.gTvWidgetFT.chart().chartType() == 1){
-                    if(this.targetAverage.MA5.id){
+                if (window.gTvWidgetFT.chart().chartType() == 1) {
+                    if (this.targetAverage.MA5.id) {
                         gTvWidgetFT.chart().removeEntity(this.targetAverage.MA5.id)
                         this.targetAverage.MA5.id = null;
                     }
-                    if(this.targetAverage.MA10.id){
+                    if (this.targetAverage.MA10.id) {
                         gTvWidgetFT.chart().removeEntity(this.targetAverage.MA10.id)
                         this.targetAverage.MA10.id = null;
                     }
                     window.gTvWidgetFT.chart().setChartType(3)
                     window.gTvWidgetFT.chart().setResolution('1', () => { // 1代表1分钟
-    
+
                     });
-                }else if(window.gTvWidgetFT.chart().chartType() == 3){
+                } else if (window.gTvWidgetFT.chart().chartType() == 3) {
                     window.gTvWidgetFT.chart().setChartType(1)
                     this.setMA();
                 }
                 break;
             default:
-                window.gTvWidgetFT.setSymbol(this.selectInst, val, function() {
+                window.gTvWidgetFT.setSymbol(this.selectInst, val, function () {
 
                 })
         }
     },
-    setMA: function(){
+    setMA: function () {
         let that = this;
-        if(this.targetAverage.MA60.id){
+        if (this.targetAverage.MA60.id) {
             gTvWidgetFT.chart().removeEntity(this.targetAverage.MA60.id)
             this.targetAverage.MA60.id = null
         }
-        if(!that.targetAverage.MA5.id){
-            gTvWidgetFT.chart().createStudy('Moving Average', false, false, [5], (data)=>{
+        if (!that.targetAverage.MA5.id) {
+            gTvWidgetFT.chart().createStudy('Moving Average', false, false, [5], (data) => {
                 that.targetAverage.MA5.id = data;
             }, {
                 "Plot.color.0": '#965fc4',
                 "Plot.linewidth": 4
             })
         }
-        if(!that.targetAverage.MA10.id){
-            gTvWidgetFT.chart().createStudy('Moving Average', false, false, [10], (data)=>{
+        if (!that.targetAverage.MA10.id) {
+            gTvWidgetFT.chart().createStudy('Moving Average', false, false, [10], (data) => {
                 that.targetAverage.MA10.id = data;
             }, {
                 "Plot.color.0": '#84aad5',
@@ -852,21 +857,21 @@ let obj = {
 }
 
 export default {
-    oninit: function(vnode){
-        
+    oninit: function (vnode) {
+
     },
-    oncreate: function(vnode){
+    oncreate: function (vnode) {
         obj.initEVBUS()
         obj.initKline()
     },
-    view: function(vnode) {
-        
-        return m("div",{class:"pub-kline box has-text-centered"},[
-            m('#tv_chart_container', {class:""})
+    view: function (vnode) {
+
+        return m("div", { class: "pub-kline box has-text-centered" }, [
+            m('#tv_chart_container', { class: "" })
         ])
     },
-    onbeforeremove: function(vnode) {
-        if(window.gTvWidgetFT){
+    onbeforeremove: function (vnode) {
+        if (window.gTvWidgetFT) {
             window.gTvWidgetFT.remove()
             window.gTvWidgetFT = null
         }
