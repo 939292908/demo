@@ -144,7 +144,7 @@ let obj = {
   },
   initLeverInfo: function (param) {
     let Sym = param.Sym
-    let Lever = param.Lever
+    let Lever = (param.Lever || 0).toFixed2(0)
     let PId = param.PId
     let MIRMy = param.MIRMy
     let needReq = param.needReq
@@ -158,12 +158,12 @@ let obj = {
       this.tabsActive = 1
     }
     if(window.$config.future.setMIRMy){
-      this.LeverForMy = param.MIRMy?1/param.MIRMy: maxLever
+      this.LeverForMy = (param.MIRMy?1/param.MIRMy: maxLever).toFixed2(0)
     }
     this.Sym = Sym
     this.PId = PId
     this.MIRMy = MIRMy
-    this.Lever = Lever
+    this.Lever = Lever.
     this.maxLever = maxLever
     this.needReq = needReq
     this.leverageCallback = param.cb
