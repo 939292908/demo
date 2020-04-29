@@ -812,10 +812,11 @@ hr {
 // 合约信息 end
 
 // 资产模块 start
-.pub-wallet {
+.pub-wallet-box {
     @extend %side-pa;
+    height: 309px;
 
-    .pub-wallet-tabs {
+    .pub-wallet-box-tabs {
         @extend %mb-3;
     }
 
@@ -827,7 +828,53 @@ hr {
         }
     }
 }
+.pub-wallet {
+
+    .pub-wallet-content {
+        @extend %font-2;
+
+        .level:not(:last-child) {
+            @extend %mb-3;
+        }
+    }
+}
 // 资产模块 end
+
+// 划转 start
+.pub-transfer {
+    .dropdown {
+        width: 100%;
+        .dropdown-trigger {
+            width: 100%;
+
+            .button-content {
+                width: 100%;
+            }
+        }
+
+        .dropdown-menu {
+            @extend %box-shadow;
+            width: 100%;
+            max-height: 300px;
+            overflow: auto;
+
+        }
+    }
+
+    .pub-transfer-transfer-select {
+        
+        .pub-transfer-transfer-select-center {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    }
+
+    .pub-transfer-wlt {
+        text-align: left;
+    }
+}
+// 划转 end
 
 // 手机端k线页面 start
 .pub-m-kline-box {
