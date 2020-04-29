@@ -135,12 +135,12 @@ let obj = {
     if(param == 0){
       this.Lever = 0
       if(window.$config.future.setMIRMy){
-        this.LeverForMy = Number(param.MIRMy?1/param.MIRMy: maxLever).toFixed2(0)
+        this.LeverForMy = Number(param.MIRMy?1/param.MIRMy: this.maxLever).toFixed2(0)
       }
     }else if(param == 1){
       this.Lever = this.maxLever
     }
-    this.calcNeedMgn()
+    obj.calcNeedMgn()
   },
   initLeverInfo: function (param) {
     let Sym = param.Sym
@@ -247,6 +247,7 @@ let obj = {
     }else if(this.tabsActive == 1){
       this.Lever = param
     }
+    obj.calcNeedMgn()
   }
 }
 
