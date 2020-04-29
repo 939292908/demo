@@ -53,6 +53,28 @@ window.gDriver = Driver
 require("../tplibs/geetest/gt");
 window.gGeeTest = null;
 
+// 复制到剪切板
+/**
+ * 拷贝到剪切板
+ * @target 类名或者id，例如：".btn"
+ */
+import Clipboard from 'clipboard'
+window.$copy = function(target, suc, err){
+    let copyBtn = new Clipboard(target);
+    copyBtn.on("success", function () {
+        window.$message?window.$message({content: "已拷贝至剪切板！", type: "success"}):''
+        suc && suc()
+        setTimeout(() => {
+            copyBtn.destroy();
+        }, 2000);
+    });
+    copyBtn.on("error", function () {
+        window.$message?window.$message({content: "拷贝失败！", type: "danger"}):''
+        err && err()
+        copyBtn.destroy();
+    });
+}
+
 //////////////////////////////////////////////////////////////////////
 //全局message事件
 let DBG_MESSAGE = true
@@ -73,6 +95,7 @@ if(config.mobile){
         window.isMobile = utils.isMobile()
     }
 }
+
 
 
 
