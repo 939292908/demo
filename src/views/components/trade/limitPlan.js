@@ -312,7 +312,9 @@ let obj = {
         }
 
         window.gTrd.ReqTrdOrderNew(p, function(arg){
-            console.log('ReqTrdOrderNew ==> ', arg)
+            if (arg.code != 0 || arg.data.ErrCode) {
+                window.$message({title: utils.getTradeErrorCode(arg.code || arg.data.ErrCode), content: utils.getTradeErrorCode(arg.code || arg.data.ErrCode), type: 'danger'})
+            }
         })
     },
     setLeverage: function(){

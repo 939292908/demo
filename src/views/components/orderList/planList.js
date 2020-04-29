@@ -298,9 +298,11 @@ let obj = {
             "Sym": param.Sym,
             "PId": param.PId,
         }, function (gTrd, arg) {
-            if (arg.code != 0) {
+            if (arg.code != 0 || arg.data.ErrCode) {
                 param.loading = false
-                window.$message({ title: utils.getTradeErrorCode(arg.code), content: utils.getTradeErrorCode(arg.code), type: 'danger' })
+                window.$message({ title: utils.getTradeErrorCode(arg.code || arg.data.ErrCode), content: utils.getTradeErrorCode(arg.code || arg.data.ErrCode), type: 'danger' })
+            }else{
+                param.loading = false
             }
         })
     },

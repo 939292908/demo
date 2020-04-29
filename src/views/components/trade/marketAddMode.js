@@ -83,8 +83,10 @@ let obj = {
 
     window.gTrd.ReqTrdOrderNew(p, function(aTrd, aArg){
         console.log('ReqTrdOrderNew ==> ', aArg)
-        if(aArg.code == 0){
+        if(aArg.code == 0 && !aArg.data.ErrCode){
           that.open = false
+        }else{
+          window.$message({title: utils.getTradeErrorCode(aArg.code || aArg.data.ErrCode), content: utils.getTradeErrorCode(aArg.code || aArg.data.ErrCode), type: 'danger'})
         }
     })
   },

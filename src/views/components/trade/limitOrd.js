@@ -279,8 +279,10 @@ let obj = {
             return window.$message({title: '可用资金不足！', content: '可用资金不足！', type: 'danger'})
         }
 
-        window.gTrd.ReqTrdOrderNew(p, function(arg){
-            console.log('ReqTrdOrderNew ==> ', arg)
+        window.gTrd.ReqTrdOrderNew(p, function(aTrd, arg){
+            if (arg.code != 0 || arg.data.ErrCode) {
+                window.$message({title: utils.getTradeErrorCode(arg.code || arg.data.ErrCode), content: utils.getTradeErrorCode(arg.code || arg.data.ErrCode), type: 'danger'})
+            }
         })
     },
     setLeverage: function(){

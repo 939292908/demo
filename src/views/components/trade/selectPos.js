@@ -232,11 +232,11 @@ let obj = {
       "Op": 0,
     },function(gTrd, arg){
       console.log("ReqTrdPosOp ==>>> ", arg)
-      if(arg.code == 0){
+      if(arg.code == 0 && !arg.data.ErrCode){
         window.$message({title: '新增仓位成功！', content: '新增仓位成功！', type: 'success'})
       }else{
         console.log(arg)
-        window.$message({title: utils.getTradeErrorCode(arg.code), content: utils.getTradeErrorCode(arg.code), type: 'danger'})
+        window.$message({title: utils.getTradeErrorCode(arg.code || arg.data.ErrCode), content: utils.getTradeErrorCode(arg.code || arg.data.ErrCode), type: 'danger'})
       }
     })
   },
@@ -252,11 +252,11 @@ let obj = {
       "Op": 1,
     },function(gTrd, arg){
       console.log("ReqTrdPosOp ==>>> ", arg)
-      if(arg.code == 0){
+      if(arg.code == 0 && !arg.data.ErrCode){
         window.$message({title: '仓位删除成功！', content: '仓位删除成功！', type: 'success'})
       }else{
         console.log(arg)
-        window.$message({title: utils.getTradeErrorCode(arg.code), content: utils.getTradeErrorCode(arg.code), type: 'danger'})
+        window.$message({title: utils.getTradeErrorCode(arg.code || arg.data.ErrCode), content: utils.getTradeErrorCode(arg.code || arg.data.ErrCode), type: 'danger'})
       }
     })
   },

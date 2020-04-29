@@ -83,7 +83,7 @@ let obj = {
           "PId": param.PId,
           "Param": param.Lever,
         },function(gTrd, arg){
-          if(arg.code == 0){
+          if(arg.code == 0 && !arg.data.ErrCode){
             if(window.$config.future.setMIRMy && param.Lever == 0){
               window.gTrd.ReqTrdPosOp({
                 "AId":AId,
@@ -92,7 +92,7 @@ let obj = {
                 "Op": 2,
                 "Param": param.MIRMy,
               },function(gTrd, arg){
-                if(arg.code == 0){
+                if(arg.code == 0 && !arg.data.ErrCode){
                   that.open = false
                   that.leverageCallback && that.leverageCallback({
                     Sym: that.Sym,
@@ -102,7 +102,7 @@ let obj = {
                   })
                   window.$message({title: '杠杆已调整！',content: '杠杆已调整！', type: 'success'})
                 }else{
-                  window.$message({title: utils.getTradeErrorCode(arg.code), content: utils.getTradeErrorCode(arg.code), type: 'danger'})
+                  window.$message({title: utils.getTradeErrorCode(arg.code || arg.data.ErrCode), content: utils.getTradeErrorCode(arg.code || arg.data.ErrCode), type: 'danger'})
                 }
               })
             }else{
@@ -116,7 +116,7 @@ let obj = {
               window.$message({title: '杠杆已调整！',content: '杠杆已调整！', type: 'success'})
             }
           }else{
-            window.$message({title: utils.getTradeErrorCode(arg.code), content: utils.getTradeErrorCode(arg.code), type: 'danger'})
+            window.$message({title: utils.getTradeErrorCode(arg.code || arg.data.ErrCode), content: utils.getTradeErrorCode(arg.code || arg.data.ErrCode), type: 'danger'})
           }
         })
       }
