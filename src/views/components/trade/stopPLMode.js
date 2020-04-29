@@ -11,6 +11,8 @@ let obj = {
   },
   openStopP: false,
   openStopL: false,
+  // 立即成交提示
+  showTip: false,
   //初始化全局广播
   initEVBUS: function () {
     let that = this
@@ -44,6 +46,18 @@ let obj = {
         return window.$message({title: '止损价不能为0', content: '止损价不能为0', type: 'danger'})
       }else if(!this.param.StopL){
         return window.$message({title: '请输入止损价', content: '请输入止损价', type: 'danger'})
+      }
+    }
+
+    if(this.openStopP && this.openStopL && this.param.StopP && this.param.StopL) {
+      if(this.param.Sz > 0) {
+        if(Number(this.param.StopP) < Number(this.param.StopL)) {
+          return window.$message({title: '该仓位为多仓，止盈价需大于止损价', content: '该仓位为多仓，止盈价需大于止损价', type: 'danger'})
+        }
+      }else if(this.param.Sz < 0){
+        if(Number(this.param.StopP) > Number(this.param.StopL)) {
+          return window.$message({title: '该仓位为空仓，止盈价需小于止损价', content: '该仓位为空仓，止盈价需小于止损价', type: 'danger'})
+        }
       }
     }
     
@@ -122,6 +136,7 @@ let obj = {
     }else{
       obj.param.StopP = e.target.value
     }
+    this.setTipStatus()
   },
   onStopLInput: function(e){
     let Sym = this.param.Sym
@@ -133,7 +148,25 @@ let obj = {
     }else{
       obj.param.StopL = e.target.value
     }
+    this.setTipStatus()
   },
+  setTipStatus: function(){
+    let Sym = this.param.Sym
+    let LastPrz = Number(window.gMkt.lastTick[Sym] && window.gMkt.lastTick[Sym].LastPrz || 0)
+    /**
+     * 仓位方向为多仓时，最新价大于止盈价立即成交，最新价小于止损价立即成交
+     * 仓位方向为空仓时，最新价小于止盈价立即成交，最新价大于止损价立即成交
+     */
+    let StopP =  Number(this.param.StopP || 0)
+    let StopL =  Number(this.param.StopL || 0)
+    if(this.param.Sz > 0 && ((this.openStopP && LastPrz > StopP) || (this.openStopL && LastPrz < StopL))){
+      this.showTip = true
+    }else if(this.param.Sz < 0 && ((this.openStopP && LastPrz < StopP) || (this.openStopL && LastPrz > StopL))){
+      this.showTip = true
+    }else{
+      this.showTip = false
+    }
+  }
 }
 
 export default {
@@ -162,6 +195,11 @@ export default {
             }),
           ]),
           m("section", { class: "pub-stoppl-content modal-card-body" }, [
+            m("div", { class: "pub-stoppl-content-message message is-danger"+(obj.showTip?'':' is-hidden') }, [
+              m("div", { class: "message-body" }, [
+                '当前设置的价格会导致仓位立即平仓，请谨慎设置！'
+              ]),
+            ]),
             m("div", { class: "pub-stoppl-content-pos-info level" }, [
               m("div", { class: "level-left" }, [
                 (obj.param.displayDir || '') + ' ' + (obj.param.displaySym || '')
