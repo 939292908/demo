@@ -13,6 +13,7 @@ let main = {
     messageContent: [],
     // 上次获取风险限额的时间
     getRSLastTm: 0,
+    delNullPosPlanTimer: null, 
     initEVBUS: function () {
         let that = this
 
@@ -423,6 +424,42 @@ let main = {
         }
         if (!_Title && !_Color) return;
         window.$message({title: _Title,content:_Title, type: _Color})
+    },
+    // 模式3空白仓位删除计划，空白仓位是指：不是合约默认仓位、没有持仓、没有委托、没有计划单的仓位
+    delNullPosPlan: function(){
+        if(window.$config.future.tradeType == 3){
+            this.delNullPosPlanTimer = setInterval(function(){
+                let Poss = window.gTrd.Poss
+                let needDelPos = []
+                for(let key in Poss){
+                    let item = Poss[key]
+                    // 判断是否为默认仓位
+                    if((item.Flg&1) == 0){
+                        // 判断是否有持仓和委托
+                        if(item.Sz == 0 && item.aQtyBuy == 0 && item.aQtySell == 0){
+                            // 检查仓位是否有计划单
+                            let Orders = window.gTrd.Orders['01']
+                            let i = Orders.findIndex(function(ord){
+                                return ord.PId == key
+                            })
+                            if(i == -1){
+                                needDelPos.push(item)
+                            }
+                        }
+                    }
+                }
+                // 一次只删除一条
+                if(needDelPos.length > 0){
+                    let delPos = needDelPos[0]
+                    window.gTrd.ReqTrdPosOp({
+                        "AId":delPos.AId,
+                        "Sym": delPos.Sym,
+                        "PId": delPos.PId,
+                        "Op": 1, //删除
+                      },function(gTrd, arg){})
+                }
+            }, 10 * 1000)
+        }
     }
 }
 export default {
@@ -436,6 +473,7 @@ export default {
         body.addEventListener('click', function(){
             gEVBUS.emit(gEVBUS.EV_ClICKBODY, { ev: gEVBUS.EV_ClICKBODY})
         }, false)
+        main.delNullPosPlan()
     },
     view: function (vnode) {
 
