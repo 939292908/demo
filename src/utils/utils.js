@@ -736,4 +736,52 @@ utils.isMobile = function() {
     return mobile_flag;
 }
 
+utils.ordersStatusStr = function (type) {
+    let ms = ""
+    switch (type) {
+        case 0:
+            ms = "全部";
+            break;
+        case 1:
+            ms = "排队中"; //正在排队
+            break;
+        case 2:
+            ms = "挂单"; //有效
+            break;
+        case 3:
+            ms = "错单"; //提交失败
+            break;
+        case 4:
+            ms = "全部成交"; //全部成交
+            break;
+        case 5:
+            ms = "已撤单"; //取消
+            break;
+        case 6:
+            ms = "部分撤单";
+            break;
+        case 7:
+            ms = "撤单(执行失败)";
+            break;
+        case 10:
+            ms = "部分撤单"; //已撤单，但有成交量
+            break;
+        default:
+            break;
+    }
+    return ms;
+}
+
+utils.getOrderFrom = function(Via) {
+    if(Via == 4 || Via == 5 || Via == 6 || Via == 13) {
+        return "系统委托"
+    }else if(Via == 21) {
+        return "计划委托"
+    }else if(Via == 15) {
+        return "止盈止损"
+    }else {
+        return "用户委托"
+    }
+}
+
 export default utils

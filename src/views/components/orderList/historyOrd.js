@@ -13,6 +13,9 @@ let obj = {
             title: '交易类型',
             class: ""
         }, {
+            title: '状态',
+            class: ""
+        }, {
             title: '委托类型',
             class: ""
         }, {
@@ -28,10 +31,19 @@ let obj = {
             title: '成交数量',
             class: ""
         }, {
+            title: '平仓盈亏',
+            class: ""
+        }, {
+            title: '手续费',
+            class: ""
+        }, {
             title: '触发条件',
             class: ""
         }, {
             title: '委托时间',
+            class: ""
+        }, {
+            title: '委托来源',
             class: ""
         }, {
             title: '仓位ID',
@@ -49,6 +61,13 @@ let obj = {
             that.initObj()
         })
 
+        if (this.EV_GET_HISTORY_TRD_READY_unbinder) {
+            this.EV_GET_HISTORY_TRD_READY_unbinder()
+        }
+        this.EV_GET_HISTORY_TRD_READY_unbinder = window.gEVBUS.on(gTrd.EV_GET_HISTORY_TRD_READY, arg => {
+            that.initObj()
+        })
+
         if (this.EV_WEB_LOGOUT_unbinder) {
             this.EV_WEB_LOGOUT_unbinder()
         }
@@ -60,6 +79,9 @@ let obj = {
     rmEVBUS: function () {
         if (this.EV_GET_HISTORY_ORD_READY_unbinder) {
             this.EV_GET_HISTORY_ORD_READY_unbinder()
+        }
+        if (this.EV_GET_HISTORY_TRD_READY_unbinder) {
+            this.EV_GET_HISTORY_TRD_READY_unbinder()
         }
         if (this.EV_WEB_LOGOUT_unbinder) {
             this.EV_WEB_LOGOUT_unbinder()
@@ -109,12 +131,48 @@ let obj = {
                 } else {
                     obj.cond = '--'
                 }
+                
+                // 委托状态 start
+                if (obj.Status ==3 || obj.Status ==5 ) {
+                    let status= obj.QtyF>0? 10: obj.Status
+                    obj.StatusStr =  utils.ordersStatusStr(status)
+                }   else if (obj.Status ==4 && obj.ErrCode) {
+                    let status= obj.QtyF>0? 10: 5
+                    obj.StatusStr =  utils.ordersStatusStr(status)
+                }else if (obj.Status ==4 && obj.QtyF==0) {
+                    obj.StatusStr =  utils.ordersStatusStr(5)
+                }else if((obj.Status == 4 || obj.Status == 5) && (obj.QtyF>0&&obj.QtyF<obj.Qty)){
+                    obj.StatusStr =  utils.ordersStatusStr(10)
+                } else{
+                    obj.StatusStr =  utils.ordersStatusStr(obj.Status)
+                } 
+                // 委托状态 end
+
+                // 委托来源
+                obj.OrdFromStr = utils.getOrderFrom(obj.Via)
+
+                // 平仓盈亏
+                obj.PnlCls = 0
+                // 手续费
+                obj.Fee = 0
+                obj.FeeCoin = ''
+                // 从成交记录里边累计委托对应的盈亏以及手续费 start
+                let trades = window.gTrd.MyTrades_Obj['01'][obj.OrdId] || []
+                for(let item of trades){
+                    obj.PnlCls += Number(item.PnlCls || 0)
+                    obj.Fee += Number(item.Fee || 0)
+                    obj.FeeCoin = item.FeeCoin
+                }
+
+                obj.PnlCls = obj.PnlCls.toFixed2(8)
+                obj.Fee = obj.Fee.toFixed2(8)
+                // 从成交记录里边累计委托对应的盈亏以及手续费 end
 
                 obj.AtStr = new Date(obj.At).format('MM/dd hh:mm:ss'),
 
 
-                    //止盈价
-                    obj.StopP = obj.StopP ? Number(obj.StopP || 0).toFixed2(PrzMinIncSize) : '--'
+                //止盈价
+                obj.StopP = obj.StopP ? Number(obj.StopP || 0).toFixed2(PrzMinIncSize) : '--'
                 //止损价
                 obj.StopL = obj.StopL ? Number(obj.StopL || 0).toFixed2(PrzMinIncSize) : '--'
 
@@ -155,6 +213,9 @@ let obj = {
                     item.OTypeStr
                 ]),
                 m("td", { class: " " }, [
+                    item.StatusStr
+                ]),
+                m("td", { class: " " }, [
                     item.Prz
                 ]),
                 m("td", { class: " " }, [
@@ -166,11 +227,22 @@ let obj = {
                 m("td", { class: " " }, [
                     item.QtyF
                 ]),
+                m("td", { class: " " }, [
+                    item.PnlCls
+                ]),
+                m("td", { class: " " }, [
+                    item.Fee,
+                    ' ',
+                    item.FeeCoin
+                ]),
                 m("td", { class: "" }, [
                     item.cond
                 ]),
                 m("td", { class: "" }, [
                     item.AtStr
+                ]),
+                m("td", { class: "" }, [
+                    item.OrdFromStr
                 ]),
                 m("td",{class:"cursor-pointer"+(" historyOrdTableListItemCopy"+i), "data-clipboard-text": item.PId, onclick: function(e){
                     window.$copy(".historyOrdTableListItemCopy"+i)
@@ -223,23 +295,27 @@ let obj = {
                 m('col', { name: "pub-table-3", width: 130 }),
                 m('col', { name: "pub-table-4", width: 80 }),
                 m('col', { name: "pub-table-5", width: 80 }),
+                m('col', { name: "pub-table-5", width: 80 }),
                 m('col', { name: "pub-table-6", width: 100 }),
                 m('col', { name: "pub-table-7", width: 100 }),
                 m('col', { name: "pub-table-8", width: 100 }),
                 m('col', { name: "pub-table-9", width: 100 }),
+                m('col', { name: "pub-table-9", width: 150 }),
+                m('col', { name: "pub-table-9", width: 150 }),
                 m('col', { name: "pub-table-10", width: 150 }),
                 m('col', { name: "pub-table-10", width: 150 }),
+                m('col', { name: "pub-table-9", width: 100 }),
                 m('col', { name: "pub-table-1", width: 100 }),
             ])
             return m('div', { class: " table-container" }, [
-                m("table", { class: "table is-hoverable ", width: '1260px', cellpadding: 0, cellspacing: 0 }, [
+                m("table", { class: "table is-hoverable ", width: '1730px', cellpadding: 0, cellspacing: 0 }, [
                     colgroup,
                     m("tr", { class: "" }, [
                         obj.getTheadList()
                     ])
                 ]),
-                m('div', { class: "pub-table-body-box", style: "width: 1260px" }, [
-                    m("table", { class: "table is-hoverable ", width: '1260px', cellpadding: 0, cellspacing: 0 }, [
+                m('div', { class: "pub-table-body-box", style: "width: 1730px" }, [
+                    m("table", { class: "table is-hoverable ", width: '1730px', cellpadding: 0, cellspacing: 0 }, [
                         colgroup,
                         obj.getPosList()
                     ])
