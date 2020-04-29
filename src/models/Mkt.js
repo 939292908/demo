@@ -1171,6 +1171,7 @@ class Mkt {
             "PrzChg":0
         }
         */
+        aParam.COrdId = 'pub_'+aParam.COrdId
         let s = this;
         s.WSCall_Trade("OrderNew",aParam,aFunc);
     };
