@@ -517,7 +517,7 @@ let obj = {
             debug: false, // uncomment this line to see Library errors and warnings in the console
             fullscreen: false,
             autosize: true,
-            symbol: gMkt.CtxPlaying.Sym,
+            symbol: gMkt.CtxPlaying.Sym || "BTC.USDT",
             interval: gMkt.Typ2Res[Typ],
             container_id: "tv_chart_container",
 
