@@ -6,6 +6,13 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "12972148",
+      "name": "资金汇率提示",
+      "font_class": "info",
+      "unicode": "e6c2",
+      "unicode_decimal": 59074
+    },
+    {
       "icon_id": "12295007",
       "name": "返回",
       "font_class": "arrow-left",
