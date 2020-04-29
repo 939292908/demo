@@ -322,11 +322,13 @@ let obj = {
                 m('col', { name: "pub-table-11", width: 150 })
             ])
             return m('div', { class: " table-container" }, [
-                m("table", { class: "table is-hoverable ", width: '1270px', cellpadding: 0, cellspacing: 0 }, [
-                    colgroup,
-                    m("tr", { class: "" }, [
-                        obj.getTheadList()
-                    ])
+                m('div', { class: "pub-table-head-box", style: "width: 1270px" }, [
+                    m("table", { class: "table is-hoverable ", width: '1270px', cellpadding: 0, cellspacing: 0 }, [
+                        colgroup,
+                        m("tr", { class: "" }, [
+                            obj.getTheadList()
+                        ])
+                    ]),
                 ]),
                 m('div', { class: "pub-table-body-box", style: "width: 1270px" }, [
                     m("table", { class: "table is-hoverable ", width: '1270px', cellpadding: 0, cellspacing: 0 }, [
@@ -335,27 +337,6 @@ let obj = {
                     ])
                 ]),
             ])
-            // return m('div', { class: " table-container" }, [
-            //     m("table", { class: "table is-hoverable ", cellpadding: 0, cellspacing: 0 }, [
-            //         m("thead", { class: "" }, [
-            //             m("tr", { class: "" }, [
-            //                 obj.getTheadList(),
-            //                 m("th", {}, [
-            //                     // m("button", {
-            //                     //     class: "button is-white ", onclick: function () {
-            //                     //         window.$message({ title: "全部撤单", content: "全部撤单", type: 'danger' })
-            //                     //     }
-            //                     // }, [
-            //                     //     '全部撤单'
-            //                     // ])
-            //                 ])
-            //             ])
-            //         ]),
-            //         m("tbody", { class: "" }, [
-            //             obj.getOrdList()
-            //         ])
-            //     ])
-            // ])
         }
     }
 }

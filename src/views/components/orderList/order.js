@@ -82,7 +82,7 @@ let obj = {
             that.initObj()
         })
 
-        
+
 
 
     },
@@ -273,13 +273,13 @@ let obj = {
                                 '触发条件'
                             ]),
                             m('p', { class: "" + utils.getColorStr(item.UPNLColor, 'font') }, [
-                                item.cond   
+                                item.cond
                             ]),
                         ]),
                     ]),
                     m('div', { class: "pub-order-m-content-footer" }, [
                         m('span', { class: "" }, [
-                            item.AtStr   
+                            item.AtStr
                         ]),
                         m('.spacer'),
                         m("button", {
@@ -320,7 +320,7 @@ let obj = {
             if (arg.code != 0 || arg.data.ErrCode) {
                 param.loading = false
                 window.$message({ title: utils.getTradeErrorCode(arg.code || arg.data.ErrCode), content: utils.getTradeErrorCode(arg.code || arg.data.ErrCode), type: 'danger' })
-            }else{
+            } else {
                 param.loading = false
             }
         })
@@ -329,56 +329,37 @@ let obj = {
         if (window.isMobile) {
             return obj.getOrdListForM()
         } else {
-            let colgroup = m('colgroup', {},[
-                m('col', {name: "pub-table-1",width: 70}),
-                m('col', {name: "pub-table-2",width: 160}),
-                m('col', {name: "pub-table-3",width: 130}),
-                m('col', {name: "pub-table-4",width: 80}),
-                m('col', {name: "pub-table-5",width: 80}),
-                m('col', {name: "pub-table-6",width: 100}),
-                m('col', {name: "pub-table-7",width: 100}),
-                m('col', {name: "pub-table-8",width: 100}),
-                m('col', {name: "pub-table-9",width: 100}),
-                m('col', {name: "pub-table-10",width: 150}),
-                m('col', {name: "pub-table-11",width: 150}),
-                m('col', {name: "pub-table-10",width: 150}),
-                m('col', {name: "pub-table-11",width: 100}),
-              ])
-              return m('div', { class: " table-container"}, [
-                m("table",{class:"table is-hoverable ", width: '1470px', cellpadding: 0, cellspacing: 0},[
-                  colgroup,
-                  m("tr",{class:""},[
-                    obj.getTheadList()
-                  ])
+            let colgroup = m('colgroup', {}, [
+                m('col', { name: "pub-table-1", width: 70 }),
+                m('col', { name: "pub-table-2", width: 160 }),
+                m('col', { name: "pub-table-3", width: 130 }),
+                m('col', { name: "pub-table-4", width: 80 }),
+                m('col', { name: "pub-table-5", width: 80 }),
+                m('col', { name: "pub-table-6", width: 100 }),
+                m('col', { name: "pub-table-7", width: 100 }),
+                m('col', { name: "pub-table-8", width: 100 }),
+                m('col', { name: "pub-table-9", width: 100 }),
+                m('col', { name: "pub-table-10", width: 150 }),
+                m('col', { name: "pub-table-11", width: 150 }),
+                m('col', { name: "pub-table-10", width: 150 }),
+                m('col', { name: "pub-table-11", width: 100 }),
+            ])
+            return m('div', { class: " table-container" }, [
+                m('div', { class: "pub-table-head-box", style: "width: 1470px" }, [
+                    m("table", { class: "table is-hoverable ", width: '1470px', cellpadding: 0, cellspacing: 0 }, [
+                        colgroup,
+                        m("tr", { class: "" }, [
+                            obj.getTheadList()
+                        ])
+                    ]),
                 ]),
-                m('div', {class: "pub-table-body-box", style:"width: 1470px"}, [
-                  m("table",{class:"table is-hoverable ", width: '1470px', cellpadding: 0, cellspacing: 0},[
-                    colgroup,
-                    obj.getOrdList()
-                  ])
+                m('div', { class: "pub-table-body-box", style: "width: 1470px" }, [
+                    m("table", { class: "table is-hoverable ", width: '1470px', cellpadding: 0, cellspacing: 0 }, [
+                        colgroup,
+                        obj.getOrdList()
+                    ])
                 ]),
-              ])
-            // return m('div', { class: " table-container" }, [
-            //     m("table", { class: "table is-hoverable ", cellpadding: 0, cellspacing: 0 }, [
-            //         m("thead", { class: "" }, [
-            //             m("tr", { class: "" }, [
-            //                 obj.getTheadList(),
-            //                 m("th", {}, [
-            //                     // m("button", {
-            //                     //     class: "button is-white ", onclick: function () {
-            //                     //         window.$message({ title: "全部撤单", content: "全部撤单", type: 'danger' })
-            //                     //     }
-            //                     // }, [
-            //                     //     '全部撤单'
-            //                     // ])
-            //                 ])
-            //             ])
-            //         ]),
-            //         m("tbody", { class: "" }, [
-            //             obj.getOrdList()
-            //         ])
-            //     ])
-            // ])
+            ])
         }
     }
 }

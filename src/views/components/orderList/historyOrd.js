@@ -308,11 +308,13 @@ let obj = {
                 m('col', { name: "pub-table-1", width: 100 }),
             ])
             return m('div', { class: " table-container" }, [
-                m("table", { class: "table is-hoverable ", width: '1730px', cellpadding: 0, cellspacing: 0 }, [
-                    colgroup,
-                    m("tr", { class: "" }, [
-                        obj.getTheadList()
-                    ])
+                m('div', { class: "pub-table-head-box", style: "width: 1730px" }, [
+                    m("table", { class: "table is-hoverable ", width: '1730px', cellpadding: 0, cellspacing: 0 }, [
+                        colgroup,
+                        m("tr", { class: "" }, [
+                            obj.getTheadList()
+                        ])
+                    ]),
                 ]),
                 m('div', { class: "pub-table-body-box", style: "width: 1730px" }, [
                     m("table", { class: "table is-hoverable ", width: '1730px', cellpadding: 0, cellspacing: 0 }, [

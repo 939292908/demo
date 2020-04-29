@@ -167,11 +167,13 @@ let obj = {
                 m('col', { name: "pub-table-8", width: 80 }),
             ])
             return m('div', { class: " table-container" }, [
-                m("table", { class: "table is-hoverable ", width: '890px', cellpadding: 0, cellspacing: 0 }, [
-                    colgroup,
-                    m("tr", { class: "" }, [
-                        obj.getTheadItem()
-                    ])
+                m('div', { class: "pub-table-head-box", style: "width: 890px" }, [
+                    m("table", { class: "table is-hoverable ", width: '890px', cellpadding: 0, cellspacing: 0 }, [
+                        colgroup,
+                        m("tr", { class: "" }, [
+                            obj.getTheadItem()
+                        ])
+                    ]),
                 ]),
                 m('div', { class: "pub-table-body-box", style: "width: 890px" }, [
                     m("table", { class: "table is-hoverable ", width: '890px', cellpadding: 0, cellspacing: 0 }, [

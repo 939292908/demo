@@ -5,7 +5,7 @@ let obj = {
         {
             title: '币种',
             class: ""
-        },{
+        }, {
             title: '类型',
             class: ""
         }, {
@@ -43,50 +43,50 @@ let obj = {
             this.EV_WEB_LOGOUT_unbinder()
         }
     },
-    getHistoryList: function(){
+    getHistoryList: function () {
         let that = this
         let s = window.gTrd
         let aType = '01'
         let Sym = window.gMkt.CtxPlaying.Sym
         let AssetD = window.gMkt.AssetD[Sym] || {}
-        if(AssetD.TrdCls == 1){
+        if (AssetD.TrdCls == 1) {
             aType = '02'
-        }else{
+        } else {
             aType = '01'
         }
         let uid = s.RT["UserId"]
         let isReq = s.trdInfoStatus.wltLog[aType]
-        if(!uid || !s || isReq) return
+        if (!uid || !s || isReq) return
         s.getHistoryOrdAndTrdAndWltlog({
             AId: uid + aType,
         })
     },
-    initObj: function(){
+    initObj: function () {
         let WltLog = window.gTrd.WltLog['01']
-        
+
         let list = []
-        for(let k of WltLog){
+        for (let k of WltLog) {
             let item = {}
             utils.copyTab(item, k)
 
 
             //金额
-            item.Qty = Number(item.Qty || 0).toPrecision2(6,8)
+            item.Qty = Number(item.Qty || 0).toPrecision2(6, 8)
 
-            item.ViaStr = utils.WltViaStr (item.Via)
+            item.ViaStr = utils.WltViaStr(item.Via)
 
             item.AtStr = new Date(item.At).format('MM/dd hh:mm:ss'),
 
-            list.push(item)
+                list.push(item)
         }
-        list.sort(function(a,b){
+        list.sort(function (a, b) {
             return b.At - a.At
         })
         this.list = list
     },
     getTheadItem: function () {
         return this.theadList.map(function (item, i) {
-            return m("th", { key: "historyOrdtHeadItem" + i, class: ""+item.class }, [
+            return m("th", { key: "historyOrdtHeadItem" + i, class: "" + item.class }, [
                 item.title
             ])
         })
@@ -94,13 +94,13 @@ let obj = {
     getListItem: function () {
         return this.list.map(function (item, i) {
             return m("tr", { key: "historyOrdTableListItem" + i, class: "" }, [
-                
+
                 m("td", { class: "" }, [
                     m("p", { class: " " }, [
                         item.Coin
                     ])
                 ]),
-                m("td", { class: " "}, [
+                m("td", { class: " " }, [
                     item.ViaStr
                 ]),
                 m("td", { class: " " }, [
@@ -123,11 +123,14 @@ let obj = {
                 m('col', { name: "pub-table-4", width: '25%' }),
             ])
             return m('div', { class: " table-container" }, [
-                m("table", { class: "table is-hoverable ", width: '890px', cellpadding: 0, cellspacing: 0 }, [
-                    colgroup,
-                    m("tr", { class: "" }, [
-                        obj.getTheadItem()
-                    ])
+
+                m('div', { class: "pub-table-head-box", style: "width: 890px" }, [
+                    m("table", { class: "table is-hoverable ", width: '890px', cellpadding: 0, cellspacing: 0 }, [
+                        colgroup,
+                        m("tr", { class: "" }, [
+                            obj.getTheadItem()
+                        ])
+                    ]),
                 ]),
                 m('div', { class: "pub-table-body-box", style: "width: 890px" }, [
                     m("table", { class: "table is-hoverable ", width: '890px', cellpadding: 0, cellspacing: 0 }, [
@@ -141,21 +144,21 @@ let obj = {
 }
 
 export default {
-    oninit: function(vnode){
-        
+    oninit: function (vnode) {
+
     },
-    oncreate: function(vnode){
+    oncreate: function (vnode) {
         obj.initEVBUS()
         obj.getHistoryList()
         obj.initObj()
     },
-    view: function(vnode) {
-        
+    view: function (vnode) {
+
         return m("div", { class: "pub-history-trade " }, [
             obj.getContent()
         ])
     },
-    onbeforeremove: function(){
+    onbeforeremove: function () {
         obj.rmEVBUS()
     }
 }
