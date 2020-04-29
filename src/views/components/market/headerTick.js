@@ -15,6 +15,8 @@ let spotTick = {
     tickObj: {},
     //需要显示的行情数据
     lastTick: {},
+    FundingNextTmStr: '',
+    FundingLongRStr: '',
     //初始化全局广播
     initEVBUS: function(){
         let that = this
@@ -97,7 +99,18 @@ let spotTick = {
             let obj = utils.getTickObj(window.gMkt.AssetD, window.gMkt.AssetEx, item, this.lastTick[key], indexTick)
             obj?this.lastTick[key] = obj:''
         }
+        this.setFundingNext()
         m.redraw();
+    },
+    setFundingNext: function(){
+        let Sym = window.gMkt.CtxPlaying.Sym
+        let ass = window.gMkt.AssetD[Sym]
+        let FundingNext = ass && ass.FundingNext || 0
+        let FundingLongR = (this.getLastTick().FundingLongR || 0).toString().split('%')[0]
+        // let str = `下次资金费率交换时间：${new Date(FundingNext).format('yyyy-MM-dd hh:mm:ss')}<br/>${Number(this.FundingLongR.split('%')[0])>0?this.$t('11634'):this.$t('11635')/*多头需要向空头补偿持仓价值的':'空头需要向多头补偿持仓价值的'*/}${Math.abs(Number(this.FundingLongR.split('%')[0]))}%`
+        this.FundingNextTmStr = `下次资金费率交换时间：${FundingNext?new Date(FundingNext).format('yyyy-MM-dd hh:mm:ss'):'--'}`
+        this.FundingLongRStr = `${Number(FundingLongR)>0?'多头需要向空头补偿持仓价值的':'空头需要向多头补偿持仓价值的'}${Math.abs(Number(FundingLongR))}%`
+        
     },
 
     //合约列表渲染
@@ -166,8 +179,25 @@ let spotTick = {
                                 ]),
                             ]),
                             m('td', {class:""}, [
-                                m('p', {class:""}, [
-                                    "资金费率"
+                                m('div', {class:"dropdown is-hoverable"}, [
+                                    m('div', {class:"dropdown-trigger"}, [
+                                        m('p', {class:""}, [
+                                            "资金费率 ",
+                                            m('i', {class:"iconfont iconinfo is-size-7"})
+                                        ]),
+                                    ]),
+                                    m('div', {class:"dropdown-menu"}, [
+                                        m('div', {class:"dropdown-content"}, [
+                                            m('div', {class:"dropdown-item"}, [
+                                                m('p', {class:""}, [
+                                                    spotTick.FundingNextTmStr,
+                                                ]),
+                                                m('p', {class:""}, [
+                                                    spotTick.FundingLongRStr,
+                                                ]),
+                                            ]),
+                                        ]),
+                                    ]),
                                 ]),
                                 m('p', {class:""}, [
                                     spotTick.getLastTick().FundingLongR || '--'
