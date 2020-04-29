@@ -216,7 +216,7 @@ library.calcOrderMI = function(isStopLAndP, orderBuy, orderSell, SettPrz, ass, a
         }
       }
       MI = Math.abs(ValIni) * _MIR
-      FeeIni =  Math.abs(ValIni) * ass.FeeTkrR
+      FeeIni =  Math.abs(ValIni) * (ass.FeeTkrR || 0)
       UrL = ValM - ValIni < 0? ValM - ValIni: 0
       if(Lever == 0){
         rateMIR = _MIR
@@ -251,7 +251,7 @@ library.calcOrderMI = function(isStopLAndP, orderBuy, orderSell, SettPrz, ass, a
         }
       }
       MI1 = Math.abs(ValIni1) * _MIR
-      FeeIni1 =  Math.abs(ValIni1) * ass.FeeTkrR
+      FeeIni1 =  Math.abs(ValIni1) * (ass.FeeTkrR || 0)
       UrL1 = ValM1 - ValIni1 < 0? ValM1 - ValIni1: 0
       if(Lever == 0){
         rateMIR1 = _MIR

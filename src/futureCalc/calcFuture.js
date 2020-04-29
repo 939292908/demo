@@ -13,7 +13,7 @@ import library from './library'
  * @param {Object} lastTick 最新tick行情，Sym做key
  * @param {String} UPNLPrzActive 未实现盈亏计算选择，'1':最新价， '2'：标记价
  * @param {String} MMType 保证金率公式选择，0: 默认，1: 开仓价值/杠杆 
- * @param {String} PrzLiqType 强平价计算公式选择，0: 默认，1: 默认公式中的MMR风险修改为MAX(MIRMy，MIR风险)/2
+ * @param {String} PrzLiqType 强平价计算公式选择，0: 默认，1: 默认公式中的MMR风险修改为MAX(MIRMy/2，MMR风险)
  * @param {Function} cb 
  * 用该函数处理完成后各个参数新增字段如下：
  * posArr各个持仓新增：
@@ -200,8 +200,8 @@ export function calcPos(posArr, sumMI, assetD, lastTick, UPNLPrzActive, WltBal_o
       }else{
         MM = Math.abs(ValIni)*pos.aMMR
       }
-      if(PrzLiqType){
-        let MMR = Math.max(pos.MIRMy, pos.aMIR)/2
+      if(PrzLiqType && pos.Lever == 0){
+        let MMR = Math.max(pos.MIRMy/2, pos.aMMR)
         _MM = Math.abs(ValIni)*MMR
       }else{
         _MM = Math.abs(ValIni)*pos.aMMR
@@ -315,8 +315,8 @@ function calcPos1(posArr,SumUrlForLever0,SumMM,UsedWltBal, sumMI,assetD, lastTic
 
     let isReverse = ((ass.Flag&1) == 1 || ass.TrdCls == 2)?1:0
     let MMR = 0;
-    if(PrzLiqType){
-      MMR = Math.max(pos.MIRMy, pos.aMIR)/2
+    if(PrzLiqType && pos.Lever == 0){
+      MMR = Math.max(pos.MIRMy/2, pos.aMMR)
     }else{
       MMR = pos.aMMR
     }
