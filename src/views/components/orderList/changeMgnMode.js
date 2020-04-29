@@ -63,6 +63,8 @@ let obj = {
             return $message({ title: '调整金额不能为0', content: '调整金额不能为0', type: 'danger' })
         } else if (!this.form.num) {
             return $message({ title: '调整金额不能为空', content: '调整金额不能为空', type: 'danger' })
+        }else if(Number(this.form.num) == 0){
+            return $message({ title: '调整金额不能为0', content: '调整金额不能为0', type: 'danger' })
         }
 
         let Sym = this.param.pos.Sym
@@ -262,7 +264,9 @@ export default {
                                 '最多可增加资产'
                             ]),
                             m('.spacer'),
-                            m('div', { class: ""}, [
+                            m('div', { class: "cursor-pointer", onclick: function(){
+                                obj.form.num = obj.maxAddMgn
+                            }}, [
                                 obj.maxAddMgn
                             ]),
                         ]),
@@ -271,7 +275,9 @@ export default {
                                 '最多可减少资产'
                             ]),
                             m('.spacer'),
-                            m('div', { class: ""}, [
+                            m('div', { class: "cursor-pointer", onclick: function(){
+                                obj.form.num = obj.minDelMgn
+                            }}, [
                                 obj.minDelMgn
                             ]),
                         ]),
