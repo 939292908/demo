@@ -13,10 +13,10 @@ let obj = {
             title: '交易类型',
             class: ""
         }, {
-            title: '状态',
+            title: '委托类型',
             class: ""
         }, {
-            title: '委托类型',
+            title: '状态',
             class: ""
         }, {
             title: '委托价格',
