@@ -173,7 +173,6 @@ let obj = {
                 break;
             case '03':
                 let wallet03 = window.gWebAPI.CTX.wallets_obj['03']
-                console.log(wallet03)
                 this.form.maxTransfer = Number(wallet03[coin] && wallet03[coin].mainBal || 0).toFixed2(8)
                 break;
             default:
@@ -276,12 +275,8 @@ export default {
                         // ]),
                     ]),
                 ]),
-                m("div", { class: "pub-transfer-transfer-select-center control is-expanded cursor-pointer", onclick: function(){
-                    obj.switchTransfer()
-                }}, [
-                    m('span', {class:"icon is-medium"}, [
-                        m('i', {class:"iconfont iconswitch has-text-primary is-size-4"})
-                    ]),
+                m("div", { class: "pub-transfer-transfer-select-center control is-expanded cursor-pointer"}, [
+                    '划至'
                 ]),
                 m("div", { class: "pub-transfer-transfer-select-right control is-expanded" }, [
                     m('div', {class:"dropdown is-hoverable"}, [
@@ -304,6 +299,13 @@ export default {
                         //         ]),
                         //     ]),
                         // ]),
+                    ]),
+                ]),
+                m("div", { class: "pub-transfer-transfer-select-center control is-expanded cursor-pointer", onclick: function(){
+                    obj.switchTransfer()
+                }}, [
+                    m('span', {class:"icon is-medium"}, [
+                        m('i', {class:"iconfont iconswitch has-text-primary is-size-4"})
                     ]),
                 ]),
             ]),
