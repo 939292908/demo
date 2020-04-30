@@ -126,6 +126,7 @@ let obj = {
   },
   closeMode: function(){
     this.open = false
+    this.showTip = false
   },
   onStopPInput: function(e){
     let Sym = this.param.Sym
