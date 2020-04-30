@@ -73,6 +73,7 @@ let obj = {
     window.gTrd.ReqTrdPosStopLP(param,function(gTrd, arg){
       if(arg.code == 0 && !arg.data.ErrCode){
         that.open = false
+        that.showTip = false
         that.stopPLCallback && that.stopPLCallback(arg)
         window.$message({title: '止盈止损设置成功！', content: '止盈止损设置成功！', type: 'success'})
       }else{
