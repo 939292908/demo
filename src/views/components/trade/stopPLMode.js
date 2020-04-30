@@ -159,9 +159,9 @@ let obj = {
      */
     let StopP =  Number(this.param.StopP || 0)
     let StopL =  Number(this.param.StopL || 0)
-    if(this.param.Sz > 0 && ((this.openStopP && LastPrz > StopP) || (this.openStopL && LastPrz < StopL))){
+    if(this.param.Sz > 0 && ((this.openStopP && StopP && LastPrz > StopP) || (this.openStopL && StopL && LastPrz < StopL))){
       this.showTip = true
-    }else if(this.param.Sz < 0 && ((this.openStopP && LastPrz < StopP) || (this.openStopL && LastPrz > StopL))){
+    }else if(this.param.Sz < 0 && ((this.openStopP && StopP &&  LastPrz < StopP) || (this.openStopL && StopL && LastPrz > StopL))){
       this.showTip = true
     }else{
       this.showTip = false
