@@ -16,6 +16,12 @@ let obj = {
         
     },
     setTabsActive: function(param){
+      if(param == 1){
+        if(!window.gWebAPI.isLogin()){
+          window.gWebAPI.needLogin()
+          return
+        }
+      }
         this.tabsActive = param
     },
     getContent: function(){
