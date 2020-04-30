@@ -75,6 +75,18 @@ class CAPI {
             useGAEA: 0,
             warnFlag: 0,
             whiteSetting: 0,
+        },
+        wallets: {
+            '01': [],
+            '02': [],
+            '03': [],
+            '04': [],
+        },
+        wallets_obj: {
+            '01': {},
+            '02': {},
+            '03': {},
+            '04': {},
         }
     }
 
@@ -379,6 +391,82 @@ class CAPI {
                     s.CleanAccount()
                     gEVBUS.emit(s.EV_WEB_LOGOUT,{d:s.CTX})
                 }
+                if(aOnSuccess) {
+                    aOnSuccess(result)
+                }
+            }
+            ,function(e) {
+                if (aOnError) {
+                    aOnError(e)
+                }
+            })
+    }
+
+    ReqGetAssets(aData,aOnSuccess,aOnError) {
+        /**
+         * 获取用户资产
+         * aData: {exChannel: 0}
+         */
+        let s = this;
+        if (DBG_REQUEST) {console.debug(DBG_TAG,"ReqGetAssets Req",aData)}
+        RequestWarp({
+                method:"POST",
+                withCredentials:true,
+                url:s.CTX.Conf.WebAPI + "/v1/users/GetAssets",
+                body:aData,
+            }
+            ,function (result){
+                if (DBG_REQUEST) {console.debug(DBG_TAG,"ReqGetAssets Rsp",aData)}
+                if (result.result.code ==0) {
+                    s.CTX.wallets['01'] = result.assetLists01
+                    s.CTX.wallets['02'] = result.assetLists02
+                    s.CTX.wallets['03'] = result.assetLists03
+                    s.CTX.wallets['04'] = result.assetLists04
+                    for(let item of result.assetLists01){
+                        s.CTX.wallets_obj['01'][item.wType] = item
+                    }
+                    for(let item of result.assetLists02){
+                        s.CTX.wallets_obj['02'][item.wType] = item
+                    }
+                    for(let item of result.assetLists03){
+                        s.CTX.wallets_obj['03'][item.wType] = item
+                    }
+                    for(let item of result.assetLists04){
+                        s.CTX.wallets_obj['04'][item.wType] = item
+                    }
+                }
+                if(aOnSuccess) {
+                    aOnSuccess(result)
+                }
+            }
+            ,function(e) {
+                if (aOnError) {
+                    aOnError(e)
+                }
+            })
+    }
+
+    
+    ReqTransfer(aData,aOnSuccess,aOnError) {
+        /**
+         * 获取用户资产
+         * aData: {
+                    aTypeFrom: '01',
+                    aTypeTo: '02',
+                    wType: 'USDT',
+                    num: 10
+                }
+         */
+        let s = this;
+        if (DBG_REQUEST) {console.debug(DBG_TAG,"ReqTransfer Req",aData)}
+        RequestWarp({
+                method:"POST",
+                withCredentials:true,
+                url:s.CTX.Conf.WebAPI + "/users/Transfer",
+                body:aData,
+            }
+            ,function (result){
+                if (DBG_REQUEST) {console.debug(DBG_TAG,"ReqTransfer Rsp",aData)}
                 if(aOnSuccess) {
                     aOnSuccess(result)
                 }
