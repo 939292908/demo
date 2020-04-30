@@ -426,11 +426,16 @@ let obj = {
         if(assetD.TrdCls == 2 || assetD.TrdCls == 3){
             wallets = window.gTrd.Wlts['01']
         }
+        let isUpdate = false
         for(let i = 0;i < wallets.length; i++){
             let item = wallets[i]
             if(item.AId && item.Coin == assetD.SettleCoin){
+                isUpdate = true
                 this.wlt = item
             }
+        }
+        if(!isUpdate){
+            this.wlt = {}
         }
     },
     setMgnNeed() {
