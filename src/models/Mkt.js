@@ -562,7 +562,7 @@ class Mkt {
                             case "mkt":
                             {
                                 if (true) {
-                                    aObj.ReqAssetD();
+                                    aObj.ReqAssetD({vp:window.$config.exchId});
                                 }
                                 if (false) {
                                     let start = Math.floor((Date.now() / (1000 * 60))) * 60;
