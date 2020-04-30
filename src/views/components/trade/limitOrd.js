@@ -475,7 +475,7 @@ let obj = {
             Lvr: Lever,
             MIRMy: MIRMy
         }
-        clacMgnNeed.calcFutureWltAndPosAndMI(pos, wallet, _order, RSdata, assetD, lastTick, '1', newOrderForBuy, 0, res => {
+        clacMgnNeed.calcFutureWltAndPosAndMI(pos, wallet, _order, RSdata, assetD, lastTick, window.$config.future.UPNLPrzActive, newOrderForBuy, window.$config.future.MMType, res => {
             console.log('bug 成本计算结果： ', res)
             that.MgnNeedForBuy = Number(res || 0)
         })
@@ -490,7 +490,7 @@ let obj = {
             Lvr: Lever,
             MIRMy: MIRMy
         }
-        clacMgnNeed.calcFutureWltAndPosAndMI(pos, wallet, _order, RSdata, assetD, lastTick, '1', newOrderForSell, 0, res => {
+        clacMgnNeed.calcFutureWltAndPosAndMI(pos, wallet, _order, RSdata, assetD, lastTick, window.$config.future.UPNLPrzActive, newOrderForSell, window.$config.future.MMType, res => {
             console.log('sell 成本计算结果： ', res)
             that.MgnNeedForSell = Number(res || 0)
         })

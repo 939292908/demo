@@ -182,7 +182,7 @@ let obj = {
         Lvr: Lever,
         MIRMy: 0
     }
-    clacMgnNeed.calcFutureWltAndPosAndMI(posArr, wallet, _order, RSdata, assetD, lastTick, '1', newOrderForBuy, 0, res => {
+    clacMgnNeed.calcFutureWltAndPosAndMI(posArr, wallet, _order, RSdata, assetD, lastTick, window.$config.future.UPNLPrzActive, newOrderForBuy, window.$config.future.MMType, res => {
         console.log('成本计算结果： ', res)
         that.MgnNeed = Number(res || 0)
     })
