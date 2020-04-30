@@ -596,7 +596,7 @@ hr {
         overflow-x: auto;
         overflow-y: hidden;
         width: 100%;
-        height: 363px;
+        height: 391px;
         .pub-table-head-box {
             min-width: 100%;
             overflow-x: hidden;
@@ -615,7 +615,7 @@ hr {
         .pub-table-body-box {
             overflow-x: hidden;
             overflow-y: scroll;
-            height: 307px;
+            height: 335px;
             min-width: 100%;
             table {
                 min-width: 100%;
@@ -814,7 +814,7 @@ hr {
 // 资产模块 start
 .pub-wallet-box {
     @extend %side-pa;
-    height: 309px;
+    height: 303px;
 
     .pub-wallet-box-tabs {
         @extend %mb-3;

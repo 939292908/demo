@@ -4,7 +4,7 @@ import wlt from './wlt'
 import transfer from './transfer'
 
 let obj = {
-    tabsActive: 1,
+    tabsActive: 0,
     wlt: {},
     //初始化全局广播
     initEVBUS: function(){
