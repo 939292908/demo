@@ -176,6 +176,8 @@ let obj = {
             stopP: '',    //止盈价
             stopL: ''     // 止损价
         }
+        this.MgnNeedForBuy = this.MgnNeedForSell = 0
+        this.isAutoPrz = false
         let Sym = window.gMkt.CtxPlaying.Sym
         let ass = window.gMkt.AssetD[Sym]
         if(ass){

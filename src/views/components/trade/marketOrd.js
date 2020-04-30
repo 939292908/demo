@@ -181,6 +181,8 @@ let obj = {
             stopP: '',    //止盈价
             stopL: ''     // 止损价
         }
+        this.MgnNeedForBuy = this.MgnNeedForSell = 0
+        this.isAutoPrz = false
         let Sym = window.gMkt.CtxPlaying.Sym
         let ass = window.gMkt.AssetD[Sym]
         if(ass){
@@ -282,7 +284,7 @@ let obj = {
             return window.$message({title: '可用资金不足！', content: '可用资金不足！', type: 'danger'})
         }
 
-        window.gTrd.ReqTrdOrderNew(p, function(arg){
+        window.gTrd.ReqTrdOrderNew(p, function(aTrd, arg){
             if (arg.code != 0 || arg.data.ErrCode) {
                 window.$message({title: utils.getTradeErrorCode(arg.code || arg.data.ErrCode), content: utils.getTradeErrorCode(arg.code || arg.data.ErrCode), type: 'danger'})
             }
