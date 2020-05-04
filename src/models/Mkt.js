@@ -506,39 +506,41 @@ class Mkt {
 
 
                                             aObj.Conf.Authrized = AUTH_ST_WT;
-
-                                            aObj.ReqTrdLogin({                    			// 服务端所需的参数
-                                                "UserName":aObj.Conf.UserName,
-                                                "UserSecr":aObj.Conf.UserSecr,              // 如果有API Key
-                                                "UserCred":aObj.Conf.UserCred,              // token ,或者 UserCred
-                                                "AuthType":aObj.Conf.AuthType?aObj.Conf.AuthType:0,
-                                            },function (aObj, aRaw) {
-                                                /*
-                                                {
-                                                "rid":"0",
-                                                "code":0,
-                                                "data":{
-                                                    "UserName":"gmex-test@gmail.com",
-                                                    "UserId":"1234567"
-                                                    }
-                                                }
-                                                 */
-                                                let d = aRaw.data
-                                                console.log("ReqTrdLogin",aRaw)
-                                                switch (aRaw.code) {
-                                                    case 0:
-
-                                                        aObj.RT.Authrized = AUTH_ST_OK;
-                                                        for (let prop in d ) {
-                                                            aObj.RT[prop] = d[prop]
+                                            // 登录交易前先校对时间
+                                            aObj.ReqTime(arg => {
+                                                aObj.ReqTrdLogin({                    			// 服务端所需的参数
+                                                    "UserName":aObj.Conf.UserName,
+                                                    "UserSecr":aObj.Conf.UserSecr,              // 如果有API Key
+                                                    "UserCred":aObj.Conf.UserCred,              // token ,或者 UserCred
+                                                    "AuthType":aObj.Conf.AuthType?aObj.Conf.AuthType:0,
+                                                },function (aObj, aRaw) {
+                                                    /*
+                                                    {
+                                                    "rid":"0",
+                                                    "code":0,
+                                                    "data":{
+                                                        "UserName":"gmex-test@gmail.com",
+                                                        "UserId":"1234567"
                                                         }
-                                                        aObj.CtxPlaying.UId = aObj.RT.UserId
-
-                                                        break;
-                                                    default:
-                                                        aObj.RT.Authrized = AUTH_ST_NO;
-                                                        break;
-                                                }
+                                                    }
+                                                     */
+                                                    let d = aRaw.data
+                                                    console.log("ReqTrdLogin",aRaw)
+                                                    switch (aRaw.code) {
+                                                        case 0:
+    
+                                                            aObj.RT.Authrized = AUTH_ST_OK;
+                                                            for (let prop in d ) {
+                                                                aObj.RT[prop] = d[prop]
+                                                            }
+                                                            aObj.CtxPlaying.UId = aObj.RT.UserId
+    
+                                                            break;
+                                                        default:
+                                                            aObj.RT.Authrized = AUTH_ST_NO;
+                                                            break;
+                                                    }
+                                                })
                                             })
                                             break;
                                         }
@@ -1245,6 +1247,16 @@ class Mkt {
         s.WSCall_Trade("PosTransMgn",aParam,aFunc);
     };
 
+    ReqTime(aFunc){
+        let s = this
+        let now = Date.now()
+        s.WSCall_Mkt("Time", now, (aObj ,arg) => {
+            console.log("time arg",aObj, arg)
+            aObj.netLag = arg.data.time - Date.now();
+            aFunc && aFunc()
+        })
+    }
+
     ws_onopen(aObj,evt) {
         //TODO 啥也别干
         if(DBG_MKT){console.log(__filename,"ws_onopen")}
@@ -1706,7 +1718,7 @@ class Mkt {
             return true;
         } else if (now -  aObj.lastRecvTm>aObj.timeoutIdle) {
             if (now - aObj.lastSendTm > aObj.timeoutMsg) {
-                aObj.WSCall_Mkt("Time", now)
+                aObj.ReqTime()
             }
         }
         return false;
