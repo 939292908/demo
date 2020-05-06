@@ -1251,7 +1251,6 @@ class Mkt {
         let s = this
         let now = Date.now()
         s.WSCall_Mkt("Time", now, (aObj ,arg) => {
-            console.log("time arg",aObj, arg)
             aObj.netLag = arg.data.time - Date.now();
             aFunc && aFunc()
         })
