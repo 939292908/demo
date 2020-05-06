@@ -307,6 +307,9 @@ let symSelect = {
             default:
                 
         }
+        SymList = SymList.filter(item => {
+            return item != window.gMkt.CtxPlaying.Sym
+        })
         if(SymList.length > 0){
             let subArr = utils.setSubArrType('tick',SymList)
             window.gMkt.ReqUnSub(subArr)
