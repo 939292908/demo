@@ -6,10 +6,10 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "webpack --config webpack/webpack.conf.js -d --watch",
-    "build": "cross-env BUILD_ENV=prod webpack --config webpack/webpack.conf.js -p",
-    "build_dev": "cross-env BUILD_ENV=dev webpack --config webpack/webpack.conf.js -p",
-    "dev": "cross-env BUILD_ENV=dev webpack-dev-server --config webpack/webpack.conf.js --hot --open",
-    "prod": "cross-env BUILD_ENV=prod webpack-dev-server --config webpack/webpack.conf.js --hot --open"
+    "build": "cross-env BUILD_ENV=prod webpack --config webpack/webpack.prod.conf.js -p",
+    "build_dev": "cross-env BUILD_ENV=dev webpack --config webpack/webpack.dev.conf.js -p",
+    "dev": "cross-env BUILD_ENV=dev webpack-dev-server --config webpack/webpack.dev.conf.js --hot --open",
+    "prod": "cross-env BUILD_ENV=prod webpack-dev-server --config webpack/webpack.dev.conf.js --hot --open"
   },
   "keywords": [],
   "author": "",
