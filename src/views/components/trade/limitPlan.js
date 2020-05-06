@@ -194,18 +194,30 @@ let obj = {
             return $message({title: '下单价格不能为0', content: '下单价格不能为0', type: 'danger'})
         }else if(!this.form.Prz){
             return $message({title: '下单价格不能为空', content: '下单价格不能为空', type: 'danger'})
+        }else if(Number(this.form.Prz) == 0){
+            return $message({title: '下单价格不能为0', content: '下单价格不能为0', type: 'danger'})
+        }else if(isNaN(Number(this.form.Prz))){
+            return $message({title: '请输入正确的价格', content: '请输入正确的价格', type: 'danger'})
         }
 
         if(this.form.Num === '0'){
             return $message({title: '下单数量不能为0', content: '下单数量不能为0', type: 'danger'})
         }else if(!this.form.Num){
             return $message({title: '下单数量不能为空', content: '下单数量不能为空', type: 'danger'})
+        }else if(Number(this.form.Num) == 0){
+            return $message({title: '下单数量不能为0', content: '下单数量不能为0', type: 'danger'})
+        }else if(isNaN(Number(this.form.Num))){
+            return $message({title: '请输入正确的数量', content: '请输入正确的数量', type: 'danger'})
         }
 
         if(this.form.triggerPrz === '0'){
             return $message({title: '触发价格不能为0', content: '触发价格不能为0', type: 'danger'})
         }else if(!this.form.triggerPrz){
             return $message({title: '触发价格不能为空', content: '触发价格不能为空', type: 'danger'})
+        }else if(Number(this.form.triggerPrz) == 0){
+            return $message({title: '触发价格不能为0', content: '触发价格不能为0', type: 'danger'})
+        }else if(isNaN(Number(this.form.triggerPrz))){
+            return $message({title: '请输入正确的触发价格', content: '请输入正确的触发价格', type: 'danger'})
         }
 
         
@@ -565,7 +577,7 @@ let obj = {
                 m("div", { class: "pub-place-order-form-stop-pl-input field has-addons" }, [
                     
                     m("div", { class: "pub-place-order-form-stop-pl-input-p control is-expanded" }, [
-                        m("input", { class: "input", type: 'number', placeholder: "止盈价", step: obj.PrzStep, value: obj.form.stopP, oninput: function(e){
+                        m("input", { class: "input", type: 'number', placeholder: "止盈价", step: obj.PrzStep, value: obj.form.stopP, pattern:"\d*", oninput: function(e){
                             obj.onStopPInput(e)
                         }})
                     ]),
@@ -573,7 +585,7 @@ let obj = {
                         '&'
                     ]),
                     m("div", { class: "pub-place-order-form-stop-pl-input-l control is-expanded" }, [
-                        m("input", { class: "input", type: 'number', placeholder: "止损价", step: obj.PrzStep, value: obj.form.stopL, oninput: function(e){
+                        m("input", { class: "input", type: 'number', placeholder: "止损价", step: obj.PrzStep, value: obj.form.stopL, pattern:"\d*", oninput: function(e){
                             obj.onStopLInput(e)
                         }})
                     ])
@@ -607,14 +619,14 @@ export default {
             ]),
             m("div", { class: "pub-place-order-form-prz-input field" }, [
                 m("div", { class: "control" }, [
-                    m("input", { class: "input", type: 'number', placeholder: "请输入价格", step: obj.PrzStep, value: obj.form.Prz,oninput: function(e) {
+                    m("input", { class: "input", type: 'number', placeholder: "请输入价格", step: obj.PrzStep, value: obj.form.Prz, pattern:"\d*",oninput: function(e) {
                         obj.onInputForPrz(e)
                     } })
                 ])
             ]),
             m("div", { class: "pub-place-order-form-num-input field" }, [
                 m("div", { class: "control" }, [
-                    m("input", { class: "input", type: 'number', placeholder: "请输入数量", step: obj.NumStep, value: obj.form.Num,oninput: function(e) {
+                    m("input", { class: "input", type: 'number', placeholder: "请输入数量", step: obj.NumStep, value: obj.form.Num, pattern:"\d*",oninput: function(e) {
                         obj.onInputForNum(e)
                     } }),
                     m('span', {class: 'pub-place-order-form-num-input-face-value'}, [
@@ -625,7 +637,7 @@ export default {
             obj.getStopPL(),
             m("div", { class: "pub-place-order-form-trigger-prz-input field" }, [
                 m("div", { class: "control" }, [
-                    m("input", { class: "input", type: 'number', placeholder: "请输入触发价格", step: obj.PrzStep, value: obj.form.triggerPrz,oninput: function(e) {
+                    m("input", { class: "input", type: 'number', placeholder: "请输入触发价格", step: obj.PrzStep, value: obj.form.triggerPrz, pattern:"\d*",oninput: function(e) {
                         obj.onInputFortriggerPrz(e)
                     }})
                 ])
