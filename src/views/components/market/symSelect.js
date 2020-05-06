@@ -235,6 +235,7 @@ let symSelect = {
     setSym: function(Sym){
         window.gMkt.CtxPlaying.Sym = Sym
         this.symListOpen = false
+        this.unSubSym()
         utils.setItem('futureActiveSymbol', Sym)
         gEVBUS.emit(gMkt.EV_CHANGESYM_UPD, {Ev: gMkt.EV_CHANGESYM_UPD, Sym:Sym})
     }, 
