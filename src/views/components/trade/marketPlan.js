@@ -12,6 +12,18 @@ let obj = {
         stopP: '',      // 止盈价
         stopL: '',       // 止损价
         MIRMy: 0,     // 自定义委托保证金率
+        // 交易模式2相关内容 start
+        PIdForBuy: '',
+        PIdForSell: '',
+        LeverForBuy: 0,
+        LeverForSell: 0,
+        LeverForBuyInputValue: '买 杠杠',
+        LeverForSellInputValue: '卖 杠杠',
+        MIRMyForBuy: 0,
+        MIRMyForSell: 0,
+        maxLeverForBuy: 0,
+        maxLeverForSell: 0,
+        // 交易模式2相关内容 end
     },
     faceValue: '= 0.0000 USDT',
     LeverInputValue: '杠杠',
@@ -94,7 +106,19 @@ let obj = {
             }
             that.setMgnNeed()
         })
-
+        if(this.EV_GET_POS_READY_unbinder){
+            this.EV_GET_POS_READY_unbinder()
+        }
+        this.EV_GET_POS_READY_unbinder = window.gEVBUS.on(gTrd.EV_GET_POS_READY,arg=> {
+            that.setPId()
+        })
+    
+        if(this.EV_POS_UPD_unbinder){
+          this.EV_POS_UPD_unbinder()
+        }
+        this.EV_POS_UPD_unbinder = window.gEVBUS.on(gTrd.EV_POS_UPD,arg=> {
+            that.setPId()
+        })
 
     },
     //删除全局广播
@@ -124,43 +148,74 @@ let obj = {
         if(this.EV_WEB_LOGOUT_unbinder){
             this.EV_WEB_LOGOUT_unbinder()
         }
+
         if(this.EV_CHANGEPLACEORDPRZABDNUM_unbinder){
             this.EV_CHANGEPLACEORDPRZABDNUM_unbinder()
         }
-        if(this.EV_TICK_UPD_unbinder){
-            this.EV_TICK_UPD_unbinder()
+        if(this.EV_GET_POS_READY_unbinder){
+            this.EV_GET_POS_READY_unbinder()
+        }
+    
+        if(this.EV_POS_UPD_unbinder){
+          this.EV_POS_UPD_unbinder()
         }
     },
     initPos: function (param) {
-        let PId = window.gTrd.CtxPlaying.activePId
-        let pos = window.gTrd.Poss[PId]
+        
+        let tradeType = window.$config.future.tradeType
+        switch(tradeType){
+            case 2:
+                this.setPId()
+                break;
+            default:
+                let PId = window.gTrd.CtxPlaying.activePId
+                let pos = window.gTrd.Poss[PId]
 
-        let Lever = 0, maxLever = 0,MIRMy = 0;
-        if (pos) {
-            let ass = window.gMkt.AssetD[pos.Sym]
-            if (ass) {
-                maxLever = 1 / Math.max(ass.MIR, pos.MIRMy || 0)
-            }
-            MIRMy = pos.MIRMy
-            Lever = pos.Lever
-        } else {
-            let Sym = window.gMkt.CtxPlaying.Sym
-            let ass = window.gMkt.AssetD[Sym]
-            if (ass) {
-                maxLever = 1 / ass.MIR
-            }
+                let Lever = 0, maxLever = 0,MIRMy = 0;
+                if (pos) {
+                    let ass = window.gMkt.AssetD[pos.Sym]
+                    if (ass) {
+                        maxLever = 1 / Math.max(ass.MIR, pos.MIRMy || 0)
+                    }
+                    MIRMy = pos.MIRMy
+                    Lever = pos.Lever
+                } else {
+                    let Sym = window.gMkt.CtxPlaying.Sym
+                    let ass = window.gMkt.AssetD[Sym]
+                    if (ass) {
+                        maxLever = 1 / ass.MIR
+                    }
+                }
+                this.form.MIRMy = MIRMy
+                this.form.Lever = Lever
+                this.form.maxLever = maxLever
+
+                this.setLever()
         }
-        this.form.MIRMy = MIRMy
-        this.form.Lever = Lever
-        this.form.maxLever = maxLever
-        this.setLever()
         
     },
     setLever: function () {
-        if (this.form.Lever == 0) {
-            this.LeverInputValue = (this.form.maxLever ? '全仓' + this.form.maxLever + 'X' : '杠杆')
-        } else {
-            this.LeverInputValue = '逐仓' + Number(this.form.Lever).toFixed2(2) + 'X'
+        let tradeType = window.$config.future.tradeType
+        switch(tradeType){
+            case 2:
+                if (this.form.LeverForBuy == 0) {
+                    this.form.LeverForBuyInputValue = (this.form.maxLeverForBuy ? '买 全仓' + this.form.maxLeverForBuy + 'X' : '买 杠杆')
+                } else {
+                    this.form.LeverForBuyInputValue = '买 逐仓' + Number(this.form.LeverForBuy).toFixed2(2) + 'X'
+                }
+                if (this.form.LeverForSell == 0) {
+                    this.form.LeverForSellInputValue = (this.form.maxLeverForSell ? '卖 全仓' + this.form.maxLeverForSell + 'X' : '卖 杠杆')
+                } else {
+                    this.form.LeverForSellInputValue = '卖 逐仓' + Number(this.form.LeverForSell).toFixed2(2) + 'X'
+                }
+                
+                break;
+            default:
+                if (this.form.Lever == 0) {
+                    this.LeverInputValue = (this.form.maxLever ? '全仓' + this.form.maxLever + 'X' : '杠杆')
+                } else {
+                    this.LeverInputValue = '逐仓' + Number(this.form.Lever).toFixed2(2) + 'X'
+                } 
         }
     },
     onTick: function (arg) {
@@ -184,7 +239,15 @@ let obj = {
             Lever: 0,       // 杠杠
             maxLever: 0,    // 最大杠杆
             stopP: '',      // 止盈价
-            stopL: ''       // 止损价
+            stopL: '',       // 止损价
+            // 交易模式2相关内容 start
+            LeverForBuy: 0, 
+            LeverForSell: 0,
+            LeverForBuyInputValue: '买 杠杠',
+            LeverForSellInputValue: '卖 杠杠',
+            MIRMyForBuy: 0,
+            MIRMyForSell: 0,
+            // 交易模式2相关内容 end
         }
         this.MgnNeedForBuy = this.MgnNeedForSell = 0
         this.isAutoPrz = false
@@ -291,11 +354,27 @@ let obj = {
         // 根据配置判断处理
         let tradeType = window.$config.future.tradeType
         switch(tradeType){
-            case 0:
-            case 1:
             case 2:
-                if(!PId){
-                    return window.$message({title: '请先选择您要调整的仓位！', content: '请先选择您要调整的仓位！', type: 'danger'})
+                // 只开仓标志
+                p.OrdFlag = (p.OrdFlag | 4)
+                // 仓位合并标志
+                p.OrdFlag = (p.OrdFlag | 1024)
+                if(dir == 1){
+                    p.PId = this.form.PIdForBuy || 'new'
+                    p.lvr = this.form.LeverForBuy
+                    // 判断是否开启了全仓杠杠调节 start
+                    if(window.$config.future.setMIRMy && p.lvr == 0){
+                        p.MIRMy = this.form.MIRMyForBuy
+                    }
+                    // 判断是否开启了全仓杠杠调节 end
+                }else{
+                    p.PId = this.form.PIdForSell || 'new'
+                    p.lvr = this.form.LeverForSell
+                    // 判断是否开启了全仓杠杠调节 start
+                    if(window.$config.future.setMIRMy && p.lvr == 0){
+                        p.MIRMy = this.form.MIRMyForSell
+                    }
+                    // 判断是否开启了全仓杠杠调节 end
                 }
                 break;
             case 3:
@@ -311,29 +390,36 @@ let obj = {
                 if (stopP > 0 || stopL > 0) {
                     p.StopLPBy = 1
                 }
+                
                 // 模式3判断仓位数量是否超限 start
-                let Poss = window.gTrd.Poss
-                let posArr = []
-                for(let key in Poss){
-                    let pos = Poss[key]
-                    if(pos.Sym == Sym && pos.Sz != 0){
-                        posArr.push(pos)
+                    let Poss = window.gTrd.Poss
+                    let posArr = []
+                    for(let key in Poss){
+                        let pos = Poss[key]
+                        if(pos.Sym == Sym && pos.Sz != 0){
+                            posArr.push(pos)
+                        }
                     }
-                }
-                if(posArr.length >= window.$config.future.maxPosNum){
-                    return window.$message({title: '提示', content: '同一合约最多同时存在'+window.$config.future.maxPosNum+'个仓位!', type: 'danger'})
-                }
+                    if(posArr.length >= window.$config.future.maxPosNum){
+                        return window.$message({title: '提示', content: '同一合约最多同时存在'+window.$config.future.maxPosNum+'个仓位!', type: 'danger'})
+                    }
                 // 判断仓位数量是否超限 end
+                // 判断是否开启了全仓杠杠调节 start
+                if(window.$config.future.setMIRMy && p.lvr == 0){
+                    p.MIRMy = this.form.MIRMy
+                }
+                // 判断是否开启了全仓杠杠调节 end
                 break;
             default:
-                
+                if(!PId){
+                    return window.$message({title: '请先选择您要调整的仓位！', content: '请先选择您要调整的仓位！', type: 'danger'})
+                }
+                // 判断是否开启了全仓杠杠调节 start
+                if(window.$config.future.setMIRMy && p.lvr == 0){
+                    p.MIRMy = this.form.MIRMy
+                }
+                // 判断是否开启了全仓杠杠调节 end
         }
-
-        // 判断是否开启了全仓杠杠调节 start
-        if(window.$config.future.setMIRMy){
-            p.MIRMy = this.form.MIRMy
-        }
-        // 判断是否开启了全仓杠杠调节 end
 
 
         let aWdrawable = Number(obj.wlt.aWdrawable || 0 )
@@ -351,7 +437,7 @@ let obj = {
             }
         })
     },
-    setLeverage: function(){
+    setLeverage: function(dir){
         let that = this
 
         if(!window.gWebAPI.isLogin()){
@@ -359,29 +445,36 @@ let obj = {
         }
         let Sym = window.gMkt.CtxPlaying.Sym
         let PId = window.gTrd.CtxPlaying.activePId
+        let Lever = this.form.Lever
+        let MIRMy = this.form.MIRMy
         let ass = window.gMkt.AssetD[Sym]
         if(!ass) return 
 
         // 根据配置判断处理杠杠修改
         let tradeType = window.$config.future.tradeType
         switch(tradeType){
-            case 0:
-            case 1:
             case 2:
-                if(!PId){
-                    return window.$message({title: '请先选择您要调整的仓位！', content: '请先选择您要调整的仓位！', type: 'danger'})
-                }
+                PId = dir == 1?this.form.PIdForBuy:this.form.PIdForSell
+                Lever = dir == 1?this.form.LeverForBuy:this.form.LeverForSell
+                MIRMy = dir == 1?this.form.MIRMyForBuy:this.form.MIRMyForSell
                 window.$openLeverageMode({
                     Sym: Sym,
                     PId: PId, //仓位PId
-                    Lever: this.form.Lever, //杠杆
-                    MIRMy: this.form.MIRMy, //自定义委托保证金率
-                    needReq: true, //是否需要向服务器发送修改杠杆请求
+                    Lever: Lever, //杠杆
+                    MIRMy: MIRMy, //自定义委托保证金率
+                    needReq: !!PId, //是否需要向服务器发送修改杠杆请求
                     cb: function(arg){
-                        console.log('change Lever callback', arg)
-                        that.form.Lever = arg.Lever
-                        that.form.MIRMy = arg.MIRMy
-                        that.form.maxLever = 1/Math.max(arg.MIRMy || 0, ass.MIR)
+                        console.log('change Lever callback', arg, typeof dir, dir == 1, dir)
+                        if(dir == 1){
+                            that.form.LeverForBuy = arg.Lever
+                            that.form.MIRMyForBuy = arg.MIRMy
+                            that.form.maxLeverForBuy = 1/Math.max(arg.MIRMy || 0, ass.MIR)
+                        }else{
+                            that.form.LeverForSell = arg.Lever
+                            that.form.MIRMyForSell = arg.MIRMy
+                            that.form.maxLeverForSell = 1/Math.max(arg.MIRMy || 0, ass.MIR)
+                        }
+                        
                         that.setMgnNeed()
                         that.setLever()
                     }
@@ -391,8 +484,8 @@ let obj = {
                 window.$openLeverageMode({
                     Sym: Sym,
                     PId: PId, //仓位PId
-                    Lever: this.form.Lever, //杠杆
-                    MIRMy: this.form.MIRMy, //自定义委托保证金率
+                    Lever: Lever, //杠杆
+                    MIRMy: MIRMy, //自定义委托保证金率
                     needReq: false, //是否需要向服务器发送修改杠杆请求
                     cb: function(arg){
                         console.log('change Lever callback', arg)
@@ -405,7 +498,24 @@ let obj = {
                 })
                 break;
             default:
-                
+                if(!PId){
+                    return window.$message({title: '请先选择您要调整的仓位！', content: '请先选择您要调整的仓位！', type: 'danger'})
+                }
+                window.$openLeverageMode({
+                    Sym: Sym,
+                    PId: PId, //仓位PId
+                    Lever: Lever, //杠杆
+                    MIRMy: MIRMy, //自定义委托保证金率
+                    needReq: true, //是否需要向服务器发送修改杠杆请求
+                    cb: function(arg){
+                        console.log('change Lever callback', arg)
+                        that.form.Lever = arg.Lever
+                        that.form.MIRMy = arg.MIRMy
+                        that.form.maxLever = 1/Math.max(arg.MIRMy || 0, ass.MIR)
+                        that.setMgnNeed()
+                        that.setLever()
+                    }
+                })
         }
         
     },
@@ -526,6 +636,15 @@ let obj = {
         let PId = window.gTrd.CtxPlaying.activePId
         let Lever = this.form.Lever
         let MIRMy = this.form.MIRMy
+
+        let PIdForBuy = this.form.PIdForBuy
+        let LeverForBuy = this.form.LeverForBuy
+        let MIRMyForBuy = this.form.MIRMyForBuy
+
+        let PIdForSell = this.form.PIdForSell
+        let LeverForSell = this.form.LeverForSell
+        let MIRMyForSell = this.form.MIRMyForSell
+
         
         let posObj = window.gTrd.Poss
         let pos = []
@@ -544,30 +663,64 @@ let obj = {
 
         Prz = (lastTick[Sym] && lastTick[Sym].LastPrz) || (assetD[Sym] && assetD[Sym].PrzLatest) || 0
 
-        let newOrderForBuy = {
-            Sym: Sym,
-            Prz: Prz,
-            Qty: QtyLong,
-            QtyF: 0,
-            Dir: 1,
-            PId: PId, 
-            Lvr: Lever,
-            MIRMy: MIRMy
+        let newOrderForBuy = {}
+
+        let tradeType = window.$config.future.tradeType
+        switch(tradeType){
+            case 2:
+                newOrderForBuy = {
+                    Sym: Sym,
+                    Prz: Prz,
+                    Qty: QtyLong,
+                    QtyF: 0,
+                    Dir: 1,
+                    PId: PIdForBuy, 
+                    Lvr: LeverForBuy,
+                    MIRMy: MIRMyForBuy
+                }
+                break;
+            default:
+                newOrderForBuy = {
+                    Sym: Sym,
+                    Prz: Prz,
+                    Qty: QtyLong,
+                    QtyF: 0,
+                    Dir: 1,
+                    PId: PId, 
+                    Lvr: Lever,
+                    MIRMy: MIRMy
+                }
         }
         clacMgnNeed.calcFutureWltAndPosAndMI(pos, wallet, _order, RSdata, assetD, lastTick, window.$config.future.UPNLPrzActive, newOrderForBuy, window.$config.future.MMType, res => {
             console.log('bug 成本计算结果： ', res)
             that.MgnNeedForBuy = Number(res || 0)
         })
 
-        let newOrderForSell = {
-            Sym: Sym,
-            Prz: Prz,
-            Qty: QtyShort,
-            QtyF: 0,
-            Dir: -1,
-            PId: PId, 
-            Lvr: Lever,
-            MIRMy: MIRMy
+        let newOrderForSell = {}
+        switch(tradeType){
+            case 2:
+                newOrderForSell = {
+                    Sym: Sym,
+                    Prz: Prz,
+                    Qty: QtyShort,
+                    QtyF: 0,
+                    Dir: -1,
+                    PId: PIdForSell, 
+                    Lvr: LeverForSell,
+                    MIRMy: MIRMyForSell
+                }
+                break;
+            default:
+                newOrderForSell = {
+                    Sym: Sym,
+                    Prz: Prz,
+                    Qty: QtyShort,
+                    QtyF: 0,
+                    Dir: -1,
+                    PId: PId, 
+                    Lvr: Lever,
+                    MIRMy: MIRMy
+                }
         }
         clacMgnNeed.calcFutureWltAndPosAndMI(pos, wallet, _order, RSdata, assetD, lastTick, window.$config.future.UPNLPrzActive, newOrderForSell, window.$config.future.MMType, res => {
             console.log('sell 成本计算结果： ', res)
@@ -615,6 +768,108 @@ let obj = {
             ])
         }
     },
+    getLeverChange: function(){
+        // 根据配置判断杠杠调整显示内容
+        let tradeType = window.$config.future.tradeType
+        switch(tradeType){
+            case 2:
+                return m("div", { class: "pub-place-order-form-lever-input field has-addons" }, [
+                    m("div", { class: "control is-expanded" }, [
+                        m("button", { class: "button is-outline is-fullwidth has-text-success", onclick: function () {
+                            obj.setLeverage(1)
+                        }}, [
+                            obj.form.LeverForBuyInputValue
+                        ])
+                    ]),
+                    m("div", { class: "control" }, [
+                        m("div", { class: "" }, [
+                            ' '
+                        ]),
+                    ]),
+                    m("div", { class: "control is-expanded" }, [
+                        m("button", { class: "button is-outline is-fullwidth has-text-danger", onclick: function () {
+                            obj.setLeverage(-1)
+                        }}, [
+                            obj.form.LeverForSellInputValue
+                        ])
+                    ])
+                ])
+            default:
+                return m("div", { class: "pub-place-order-form-lever-input field" }, [
+                    m("div", { class: "control" }, [
+                        m("input", {
+                            class: " input", type: 'text', placeholder: obj.LeverInputValue, readonly: true, onclick: function () {
+                                obj.setLeverage()
+                            }
+                        })
+                    ])
+                ])
+        }
+    },
+    setPId(){
+        let Sym = window.gMkt.CtxPlaying.Sym
+        let Poss = window.gTrd.Poss
+        let ass = window.gMkt.AssetD[Sym]
+        if(!ass) return
+
+        let PIdForBuy = [], PIdForSell = [], PIdForSz0 = [];
+        // 筛选买卖仓位
+        for(let key in Poss){
+            let item = Poss[key]
+            if(item.Sym == Sym){
+                if(item.hasOwnProperty('Flg') && (item.Flg&8) != 0){ //禁止做空标志
+                    if(item.Sz > 0 || item.aQtyBuy > 0){
+                        PIdForBuy.push(item.PId)
+                    }else{
+                        PIdForBuy.push(item.PId)
+                    }
+                }else if(item.hasOwnProperty('Flg') && (item.Flg&16) != 0){//禁止做多标志
+                    if(item.Sz < 0 || item.aQtySell > 0){
+                        PIdForSell.push(item.PId)
+                    }else{
+                        PIdForSell.push(item.PId)
+                    }
+                }else{
+                    if(item.Sz > 0 || item.aQtyBuy > 0){
+                        PIdForBuy.push(item.PId)
+                    }else if(item.Sz < 0 || item.aQtySell > 0){
+                        PIdForSell.push(item.PId)
+                    }else {
+                        PIdForSz0.push(item.PId)
+                    }
+                }
+            }
+        }
+        
+        // 选取买卖仓位PId
+        if(PIdForBuy.length > 0){
+            this.form.PIdForBuy = PIdForBuy[0]
+        }else{
+            this.form.PIdForBuy = PIdForSz0[0] || ''
+        }
+        PIdForSz0 = PIdForSz0.filter(item => {
+            return item != this.form.PIdForBuy
+        })
+        if(PIdForSell.length > 0){
+            this.form.PIdForSell = PIdForSell[0]
+        }else{
+            this.form.PIdForSell = PIdForSz0[0] || ''
+        }
+        
+        
+        // 获取买卖仓位对应杠杠以及
+        let posForBuy = Poss[this.form.PIdForBuy] || {}
+        this.form.LeverForBuy = posForBuy.Lever || 0
+        this.form.MIRMyForBuy = posForBuy.MIRMy || 0
+        this.form.maxLeverForBuy = 1 / Math.max(ass.MIR, posForBuy.MIRMy || 0)
+
+        let posForSell = Poss[this.form.PIdForSell] || {}
+        this.form.LeverForSell = posForSell.Lever || 0
+        this.form.MIRMyForSell = posForSell.MIRMy || 0
+        this.form.maxLeverForSell = 1 / Math.max(ass.MIR, posForSell.MIRMy || 0)
+
+        this.setLever()
+    }
 }
 export default {
     oninit: function (vnode) {
@@ -630,15 +885,7 @@ export default {
     view: function (vnode) {
 
         return m("div", { class: "pub-place-order-form" }, [
-            m("div", { class: "pub-place-order-form-lever-input field" }, [
-                m("div", { class: "control" }, [
-                    m("input", {
-                        class: " input", type: 'text', placeholder: obj.LeverInputValue, readonly: true, onclick: function () {
-                            obj.setLeverage()
-                        }
-                    })
-                ])
-            ]),
+            obj.getLeverChange(),
             m("div", { class: "pub-place-order-form-prz-input field" }, [
                 m("div", { class: "control" }, [
                     m("input", { class: "input", type: 'number', placeholder: "市价", readonly: true})
