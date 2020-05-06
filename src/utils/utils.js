@@ -688,6 +688,16 @@ utils.getSpotName = function(coin1, coin2, AssetDs){ //用币种获取相关交�
     return `${coin1}/${coin2}`
 }
 
+utils.getFutureName = function(coin1, coin2, AssetDs){ //用币种获取相关合约名称
+    let symAsset = AssetDs
+    for(let key in symAsset){
+        if( key.indexOf(`${coin1}.${coin2}`) == 0 ){
+            return key
+        }
+    }
+    return `${coin1}.${coin2}`
+}
+
 utils.WltViaStr = function (value, type) {
     let obj = {
         '4': '强制平仓',

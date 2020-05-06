@@ -103,14 +103,21 @@ let symSelect = {
         this.futureSymList = futureSymList
         this.spotSymList = spotSymList
         if(window.gMkt.CtxPlaying.pageTradeStatus == 1){
-            if(!futureSymList.includes(window.gMkt.CtxPlaying.Sym)){
-                // window.gMkt.CtxPlaying.Sym = futureSymList[0]
-                this.setSym(futureSymList[0])
+            if(futureSymList.length > 0 && !futureSymList.includes(window.gMkt.CtxPlaying.Sym)){
+                let futureActiveSymbol = utils.getItem('futureActiveSymbol')
+                let Sym = futureActiveSymbol || utils.getFutureName('BTC', 'USDT', assetD)
+                if(!assetD[Sym]){
+                    Sym = futureSymList[0]
+                }
+                this.setSym(Sym)
             }
         }else if(window.gMkt.CtxPlaying.pageTradeStatus == 2){
-            if(!spotSymList.includes(window.gMkt.CtxPlaying.Sym)){
-                // window.gMkt.CtxPlaying.Sym = spotSymList[0]
-                this.setSym(spotSymList[0])
+            if(spotSymList.length > 0 && !spotSymList.includes(window.gMkt.CtxPlaying.Sym)){
+                let Sym = utils.getSpotName('BTC', 'USDT', assetD)
+                if(!assetD[Sym]){
+                    Sym = futureSymList[0]
+                }
+                this.setSym(Sym)
             }
         }
         m.redraw();
@@ -228,7 +235,7 @@ let symSelect = {
     setSym: function(Sym){
         window.gMkt.CtxPlaying.Sym = Sym
         this.symListOpen = false
-        
+        utils.setItem('futureActiveSymbol', Sym)
         gEVBUS.emit(gMkt.EV_CHANGESYM_UPD, {Ev: gMkt.EV_CHANGESYM_UPD, Sym:Sym})
     }, 
     getSymSelect: function(){
