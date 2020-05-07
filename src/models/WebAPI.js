@@ -13,6 +13,7 @@ let Stately = require('stately.js');
 
 import { Conf } from "../reqConf/Conf"
 import { RequestWarp } from "../libs/webcall"
+import config from '../config'
 
 class CAPI {
     EV_UPD_USERINFO = "EV_UPD_USERINFO"
@@ -117,7 +118,7 @@ class CAPI {
                         let stately = this;
 
                         // 如果已经登陆成功了，那么，就尝试获取额外的信息
-                        if (s.isLogin()) {
+                        if (s.isLogin() && config.loginType == 0) {
                             aObj.ReqUserInfo({},function (result) {
                                 stately.setMachineState("WORKING")
                                 
