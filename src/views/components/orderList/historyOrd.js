@@ -188,14 +188,15 @@ let obj = {
 
     getTheadList: function () {
         return this.theadList.map(function (item, i) {
-            return m("th", { key: "historyOrdtHeadItem" + i, class: "" + item.class }, [
+            return m("th", { key: "historyOrdtHeadItem" + i, class: " " + item.class }, [
                 item.title
             ])
         })
     },
+
     getPosList: function () {
         return this.posList.map(function (item, i) {
-            return m("tr", { key: "historyOrdTableListItem" + i, class: "" }, [
+            return m("tr", { key: "historyOrdTableListItem" + i, class: " "}, [
                 m("td", { class: "" }, [
                     m("p", { class: " " }, [
                         utils.getSymDisplayName(window.gMkt.AssetD, item.Sym)
@@ -254,6 +255,71 @@ let obj = {
             ])
         })
     },
+    //移动端
+    getTheadList_m: function () {
+        return this.theadList.map(function (item, i) {
+            return m("li", { key: "historyOrdtHeadItem" + i, class: "mobile-li" + item.class }, [
+                item.title
+            ])
+        })
+    },
+    getPosList_m: function () {
+        return this.posList.map(function (item, i) {
+            return m("tr", { key: "historyOrdTableListItem" + i, class: "flex-comm" }, [
+                m("td", { class: "" }, [
+                    utils.getSymDisplayName(window.gMkt.AssetD, item.Sym)
+                ]),
+                m("td", { class: "" }, [
+                    item.displayLever
+                ]),
+                m("td", { class: " " + utils.getColorStr(item.Dir, 'font')}, [
+                    item.DirStr
+                ]),
+                m("td", { class: "" }, [
+                    item.OTypeStr
+                ]),
+                m("td", { class: "" }, [
+                    item.StatusStr
+                ]),
+                m("td", { class: "" }, [
+                    item.Prz
+                ]),
+                m("td", { class: "" }, [
+                    item.Qty
+                ]),
+                m("td", { class: "" }, [
+                    item.PrzF
+                ]),
+                m("td", { class: "" }, [
+                    item.QtyF
+                ]),
+                m("td", { class: "" }, [
+                    item.PnlCls
+                ]),
+                m("td", { class: "" }, [
+                    item.Fee,
+                    ' ',
+                    item.FeeCoin
+                ]),
+                m("td", { class: "" }, [
+                    item.cond
+                ]),
+                m("td", { class: "" }, [
+                    item.AtStr
+                ]),
+                m("td", { class: "" }, [
+                    item.OrdFromStr
+                ]),
+                m("td",{class:"cursor-pointer"+(" historyOrdTableListItemCopy"+i), "data-clipboard-text": item.PId, onclick: function(e){
+                    window.$copy(".historyOrdTableListItemCopy"+i)
+                }},[
+                    item.PId.substr(-4),
+                    ' ',
+                    m("i",{class:"iconfont iconcopy"}),
+                ]),
+            ])
+        })
+    },
     subPosNeedSymTick: function () {
         let oldSubList = window.gMkt.CtxPlaying.subList
         let needSub = []
@@ -288,7 +354,41 @@ let obj = {
     },
     getContent: function () {
         if (window.isMobile) {
-            return null
+
+            //添加移动端列表
+            let colgroup = m('colgroup', {}, [
+                m('col', { name: "pub-table-2", width: 160 }),
+                m('col', { name: "pub-table-3", width: 130 }),
+                m('col', { name: "pub-table-4", width: 80 }),
+                m('col', { name: "pub-table-5", width: 80 }),
+                m('col', { name: "pub-table-5", width: 80 }),
+                m('col', { name: "pub-table-6", width: 100 }),
+                m('col', { name: "pub-table-7", width: 100 }),
+                m('col', { name: "pub-table-8", width: 100 }),
+                m('col', { name: "pub-table-9", width: 100 }),
+                m('col', { name: "pub-table-9", width: 150 }),
+                m('col', { name: "pub-table-9", width: 150 }),
+                m('col', { name: "pub-table-10", width: 150 }),
+                m('col', { name: "pub-table-10", width: 150 }),
+                m('col', { name: "pub-table-9", width: 100 }),
+                m('col', { name: "pub-table-1", width: 100 }),
+            ])
+            return m('div', { class: " table-container-m" }, [
+                m("div",{class:"pub-table-head-box-m"},[
+                    m("ul",{class:"ul is-hoverable"},[
+                        colgroup,
+                        m("div", { class: "" }, [
+                            obj.getTheadList_m()
+                        ])
+                    ])
+                ]),
+                m('div', { class: "pub-table-body-box-m", }, [
+                    m("table", { class: "table is-hoverable ",cellpadding: 0, cellspacing: 0 }, [
+                        colgroup,
+                        obj.getPosList_m()
+                    ])
+                ]),
+            ])
         } else {
             let colgroup = m('colgroup', {}, [
                 m('col', { name: "pub-table-2", width: 160 }),

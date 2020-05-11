@@ -112,9 +112,59 @@ let obj = {
             ])
         })
     },
+    getTheadItem_m: function () {
+        return this.theadList.map(function (item, i) {
+            return m("li", { key: "historyOrdtHeadItem" + i, class: "mobile-li" + item.class }, [
+                item.title
+            ])
+        })
+    },
+    getListItem_m: function () {
+        return this.list.map(function (item, i) {
+            return m("tr", { key: "historyOrdTableListItem" + i, class: "flex-comm" }, [
+
+                m("td", { class: "" }, [
+                    m("p", { class: " " }, [
+                        item.Coin
+                    ])
+                ]),
+                m("td", { class: " " }, [
+                    item.ViaStr
+                ]),
+                m("td", { class: " " }, [
+                    item.Qty
+                ]),
+                m("td", { class: "" }, [
+                    item.AtStr
+                ])
+            ])
+        })
+    },
     getContent: function () {
         if (window.isMobile) {
-            return null
+            let colgroup = m('colgroup', {}, [
+                m('col', { name: "pub-table-1", width: '25%' }),
+                m('col', { name: "pub-table-2", width: '25%' }),
+                m('col', { name: "pub-table-3", width: '25%' }),
+                m('col', { name: "pub-table-4", width: '25%' }),
+            ])
+            return m('div', { class: " table-container-m" }, [
+
+                m('div', { class: "pub-table-head-box-m", }, [
+                    m("ul", { class: "ul is-hoverable ", cellpadding: 0, cellspacing: 0 }, [
+                        colgroup,
+                        m("div", { class: "" }, [
+                            obj.getTheadItem_m()
+                        ])
+                    ]),
+                ]),
+                m('div', { class: "pub-table-body-box-m", }, [
+                    m("table", { class: "table is-hoverable ", cellpadding: 0, cellspacing: 0 }, [
+                        colgroup,
+                        obj.getListItem_m()
+                    ])
+                ]),
+            ])
         } else {
             let colgroup = m('colgroup', {}, [
                 m('col', { name: "pub-table-1", width: '25%' }),

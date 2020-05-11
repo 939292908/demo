@@ -152,9 +152,80 @@ let obj = {
             ])
         })
     },
+
+    getTheadItem_m: function () {
+        return this.theadList.map(function (item, i) {
+            return m("li", { key: "historyOrdtHeadItem" + i, class: "mobile-li"+item.class }, [
+                item.title
+            ])
+        })
+    },
+    getListItem_m: function () {
+        return this.list.map(function (item, i) {
+            return m("tr", { key: "historyTrdTableListItem" + i, class: "flex-comm" }, [
+                
+                m("td", { class: "" }, [
+                    m("p", { class: " " }, [
+                        item.displaySym
+                    ])
+                ]),
+                m("td", { class: " " + utils.getColorStr(item.Dir, 'font') }, [
+                    item.DirStr
+                ]),
+                m("td", { class: " " }, [
+                    item.Prz
+                ]),
+                m("td", { class: " " }, [
+                    item.Sz
+                ]),
+                m("td", { class: " " }, [
+                    item.PnlCls
+                ]),
+                m("td", { class: " " }, [
+                    item.Fee
+                ]),
+                m("td", { class: "" }, [
+                    item.AtStr
+                ]),
+                m("td",{class:"cursor-pointer"+(" historyTrdTableListItemCopy"+i), "data-clipboard-text": item.PId, onclick: function(e){
+                    window.$copy(".historyTrdTableListItemCopy"+i)
+                }},[
+                    item.PId.substr(-4),
+                    ' ',
+                    m("i",{class:"iconfont iconcopy"}),
+                ]),
+            ])
+        })
+    },
     getContent: function () {
         if (window.isMobile) {
-            return null
+            //移动端列表
+            let colgroup = m('colgroup', {}, [
+                m('col', { name: "pub-table-1", width: 160 }),
+                m('col', { name: "pub-table-2", width: 100 }),
+                m('col', { name: "pub-table-3", width: 100 }),
+                m('col', { name: "pub-table-4", width: 100 }),
+                m('col', { name: "pub-table-5", width: 100 }),
+                m('col', { name: "pub-table-6", width: 100 }),
+                m('col', { name: "pub-table-7", width: 150 }),
+                m('col', { name: "pub-table-8", width: 80 }),
+            ])
+            return m('div', { class: " table-container-m" }, [
+                m('div', { class: "pub-table-head-box-m", }, [
+                    m("ul", { class: "ul is-hoverable ", cellpadding: 0, cellspacing: 0 }, [
+                        colgroup,
+                        m("div", { class: "" }, [
+                            obj.getTheadItem_m()
+                        ])
+                    ]),
+                ]),
+                m('div', { class: "pub-table-body-box-m", }, [
+                    m("table", { class: "table is-hoverable ", cellpadding: 0, cellspacing: 0 }, [
+                        colgroup,
+                        obj.getListItem_m()
+                    ])
+                ]),
+            ])
         } else {
             let colgroup = m('colgroup', {}, [
                 m('col', { name: "pub-table-1", width: 160 }),

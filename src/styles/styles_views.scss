@@ -583,6 +583,65 @@ hr {
 // 杠杠调整 end
 
 
+//移动端列表 start
+.headerBack{
+    width:100%;
+    height: 40px;
+}
+.headerBack-two{
+    width:100%;
+    height: 75px;
+}
+
+.mobile-li{
+    padding: 0.53em 5px;
+}
+
+.flex-comm{
+    display: flex;
+    flex-direction: column;
+    min-width:150px;
+
+    td{
+        overflow:hidden;
+        text-overflow:ellipsis;
+        white-space: nowrap;
+    }
+}
+.table-container-m{
+    // @extend %side-pa;
+    display: flex;
+    justify-content: center;
+    width:100%;
+
+    .pub-table-head-box-m{
+        // width: 30%;
+        overflow-x: auto;
+        overflow-y: auto;
+
+        .ul{
+            // width: 100%;
+            padding-top: 5px;
+
+        }
+    }
+
+    .pub-table-body-box-m{
+        width: 70%;
+        overflow-x: auto;
+        overflow-y: hidden;
+        .table{
+            display: flex;
+            justify-content: start;
+
+            
+        }
+    }
+}
+
+
+//移动端列表 end
+
 // pc端列表 start
 .pub-trade-list {
     @extend %side-pa;
@@ -890,6 +949,14 @@ hr {
     transition: all .2s;
     overflow: auto;
 }
+
+//新增k线顶部样式 start
+.conent-div-top{
+    height:7%;
+    width:100%;
+}
+//新增k线顶部样式 end
+
 
 .pub-m-kline-box.open {
     transform: translateX(0);

@@ -19,7 +19,8 @@ import dish from './market/dish'
 import symSelect from './market/symSelect'
 import selectPos from './trade/selectPos'
 
-
+//引入k线
+import kLine from "./market/kline"
 
 let obj = {
   oldSubArr: [],
@@ -337,7 +338,7 @@ export default {
     view: function(vnode) {
         return m("div",{class: ""}, [
           m('div', {class: 'pub-m-kline-box has-background-white '+(obj.klineOpen?' open':'')}, [
-            m("nav",{class:"pub-layout-m-header is-fixed-top navbar is-transparent", role:"navigation", "aria-label":"main navigation"},[
+            m("nav",{class:"pub-layout-m-header is-fixed-top navbar is-transparent ", role:"navigation", "aria-label":"main navigation"},[
               m('div', {class:"navbar-brand is-flex"}, [
                 m('a', {class:"navbar-item", onclick: function(e){
                   obj.klineOpen = false
@@ -346,14 +347,17 @@ export default {
                     m('i', {class:"iconfont iconarrow-left"}),
                   ]),
                 ]),
-                m('.spacer'),
-                m('div', {}, [
-                  'k'
-                ]),
-                m('.spacer'),
+                // m('.spacer'),
+                // m('div', {}, [
+                //   'k'
+                // ]),
+                // m('.spacer'),
                 
               ]),
             ]),
+            //右进k线
+            m("div",{class:"headerBack"}),
+            m(kLine,{class:""}),
           ]),
           m("nav",{class:"pub-layout-m-header is-fixed-top navbar is-transparent", role:"navigation", "aria-label":"main navigation"},[
             m('div', {class:"navbar-brand is-flex"}, [
@@ -389,13 +393,13 @@ export default {
                     '合约记录'
                   ]),
                   m("div",{class:"navbar-dropdown"},[
-                    m("a",{class:"navbar-item", onclick: this.signOut},[
+                    m("a",{class:"navbar-item", onclick: this.signOut,href:"/#!/delegation"},[
                       '历史委托'
                     ]),
-                    m("a",{class:"navbar-item", onclick: this.signOut},[
+                    m("a",{class:"navbar-item", onclick: this.signOut,href:"/#!/deal"},[
                       '历史成交'
                     ]),
-                    m("a",{class:"navbar-item", onclick: this.signOut},[
+                    m("a",{class:"navbar-item", onclick: this.signOut,href:"/#!/contractbill"},[
                       '合约账单'
                     ])
                   ])
