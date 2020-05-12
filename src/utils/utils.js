@@ -102,7 +102,7 @@ utils.getSymDisplayName = function(assetD, Sym){
   if(ass){
     if (ass.TrdCls == 3) {
         if((ass.Flag&1) == 1){
-            return ass.ToC + ' 永续'
+            return gDI18n.$t('10002', {value: ass.ToC})//ass.ToC + ' 永续'
         }else{
             return ass.ToC + '/' + ass.SettleCoin + ' 永续'
         }

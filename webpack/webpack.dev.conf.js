@@ -4,8 +4,6 @@ const path = require('path');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const CopyPlugin = require('copy-webpack-plugin');
-const UglifyjsPlugin = require('uglifyjs-webpack-plugin');
-
 
 const config = {
     mode: 'development',
@@ -88,7 +86,7 @@ const config = {
         ]),
         new webpack.DefinePlugin({
             'process.env.BUILD_ENV': JSON.stringify(process.env.BUILD_ENV)
-        }),
+        })
     ]
 };
 

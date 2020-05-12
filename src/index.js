@@ -16,6 +16,11 @@ import config from './config'
 window.$config = config
 //////////////////////////////////////////////////////////////////////
 
+// 多语言模块 start
+import di18n from './languages/dI18n'
+window.gDI18n = new di18n()
+// 多语言模块 end
+
 import Mkt from "./models/Mkt"
 import rt_conf from "./reqConf/rt"
 if (true) {

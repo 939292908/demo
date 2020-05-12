@@ -107,7 +107,7 @@ let header = {
           m('a', {class:"navbar-item"+(window.gMkt.CtxPlaying.pageTradeStatus == 1 ?' has-text-primary':''), onclick:function(){
             header.setTradeStatus(1)
           }}, [
-            '合约交易',
+            gDI18n.$t('10001')//'合约交易',
           ]),
           // m('a', {class:"navbar-item"+(window.gMkt.CtxPlaying.pageTradeStatus == 2 ?' has-text-primary':''), onclick:function(){
           //   header.setTradeStatus(2)
@@ -128,6 +128,16 @@ let header = {
     if(type == 0){
       return m("div",{class:"navbar-menu"},[
         m("div",{class:"navbar-end"},[
+          m("div",{class:"navbar-item has-dropdown is-hoverable"},[
+            m("a",{class:"navbar-link"},[
+              '简体中文'
+            ]),
+            m("div",{class:"navbar-dropdown"},[
+              m("a",{class:"navbar-item", onclick: this.signOut},[
+                'English'
+              ])
+            ])
+          ]),
           header.getLoginDom()
         ])
       ])
