@@ -128,16 +128,7 @@ let header = {
     if(type == 0){
       return m("div",{class:"navbar-menu"},[
         m("div",{class:"navbar-end"},[
-          m("div",{class:"navbar-item has-dropdown is-hoverable"},[
-            m("a",{class:"navbar-link"},[
-              '简体中文'
-            ]),
-            m("div",{class:"navbar-dropdown"},[
-              m("a",{class:"navbar-item", onclick: this.signOut},[
-                'English'
-              ])
-            ])
-          ]),
+          header.getChangeLangDom(),
           header.getLoginDom()
         ])
       ])
@@ -196,6 +187,38 @@ let header = {
   customMenu: function(){
     
   },
+  getChangeLangDom: function(){
+    return m("div",{class:"navbar-item has-dropdown is-hoverable"},[
+      m("a",{class:"navbar-link"},[
+        gDI18n.langList[gDI18n.locale].language
+      ]),
+      m("div",{class:"navbar-dropdown"},[
+        header.getChangeLangList()
+      ])
+    ])
+  },
+  getChangeLangList: function(){
+    let langList = []
+    for(let key in gDI18n.langList){
+      let item = gDI18n.langList[key]
+      if(item.open){
+        langList.push(item)
+      }
+    }
+
+    return langList.map(function(item,i){
+        return m("a",{key: "ChangeLangListItem"+i+item, class:"navbar-item"+(item.key == gDI18n.locale?' has-text-primary':''), onclick: function(){
+          header.setLang(item.key)
+        }},[
+          item.language
+        ])
+    })
+  },
+  setLang: function(param){
+    gDI18n.setLocale(param, arg => {
+      console.log('change lang suc', arg)
+    })
+  }
 }
 import headerLogo from '../../../tplibs/img/header-logo.png'
 import login from './userCenter/login'
