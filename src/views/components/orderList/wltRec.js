@@ -1,6 +1,7 @@
 var m = require("mithril")
 let obj = {
     list: [],
+    setType : false,
     theadList: [
         {
             title: '币种',
@@ -15,6 +16,55 @@ let obj = {
             title: '时间',
             class: ""
         }
+    ],
+    type:[
+        {
+            name:"全部"
+        },
+        {
+            name:"强制平仓"
+        },
+        {
+            name:"自动减仓"
+        },
+        {
+            name:"交割结算"
+        },
+        {
+            name:"平仓盈亏"
+        },
+        {
+            name:"手续费"
+        },
+        {
+            name:"账户划入"
+        },
+        {
+            name:"账户划出"
+        },
+        {
+            name:"资金费用"
+        },
+        {
+            name:"合约赠金"
+        },
+    ],
+    biName : [
+        {
+            name:"全部"
+        },
+        {
+            name:"USDT"
+        },
+        {
+            name:"BTC"
+        },
+        {
+            name:"ETH"
+        },
+        {
+            name:"UT"
+        },
     ],
     //初始化全局广播
     initEVBUS: function () {
@@ -116,32 +166,94 @@ let obj = {
     //移动端列表
 
     getContentList: function () {
-        return this.list.map(function (item, i) {
-            return m("div",{ key: "historyOrdtHeadItem" + i, class: "mobile-list "},[
-                //顶部排列
-                m("div",{class : "mobile-div"},[
-                    item.Coin,
-                    m("span",{class : "mobile-font"},[
-                       item.ViaStr 
-                    ]),
+        return m("div",{class : "delegation-list"},[
+            m("div",{class : "delegation-list-header"},[
+                m('a', {class:"",href:"/#!/future"}, [
+                    m('span', {class:"icon is-medium", }, [
+                    m('i', {class:"iconfont iconarrow-left"}),
+                    ]), 
                 ]),
-                //底部排列
-                m("div",{class : "theadList-profit-loss" ,style : "font-size: 10px"},[
-                    m("div",{class  : "theadList-profit-loss-p1"},[
-                        "金额：" ,
-                        m("p",{class : "font-color-2"},[
-                            item.Qty
+                m("p",{class : "delegation-list-phistory"},[
+                    "合约账单"
+                ]),
+                m('a', {class:"icon is-medium transform-for-icon",onclick: function(){
+                    obj.setType = true
+                }}, [
+                    m('i', {class:"iconfont icontoolbar-side"}),
+                ]),
+            ]),
+            //搜索框
+            obj.setType ?m("div",{class : "search-bar"},[
+                m("div",{class : "search-bar-header"},[
+                    m("div",{class : "search-gmex"},[
+                        "Gmex"
+                    ]),
+                    m("button", {class: "delete", "aria-label": "close",onclick: function(){
+                        obj.setType = false
+                    }}),
+                ]),
+                m("div",{class : "search-bi-name"},[
+                    m("p",{class : "search-bi-name-p"},[
+                        "币种名称"
+                    ]),
+                    m("div",{class : "search-k-d select is-small",},[
+                        m("select",{class : "select-sty",style:"select",id:"selectId"},[
+                            obj.biName.map(function (item,i){
+                                return m("option",{class : "option-list"},[
+                                    item.name
+                                ])
+                            })
                         ])
                     ]),
-                    m("div",{class  : "theadList-time"},[
-                        "时间：" ,
-                        m("p",{class : "font-color"},[
-                            item.AtStr
-                        ])
+                ]),
+                m("div",{class : "search-bi-name"},[
+                    m("p",{class : "search-bi-name-p"},[
+                        "类型"
+                    ]),
+                    m("div",{class : "search-k-d"},[
+                        obj.type.map(function (item,i){
+                            return m("a",{class : "button is-primary is-outlined is-small",},[
+                                item.name
+                            ])
+                        })
                     ]),
                 ]),
-            ])
-        })
+                m("div",{class : "reset-complete"},[
+                    m("a",{class : "reset-button button is-primary is-outlined is-small"},[
+                        "重置"
+                    ]),
+                    m("a",{class : "reset-button button is-primary is-outlined is-small",},[
+                        "完成"
+                    ]),
+                ])
+            ]):"",      
+            this.list.map(function (item, i) {
+                return m("div",{ key: "historyOrdtHeadItem" + i, class: "mobile-list "},[
+                    //顶部排列
+                    m("div",{class : "mobile-div"},[
+                        item.Coin,
+                        m("span",{class : "mobile-font"},[
+                        item.ViaStr 
+                        ]),
+                    ]),
+                    //底部排列
+                    m("div",{class : "theadList-profit-loss" ,style : "font-size: 10px"},[
+                        m("div",{class  : "theadList-profit-loss-p1"},[
+                            "金额：" ,
+                            m("p",{class : "font-color-2"},[
+                                item.Qty
+                            ])
+                        ]),
+                        m("div",{class  : "theadList-time"},[
+                            "时间：" ,
+                            m("p",{class : "font-color"},[
+                                item.AtStr
+                            ])
+                        ]),
+                    ]),
+                ])
+            })
+        ])
     },
     getContent: function () {
         if (window.isMobile) {

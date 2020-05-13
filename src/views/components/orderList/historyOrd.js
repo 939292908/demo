@@ -3,21 +3,48 @@ var m = require("mithril")
 let obj = {
     posList: [],
     setType : false,
+    contract:[],
+    purchase: [],
+    stateType: [],
     biName : [
         {
             name:"全部"
         },
         {
-            name:"USDT"
+            name:"BTC/USDT永续"
         },
         {
-            name:"BTC"
+            name:"ETH/USDT永续"
         },
         {
-            name:"ETH"
+            name:"XRP/USDT永续"
         },
         {
-            name:"UT"
+            name:"EOS/USDT永续"
+        },
+        {
+            name:"LTC/USDT永续"
+        },
+        {
+            name:"ETC/USDT永续"
+        },
+        {
+            name:"BCH/USDT永续"
+        },
+        {
+            name:"BTC永续"
+        },
+        {
+            name:"ETH永续"
+        },
+        {
+            name:"BTC 季度0626"
+        },
+        {
+            name:"ETH 季度0626"
+        },
+        {
+            name:"BTC/UT永续"
         },
     ],
     buySell:[
@@ -28,7 +55,40 @@ let obj = {
             name:"买入"
         },
         {
-            name:"卖出"
+            name:"买入强平"
+        },
+        {
+            name:"卖出强平"
+        },
+        {
+            name:"买入开多"
+        },
+        {
+            name:"卖出开空"
+        },
+        {
+            name:"买入平空"
+        },
+        {
+            name:"卖出平多"
+        },
+        {
+            name:"买入强制平空"
+        },
+        {
+            name:"卖出强制平多"
+        },
+        {
+            name:"买入ADL平空"
+        },
+        {
+            name:"卖出ADL平多"
+        },
+        {
+            name:"买入平空并开多"
+        },
+        {
+            name:"卖出平多并开空"
         },
     ],
     state:[
@@ -302,17 +362,31 @@ let obj = {
     getOptions:function (){
         let selectId = document.getElementById("selectId");
         let value = selectId.options[selectId.selectedIndex].innerHTML
-        console.log(value,1111111111111)
+        obj.contract = value
+        console.log(obj.contract,1111111111111)
     },
     getOptions2:function(){
         let selectId = document.getElementById("selectId2");
         let value2 = selectId.options[selectId.selectedIndex].innerHTML
-        console.log(value2,1111111111111)
+        
+        obj.purchase = value2
+        console.log(obj.purchase,22222222222)
+    },
+    getStateSelect:function(){
+        console.log(this.posList,888888888888888888)
+        let posList=[]
+        for(let i=0;i<this.posList.length;i++){
+            if(this.posList[i].FeeCoin == obj.contract){
+                posList.push(this.posList[i])
+            }
+        }
+        this.posList = posList
+        console.log(posList,999999999999999)
+        console.log(this.posList,777777777777777)
     },
     //移动端历史成交列表
     getMobileList: function () {
         let qs = require('qs');
-        
         return m("div",{class : "delegation-list"},[
                 m("div",{class : "delegation-list-header"},[
                     m('a', {class:"",href:"/#!/future"}, [
@@ -346,7 +420,7 @@ let obj = {
                         m("div",{class : "search-k-d select is-small",onchange:function(){
                             obj.getOptions()
                         }},[
-                            m("select",{class : "select-sty",style:"select",id:"selectId"},[
+                            m("select",{class : "select-sty",style:"select",id:"selectId",},[
                                 obj.biName.map(function (item,i){
                                     return m("option",{class : "option-list"},[
                                         item.name
@@ -377,7 +451,10 @@ let obj = {
                         ]),
                         m("div",{class : "search-k-d"},[
                             obj.state.map(function (item,i){
-                                return m("a",{class : "button is-primary is-outlined is-small"},[
+                                return m("a",{class : "button is-primary is-outlined is-small",onclick:function(i){
+                                    obj.stateType[0] = item.name
+                                    console.log(obj.stateType,66666666666666)
+                                }},[
                                     item.name
                                 ])
                             })
@@ -387,7 +464,9 @@ let obj = {
                         m("a",{class : "reset-button button is-primary is-outlined is-small"},[
                             "重置"
                         ]),
-                        m("a",{class : "reset-button button is-primary is-outlined is-small"},[
+                        m("a",{class : "reset-button button is-primary is-outlined is-small",onclick:function(){
+                            obj.getStateSelect()
+                        }},[
                             "完成"
                         ]),
                     ])
