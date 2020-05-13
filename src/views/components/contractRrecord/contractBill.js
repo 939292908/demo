@@ -16,7 +16,7 @@ export default {
         return m("div",{class:""},[
           m(publicHeader),
           m("div",{class:"headerBack-two"}),
-          m("div",{class:"columns"},[
+          m("div",{class:"columns",style: "padding :75px 25px 10px 25px"},[
             m(wltRec)
           ])
         ])

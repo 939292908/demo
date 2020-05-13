@@ -10,6 +10,7 @@ import main from '../views/main'
 import delegation from '../views/components/contractRrecord/historicalDelegation'
 import deal from '../views/components/contractRrecord/historicalDeal'
 import contractbill from '../views/components/contractRrecord/contractBill'
+import details from '../views/components/contractRrecord/details'
 
 switch(0){
     case 0:
@@ -22,6 +23,11 @@ switch(0){
             "/delegation": {
                 render: function (vnode){
                     return m(delegation,vnode.attrs)
+                },
+            },
+            "/details:item":{
+                render:function(vnode){
+                    return m(details,vnode.attrs)
                 }
             },
             "/deal": {

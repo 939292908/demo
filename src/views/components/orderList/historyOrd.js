@@ -2,6 +2,49 @@ var m = require("mithril")
 
 let obj = {
     posList: [],
+    setType : false,
+    biName : [
+        {
+            name:"全部"
+        },
+        {
+            name:"USDT"
+        },
+        {
+            name:"BTC"
+        },
+        {
+            name:"ETH"
+        },
+        {
+            name:"UT"
+        },
+    ],
+    buySell:[
+        {
+            name:"全部"
+        },
+        {
+            name:"买入"
+        },
+        {
+            name:"卖出"
+        },
+    ],
+    state:[
+        {
+            name:"全部",
+            id:0
+        },
+        {
+            name:"成交",
+            id:1
+        },
+        {
+            name:"撤单",
+            id:2
+        },
+    ],
     theadList: [
         {
             title: '合约',
@@ -255,71 +298,216 @@ let obj = {
             ])
         })
     },
-    //移动端
-    getTheadList_m: function () {
-        return this.theadList.map(function (item, i) {
-            return m("li", { key: "historyOrdtHeadItem" + i, class: "mobile-li" + item.class }, [
-                item.title
-            ])
-        })
+    //获取select选择框内容
+    getOptions:function (){
+        let selectId = document.getElementById("selectId");
+        let value = selectId.options[selectId.selectedIndex].innerHTML
+        console.log(value,1111111111111)
     },
-    getPosList_m: function () {
-        return this.posList.map(function (item, i) {
-            return m("tr", { key: "historyOrdTableListItem" + i, class: "flex-comm" }, [
-                m("td", { class: "" }, [
-                    utils.getSymDisplayName(window.gMkt.AssetD, item.Sym)
-                ]),
-                m("td", { class: "" }, [
-                    item.displayLever
-                ]),
-                m("td", { class: " " + utils.getColorStr(item.Dir, 'font')}, [
-                    item.DirStr
-                ]),
-                m("td", { class: "" }, [
-                    item.OTypeStr
-                ]),
-                m("td", { class: "" }, [
-                    item.StatusStr
-                ]),
-                m("td", { class: "" }, [
-                    item.Prz
-                ]),
-                m("td", { class: "" }, [
-                    item.Qty
-                ]),
-                m("td", { class: "" }, [
-                    item.PrzF
-                ]),
-                m("td", { class: "" }, [
-                    item.QtyF
-                ]),
-                m("td", { class: "" }, [
-                    item.PnlCls
-                ]),
-                m("td", { class: "" }, [
-                    item.Fee,
-                    ' ',
-                    item.FeeCoin
-                ]),
-                m("td", { class: "" }, [
-                    item.cond
-                ]),
-                m("td", { class: "" }, [
-                    item.AtStr
-                ]),
-                m("td", { class: "" }, [
-                    item.OrdFromStr
-                ]),
-                m("td",{class:"cursor-pointer"+(" historyOrdTableListItemCopy"+i), "data-clipboard-text": item.PId, onclick: function(e){
-                    window.$copy(".historyOrdTableListItemCopy"+i)
-                }},[
-                    item.PId.substr(-4),
-                    ' ',
-                    m("i",{class:"iconfont iconcopy"}),
-                ]),
-            ])
-        })
+    getOptions2:function(){
+        let selectId = document.getElementById("selectId2");
+        let value2 = selectId.options[selectId.selectedIndex].innerHTML
+        console.log(value2,1111111111111)
     },
+    //移动端历史成交列表
+    getMobileList: function () {
+        let qs = require('qs');
+        
+        return m("div",{class : "delegation-list"},[
+                m("div",{class : "delegation-list-header"},[
+                    m('a', {class:"",href:"/#!/future"}, [
+                        m('span', {class:"icon is-medium", }, [
+                        m('i', {class:"iconfont iconarrow-left"}),
+                        ]), 
+                    ]),
+                    m("p",{class : "delegation-list-phistory"},[
+                        "历史委托"
+                    ]),
+                    m('a', {class:"icon is-medium transform-for-icon",onclick: function(){
+                        obj.setType = true
+                    }}, [
+                        m('i', {class:"iconfont icontoolbar-side"}),
+                    ]),
+                ]),
+                //搜索框
+                obj.setType ?m("div",{class : "search-bar"},[
+                    m("div",{class : "search-bar-header"},[
+                        m("div",{class : "search-gmex"},[
+                            "Gmex"
+                        ]),
+                        m("button", {class: "delete", "aria-label": "close",onclick: function(){
+                            obj.setType = false
+                        }}),
+                    ]),
+                    m("div",{class : "search-bi-name"},[
+                        m("p",{class : "search-bi-name-p"},[
+                            "合约名称"
+                        ]),
+                        m("div",{class : "search-k-d select is-small",onchange:function(){
+                            obj.getOptions()
+                        }},[
+                            m("select",{class : "select-sty",style:"select",id:"selectId"},[
+                                obj.biName.map(function (item,i){
+                                    return m("option",{class : "option-list"},[
+                                        item.name
+                                    ])
+                                })
+                            ])
+                        ]),
+                    ]),
+                    m("div",{class : "search-bi-name"},[
+                        m("p",{class : "search-bi-name-p"},[
+                            "买入/卖出"
+                        ]),
+                        m("div",{class : "search-k-d select is-small",onchange:function(){
+                            obj.getOptions2()
+                        }},[
+                            m("select",{class : "select-sty",style:"select",id:"selectId2"},[
+                                obj.buySell.map(function (item,i){
+                                    return m("option",{class : "option-list"},[
+                                        item.name
+                                    ])
+                                })
+                            ])
+                        ]),
+                    ]),
+                    m("div",{class : "search-bi-name"},[
+                        m("p",{class : "search-bi-name-p"},[
+                            "状态"
+                        ]),
+                        m("div",{class : "search-k-d"},[
+                            obj.state.map(function (item,i){
+                                return m("a",{class : "button is-primary is-outlined is-small"},[
+                                    item.name
+                                ])
+                            })
+                        ]),
+                    ]),
+                    m("div",{class : "reset-complete"},[
+                        m("a",{class : "reset-button button is-primary is-outlined is-small"},[
+                            "重置"
+                        ]),
+                        m("a",{class : "reset-button button is-primary is-outlined is-small"},[
+                            "完成"
+                        ]),
+                    ])
+                ]):"",
+                this.posList.map(function (item, i) {
+                    return m("div",{ key: "historyOrdtHeadItem" + i, class: "mobile-list "},[
+                        //顶部排列
+                        m("div",{class : "theadList-transaction"},[
+                            m("p",{class : "theadList-transaction-p1"},[
+                                utils.getSymDisplayName(window.gMkt.AssetD, item.Sym)
+                            ]),
+                            m("p",{class : "theadList-transaction-p2"},[
+                                item.displayLever
+                            ]),
+                            m("p",{class : "theadList-transaction-p3" + utils.getColorStr(item.Dir, 'font') },[
+                                item.DirStr
+                            ]),
+                            item.StatusStr == "全部成交"?
+                            m('a',{class : 'button is-white is-primary is-inverted theadList-transaction-p4',href:"/#!/details" + qs.stringify(item)},[
+                                item.StatusStr
+                            ])
+                            :
+                            m('a',{class : 'button is-white theadList-transaction-p4',disabled:"disabled"},[
+                                item.StatusStr
+                            ])
+                        ]),
+                        //中间排列
+                        m("div",{class : "theadList-profit-loss" ,style : "font-size: 10px"},[
+                            m("div",{class  : "theadList-profit-loss-p1"},[
+                                "委托价格：" ,
+                                m("p",{class : "font-color"},[
+                                    item.Prz
+        
+                                ])
+                            ]),
+                            m("div",{class  : "theadList-profit-loss-p1"},[
+                                "成交均价：",
+                                m("p",{class : "font-color"},[
+                                    item.PrzF
+                                ])
+                            ]),
+                            m("div",{class  : "theadList-profit-loss-p2"},[
+                                "委托数量：",
+                                m("p",{class : "font-color"},[
+                                    item.Qty
+                                ])
+                            ]),
+                        ]),
+                        //平仓手续
+                        m("div",{class : "theadList-profit-loss" ,style : "font-size: 10px"},[
+                            m("div",{class  : "theadList-profit-loss-p2"},[
+                                "成交数量：" ,
+                                m("p",{class : "font-color"},[
+                                    item.QtyF
+                                ])
+                            ]),
+                            m("div",{class  : "theadList-profit-loss-p2"},[
+                                "平仓盈亏：",
+                                m("p",{class : "font-color"},[
+                                    item.PnlCls
+                                ])
+                            ]),
+                            m("div",{class  : "theadList-profit-loss-p2"},[
+                                "手续费：" + item.FeeCoin,
+                                m("p",{class : "font-color"},[
+                                    item.Fee
+                                ])
+                            ]),
+                        ]),
+        
+                        m("div",{class : "theadList-profit-loss border-lise" ,style : "font-size: 10px"},[
+                            m("div",{class  : "theadList-profit-loss-p2"},[
+                                "委托类型：" ,
+                                m("p",{class : "font-color"},[
+                                    item.OTypeStr
+                                ])
+                            ]),
+                            m("div",{class  : "theadList-profit-loss-p2"},[
+                                "触发条件：",
+                                m("p",{class : "font-color"},[
+                                    item.cond
+                                ])
+                            ]),
+                            m("div",{class  : "theadList-profit-loss-p2"},[
+                                "委托时间：",
+                                m("p",{class : "font-color"},[
+                                    item.AtStr
+                                ])
+                            ]),
+                        ]),
+                        m("div",{class : "theadList-profit-loss" ,style : "font-size: 10px"},[
+                            
+                            m("div",{class  : "theadList-profit-loss-p2"},[
+                                "委托来源：",
+                                m("p",{class : "font-color"},[
+                                    item.OrdFromStr
+                                ])
+                            ]),
+                            m("div",{class  : "theadList-profit-loss-p2"},[
+                                " ",
+                                m("p",{class : "font-color"},[
+                                    " "
+                                ])
+                            ]),
+                            m("div",{class:"cursor-pointer theadList-profit-loss-p2"+(" historyOrdTableListItemCopy"+i), "data-clipboard-text": item.PId, onclick: function(e){
+                                window.$copy(".historyOrdTableListItemCopy"+i)
+                            }},[
+                                "仓位ID：",
+                                m("p",{class : "font-color"},[
+                                    item.PId.substr(-4),
+                                    m("i",{class:"iconfont iconcopy"}),
+                                ])  
+                            ]),
+                        ]),
+                    ])
+                })
+            ])
+        
+    },
+
     subPosNeedSymTick: function () {
         let oldSubList = window.gMkt.CtxPlaying.subList
         let needSub = []
@@ -354,41 +542,7 @@ let obj = {
     },
     getContent: function () {
         if (window.isMobile) {
-
-            //添加移动端列表
-            let colgroup = m('colgroup', {}, [
-                m('col', { name: "pub-table-2", width: 160 }),
-                m('col', { name: "pub-table-3", width: 130 }),
-                m('col', { name: "pub-table-4", width: 80 }),
-                m('col', { name: "pub-table-5", width: 80 }),
-                m('col', { name: "pub-table-5", width: 80 }),
-                m('col', { name: "pub-table-6", width: 100 }),
-                m('col', { name: "pub-table-7", width: 100 }),
-                m('col', { name: "pub-table-8", width: 100 }),
-                m('col', { name: "pub-table-9", width: 100 }),
-                m('col', { name: "pub-table-9", width: 150 }),
-                m('col', { name: "pub-table-9", width: 150 }),
-                m('col', { name: "pub-table-10", width: 150 }),
-                m('col', { name: "pub-table-10", width: 150 }),
-                m('col', { name: "pub-table-9", width: 100 }),
-                m('col', { name: "pub-table-1", width: 100 }),
-            ])
-            return m('div', { class: " table-container-m" }, [
-                m("div",{class:"pub-table-head-box-m"},[
-                    m("ul",{class:"ul is-hoverable"},[
-                        colgroup,
-                        m("div", { class: "" }, [
-                            obj.getTheadList_m()
-                        ])
-                    ])
-                ]),
-                m('div', { class: "pub-table-body-box-m", }, [
-                    m("table", { class: "table is-hoverable ",cellpadding: 0, cellspacing: 0 }, [
-                        colgroup,
-                        obj.getPosList_m()
-                    ])
-                ]),
-            ])
+            return obj.getMobileList()
         } else {
             let colgroup = m('colgroup', {}, [
                 m('col', { name: "pub-table-2", width: 160 }),

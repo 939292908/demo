@@ -584,63 +584,263 @@ hr {
 
 
 //移动端列表 start
-.headerBack{
-    width:100%;
-    height: 40px;
-}
-.headerBack-two{
-    width:100%;
-    height: 75px;
-}
+.delegation-list{
+    .delegation-list-header{
+        display: flex;
+        justify-content: space-between;
+    }
 
-.mobile-li{
-    padding: 0.53em 5px;
-}
-
-.flex-comm{
-    display: flex;
-    flex-direction: column;
-    min-width:150px;
-
-    td{
-        overflow:hidden;
-        text-overflow:ellipsis;
-        white-space: nowrap;
+    .delegation-list-phistory{
+        font-size: 20px;
+        font-weight: 700;
     }
 }
-.table-container-m{
-    // @extend %side-pa;
-    display: flex;
-    justify-content: center;
-    width:100%;
 
-    .pub-table-head-box-m{
-        // width: 30%;
-        overflow-x: auto;
-        overflow-y: auto;
 
-        .ul{
-            // width: 100%;
-            padding-top: 5px;
+.transform-for-icon{
+    transform: rotate(180deg);
+    -ms-transform:rotate(180deg); /* Internet Explorer */
+    -moz-transform:rotate(180deg); /* Firefox */
+    -webkit-transform:rotate(180deg); /* Safari 和 Chrome */
+    -o-transform:rotate(180deg);
+}
 
+.mobile-list{
+    width: 100%;
+    // height: 100px;
+    background-color: white;
+    border:1px solid #dadde030;
+    box-shadow:2px 6px 13px #dadde0;
+    border-radius: 8px;
+    padding:5px 5px;
+    margin-top: 5px;
+
+    .theadList-transaction{
+        display: flex;
+        justify-content:space-around;
+        text-align: left;
+        border-bottom: 1px solid #dadde0e0;
+
+        .theadList-transaction-p2{
+            font-size: small;
+            color: rgb(0, 209, 178);
+            // text-align: left;
+            line-height: 28px;
+        }
+
+        .theadList-transaction-p3{
+            font-size: small;
+            line-height: 28px;
+        }
+        .theadList-transaction-p4{
+            font-size: small;
+            line-height: 28px;
         }
     }
 
-    .pub-table-body-box-m{
-        width: 70%;
-        overflow-x: auto;
-        overflow-y: hidden;
-        .table{
-            display: flex;
-            justify-content: start;
+    .theadList-profit-loss{
+        display: flex;
+        justify-content:start;
+        text-align: left;
+        margin-top: 10px;
 
-            
+        .theadList-profit-loss-p1,
+        .theadList-profit-loss-p2{
+            width: 50%;
+            padding: 0 10px;
+            color: #3c3c3c7a;
+        }
+
+        .font-color{
+            color: #000;
+        }
+
+        .font-color-2{
+            color: rgb(0, 209, 178);
         }
     }
-}
 
+    .border-lise{
+        border-bottom: 1px solid #dadde0e0;
+    }
+
+
+    .mobile-div{
+        padding-left: 9px;
+        font-size: 18px;
+        color: #000;
+    }
+
+    .mobile-font{
+        display: inline-block;
+        padding-left: 5px;
+        font-size: 10px;
+        color: #000;
+    }
+
+    .theadList-time{
+        width: 50%;
+        text-align: right;
+    }
+}
 
 //移动端列表 end
+
+//移动端详情 start
+.details-header{
+    padding: 0 20px;
+
+    .details{
+        position: relative;
+
+        .navbar-item{
+            display: inline-block;
+            padding: 0.75rem 0;
+        }
+
+        .details-conent{
+            position: absolute;
+            top: 0.75rem;
+            left: 39%;
+            text-align: center;
+            font-size: 20px;
+            font-weight: 700;
+        }
+    }
+
+    //中间内容
+    .details-body{
+
+        .details-body-list{
+            padding-bottom: 14px;
+            border-bottom: 1px solid #0000002e;
+            display: flex;
+            justify-content: space-between;
+
+            .details-body-title{
+                font-size: 18px;
+                font-weight: 700;
+            }
+
+            .details-body-title2{
+                font-size: small;
+                color: rgb(0, 209, 178);
+                line-height: 27px;
+            }
+
+            .details-body-title3{
+                color: rgb(0, 209, 178);
+            }
+        } 
+
+        .font-default-color{
+            color: #ef2e55 !important;
+        }
+        .font-default-color2{
+            color: #48c774 !important;
+        }
+        .details-body-conent{
+            padding: 10px 0;
+            display: flex;
+            justify-content: space-between;
+
+            .font-div{
+                font-size: 14px;
+                color: #0000005c;
+                line-height: 26px;
+
+                .font-p{
+                    font-size: 14px;
+                    color: #000;
+                }
+
+                .p-only{
+                    text-align: right;
+                }
+            }
+
+            .font-div-bottom{
+                color: #000;
+                font-size: 14px;
+            }
+        }
+
+        .bottom-sty{
+            padding-top: 20px;
+            font-size: 18rx;
+            font-weight: 700;
+
+        }
+    }
+}
+
+
+//移动端详情 end
+//移动端搜索框
+.search-bar{
+    width: 100%;
+    background-color:#fff;
+    z-index: 10;
+    // height: 200px;
+    border-bottom-left-radius:8px ;
+    border-bottom-right-radius:8px ;
+    box-shadow: 0px 2px 4px #0000005e;
+    position: fixed;
+    top: 0;
+    left: 0;
+    padding:20px 25px;
+}
+    .search-bar-header{
+        display: flex;
+        justify-content: space-between;
+    }
+    .search-gmex{
+        font-size: 25px;
+        color:#000;
+        font-weight: 700;
+        line-height: 15px;
+    }
+    
+
+    .search-bi-name{
+        padding-top: 20px;
+    }    
+    .search-bi-name-p{
+        font-size: 14px;
+        font-weight: 700;
+        color:#000;
+        padding-bottom: 20px;
+    }
+
+    .search-k-d{
+        width: 100%;
+    }
+    .select-sty{
+        width: 100%;
+        // height: 40px;
+        font-size: 13px !important;
+        background-color: #00000008;
+    }
+    .option-list{
+        font-size: 13px !important;
+    }
+
+    .button.is-small{
+        border-radius: 5px;
+        display: inline-block;
+        margin-left: 10px;
+    }
+
+    //重置完成按钮
+    .reset-complete{
+        width: 100%;
+        display: flex;
+        justify-content: space-around;
+        padding-top: 20px;
+    }
+    .reset-button{
+        width: 35%;
+    }
 
 // pc端列表 start
 .pub-trade-list {
