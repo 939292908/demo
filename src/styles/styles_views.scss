@@ -595,6 +595,14 @@ hr {
         font-weight: 700;
     }
 }
+.text-none{
+    text-align: center;
+    font-size: 15px;
+    display: flex;
+    flex-direction: column;
+    padding-top: 45%;
+    color: #0000005c;
+}
 
 
 .transform-for-icon{
@@ -784,7 +792,7 @@ hr {
     // height: 200px;
     border-bottom-left-radius:8px ;
     border-bottom-right-radius:8px ;
-    box-shadow: 0px 2px 4px #0000005e;
+    box-shadow: 0px 5px 20px #000000a3;
     position: fixed;
     top: 0;
     left: 0;

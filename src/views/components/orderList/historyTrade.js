@@ -155,7 +155,8 @@ let obj = {
 
     //
     getMobileHistoryList: function (){
-        return this.list.map(function (item, i) {
+        return this.list.length !=0?
+        this.list.map(function (item, i) {
             return m("div",{ key: "historyOrdtHeadItem" + i, class: "mobile-list "},[
                 //顶部排列
                 m("div",{class : "theadList-transaction"},[
@@ -221,7 +222,12 @@ let obj = {
                     ]),
                 ]),
             ])
-        })
+        }):m("div",{class : "text-none"},[
+            m("i",{class : "iconfont icon-box" ,style:"font-size: 60px",},[
+                
+            ]),
+            "暂无历史成交记录"
+        ])
     },
     getContent: function () {
         if (window.isMobile) {

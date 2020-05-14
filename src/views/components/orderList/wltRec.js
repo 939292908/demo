@@ -226,7 +226,8 @@ let obj = {
                         "完成"
                     ]),
                 ])
-            ]):"",      
+            ]):"",  
+            this.list.length !=0?    
             this.list.map(function (item, i) {
                 return m("div",{ key: "historyOrdtHeadItem" + i, class: "mobile-list "},[
                     //顶部排列
@@ -252,7 +253,12 @@ let obj = {
                         ]),
                     ]),
                 ])
-            })
+            }):m("div",{class : "text-none"},[
+                m("i",{class : "iconfont icon-box" ,style:"font-size: 60px",},[
+                    
+                ]),
+                "暂无合约账单记录"
+            ])
         ])
     },
     getContent: function () {

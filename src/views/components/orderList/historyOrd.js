@@ -358,11 +358,11 @@ let obj = {
             ])
         })
     },
-    //获取select选择框内容
+    //获取select筛选
     getOptions:function (){
         let selectId = document.getElementById("selectId");
-        let value = selectId.options[selectId.selectedIndex].innerHTML
-        obj.contract = value
+        let value = selectId.options[selectId.selectedIndex].innerHTML.replace("/",".")
+        obj.contract = value.slice(0,-2)
         console.log(obj.contract,1111111111111)
     },
     getOptions2:function(){
@@ -376,7 +376,9 @@ let obj = {
         console.log(this.posList,888888888888888888)
         let posList=[]
         for(let i=0;i<this.posList.length;i++){
-            if(this.posList[i].FeeCoin == obj.contract){
+            if(this.posList[i].Sym == obj.contract){
+                posList.push(this.posList[i])
+            } else if(this.posList[i].Sym == ""){
                 posList.push(this.posList[i])
             }
         }
@@ -387,6 +389,7 @@ let obj = {
     //移动端历史成交列表
     getMobileList: function () {
         let qs = require('qs');
+        console.log(this.posList,1111111111111111);
         return m("div",{class : "delegation-list"},[
                 m("div",{class : "delegation-list-header"},[
                     m('a', {class:"",href:"/#!/future"}, [
@@ -452,7 +455,7 @@ let obj = {
                         m("div",{class : "search-k-d"},[
                             obj.state.map(function (item,i){
                                 return m("a",{class : "button is-primary is-outlined is-small",onclick:function(i){
-                                    obj.stateType[0] = item.name
+                                    obj.stateType = item.name
                                     console.log(obj.stateType,66666666666666)
                                 }},[
                                     item.name
@@ -471,7 +474,8 @@ let obj = {
                         ]),
                     ])
                 ]):"",
-                this.posList.map(function (item, i) {
+                
+                this.posList.length !=0 ? this.posList.map(function (item, i) {
                     return m("div",{ key: "historyOrdtHeadItem" + i, class: "mobile-list "},[
                         //顶部排列
                         m("div",{class : "theadList-transaction"},[
@@ -582,7 +586,12 @@ let obj = {
                             ]),
                         ]),
                     ])
-                })
+                }):m("div",{class : "text-none"},[
+                    m("i",{class : "iconfont icon-box" ,style:"font-size: 60px",},[
+                        
+                    ]),
+                    "暂无委托记录"
+                ])
             ])
         
     },
