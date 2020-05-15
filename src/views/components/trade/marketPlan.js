@@ -7,7 +7,7 @@ let obj = {
         Prz: '',        // 委托价格
         Num: '',        // 委托数量
         triggerPrz: '', // 触发价格
-        Lever: 0,       // 杠杠
+        Lever: 0,       // 杠杆
         maxLever: 0,    // 最大杠杆
         stopP: '',      // 止盈价
         stopL: '',       // 止损价
@@ -17,8 +17,8 @@ let obj = {
         PIdForSell: '',
         LeverForBuy: 0,
         LeverForSell: 0,
-        LeverForBuyInputValue: '买 杠杠',
-        LeverForSellInputValue: '卖 杠杠',
+        LeverForBuyInputValue: '买 杠杆',
+        LeverForSellInputValue: '卖 杠杆',
         MIRMyForBuy: 0,
         MIRMyForSell: 0,
         maxLeverForBuy: 0,
@@ -26,7 +26,7 @@ let obj = {
         // 交易模式2相关内容 end
     },
     faceValue: '= 0.0000 USDT',
-    LeverInputValue: '杠杠',
+    LeverInputValue: '杠杆',
     wlt: {},
     MgnNeedForBuy: 0,
     MgnNeedForSell: 0,
@@ -236,15 +236,15 @@ let obj = {
             Prz: '',        // 委托价格
             Num: '',        // 委托数量
             triggerPrz: '', // 触发价格
-            Lever: 0,       // 杠杠
+            Lever: 0,       // 杠杆
             maxLever: 0,    // 最大杠杆
             stopP: '',      // 止盈价
             stopL: '',       // 止损价
             // 交易模式2相关内容 start
             LeverForBuy: 0, 
             LeverForSell: 0,
-            LeverForBuyInputValue: '买 杠杠',
-            LeverForSellInputValue: '卖 杠杠',
+            LeverForBuyInputValue: '买 杠杆',
+            LeverForSellInputValue: '卖 杠杆',
             MIRMyForBuy: 0,
             MIRMyForSell: 0,
             // 交易模式2相关内容 end

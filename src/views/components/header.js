@@ -49,7 +49,7 @@ let header = {
         ]),
         m("div",{class:"navbar-dropdown"},[
           m("a",{class:"navbar-item", onclick: this.signOut},[
-            '退出'
+            gDI18n.$t('10003')//'退出'
           ])
         ])
       ])
@@ -205,7 +205,6 @@ let header = {
         langList.push(item)
       }
     }
-
     return langList.map(function(item,i){
         return m("a",{key: "ChangeLangListItem"+i+item, class:"navbar-item"+(item.key == gDI18n.locale?' has-text-primary':''), onclick: function(){
           header.setLang(item.key)
