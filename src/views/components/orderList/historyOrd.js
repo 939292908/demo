@@ -6,7 +6,18 @@ let obj = {
     contract:[],
     purchase: [],
     stateType: [],
-    biName : [
+    //
+    navDrawerInfo:{
+        Sym: '全部',
+        dir: '全部',
+        status: '全部'
+    },
+    oldNavDrawerInfo:{
+        Sym: '全部',
+        dir: '全部',
+        status: '全部'
+    },
+    contractName : [
         {
             name:"全部"
         },
@@ -47,12 +58,15 @@ let obj = {
             name:"BTC/UT永续"
         },
     ],
-    buySell:[
+    dirStrList:[
         {
             name:"全部"
         },
         {
             name:"买入"
+        },
+        {
+            name:"卖出"
         },
         {
             name:"买入强平"
@@ -91,7 +105,7 @@ let obj = {
             name:"卖出平多并开空"
         },
     ],
-    state:[
+    statusStrList:[
         {
             name:"全部",
             id:0
@@ -280,13 +294,82 @@ let obj = {
                 obj.StopL = obj.StopL ? Number(obj.StopL || 0).toFixed2(PrzMinIncSize) : '--'
 
                 posList.push(obj)
+                
             }
 
         }
         posList.sort(function (a, b) {
             return b.At - a.At
         })
-        this.posList = posList
+        // this.posList = posList
+        //根据 obj.navDrawerInfo筛选this.posList数据
+        if(this.navDrawerInfo.Sym == this.oldNavDrawerInfo.Sym && this.navDrawerInfo.dir == this.oldNavDrawerInfo.dir && this.navDrawerInfo.status == this.oldNavDrawerInfo.status){
+            this.posList = posList
+            console.log(posList,"原始数据2")
+         }else if(this.navDrawerInfo.Sym != this.oldNavDrawerInfo.Sym && this.navDrawerInfo.dir == this.oldNavDrawerInfo.dir && this.navDrawerInfo.status == this.oldNavDrawerInfo.status){
+            let newposList=[]
+            for (let i=0; i<posList.length;i++){
+                if(posList[i].Sym == this.navDrawerInfo.Sym){
+                    newposList.push(posList[i])
+                }   
+            }
+            this.posList = newposList
+            console.log(newposList,"合约名称选择后数据")
+         }else if(this.navDrawerInfo.Sym == this.oldNavDrawerInfo.Sym && this.navDrawerInfo.dir != this.oldNavDrawerInfo.dir && this.navDrawerInfo.status == this.oldNavDrawerInfo.status){
+            let newposList=[]
+            for (let i=0; i<posList.length;i++){
+                if(posList[i].DirStr == this.navDrawerInfo.dir){
+                    newposList.push(posList[i])
+                }   
+            }
+            this.posList = newposList
+            console.log(newposList,"买入卖出选择后数据")
+         }else if(this.navDrawerInfo.Sym == this.oldNavDrawerInfo.Sym && this.navDrawerInfo.dir == this.oldNavDrawerInfo.dir && this.navDrawerInfo.status != this.oldNavDrawerInfo.status){
+            let newposList=[]
+            for (let i=0; i<posList.length;i++){
+                if(posList[i].StatusStr == this.navDrawerInfo.status){
+                    newposList.push(posList[i])
+                }   
+            }
+            this.posList = newposList
+            console.log(newposList,"状态选择后数据")
+         }else if(this.navDrawerInfo.Sym != this.oldNavDrawerInfo.Sym && this.navDrawerInfo.dir != this.oldNavDrawerInfo.dir && this.navDrawerInfo.status == this.oldNavDrawerInfo.status){
+            let newposList=[]
+            for (let i=0; i<posList.length;i++){
+                if(posList[i].Sym == this.navDrawerInfo.Sym && posList[i].DirStr == this.navDrawerInfo.dir){
+                    newposList.push(posList[i])
+                }   
+            }
+            this.posList = newposList
+            console.log(newposList,"名称和买卖选择后数据")
+         }else if(this.navDrawerInfo.Sym != this.oldNavDrawerInfo.Sym && this.navDrawerInfo.dir == this.oldNavDrawerInfo.dir && this.navDrawerInfo.status != this.oldNavDrawerInfo.status){
+            let newposList=[]
+            for (let i=0; i<posList.length;i++){
+                if(posList[i].Sym == this.navDrawerInfo.Sym && posList[i].StatusStr == this.navDrawerInfo.status){
+                    newposList.push(posList[i])
+                }   
+            }
+            this.posList = newposList
+            console.log(newposList,"名称和状态选择后数据")
+         }else if(this.navDrawerInfo.Sym == this.oldNavDrawerInfo.Sym && this.navDrawerInfo.dir != this.oldNavDrawerInfo.dir && this.navDrawerInfo.status != this.oldNavDrawerInfo.status){
+            let newposList=[]
+            for (let i=0; i<posList.length;i++){
+                if(posList[i].DirStr == this.navDrawerInfo.dir && posList[i].StatusStr == this.navDrawerInfo.status){
+                    newposList.push(posList[i])
+                }   
+            }
+            this.posList = newposList
+            console.log(newposList,"买卖和状态选择后数据")
+         }else if(this.navDrawerInfo.Sym != this.oldNavDrawerInfo.Sym && this.navDrawerInfo.dir != this.oldNavDrawerInfo.dir && this.navDrawerInfo.status != this.oldNavDrawerInfo.status){
+            let newposList=[]
+            for (let i=0; i<posList.length;i++){
+                if(posList[i].DirStr == this.navDrawerInfo.dir && posList[i].StatusStr == this.navDrawerInfo.status && posList[i].Sym == this.navDrawerInfo.Sym){
+                    newposList.push(posList[i])
+                }   
+            }
+            this.posList = newposList
+            console.log(newposList,"名称和买卖和状态选择后数据")
+         }
     },
 
     getTheadList: function () {
@@ -361,35 +444,48 @@ let obj = {
     //获取select筛选
     getOptions:function (){
         let selectId = document.getElementById("selectId");
-        let value = selectId.options[selectId.selectedIndex].innerHTML.replace("/",".")
-        obj.contract = value.slice(0,-2)
-        console.log(obj.contract,1111111111111)
+        let value = selectId.options[selectId.selectedIndex].innerHTML
+        if(value.includes('/') && value.includes('永续')){
+            value = value.replace("/",".").slice(0,-2)
+        }else if(value.includes('季度')){
+            value = value.slice(0,-7)
+        }else if(value.includes('永续')){
+            value = value.slice(0,-2)
+        }else {
+            value = value
+        }
+        obj.navDrawerInfo.Sym = value
+        console.log(obj.navDrawerInfo.Sym,"合约名称")
     },
     getOptions2:function(){
         let selectId = document.getElementById("selectId2");
         let value2 = selectId.options[selectId.selectedIndex].innerHTML
-        
-        obj.purchase = value2
-        console.log(obj.purchase,22222222222)
+        obj.navDrawerInfo.dir = value2
     },
-    getStateSelect:function(){
-        console.log(this.posList,888888888888888888)
-        let posList=[]
-        for(let i=0;i<this.posList.length;i++){
-            if(this.posList[i].Sym == obj.contract){
-                posList.push(this.posList[i])
-            } else if(this.posList[i].Sym == ""){
-                posList.push(this.posList[i])
-            }
-        }
-        this.posList = posList
-        console.log(posList,999999999999999)
-        console.log(this.posList,777777777777777)
+    //完成按钮
+    submitNavDrawer:function(){
+        let that = this
+        obj.initObj()
+        setTimeout(function(){
+            that.setType = false
+        },200)
+        console.log(obj.navDrawerInfo,"新状态")
     },
+    //重置按钮
+    resetNavDrawerInfo(){
+        obj.navDrawerInfo.Sym = '全部';
+        obj.navDrawerInfo.dir = '全部';
+        obj.navDrawerInfo.status = '全部';
+        obj.initObj()
+        let selectId = document.getElementById("selectId");
+        let selectId2 = document.getElementById("selectId2");
+        selectId.options.selectedIndex = 0;
+        selectId2.options.selectedIndex = 0;
+    },
+
     //移动端历史成交列表
     getMobileList: function () {
         let qs = require('qs');
-        console.log(this.posList,1111111111111111);
         return m("div",{class : "delegation-list"},[
                 m("div",{class : "delegation-list-header"},[
                     m('a', {class:"",href:"/#!/future"}, [
@@ -424,8 +520,8 @@ let obj = {
                             obj.getOptions()
                         }},[
                             m("select",{class : "select-sty",style:"select",id:"selectId",},[
-                                obj.biName.map(function (item,i){
-                                    return m("option",{class : "option-list"},[
+                                obj.contractName.map(function (item,i){
+                                    return m("option",{class : "option-list",},[
                                         item.name
                                     ])
                                 })
@@ -440,8 +536,8 @@ let obj = {
                             obj.getOptions2()
                         }},[
                             m("select",{class : "select-sty",style:"select",id:"selectId2"},[
-                                obj.buySell.map(function (item,i){
-                                    return m("option",{class : "option-list"},[
+                                obj.dirStrList.map(function (item,i){
+                                    return m("option",{class : "option-list",},[
                                         item.name
                                     ])
                                 })
@@ -453,10 +549,17 @@ let obj = {
                             "状态"
                         ]),
                         m("div",{class : "search-k-d"},[
-                            obj.state.map(function (item,i){
+                            obj.statusStrList.map(function (item,i){
                                 return m("a",{class : "button is-primary is-outlined is-small",onclick:function(i){
-                                    obj.stateType = item.name
-                                    console.log(obj.stateType,66666666666666)
+                                    if(item.name == "成交"){
+                                        obj.navDrawerInfo.status = "全部成交"
+                                    }else if (item.name == "撤单"){
+                                        obj.navDrawerInfo.status = "已撤单"
+                                    }else{
+                                        obj.navDrawerInfo.status = item.name
+                                    }
+                                    
+                                    // console.log(obj.navDrawerInfo.status,"状态")
                                 }},[
                                     item.name
                                 ])
@@ -464,11 +567,13 @@ let obj = {
                         ]),
                     ]),
                     m("div",{class : "reset-complete"},[
-                        m("a",{class : "reset-button button is-primary is-outlined is-small"},[
+                        m("a",{class : "reset-button button is-primary is-outlined is-small",onclick: function (){
+                            obj.resetNavDrawerInfo()
+                        }},[
                             "重置"
                         ]),
                         m("a",{class : "reset-button button is-primary is-outlined is-small",onclick:function(){
-                            obj.getStateSelect()
+                            obj.submitNavDrawer()
                         }},[
                             "完成"
                         ]),
@@ -480,7 +585,7 @@ let obj = {
                         //顶部排列
                         m("div",{class : "theadList-transaction"},[
                             m("p",{class : "theadList-transaction-p1"},[
-                                utils.getSymDisplayName(window.gMkt.AssetD, item.Sym)
+                                utils.getSymDisplayName(window.gMkt.AssetD, item.Sym),
                             ]),
                             m("p",{class : "theadList-transaction-p2"},[
                                 item.displayLever
@@ -671,7 +776,7 @@ let obj = {
 
 export default {
     oninit: function (vnode) {
-
+        
     },
     oncreate: function (vnode) {
         obj.initEVBUS()

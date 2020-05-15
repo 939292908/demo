@@ -2,6 +2,14 @@ var m = require("mithril")
 let obj = {
     list: [],
     setType : false,
+    navCoinInfo:{
+        Coin: '全部',
+        Stat: '全部',
+    },
+    oldNavCoinInfo:{
+        Coin: '全部',
+        Stat: '全部',
+    },
     theadList: [
         {
             title: '币种',
@@ -132,7 +140,40 @@ let obj = {
         list.sort(function (a, b) {
             return b.At - a.At
         })
-        this.list = list
+        // this.list = list
+        //根据 obj.navCoinInfo 筛选this.list数据
+        if(this.navCoinInfo.Coin == this.oldNavCoinInfo.Coin && this.navCoinInfo.Stat == this.oldNavCoinInfo.Stat){
+            this.list = list
+            console.log(list,"原始未改变数据")
+        }else if(this.navCoinInfo.Coin != this.oldNavCoinInfo.Coin && this.navCoinInfo.Stat == this.oldNavCoinInfo.Stat){
+            let newList = []
+            for (let i=0; i<list.length;i++){
+                if(list[i].Coin == this.navCoinInfo.Coin){
+                    newList.push(list[i])
+                }   
+            }
+            this.list = newList
+            console.log(newList,"币种名称选择后数据")
+        }else if(this.navCoinInfo.Coin == this.oldNavCoinInfo.Coin && this.navCoinInfo.Stat != this.oldNavCoinInfo.Stat){
+            let newList = []
+            for (let i=0; i<list.length;i++){
+                if(list[i].ViaStr == this.navCoinInfo.Stat){
+                    newList.push(list[i])
+                }   
+            }
+            this.list = newList
+            console.log(newList,"类型选择后数据")
+        }else if(this.navCoinInfo.Coin != this.oldNavCoinInfo.Coin && this.navCoinInfo.Stat != this.oldNavCoinInfo.Stat){
+            let newList = []
+            for (let i=0; i<list.length;i++){
+                if(list[i].ViaStr == this.navCoinInfo.Stat && list[i].Coin == this.navCoinInfo.Coin){
+                    newList.push(list[i])
+                }   
+            }
+            this.list = newList
+            console.log(newList,"币种名称和类型选择后数据")
+        }
+
     },
     getTheadItem: function () {
         return this.theadList.map(function (item, i) {
@@ -164,6 +205,30 @@ let obj = {
     },
 
     //移动端列表
+    getOptions:function (){
+        let selectId =document.getElementById("selectId")
+        let val = selectId.options[selectId.selectedIndex].innerHTML
+        this.navCoinInfo.Coin = val
+        console.log(val,"币种名称")
+
+    },
+    //重置按钮
+    resetNavDrawerInfo:function(){
+        obj.navCoinInfo.Coin = "全部";
+        obj.navCoinInfo.Stat = "全部";
+        obj.initObj()
+        let selectId = document.getElementById("selectId");
+        selectId.options.selectedIndex = 0;
+    },
+    //提交按钮
+    submitNavDrawer:function(){
+        let that = this
+        obj.initObj()
+        setTimeout(function(){
+            that.setType = false
+        },200)
+        console.log(obj.navCoinInfo,"选择后状态")
+    },
 
     getContentList: function () {
         return m("div",{class : "delegation-list"},[
@@ -196,7 +261,9 @@ let obj = {
                     m("p",{class : "search-bi-name-p"},[
                         "币种名称"
                     ]),
-                    m("div",{class : "search-k-d select is-small",},[
+                    m("div",{class : "search-k-d select is-small",onchange:function(){
+                        obj.getOptions()
+                    }},[
                         m("select",{class : "select-sty",style:"select",id:"selectId"},[
                             obj.biName.map(function (item,i){
                                 return m("option",{class : "option-list"},[
@@ -212,17 +279,24 @@ let obj = {
                     ]),
                     m("div",{class : "search-k-d"},[
                         obj.type.map(function (item,i){
-                            return m("a",{class : "button is-primary is-outlined is-small",},[
+                            return m("a",{class : "button is-primary is-outlined is-small",onclick:function(i){
+                                obj.navCoinInfo.Stat = item.name
+                                console.log(obj.navCoinInfo.Stat,"类型")
+                            }},[
                                 item.name
                             ])
                         })
                     ]),
                 ]),
                 m("div",{class : "reset-complete"},[
-                    m("a",{class : "reset-button button is-primary is-outlined is-small"},[
+                    m("a",{class : "reset-button button is-primary is-outlined is-small", onclick:function(){
+                        obj.resetNavDrawerInfo()
+                    }},[
                         "重置"
                     ]),
-                    m("a",{class : "reset-button button is-primary is-outlined is-small",},[
+                    m("a",{class : "reset-button button is-primary is-outlined is-small",onclick:function (){
+                        obj.submitNavDrawer()
+                    }},[
                         "完成"
                     ]),
                 ])
@@ -257,7 +331,7 @@ let obj = {
                 m("i",{class : "iconfont icon-box" ,style:"font-size: 60px",},[
                     
                 ]),
-                "暂无合约账单记录"
+                "暂无账单记录"
             ])
         ])
     },
