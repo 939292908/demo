@@ -315,7 +315,7 @@ let obj = {
                     m("div",{class : "theadList-profit-loss" ,style : "font-size: 10px"},[
                         m("div",{class  : "theadList-profit-loss-p1"},[
                             "金额：" ,
-                            m("p",{class : "font-color-2"},[
+                            m("p",{class : "" + item.Qty>0?"font-color-3" : "font-color-2"},[
                                 item.Qty
                             ])
                         ]),

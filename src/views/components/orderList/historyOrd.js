@@ -445,7 +445,7 @@ let obj = {
     getOptions:function (){
         let selectId = document.getElementById("selectId");
         let value = selectId.options[selectId.selectedIndex].innerHTML
-        if(value.includes('/') && value.includes('永续')){
+        if(value.includes('/' && '永续')){
             value = value.replace("/",".").slice(0,-2)
         }else if(value.includes('季度')){
             value = value.slice(0,-7)
