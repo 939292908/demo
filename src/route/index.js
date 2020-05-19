@@ -1,6 +1,5 @@
 import m from "mithril";
 
-let nodeApp = document.getElementById("app");
 
 
 
@@ -12,35 +11,31 @@ import deal from '../views/components/contractRrecord/historicalDeal'
 import contractbill from '../views/components/contractRrecord/contractBill'
 import details from '../views/components/contractRrecord/details'
 
-switch(0){
-    case 0:
-        m.route(document.body, "/future",{
-            "/future": {
-                render: function (vnode) {
-                    return m(main,vnode.attrs)
-                }
-            },
-            "/delegation": {
-                render: function (vnode){
-                    return m(delegation,vnode.attrs)
-                },
-            },
-            "/details:item":{
-                render:function(vnode){
-                    return m(details,vnode.attrs)
-                }
-            },
-            "/deal": {
-                render:function (vnode){
-                    return m(deal,vnode.attrs)
-                }
-            },
-            "/contractbill": {
-                render:function (vnode){
-                    return m(contractbill,vnode.attrs)
-                }
-            }
-        }) 
-        break;
-}
+m.route(document.body, "/future",{
+    "/future": {
+        render: function (vnode) {
+            return m(main,vnode.attrs)
+        }
+    },
+    "/delegation": {
+        render: function (vnode){
+            return m(delegation,vnode.attrs)
+        },
+    },
+    "/details:item":{
+        render:function(vnode){
+            return m(details,vnode.attrs)
+        }
+    },
+    "/deal": {
+        render:function (vnode){
+            return m(deal,vnode.attrs)
+        }
+    },
+    "/contractbill": {
+        render:function (vnode){
+            return m(contractbill,vnode.attrs)
+        }
+    }
+})
 

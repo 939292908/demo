@@ -1,6 +1,7 @@
 //详情信息
 let m = require("mithril")
 let qs = require('qs');
+import message from '../message'
 
 
 export default {
@@ -181,7 +182,9 @@ export default {
                         ]),
                     ]),
                 ]) 
-            ])
+            ]),
+
+            m(message)
 
         ])
     }

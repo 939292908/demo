@@ -3,6 +3,7 @@
 let m = require("mithril")
 
 import historyOrd from '../orderList/historyOrd'
+import message from '../message'
 
 
 
@@ -15,7 +16,8 @@ export default {
     },
     view:function(vnode){
         return m("div",{class:""},[
-            m(historyOrd)
+            m(historyOrd),
+            m(message)
           ])
       }
 }

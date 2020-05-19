@@ -3,6 +3,7 @@ let m = require("mithril")
 
 import historicalDeal from "../orderList/historyTrade"
 import publicHeader from "../publicHeader_m"
+import message from '../message'
 
 export default {
     oninit: function(vnode){
@@ -13,7 +14,8 @@ export default {
     },
     view:function(vnode){
         return m("div",{class:""},[
-            m(historicalDeal)
+            m(historicalDeal),
+            m(message)
           ])
     }
 }
