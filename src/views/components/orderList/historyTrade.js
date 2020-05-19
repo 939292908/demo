@@ -160,8 +160,8 @@ let obj = {
                 m('div', {class:"navbar-brand is-flex"}, [
                 m('a', {class:"navbar-item"}, [
                     m('a', {class:"",href:"/#!/future"}, [
-                        m('span', {class:"icon"}, [
-                            m('i', {class:"iconfont iconarrow-left"}),
+                        m('span', {class:"icon icon-right-i"}, [
+                            m('i', {class:"iconfont has-text-black iconarrow-left"}),
                         ]),
                     ]),
                 ]),

@@ -25,6 +25,11 @@ let obj = {
             class: ""
         }
     ],
+    tabsList:[
+        "全部","USDT","BTC","ETH","UT"
+    ],
+    tabsActive:0,
+    tabsListOpen: false,
     type:[
         {
             name:"全部"
@@ -205,9 +210,7 @@ let obj = {
     },
 
     //移动端列表
-    getOptions:function (){
-        let selectId =document.getElementById("selectId")
-        let val = selectId.options[selectId.selectedIndex].innerHTML
+    getOptions:function (val){
         this.navCoinInfo.Coin = val
         console.log(val,"币种名称")
 
@@ -217,8 +220,7 @@ let obj = {
         obj.navCoinInfo.Coin = "全部";
         obj.navCoinInfo.Stat = "全部";
         obj.initObj()
-        let selectId = document.getElementById("selectId");
-        selectId.options.selectedIndex = 0;
+        obj.tabsActive = 0;
     },
     //提交按钮
     submitNavDrawer:function(){
@@ -232,6 +234,37 @@ let obj = {
     closeLeverageMode: function(){
         this.setType = false
     },
+    setTabsActive: function(param){
+        this.tabsActive = param
+    },
+    getTabsList: function(){
+        return this.tabsList.map(function(item,i){
+            return m("p",{class:"a-text-left"+(obj.tabsActive == i?' is-active':'')},[
+                m("a",{class:"has-text-black",key: "orderListTabsItem"+i, class:"", href:"javascript:void(0);", onclick: function(){
+                    obj.setTabsActive(i)
+                    obj.tabsListOpen = !obj.tabsListOpen
+                    obj.getOptions(obj.tabsList[obj.tabsActive])
+                }},[
+                    item
+                ])
+            ])
+        })
+    },
+    getTabsList: function(){
+        return this.tabsList.map((item, i)=>{
+            return m('dev', {key: 'dropdown-item'+item+i, class: ""}, [
+                // m('hr', {class: "dropdown-divider "}),
+                m('a', { href: "javascript:void(0);", class: "dropdown-item"+(obj.tabsActive == i?' has-text-primary':''), onclick: function(){
+                    obj.setTabsActive(i)
+                    obj.tabsListOpen = !obj.tabsListOpen
+                    obj.getOptions(obj.tabsList[obj.tabsActive])
+                }},[
+                    item
+                ])
+            ])
+            
+        })
+    },
     getSelectOptions:function (){
         return m('div', {class: 'pub-set-lever'}, [
             m("div", { class: "modal" + (obj.setType ? " is-active" : ''), }, [
@@ -243,7 +276,6 @@ let obj = {
                         ]),
                     m("button", {class: "delete", "aria-label": "close", onclick: function () {
                         obj.closeLeverageMode()
-                        // obj.resetNavDrawerInfo()
                     }
                     }),
                 ]),
@@ -252,17 +284,28 @@ let obj = {
                         m("p",{class : "search-bi-name-p"},[
                             "币种名称"
                         ]),
-                        m("div",{class : "search-k-d select is-small",onchange:function(){
-                            obj.getOptions()
-                        }},[
-                            m("select",{class : "select-sty",style:"select",id:"selectId"},[
-                                obj.biName.map(function (item,i){
-                                    return m("option",{class : "option-list"},[
-                                        item.name
-                                    ])
-                                })
-                            ])
-                        ]),
+                        m("div",{class:" pub-place-order-m pub-order-m"},[
+                            m('div', {class: "dropdown pub-place-order-select is-hidden-desktop" + (obj.tabsListOpen?' is-active':'')}, [
+                                m('.dropdown-trigger', {}, [
+                                    m('button', {class: "button is-white is-fullwidth",'aria-haspopup':true, "aria-controls": "dropdown-menu2", onclick: function(e){
+                                        obj.tabsListOpen = !obj.tabsListOpen
+                                    }}, [
+                                        m('div', {}, [
+                                            m('span',{ class: "",id:"selectId"}, obj.tabsList[obj.tabsActive]),
+                                            m('span', {class: "icon "},[
+                                                m('i', {class: "iconfont iconxiala has-text-primary", "aria-hidden": true })
+                                            ]),
+                                        ])
+                                    ]),
+                                ]),
+                                m('.dropdown-menu', {class:"scroll-y", id: "dropdown-menu2", role: "menu"}, [
+                                    m('.dropdown-content', {class:"has-text-centered"}, [
+                                        obj.getTabsList()
+                                    ]),
+                                ]),
+                            ]),
+                        ])
+
                     ]),
                     m("div",{class : "search-bi-name"},[
                         m("p",{class : "search-bi-name-p"},[
@@ -282,12 +325,12 @@ let obj = {
                 ]),
                 m("footer", { class: "pub-set-lever-foot modal-card-foot modal-card-body-list" }, [
                     m("div",{class : "reset-complete"},[
-                        m("a",{class : "reset-button button is-primary is-outlined is-small", onclick:function(){
+                        m("a",{class : "reset-button button is-primary is-outlined", onclick:function(){
                             obj.resetNavDrawerInfo()
                         }},[
                             "重置"
                         ]),
-                        m("a",{class : "reset-button button is-primary is-outlined is-small",onclick:function (){
+                        m("a",{class : "reset-button button is-primary is-outlined",onclick:function (){
                             obj.submitNavDrawer()
                         }},[
                             "完成"
@@ -307,7 +350,7 @@ let obj = {
                             m('a', {class:"",href:"/#!/future",onclick :function(){
                                 obj.resetNavDrawerInfo()
                             }}, [
-                                m('span', {class:"icon"}, [
+                                m('span', {class:"icon icon-right-i"}, [
                                     m('i', {class:"iconfont iconarrow-left has-text-black"}),
                                 ]),
                             ]),
@@ -318,7 +361,7 @@ let obj = {
                             ]),
                         m('.spacer'),
                         m('a', {class:"navbar-item"}, [
-                            m('a', {class:"icon navbar-item transform-for-icon",onclick: function(){
+                            m('a', {class:"icon icon-right-i navbar-item transform-for-icon",onclick: function(){
                                 obj.setType = true
                             }}, [
                                 m('i', {class:"iconfont icontoolbar-side"}),

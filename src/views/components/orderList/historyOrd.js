@@ -7,6 +7,12 @@ let obj = {
     purchase: [],
     stateType: [],
     //
+    tabsActive:0,
+    tabsListOpen: false,
+    
+    tabsActive2:0,
+    tabsListOpen2: false,
+
     navDrawerInfo:{
         Sym: '全部',
         dir: '全部',
@@ -58,7 +64,7 @@ let obj = {
             name:"BTC/UT永续"
         },
     ],
-    dirStrList:[
+    dirStrList2:[
         {
             name:"全部"
         },
@@ -104,6 +110,12 @@ let obj = {
         {
             name:"卖出平多并开空"
         },
+    ],
+    tabsList:[
+        "全部","BTC/USDT永续","ETH/USDT永续","XRP/USDT永续","EOS/USDT永续","LTC/USDT永续","ETC/USDT永续","BCH/USDT永续","BTC永续","ETH永续","BTC 季度0626","ETH 季度0626","BTC/UT永续"
+    ],
+    dirStrList:[
+        "全部","买入","卖出","买入强平","卖出强平","买入开多","卖出开空","买入平空","卖出平多","买入强制平空","卖出强制平多","买入ADL平空","卖出ADL平多","买入平空并开多","卖出平多并开空"
     ],
     statusStrList:[
         {
@@ -442,18 +454,9 @@ let obj = {
             ])
         })
     },
-    //copy选择提示
-    copyPid:function(val){
-        if(val!=""){
-            return window.$message({title: '复制成功！', content: '复制成功！', type: 'success'})
-        }else{
-            return window.$message({title: '复制失败！', content: '复制失败！', type: 'danger'})
-        }
-    },
     //获取select筛选
-    getOptions:function (){
-        let selectId = document.getElementById("selectId");
-        let value = selectId.options[selectId.selectedIndex].innerHTML
+    getOptions:function (val){
+        let value = val
         if(value.includes('/' && '永续')){
             value = value.replace("/",".").slice(0,-2)
         }else if(value.includes('季度')){
@@ -466,10 +469,10 @@ let obj = {
         obj.navDrawerInfo.Sym = value
         console.log(obj.navDrawerInfo.Sym,"合约名称")
     },
-    getOptions2:function(){
-        let selectId = document.getElementById("selectId2");
-        let value2 = selectId.options[selectId.selectedIndex].innerHTML
+    getOptions2:function(val){
+        let value2 = val
         obj.navDrawerInfo.dir = value2
+        console.log(obj.navDrawerInfo.dir,"买入卖出")
     },
     //完成按钮
     submitNavDrawer:function(){
@@ -486,13 +489,73 @@ let obj = {
         obj.navDrawerInfo.dir = '全部';
         obj.navDrawerInfo.status = '全部';
         obj.initObj()
-        let selectId = document.getElementById("selectId");
-        let selectId2 = document.getElementById("selectId2");
-        selectId.options.selectedIndex = 0;
-        selectId2.options.selectedIndex = 0;
+        obj.tabsActive2 = 0;
+        obj.tabsActive = 0;
     },
     closeLeverageMode: function(){
-        this.setType = false
+        this.setType = false   
+    },
+    setTabsActive: function(param){
+        this.tabsActive = param
+    },
+    setTabsActive2: function(param){
+        this.tabsActive2 = param
+    },
+    getTabsList: function(){
+        return this.tabsList.map(function(item,i){
+            return m("p",{class:"a-text-left"+(obj.tabsActive == i?' is-active':'')},[
+                m("a",{class:"",key: "orderListTabsItem"+i, class:"", href:"javascript:void(0);", onclick: function(){
+                    obj.setTabsActive(i)
+                    obj.tabsListOpen = !obj.tabsListOpen
+                    obj.getOptions(obj.tabsList[obj.tabsActive])
+                }},[
+                    item
+                ])
+            ])
+        })
+    },
+    getTabsList: function(){
+        return this.tabsList.map((item, i)=>{
+            return m('dev', {key: 'dropdown-item'+item+i, class: ""}, [
+                // m('hr', {class: "dropdown-divider "}),
+                m('a', { href: "javascript:void(0);", class: "dropdown-item"+(obj.tabsActive == i?' has-text-primary':''), onclick: function(){
+                    obj.setTabsActive(i)
+                    obj.tabsListOpen = !obj.tabsListOpen
+                    obj.getOptions(obj.tabsList[obj.tabsActive])
+                }},[
+                    item
+                ])
+            ])
+            
+        })
+    },
+    getTabsList2: function(){
+        return this.dirStrList.map(function(item,i){
+            return m("p",{class:"a-text-left"+(obj.tabsActive2 == i?' is-active':'')},[
+                m("a",{key: "orderListTabsItem"+i, class:"", href:"javascript:void(0);", onclick: function(){
+                    obj.setTabsActive2(i)
+                    obj.tabsListOpen2 = !obj.tabsListOpen2
+                    obj.getOptions2(obj.dirStrList[obj.tabsActive2])
+                }},[
+                    item
+                ])
+            ])
+        })
+    },
+    getTabsList2: function(){
+        return this.dirStrList.map((item, i)=>{
+            return m('dev', {key: 'dropdown-item'+item+i, class: ""}, [
+                // m('hr', {class: "dropdown-divider "}),
+                m('a', { href: "javascript:void(0);", class: "dropdown-item"+(obj.tabsActive2 == i?' has-text-primary':''), onclick: function(){
+                    obj.setTabsActive2(i)
+                    obj.tabsListOpen2 = !obj.tabsListOpen2
+                    obj.getOptions2(obj.dirStrList[obj.tabsActive2])
+                }},[
+                    item
+                ])
+            ])
+            
+        })
     },
     getSelectOptions: function (){
         return m('div', {class: 'pub-set-lever'}, [
@@ -511,36 +574,58 @@ let obj = {
                 ]),
                 m("section", { class: "pub-set-lever-content modal-card-body modal-card-body-list" }, [
                     m("div",{class : "search-bi-name"},[
-                        m("p",{class : "search-bi-name-p"},[
+                        m("p",{class : "search-bi-name-p has-text-black"},[
                             "合约名称"
                         ]),
-                        m("div",{class : "search-k-d select is-small",onchange:function(){
-                            obj.getOptions()
-                        }},[
-                            m("select",{class : "select-sty",style:"select ",id:"selectId",},[
-                                obj.contractName.map(function (item,i){
-                                    return m("option",{class : "option-list",},[
-                                        item.name
-                                    ])
-                                })
-                            ])
-                        ]),
+                        m("div",{class:" pub-place-order-m pub-order-m"},[
+                            m('div', {class: "dropdown pub-place-order-select is-hidden-desktop" + (obj.tabsListOpen?' is-active':'')}, [
+                                m('.dropdown-trigger', {}, [
+                                    m('button', {class: "button is-white is-fullwidth",'aria-haspopup':true, "aria-controls": "dropdown-menu2", onclick: function(e){
+                                        obj.tabsListOpen = !obj.tabsListOpen
+                                    }}, [
+                                        m('div', {}, [
+                                            m('span',{ class: "",id:"selectId"}, obj.tabsList[obj.tabsActive]),
+                                            m('span', {class: "icon "},[
+                                                m('i', {class: "iconfont iconxiala has-text-primary", "aria-hidden": true })
+                                            ]),
+                                        ])
+                                    ]),
+                                ]),
+                                m('.dropdown-menu', {class:"scroll-y", id: "dropdown-menu2", role: "menu"}, [
+                                    m('.dropdown-content', {class:"has-text-centered"}, [
+                                        obj.getTabsList()
+                                    ]),
+                                ]),
+                            ]),
+                        ])
+
+
                     ]),
                     m("div",{class : "search-bi-name"},[
                         m("p",{class : "search-bi-name-p"},[
                             "买入/卖出"
                         ]),
-                        m("div",{class : "search-k-d select is-small",onchange:function(){
-                            obj.getOptions2()
-                        }},[
-                            m("select",{class : "select-sty",style:"select",id:"selectId2"},[
-                                obj.dirStrList.map(function (item,i){
-                                    return m("option",{class : "option-list",},[
-                                        item.name
-                                    ])
-                                })
-                            ])
-                        ]),
+                        m("div",{class:" pub-place-order-m pub-order-m"},[
+                            m('div', {class: "dropdown pub-place-order-select is-hidden-desktop" + (obj.tabsListOpen2?' is-active':'')}, [
+                                m('.dropdown-trigger', {}, [
+                                    m('button', {class: "button is-white is-fullwidth",'aria-haspopup':true, "aria-controls": "dropdown-menu3", onclick: function(e){
+                                        obj.tabsListOpen2 = !obj.tabsListOpen2
+                                    }}, [
+                                        m('div', {}, [
+                                            m('span',{ class: "",id:"selectId2"}, obj.dirStrList[obj.tabsActive2]),
+                                            m('span', {class: "icon "},[
+                                                m('i', {class: "iconfont iconxiala has-text-primary", "aria-hidden": true })
+                                            ]),
+                                        ])
+                                    ]),
+                                ]),
+                                m('.dropdown-menu', {class:"scroll-y", id: "dropdown-menu3", role: "menu"}, [
+                                    m('.dropdown-content', {class:"has-text-centered"}, [
+                                        obj.getTabsList2()
+                                    ]),
+                                ]),
+                            ]),
+                        ])
                     ]),
                     m("div",{class : "search-bi-name"},[
                         m("p",{class : "search-bi-name-p"},[
@@ -548,7 +633,7 @@ let obj = {
                         ]),
                         m("div",{class : "search-k-d"},[
                             obj.statusStrList.map(function (item,i){
-                                return m("a",{class : "button is-primary is-outlined is-small",onclick:function(i){
+                                return m("a",{class : "button is-primary is-outlined button-styl",onclick:function(i){
                                     if(item.name == "成交"){
                                         obj.navDrawerInfo.status = "全部成交"
                                     }else if (item.name == "撤单"){
@@ -565,12 +650,12 @@ let obj = {
                 ]),
                 m("footer", { class: "pub-set-lever-foot modal-card-foot modal-card-body-list" }, [
                     m("div",{class : "reset-complete"},[
-                        m("a",{class : "reset-button button is-primary is-outlined is-small",onclick: function (){
+                        m("a",{class : "reset-button button is-primary is-outlined",onclick: function (){
                             obj.resetNavDrawerInfo()
                         }},[
                             "重置"
                         ]),
-                        m("a",{class : "reset-button button is-primary is-outlined is-small",onclick:function(){
+                        m("a",{class : "reset-button button is-primary is-outlined",onclick:function(){
                             obj.submitNavDrawer()
                         }},[
                             "完成"
@@ -591,7 +676,7 @@ let obj = {
                             m('a', {class:"",href:"/#!/future",onclick :function (){
                                 obj.resetNavDrawerInfo()
                             }}, [
-                            m('span', {class:"icon"}, [
+                            m('span', {class:"icon icon-right-i"}, [
                                 m('i', {class:"iconfont iconarrow-left  has-text-black"}),
                             ]),
                             ]),
@@ -602,7 +687,7 @@ let obj = {
                             ]),
                         m('.spacer'),
                         m('a', {class:"navbar-item"}, [
-                            m('a', {class:"icon navbar-item transform-for-icon",onclick: function(){
+                            m('a', {class:"icon icon-right-i navbar-item transform-for-icon",onclick: function(){
                                 obj.setType = true
                             }}, [
                                 m('i', {class:"iconfont icontoolbar-side"}),

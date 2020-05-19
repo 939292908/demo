@@ -18,7 +18,7 @@ export default {
                 m('div', {class:"navbar-brand is-flex"}, [
                 m('a', {class:"navbar-item"}, [
                     m('a', {class:"",href:"/#!/delegation"}, [
-                        m('span', {class:"icon"}, [
+                        m('span', {class:"icon icon-right-i"}, [
                             m('i', {class:"iconfont iconarrow-left"}),
                         ]),
                     ]),

@@ -600,8 +600,27 @@ hr {
     flex-direction: column;
     padding-top: 45%;
 }
+.icon-right-i{
+    width: 2rem;
+}
 
+//筛选框样式 start
+.a-text-left{
+    text-align: left;
+    @extend %side-px;
+    @extend %py-2;
+}
 
+.pub-order-m{
+    @extend %pl-0;
+}
+
+.scroll-y{
+    max-height: 194px;
+    overflow-y: scroll
+}
+
+//筛选框样式 end
 .transform-for-icon{
     transform: rotate(180deg);
     -ms-transform:rotate(180deg); /* Internet Explorer */
@@ -752,14 +771,12 @@ hr {
     }
 
     .search-bi-name{
-        padding-top: 20px;
+        @extend %pt-3;
     } 
        
     .search-bi-name-p{
-        font-size: 14px;
-        font-weight: 700;
-        color:#000;
-        padding-bottom: 20px;
+        @extend %font-3;
+        @extend %pb-3;
     }
 
     .search-k-d{
@@ -775,12 +792,6 @@ hr {
         @extend %font-3;
     }
 
-    .button.is-small{
-        border-radius: 5px;
-        display: inline-block;
-        margin-left: 10px;
-    }
-
     //重置完成按钮
     .reset-complete{
         width: 100%;
@@ -790,7 +801,8 @@ hr {
     }
 
     .reset-button{
-        width: 45%;
+        width: 48%;
+        height: 35px;
     }
 
     .button-styl{
