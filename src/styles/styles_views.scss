@@ -582,26 +582,23 @@ hr {
 }
 // 杠杠调整 end
 
-
 //移动端列表 start
-.delegation-list{
-    .delegation-list-header{
-        display: flex;
-        justify-content: space-between;
-    }
-
-    .delegation-list-phistory{
-        font-size: 20px;
-        font-weight: 700;
-    }
+.pub-layout-m{
+    @extend %py-2;
+    margin-top: 3.25rem;
+}
+.card-content{
+    @extend %pa-3;
+}
+.delegation-list-phistory{
+    @extend %font-6;
 }
 .text-none{
     text-align: center;
-    font-size: 15px;
+    @extend %font-4;
     display: flex;
     flex-direction: column;
     padding-top: 45%;
-    color: #0000005c;
 }
 
 
@@ -615,34 +612,19 @@ hr {
 
 .mobile-list{
     width: 100%;
-    // height: 100px;
-    background-color: white;
-    border:1px solid #dadde030;
-    box-shadow:2px 6px 13px #dadde0;
-    border-radius: 8px;
-    padding:5px 5px;
-    margin-top: 5px;
+    @extend %pa-3;
+    @extend %side-my;
 
     .theadList-transaction{
         display: flex;
-        justify-content:space-around;
+        justify-content:space-between;
         text-align: left;
-        border-bottom: 1px solid #dadde0e0;
 
+        .theadList-transaction-p1{
+            @extend %font-4;
+        }
         .theadList-transaction-p2{
-            font-size: small;
-            color: rgb(0, 209, 178);
-            // text-align: left;
-            line-height: 28px;
-        }
-
-        .theadList-transaction-p3{
-            font-size: small;
-            line-height: 28px;
-        }
-        .theadList-transaction-p4{
-            font-size: small;
-            line-height: 28px;
+            @extend %font-3;
         }
     }
 
@@ -650,43 +632,33 @@ hr {
         display: flex;
         justify-content:start;
         text-align: left;
-        margin-top: 10px;
+        @extend %side-mt;
+        @extend %font-1;
 
         .theadList-profit-loss-p1,
         .theadList-profit-loss-p2{
             width: 50%;
-            padding: 0 10px;
-            color: #3c3c3c7a;
         }
-
-        .font-color{
-            color: #000;
+        .text-right{
+            text-align: right;
         }
-
-        .font-color-2{
-            color: rgb(0, 209, 178);
+        .theadList-profit2{
+            display: flex;
+            justify-content: start;
         }
-        .font-color-3{
-            color: rgb(241, 70, 104);
+        .fomt-blacl{
+            align-items: center;
         }
     }
-
-    .border-lise{
-        border-bottom: 1px solid #dadde0e0;
-    }
-
 
     .mobile-div{
-        padding-left: 9px;
-        font-size: 18px;
-        color: #000;
+        @extend %font-5;
     }
 
     .mobile-font{
         display: inline-block;
-        padding-left: 5px;
-        font-size: 10px;
-        color: #000;
+        @extend %pl-2;
+        @extend %font-1;
     }
 
     .theadList-time{
@@ -694,75 +666,46 @@ hr {
         text-align: right;
     }
 }
-
 //移动端列表 end
+.pub-layout-m-details{
+    @extend %side-px;
+}
 
 //移动端详情 start
 .details-header{
-    padding: 0 20px;
-
-    .details{
-        position: relative;
-
-        .navbar-item{
-            display: inline-block;
-            padding: 0.75rem 0;
-        }
-
-        .details-conent{
-            position: absolute;
-            top: 0.75rem;
-            left: 39%;
-            text-align: center;
-            font-size: 20px;
-            font-weight: 700;
-        }
+     
+    .navbar-item{
+        display: inline-block;
+        @extend %side-pa;
     }
 
     //中间内容
     .details-body{
 
         .details-body-list{
-            padding-bottom: 14px;
-            border-bottom: 1px solid #0000002e;
+            @extend %pb-3;
             display: flex;
             justify-content: space-between;
 
             .details-body-title{
-                font-size: 18px;
-                font-weight: 700;
+                @extend %font-5;
             }
 
             .details-body-title2{
-                font-size: small;
-                color: rgb(0, 209, 178);
-                line-height: 27px;
-            }
-
-            .details-body-title3{
-                color: rgb(0, 209, 178);
+                @extend %font-3;
             }
         } 
 
-        .font-default-color{
-            color: #ef2e55 !important;
-        }
-        .font-default-color2{
-            color: #48c774 !important;
-        }
         .details-body-conent{
-            padding: 10px 0;
+            @extend %side-py;
             display: flex;
             justify-content: space-between;
 
             .font-div{
-                font-size: 14px;
-                color: #0000005c;
-                line-height: 26px;
+                @extend %font-3;
 
                 .font-p{
-                    font-size: 14px;
-                    color: #000;
+                    @extend %font-3;
                 }
 
                 .p-only{
@@ -771,15 +714,13 @@ hr {
             }
 
             .font-div-bottom{
-                color: #000;
-                font-size: 14px;
+                @extend %font-3;
             }
         }
 
         .bottom-sty{
-            padding-top: 20px;
-            font-size: 18rx;
-            font-weight: 700;
+            @extend %pt-3;
+            @extend %font-5;
 
         }
     }
@@ -791,33 +732,29 @@ hr {
 .search-bar{
     width: 100%;
     background-color:#fff;
-    z-index: 10;
-    // height: 200px;
-    border-bottom-left-radius:8px ;
-    border-bottom-right-radius:8px ;
-    box-shadow: 0px 5px 20px #000000a3;
-    -moz-box-shadow:0px 5px 20px #000000a3;/*firefox*/ 
-    -webkit-box-shadow:0px 5px 20px #000000a3;/*webkit*/ 
+    z-index: 999;
+    @extend %box-shadow;
     position: fixed;
     top: 0;
     left: 0;
-    padding:20px 25px;
+    @extend %side-pa;
 }
+    .modal-card-body-list{
+        @extend %side-pa;
+    }
     .search-bar-header{
         display: flex;
         justify-content: space-between;
     }
+
     .search-gmex{
-        font-size: 25px;
-        color:#000;
-        font-weight: 700;
-        line-height: 15px;
+        @extend %font-5;
     }
-    
 
     .search-bi-name{
         padding-top: 20px;
-    }    
+    } 
+       
     .search-bi-name-p{
         font-size: 14px;
         font-weight: 700;
@@ -828,14 +765,14 @@ hr {
     .search-k-d{
         width: 100%;
     }
+
     .select-sty{
         width: 100%;
-        // height: 40px;
-        font-size: 13px !important;
-        background-color: #00000008;
+        @extend %font-3;
     }
+
     .option-list{
-        font-size: 13px !important;
+        @extend %font-3;
     }
 
     .button.is-small{
@@ -849,10 +786,21 @@ hr {
         width: 100%;
         display: flex;
         justify-content: space-around;
-        padding-top: 20px;
+        @extend %pt-3;
     }
+
     .reset-button{
-        width: 35%;
+        width: 45%;
+    }
+
+    .button-styl{
+        width:65px;
+        height:28px;
+        @extend %font-2; 
+        @extend %mb-3;
+        &:not(:last-child){
+            @extend %mr-3;
+        }
     }
 
 // pc端列表 start

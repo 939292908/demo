@@ -272,7 +272,7 @@ export default {
         ])
     },
     onbeforeremove: function(vnode) {
-        obj.rmEVBUS()
+        spotTick.rmEVBUS()
     },
     
 }

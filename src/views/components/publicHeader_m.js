@@ -88,6 +88,9 @@ export default {
             m("div",{class:"headerBack"}),
             m(kLine,{class:""}),
           ]),
+
+
+          
           m("nav",{class:"pub-layout-m-header is-fixed-top navbar is-transparent", role:"navigation", "aria-label":"main navigation"},[
             m('div', {class:"navbar-brand is-flex"}, [
               m('a', {class:"navbar-item", onclick: function(e){
@@ -113,6 +116,9 @@ export default {
               ]),
             ]),
           ]),
+
+
+
         ])
     },
 }

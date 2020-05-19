@@ -229,111 +229,145 @@ let obj = {
         },200)
         console.log(obj.navCoinInfo,"选择后状态")
     },
-
-    getContentList: function () {
-        return m("div",{class : "delegation-list"},[
-            m("div",{class : "delegation-list-header"},[
-                m('a', {class:"",href:"/#!/future"}, [
-                    m('span', {class:"icon is-medium", }, [
-                    m('i', {class:"iconfont iconarrow-left"}),
-                    ]), 
+    closeLeverageMode: function(){
+        this.setType = false
+    },
+    getSelectOptions:function (){
+        return m('div', {class: 'pub-set-lever'}, [
+            m("div", { class: "modal" + (obj.setType ? " is-active" : ''), }, [
+                m("div", { class: "modal-background" }),
+                m("div", { class: "modal-card" }, [
+                m("header", { class: "pub-set-lever-head modal-card-head modal-card-body-list" }, [
+                    m("p", { class: "modal-card-title" }, [
+                        '筛选'
+                        ]),
+                    m("button", {class: "delete", "aria-label": "close", onclick: function () {
+                        obj.closeLeverageMode()
+                        // obj.resetNavDrawerInfo()
+                    }
+                    }),
                 ]),
-                m("p",{class : "delegation-list-phistory"},[
-                    "合约账单"
-                ]),
-                m('a', {class:"icon is-medium transform-for-icon",onclick: function(){
-                    obj.setType = true
-                }}, [
-                    m('i', {class:"iconfont icontoolbar-side"}),
-                ]),
-            ]),
-            //搜索框
-            obj.setType ?m("div",{class : "search-bar"},[
-                m("div",{class : "search-bar-header"},[
-                    m("div",{class : "search-gmex"},[
-                        "Gmex"
+                m("section", { class: "pub-set-lever-content modal-card-body modal-card-body-list" }, [
+                    m("div",{class : "search-bi-name"},[
+                        m("p",{class : "search-bi-name-p"},[
+                            "币种名称"
+                        ]),
+                        m("div",{class : "search-k-d select is-small",onchange:function(){
+                            obj.getOptions()
+                        }},[
+                            m("select",{class : "select-sty",style:"select",id:"selectId"},[
+                                obj.biName.map(function (item,i){
+                                    return m("option",{class : "option-list"},[
+                                        item.name
+                                    ])
+                                })
+                            ])
+                        ]),
                     ]),
-                    m("button", {class: "delete", "aria-label": "close",onclick: function(){
-                        obj.setType = false
-                    }}),
-                ]),
-                m("div",{class : "search-bi-name"},[
-                    m("p",{class : "search-bi-name-p"},[
-                        "币种名称"
-                    ]),
-                    m("div",{class : "search-k-d select is-small",onchange:function(){
-                        obj.getOptions()
-                    }},[
-                        m("select",{class : "select-sty",style:"select",id:"selectId"},[
-                            obj.biName.map(function (item,i){
-                                return m("option",{class : "option-list"},[
+                    m("div",{class : "search-bi-name"},[
+                        m("p",{class : "search-bi-name-p"},[
+                            "类型"
+                        ]),
+                        m("div",{class : "search-k-d"},[
+                            obj.type.map(function (item,i){
+                                return m("a",{class : "button is-primary is-outlined button-styl",onclick:function(i){
+                                    obj.navCoinInfo.Stat = item.name
+                                    console.log(obj.navCoinInfo.Stat,"类型")
+                                }},[
                                     item.name
                                 ])
                             })
-                        ])
-                    ]),
+                        ]),
+                    ])
                 ]),
-                m("div",{class : "search-bi-name"},[
-                    m("p",{class : "search-bi-name-p"},[
-                        "类型"
-                    ]),
-                    m("div",{class : "search-k-d"},[
-                        obj.type.map(function (item,i){
-                            return m("a",{class : "button is-primary is-outlined is-small",onclick:function(i){
-                                obj.navCoinInfo.Stat = item.name
-                                console.log(obj.navCoinInfo.Stat,"类型")
-                            }},[
-                                item.name
-                            ])
-                        })
-                    ]),
-                ]),
-                m("div",{class : "reset-complete"},[
-                    m("a",{class : "reset-button button is-primary is-outlined is-small", onclick:function(){
-                        obj.resetNavDrawerInfo()
-                    }},[
-                        "重置"
-                    ]),
-                    m("a",{class : "reset-button button is-primary is-outlined is-small",onclick:function (){
-                        obj.submitNavDrawer()
-                    }},[
-                        "完成"
-                    ]),
+                m("footer", { class: "pub-set-lever-foot modal-card-foot modal-card-body-list" }, [
+                    m("div",{class : "reset-complete"},[
+                        m("a",{class : "reset-button button is-primary is-outlined is-small", onclick:function(){
+                            obj.resetNavDrawerInfo()
+                        }},[
+                            "重置"
+                        ]),
+                        m("a",{class : "reset-button button is-primary is-outlined is-small",onclick:function (){
+                            obj.submitNavDrawer()
+                        }},[
+                            "完成"
+                        ]),
+                    ])
                 ])
-            ]):"",  
-            this.list.length !=0?    
+            ]),
+            ])
+        ])
+    },
+    getContentList: function () {
+        return m("div",{class : "delegation-list"},[
+            m("div",{class : "delegation-list-header"},[
+                m("nav",{class:"pub-layout-m-header is-fixed-top navbar is-transparent", role:"navigation", "aria-label":"main navigation"},[
+                    m('div', {class:"navbar-brand is-flex"}, [
+                        m('a', {class:"navbar-item"}, [
+                            m('a', {class:"",href:"/#!/future",onclick :function(){
+                                obj.resetNavDrawerInfo()
+                            }}, [
+                                m('span', {class:"icon"}, [
+                                    m('i', {class:"iconfont iconarrow-left has-text-black"}),
+                                ]),
+                            ]),
+                        ]),
+                        m('.spacer'),
+                        m("p",{class : "delegation-list-phistory navbar-item has-text-black"},[
+                            "合约账单"
+                            ]),
+                        m('.spacer'),
+                        m('a', {class:"navbar-item"}, [
+                            m('a', {class:"icon navbar-item transform-for-icon",onclick: function(){
+                                obj.setType = true
+                            }}, [
+                                m('i', {class:"iconfont icontoolbar-side"}),
+                            ]),
+                        ]),
+                    ]),
+                ]),
+            ]),
+            // 搜索框
+            obj.getSelectOptions(),
+
+            m("div",{class : "pub-trade-list  pub-layout-m"},[
+            this.list.length !=0?
             this.list.map(function (item, i) {
-                return m("div",{ key: "historyOrdtHeadItem" + i, class: "mobile-list "},[
+                return m("div",{ key: "historyOrdtHeadItem" + i, class: "card"},[
+                    m("div",{class : "card-content mobile-list"},[
                     //顶部排列
-                    m("div",{class : "mobile-div"},[
+                    m("div",{class : "mobile-div has-text-black"},[
                         item.Coin,
-                        m("span",{class : "mobile-font"},[
+                        m("span",{class : "mobile-font has-text-black"},[
                         item.ViaStr 
                         ]),
                     ]),
+                    m("hr",{class :""}),
                     //底部排列
-                    m("div",{class : "theadList-profit-loss" ,style : "font-size: 10px"},[
+                    m("div",{class : "theadList-profit-loss" },[
                         m("div",{class  : "theadList-profit-loss-p1"},[
                             "金额：" ,
-                            m("p",{class : "" + item.Qty>0?"font-color-3" : "font-color-2"},[
+                            m("p",{class : "" + item.Qty>0?"has-text-danger" : "has-text-primary"},[
                                 item.Qty
                             ])
                         ]),
                         m("div",{class  : "theadList-time"},[
                             "时间：" ,
-                            m("p",{class : "font-color"},[
+                            m("p",{class : ""},[
                                 item.AtStr
                             ])
                         ]),
                     ]),
                 ])
-            }):m("div",{class : "text-none"},[
+            ])
+            }):m("div",{class : "text-none has-text-grey-light"},[
                 m("i",{class : "iconfont icon-box" ,style:"font-size: 60px",},[
                     
                 ]),
                 "暂无账单记录"
             ])
         ])
+    ])
     },
     getContent: function () {
         if (window.isMobile) {
