@@ -750,7 +750,6 @@ hr {
 //移动端搜索框
 .search-bar{
     width: 100%;
-    background-color:#fff;
     z-index: 999;
     @extend %box-shadow;
     position: fixed;
@@ -814,6 +813,93 @@ hr {
             @extend %mr-3;
         }
     }
+
+//k线页面样式start
+.kline-top{
+    @extend %side-px;
+    display: flex;
+    justify-content: space-between;
+    height:100%;
+    
+
+    .spotTick{
+        display: flex;
+        justify-content: start;
+
+        .spotTick-left{
+            @extend %font-8;
+            @extend %font-weight-bold;
+        }
+
+        .spotTick-right{
+            display: inline-block;
+            @extend %pl-3;
+            line-height: 2.3;
+        }
+    }
+
+    .spotTick-buttom{
+        display: flex;
+        justify-content: start;
+    }
+}
+
+.width-div-right{
+    width: 45%;
+}
+.width-div-left{
+    width: 70%;
+}
+.width-curren{
+    width: 65%;
+}
+.font-textalent-right{
+    text-align: right !important;
+}
+
+.table-width{
+    width: 100%;
+}
+
+.table-margin{
+    // display: inline-block;
+    @extend %pt-4;
+}
+.table-margin2{
+    // display: inline-block;
+    @extend %pt-2;
+}
+//通用字体大小
+.currency-font{
+    @extend %font-2;
+}
+
+.centent-a-default{
+    @extend %font-5;
+}
+
+.centent-a{
+    @extend %font-7;
+}
+
+.pos-info{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.level-right-m{
+    @extend %mt-0;
+}
+
+.kLine-body-list{
+    height: 100%;
+    overflow-y: scroll;
+}
+//k线页面样式end
+
+
+
 
 // pc端列表 start
 .pub-trade-list {

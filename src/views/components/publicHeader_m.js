@@ -3,8 +3,6 @@ var m = require("mithril")
 
 import symSelect from './market/symSelect'//
 
-//引入k线
-import kLine from "./market/kline"
 
 let obj = {
   oldSubArr: [],
@@ -72,22 +70,20 @@ export default {
     },
     view: function(vnode) {
         return m("div",{class: ""}, [
-          m('div', {class: 'pub-m-kline-box has-background-white '+(obj.klineOpen?' open':'')}, [
-            m("nav",{class:"pub-layout-m-header is-fixed-top navbar is-transparent ", role:"navigation", "aria-label":"main navigation"},[
-              m('div', {class:"navbar-brand is-flex"}, [
-                m('a', {class:"navbar-item", onclick: function(e){
-                  obj.klineOpen = false
-                }}, [
-                  m('span', {class:"icon is-medium"}, [
-                    m('i', {class:"iconfont iconarrow-left"}),
-                  ]),
-                ]),
-              ]),
-            ]),
-            //右进k线
-            m("div",{class:"headerBack"}),
-            m(kLine,{class:""}),
-          ]),
+          // m('div', {class: 'pub-m-kline-box has-background-white '+(obj.klineOpen?' open':'')}, [
+          //   m("nav",{class:"pub-layout-m-header is-fixed-top navbar is-transparent ", role:"navigation", "aria-label":"main navigation"},[
+          //     m('div', {class:"navbar-brand is-flex"}, [
+          //       m('a', {class:"navbar-item", onclick: function(e){
+          //         obj.klineOpen = false
+          //       }}, [
+          //         m('span', {class:"icon is-medium"}, [
+          //           m('i', {class:"iconfont iconarrow-left"}),
+          //         ]),
+          //       ]),
+          //     ]),
+          //   ]),
+          //   //右进k线
+          // ]),
 
 
           
@@ -107,13 +103,6 @@ export default {
               m('.spacer'),
               m(symSelect),
               m('.spacer'),
-              m('a', {class:"navbar-item"}, [
-                m('span', {class:"icon is-medium", onclick: function(){
-                  obj.klineOpen = true
-                }}, [
-                  m('i', {class:"iconfont iconhangqing"}),
-                ]),
-              ]),
             ]),
           ]),
 

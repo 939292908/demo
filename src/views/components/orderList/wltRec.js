@@ -62,23 +62,6 @@ let obj = {
             name:"合约赠金"
         },
     ],
-    biName : [
-        {
-            name:"全部"
-        },
-        {
-            name:"USDT"
-        },
-        {
-            name:"BTC"
-        },
-        {
-            name:"ETH"
-        },
-        {
-            name:"UT"
-        },
-    ],
     //初始化全局广播
     initEVBUS: function () {
         let that = this

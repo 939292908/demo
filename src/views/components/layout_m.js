@@ -19,8 +19,8 @@ import dish from './market/dish'
 import symSelect from './market/symSelect'
 import selectPos from './trade/selectPos'
 
-//引入k线
-import kLine from "./market/kline"
+//引入手机k线页面
+import klineM from "./market/kline_m"
 
 let obj = {
   oldSubArr: [],
@@ -82,6 +82,24 @@ let obj = {
   customKline: function(){
 
   },
+  //获取手机端k线图
+  getMobilekLine :function (){
+    let type = window.$config.views.kline.type
+    switch(type){
+      case 0:
+        return m("div",{class:"pub-layout-m"},[
+          m(klineM)
+        ])
+      case 1:
+        return this.customKlineM()
+      default:
+        return null;
+    }
+  },
+  customKlineM: function(){
+
+  },
+
   getDishAndNewTrd: function(){
     let type = window.$config.views.dishAndNewTrd.type
     switch(type){
@@ -324,8 +342,10 @@ let obj = {
       default:
 
     }
-  }
+  },
 }
+
+
 
 import login from './userCenter/login'
 export default {
@@ -347,17 +367,16 @@ export default {
                     m('i', {class:"iconfont iconarrow-left"}),
                   ]),
                 ]),
-                // m('.spacer'),
-                // m('div', {}, [
-                //   'k'
-                // ]),
-                // m('.spacer'),
-                
+                m('.spacer'),
+                m(symSelect),
+                m('.spacer'),
+                m('.spacer'),
               ]),
             ]),
             //右进k线
-            m("div",{class:"headerBack"}),
-            m(kLine,{class:""}),
+            m("div",{class : "kLine-body-list"},[
+              obj.getMobilekLine()
+            ])
           ]),
           m("nav",{class:"pub-layout-m-header is-fixed-top navbar is-transparent", role:"navigation", "aria-label":"main navigation"},[
             m('div', {class:"navbar-brand is-flex"}, [
