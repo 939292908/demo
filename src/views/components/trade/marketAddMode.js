@@ -47,9 +47,9 @@ let obj = {
     let that = this
 
     if(this.form.num === '0'){
-        return $message({title: '加仓数量不能为0', content: '加仓数量不能为0', type: 'danger'})
+        return $message({title: gDI18n.$t('10165'/*'加仓数量不能为0'*/), content: gDI18n.$t('10165'/*'加仓数量不能为0'*/), type: 'danger'})
     }else if(!this.form.num){
-        return $message({title: '加仓数量不能为空', content: '加仓数量不能为空', type: 'danger'})
+        return $message({title: gDI18n.$t('10166'/*'加仓数量不能为空'*/), content: gDI18n.$t('10166'/*'加仓数量不能为空'*/), type: 'danger'})
     }
 
     let Sym = this.param.pos.Sym
@@ -76,9 +76,9 @@ let obj = {
 
     let aWdrawable = Number(obj.wlt.aWdrawable || 0 )
     if(aWdrawable == 0){
-        return window.$message({title: '可用资金不足！', content: '可用资金不足！', type: 'danger'})
+        return window.$message({title: gDI18n.$t('10038'/*'可用资金不足！'*/), content: gDI18n.$t('10038'/*'可用资金不足！'*/), type: 'danger'})
     }else if(aWdrawable < Number(this.MgnNeed)){
-        return window.$message({title: '可用资金不足！', content: '可用资金不足！', type: 'danger'})
+        return window.$message({title: gDI18n.$t('10038'/*'可用资金不足！'*/), content: gDI18n.$t('10038'/*'可用资金不足！'*/), type: 'danger'})
     }
 
     window.gTrd.ReqTrdOrderNew(p, function(aTrd, aArg){
@@ -207,7 +207,7 @@ export default {
         m("div", { class: "modal-card" }, [
           m("header", { class: "pub-market-add-head modal-card-head" }, [
             m("p", { class: "modal-card-title" }, [
-              '市价加仓'
+              gDI18n.$t('10096')//'市价加仓'
             ]),
             m("button", {
               class: "delete", "aria-label": "close", onclick: function () {
@@ -219,19 +219,19 @@ export default {
             
             m('div', { class: "pub-market-add-content-stopp-input field" }, [
               m('div', { class: "control is-expanded" }, [
-                m("input", { class: "input", type: 'number', placeholder: "市价", readonly: true})
+                m("input", { class: "input", type: 'number', placeholder: gDI18n.$t('10081'/*"市价"*/), readonly: true})
               ])
             ]),
             m('div', { class: "pub-market-add-content-stopl-input field" }, [
               m('div', { class: "control is-expanded" }, [
-                m('input', { class: "input ", type: 'number', placeholder: "数量(张)", value:  obj.form.num, oninput: function(e){
+                m('input', { class: "input ", type: 'number', placeholder: gDI18n.$t('10163'/*"数量(张)"*/), value:  obj.form.num, oninput: function(e){
                   obj.onNumInput(e)
                 }})
               ])
             ]),
             m('div', { class: "level" }, [
               m('div', { class: "level-left" }, [
-                '委托保证金'
+                gDI18n.$t('10167')//'委托保证金'
               ]),
               m('div', { class: "level-left" }, [
                 Number(obj.MgnNeed || 0).toFixed2(8)
@@ -239,7 +239,7 @@ export default {
             ]),
             m('div', { class: "level" }, [
               m('div', { class: "level-left" }, [
-                '可用保证金'
+                gDI18n.$t('10157')//'可用保证金'
               ]),
               m('div', { class: "level-left" }, [
                 obj.wlt.aWdrawable?Number(obj.wlt.aWdrawable).toFixed2(8): (0).toFixed2(8)
@@ -253,14 +253,14 @@ export default {
                 obj.submit()
               }
             }, [
-              '确定'
+              gDI18n.$t('10051')//'确定'
             ]),
             m("button", {
               class: "button", onclick: function () {
                 obj.closeMode()
               }
             }, [
-              '取消'
+              gDI18n.$t('10052')//'取消'
             ]),
           ]),
         ])

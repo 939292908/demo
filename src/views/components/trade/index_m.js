@@ -9,7 +9,7 @@ import selectPos from './selectPos'
 
 let obj = {
     tabsActive: 0,
-    tabsList: ['限价委托', '市价委托', '限价计划', '市价计划'],
+    tabsList: [gDI18n.$t('10117'),gDI18n.$t('10118'),gDI18n.$t('10119'),gDI18n.$t('10120')],//['限价委托', '市价委托', '限价计划', '市价计划'],
     tabsListOpen: false,
 
     //初始化全局广播

@@ -4,34 +4,34 @@ let obj = {
     posList: [],
     theadList: [
         {
-            title: '仓位ID',
+            title: gDI18n.$t('10067'),//'仓位ID',
             class: ""
         }, {
-            title: '合约',
+            title: gDI18n.$t('10053'),//'合约',
             class: ""
         }, {
-            title: '杠杆',
+            title: gDI18n.$t('10054'),//'杠杆',
             class: ""
         }, {
-            title: '交易类型',
+            title: gDI18n.$t('10055'),//'交易类型',
             class: ""
         }, {
-            title: '委托类型',
+            title: gDI18n.$t('10056'),//'委托类型',
             class: ""
         }, {
-            title: '委托价格',
+            title: gDI18n.$t('10058'),//'委托价格',
             class: ""
         }, {
-            title: '委托数量',
+            title: gDI18n.$t('10059'),//'委托数量',
             class: ""
         }, {
-            title: '止盈/止损',
+            title: gDI18n.$t('10080') + "/" +gDI18n.$t('10101'),//'止盈/止损',
             class: ""
         }, {
-            title: '触发条件',
+            title: gDI18n.$t('10064'),//'触发条件',
             class: ""
         }, {
-            title: '委托时间',
+            title: gDI18n.$t('10065'),//'委托时间',
             class: ""
         }
     ],
@@ -108,7 +108,8 @@ let obj = {
                 if (ass.MIR) {
                     let lvr = obj.Lvr || (pos && pos.Lever) || 0
                     let maxLever = Number(1 / Math.max(ass.MIR || 0, obj.MIRMy || 0)).toFixed2(2)
-                    obj.displayLever = lvr == 0 ? '全仓' + maxLever + 'X' : '逐仓' + Number(lvr || 0).toFixed2(2) + 'X'
+                    obj.displayLever = lvr == 0 ? gDI18n.$t('10068',{value :maxLever }) : gDI18n.$t('10069',{value :Number(lvr || 0).toFixed2(2) })
+                    // obj.displayLever = lvr == 0 ? '全仓' + maxLever + 'X' : '逐仓' + Number(lvr || 0).toFixed2(2) + 'X'
                 } else {
                     obj.displayLever = '--'
                 }
@@ -119,7 +120,7 @@ let obj = {
 
                 //委托价格
                 if (obj.OType == 2 || obj.OType == 4) {
-                    obj.displayPrz = '市价'
+                    obj.displayPrz = gDI18n.$t('10081')//'市价'
                 } else {
                     obj.displayPrz = Number(obj.Prz).toFixed2(PrzMinIncSize)
                 }
@@ -131,7 +132,8 @@ let obj = {
                 obj.QtyF = Number(obj.QtyF).toFixed2(VolMinValSize)
 
                 if (obj.StopPrz) {
-                    obj.cond = obj.StopBy == 2 ? '指数价' : obj.StopBy == 1 ? '最新价' : '标记价'
+                    obj.cond = obj.StopBy == 2 ? gDI18n.$t('10070') : obj.StopBy == 1 ? gDI18n.$t('10046') : gDI18n.$t('10048')
+                    // obj.cond = obj.StopBy == 2 ? '指数价' : obj.StopBy == 1 ? '最新价' : '标记价'
                     obj.cond += (obj.OrdFlag & 8) ? '≥' : '≤'
                     obj.cond += obj.StopPrz.toFixed2(PrzMinIncSize)
                 } else {
@@ -206,7 +208,7 @@ let obj = {
                             obj.delOrder(item)
                         }
                     }, [
-                        '删除'
+                        gDI18n.$t('10085')//'删除'
                     ])
                 ])
             ])
@@ -227,13 +229,13 @@ let obj = {
                         ]),
                         m('.spacer'),
                         m('p', { class: '' }, [
-                            '仓位ID: ' + item.PId.substr(-4)
+                            gDI18n.$t('10067',/*'仓位ID: '*/) + item.PId.substr(-4)
                         ]),
                     ]),
                     m('div', { class: 'pub-plan-m-content content is-flex' }, [
                         m('div', {}, [
                             m('p', {}, [
-                                '委托数量'
+                                gDI18n.$t('10059')//'委托数量'
                             ]),
                             m('p', {}, [
                                 item.Qty
@@ -242,7 +244,7 @@ let obj = {
                         m('.spacer'),
                         m('div', {}, [
                             m('p', {}, [
-                                '委托价格'
+                                gDI18n.$t('10058')//'委托价格'
                             ]),
                             m('p', {}, [
                                 item.Prz
@@ -251,7 +253,7 @@ let obj = {
                         m('.spacer'),
                         m('div', { class: "has-text-right" }, [
                             m('p', {}, [
-                                '触发条件'
+                                gDI18n.$t('10064')//'触发条件'
                             ]),
                             m('p', { class: "" + utils.getColorStr(item.UPNLColor, 'font') }, [
                                 item.cond
@@ -269,7 +271,7 @@ let obj = {
                                 obj.delOrder(item)
                             }
                         }, [
-                            '删除'
+                            gDI18n.$t('10085')//'删除'
                         ])
                     ]),
                 ]),

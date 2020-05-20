@@ -30,7 +30,7 @@ let dish = {
     order20ListNum: 8,
     //盘口类型
     dishType: 0, //0:买卖盘口，1:买盘盘口，2:卖盘盘口
-    dishTypeList: ['买卖盘口', '买盘盘口', '卖盘盘口'],
+    dishTypeList: [gDI18n.$t('10007'/*'买卖盘口'*/), gDI18n.$t('10008'/*'买盘盘口'*/), gDI18n.$t('10009'/*'卖盘盘口'*/)],
     dishTypeListOpen: false,
     //初始化全局广播
     initEVBUS: function(){
@@ -356,13 +356,13 @@ export default {
                 m("div",{class:"is-flex "},[
                     m("div",{class:""},[
                         m('span', {class:" is-size-7 "},[
-                            '指数：'+(dish.getLastTick().indexPrz || '--')
+                            gDI18n.$t('10010',{value :(dish.getLastTick().indexPrz || '--')})//'指数：'+(dish.getLastTick().indexPrz || '--')
                         ]),
                     ]),
                     m('.spacer'),
                     m("div",{class:""},[
                         m('span', {class:" is-size-7 "},[
-                            '标记：'+(dish.getLastTick().SettPrz || '--')
+                            gDI18n.$t('10011',{value:(dish.getLastTick().SettPrz || '--')})//'标记：'+(dish.getLastTick().SettPrz || '--')
                         ]),
                     ]),
                 ]),

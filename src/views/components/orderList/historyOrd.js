@@ -4,49 +4,49 @@ let obj = {
     posList: [],
     theadList: [
         {
-            title: '合约',
+            title: gDI18n.$t('10053'),//'合约',
             class: ""
         }, {
-            title: '杠杆',
+            title: gDI18n.$t('10054'),//'杠杆',
             class: ""
         }, {
-            title: '交易类型',
+            title: gDI18n.$t('10055'),//'交易类型',
             class: ""
         }, {
-            title: '委托类型',
+            title: gDI18n.$t('10056'),//'委托类型',
             class: ""
         }, {
-            title: '状态',
+            title: gDI18n.$t('10057'),//'状态',
             class: ""
         }, {
-            title: '委托价格',
+            title: gDI18n.$t('10058'),//'委托价格',
             class: ""
         }, {
-            title: '委托数量',
+            title: gDI18n.$t('10059'),//'委托数量',
             class: ""
         }, {
-            title: '成交均价',
+            title: gDI18n.$t('10060'),//'成交均价',
             class: ""
         }, {
-            title: '成交数量',
+            title: gDI18n.$t('10061'),//'成交数量',
             class: ""
         }, {
-            title: '平仓盈亏',
+            title: gDI18n.$t('10062'),//'平仓盈亏',
             class: ""
         }, {
-            title: '手续费',
+            title: gDI18n.$t('10063'),//'手续费',
             class: ""
         }, {
-            title: '触发条件',
+            title: gDI18n.$t('10064'),//'触发条件',
             class: ""
         }, {
-            title: '委托时间',
+            title: gDI18n.$t('10065'),//'委托时间',
             class: ""
         }, {
-            title: '委托来源',
+            title: gDI18n.$t('10066'),//'委托来源',
             class: ""
         }, {
-            title: '仓位ID',
+            title: gDI18n.$t('10067'),//'仓位ID',
             class: ""
         }, 
     ],
@@ -106,7 +106,8 @@ let obj = {
                 if (ass.MIR) {
                     let lvr = obj.Lvr || pos.Lever || 0
                     let maxLever = Number(1 / Math.max(ass.MIR || 0, obj.MIRMy || 0)).toFixed2(2)
-                    obj.displayLever = lvr == 0 ? '全仓' + maxLever + 'X' : '逐仓' + Number(lvr || 0).toFixed2(2) + 'X'
+                    obj.displayLever = lvr == 0 ? gDI18n.$t('10068',{value :maxLever }) : gDI18n.$t('10069',{value :Number(lvr || 0).toFixed2(2) })
+                    //obj.displayLever = lvr == 0 ? '全仓' + maxLever + 'X' : '逐仓' + Number(lvr || 0).toFixed2(2) + 'X'
                 } else {
                     obj.displayLever = '--'
                 }
@@ -125,7 +126,8 @@ let obj = {
                 obj.QtyF = Number(obj.QtyF || 0).toFixed2(VolMinValSize)
 
                 if (obj.StopPrz) {
-                    obj.cond = obj.StopBy == 2 ? '指数价' : obj.StopBy == 1 ? '最新价' : '标记价'
+                    obj.cond = obj.StopBy == 2 ? gDI18n.$t('10070'): obj.StopBy == 1 ?  gDI18n.$t('10046'): gDI18n.$t('10048')
+                    // obj.cond = obj.StopBy == 2 ? '指数价' : obj.StopBy == 1 ? '最新价' : '标记价'
                     obj.cond += (obj.OrdFlag & 8) ? '≥' : '≤'
                     obj.cond += obj.StopPrz.toFixed2(PrzMinIncSize)
                 } else {

@@ -123,7 +123,7 @@ export function calcChangeLever(pos, orderForPId, assetD, lastTick, newLever, cb
   }else if(newLever > 1/pos.aMIR){
     cb && cb({
       code: -3,
-      errorText: '超出风险限额最大可调整杠杆，杠杆调整失败！',
+      errorText: gDI18n.$t('10408'/*'超出风险限额最大可调整杠杆，杠杆调整失败！'*/),
       changeNeedMM: 0
     })
   }else if(newLever != 0 && NewMgn <= NewAvailBal && (_aUrL+aValIni * pos.aMMR < NewMgnCalcAndMgnISO)){
@@ -137,13 +137,13 @@ export function calcChangeLever(pos, orderForPId, assetD, lastTick, newLever, cb
     // NewMgnCalcAndMgnISO <= NewAvailBal && (_aUrL + (aValIni * pos.aMMR)) >= NewMgnCalcAndMgnISO
     cb && cb({
       code: -1, 
-      errorText: '该操作导致仓位强平，调整杠杆失败！',
+      errorText: gDI18n.$t('10409'/*"该操作导致仓位强平，调整杠杆失败！"*/),
       changeNeedMM,
     })
   }else if(newLever != 0 && NewMgn > NewAvailBal){
     cb && cb({
       code: -2, 
-      errorText: '可用保证金不足，调整杠杆失败！',
+      errorText: gDI18n.$t('10410'/*'可用保证金不足，调整杠杆失败！'*/),
       changeNeedMM,
     })
   }

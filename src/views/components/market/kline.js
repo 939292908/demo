@@ -297,58 +297,58 @@ let obj = {
     timeList: {
         '0': {
             type: '0',
-            name: "分时",
-            title: "分时图"
+            name: gDI18n.$t('10023'),//"分时",
+            title: gDI18n.$t('10024'),//"分时图"
         },
         '1': {
             type: '1',
             name: "1m",
-            title: "1分钟"
+            title: gDI18n.$t('10025'),//"1分钟"
         },
         '3': {
             type: '3',
             name: "3m",
-            title: "3分钟"
+            title: gDI18n.$t('10026'),//"3分钟"
         },
         '5': {
             type: '5',
             name: "5m",
-            title: "5分钟"
+            title: gDI18n.$t('10027'),//"5分钟"
         },
         '30': {
             type: '30',
             name: "30m",
-            title: "30分钟"
+            title: gDI18n.$t('10028'),//"30分钟"
         },
         '60': {
             type: '60',
             name: "1h",
-            title: "1小时"
+            title: gDI18n.$t('10029'),//"1小时"
         },
         '120': {
             type: '120',
             name: "2h",
-            title: "2小时"
+            title: gDI18n.$t('10030'),//"2小时"
         },
         '240': {
             type: '240',
             name: "4h",
-            title: "4小时"
+            title: gDI18n.$t('10031'),//"4小时"
         },
         'D': {
             type: 'D',
             name: "D",
-            title: "1天"
+            title: gDI18n.$t('10032'),//"1天"
         },
         'W': {
             type: 'W',
             name: "W",
-            title: "1周"
+            title: gDI18n.$t('10033'),//"1周"
         },
         'M': {
             type: 'M',
             name: "M",
-            title: "1月"
+            title: gDI18n.$t('10034'),//"1月"
         },
     },
     //平均线指标信息

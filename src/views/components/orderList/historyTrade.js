@@ -3,28 +3,28 @@ let obj = {
     list: [],
     theadList: [
         {
-            title: '合约',
+            title: gDI18n.$t('10053'),//'合约',
             class: ""
         },{
-            title: '交易类型',
+            title: gDI18n.$t('10055'),//'交易类型',
             class: ""
         }, {
-            title: '成交均价',
+            title: gDI18n.$t('10060'),//'成交均价',
             class: ""
         }, {
-            title: '成交数量',
+            title: gDI18n.$t('10061'),//'成交数量',
             class: ""
         }, {
-            title: '平仓盈亏',
+            title: gDI18n.$t('10062'),//'平仓盈亏',
             class: ""
         }, {
-            title: '手续费',
+            title: gDI18n.$t('10063'),//'手续费',
             class: ""
         }, {
-            title: '成交时间',
+            title: gDI18n.$t('10073'),//'成交时间',
             class: ""
         },{
-            title: '仓位ID',
+            title: gDI18n.$t('10067'),//'仓位ID',
             class: ""
         }
     ],

@@ -3,16 +3,16 @@ let obj = {
     list: [],
     theadList: [
         {
-            title: '币种',
+            title: gDI18n.$t('10420'),//'币种',
             class: ""
         }, {
-            title: '类型',
+            title: gDI18n.$t('10102'),//'类型',
             class: ""
         }, {
-            title: '金额',
+            title: gDI18n.$t('10421'),//'金额',
             class: ""
         }, {
-            title: '时间',
+            title: gDI18n.$t('10103'),//'时间',
             class: ""
         }
     ],

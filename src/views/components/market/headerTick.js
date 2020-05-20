@@ -108,8 +108,9 @@ let spotTick = {
         let FundingNext = ass && ass.FundingNext || 0
         let FundingLongR = (this.getLastTick().FundingLongR || 0).toString().split('%')[0]
         // let str = `下次资金费率交换时间：${new Date(FundingNext).format('yyyy-MM-dd hh:mm:ss')}<br/>${Number(this.FundingLongR.split('%')[0])>0?this.$t('11634'):this.$t('11635')/*多头需要向空头补偿持仓价值的':'空头需要向多头补偿持仓价值的'*/}${Math.abs(Number(this.FundingLongR.split('%')[0]))}%`
-        this.FundingNextTmStr = `下次资金费率交换时间：${FundingNext?new Date(FundingNext).format('yyyy-MM-dd hh:mm:ss'):'--'}`
-        this.FundingLongRStr = `${Number(FundingLongR)>0?'多头需要向空头补偿持仓价值的':'空头需要向多头补偿持仓价值的'}${Math.abs(Number(FundingLongR))}%`
+        this.FundingNextTmStr =gDI18n.$t('10414',{value : (FundingNext?new Date(FundingNext).format('yyyy-MM-dd hh:mm:ss'):'--')})
+        //this.FundingNextTmStr = `下次资金费率交换时间：${FundingNext?new Date(FundingNext).format('yyyy-MM-dd hh:mm:ss'):'--'}`
+        this.FundingLongRStr = `${Number(FundingLongR)>0?G= gDI18n.$t('10014'/*'多头需要向空头补偿持仓价值的'*/): gDI18n.$t('10015'/*'空头需要向多头补偿持仓价值的'*/)}${Math.abs(Number(FundingLongR))}%`
         
     },
 
@@ -164,25 +165,25 @@ let spotTick = {
                         m('tr', {}, [
                             m('td', {class:""}, [
                                 m('p', {class:""}, [
-                                    "指数价格："+(spotTick.getLastTick().indexPrz || '--')
+                                    gDI18n.$t('10016',{value : (spotTick.getLastTick().indexPrz || '--')})//"指数价格："+(spotTick.getLastTick().indexPrz || '--')
                                 ]),
                                 m('p', {class:""}, [
-                                    "标记价格："+(spotTick.getLastTick().SettPrz || '--')
+                                    gDI18n.$t('10017',{value : (spotTick.getLastTick().SettPrz || '--')})//"标记价格："+(spotTick.getLastTick().SettPrz || '--')
                                 ]),
                             ]),
                             m('td', {class:""}, [
                                 m('p', {class:""}, [
-                                    "24H最高："+(spotTick.getLastTick().High24 || '--')
+                                    gDI18n.$t('10018',{value : (spotTick.getLastTick().High24 || '--')})//"24H最高："+(spotTick.getLastTick().High24 || '--')
                                 ]),
                                 m('p', {class:""}, [
-                                    "24H最低："+(spotTick.getLastTick().Low24 || '--')
+                                    gDI18n.$t('10019',{value : (spotTick.getLastTick().Low24 || '--')})//"24H最低："+(spotTick.getLastTick().Low24 || '--')
                                 ]),
                             ]),
                             m('td', {class:""}, [
                                 m('div', {class:"dropdown is-hoverable"}, [
                                     m('div', {class:"dropdown-trigger"}, [
                                         m('p', {class:""}, [
-                                            "资金费率 ",
+                                            gDI18n.$t('10020'),//"资金费率 ",
                                             m('i', {class:"iconfont iconinfo is-size-7"})
                                         ]),
                                     ]),
@@ -205,7 +206,7 @@ let spotTick = {
                             ]),
                             m('td', {class:""}, [
                                 m('p', {class:""}, [
-                                    "24H成交量："+(spotTick.getLastTick().Volume24 || '--')
+                                    gDI18n.$t('10021',{value : (spotTick.getLastTick().Volume24 || '--')})//"24H成交量："+(spotTick.getLastTick().Volume24 || '--')
                                 ]),
                                 m('p', {class:""}, [
                                     '≈ '+(spotTick.getLastTick().Volume24ForUSDT || '--')+'USDT'
@@ -213,7 +214,7 @@ let spotTick = {
                             ]),
                             m('td', {}, [
                                 m('p', {class:""}, [
-                                    "持仓量："+(spotTick.getLastTick().Turnover24 || '--')
+                                    gDI18n.$t('10022',{value : (spotTick.getLastTick().Turnover24 || '--')})//"持仓量："+(spotTick.getLastTick().Turnover24 || '--')
                                 ]),
                                 m('p', {class:""}, [
                                     '≈ '+(spotTick.getLastTick().Turnover24ForUSDT || '--')+'USDT'

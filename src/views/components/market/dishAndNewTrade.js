@@ -75,14 +75,14 @@ export default {
               m("a",{class:"", href:"javascript:void(0);", onclick: function(){
                 obj.setTabsActive(0)
               }},[
-                '买卖盘口'
+                gDI18n.$t('10007')//'买卖盘口'
               ])
             ]),
             m("li",{class:""+(obj.tabsActive == 1?"is-active":''), href:"javascript:void(0);", onclick: function(){
               obj.setTabsActive(1)
             }},[
               m("a",{class:""},[
-                '最新成交'
+                gDI18n.$t('10012')//'最新成交'
               ])
             ])
           ])

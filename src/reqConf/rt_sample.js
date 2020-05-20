@@ -7,8 +7,8 @@ module.exports =  {
     ,Trd:{
         Host: "wss://api-trade.gmex.io/v1/trade",
         Type: "trd", //mkt/ trd
-        UserSecr: "请自行申请",
-        SecretKey: "请自行申请",
-        UserName: "请自行申请"
+        UserSecr: gDI18n.$t('10405'/*"请自行申请"*/),
+        SecretKey: gDI18n.$t('10405'/*"请自行申请"*/),
+        UserName: gDI18n.$t('10405'/*"请自行申请"*/),
     }
 }

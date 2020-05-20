@@ -48,25 +48,25 @@ let obj = {
     if(this.tabsActive == 0){
       if(window.$config.future.setMIRMy){
         if(this.LeverForMy === '0'){
-          return window.$message({title: '全仓杠杆不能为0',content: '全仓杠杆不能为0', type: 'danger'})
+          return window.$message({title: gDI18n.$t('10121'/*'全仓杠杆不能为0'*/),content: gDI18n.$t('10121'/*'全仓杠杆不能为0'*/), type: 'danger'})
         }else if(!this.LeverForMy){
-          return window.$message({title: '请输入全仓杠杆数量',content: '请输入全仓杠杆数量', type: 'danger'})
+          return window.$message({title: gDI18n.$t('10122'/*'请输入全仓杠杆数量'*/),content: gDI18n.$t('10122'/*'请输入全仓杠杆数量'*/), type: 'danger'})
         }else if(Number(this.LeverForMy) < 1){
-          return window.$message({title: '全仓最小杠杠为1',content: '全仓最小杠杠为1', type: 'danger'})
+          return window.$message({title: gDI18n.$t('10123'/*'全仓最小杠杠为1'*/),content: gDI18n.$t('10123'/*'全仓最小杠杠为1'*/), type: 'danger'})
         }
       }
     }else if(this.tabsActive == 1){
       if(this.Lever === '0'){
-        return window.$message({title: '逐仓杠杆不能为0',content: '逐仓杠杆不能为0', type: 'danger'})
+        return window.$message({title: gDI18n.$t('10124'/*'逐仓杠杆不能为0'*/),content: gDI18n.$t('10124'/*'逐仓杠杆不能为0'*/), type: 'danger'})
       }else if(!this.Lever){
-        return window.$message({title: '请输入杠杆数量',content: '请输入杠杆数量', type: 'danger'})
+        return window.$message({title: gDI18n.$t('10125'/*'请输入杠杆数量'*/),content: gDI18n.$t('10125'/*'请输入杠杆数量'*/), type: 'danger'})
       }else if(Number(this.Lever) < 1){
-        return window.$message({title: '最小杠杠为1',content: '最小杠杠为1', type: 'danger'})
+        return window.$message({title: gDI18n.$t('10424'/*'最小杠杠为1'*/),content: gDI18n.$t('10424'/*'最小杠杠为1'*/), type: 'danger'})
       }
     }
     if(this.changeLeverInfo.hasOwnProperty('code') && this.changeLeverInfo.code != 0){
       console.log(this.changeLeverInfo)
-      return window.$message({title: '提示',content: this.changeLeverInfo.errorText, type: 'danger'})
+      return window.$message({title: gDI18n.$t('10037'/*'提示'*/),content: this.changeLeverInfo.errorText, type: 'danger'})
     }
     let param = {
       Sym: this.Sym,
@@ -100,7 +100,7 @@ let obj = {
                     Lever: Number(that.Lever),
                     MIRMy: Number(that.MIRMy),
                   })
-                  window.$message({title: '杠杆已调整！',content: '杠杆已调整！', type: 'success'})
+                  window.$message({title: gDI18n.$t('10127'/*'杠杆已调整！'*/),content: gDI18n.$t('10127'/*'杠杆已调整！'*/), type: 'success'})
                 }else{
                   window.$message({title: utils.getTradeErrorCode(arg.code || arg.data.ErrCode), content: utils.getTradeErrorCode(arg.code || arg.data.ErrCode), type: 'danger'})
                 }
@@ -113,7 +113,7 @@ let obj = {
                 Lever: Number(that.Lever),
                 MIRMy: Number(that.MIRMy),
               })
-              window.$message({title: '杠杆已调整！',content: '杠杆已调整！', type: 'success'})
+              window.$message({title: gDI18n.$t('10127'/*'杠杆已调整！'*/),content: gDI18n.$t('10127'/*'杠杆已调整！'*/), type: 'success'})
             }
           }else{
             window.$message({title: utils.getTradeErrorCode(arg.code || arg.data.ErrCode), content: utils.getTradeErrorCode(arg.code || arg.data.ErrCode), type: 'danger'})
@@ -268,7 +268,7 @@ export default {
         m("div", { class: "modal-card" }, [
           m("header", { class: "pub-set-lever-head modal-card-head" }, [
             m("p", { class: "modal-card-title" }, [
-              '杠杆调整'
+              gDI18n.$t('10128')//'杠杆调整'
             ]),
             m("button", {
               class: "delete", "aria-label": "close", onclick: function () {
@@ -285,7 +285,7 @@ export default {
                       obj.setTabsActive(0)
                     }
                   }, [
-                    '全仓'
+                    gDI18n.$t('10425')//'全仓'
                   ])
                 ]),
                 m("li", { class: "" + (obj.tabsActive == 1 ? ' is-active' : '') }, [
@@ -294,7 +294,7 @@ export default {
                       obj.setTabsActive(1)
                     }
                   }, [
-                    '逐仓'
+                    gDI18n.$t('10426')//'逐仓'
                   ])
                 ]),
               ])
@@ -302,12 +302,12 @@ export default {
 
             m('div', { class: "pub-set-lever-content-risk-warning has-text-danger" + (obj.tabsActive != 0 ? " is-hidden" : '') }, [
               m('div', { class: "field" }, [
-                '全仓模式下所有仓位将共享合约账户的可用保证金，若发生强平，可能损失所有仓位和可用保证金。请注意仓位风险！'
+                gDI18n.$t('10129')//'全仓模式下所有仓位将共享合约账户的可用保证金，若发生强平，可能损失所有仓位和可用保证金。请注意仓位风险！'
               ]),
               m('div', { class: "field has-addons"+(window.$config.future.setMIRMy?'':' is-hidden') }, [
                 m('div', { class: "control" }, [
                   m('button', { class: "button is-static" }, [
-                    '最高'+obj.maxLever+'X'
+                    gDI18n.$t('10130',{value : obj.maxLever})//'最高'+obj.maxLever+'X'
                   ]),
                 ]),
                 m('div', { class: "control is-expanded" }, [
@@ -324,7 +324,7 @@ export default {
               m('div', { class: "field has-addons" }, [
                 m('div', { class: "control" }, [
                   m('button', { class: "button is-static" }, [
-                    '最高'+obj.maxLever+'X'
+                    gDI18n.$t('10130',{value : obj.maxLever})//'最高'+obj.maxLever+'X'
                   ]),
                 ]),
                 m('div', { class: "control is-expanded" }, [
@@ -339,7 +339,7 @@ export default {
             ]),
             m('div', { class: "pub-set-lever-content-mm level" }, [
               m('p', { class: "level-left" }, [
-                '当前仓位保证金'
+                gDI18n.$t('10131')//'当前仓位保证金'
               ]),
               m('p', { class: "level-right" }, [
                 obj.posInfo?obj.posInfo.aMM:'0.0000'
@@ -347,7 +347,7 @@ export default {
             ]),
             m('div', { class: "pub-set-lever-content-need-mgn level" }, [
               m('p', { class: "level-left" }, [
-                '需要追加保证金'
+                gDI18n.$t('10132')//'需要追加保证金'
               ]),
               m('p', { class: "level-right" }, [
                 obj.changeLeverInfo?Number(obj.changeLeverInfo.changeNeedMM || 0).toPrecision2(6,8):'0.0000'
@@ -360,14 +360,14 @@ export default {
                 obj.submit()
               }
             }, [
-              '确定'
+              gDI18n.$t('10051')//'确定'
             ]),
             m("button", {
               class: "button", onclick: function () {
                 obj.closeLeverageMode()
               }
             }, [
-              '取消'
+              gDI18n.$t('10052')//'取消'
             ]),
           ]),
         ])

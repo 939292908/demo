@@ -49,7 +49,7 @@ let header = {
         ]),
         m("div",{class:"navbar-dropdown"},[
           m("a",{class:"navbar-item", onclick: this.signOut},[
-            gDI18n.$t('10003')//'退出'
+            gDI18n.$t('10003'/*'退出'*/)
           ])
         ])
       ])
@@ -75,12 +75,12 @@ let header = {
         window.gWebAPI.ReqSignOut({}, function(res){
           console.log('ReqSignOut success ==>> ',res)
           if(res.result.code === 0){
-            window.$message({title: '退出登录成功！',content: '退出登录成功！', type: 'success'})
+            window.$message({title: gDI18n.$t('10004'/*'退出登录成功！'*/),content: gDI18n.$t('10004'/*'退出登录成功！'*/), type: 'success'})
           }else{
-            window.$message({title: '退出登录失败！',content: '退出登录失败！', type: 'danger'})
+            window.$message({title: gDI18n.$t('10005'/*'退出登录失败！'*/),content: gDI18n.$t('10005'/*'退出登录失败！'*/), type: 'danger'})
           }
         }, function(err){
-            window.$message({title: '操作超时',content: '操作超时', type: 'danger'})
+            window.$message({title: gDI18n.$t('10006'/*'操作超时'*/),content: gDI18n.$t('10006'/*'操作超时'*/), type: 'danger'})
             console.log('ReqSignOut => ', err)
         })
         break;
@@ -107,7 +107,7 @@ let header = {
           m('a', {class:"navbar-item"+(window.gMkt.CtxPlaying.pageTradeStatus == 1 ?' has-text-primary':''), onclick:function(){
             header.setTradeStatus(1)
           }}, [
-            gDI18n.$t('10001')//'合约交易',
+            gDI18n.$t('10001'/*合约交易*/),
           ]),
           // m('a', {class:"navbar-item"+(window.gMkt.CtxPlaying.pageTradeStatus == 2 ?' has-text-primary':''), onclick:function(){
           //   header.setTradeStatus(2)

@@ -11,22 +11,22 @@ import wltRec from './wltRec'
 let obj = {
     tabsActive: 0,
     tabsList: [{
-        name:'持有仓位',
+        name: gDI18n.$t('10074'),//'持有仓位',
         class: '',
     },{
-        name:'当前委托',
+        name: gDI18n.$t('10075'),//'当前委托',
         class: '',
     },{
-        name:'当前计划',
+        name: gDI18n.$t('10076'),//'当前计划',
         class: '',
     },{
-        name:'历史委托',
+        name: gDI18n.$t('10077'),//'历史委托',
         class: ' is-hidden-touch',
     },{
-        name:'成交记录',
+        name: gDI18n.$t('10078'),//'成交记录',
         class: ' is-hidden-touch',
     },{
-        name:'合约账单',
+        name: gDI18n.$t('10079'),//'合约账单',
         class: ' is-hidden-touch',
     }],
     setTabsActive: function(param){

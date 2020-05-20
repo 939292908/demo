@@ -14,7 +14,7 @@ let obj = {
     minDelMgn:'0.00000000',
     LastPrz: '0.00',
     SettPrz: '0.00',
-    placeholder: '金额(USDT)',
+    placeholder: gDI18n.$t('10415'),//'金额(USDT)',
     //初始化全局广播
     initEVBUS: function () {
         let that = this
@@ -60,11 +60,11 @@ let obj = {
 
         
         if (this.form.num === '0') {
-            return $message({ title: '调整金额不能为0', content: '调整金额不能为0', type: 'danger' })
+            return $message({ title: gDI18n.$t('10035'/*'调整金额不能为0'*/), content: gDI18n.$t('10035'/*'调整金额不能为0'*/), type: 'danger' })
         } else if (!this.form.num) {
-            return $message({ title: '调整金额不能为空', content: '调整金额不能为空', type: 'danger' })
+            return $message({ title: gDI18n.$t('10036'/*'调整金额不能为空'*/), content: gDI18n.$t('10036'/*'调整金额不能为空'*/), type: 'danger' })
         }else if(Number(this.form.num) == 0){
-            return $message({ title: '调整金额不能为0', content: '调整金额不能为0', type: 'danger' })
+            return $message({ title: gDI18n.$t('10035'/*'调整金额不能为0'*/), content: gDI18n.$t('10035'/*'调整金额不能为0'*/), type: 'danger' })
         }
 
         let Sym = this.param.pos.Sym
@@ -76,13 +76,13 @@ let obj = {
         if(this.tabsActive == 0){
             let aWdrawable = Number(obj.wlt.aWdrawable || 0)
             if (aWdrawable == 0) {
-                return window.$message({ title: '提示', content: '可用资金不足！', type: 'danger' })
+                return window.$message({ title: gDI18n.$t('10037'/*'提示'*/), content: gDI18n.$t('10038'/*'可用资金不足！'*/), type: 'danger' })
             } else if (aWdrawable < Number(this.form.num)) {
-                return window.$message({ title: '提示', content: '调整金额不能大于最多可增加资产！', type: 'danger' })
+                return window.$message({ title: gDI18n.$t('10037'/*'提示'*/), content: gDI18n.$t('10039'/*'调整金额不能大于最多可增加资产！'*/), type: 'danger' })
             }
         }else{
             if (Number(this.minDelMgn) < Number(this.form.num)) {
-                return window.$message({ title: '提示', content: '调整金额不能大于最多可减少资产！', type: 'danger' })
+                return window.$message({ title: gDI18n.$t('10037'/*'提示'*/), content: gDI18n.$t('10040'/*'调整金额不能大于最多可减少资产！'*/), type: 'danger' })
             }
         }
         let p = {
@@ -95,7 +95,7 @@ let obj = {
         window.gTrd.ReqTrdPosTransMgn(p, function (aTrd, aArg) {
             console.log('ReqTrdPosTransMgn ==> ', aArg)
             if (aArg.code == 0) {
-                window.$message({ title: '提示', content: '操作成功！', type: 'success' })
+                window.$message({ title: gDI18n.$t('10037'/*'提示'*/), content: gDI18n.$t('10041'/*'操作成功！'*/), type: 'success' })
                 that.open = false
             }
         })
@@ -109,7 +109,7 @@ let obj = {
         }
         this.param = param
         this.minDelMgn = Number(param.pos.aAvailMgnISO).toFixed2(8)
-        this.placeholder = `金额(${param.pos.SettleCoin})`
+        this.placeholder = gDI18n.$t('10042',{value :param.pos.SettleCoin})//`金额(${param.pos.SettleCoin})`
         this.initWlt()
     },
     openMode: function (param) {
@@ -180,7 +180,7 @@ export default {
                 m("div", { class: "modal-card" }, [
                     m("header", { class: "pub-change-mgn-head modal-card-head" }, [
                         m("p", { class: "modal-card-title" }, [
-                            '调节保证金'
+                            gDI18n.$t('10043')//'调节保证金'
                         ]),
                         m("button", {
                             class: "delete", "aria-label": "close", onclick: function () {
@@ -197,7 +197,7 @@ export default {
                                             obj.setTabsActive(0)
                                         }
                                     }, [
-                                        '增加保证金'
+                                        gDI18n.$t('10044')//'增加保证金'
                                     ])
                                 ]),
                                 m("li", { class: "" + (obj.tabsActive == 1 ? ' is-active' : '') }, [
@@ -206,7 +206,7 @@ export default {
                                             obj.setTabsActive(1)
                                         }
                                     }, [
-                                        '减少保证金'
+                                        gDI18n.$t('10045')//'减少保证金'
                                     ])
                                 ]),
                             ])
@@ -224,7 +224,7 @@ export default {
                             m('.spacer'),
                             m('div', { class: ""}, [
                                 m('span', { class: ""}, [
-                                    '最新价：'
+                                    gDI18n.$t('10046')//'最新价：'
                                 ]),
                                 m('span', { class: ""}, [
                                     obj.LastPrz,
@@ -234,7 +234,7 @@ export default {
                         m('div', { class: "is-flex field" }, [
                             m('div', { class: ""}, [
                                 m('span', { class: ""}, [
-                                    '当前保证金：'
+                                    gDI18n.$t('10047')//'当前保证金：'
                                 ]),
                                 m('span', { class: ""}, [
                                     obj.param.pos && obj.param.pos.aMM
@@ -243,7 +243,7 @@ export default {
                             m('.spacer'),
                             m('div', { class: ""}, [
                                 m('span', { class: ""}, [
-                                    '标记价：'
+                                    gDI18n.$t('10048')//'标记价：'
                                 ]),
                                 m('span', { class: ""}, [
                                     obj.SettPrz,
@@ -261,7 +261,7 @@ export default {
                         ]),
                         m('div', { class: "is-flex"+(obj.tabsActive == 0?'':' is-hidden') }, [
                             m('div', { class: ""}, [
-                                '最多可增加资产'
+                                gDI18n.$t('10049')//'最多可增加资产'
                             ]),
                             m('.spacer'),
                             m('div', { class: "cursor-pointer", onclick: function(){
@@ -272,7 +272,7 @@ export default {
                         ]),
                         m('div', { class: "is-flex"+(obj.tabsActive == 1?'':' is-hidden') }, [
                             m('div', { class: ""}, [
-                                '最多可减少资产'
+                                gDI18n.$t('10050')//'最多可减少资产'
                             ]),
                             m('.spacer'),
                             m('div', { class: "cursor-pointer", onclick: function(){
@@ -289,14 +289,14 @@ export default {
                                 obj.submit()
                             }
                         }, [
-                            '确定'
+                            gDI18n.$t('10051')//'确定'
                         ]),
                         m("button", {
                             class: "button", onclick: function () {
                                 obj.closeMode()
                             }
                         }, [
-                            '取消'
+                            gDI18n.$t('10052')//'取消'
                         ]),
                     ]),
                 ])
