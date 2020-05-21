@@ -216,6 +216,7 @@ let header = {
   setLang: function(param){
     gDI18n.setLocale(param, arg => {
       console.log('change lang suc', arg)
+      gEVBUS.emit(gDI18n.EV_CHANGELOCALE_UPD, {Ev: gDI18n.EV_CHANGELOCALE_UPD, locale:arg})
     })
   }
 }

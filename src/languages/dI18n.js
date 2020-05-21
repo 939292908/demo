@@ -4,6 +4,7 @@ import config from '../config'
 class _DI18n {
     EV_DI18N_READY = "EV_DI18N_READY"
     EV_DI18N_UPD = "EV_DI18N_UPD"
+    EV_CHANGELOCALE_UPD = "EV_CHANGELOCALE_UPD"
 
     locale = 'zh'
     langList = {
