@@ -269,6 +269,31 @@ hr {
 .pub-kline  {
     @extend %side-pa;
     height: 100%;
+    .pub-kline-iframe {
+        height: 100%;
+    }
+
+    .pub-kline-btns {
+        @extend %ma-0;
+        display: flex;
+        >*{
+            flex: 1;
+        }
+
+        button {
+            @extend %ma-0;
+            border-radius: 0;
+            border-bottom: 0;
+            border-color: $tradingview-bg;
+        }
+
+        .dropdown-content {
+            @extend %pa-0;
+            button {
+                width: 50%;
+            }
+        }
+    }
 
     #tv_chart_container {
         height: 100%;
@@ -1196,7 +1221,7 @@ hr {
 
 // 手机端k线页面 start
 .pub-m-kline-box {
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     bottom: 0;
