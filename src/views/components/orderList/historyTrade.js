@@ -152,9 +152,112 @@ let obj = {
             ])
         })
     },
+
+    //
+    getMobileHistoryList: function (){
+        return m("div",{class: "details-header"},[
+            m("nav",{class:"pub-layout-m-header is-fixed-top navbar is-transparent", role:"navigation", "aria-label":"main navigation"},[
+                m('div', {class:"navbar-brand is-flex"}, [
+                m('a', {class:"navbar-item"}, [
+                    m('a', {class:"",href:"/#!/future"}, [
+                        m('span', {class:"icon icon-right-i"}, [
+                            m('i', {class:"iconfont has-text-black iconarrow-left"}),
+                        ]),
+                    ]),
+                ]),
+                m('.spacer'),
+                m("p",{class : "delegation-list-phistory navbar-item has-text-black"},[
+                    "历史成交"
+                    ]),
+                m('.spacer'),
+                ]),
+            ]),
+            m("div",{class : "pub-trade-list  pub-layout-m"},[
+            this.list.length !=0?
+            this.list.map(function (item, i) {
+                return m("div",{ key: "historyOrdtHeadItem" + i, class: "card "},[
+                    //顶部排列
+                    m("div",{class : "card-content mobile-list"},[
+                        m("div",{class : "theadList-transaction"},[
+                            m("p",{class : "theadList-transaction-p1"},[
+                                utils.getSymDisplayName(window.gMkt.AssetD, item.displaySym)
+                            ]),
+                            m("p",{class : " " + utils.getColorStr(item.Dir, 'font') },[
+                                item.DirStr
+                            ]),
+                            m("div",{class  : ""},[
+                                " ",
+                                m("p",{class : " "},[
+                                    " "
+                                ])
+                            ]),
+                            m("p",{class : " "},[
+                                item.AtStr
+                            ])
+                        ]),
+                        m("hr",{class : ""}),
+                        //中间排列
+                        m("div",{class :  ""},[
+                            m("div",{class : "theadList-profit-loss" ,},[
+                                m("div",{class  : "theadList-profit-loss-p1 has-text-grey"},[
+                                    "成交均价：" ,
+                                    m("p",{class : "has-text-dark"},[
+                                        item.Prz
+                                    ])
+                                ]),
+                                m("div",{class  : "theadList-profit-loss-p1 has-text-grey"},[
+                                    "成交数量：" ,
+                                    m("p",{class : "has-text-dark"},[
+                                        item.Sz
+                                    ])
+                                ]),
+                                m("div",{class  : "theadList-profit-loss-p1 has-text-grey"},[
+                                    "平仓盈亏：" ,
+                                    m("p",{class : "has-text-dark"},[
+                                        item.PnlCls
+                                    ])
+                                ]),
+                            ]),
+                            //底部排列
+                            m("div",{class : "theadList-profit-loss" ,},[
+                                m("div",{class  : "theadList-profit-loss-p1 has-text-grey theadList-profit2"},[
+                                    m("p",{class: ""},[
+                                       "手续费：" 
+                                    ]),
+                                    m("p",{class : "has-text-dark" + item.Fee>0?"has-text-danger" :"has-text-primary"},[
+                                        item.Fee
+                                    ])
+                                ]),
+                                m("div",{class  : "theadList-profit-loss-p2"},[
+                                    " ",
+                                ]),
+                                m("div",{class:"cursor-pointer theadList-profit-loss-p2 has-text-grey theadList-profit2 fomt-blacl text-right"+(" historyOrdTableListItemCopy"+i), "data-clipboard-text": item.PId, onclick: function(e){
+                                    window.$copy(".historyOrdTableListItemCopy"+i)
+                                }},[
+                                    "仓位ID：",
+                                    m("p",{class : "has-text-dark"},[
+                                        item.PId.substr(-4),
+                                        m("i",{class : ""},[ " "]),
+                                        m("i",{class:"iconfont iconcopy"}),
+                                    ])  
+                                ]),
+                            ]),
+                        ])
+                    ])
+                ])
+            }):m("div",{class : "text-none has-text-grey"},[
+                m("i",{class : "iconfont icon-box" ,style:"font-size: 60px",},[
+                    
+                ]),
+                "暂无历史成交记录"
+            ])
+        ])
+    ])
+    },
     getContent: function () {
         if (window.isMobile) {
-            return null
+            //移动端列表
+            return obj.getMobileHistoryList()
         } else {
             let colgroup = m('colgroup', {}, [
                 m('col', { name: "pub-table-1", width: 160 }),

@@ -1,4 +1,9 @@
-var m = require("mithril")
+let m = require("mithril")
+
+import kline from "./kline"
+import wlt from "../contractRrecord/wlt"
+import transfer from "../contractRrecord/transfer"
+
 
 let spotTick = {
     //行情限制数据处理时间间隔
@@ -18,6 +23,7 @@ let spotTick = {
     FundingNextTmStr: '',
     FundingLongRStr: '',
     //初始化全局广播
+    tabsActive: 0,
     initEVBUS: function(){
         let that = this
         //tick行情全局广播
@@ -107,10 +113,8 @@ let spotTick = {
         let ass = window.gMkt.AssetD[Sym]
         let FundingNext = ass && ass.FundingNext || 0
         let FundingLongR = (this.getLastTick().FundingLongR || 0).toString().split('%')[0]
-        // let str = `下次资金费率交换时间：${new Date(FundingNext).format('yyyy-MM-dd hh:mm:ss')}<br/>${Number(this.FundingLongR.split('%')[0])>0?this.$t('11634'):this.$t('11635')/*多头需要向空头补偿持仓价值的':'空头需要向多头补偿持仓价值的'*/}${Math.abs(Number(this.FundingLongR.split('%')[0]))}%`
-        this.FundingNextTmStr =gDI18n.$t('10414',{value : (FundingNext?new Date(FundingNext).format('yyyy-MM-dd hh:mm:ss'):'--')})
-        //this.FundingNextTmStr = `下次资金费率交换时间：${FundingNext?new Date(FundingNext).format('yyyy-MM-dd hh:mm:ss'):'--'}`
-        this.FundingLongRStr = `${Number(FundingLongR)>0?G= gDI18n.$t('10014'/*'多头需要向空头补偿持仓价值的'*/): gDI18n.$t('10015'/*'空头需要向多头补偿持仓价值的'*/)}${Math.abs(Number(FundingLongR))}%`
+        this.FundingNextTmStr = `下次资金费率交换时间：${FundingNext?new Date(FundingNext).format('yyyy-MM-dd hh:mm:ss'):'--'}`
+        this.FundingLongRStr = `${Number(FundingLongR)>0?'多头需要向空头补偿持仓价值的':'空头需要向多头补偿持仓价值的'}${Math.abs(Number(FundingLongR))}%`
         
     },
 
@@ -129,7 +133,6 @@ let spotTick = {
         }
         return SymList.map((Sym, i)=>{
             return m('dev', {key: 'dropdown-item'+Sym+i, class: ""}, [
-                // m('hr', {class: "dropdown-divider "}),
                 m('a', { href: "javascript:void(0);", class: "dropdown-item", onclick: function(){
                     that.setSym(Sym)
                 }},[
@@ -143,85 +146,79 @@ let spotTick = {
     //获取当前合约最新行情
     getLastTick: function(){
         let Sym = window.gMkt.CtxPlaying.Sym
+        // console.log(this.lastTick[Sym],"最新行情")
         return this.lastTick[Sym] || {}
+        
+    },
+    //k线
+    getKlineM:function (){
+        return m(kline)
     },
 
-    getLeftTick: function(){
+    getTopTick: function(){
         let type = window.$config.views.headerTick.left.type
         switch(type){
             case 0: 
-                return m("div",{class:"pub-header-tick-left"},[
-                    m(symSelect),
-                    m('span', {class:"pub-header-tick-left-pre-prz is-hidden-touch"+utils.getColorStr(spotTick.getLastTick().color, 'font')},[
-                        spotTick.getLastTick().LastPrz || '--'
+                return m("header",{class : "kline-top"},[
+                    //左边
+                    m("div",{class : "width-div-left"},[
+                        m("div",{class : "spotTick"},[
+                            m("p",{class : "spotTick-left" + utils.getColorStr(spotTick.getLastTick().color, 'font')},[
+                                spotTick.getLastTick().LastPrz || '--'
+                            ]),
+                            "",
+                            m("p",{class : "spotTick-right" + utils.getColorStr(spotTick.getLastTick().rfpreColor,"font")},[
+                                spotTick.getLastTick().rfpre || '--'
+                            ]),
+                        ]),
+                        m("table",{class : ""},[
+                            m("tr",{class : ""},[
+                                m("td",{class : "currency-font has-text-grey table-margin2"},[
+                                    "标记价格："
+                                ]),
+                                m("td",{class : "currency-font has-text-grey width-curren table-margin2"},[
+                                    spotTick.getLastTick().SettPrz || '--'
+                                ]),
+                            ]),
+                            m("tr",{class : ""},[
+                                m("td",{class : "currency-font has-text-grey table-margin2"},[
+                                    "指数价格："
+                                ]),
+                                m("td",{class : "currency-font has-text-grey width-curren table-margin2"},[
+                                    spotTick.getLastTick().indexPrz || '--'
+                                ]),
+                            ]) 
+                        ]),
                     ]),
-                    // m('button', {class:"pub-header-tick-left-pre-button button"+utils.getColorStr(spotTick.getLastTick().rfpreColor)},[
-                    //     spotTick.getLastTick().rfpre || '--'
-                    // ]),
-                    m('span', {class:"pub-header-tick-left-pre-button tag is-hidden-touch"+utils.getColorStr(spotTick.getLastTick().rfpreColor)},[
-                        spotTick.getLastTick().rfpre || '--'
-                    ]),
-                    m('table', {class:"is-hidden-touch"}, [
-                        m('tr', {}, [
-                            m('td', {class:""}, [
-                                m('p', {class:""}, [
-                                    gDI18n.$t('10016',{value : (spotTick.getLastTick().indexPrz || '--')})//"指数价格："+(spotTick.getLastTick().indexPrz || '--')
+                    //右边
+                    m("div",{class : "width-div-right"},[
+                        m("table",{class : "currency-font table-width"},[
+                            m("tr",{class :"table-margin"},[
+                                m("td",{class :"has-text-grey table-margin"},[
+                                    "24H最高："
                                 ]),
-                                m('p', {class:""}, [
-                                    gDI18n.$t('10017',{value : (spotTick.getLastTick().SettPrz || '--')})//"标记价格："+(spotTick.getLastTick().SettPrz || '--')
+                                m("td",{class :"font-textalent-right has-text-black  table-margin"},[
+                                    spotTick.getLastTick().High24 || '--'
                                 ]),
                             ]),
-                            m('td', {class:""}, [
-                                m('p', {class:""}, [
-                                    gDI18n.$t('10018',{value : (spotTick.getLastTick().High24 || '--')})//"24H最高："+(spotTick.getLastTick().High24 || '--')
+                            m("tr",{class :"table-margin"},[
+                                m("td",{class :"has-text-grey table-margin"},[
+                                    "24H最低："
                                 ]),
-                                m('p', {class:""}, [
-                                    gDI18n.$t('10019',{value : (spotTick.getLastTick().Low24 || '--')})//"24H最低："+(spotTick.getLastTick().Low24 || '--')
-                                ]),
-                            ]),
-                            m('td', {class:""}, [
-                                m('div', {class:"dropdown is-hoverable"}, [
-                                    m('div', {class:"dropdown-trigger"}, [
-                                        m('p', {class:""}, [
-                                            gDI18n.$t('10020'),//"资金费率 ",
-                                            m('i', {class:"iconfont iconinfo is-size-7"})
-                                        ]),
-                                    ]),
-                                    m('div', {class:"dropdown-menu"}, [
-                                        m('div', {class:"dropdown-content"}, [
-                                            m('div', {class:"dropdown-item"}, [
-                                                m('p', {class:""}, [
-                                                    spotTick.FundingNextTmStr,
-                                                ]),
-                                                m('p', {class:""}, [
-                                                    spotTick.FundingLongRStr,
-                                                ]),
-                                            ]),
-                                        ]),
-                                    ]),
-                                ]),
-                                m('p', {class:""}, [
-                                    spotTick.getLastTick().FundingLongR || '--'
+                                m("td",{class :"font-textalent-right has-text-black table-margin"},[
+                                    spotTick.getLastTick().Low24 || '--'
                                 ]),
                             ]),
-                            m('td', {class:""}, [
-                                m('p', {class:""}, [
-                                    gDI18n.$t('10021',{value : (spotTick.getLastTick().Volume24 || '--')})//"24H成交量："+(spotTick.getLastTick().Volume24 || '--')
+                            m("tr",{class :"table-margin"},[
+                                m("td",{class :"has-text-grey table-margin"},[
+                                    "持仓量："
                                 ]),
-                                m('p', {class:""}, [
-                                    '≈ '+(spotTick.getLastTick().Volume24ForUSDT || '--')+'USDT'
-                                ]),
-                            ]),
-                            m('td', {}, [
-                                m('p', {class:""}, [
-                                    gDI18n.$t('10022',{value : (spotTick.getLastTick().Turnover24 || '--')})//"持仓量："+(spotTick.getLastTick().Turnover24 || '--')
-                                ]),
-                                m('p', {class:""}, [
-                                    '≈ '+(spotTick.getLastTick().Turnover24ForUSDT || '--')+'USDT'
+                                m("td",{class :"font-textalent-right has-text-black  table-margin"},[
+                                    spotTick.getLastTick().Turnover24 || '--'
                                 ]),
                             ]),
                         ])
-                    ])
+                    ]),
                 ])
             case 1:
                 return this.customLeftTick()
@@ -229,6 +226,25 @@ let spotTick = {
                 return  null
         }
     },
+    setTabsActive: function(param){
+        this.tabsActive = param
+      },
+    getContent: function(){
+        switch(this.tabsActive){
+            case 0:
+                return m(transfer)
+            case 1:
+                return m(wlt)
+        }
+    },
+    //最新成交
+    LatestDeal:function (){
+        return 
+    },
+
+    //合约简介
+    ContractIntroduction:function (){},
+
     customLeftTick: function(){
 
     }, 
@@ -237,11 +253,7 @@ let spotTick = {
         switch(type){
             case 0: 
                 return m("div",{class:"pub-header-tick-right"},[
-                    // m('button', {class: "button is-white is-rounded",}, [
-                    //     m('span', {class: "icon is-medium"},[
-                    //         m('i', {class: "iconfont iconshezhi1 fas fa-2x", "aria-hidden": true })
-                    //     ]),
-                    // ]),
+
                 ])
             case 1:
                 return this.customRightTick()
@@ -254,8 +266,6 @@ let spotTick = {
     },
 
 }
-
-import symSelect from './symSelect'
 export default {
     oninit: function(vnode){
         
@@ -264,16 +274,34 @@ export default {
         spotTick.initEVBUS()
         spotTick.subTick()
     },
-    view: function(vnode) {
-        
-        return m("div",{class:"pub-header-tick box is-flex"},[
-            spotTick.getLeftTick(),
-            m('.spacer'),
-            spotTick.getRightTick()
+    view:function(vnode){
+        return m("div",[
+            spotTick.getTopTick(),
+            spotTick.getKlineM(),
+            m("div",{class:"pub-dish-and-new-trade box h100"},[
+                m("div",{class:"pub-dish-and-new-trade-tabs tabs"},[
+                    m("ul",[
+                      m("li",{class:""+(spotTick.tabsActive == 0?' is-active':'')},[
+                        m("a",{class:"", onclick: function(){
+                            spotTick.setTabsActive(0)
+                        }},[
+                          '最新成交'
+                        ])
+                      ]),
+                      m("li",{class:""+(spotTick.tabsActive == 1?' is-active':'')},[
+                        m("a",{class:"", onclick: function(){
+                            spotTick.setTabsActive(1)
+                        }},[
+                          '合约简介'
+                        ])
+                      ])
+                    ]),
+                ]),
+                spotTick.getContent()
+            ]),
         ])
     },
     onbeforeremove: function(vnode) {
         spotTick.rmEVBUS()
     },
-    
 }

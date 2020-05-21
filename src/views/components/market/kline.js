@@ -240,10 +240,10 @@ let obj = {
         //     name: 'VOL',
         //     title: 'Volume'
         // },
-        {
-            name: 'MA',
-            title: 'Moving Average'
-        },
+        // {
+        //     name: 'MA',
+        //     title: 'Moving Average'
+        // },
         {
             name: 'MACD',
             title: 'Moving Average Convergence / Divergence'
@@ -330,11 +330,11 @@ let obj = {
             name: "2h",
             title: gDI18n.$t('10030'),//"2小时"
         },
-        '240': {
-            type: '240',
-            name: "4h",
-            title: gDI18n.$t('10031'),//"4小时"
-        },
+        // '240': {
+        //     type: '240',
+        //     name: "4h",
+        //     title: gDI18n.$t('10031'),//"4小时"
+        // },
         'D': {
             type: 'D',
             name: "D",
@@ -351,6 +351,8 @@ let obj = {
             title: gDI18n.$t('10034'),//"1月"
         },
     },
+    klineTimeListOpen: false,
+    klineTargetListOpen: false,
     //平均线指标信息
     targetAverage: {
         MA5: {},
@@ -495,6 +497,15 @@ let obj = {
             }
         })
 
+        //body点击事件广播
+        if(this.EV_ClICKBODY_unbinder){
+            this.EV_ClICKBODY_unbinder()
+        }
+        this.EV_ClICKBODY_unbinder = window.gEVBUS.on(gEVBUS.EV_ClICKBODY,arg=> {
+            that.klineTimeListOpen = false
+            that.klineTargetListOpen = false
+        })
+
 
     },
     //删除全局广播
@@ -514,17 +525,28 @@ let obj = {
         if (this.EV_KLINE_UPD_unbinder) {
             this.EV_KLINE_UPD_unbinder();
         }
+        if(this.EV_ClICKBODY_unbinder){
+            this.EV_ClICKBODY_unbinder()
+        }
     },
     initKline: function () {
         let that = this
+
+        // 设置k线模块高度 start
+        if(window.isMobile){
+            let height = window.innerHeight
+            document.querySelector('.pub-layout-m .pub-kline .pub-kline-iframe').style.height = height/2+'px'
+        }
+        // 设置k线模块高度 end】
+
         window.gTvWidgetFT = new TradingView.widget({
             debug: false, // uncomment this line to see Library errors and warnings in the console
             fullscreen: false,
             autosize: true,
             symbol: gMkt.CtxPlaying.Sym || "new",
-            interval: gMkt.Typ2Res[Typ],
+            interval: gMkt.Typ2Res[gMkt.CtxPlaying.Typ],
             container_id: "tv_chart_container",
-
+            preset: window.isMobile?"mobile":'',
             //	BEWARE: no trailing slash is expected in feed URL
             datafeed: new TDataFeeder(),//new Datafeeds.UDFCompatibleDatafeed("https://demo_feed.tradingview.com"),
             library_path: "./libs/tradingview/",
@@ -549,7 +571,7 @@ let obj = {
                 "header_chart_type",
                 // "header_indicators"
             ],
-            enabled_features: [""],
+            enabled_features: [],
             charts_storage_url: 'http://saveload.tradingview.com',
             charts_storage_api_version: "1.1",
             client_id: 'tradingview.com',
@@ -569,10 +591,17 @@ let obj = {
                 'mainSeriesProperties.candleStyle.borderDownColor': "#FF5935",
                 'mainSeriesProperties.candleStyle.wickUpColor': '#4DC49F',
                 'mainSeriesProperties.candleStyle.wickDownColor': '#FF5935',
+                "paneProperties.legendProperties.showLegend": false, //左侧ma默认收缩
+                // 'scalesProperties.showLeftScale': false,
+                'paneProperties.legendProperties.showSeriesTitle': false, // 隐藏合约名称显示
             },
             favorites: {
                 intervals: ["1", "5", "15", "30", "60", "120", "240", "D", "3D", "W"],
                 chartTypes: [],//["candles", "Line"]
+            },
+            widgetbar: {
+                details: false,
+                watchlist: false,
             },
         });
         window.gTvWidgetFT.onChartReady(function () {
@@ -796,7 +825,7 @@ let obj = {
                 break;
         }
     },
-    setKCrossTime: function (val, oldVal) {
+    setKCrossTime: function (val) {
         let that = this;
 
         if (!window.gTvWidgetFT) return
@@ -853,6 +882,31 @@ let obj = {
             })
         }
     },
+    getTimeList: function(){
+        let that = this
+        let timeList = Object.keys(this.timeList)
+        return timeList.map((key, i) =>{
+            let item = that.timeList[key]
+            return m('button', {key: "klineTimeListItem"+i,class: "button"+(gMkt.CtxPlaying.Typ == item.name?' has-text-primary':''), onclick: function(){
+                obj.setKCrossTime(item.type)
+            }}, [
+                item.title
+            ])
+        })
+    },
+    getTargetList: function(){
+        let that = this
+        let timeList = Object.keys(this.targetList)
+        return timeList.map((key, i) =>{
+            let item = that.targetList[key]
+            return m('button', {key: "klineTimeListItem"+i,class: "button"+(obj.targetActive.name == item.name?' has-text-primary':''), onclick: function(){
+                obj.createTarget(item.name)
+                
+            }}, [
+                item.name
+            ])
+        })
+    }
 }
 
 export default {
@@ -865,8 +919,72 @@ export default {
     },
     view: function (vnode) {
 
-        return m("div", { class: "pub-kline box has-text-centered" }, [
-            m('#tv_chart_container', { class: "" })
+        return m("div", { class: "pub-kline"+(window.isMobile?'':' box') }, [
+            m('div', {class:"pub-kline-btns buttons has-addons is-hidden-desktop"}, [
+                // m('button', {class:"button is-selected"}, [
+                //     '分时'
+                // ]),
+                m('div', {class:"dropdown is-hidden-desktop"+(obj.klineTimeListOpen?' is-active':'')}, [
+                    m('div', {class:"dropdown-trigger", onclick: function(e){
+                        obj.klineTimeListOpen = !obj.klineTimeListOpen
+                        window.stopBubble(e)
+                    }}, [
+                        m('button', {class:"button is-selected"+(obj.klineTimeListOpen?' has-text-primary':'')}, [
+                            '分时'
+                        ]),
+                    ]),
+                    m('div', {class:"dropdown-menu"}, [
+                        m('div', {class:"dropdown-content"}, [
+                            obj.getTimeList()
+                        ]),
+                    ]),
+                ]),
+                m('button', {class:"button is-selected"+(gMkt.CtxPlaying.Typ == '1m'?' has-text-primary':''), onclick: function(){
+                    obj.setKCrossTime('1')
+                    // obj.klineTimeListOpen = false
+                }}, [
+                    '1分'
+                ]),
+                m('button', {class:"button is-selected"+(gMkt.CtxPlaying.Typ == '30m'?' has-text-primary':''), onclick: function(){
+                    obj.setKCrossTime('30')
+                    // obj.klineTimeListOpen = false
+                }}, [
+                    '30分'
+                ]),
+                m('button', {class:"button is-selected"+(gMkt.CtxPlaying.Typ == '1h'?' has-text-primary':''), onclick: function(){
+                    obj.setKCrossTime('60')
+                    // obj.klineTimeListOpen = false
+                }}, [
+                    '1小时'
+                ]),
+                
+                m('div', {class:"dropdown is-hidden-desktop is-right"+(obj.klineTargetListOpen?' is-active':'')}, [
+                    m('div', {class:"dropdown-trigger", onclick: function(e){
+                        obj.klineTargetListOpen = !obj.klineTargetListOpen
+                        window.stopBubble(e)
+                    }}, [
+                        m('button', {class:"button is-selected"}, [
+                            '指标'
+                        ]),
+                    ]),
+                    m('div', {class:"dropdown-menu"}, [
+                        m('div', {class:"dropdown-content"}, [
+                            obj.getTargetList()
+                        ]),
+                    ]),
+                ]),
+            ]),
+            
+            /**
+             * <div class="buttons has-addons">
+                <button class="button is-success is-selected">Yes</button>
+                <button class="button">Maybe</button>
+                <button class="button">No</button>
+                </div>
+             */
+            m("div", { class: "pub-kline-iframe"}, [
+                m('#tv_chart_container', { class: "" })
+            ])
         ])
     },
     onbeforeremove: function (vnode) {

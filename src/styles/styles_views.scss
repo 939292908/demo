@@ -269,6 +269,31 @@ hr {
 .pub-kline  {
     @extend %side-pa;
     height: 100%;
+    .pub-kline-iframe {
+        height: 100%;
+    }
+
+    .pub-kline-btns {
+        @extend %ma-0;
+        display: flex;
+        >*{
+            flex: 1;
+        }
+
+        button {
+            @extend %ma-0;
+            border-radius: 0;
+            border-bottom: 0;
+            border-color: $tradingview-bg;
+        }
+
+        .dropdown-content {
+            @extend %pa-0;
+            button {
+                width: 50%;
+            }
+        }
+    }
 
     #tv_chart_container {
         height: 100%;
@@ -582,6 +607,335 @@ hr {
 }
 // 杠杠调整 end
 
+//移动端列表 start
+.pub-layout-m{
+    @extend %py-2;
+    margin-top: 3.25rem;
+}
+.card-content{
+    @extend %pa-3;
+}
+.delegation-list-phistory{
+    @extend %font-6;
+}
+.text-none{
+    text-align: center;
+    @extend %font-4;
+    display: flex;
+    flex-direction: column;
+    padding-top: 45%;
+}
+.icon-right-i{
+    width: 2rem;
+}
+
+//筛选框样式 start
+.a-text-left{
+    text-align: left;
+    @extend %side-px;
+    @extend %py-2;
+}
+
+.pub-order-m{
+    @extend %pl-0;
+}
+
+.scroll-y{
+    max-height: 194px;
+    overflow-y: scroll
+}
+
+//筛选框样式 end
+.transform-for-icon{
+    transform: rotate(180deg);
+    -ms-transform:rotate(180deg); /* Internet Explorer */
+    -moz-transform:rotate(180deg); /* Firefox */
+    -webkit-transform:rotate(180deg); /* Safari 和 Chrome */
+    -o-transform:rotate(180deg);
+}
+
+.mobile-list{
+    width: 100%;
+    @extend %pa-3;
+    @extend %side-my;
+
+    .theadList-transaction{
+        display: flex;
+        justify-content:space-between;
+        text-align: left;
+
+        .theadList-transaction-p1{
+            @extend %font-4;
+        }
+        .theadList-transaction-p2{
+            @extend %font-3;
+        }
+    }
+
+    .theadList-profit-loss{
+        display: flex;
+        justify-content:start;
+        text-align: left;
+        @extend %side-mt;
+        @extend %font-1;
+
+        .theadList-profit-loss-p1,
+        .theadList-profit-loss-p2{
+            width: 50%;
+        }
+        .text-right{
+            text-align: right;
+        }
+        .theadList-profit2{
+            display: flex;
+            justify-content: start;
+        }
+        .fomt-blacl{
+            align-items: center;
+        }
+    }
+
+    .mobile-div{
+        @extend %font-5;
+    }
+
+    .mobile-font{
+        display: inline-block;
+        @extend %pl-2;
+        @extend %font-1;
+    }
+
+    .theadList-time{
+        width: 50%;
+        text-align: right;
+    }
+}
+//移动端列表 end
+.pub-layout-m-details{
+    @extend %side-px;
+}
+
+//移动端详情 start
+.details-header{
+     
+    .navbar-item{
+        display: inline-block;
+        @extend %side-pa;
+    }
+
+    //中间内容
+    .details-body{
+
+        .details-body-list{
+            @extend %pb-3;
+            display: flex;
+            justify-content: space-between;
+
+            .details-body-title{
+                @extend %font-5;
+            }
+
+            .details-body-title2{
+                @extend %font-3;
+            }
+        } 
+
+        .details-body-conent{
+            @extend %side-py;
+            display: flex;
+            justify-content: space-between;
+
+            .font-div{
+                @extend %font-3;
+
+                .font-p{
+                    @extend %font-3;
+                }
+
+                .p-only{
+                    text-align: right;
+                }
+            }
+
+            .font-div-bottom{
+                @extend %font-3;
+            }
+        }
+
+        .bottom-sty{
+            @extend %pt-3;
+            @extend %font-5;
+
+        }
+    }
+}
+
+
+//移动端详情 end
+//移动端搜索框
+.search-bar{
+    width: 100%;
+    z-index: 999;
+    @extend %box-shadow;
+    position: fixed;
+    top: 0;
+    left: 0;
+    @extend %side-pa;
+}
+    .modal-card-body-list{
+        @extend %side-pa;
+    }
+    .search-bar-header{
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .search-gmex{
+        @extend %font-5;
+    }
+
+    .search-bi-name{
+        @extend %pt-3;
+    } 
+       
+    .search-bi-name-p{
+        @extend %font-3;
+        @extend %pb-3;
+    }
+
+    .search-k-d{
+        width: 100%;
+    }
+
+    .select-sty{
+        width: 100%;
+        @extend %font-3;
+    }
+
+    .option-list{
+        @extend %font-3;
+    }
+
+    //重置完成按钮
+    .reset-complete{
+        width: 100%;
+        display: flex;
+        justify-content: space-around;
+        @extend %pt-3;
+    }
+
+    .reset-button{
+        width: 48%;
+        height: 35px;
+    }
+
+    .button-styl{
+        width:65px;
+        height:28px;
+        @extend %font-2; 
+        @extend %mb-3;
+        &:not(:last-child){
+            @extend %mr-3;
+        }
+    }
+
+//k线页面样式start
+.kline-top{
+    @extend %side-px;
+    display: flex;
+    justify-content: space-between;
+    height:100%;
+    
+
+    .spotTick{
+        display: flex;
+        justify-content: start;
+
+        .spotTick-left{
+            @extend %font-8;
+            @extend %font-weight-bold;
+        }
+
+        .spotTick-right{
+            display: inline-block;
+            @extend %pl-3;
+            line-height: 2.3;
+        }
+    }
+
+    .spotTick-buttom{
+        display: flex;
+        justify-content: start;
+    }
+}
+
+.width-div-right{
+    width: 45%;
+}
+.width-div-left{
+    width: 70%;
+}
+.width-curren{
+    width: 65%;
+}
+.font-textalent-right{
+    text-align: right !important;
+}
+
+.table-width{
+    width: 100%;
+}
+
+.table-margin{
+    // display: inline-block;
+    @extend %pt-4;
+}
+.table-margin2{
+    // display: inline-block;
+    @extend %pt-2;
+}
+//通用字体大小start
+.currency-font{
+    @extend %font-2;
+}
+
+.centent-a-default{
+    @extend %font-5;
+}
+
+.centent-a{
+    @extend %font-7;
+}
+//通用字体大小end
+//首页仓位选择框样式start
+.pos-id{
+    @extend %side-mb;
+}
+
+.card-first-head{
+    max-height: 600px;
+    overflow-y: scroll;
+}
+
+//首页仓位选择框样式end
+.pos-info{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.level-right-m{
+    @extend %mt-0;
+}
+
+.kLine-body-list{
+    height: 100%;
+    overflow-y: scroll;
+}
+//k线页面样式end
+
+
+
 
 // pc端列表 start
 .pub-trade-list {
@@ -878,7 +1232,7 @@ hr {
 
 // 手机端k线页面 start
 .pub-m-kline-box {
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     bottom: 0;
@@ -890,6 +1244,14 @@ hr {
     transition: all .2s;
     overflow: auto;
 }
+
+//新增k线顶部样式 start
+.conent-div-top{
+    height:7%;
+    width:100%;
+}
+//新增k线顶部样式 end
+
 
 .pub-m-kline-box.open {
     transform: translateX(0);

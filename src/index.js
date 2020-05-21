@@ -3,9 +3,6 @@ require('./styles/mystyles.scss');
 
 import m from "mithril";
 
-if (true) {
-    m.route.prefix='#!'
-}
 //////////////////////////////////////////////////////////////////////
 require('./models/initEVBUS')
 

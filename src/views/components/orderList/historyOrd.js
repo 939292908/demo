@@ -2,6 +2,135 @@ var m = require("mithril")
 
 let obj = {
     posList: [],
+    setType : false,
+    contract:[],
+    purchase: [],
+    stateType: [],
+    //
+    tabsActive:0,
+    tabsListOpen: false,
+    
+    tabsActive2:0,
+    tabsListOpen2: false,
+
+    navDrawerInfo:{
+        Sym: '全部',
+        dir: '全部',
+        status: '全部'
+    },
+    oldNavDrawerInfo:{
+        Sym: '全部',
+        dir: '全部',
+        status: '全部'
+    },
+    contractName : [
+        {
+            name:"全部"
+        },
+        {
+            name:"BTC/USDT永续"
+        },
+        {
+            name:"ETH/USDT永续"
+        },
+        {
+            name:"XRP/USDT永续"
+        },
+        {
+            name:"EOS/USDT永续"
+        },
+        {
+            name:"LTC/USDT永续"
+        },
+        {
+            name:"ETC/USDT永续"
+        },
+        {
+            name:"BCH/USDT永续"
+        },
+        {
+            name:"BTC永续"
+        },
+        {
+            name:"ETH永续"
+        },
+        {
+            name:"BTC 季度0626"
+        },
+        {
+            name:"ETH 季度0626"
+        },
+        {
+            name:"BTC/UT永续"
+        },
+    ],
+    dirStrList2:[
+        {
+            name:"全部"
+        },
+        {
+            name:"买入"
+        },
+        {
+            name:"卖出"
+        },
+        {
+            name:"买入强平"
+        },
+        {
+            name:"卖出强平"
+        },
+        {
+            name:"买入开多"
+        },
+        {
+            name:"卖出开空"
+        },
+        {
+            name:"买入平空"
+        },
+        {
+            name:"卖出平多"
+        },
+        {
+            name:"买入强制平空"
+        },
+        {
+            name:"卖出强制平多"
+        },
+        {
+            name:"买入ADL平空"
+        },
+        {
+            name:"卖出ADL平多"
+        },
+        {
+            name:"买入平空并开多"
+        },
+        {
+            name:"卖出平多并开空"
+        },
+    ],
+    tabsList:[
+        "全部","BTC/USDT永续","ETH/USDT永续","XRP/USDT永续","EOS/USDT永续","LTC/USDT永续","ETC/USDT永续","BCH/USDT永续","BTC永续","ETH永续","BTC 季度0626","ETH 季度0626","BTC/UT永续"
+    ],
+    dirStrList:[
+        "全部","买入","卖出","买入强平","卖出强平","买入开多","卖出开空","买入平空","卖出平多","买入强制平空","卖出强制平多","买入ADL平空","卖出ADL平多","买入平空并开多","卖出平多并开空"
+    ],
+    statusStrList:[
+        {
+            name:"全部",
+            id:0
+        },
+        {
+            name:"成交",
+            id:1
+        },
+        {
+            name:"撤单",
+            id:2
+        },
+    ],
     theadList: [
         {
             title: gDI18n.$t('10053'),//'合约',
@@ -179,25 +308,95 @@ let obj = {
                 obj.StopL = obj.StopL ? Number(obj.StopL || 0).toFixed2(PrzMinIncSize) : '--'
 
                 posList.push(obj)
+                
             }
 
         }
         posList.sort(function (a, b) {
             return b.At - a.At
         })
-        this.posList = posList
+        // this.posList = posList
+        //根据 obj.navDrawerInfo筛选this.posList数据
+        if(this.navDrawerInfo.Sym == this.oldNavDrawerInfo.Sym && this.navDrawerInfo.dir == this.oldNavDrawerInfo.dir && this.navDrawerInfo.status == this.oldNavDrawerInfo.status){
+            this.posList = posList
+            console.log(posList,"原始数据2")
+         }else if(this.navDrawerInfo.Sym != this.oldNavDrawerInfo.Sym && this.navDrawerInfo.dir == this.oldNavDrawerInfo.dir && this.navDrawerInfo.status == this.oldNavDrawerInfo.status){
+            let newposList=[]
+            for (let i=0; i<posList.length;i++){
+                if(posList[i].Sym == this.navDrawerInfo.Sym){
+                    newposList.push(posList[i])
+                }   
+            }
+            this.posList = newposList
+            console.log(newposList,"合约名称选择后数据")
+         }else if(this.navDrawerInfo.Sym == this.oldNavDrawerInfo.Sym && this.navDrawerInfo.dir != this.oldNavDrawerInfo.dir && this.navDrawerInfo.status == this.oldNavDrawerInfo.status){
+            let newposList=[]
+            for (let i=0; i<posList.length;i++){
+                if(posList[i].DirStr == this.navDrawerInfo.dir){
+                    newposList.push(posList[i])
+                }   
+            }
+            this.posList = newposList
+            console.log(newposList,"买入卖出选择后数据")
+         }else if(this.navDrawerInfo.Sym == this.oldNavDrawerInfo.Sym && this.navDrawerInfo.dir == this.oldNavDrawerInfo.dir && this.navDrawerInfo.status != this.oldNavDrawerInfo.status){
+            let newposList=[]
+            for (let i=0; i<posList.length;i++){
+                if(posList[i].StatusStr == this.navDrawerInfo.status){
+                    newposList.push(posList[i])
+                }   
+            }
+            this.posList = newposList
+            console.log(newposList,"状态选择后数据")
+         }else if(this.navDrawerInfo.Sym != this.oldNavDrawerInfo.Sym && this.navDrawerInfo.dir != this.oldNavDrawerInfo.dir && this.navDrawerInfo.status == this.oldNavDrawerInfo.status){
+            let newposList=[]
+            for (let i=0; i<posList.length;i++){
+                if(posList[i].Sym == this.navDrawerInfo.Sym && posList[i].DirStr == this.navDrawerInfo.dir){
+                    newposList.push(posList[i])
+                }   
+            }
+            this.posList = newposList
+            console.log(newposList,"名称和买卖选择后数据")
+         }else if(this.navDrawerInfo.Sym != this.oldNavDrawerInfo.Sym && this.navDrawerInfo.dir == this.oldNavDrawerInfo.dir && this.navDrawerInfo.status != this.oldNavDrawerInfo.status){
+            let newposList=[]
+            for (let i=0; i<posList.length;i++){
+                if(posList[i].Sym == this.navDrawerInfo.Sym && posList[i].StatusStr == this.navDrawerInfo.status){
+                    newposList.push(posList[i])
+                }   
+            }
+            this.posList = newposList
+            console.log(newposList,"名称和状态选择后数据")
+         }else if(this.navDrawerInfo.Sym == this.oldNavDrawerInfo.Sym && this.navDrawerInfo.dir != this.oldNavDrawerInfo.dir && this.navDrawerInfo.status != this.oldNavDrawerInfo.status){
+            let newposList=[]
+            for (let i=0; i<posList.length;i++){
+                if(posList[i].DirStr == this.navDrawerInfo.dir && posList[i].StatusStr == this.navDrawerInfo.status){
+                    newposList.push(posList[i])
+                }   
+            }
+            this.posList = newposList
+            console.log(newposList,"买卖和状态选择后数据")
+         }else if(this.navDrawerInfo.Sym != this.oldNavDrawerInfo.Sym && this.navDrawerInfo.dir != this.oldNavDrawerInfo.dir && this.navDrawerInfo.status != this.oldNavDrawerInfo.status){
+            let newposList=[]
+            for (let i=0; i<posList.length;i++){
+                if(posList[i].DirStr == this.navDrawerInfo.dir && posList[i].StatusStr == this.navDrawerInfo.status && posList[i].Sym == this.navDrawerInfo.Sym){
+                    newposList.push(posList[i])
+                }   
+            }
+            this.posList = newposList
+            console.log(newposList,"名称和买卖和状态选择后数据")
+         }
     },
 
     getTheadList: function () {
         return this.theadList.map(function (item, i) {
-            return m("th", { key: "historyOrdtHeadItem" + i, class: "" + item.class }, [
+            return m("th", { key: "historyOrdtHeadItem" + i, class: " " + item.class }, [
                 item.title
             ])
         })
     },
+
     getPosList: function () {
         return this.posList.map(function (item, i) {
-            return m("tr", { key: "historyOrdTableListItem" + i, class: "" }, [
+            return m("tr", { key: "historyOrdTableListItem" + i, class: " "}, [
                 m("td", { class: "" }, [
                     m("p", { class: " " }, [
                         utils.getSymDisplayName(window.gMkt.AssetD, item.Sym)
@@ -248,6 +447,7 @@ let obj = {
                 ]),
                 m("td",{class:"cursor-pointer"+(" historyOrdTableListItemCopy"+i), "data-clipboard-text": item.PId, onclick: function(e){
                     window.$copy(".historyOrdTableListItemCopy"+i)
+                    
                 }},[
                     item.PId.substr(-4),
                     ' ',
@@ -256,6 +456,384 @@ let obj = {
             ])
         })
     },
+    //获取select筛选
+    getOptions:function (val){
+        let value = val
+        if(value.includes('/' && '永续')){
+            value = value.replace("/",".").slice(0,-2)
+        }else if(value.includes('季度')){
+            value = value.slice(0,-7)
+        }else if(value.includes('永续')){
+            value = value.slice(0,-2)
+        }else {
+            value = value
+        }
+        obj.navDrawerInfo.Sym = value
+        console.log(obj.navDrawerInfo.Sym,"合约名称")
+    },
+    getOptions2:function(val){
+        let value2 = val
+        obj.navDrawerInfo.dir = value2
+        console.log(obj.navDrawerInfo.dir,"买入卖出")
+    },
+    //完成按钮
+    submitNavDrawer:function(){
+        let that = this
+        obj.initObj()
+        setTimeout(function(){
+            that.setType = false
+        },200)
+        console.log(obj.navDrawerInfo,"新状态")
+    },
+    //重置按钮
+    resetNavDrawerInfo(){
+        obj.navDrawerInfo.Sym = '全部';
+        obj.navDrawerInfo.dir = '全部';
+        obj.navDrawerInfo.status = '全部';
+        obj.initObj()
+        obj.tabsActive2 = 0;
+        obj.tabsActive = 0;
+    },
+    closeLeverageMode: function(){
+        this.setType = false   
+    },
+    setTabsActive: function(param){
+        this.tabsActive = param
+    },
+    setTabsActive2: function(param){
+        this.tabsActive2 = param
+    },
+    getTabsList: function(){
+        return this.tabsList.map(function(item,i){
+            return m("p",{class:"a-text-left"+(obj.tabsActive == i?' is-active':'')},[
+                m("a",{class:"",key: "orderListTabsItem"+i, class:"", href:"javascript:void(0);", onclick: function(){
+                    obj.setTabsActive(i)
+                    obj.tabsListOpen = !obj.tabsListOpen
+                    obj.getOptions(obj.tabsList[obj.tabsActive])
+                }},[
+                    item
+                ])
+            ])
+        })
+    },
+    getTabsList: function(){
+        return this.tabsList.map((item, i)=>{
+            return m('dev', {key: 'dropdown-item'+item+i, class: ""}, [
+                // m('hr', {class: "dropdown-divider "}),
+                m('a', { href: "javascript:void(0);", class: "dropdown-item"+(obj.tabsActive == i?' has-text-primary':''), onclick: function(){
+                    obj.setTabsActive(i)
+                    obj.tabsListOpen = !obj.tabsListOpen
+                    obj.getOptions(obj.tabsList[obj.tabsActive])
+                }},[
+                    item
+                ])
+            ])
+            
+        })
+    },
+    getTabsList2: function(){
+        return this.dirStrList.map(function(item,i){
+            return m("p",{class:"a-text-left"+(obj.tabsActive2 == i?' is-active':'')},[
+                m("a",{key: "orderListTabsItem"+i, class:"", href:"javascript:void(0);", onclick: function(){
+                    obj.setTabsActive2(i)
+                    obj.tabsListOpen2 = !obj.tabsListOpen2
+                    obj.getOptions2(obj.dirStrList[obj.tabsActive2])
+                }},[
+                    item
+                ])
+            ])
+        })
+    },
+    getTabsList2: function(){
+        return this.dirStrList.map((item, i)=>{
+            return m('dev', {key: 'dropdown-item'+item+i, class: ""}, [
+                // m('hr', {class: "dropdown-divider "}),
+                m('a', { href: "javascript:void(0);", class: "dropdown-item"+(obj.tabsActive2 == i?' has-text-primary':''), onclick: function(){
+                    obj.setTabsActive2(i)
+                    obj.tabsListOpen2 = !obj.tabsListOpen2
+                    obj.getOptions2(obj.dirStrList[obj.tabsActive2])
+                }},[
+                    item
+                ])
+            ])
+            
+        })
+    },
+    getSelectOptions: function (){
+        return m('div', {class: 'pub-set-lever'}, [
+            m("div", { class: "modal" + (obj.setType ? " is-active" : ''), }, [
+              m("div", { class: "modal-background" }),
+              m("div", { class: "modal-card" }, [
+                m("header", { class: "pub-set-lever-head modal-card-head modal-card-body-list" }, [
+                    m("p", { class: "modal-card-title" }, [
+                        '筛选'
+                      ]),
+                    m("button", {
+                    class: "delete", "aria-label": "close", onclick: function () {
+                        obj.closeLeverageMode()
+                    }
+                    }),
+                ]),
+                m("section", { class: "pub-set-lever-content modal-card-body modal-card-body-list" }, [
+                    m("div",{class : "search-bi-name"},[
+                        m("p",{class : "search-bi-name-p has-text-black"},[
+                            "合约名称"
+                        ]),
+                        m("div",{class:" pub-place-order-m pub-order-m"},[
+                            m('div', {class: "dropdown pub-place-order-select is-hidden-desktop" + (obj.tabsListOpen?' is-active':'')}, [
+                                m('.dropdown-trigger', {}, [
+                                    m('button', {class: "button is-white is-fullwidth",'aria-haspopup':true, "aria-controls": "dropdown-menu2", onclick: function(e){
+                                        obj.tabsListOpen = !obj.tabsListOpen
+                                    }}, [
+                                        m('div', {}, [
+                                            m('span',{ class: "",id:"selectId"}, obj.tabsList[obj.tabsActive]),
+                                            m('span', {class: "icon "},[
+                                                m('i', {class: "iconfont iconxiala has-text-primary", "aria-hidden": true })
+                                            ]),
+                                        ])
+                                    ]),
+                                ]),
+                                m('.dropdown-menu', {class:"scroll-y", id: "dropdown-menu2", role: "menu"}, [
+                                    m('.dropdown-content', {class:"has-text-centered"}, [
+                                        obj.getTabsList()
+                                    ]),
+                                ]),
+                            ]),
+                        ])
+
+
+                    ]),
+                    m("div",{class : "search-bi-name"},[
+                        m("p",{class : "search-bi-name-p"},[
+                            "买入/卖出"
+                        ]),
+                        m("div",{class:" pub-place-order-m pub-order-m"},[
+                            m('div', {class: "dropdown pub-place-order-select is-hidden-desktop" + (obj.tabsListOpen2?' is-active':'')}, [
+                                m('.dropdown-trigger', {}, [
+                                    m('button', {class: "button is-white is-fullwidth",'aria-haspopup':true, "aria-controls": "dropdown-menu3", onclick: function(e){
+                                        obj.tabsListOpen2 = !obj.tabsListOpen2
+                                    }}, [
+                                        m('div', {}, [
+                                            m('span',{ class: "",id:"selectId2"}, obj.dirStrList[obj.tabsActive2]),
+                                            m('span', {class: "icon "},[
+                                                m('i', {class: "iconfont iconxiala has-text-primary", "aria-hidden": true })
+                                            ]),
+                                        ])
+                                    ]),
+                                ]),
+                                m('.dropdown-menu', {class:"scroll-y", id: "dropdown-menu3", role: "menu"}, [
+                                    m('.dropdown-content', {class:"has-text-centered"}, [
+                                        obj.getTabsList2()
+                                    ]),
+                                ]),
+                            ]),
+                        ])
+                    ]),
+                    m("div",{class : "search-bi-name"},[
+                        m("p",{class : "search-bi-name-p"},[
+                            "状态"
+                        ]),
+                        m("div",{class : "search-k-d"},[
+                            obj.statusStrList.map(function (item,i){
+                                return m("a",{class : "button is-primary is-outlined button-styl",onclick:function(i){
+                                    if(item.name == "成交"){
+                                        obj.navDrawerInfo.status = "全部成交"
+                                    }else if (item.name == "撤单"){
+                                        obj.navDrawerInfo.status = "已撤单"
+                                    }else{
+                                        obj.navDrawerInfo.status = item.name
+                                    }
+                                }},[
+                                    item.name
+                                ])
+                            })
+                        ]),
+                    ]),
+                ]),
+                m("footer", { class: "pub-set-lever-foot modal-card-foot modal-card-body-list" }, [
+                    m("div",{class : "reset-complete"},[
+                        m("a",{class : "reset-button button is-primary is-outlined",onclick: function (){
+                            obj.resetNavDrawerInfo()
+                        }},[
+                            "重置"
+                        ]),
+                        m("a",{class : "reset-button button is-primary is-outlined",onclick:function(){
+                            obj.submitNavDrawer()
+                        }},[
+                            "完成"
+                        ]),
+                    ])
+                ])
+            ]),
+            ])
+        ])     
+    },
+    //移动端历史成交列表
+    getMobileList: function () {
+        let qs = require('qs');
+        return m("div",{class : ""},[
+                m("nav",{class:"pub-layout-m-header is-fixed-top navbar is-transparent", role:"navigation", "aria-label":"main navigation"},[
+                    m('div', {class:"navbar-brand is-flex"}, [
+                        m('a', {class:"navbar-item"}, [
+                            m('a', {class:"",href:"/#!/future",onclick :function (){
+                                obj.resetNavDrawerInfo()
+                            }}, [
+                            m('span', {class:"icon icon-right-i"}, [
+                                m('i', {class:"iconfont iconarrow-left  has-text-black"}),
+                            ]),
+                            ]),
+                        ]),
+                        m('.spacer'),
+                        m("p",{class : "delegation-list-phistory navbar-item has-text-black"},[
+                            "历史委托"
+                            ]),
+                        m('.spacer'),
+                        m('a', {class:"navbar-item"}, [
+                            m('a', {class:"icon icon-right-i navbar-item transform-for-icon",onclick: function(){
+                                obj.setType = true
+                            }}, [
+                                m('i', {class:"iconfont icontoolbar-side"}),
+                            ]),
+                        ]),
+                    ]),
+                ]),
+                //搜索框
+                obj.getSelectOptions(),
+                m("div",{class : "pub-trade-list  pub-layout-m"},[
+                        this.posList.length !=0 ? this.posList.map(function (item, i) {
+                            return m("div",{ key: "historyOrdtHeadItem" + i, class: "card" },[
+                                m("div",{class : "card-content mobile-list"},[
+                                //顶部排列
+                                m("header",{class : "theadList-transaction"},[
+                                    m("p",{class : "theadList-transaction-p1"},[
+                                        utils.getSymDisplayName(window.gMkt.AssetD, item.Sym),
+                                    ]),
+                                    m("p",{class : "theadList-transaction-p2 has-text-primary"},[
+                                        item.displayLever
+                                    ]),
+                                    m("p",{class : "theadList-transaction-p2" + utils.getColorStr(item.Dir, 'font') },[
+                                        item.DirStr
+                                    ]),
+                                    item.StatusStr == "全部成交"?
+                                    m('a',{class : 'theadList-transaction-p2 has-text-primary',href:"/#!/details" + qs.stringify(item)},[
+                                        item.StatusStr
+                                    ])
+                                    :
+                                    m('a',{class : 'button is-white theadList-transaction-p2',disabled:"disabled"},[
+                                        item.StatusStr
+                                    ])
+                                ]),
+                                m("hr",{class :" "}),
+                                //中间排列
+                                m("div",{class : ""},[
+                                    m("div",{class : "theadList-profit-loss" },[
+                                        m("div",{class  : "theadList-profit-loss-p1 has-text-grey-light"},[
+                                            "委托价格：" ,
+                                            m("p",{class : "has-text-black"},[
+                                                item.Prz
+                    
+                                            ])
+                                        ]),
+                                        m("div",{class  : "theadList-profit-loss-p1  has-text-grey-light"},[
+                                            "成交均价：",
+                                            m("p",{class : "has-text-black"},[
+                                                item.PrzF
+                                            ])
+                                        ]),
+                                        m("div",{class  : "theadList-profit-loss-p2  has-text-grey-light"},[
+                                            "委托数量：",
+                                            m("p",{class : "has-text-black"},[
+                                                item.Qty
+                                            ])
+                                        ]),
+                                    ]),
+                                    //平仓手续
+                                    m("div",{class : "theadList-profit-loss"},[
+                                        m("div",{class  : "theadList-profit-loss-p2 has-text-grey-light"},[
+                                            "成交数量：" ,
+                                            m("p",{class : "has-text-black"},[
+                                                item.QtyF
+                                            ])
+                                        ]),
+                                        m("div",{class  : "theadList-profit-loss-p2 has-text-grey-light"},[
+                                            "平仓盈亏：",
+                                            m("p",{class : "has-text-black"},[
+                                                item.PnlCls
+                                            ])
+                                        ]),
+                                        m("div",{class  : "theadList-profit-loss-p2 has-text-grey-light"},[
+                                            "手续费：" + item.FeeCoin,
+                                            m("p",{class : "has-text-black"},[
+                                                item.Fee
+                                            ])
+                                        ]),
+                                    ]),
+                    
+                                    m("div",{class : "theadList-profit-loss"},[
+                                        m("div",{class  : "theadList-profit-loss-p2 has-text-grey-light"},[
+                                            "委托类型：" ,
+                                            m("p",{class : "has-text-black"},[
+                                                item.OTypeStr
+                                            ])
+                                        ]),
+                                        m("div",{class  : "theadList-profit-loss-p2 has-text-grey-light"},[
+                                            "触发条件：",
+                                            m("p",{class : "has-text-black"},[
+                                                item.cond
+                                            ])
+                                        ]),
+                                        m("div",{class  : "theadList-profit-loss-p2 has-text-grey-light"},[
+                                            "委托时间：",
+                                            m("p",{class : "has-text-black"},[
+                                                item.AtStr
+                                            ])
+                                        ]),
+                                    ]),
+                                    m("hr",{class : ""})
+                                ]),
+                                m("footer",{class : "theadList-profit-loss" ,},[
+                                    m("div",{class  : "theadList-profit-loss-p2 has-text-grey-light theadList-profit2"},[
+                                        m("p",{class :""},[
+                                           "委托来源：" 
+                                        ]),
+                                        m("p",{class : "has-text-black"},[
+                                            item.OrdFromStr
+                                        ])
+                                    ]),
+                                    m("div",{class  : "theadList-profit-loss-p2 has-text-grey-light"},[
+                                        " ",
+                                        m("p",{class : "has-text-black"},[
+                                            " "
+                                        ])
+                                    ]),
+                                    m("div",{class:"cursor-pointer theadList-profit-loss-p2 has-text-grey-light theadList-profit2 fomt-blacl"+(" historyOrdTableListItemCopy"+i), "data-clipboard-text": item.PId, onclick: function(e){
+                                        window.$copy(".historyOrdTableListItemCopy"+i)
+                                        obj.copyPid(item.PId)
+                                    }},[
+                                        m("p",{class :""},[
+                                            "仓位ID：" 
+                                         ]),
+                                        
+                                        m("p",{class : "has-text-black"},[
+                                            item.PId.substr(-4),
+                                            m("i",{class : ""},[ " "]),
+                                            m("i",{class:"iconfont iconcopy"}),
+                                        ])  
+                                    ]),
+                                ]),
+                            ])
+                        ])
+                        }):m("div",{class : "text-none has-text-grey-light"},[
+                            m("i",{class : "iconfont icon-box" ,style:"font-size: 60px",},[
+                                
+                            ]),
+                            "暂无委托记录"
+                        ])
+                    ])
+                ])     
+        
+    },
+
     subPosNeedSymTick: function () {
         let oldSubList = window.gMkt.CtxPlaying.subList
         let needSub = []
@@ -290,7 +868,7 @@ let obj = {
     },
     getContent: function () {
         if (window.isMobile) {
-            return null
+            return obj.getMobileList()
         } else {
             let colgroup = m('colgroup', {}, [
                 m('col', { name: "pub-table-2", width: 160 }),
@@ -331,7 +909,7 @@ let obj = {
 
 export default {
     oninit: function (vnode) {
-
+        
     },
     oncreate: function (vnode) {
         obj.initEVBUS()
