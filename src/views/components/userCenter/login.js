@@ -81,7 +81,7 @@ let obj = {
                         })
                         break;
                     default:
-                        $message({title: '未知错误', content: '未知错误', type: 'danger'});
+                        $message({title: gDI18n.$t('10203'/*'未知错误'*/), content: gDI18n.$t('10203'/*'未知错误'*/), type: 'danger'});
                         that.loginLoading = false;
                 }
             }else{
@@ -90,7 +90,7 @@ let obj = {
             }
         }, function(err){
             that.loginLoading = false
-            window.$message({content: '操作超时', type: 'danger'})
+            window.$message({content: gDI18n.$t('10205'/*'操作超时'*/), type: 'danger'})
             console.log('ReqUserLoginCheck => ', err)
         })
     },
@@ -117,7 +117,7 @@ let obj = {
         window.gWebAPI.ReqUserInfo({}, function(param){
             if(param.result.code == 0){
                 that.closeMode()
-                window.$message({title: '登录成功！', content: '登录成功！', type: 'success'})
+                window.$message({title: gDI18n.$t('10204'/*'登录成功！'*/), content: gDI18n.$t('10204'/*'登录成功！'*/), type: 'success'})
                 utils.setItem('login-user-name', param.account.accountName)
             }else{
                 window.$message({title: utils.getWebApiErrorCode(res.result.code), content: utils.getWebApiErrorCode(res.result.code), type: 'danger'})
@@ -126,7 +126,7 @@ let obj = {
             console.log('ReqUserInfo success ==>',param)
         }, function(error){
             that.loginLoading = false
-            window.$message({title: '操作超时！', content: '操作超时！', type: 'danger'})
+            window.$message({title: gDI18n.$t('10205'/*'操作超时！'*/), content: gDI18n.$t('10205'/*'操作超时！'*/), type: 'danger'})
             console.log('ReqUserInfo => ', error)
         })
     },
@@ -178,14 +178,14 @@ export default {
             m('button', {class: "pub-login-btn button is-light is-hidden-touch", onclick: function(){
                 obj.openLoginMode()
             }}, [
-                '登录'
+                gDI18n.$t('10136')//'登录'
             ]),
             m("div",{class:"pub-login-mpdel modal"+ (obj.open?" is-active":''),},[
                 m("div",{class:"modal-background"}),
                 m("div",{class:"modal-card"},[
                     m("header",{class:"pub-login-head modal-card-head"},[
                         m("p",{class:"modal-card-title"},[
-                            '登录'
+                            gDI18n.$t('10136')//'登录'
                         ]),
                         m("button",{class:"delete", "aria-label":"close", onclick: function(){
                             obj.closeMode()
@@ -197,7 +197,7 @@ export default {
                                 m("input",{
                                     class:"input", 
                                     type:"text", 
-                                    placeholder: "请输入邮箱或者手机号", 
+                                    placeholder: gDI18n.$t('10206'/*"请输入邮箱或者手机号"*/), 
                                     value: obj.userName,
                                     oninput: function(e) {
                                         obj.userName = e.target.value
@@ -210,7 +210,7 @@ export default {
                                 m("input",{
                                     class:"input", 
                                     type:"password", 
-                                    placeholder: "请输入登录密码", 
+                                    placeholder: gDI18n.$t('10207'/*"请输入登录密码"*/), 
                                     value: obj.password,
                                     oninput:function(e) {
                                         obj.password = e.target.value
@@ -223,12 +223,12 @@ export default {
                         m("button",{class:"button is-success"+(obj.loginLoading?" is-loading":""), onclick: function(){
                             obj.submit()
                         }},[
-                            '登录'
+                            gDI18n.$t('10136')//'登录'
                         ]),
                         m("button",{class:"button border-4", onclick: function(){
                             obj.closeMode()
                         }},[
-                            '取消'
+                            gDI18n.$t('10052')//'取消'
                         ]),
                     ]),
                 ]) 

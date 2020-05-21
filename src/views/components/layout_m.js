@@ -287,7 +287,7 @@ let obj = {
           window.gWebAPI.needLogin()
         }},[
           m("span",{class:"is-size-3"},[
-            '登录'
+            gDI18n.$t('10136')//'登录'
           ]),
           m('.spacer'),
           m("span",{class:"icon is-large"},[
@@ -304,12 +304,12 @@ let obj = {
         window.gWebAPI.ReqSignOut({}, function(res){
           console.log('ReqSignOut success ==>> ',res)
           if(res.result.code === 0){
-            window.$message({title: '退出登录成功！',content: '退出登录成功！', type: 'success'})
+            window.$message({title: gDI18n.$t('10004'/*'退出登录成功！'*/),content: gDI18n.$t('10004'/*'退出登录成功！'*/), type: 'success'})
           }else{
-            window.$message({title: '退出登录失败！',content: '退出登录失败！', type: 'danger'})
+            window.$message({title: gDI18n.$t('10005'/*'退出登录失败！'*/),content: gDI18n.$t('10005'/*'退出登录失败！'*/), type: 'danger'})
           }
         }, function(err){
-            window.$message({title: '操作超时',content: '操作超时', type: 'danger'})
+            window.$message({title: gDI18n.$t('10006'/*'操作超时'*/),content: gDI18n.$t('10006'/*'操作超时'*/), type: 'danger'})
             console.log('ReqSignOut => ', err)
         })
         break;
@@ -386,17 +386,17 @@ export default {
                 m('hr'),
                 m("div",{class:"navbar-item has-dropdown is-hoverable"},[
                   m("a",{class:"navbar-link"},[
-                    '合约记录'
+                    gDI18n.$t('10236')//'合约记录'
                   ]),
                   m("div",{class:"navbar-dropdown"},[
                     m("a",{class:"navbar-item", onclick: this.signOut},[
-                      '历史委托'
+                      gDI18n.$t('10077')//'历史委托'
                     ]),
                     m("a",{class:"navbar-item", onclick: this.signOut},[
-                      '历史成交'
+                      gDI18n.$t('10237')//'历史成交'
                     ]),
                     m("a",{class:"navbar-item", onclick: this.signOut},[
-                      '合约账单'
+                      gDI18n.$t('10079')//'合约账单'
                     ])
                   ])
                 ])

@@ -156,7 +156,7 @@ let obj = {
     }, function(param){
         if(param.result.code == 0){
             that.getSMSLoading = false
-            window.$message({title: '验证码发送成功！', content: '验证码发送成功！', type: 'success'})
+            window.$message({title: gDI18n.$t('10208'/*'验证码发送成功！'*/), content: gDI18n.$t('10208'/*'验证码发送成功！'*/), type: 'success'})
             console.log(that)
             that.setCountDown()
         }else{
@@ -165,7 +165,7 @@ let obj = {
         console.log('ReqSMSVerifyCode success ==>',param)
     }, function(error){
         that.getSMSLoading = false
-        window.$message({title: '操作超时！', content: '操作超时！', type: 'danger'})
+        window.$message({title: gDI18n.$t('10205'/*'操作超时！'*/), content: gDI18n.$t('10205'/*'操作超时！'*/), type: 'danger'})
         console.log('ReqSMSVerifyCode => ', error)
     })
   },
@@ -200,13 +200,13 @@ export default {
         m("div", { class: "modal-card" }, [
           m("header", { class: "pub-validate-head modal-card-head" }, [
             m("p", { class: "modal-card-title"+(obj.validateStatus != 1?' is-hidden':'') }, [
-              '短信验证'
+              gDI18n.$t('10209')//'短信验证'
             ]),
             m("p", { class: "modal-card-title"+(obj.validateStatus != 2?' is-hidden':'') }, [
-              '谷歌验证'
+              gDI18n.$t('10210')//'谷歌验证'
             ]),
             m("p", { class: "modal-card-title"+(obj.validateStatus != 3?' is-hidden':'') }, [
-              '二次验证'
+              gDI18n.$t('10211')//'二次验证'
             ]),
             m("button", {
               class: "delete", "aria-label": "close", onclick: function () {
@@ -223,7 +223,7 @@ export default {
                       obj.setTabsActive(0)
                     }
                   }, [
-                    '谷歌验证'
+                    gDI18n.$t('10210')//'谷歌验证'
                   ])
                 ]),
                 m("li", { class: "" + (obj.tabsActive == 1 ? ' is-active' : '') }, [
@@ -232,21 +232,21 @@ export default {
                       obj.setTabsActive(1)
                     }
                   }, [
-                    '短信验证'
+                    gDI18n.$t('10209')//'短信验证'
                   ])
                 ]),
               ])
             ]),
 
             m('div', { class: "pub-validate-content-google" + (obj.tabsActive != 0 ? " is-hidden" : '') }, [
-              m('input', { class: "input", type: 'number', placeholder: '请输入谷歌验证码', value: obj.google, oninput: function(e){
+              m('input', { class: "input", type: 'number', placeholder: gDI18n.$t('10212'/*'请输入谷歌验证码'*/), value: obj.google, oninput: function(e){
                 obj.onGoogleInput(e)
               }}),
             ]),
             m('div', { class: "pub-validate-content-sms" + (obj.tabsActive != 1 ? " is-hidden" : '') }, [
               m('div', { class: "field has-addons" }, [
                 m('div', { class: "control is-expanded" }, [
-                  m('input', { class: "input ", type: 'number', placeholder: '请输入短信验证码', value: obj.sms, oninput: function(e){
+                  m('input', { class: "input ", type: 'number', placeholder: gDI18n.$t('10213'/*'请输入短信验证码'*/), value: obj.sms, oninput: function(e){
                     obj.onSMSInput(e)
                   }})
                 ]),
@@ -254,7 +254,7 @@ export default {
                   m('button', { class: "button"+(obj.getSMSLoading?' is-loading':''), disabled: !!obj.SMSCodeCountDown, onclick: function(){
                     obj.getSMSCode()
                   } }, [
-                    obj.SMSCodeCountDown?obj.SMSCodeCountDown:'发送验证码'
+                    obj.SMSCodeCountDown?obj.SMSCodeCountDown: gDI18n.$t('10214'/*'发送验证码'*/)
                   ]),
                 ]),
               ])
@@ -266,14 +266,14 @@ export default {
                 obj.submit()
               }
             }, [
-              '确定'
+              gDI18n.$t('10051')//'确定'
             ]),
             m("button", {
               class: "button", onclick: function () {
                 obj.closeValidateMode()
               }
             }, [
-              '取消'
+              gDI18n.$t('10052')//'取消'
             ]),
           ]),
         ])

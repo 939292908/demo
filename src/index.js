@@ -67,14 +67,14 @@ import Clipboard from 'clipboard'
 window.$copy = function(target, suc, err){
     let copyBtn = new Clipboard(target);
     copyBtn.on("success", function () {
-        window.$message?window.$message({content: "已拷贝至剪切板！", type: "success"}):''
+        window.$message?window.$message({content: gDI18n.$t('10253'/*"已拷贝至剪切板！"*/), type: "success"}):''
         suc && suc()
         setTimeout(() => {
             copyBtn.destroy();
         }, 2000);
     });
     copyBtn.on("error", function () {
-        window.$message?window.$message({content: "拷贝失败！", type: "danger"}):''
+        window.$message?window.$message({content: gDI18n.$t('10254'/*"拷贝失败！"*/), type: "danger"}):''
         err && err()
         copyBtn.destroy();
     });
@@ -86,7 +86,7 @@ let DBG_MESSAGE = true
 let DEL_INTERVAL = 5*1000
 let EV_MESSAGE_UPD = 'EV_MESSAGE_UPD'
 window.EV_MESSAGE_UPD = 'EV_MESSAGE_UPD'
-window.$message = function({title = '提示', content = '', type = 'dark'}){
+window.$message = function({title = gDI18n.$t('10037'/*'提示'*/), content = '', type = 'dark'}){
     if(DBG_MESSAGE){console.log(__filename,"MESSAGE",{title, content})}
     gEVBUS.emit(EV_MESSAGE_UPD, {Ev: EV_MESSAGE_UPD, DEL_INTERVAL: DEL_INTERVAL, data: {title, content, type}})
 }

@@ -36,27 +36,27 @@ let obj = {
 
     if(this.openStopP){
       if(this.param.StopP === '0'){
-        return window.$message({title: '止盈价不能为0', content: '止盈价不能为0', type: 'danger'})
+        return window.$message({title: gDI18n.$t('10189'/*'止盈价不能为0'*/), content: gDI18n.$t('10189'/*'止盈价不能为0'*/), type: 'danger'})
       }else if(!this.param.StopP){
-        return window.$message({title: '请输入止盈价', content: '请输入止盈价', type: 'danger'})
+        return window.$message({title: gDI18n.$t('10190'/*'请输入止盈价'*/), content: gDI18n.$t('10190'/*'请输入止盈价'*/), type: 'danger'})
       }
     }
     if(this.openStopL){
       if(this.param.StopL === '0'){
-        return window.$message({title: '止损价不能为0', content: '止损价不能为0', type: 'danger'})
+        return window.$message({title: gDI18n.$t('10191'/*'止损价不能为0'*/), content: gDI18n.$t('10191'/*'止损价不能为0'*/), type: 'danger'})
       }else if(!this.param.StopL){
-        return window.$message({title: '请输入止损价', content: '请输入止损价', type: 'danger'})
+        return window.$message({title: gDI18n.$t('10192'/*'请输入止损价'*/), content: gDI18n.$t('10192'/*'请输入止损价'*/), type: 'danger'})
       }
     }
 
     if(this.openStopP && this.openStopL && this.param.StopP && this.param.StopL) {
       if(this.param.Sz > 0) {
         if(Number(this.param.StopP) < Number(this.param.StopL)) {
-          return window.$message({title: '该仓位为多仓，止盈价需大于止损价', content: '该仓位为多仓，止盈价需大于止损价', type: 'danger'})
+          return window.$message({title: gDI18n.$t('10193'/*'该仓位为多仓，止盈价需大于止损价'*/), content: gDI18n.$t('10193'/*'该仓位为多仓，止盈价需大于止损价'*/), type: 'danger'})
         }
       }else if(this.param.Sz < 0){
         if(Number(this.param.StopP) > Number(this.param.StopL)) {
-          return window.$message({title: '该仓位为空仓，止盈价需小于止损价', content: '该仓位为空仓，止盈价需小于止损价', type: 'danger'})
+          return window.$message({title: gDI18n.$t('10194'/*'该仓位为空仓，止盈价需小于止损价'*/), content: gDI18n.$t('10194'/*'该仓位为空仓，止盈价需小于止损价'*/), type: 'danger'})
         }
       }
     }
@@ -75,7 +75,7 @@ let obj = {
         that.open = false
         that.showTip = false
         that.stopPLCallback && that.stopPLCallback(arg)
-        window.$message({title: '止盈止损设置成功！', content: '止盈止损设置成功！', type: 'success'})
+        window.$message({title: gDI18n.$t('10195'/*'止盈止损设置成功！'*/), content: gDI18n.$t('10195'/*'止盈止损设置成功！'*/), type: 'success'})
       }else{
         window.$message({title: utils.getTradeErrorCode(arg.code || arg.data.ErrCode), content: utils.getTradeErrorCode(arg.code || arg.data.ErrCode), type: 'danger'})
       }
@@ -188,7 +188,7 @@ export default {
         m("div", { class: "modal-card" }, [
           m("header", { class: "pub-stoppl-head modal-card-head" }, [
             m("p", { class: "modal-card-title" }, [
-              '止盈止损设置（市价）'
+              gDI18n.$t('10196')//'止盈止损设置（市价）'
             ]),
             m("button", {
               class: "delete", "aria-label": "close", onclick: function () {
@@ -199,7 +199,7 @@ export default {
           m("section", { class: "pub-stoppl-content modal-card-body" }, [
             m("div", { class: "pub-stoppl-content-message message is-danger"+(obj.showTip?'':' is-hidden') }, [
               m("div", { class: "message-body" }, [
-                '当前设置的价格会导致仓位立即平仓，请谨慎设置！'
+                gDI18n.$t('10197')//'当前设置的价格会导致仓位立即平仓，请谨慎设置！'
               ]),
             ]),
             m("div", { class: "pub-stoppl-content-pos-info level" }, [
@@ -214,7 +214,7 @@ export default {
               m('input', { type: "checkbox", checked: obj.openStopP, oninput: function(e){
                 obj.openStopP = e.target.checked
               } }),
-              '止盈设置'
+              gDI18n.$t('10198')//'止盈设置'
             ]),
             m('div', { class: "pub-stoppl-content-stopp-input field has-addons" }, [
               m('div', { class: "control" }, [
@@ -232,7 +232,7 @@ export default {
               m('input', { type: "checkbox", checked: obj.openStopL, oninput: function(e){
                 obj.openStopL = e.target.checked
               } }),
-              '止损设置'
+              gDI18n.$t('10199')//'止损设置'
             ]),
             m('div', { class: "pub-stoppl-content-stopl-input field has-addons" }, [
               m('div', { class: "control" }, [
@@ -247,13 +247,13 @@ export default {
               ])
             ]),
             m('p',{class: 'has-text-danger'}, [
-              '止盈止损触发后将以市价成交，成交的价格可能与设置的价格有偏差；'
+              gDI18n.$t('10200')//'止盈止损触发后将以市价成交，成交的价格可能与设置的价格有偏差；'
             ]),
             m('p',{class: 'has-text-danger'+(obj.param.Sz > 0?' is-hidden':'')}, [
-              '该仓位为【空仓】，如若设置的止盈价高于最新价，止损价低于最新价，会将仓位平仓，请注意设置！'
+              gDI18n.$t('10201')//'该仓位为【空仓】，如若设置的止盈价高于最新价，止损价低于最新价，会将仓位平仓，请注意设置！'
             ]),
             m('p',{class: 'has-text-danger'+(obj.param.Sz < 0?' is-hidden':'')}, [
-              '该仓位为【多仓】，如若设置的止盈价低于最新价，止损价高于最新价，会将仓位平仓，请注意设置！'
+              gDI18n.$t('10202')//'该仓位为【多仓】，如若设置的止盈价低于最新价，止损价高于最新价，会将仓位平仓，请注意设置！'
             ])
           ]),
           m("footer", { class: "pub-stoppl-foot modal-card-foot" }, [
@@ -262,14 +262,14 @@ export default {
                 obj.submit()
               }
             }, [
-              '确定'
+              gDI18n.$t('10051')//'确定'
             ]),
             m("button", {
               class: "button", onclick: function () {
                 obj.closeMode()
               }
             }, [
-              '取消'
+              gDI18n.$t('10052')//'取消'
             ]),
           ]),
         ])

@@ -108,7 +108,7 @@ let obj = {
           pos.PId.substr(-4)
         ]),
         m('td', {class: '', align: 'center'},[
-          (pos.Sz>0?'多仓':pos.Sz<0?'空仓':'--')
+          (pos.Sz>0?gDI18n.$t('10170'/*'多仓'*/):pos.Sz<0?gDI18n.$t('10171'/*'空仓'*/):'--')
         ]),
         m('td', {class: '', align: 'center'},[
           pos.displayLever
@@ -147,15 +147,15 @@ let obj = {
         obj.selectPosItem(pos)
       }},[
         m('span', {class: ''},[
-          '仓位ID '+pos.PId.substr(-4)
+          gDI18n.$t('10067'/*'仓位ID '*/)+pos.PId.substr(-4)
         ]),
         m('.spacer'),
         m('span', {class: ''},[
-          '方向 '+(pos.Sz>0?'多仓':pos.Sz<0?'空仓':'--')
+          gDI18n.$t('10172'/*'方向 '*/)+(pos.Sz>0?gDI18n.$t('10170'/*'多仓'*/):pos.Sz<0?gDI18n.$t('10171'/*'空仓'*/):'--')
         ]),
         m('.spacer'),
         m('span', {class: ''},[
-          '数量/价格 '+(pos.PrzIni)+'/'+(pos.Sz)
+          gDI18n.$t('10173'/*'数量/价格 '*/)+(pos.PrzIni)+'/'+(pos.Sz)
         ]),
         (isSelect?m('span', {class: "icon"},[
           m('i', {class: "iconfont iconxiala iconfont-medium", "aria-hidden": true })
@@ -164,15 +164,15 @@ let obj = {
     }else{
       return m('div', {key: 'selectPosItem'+(isSelect?'isSelect':''), class: 'is-flex w100 cursor-pointer'+(isSelect?' ':'')},[
         m('span', {class: ''},[
-          '仓位ID --'
+          gDI18n.$t('10067'/*仓位ID*/) + ' --'
         ]),
         m('.spacer'),
         m('span', {class: ''},[
-          '方向 --'
+          gDI18n.$t('10172'/*方向*/) + ' --'
         ]),
         m('.spacer'),
         m('span', {class: ''},[
-          '数量/价格 --/--'
+          gDI18n.$t('10173'/*数量/价格*/) + ' --/--'
         ]),
         m('.spacer'),
         (isSelect?m('span', {class: "icon"},[
@@ -206,7 +206,7 @@ let obj = {
       }
     }
     if(!Wlts || aWdrawable == 0){
-        return window.$message({title: '可用资金不足！', content: '可用资金不足！', type: 'danger'})
+        return window.$message({title: gDI18n.$t('10038'/*'可用资金不足！'*/), content: gDI18n.$t('10038'/*'可用资金不足！'*/), type: 'danger'})
     }
     // 判断资金情况 end
 
@@ -221,7 +221,8 @@ let obj = {
         }
     }
     if(posArr.length >= window.$config.future.maxPosNum){
-        return window.$message({title: '提示', content: '同一合约最多同时存在'+window.$config.future.maxPosNum+'个仓位!', type: 'danger'})
+        return window.$message({title: gDI18n.$t('10037'), content: gDI18n.$t('10147',{value : window.$config.future.maxPosNum}), type: 'danger'})
+        // return window.$message({title: '提示', content: '同一合约最多同时存在'+window.$config.future.maxPosNum+'个仓位!', type: 'danger'})
     }
     // 判断仓位数量是否超限 end
 
@@ -233,7 +234,7 @@ let obj = {
     },function(gTrd, arg){
       console.log("ReqTrdPosOp ==>>> ", arg)
       if(arg.code == 0 && !arg.data.ErrCode){
-        window.$message({title: '新增仓位成功！', content: '新增仓位成功！', type: 'success'})
+        window.$message({title: gDI18n.$t('10174'/*'新增仓位成功！'*/), content: gDI18n.$t('10174'/*'新增仓位成功！'*/), type: 'success'})
       }else{
         console.log(arg)
         window.$message({title: utils.getTradeErrorCode(arg.code || arg.data.ErrCode), content: utils.getTradeErrorCode(arg.code || arg.data.ErrCode), type: 'danger'})
@@ -253,7 +254,7 @@ let obj = {
     },function(gTrd, arg){
       console.log("ReqTrdPosOp ==>>> ", arg)
       if(arg.code == 0 && !arg.data.ErrCode){
-        window.$message({title: '仓位删除成功！', content: '仓位删除成功！', type: 'success'})
+        window.$message({title: gDI18n.$t('10175'/*'仓位删除成功！'*/), content: gDI18n.$t('10175'/*'仓位删除成功！'*/), type: 'success'})
       }else{
         console.log(arg)
         window.$message({title: utils.getTradeErrorCode(arg.code || arg.data.ErrCode), content: utils.getTradeErrorCode(arg.code || arg.data.ErrCode), type: 'danger'})
@@ -305,22 +306,22 @@ export default {
                   m("thead", { class: "" }, [
                       m("tr", { class: "" }, [
                         m("th", { class: ""}, [
-                          '仓位ID'
+                          gDI18n.$t('10067')//'仓位ID'
                         ]),
                         m("th", { class: "", align: 'center'}, [
-                          '方向'
+                          gDI18n.$t('10172')//'方向'
                         ]),
                         m("th", { class: "", align: 'center'}, [
-                          '杠杆'
+                          gDI18n.$t('10054')//'杠杆'
                         ]),
                         m("th", { class: "", align: 'center'}, [
-                          '数量/价格'
+                          gDI18n.$t('10173')//'数量/价格'
                         ]),
                         m("th", { class: "", align: 'center'}, [
-                          '买挂单'
+                          gDI18n.$t('10177')//'买挂单'
                         ]),
                         m("th", { class: "", align: 'center'}, [
-                          '卖挂单'
+                          gDI18n.$t('10178')//'卖挂单'
                         ]),
                         m("th", { class: "", align: 'center'}, [])
                       ])
@@ -337,7 +338,7 @@ export default {
                     obj.addPos()
                   }
                 }, [
-                  '新增仓位'
+                  gDI18n.$t('10179')//'新增仓位'
                 ])
               ]),
             ])

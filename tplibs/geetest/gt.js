@@ -262,8 +262,8 @@
 
     var throwError = function (errorType, config) {
         var errors = {
-            networkError: '网络错误',
-            gtTypeError: 'gt字段不是字符串类型'
+            networkError: gDI18n.$t('10411'/*'网络错误'*/),
+            gtTypeError: gDI18n.$t('10412'/*'gt字段不是字符串类型'*/)
         };
         if (typeof config.onError === 'function') {
             config.onError(errors[errorType]);

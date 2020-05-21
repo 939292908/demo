@@ -693,7 +693,7 @@ let obj = {
                 m("div", { class: "pub-place-order-form-stop-pl-input field has-addons" }, [
                     
                     m("div", { class: "pub-place-order-form-stop-pl-input-p control is-expanded" }, [
-                        m("input", { class: "input", type: 'number', placeholder: "止盈价", step: obj.PrzStep, value: obj.form.stopP, pattern:"\d*", oninput: function(e){
+                        m("input", { class: "input", type: 'number', placeholder: gDI18n.$t('10150'/*"止盈价"*/), step: obj.PrzStep, value: obj.form.stopP, pattern:"\d*", oninput: function(e){
                             obj.onStopPInput(e)
                         }})
                     ]),
@@ -701,7 +701,7 @@ let obj = {
                         '&'
                     ]),
                     m("div", { class: "pub-place-order-form-stop-pl-input-l control is-expanded" }, [
-                        m("input", { class: "input", type: 'number', placeholder: "止损价", step: obj.PrzStep, value: obj.form.stopL, pattern:"\d*", oninput: function(e){
+                        m("input", { class: "input", type: 'number', placeholder: gDI18n.$t('10151'/*"止损价"*/), step: obj.PrzStep, value: obj.form.stopL, pattern:"\d*", oninput: function(e){
                             obj.onStopLInput(e)
                         }})
                     ])
@@ -829,12 +829,12 @@ export default {
             obj.getLeverChange(),
             m("div", { class: "pub-place-order-form-prz-input field" }, [
                 m("div", { class: "control" }, [
-                    m("input", { class: "input", type: 'number', placeholder: "市价", readonly: true})
+                    m("input", { class: "input", type: 'number', placeholder: gDI18n.$t('10081'/*"市价"*/), readonly: true})
                 ])
             ]),
             m("div", { class: "pub-place-order-form-num-input field" }, [
                 m("div", { class: "control" }, [
-                    m("input", { class: "input", type: 'number', placeholder: "请输入数量", step: obj.NumStep, value: obj.form.Num, pattern:"\d*",oninput: function(e) {
+                    m("input", { class: "input", type: 'number', placeholder: gDI18n.$t('10153'/*"请输入数量"*/), step: obj.NumStep, value: obj.form.Num, pattern:"\d*",oninput: function(e) {
                         obj.onInputForNum(e)
                     } }),
                     m('span', {class: 'pub-place-order-form-num-input-face-value'}, [

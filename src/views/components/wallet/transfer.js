@@ -11,10 +11,10 @@ let obj = {
     canTransferListOpen: false,
     canTransferCoin: [],
     wltList: {
-        '01': '合约账户',
-        '02': '币币账户',
-        '03': '我的钱包',
-        '04': '法币账户',
+        '01': gDI18n.$t('10217'),//'合约账户',
+        '02': gDI18n.$t('10218'),//'币币账户',
+        '03': gDI18n.$t('10219'),//'我的钱包',
+        '04': gDI18n.$t('10220'),//'法币账户',
     },
     wlt: {},
     //初始化全局广播
@@ -186,13 +186,13 @@ let obj = {
         let that = this
 
         if(this.form.num === '0'){
-            return $message({title: '划转数量不能为0', content: '划转数量不能为0', type: 'danger'})
+            return $message({title: gDI18n.$t('10221'/*'划转数量不能为0'*/), content: gDI18n.$t('10221'/*'划转数量不能为0'*/), type: 'danger'})
         }else if(!this.form.num){
-            return $message({title: '划转数量不能为空', content: '划转数量不能为空', type: 'danger'})
+            return $message({title: gDI18n.$t('10222'/*'划转数量不能为空'*/), content: gDI18n.$t('10222'/*'划转数量不能为空'*/), type: 'danger'})
         }else if(Number(this.form.num) == 0){
-            return $message({title: '划转数量不能为0', content: '划转数量不能为0', type: 'danger'})
+            return $message({title: gDI18n.$t('10221'/*'划转数量不能为0'*/), content: gDI18n.$t('10221'/*'划转数量不能为0'*/), type: 'danger'})
         }else if(Number(this.form.num) > Number(this.form.maxTransfer)){
-            return $message({title: '划转数量不能大于最大可划', content: '划转数量不能大于最大可划', type: 'danger'})
+            return $message({title: gDI18n.$t('10223'/*'划转数量不能大于最大可划'*/), content: gDI18n.$t('10223'/*'划转数量不能大于最大可划'*/), type: 'danger'})
         }
         this.loading = true
         window.gWebAPI.ReqTransfer({
@@ -203,7 +203,7 @@ let obj = {
         }, function(arg){
             if(arg.result.code == 0){
                 setTimeout(function(){
-                    $message({content: '划转成功！', type: 'success'})
+                    $message({content: gDI18n.$t('10224'/*'划转成功！'*/), type: 'success'})
                     that.form.num = ''
                     that.loading = false
                     that.getWallet()
@@ -212,7 +212,7 @@ let obj = {
                 window.$message({title: utils.getWebApiErrorCode(arg.result.code), content: utils.getWebApiErrorCode(arg.result.code), type: 'danger'})
             }
         }, function(error){
-            $message({content: '操作超时，请稍后重试！', type: 'danger'})
+            $message({content: gDI18n.$t('10225'/*'操作超时，请稍后重试！'*/), type: 'danger'})
         })
     }
 }
@@ -276,7 +276,7 @@ export default {
                     ]),
                 ]),
                 m("div", { class: "pub-transfer-transfer-select-center control is-expanded cursor-pointer"}, [
-                    '划至'
+                    gDI18n.$t('10227')//'划至'
                 ]),
                 m("div", { class: "pub-transfer-transfer-select-right control is-expanded" }, [
                     m('div', {class:"dropdown is-hoverable"}, [
@@ -311,7 +311,7 @@ export default {
             ]),
             m("div", { class: "pub-transfer-num-input field" }, [
                 m("div", { class: "control" }, [
-                    m("input", { class: "input", type: 'number', placeholder: "请输划转入数量", value: obj.form.num, oninput: function(e) {
+                    m("input", { class: "input", type: 'number', placeholder: gDI18n.$t('10228'/*"请输划转入数量"*/), value: obj.form.num, oninput: function(e) {
                         obj.onInputForNum(e)
                     } })
                 ])
@@ -319,13 +319,14 @@ export default {
             m("div", { class: "pub-transfer-wlt field cursor-pointer is-size-7", onclick: function(){
                 obj.setTransferNum(obj.form.maxTransfer)
             }}, [
-                '最大可划：'+obj.form.maxTransfer
+                gDI18n.$t('10229',{value : obj.form.maxTransfer})
+                // '最大可划：'+obj.form.maxTransfer
             ]),
             m("div", { class: "pub-transfer-btn field" }, [
                 m("button", { class: "button is-primary is-fullwidth"+(obj.loading? ' is-loading':''), onclick: function(){
                     obj.submit()
                 }}, [
-                    '划转'
+                    gDI18n.$t('10230')//'划转'
                 ])
             ]),
         ])

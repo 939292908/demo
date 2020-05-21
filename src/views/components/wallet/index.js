@@ -50,14 +50,15 @@ export default {
                     m("a",{class:"", onclick: function(){
                       obj.setTabsActive(0)
                     }},[
-                      (obj.wlt.Coin || '')+'合约资产'
+                      gDI18n.$t('10215',{value : (obj.wlt.Coin || '')})
+                      // (obj.wlt.Coin || '')+'合约资产'
                     ])
                   ]),
                   m("li",{class:""+(obj.tabsActive == 1?' is-active':'')},[
                     m("a",{class:"", onclick: function(){
                         obj.setTabsActive(1)
                     }},[
-                      '资产划转'
+                      gDI18n.$t('10216')//'资产划转'
                     ])
                   ])
                 ]),
@@ -66,7 +67,8 @@ export default {
                 m("ul",[
                   m("li",{class:""},[
                     m("a",{class:""},[
-                      (obj.wlt.Coin || '')+'合约资产'
+                      gDI18n.$t('10215',{value : (obj.wlt.Coin || '')})
+                      // (obj.wlt.Coin || '')+'合约资产'
                     ])
                   ]),
                 ]),

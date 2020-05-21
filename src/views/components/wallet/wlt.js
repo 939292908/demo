@@ -98,7 +98,7 @@ export default {
             m('div', {class:"pub-wallet-content"}, [
                 m('div', {class: 'level'}, [
                     m('div', {class: 'level-left text--secondary'}, [
-                        '账户权益'
+                        gDI18n.$t('10231')//'账户权益'
                     ]),
                     m('div', {class: 'level-right'}, [
                         obj.wlt.WltBal?Number(obj.wlt.WltBal).toFixed2(8): (0).toFixed2(8)
@@ -106,7 +106,7 @@ export default {
                 ]),
                 m('div', {class: 'level'}, [
                     m('div', {class: 'level-left text--secondary'}, [
-                        '未实现盈亏'
+                        gDI18n.$t('10427')//'未实现盈亏'
                     ]),
                     m('div', {class: 'level-right'}, [
                         obj.wlt.aUPNL?Number(obj.wlt.aUPNL).toFixed2(8): (0).toFixed2(8)
@@ -114,7 +114,7 @@ export default {
                 ]),
                 m('div', {class: 'level'}, [
                     m('div', {class: 'level-left text--secondary'}, [
-                        '仓位保证金'
+                        gDI18n.$t('10232')//'仓位保证金'
                     ]),
                     m('div', {class: 'level-right'}, [
                         obj.wlt.aMM?Number(obj.wlt.aMM).toFixed2(8): (0).toFixed2(8)
@@ -122,7 +122,7 @@ export default {
                 ]),
                 m('div', {class: 'level'}, [
                     m('div', {class: 'level-left text--secondary'}, [
-                        '委托保证金'
+                        gDI18n.$t('10167')//'委托保证金'
                     ]),
                     m('div', {class: 'level-right'}, [
                         obj.wlt.aMI?Number(obj.wlt.aMI).toFixed2(8): (0).toFixed2(8)
@@ -130,7 +130,7 @@ export default {
                 ]),
                 m('div', {class: 'level'}, [
                     m('div', {class: 'level-left text--secondary'}, [
-                        '可用保证金'
+                        gDI18n.$t('10157')//'可用保证金'
                     ]),
                     m('div', {class: 'level-right'}, [
                         obj.wlt.aWdrawable?Number(obj.wlt.aWdrawable).toFixed2(8): (0).toFixed2(8)
@@ -138,7 +138,7 @@ export default {
                 ]),
                 m('div', {class: 'level'}, [
                     m('div', {class: 'level-left text--secondary'}, [
-                        '可用赠金'
+                        gDI18n.$t('10233')//'可用赠金'
                     ]),
                     m('div', {class: 'level-right'}, [
                         obj.wlt.aGift?Number(obj.wlt.aGift).toFixed2(8): (0).toFixed2(8)
@@ -146,7 +146,7 @@ export default {
                 ]),
                 m('div', {class: 'level'}, [
                     m('div', {class: 'level-left text--secondary'}, [
-                        '资金使用率'
+                        gDI18n.$t('10234')//'资金使用率'
                     ]),
                     m('div', {class: 'level-right'}, [
                         obj.wlt.walletRate?(Number(obj.wlt.walletRate)*100).toFixed2(2)+'%': (0).toFixed2(2)+'%'

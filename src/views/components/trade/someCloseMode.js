@@ -39,16 +39,16 @@ let obj = {
     console.log('some close submit', this.form)
     if(this.tabsActive == 0){
       if(this.form.prz === '0'){
-        return $message({title: '平仓价格不能为0', content: '平仓价格不能为0', type: 'danger'})
+        return $message({title: gDI18n.$t('10180'/*'平仓价格不能为0'*/), content: gDI18n.$t('10180'/*'平仓价格不能为0'*/), type: 'danger'})
       }else if(!this.form.prz){
-        return $message({title: '平仓价格不能为空', content: '平仓价格不能为空', type: 'danger'})
+        return $message({title: gDI18n.$t('10181'/*'平仓价格不能为空'*/), content: gDI18n.$t('10181'/*'平仓价格不能为空'*/), type: 'danger'})
       }
     }
 
     if(this.form.num === '0'){
-      return $message({title: '平仓数量不能为0', content: '平仓数量不能为0', type: 'danger'})
+      return $message({title: gDI18n.$t('10182'/*'平仓数量不能为0'*/), content: gDI18n.$t('10182'/*'平仓数量不能为0'*/), type: 'danger'})
     }else if(!this.form.num){
-      return $message({title: '平仓数量不能为空', content: '平仓数量不能为空', type: 'danger'})
+      return $message({title: gDI18n.$t('10181'/*'平仓数量不能为空'*/), content: gDI18n.$t('10181'/*'平仓数量不能为空'*/), type: 'danger'})
     }
 
     let Sym = this.param.pos.Sym
@@ -192,7 +192,7 @@ export default {
         m("div", { class: "modal-card" }, [
           m("header", { class: "pub-some-close-head modal-card-head" }, [
             m("p", { class: "modal-card-title" }, [
-              '部分平仓'
+              gDI18n.$t('10184')//'部分平仓'
             ]),
             m("button", {
               class: "delete", "aria-label": "close", onclick: function () {
@@ -209,7 +209,7 @@ export default {
                       obj.setTabsActive(0)
                     }
                   }, [
-                    '限价'
+                    gDI18n.$t('10185')//'限价'
                   ])
                 ]),
                 m("li", { class: "" + (obj.tabsActive == 1 ? ' is-active' : '') }, [
@@ -218,7 +218,7 @@ export default {
                       obj.setTabsActive(1)
                     }
                   }, [
-                    '市价'
+                    gDI18n.$t('10081')//'市价'
                   ])
                 ]),
               ])
@@ -226,14 +226,14 @@ export default {
             m('div', {class: "field"+(obj.tabsActive == 0?'':' is-hidden')}, [
               m('div', { class: "pub-some-close-content-stopp-input field" }, [
                 m('div', { class: "control is-expanded" }, [
-                  m("input", { class: "input", type: 'number', placeholder: "价格", value:  obj.form.prz, oninput: function(e){
+                  m("input", { class: "input", type: 'number', placeholder: gDI18n.$t('10186'/*"价格"*/), value:  obj.form.prz, oninput: function(e){
                     obj.onPrzInput(e)
                   }})
                 ])
               ]),
               m('div', { class: "pub-some-close-content-stopl-input field" }, [
                 m('div', { class: "control is-expanded" }, [
-                  m('input', { class: "input ", type: 'number', placeholder: "数量(张)", value:  obj.form.num, oninput: function(e){
+                  m('input', { class: "input ", type: 'number', placeholder: gDI18n.$t('10163'/*"数量(张)"*/), value:  obj.form.num, oninput: function(e){
                     obj.onNumInput(e)
                   }})
                 ])
@@ -242,12 +242,12 @@ export default {
             m('div', {class: "field"+(obj.tabsActive == 1?'':' is-hidden')}, [
               m('div', { class: "pub-some-close-content-stopp-input field" }, [
                 m('div', { class: "control is-expanded" }, [
-                  m("input", { class: "input", type: 'number', placeholder: "市价", readonly: true})
+                  m("input", { class: "input", type: 'number', placeholder: gDI18n.$t('10081'/*"市价"*/), readonly: true})
                 ])
               ]),
               m('div', { class: "pub-some-close-content-stopl-input field" }, [
                 m('div', { class: "control is-expanded" }, [
-                  m('input', { class: "input ", type: 'number', placeholder: "数量(张)", value:  obj.form.num, oninput: function(e){
+                  m('input', { class: "input ", type: 'number', placeholder: gDI18n.$t('10163'/*"数量(张)"*/), value:  obj.form.num, oninput: function(e){
                     obj.onNumInput(e)
                   }})
                 ])
@@ -258,10 +258,12 @@ export default {
             ]),
             m('div', { class: "level" }, [
               m('div', { class: "level-left" }, [
-                '可平数量：'+ obj.maxNum
+                gDI18n.$t('10187',{value : obj.maxNum})
+                // '可平数量：'+ obj.maxNum
               ]),
               m('div', { class: "level-left" }, [
-                '冻结数量：'+ obj.lockNum
+                gDI18n.$t('10188',{value : obj.lockNum})
+                // '冻结数量：'+ obj.lockNum
               ]),
             ]),
             
@@ -272,14 +274,14 @@ export default {
                 obj.submit()
               }
             }, [
-              '确定'
+              gDI18n.$t('10051')//'确定'
             ]),
             m("button", {
               class: "button", onclick: function () {
                 obj.closeMode()
               }
             }, [
-              '取消'
+              gDI18n.$t('10052')//'取消'
             ]),
           ]),
         ])

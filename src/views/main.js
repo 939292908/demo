@@ -330,14 +330,14 @@ let main = {
             _Color = '';
         if (_OType == 1) {
             if (_Status == 1) {
-                _Title = '委托已挂单！';
+                _Title = gDI18n.$t('10238'/*'委托已挂单！'*/);
                 _Color = 'success';
             } else if (_Status == 2) {
                 if (ret.QtyF != 0) {
-                    _Title = '委托已成交！';
+                    _Title = gDI18n.$t('10239'/*'委托已成交！'*/);
                     _Color = 'success';
                 } else {
-                    _Title = '委托已挂单！';
+                    _Title = gDI18n.$t('10238'/*'委托已挂单！'*/);
                     _Color = 'success';
                 }
             } else if (_Status == 3) {
@@ -345,7 +345,7 @@ let main = {
                     _Title = utils.getTradeErrorCode(ret.ErrCode)
                     _Color = 'danger';
                 } else {
-                    _Title = '委托提交失败！';
+                    _Title = gDI18n.$t('10240'/*'委托提交失败！'*/);
                     _Color = 'danger';
                 }
             } else if (_Status == 4) {
@@ -353,50 +353,50 @@ let main = {
                     _Title = utils.getTradeErrorCode(ret.ErrCode)
                     _Color = 'danger';
                 } else if (ret.QtyF != ret.Qty) {
-                    _Title = '委托已撤销！';
+                    _Title = gDI18n.$t('10241'/*'委托已撤销！'*/);
                     _Color = 'danger';
                 } else {
-                    _Title = '委托已全部成交';
+                    _Title = gDI18n.$t('10242'/*'委托已全部成交'*/);
                     _Color = 'success';
                 }
             }
         } else if (_OType == 3 || _OType == 4) {
             if (_AId == '01') {
                 if (_Status == 1) {
-                    _Title = '计划委托已提交！';
+                    _Title = gDI18n.$t('10243'/*'计划委托已提交！'*/);
                     _Color = 'success';
                 } else if (_Status == 2) {
-                    _Title = '计划委托已触发！';
+                    _Title = gDI18n.$t('10244'/*'计划委托已触发！'*/);
                     _Color = 'success';
                 } else if (_Status == 3) {
                     if (ret.ErrCode) {
                         _Title = utils.getTradeErrorCode(ret.ErrCode)
                         _Color = 'danger';
                     } else {
-                        _Title = '计划委托提交失败！';
+                        _Title = gDI18n.$t('10245'/*'计划委托提交失败！'*/);
                         _Color = 'danger';
                     }
                 } else if (_Status == 4) {
-                    _Title = '计划委托已删除！';
+                    _Title = gDI18n.$t('10246'/*'计划委托已删除！'*/);
                     _Color = 'danger';
                 }
             } else if (_AId == '02') {
                 if (_Status == 1) {
-                    _Title = '止盈止损已提交！';
+                    _Title = gDI18n.$t('10247'/*'止盈止损已提交！'*/);
                     _Color = 'success';
                 } else if (_Status == 2) {
-                    _Title = '止盈止损已触发！';
+                    _Title = gDI18n.$t('10248'/*'止盈止损已触发！'*/);
                     _Color = 'success';
                 } else if (_Status == 3) {
                     if (ret.ErrCode) {
                         _Title = utils.getTradeErrorCode(ret.ErrCode)
                         _Color = 'danger';
                     } else {
-                        _Title = '止盈止损提交失败！';
+                        _Title = gDI18n.$t('10249'/*'止盈止损提交失败！'*/);
                         _Color = 'danger';
                     }
                 } else if (_Status == 4) {
-                    _Title = '止盈止损已删除！';
+                    _Title = gDI18n.$t('10250'/*'止盈止损已删除！'*/);
                     _Color = 'danger';
                 }
             }
@@ -406,10 +406,10 @@ let main = {
                     _Title = utils.getTradeErrorCode(ret.ErrCode)
                     _Color = 'danger';
                 } else if (ret.Qty && ret.QtyF && ret.Qty == ret.QtyF) {
-                    _Title = `委托全部成交`;
+                    _Title = gDI18n.$t('10251'/*`委托全部成交`*/);
                     _Color = 'success';
                 } else {
-                    _Title = `委托已取消`;
+                    _Title = gDI18n.$t('10252'/*`委托已取消`*/);
                     _Color = 'danger';
                 }
             } else if (ret.ErrCode) {

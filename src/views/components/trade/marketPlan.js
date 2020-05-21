@@ -17,8 +17,8 @@ let obj = {
         PIdForSell: '',
         LeverForBuy: 0,
         LeverForSell: 0,
-        LeverForBuyInputValue: '买 杠杆',
-        LeverForSellInputValue: '卖 杠杆',
+        LeverForBuyInputValue: gDI18n.$t('10133'),//'买 杠杆',
+        LeverForSellInputValue: gDI18n.$t('10134'),//'卖 杠杆',
         MIRMyForBuy: 0,
         MIRMyForSell: 0,
         maxLeverForBuy: 0,
@@ -26,7 +26,7 @@ let obj = {
         // 交易模式2相关内容 end
     },
     faceValue: '= 0.0000 USDT',
-    LeverInputValue: '杠杆',
+    LeverInputValue: gDI18n.$t('10135'),//'杠杆',
     wlt: {},
     MgnNeedForBuy: 0,
     MgnNeedForSell: 0,
@@ -199,22 +199,24 @@ let obj = {
         switch(tradeType){
             case 2:
                 if (this.form.LeverForBuy == 0) {
-                    this.form.LeverForBuyInputValue = (this.form.maxLeverForBuy ? '买 全仓' + this.form.maxLeverForBuy + 'X' : '买 杠杆')
+                    this.form.LeverForBuyInputValue = (this.form.maxLeverForBuy ? gDI18n.$t('10137'/*'买 全仓*/) + this.form.maxLeverForBuy + 'X' : gDI18n.$t('10133'/*'买 杠杆'*/))
                 } else {
-                    this.form.LeverForBuyInputValue = '买 逐仓' + Number(this.form.LeverForBuy).toFixed2(2) + 'X'
+                    this.form.LeverForBuyInputValue = gDI18n.$t('10137'/*'买 逐仓'*/) + Number(this.form.LeverForBuy).toFixed2(2) + 'X'
                 }
                 if (this.form.LeverForSell == 0) {
-                    this.form.LeverForSellInputValue = (this.form.maxLeverForSell ? '卖 全仓' + this.form.maxLeverForSell + 'X' : '卖 杠杆')
+                    this.form.LeverForSellInputValue = (this.form.maxLeverForSell ? ('10139'/*'卖 全仓'*/) + this.form.maxLeverForSell + 'X' : gDI18n.$t('10134'/*'卖 杠杆'*/))
                 } else {
-                    this.form.LeverForSellInputValue = '卖 逐仓' + Number(this.form.LeverForSell).toFixed2(2) + 'X'
+                    this.form.LeverForSellInputValue = gDI18n.$t('10140'/*'卖 逐仓'*/) + Number(this.form.LeverForSell).toFixed2(2) + 'X'
                 }
                 
                 break;
             default:
                 if (this.form.Lever == 0) {
-                    this.LeverInputValue = (this.form.maxLever ? '全仓' + this.form.maxLever + 'X' : '杠杆')
+                    this.LeverInputValue = (this.form.maxLever ? gDI18n.$t('10068',{value : this.form.maxLever}) : gDI18n.$t('10054'))
+                    // this.LeverInputValue = (this.form.maxLever ? '全仓' + this.form.maxLever + 'X' : '杠杆')
                 } else {
-                    this.LeverInputValue = '逐仓' + Number(this.form.Lever).toFixed2(2) + 'X'
+                    this.LeverInputValue = gDI18n.$t('10069',{value : Number(this.form.Lever).toFixed2(2)})
+                    // this.LeverInputValue = '逐仓' + Number(this.form.Lever).toFixed2(2) + 'X'
                 } 
         }
     },
@@ -243,8 +245,8 @@ let obj = {
             // 交易模式2相关内容 start
             LeverForBuy: 0, 
             LeverForSell: 0,
-            LeverForBuyInputValue: '买 杠杆',
-            LeverForSellInputValue: '卖 杠杆',
+            LeverForBuyInputValue: gDI18n.$t('10133'),//'买 杠杆',
+            LeverForSellInputValue: gDI18n.$t('10134'),//'卖 杠杆',
             MIRMyForBuy: 0,
             MIRMyForSell: 0,
             // 交易模式2相关内容 end
@@ -264,33 +266,33 @@ let obj = {
             return window.gWebAPI.needLogin()
         }
         if(this.form.Prz === '0'){
-            return $message({title: '下单价格不能为0', content: '下单价格不能为0', type: 'danger'})
+            return $message({title: gDI18n.$t('10141'/*'下单价格不能为0'*/), content: gDI18n.$t('10141'/*'下单价格不能为0'*/), type: 'danger'})
         }else if(!this.form.Prz){
-            return $message({title: '下单价格不能为空', content: '下单价格不能为空', type: 'danger'})
+            return $message({title: gDI18n.$t('10142'/*'下单价格不能为空'*/), content: gDI18n.$t('10142'/*'下单价格不能为空'*/), type: 'danger'})
         }else if(Number(this.form.Prz) == 0){
-            return $message({title: '下单价格不能为0', content: '下单价格不能为0', type: 'danger'})
+            return $message({title: gDI18n.$t('10141'/*'下单价格不能为0'*/), content: gDI18n.$t('10141'/*'下单价格不能为0'*/), type: 'danger'})
         }else if(isNaN(Number(this.form.Prz))){
-            return $message({title: '请输入正确的价格', content: '请输入正确的价格', type: 'danger'})
+            return $message({title: gDI18n.$t('10143'/*'请输入正确的价格'*/), content: gDI18n.$t('10143'/*'请输入正确的价格'*/), type: 'danger'})
         }
 
         if(this.form.Num === '0'){
-            return $message({title: '下单数量不能为0', content: '下单数量不能为0', type: 'danger'})
+            return $message({title: gDI18n.$t('10144'/*'下单数量不能为0'*/), content: gDI18n.$t('10144'/*'下单数量不能为0'*/), type: 'danger'})
         }else if(!this.form.Num){
-            return $message({title: '下单数量不能为空', content: '下单数量不能为空', type: 'danger'})
+            return $message({title: gDI18n.$t('10145'/*'下单数量不能为空'*/), content: gDI18n.$t('10145'/*'下单数量不能为空'*/), type: 'danger'})
         }else if(Number(this.form.Num) == 0){
-            return $message({title: '下单数量不能为0', content: '下单数量不能为0', type: 'danger'})
+            return $message({title: gDI18n.$t('10144'/*'下单数量不能为0'*/), content: gDI18n.$t('10144'/*'下单数量不能为0'*/), type: 'danger'})
         }else if(isNaN(Number(this.form.Num))){
-            return $message({title: '请输入正确的数量', content: '请输入正确的数量', type: 'danger'})
+            return $message({title: gDI18n.$t('10146'/*'请输入正确的数量'*/), content: gDI18n.$t('10146'/*'请输入正确的数量'*/), type: 'danger'})
         }
 
         if(this.form.triggerPrz === '0'){
-            return $message({title: '触发价格不能为0', content: '触发价格不能为0', type: 'danger'})
+            return $message({title: gDI18n.$t('10158'/*'触发价格不能为0'*/), content: gDI18n.$t('10158'/*'触发价格不能为0'*/), type: 'danger'})
         }else if(!this.form.triggerPrz){
-            return $message({title: '触发价格不能为空', content: '触发价格不能为空', type: 'danger'})
+            return $message({title: gDI18n.$t('10159'/*'触发价格不能为空'*/), content: gDI18n.$t('10159'/*'触发价格不能为空'*/), type: 'danger'})
         }else if(Number(this.form.triggerPrz) == 0){
-            return $message({title: '触发价格不能为0', content: '触发价格不能为0', type: 'danger'})
+            return $message({title: gDI18n.$t('10158'/*'触发价格不能为0'*/), content: gDI18n.$t('10158'/*'触发价格不能为0'*/), type: 'danger'})
         }else if(isNaN(Number(this.form.triggerPrz))){
-            return $message({title: '请输入正确的触发价格', content: '请输入正确的触发价格', type: 'danger'})
+            return $message({title: gDI18n.$t('10160'/*'请输入正确的触发价格'*/), content: gDI18n.$t('10160'/*'请输入正确的触发价格'*/), type: 'danger'})
         }
 
 
@@ -305,14 +307,14 @@ let obj = {
             })
             console.log(planList)
             if(planList.length >= 5){
-                return $message({title: '同一仓位ID计划单最多5条！', content: '同一仓位ID计划单最多5条！', type: 'danger'})
+                return $message({title: gDI18n.$t('10161'/*'同一仓位ID计划单最多5条！'*/), content: gDI18n.$t('10161'/*'同一仓位ID计划单最多5条！'*/), type: 'danger'})
             }
         }else{
             let planList = Orders.filter(function(item){
                 return (item.OType == 3 || item.OType == 4) && item.Sym == Sym
             })
             if(planList.length >= 10){
-                return $message({title: '同一合约计划单最多10条！', content: '同一合约计划单最多10条！', type: 'danger'})
+                return $message({title: gDI18n.$t('10162'/*'同一合约计划单最多10条！'*/), content: gDI18n.$t('10162'/*'同一合约计划单最多10条！'*/), type: 'danger'})
             }
         }
 
@@ -401,7 +403,8 @@ let obj = {
                         }
                     }
                     if(posArr.length >= window.$config.future.maxPosNum){
-                        return window.$message({title: '提示', content: '同一合约最多同时存在'+window.$config.future.maxPosNum+'个仓位!', type: 'danger'})
+                        return window.$message({title: gDI18n.$t('10037'), content: gDI18n.$t('10147',{value : window.$config.future.maxPosNum}), type: 'danger'})
+                        // return window.$message({title: '提示', content: '同一合约最多同时存在'+window.$config.future.maxPosNum+'个仓位!', type: 'danger'})
                     }
                 // 判断仓位数量是否超限 end
                 // 判断是否开启了全仓杠杠调节 start
@@ -412,7 +415,8 @@ let obj = {
                 break;
             default:
                 if(!PId){
-                    return window.$message({title: '请先选择您要调整的仓位！', content: '请先选择您要调整的仓位！', type: 'danger'})
+                    return window.$message({title: gDI18n.$t('10148'), content: gDI18n.$t('10148'), type: 'danger'})
+                    // return window.$message({title: '请先选择您要调整的仓位！', content: '请先选择您要调整的仓位！', type: 'danger'})
                 }
                 // 判断是否开启了全仓杠杠调节 start
                 if(window.$config.future.setMIRMy && p.lvr == 0){
@@ -424,11 +428,11 @@ let obj = {
 
         let aWdrawable = Number(obj.wlt.aWdrawable || 0 )
         if(aWdrawable == 0){
-            return window.$message({title: '可用资金不足！', content: '可用资金不足！', type: 'danger'})
+            return window.$message({title: gDI18n.$t('10038'/*'可用资金不足！'*/), content: gDI18n.$t('10038'/*'可用资金不足！'*/), type: 'danger'})
         }else if(dir == 1 && aWdrawable < Number(this.MgnNeedForBuy)){
-            return window.$message({title: '可用资金不足！', content: '可用资金不足！', type: 'danger'})
+            return window.$message({title: gDI18n.$t('10038'/*'可用资金不足！'*/), content: gDI18n.$t('10038'/*'可用资金不足！'*/), type: 'danger'})
         }else if(dir == -1 && aWdrawable < Number(this.MgnNeedForSell)){
-            return window.$message({title: '可用资金不足！', content: '可用资金不足！', type: 'danger'})
+            return window.$message({title: gDI18n.$t('10038'/*'可用资金不足！'*/), content: gDI18n.$t('10038'/*'可用资金不足！'*/), type: 'danger'})
         }
 
         window.gTrd.ReqTrdOrderNew(p, function(aTrd, arg){
@@ -499,7 +503,7 @@ let obj = {
                 break;
             default:
                 if(!PId){
-                    return window.$message({title: '请先选择您要调整的仓位！', content: '请先选择您要调整的仓位！', type: 'danger'})
+                    return window.$message({title: gDI18n.$t('10148'/*'请先选择您要调整的仓位！'*/), content: gDI18n.$t('10148'/*'请先选择您要调整的仓位！'*/), type: 'danger'})
                 }
                 window.$openLeverageMode({
                     Sym: Sym,
@@ -747,12 +751,12 @@ let obj = {
         if(show){
             return m('div', { class: 'pub-place-order-form-stop-pl field' }, [
                 m("label", { class: "pub-place-order-form-stop-pl-label label" }, [
-                    '止盈止损设置（选填）'
+                    gDI18n.$t('10149')//'止盈止损设置（选填）'
                 ]),
                 m("div", { class: "pub-place-order-form-stop-pl-input field has-addons" }, [
                     
                     m("div", { class: "pub-place-order-form-stop-pl-input-p control is-expanded" }, [
-                        m("input", { class: "input", type: 'number', placeholder: "止盈价", step: obj.PrzStep, value: obj.form.stopP, pattern:"\d*", oninput: function(e){
+                        m("input", { class: "input", type: 'number', placeholder: gDI18n.$t('10150'/*"止盈价"*/), step: obj.PrzStep, value: obj.form.stopP, pattern:"\d*", oninput: function(e){
                             obj.onStopPInput(e)
                         }})
                     ]),
@@ -760,7 +764,7 @@ let obj = {
                         '&'
                     ]),
                     m("div", { class: "pub-place-order-form-stop-pl-input-l control is-expanded" }, [
-                        m("input", { class: "input", type: 'number', placeholder: "止损价", step: obj.PrzStep, value: obj.form.stopL, pattern:"\d*", oninput: function(e){
+                        m("input", { class: "input", type: 'number', placeholder: gDI18n.$t('10151'/*"止损价"*/), step: obj.PrzStep, value: obj.form.stopL, pattern:"\d*", oninput: function(e){
                             obj.onStopLInput(e)
                         }})
                     ])
@@ -888,12 +892,12 @@ export default {
             obj.getLeverChange(),
             m("div", { class: "pub-place-order-form-prz-input field" }, [
                 m("div", { class: "control" }, [
-                    m("input", { class: "input", type: 'number', placeholder: "市价", readonly: true})
+                    m("input", { class: "input", type: 'number', placeholder: gDI18n.$t('10081'/*"市价"*/), readonly: true})
                 ])
             ]),
             m("div", { class: "pub-place-order-form-num-input field" }, [
                 m("div", { class: "control" }, [
-                    m("input", { class: "input", type: 'number', placeholder: "请输入数量", step: obj.NumStep, value: obj.form.Num, pattern:"\d*",oninput: function(e) {
+                    m("input", { class: "input", type: 'number', placeholder: gDI18n.$t('10153'/*"请输入数量"*/), step: obj.NumStep, value: obj.form.Num, pattern:"\d*",oninput: function(e) {
                         obj.onInputForNum(e)
                     } }),
                     m('span', {class: 'pub-place-order-form-num-input-face-value'}, [
@@ -904,7 +908,7 @@ export default {
             obj.getStopPL(),
             m("div", { class: "pub-place-order-form-trigger-prz-input field" }, [
                 m("div", { class: "control" }, [
-                    m("input", { class: "input", type: 'number', placeholder: "请输入触发价格", step: obj.PrzStep, value: obj.form.triggerPrz, pattern:"\d*",oninput: function(e) {
+                    m("input", { class: "input", type: 'number', placeholder: gDI18n.$t('10164'/*"请输入触发价格"*/), step: obj.PrzStep, value: obj.form.triggerPrz, pattern:"\d*",oninput: function(e) {
                         obj.onInputFortriggerPrz(e)
                     }})
                 ])
@@ -917,11 +921,11 @@ export default {
                             m("button", { class: "button is-success is-fullwidth", onclick: function(){
                                 obj.submit(1)
                             }}, [
-                                "买入/做多(看涨)"
+                                gDI18n.$t('10154')//"买入/做多(看涨)"
                             ]),
                             m('div', {class: "pub-place-order-form-need-mgn is-flex"}, [
                                 m('div', {class: ""}, [
-                                    '所需保证金'
+                                    gDI18n.$t('10155')//'所需保证金'
                                 ]),
                                 m('.spacer'),
                                 m('div', {class: ""}, [
@@ -935,11 +939,11 @@ export default {
                             m("button", { class: "button is-danger is-fullwidth", onclick: function(){
                                 obj.submit(-1)
                             }}, [
-                                "卖出/做空(看跌)"
+                                gDI18n.$t('10156')//"卖出/做空(看跌)"
                             ]),
                             m('div', {class: "pub-place-order-form-need-mgn is-flex"}, [
                                 m('div', {class: ""}, [
-                                    '所需保证金'
+                                    gDI18n.$t('10155')//'所需保证金'
                                 ]),
                                 m('.spacer'),
                                 m('div', {class: ""}, [
@@ -953,7 +957,7 @@ export default {
             
             m('div', {class: "pub-place-order-form-wallet is-flex field"}, [
                 m('div', {class: ""}, [
-                    '可用保证金'
+                    gDI18n.$t('10157')//'可用保证金'
                 ]),
                 m('.spacer'),
                 m('div', {class: ""}, [
