@@ -550,7 +550,7 @@ let obj = {
             //	BEWARE: no trailing slash is expected in feed URL
             datafeed: new TDataFeeder(),//new Datafeeds.UDFCompatibleDatafeed("https://demo_feed.tradingview.com"),
             library_path: "./libs/tradingview/",
-            locale: 'zh',//this.getParameterByName('lang') || "en",
+            locale: gDI18n.locale, //'zh',//this.getParameterByName('lang') || "en",
             timezone: "Asia/Shanghai",
 
             disabled_features: [
