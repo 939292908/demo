@@ -150,33 +150,39 @@ class TDataFeeder {
         volume_precision: 1
         }
         */
+        if(symbolInfo.name == 'new'){
+            onHistoryCallback([], { noData: true });
+            obj.setSymbol()
+            return
+        }
+        let _Sym = symbolInfo.name == 'new'? gMkt.CtxPlaying.Typ: symbolInfo.name
         let _Typ = gMkt.Res2Typ[resolution];
         
         let assetD = window.gMkt.AssetD
 
-        if (gMkt&& (Sym != symbolInfo.name || Typ != _Typ)) {
+        if (gMkt&& (Sym != _Sym || Typ != _Typ)) {
             if (Sym && Typ) {
                 if (assetD[Sym]) {
                     gMkt.ReqUnSub(["kline_" + Typ + "_" + Sym, "trade_" + Sym])
                 }
             }
-            if (assetD[symbolInfo.name]) {
-                gMkt.ReqSub(["kline_" + _Typ + "_" + symbolInfo.name, "trade_" + symbolInfo.name])
+            if (assetD[_Sym]) {
+                gMkt.ReqSub(["kline_" + _Typ + "_" + _Sym, "trade_" + _Sym])
             }
             
             Typ = _Typ
             gMkt.CtxPlaying.Typ = _Typ
-            Sym = symbolInfo.name
+            Sym = _Sym
         }
 
         gMkt.CtxPlaying.Typ = _Typ;
         let interval = gMkt.Typ2Sec[_Typ]
         if (DBG_TDataFeeder) {
-            console.log(__filename, "TDataFeeder.getBars", symbolInfo.name, resolution, fromSec, toSec, firstDataRequest, Math.floor((toSec - fromSec) / interval))
+            console.log(__filename, "TDataFeeder.getBars", _Sym, resolution, fromSec, toSec, firstDataRequest, Math.floor((toSec - fromSec) / interval))
         }
         let start = Math.floor(fromSec / interval) * interval;
         let end = Math.ceil(toSec / interval) * interval;
-        let bars = gMkt.AffirmKlineReqIfNeeded(symbolInfo.name, Typ, start, end, Math.floor((end - start) / interval))
+        let bars = gMkt.AffirmKlineReqIfNeeded(_Sym, Typ, start, end, Math.floor((end - start) / interval))
         //        onHistoryCallback(bars,{noData:!firstDataRequest} );
         onHistoryCallback(bars, { noData: false });
     }
@@ -506,6 +512,14 @@ let obj = {
             that.klineTargetListOpen = false
         })
 
+        if(this.EV_CHANGELOCALE_UPD_unbinder){
+            this.EV_CHANGELOCALE_UPD_unbinder()
+        }
+        this.EV_CHANGELOCALE_UPD_unbinder = window.gEVBUS.on(gDI18n.EV_CHANGELOCALE_UPD,arg=> {
+            that.setKlineLanguage()
+        })
+        
+
 
     },
     //删除全局广播
@@ -527,6 +541,9 @@ let obj = {
         }
         if(this.EV_ClICKBODY_unbinder){
             this.EV_ClICKBODY_unbinder()
+        }
+        if(this.EV_CHANGELOCALE_UPD_unbinder){
+            this.EV_CHANGELOCALE_UPD_unbinder()
         }
     },
     initKline: function () {
@@ -906,6 +923,14 @@ let obj = {
                 item.name
             ])
         })
+    },
+    setKlineLanguage(){
+        let locale = gDI18n.locale
+        if(locale == "zh" || locale == "tw"){
+            window.gTvWidgetFT?window.gTvWidgetFT.setLanguage('zh'):''
+        }else {
+            window.gTvWidgetFT?window.gTvWidgetFT.setLanguage('en'):''
+        }
     }
 }
 
