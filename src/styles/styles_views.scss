@@ -894,7 +894,7 @@ hr {
     // display: inline-block;
     @extend %pt-2;
 }
-//通用字体大小
+//通用字体大小start
 .currency-font{
     @extend %font-2;
 }
@@ -906,7 +906,18 @@ hr {
 .centent-a{
     @extend %font-7;
 }
+//通用字体大小end
+//首页仓位选择框样式start
+.pos-id{
+    @extend %side-mb;
+}
 
+.card-first-head{
+    max-height: 600px;
+    overflow-y: scroll;
+}
+
+//首页仓位选择框样式end
 .pos-info{
     display: flex;
     justify-content: space-between;
