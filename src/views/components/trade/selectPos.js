@@ -269,6 +269,130 @@ let obj = {
     }else{
       window.gWebAPI.needLogin()
     }
+  },
+
+  getPosList_m:function (){
+    let that = this
+      return this.posList.map(function(item, i){
+        return m("div",{class : "card pos-id"},[
+          m("div",{class : "card-content"},[
+            that.getPosListTableItem_m(item)
+          ])
+        ])
+      }) 
+  },
+
+  getPosListTableItem_m:function (pos){
+    return m("div",{class : "",key: 'selectPosItem'+pos.PId, class: 'cursor-pointer', onclick: function(){
+      obj.selectPosItem(pos)
+    }},[
+      m('table',{class : "currency-font"},[
+        m('tr',{class : ""},[
+          m('td',{class : ""},[
+            m('span',{class : "has-text-grey"},[
+              "仓位ID: "
+            ]),
+            m('span',{class : "has-text-black"},[
+              pos.PId.substr(-4)
+            ]),
+          ]),
+          m('td',{class : ""},[
+            m('span',{class : "has-text-grey"},[
+              "方向: "
+            ]),
+            m('span',{class : "has-text-black"},[
+              (pos.Sz>0?'多仓':pos.Sz<0?'空仓':'--')
+            ]),
+          ]),
+          m('td', {class: '', align: 'center', onclick: function (e) {
+            obj.delPos(pos)
+            window.stopBubble(e)
+          }},[
+            m("button", {
+              class: "delete"+(obj.checkPosDelShow(pos)?'':' is-hidden'), 
+              "aria-label": "close", 
+              onclick: function (e) {
+                obj.delPos(pos)
+                window.stopBubble(e)
+              }
+            }),
+          ])
+        ]),
+        m('tr',{class : ""},[
+          m('td',{class : ""},[
+            m('span',{class : "has-text-grey"},[
+              "杠杆: "
+            ]),
+            m('span',{class : "has-text-black"},[
+              pos.displayLever
+            ]),
+          ]),
+          m('td',{class : ""},[
+            m('span',{class : "has-text-grey"},[
+              "数量/价格: "
+            ]),
+            m('span',{class : "has-text-black"},[
+              (pos.PrzIni)+'/'+(pos.Sz),
+            ]),
+          ]),
+        ]),
+        m('tr',{class : ""},[
+          m('td',{class : ""},[
+            m('span',{class : "has-text-grey"},[
+              "买挂单: "
+            ]),
+            m('span',{class : "has-text-black"},[
+              pos.aQtyBuy || 0
+            ]),
+          ]),
+          m('td',{class : ""},[
+            m('span',{class : "has-text-grey"},[
+              "卖挂单: "
+            ]),
+            m('span',{class : "has-text-black"},[
+              pos.aQtySell || 0
+            ]),
+          ]),
+        ]),
+      ])
+    ])
+  },
+  //移动端selectpos界面
+  getselectPos_m:function (){
+    return m("div",{class:"pub-select-pos"},[
+      m('button', {class: "pub-select-pos-open-btn button is-primary is-inverted is-small",'aria-haspopup':true, "aria-controls": "dropdown-menu2", onclick: function(){
+        obj.openMode()
+      }}, [
+          obj.getPosListItem(obj.posList_obj[obj.posActive], true)
+      ]),
+      m("div", { class: "pub-select-pos-model modal" + (obj.openSelect ? " is-active" : ''), }, [
+        m("div", { class: "modal-background" }),
+        m("div", { class: "modal-card card-first-head" }, [
+          m("header", { class: "pub-select-pos-model-header modal-card-head modal-card-body-list" }, [
+            m("p", { class: "modal-card-title" }, [
+              '仓位选择'
+            ]),
+            m("button", {
+              class: "delete", "aria-label": "close", onclick: function () {
+                obj.closeMode()
+              }
+            }),
+          ]),
+          m("section", { class: "pub-select-pos-model-content modal-card-body modal-card-body-list " }, [
+            obj.getPosList_m()
+          ]),
+          m("footer", { class: "pub-select-pos-model-foot modal-card-foot modal-card-body-list" }, [
+            m("button", {
+              class: "button is-success", onclick: function () {
+                obj.addPos()
+              }
+            }, [
+              '新增仓位'
+            ])
+          ]),
+        ])
+      ])
+    ])
   }
 }
 export default {
@@ -280,6 +404,9 @@ export default {
         obj.initPos()
     },
     view: function(vnode) {
+      if (window.isMobile) {
+        return obj.getselectPos_m()
+      } else {
         return m("div",{class:"pub-select-pos"},[
           m('button', {class: "pub-select-pos-open-btn button is-primary is-inverted is-small",'aria-haspopup':true, "aria-controls": "dropdown-menu2", onclick: function(){
             // obj.openSelect = !obj.openSelect
@@ -289,6 +416,7 @@ export default {
           ]),
           m("div", { class: "pub-select-pos-model modal" + (obj.openSelect ? " is-active" : ''), }, [
             m("div", { class: "modal-background" }),
+            
             m("div", { class: "modal-card" }, [
               m("header", { class: "pub-select-pos-model-header modal-card-head" }, [
                 m("p", { class: "modal-card-title" }, [
@@ -353,6 +481,7 @@ export default {
             //     ]),
             // ]),
         ])
+      }
     },
     onbeforeremove: function(){
       obj.rmEVBUS()
