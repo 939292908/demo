@@ -182,17 +182,17 @@ let obj = {
     return m("div",{class:"pub-new-trade-list-item level is-relative pos-info"},[
       m('div', {class: ""},[
           m('p', {class: ""},[
-              "价格"
+            gDI18n.$t('10186')//"价格"
           ]),
       ]),
       m('div', {class: ""},[
           m('p', {class: ""},[
-            "数量"
+            gDI18n.$t('10087')//"数量"
           ]),
       ]),
       m('div', {class: ""},[
           m('p', {class: ""},[
-            "时间"
+            gDI18n.$t('10103')//"时间"
           ]),
       ]),
   ])

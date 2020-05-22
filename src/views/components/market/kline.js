@@ -955,7 +955,7 @@ export default {
                         window.stopBubble(e)
                     }}, [
                         m('button', {class:"button is-selected"+(obj.klineTimeListOpen?' has-text-primary':'')}, [
-                            '分时'
+                            gDI18n.$t('10023')//'分时'
                         ]),
                     ]),
                     m('div', {class:"dropdown-menu"}, [
@@ -968,19 +968,19 @@ export default {
                     obj.setKCrossTime('1')
                     // obj.klineTimeListOpen = false
                 }}, [
-                    '1分'
+                    gDI18n.$t('10439')//'1分'
                 ]),
                 m('button', {class:"button is-selected"+(gMkt.CtxPlaying.Typ == '30m'?' has-text-primary':''), onclick: function(){
                     obj.setKCrossTime('30')
                     // obj.klineTimeListOpen = false
                 }}, [
-                    '30分'
+                    gDI18n.$t('10440')//'30分'
                 ]),
                 m('button', {class:"button is-selected"+(gMkt.CtxPlaying.Typ == '1h'?' has-text-primary':''), onclick: function(){
                     obj.setKCrossTime('60')
                     // obj.klineTimeListOpen = false
                 }}, [
-                    '1小时'
+                    gDI18n.$t('10029')//'1小时'
                 ]),
                 
                 m('div', {class:"dropdown is-hidden-desktop is-right"+(obj.klineTargetListOpen?' is-active':'')}, [
@@ -989,7 +989,7 @@ export default {
                         window.stopBubble(e)
                     }}, [
                         m('button', {class:"button is-selected"}, [
-                            '指标'
+                            gDI18n.$t('10432')//'指标'
                         ]),
                     ]),
                     m('div', {class:"dropdown-menu"}, [

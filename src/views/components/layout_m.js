@@ -420,7 +420,15 @@ export default {
                     ]),
                     m("a",{class:"navbar-item", onclick: this.signOut,href:"/#!/contractbill"},[
                       gDI18n.$t('10079')//'合约账单'
-                    ])
+                    ]),
+                  ]),
+                  m("a",{class:"navbar-link"},[
+                    gDI18n.$t('10461')//'设置'
+                  ]),
+                  m("div",{class:"navbar-dropdown"},[
+                    m("a",{class:"navbar-item", onclick: this.signOut,href:"/#!/setlanguages"},[
+                      gDI18n.$t('10462')//"切换语言"
+                    ]),
                   ])
                 ])
                 

@@ -113,8 +113,9 @@ let spotTick = {
         let ass = window.gMkt.AssetD[Sym]
         let FundingNext = ass && ass.FundingNext || 0
         let FundingLongR = (this.getLastTick().FundingLongR || 0).toString().split('%')[0]
-        this.FundingNextTmStr = `下次资金费率交换时间：${FundingNext?new Date(FundingNext).format('yyyy-MM-dd hh:mm:ss'):'--'}`
-        this.FundingLongRStr = `${Number(FundingLongR)>0?'多头需要向空头补偿持仓价值的':'空头需要向多头补偿持仓价值的'}${Math.abs(Number(FundingLongR))}%`
+        this.FundingNextTmStr = gDI18n.$t('10414',{value : (FundingNext?new Date(FundingNext).format('yyyy-MM-dd hh:mm:ss'):'--')})
+        // this.FundingNextTmStr = `下次资金费率交换时间：${FundingNext?new Date(FundingNext).format('yyyy-MM-dd hh:mm:ss'):'--'}`
+        this.FundingLongRStr = `${Number(FundingLongR)>0?gDI18n.$t('10014'/*'多头需要向空头补偿持仓价值的'*/):gDI18n.$t('10015'/*'空头需要向多头补偿持仓价值的'*/)}${Math.abs(Number(FundingLongR))}%`
         
     },
 
@@ -174,7 +175,7 @@ let spotTick = {
                         m("table",{class : ""},[
                             m("tr",{class : ""},[
                                 m("td",{class : "currency-font has-text-grey table-margin2"},[
-                                    "标记价格："
+                                    gDI18n.$t('10433')//"标记价格："
                                 ]),
                                 m("td",{class : "currency-font has-text-grey width-curren table-margin2"},[
                                     spotTick.getLastTick().SettPrz || '--'
@@ -182,7 +183,7 @@ let spotTick = {
                             ]),
                             m("tr",{class : ""},[
                                 m("td",{class : "currency-font has-text-grey table-margin2"},[
-                                    "指数价格："
+                                    gDI18n.$t('10434')//"指数价格："
                                 ]),
                                 m("td",{class : "currency-font has-text-grey width-curren table-margin2"},[
                                     spotTick.getLastTick().indexPrz || '--'
@@ -195,7 +196,7 @@ let spotTick = {
                         m("table",{class : "currency-font table-width"},[
                             m("tr",{class :"table-margin"},[
                                 m("td",{class :"has-text-grey table-margin"},[
-                                    "24H最高："
+                                    gDI18n.$t('10435')//"24H最高："
                                 ]),
                                 m("td",{class :"font-textalent-right has-text-black  table-margin"},[
                                     spotTick.getLastTick().High24 || '--'
@@ -203,7 +204,7 @@ let spotTick = {
                             ]),
                             m("tr",{class :"table-margin"},[
                                 m("td",{class :"has-text-grey table-margin"},[
-                                    "24H最低："
+                                    gDI18n.$t('10436')//"24H最低："
                                 ]),
                                 m("td",{class :"font-textalent-right has-text-black table-margin"},[
                                     spotTick.getLastTick().Low24 || '--'
@@ -211,7 +212,7 @@ let spotTick = {
                             ]),
                             m("tr",{class :"table-margin"},[
                                 m("td",{class :"has-text-grey table-margin"},[
-                                    "持仓量："
+                                    gDI18n.$t('10437')//"持仓量："
                                 ]),
                                 m("td",{class :"font-textalent-right has-text-black  table-margin"},[
                                     spotTick.getLastTick().Turnover24 || '--'
@@ -285,14 +286,14 @@ export default {
                         m("a",{class:"", onclick: function(){
                             spotTick.setTabsActive(0)
                         }},[
-                          '最新成交'
+                            gDI18n.$t('10012')//'最新成交'
                         ])
                       ]),
                       m("li",{class:""+(spotTick.tabsActive == 1?' is-active':'')},[
                         m("a",{class:"", onclick: function(){
                             spotTick.setTabsActive(1)
                         }},[
-                          '合约简介'
+                            gDI18n.$t('10438')//'合约简介'
                         ])
                       ])
                     ]),

@@ -10,6 +10,7 @@ import delegation from '../views/components/contractRrecord/historicalDelegation
 import deal from '../views/components/contractRrecord/historicalDeal'
 import contractbill from '../views/components/contractRrecord/contractBill'
 import details from '../views/components/contractRrecord/details'
+import languages from '../views/components/contractRrecord/languages'
 
 m.route(document.body, "/future",{
     "/future": {
@@ -36,6 +37,11 @@ m.route(document.body, "/future",{
         render:function (vnode){
             return m(contractbill,vnode.attrs)
         }
-    }
+    },
+    "/setlanguages": {
+        render:function (vnode){
+            return m(languages,vnode.attrs)
+        }
+    },
 })
 

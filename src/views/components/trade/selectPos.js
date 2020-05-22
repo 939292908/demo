@@ -291,7 +291,7 @@ let obj = {
         m('tr',{class : ""},[
           m('td',{class : ""},[
             m('span',{class : "has-text-grey"},[
-              "仓位ID: "
+              gDI18n.$t('10067') + "："//"仓位ID: "
             ]),
             m('span',{class : "has-text-black"},[
               pos.PId.substr(-4)
@@ -299,10 +299,10 @@ let obj = {
           ]),
           m('td',{class : ""},[
             m('span',{class : "has-text-grey"},[
-              "方向: "
+              gDI18n.$t('10172') + "："//"方向: "
             ]),
             m('span',{class : "has-text-black"},[
-              (pos.Sz>0?'多仓':pos.Sz<0?'空仓':'--')
+              (pos.Sz>0?gDI18n.$t('10170'/*'多仓'*/):pos.Sz<0?gDI18n.$t('10171'/*'空仓'*/):'--')
             ]),
           ]),
           m('td', {class: '', align: 'center', onclick: function (e) {
@@ -322,7 +322,7 @@ let obj = {
         m('tr',{class : ""},[
           m('td',{class : ""},[
             m('span',{class : "has-text-grey"},[
-              "杠杆: "
+              gDI18n.$t('10054') + "："//"杠杆: "
             ]),
             m('span',{class : "has-text-black"},[
               pos.displayLever
@@ -330,7 +330,7 @@ let obj = {
           ]),
           m('td',{class : ""},[
             m('span',{class : "has-text-grey"},[
-              "数量/价格: "
+              gDI18n.$t('10173') + "："//"数量/价格: "
             ]),
             m('span',{class : "has-text-black"},[
               (pos.PrzIni)+'/'+(pos.Sz),
@@ -340,7 +340,7 @@ let obj = {
         m('tr',{class : ""},[
           m('td',{class : ""},[
             m('span',{class : "has-text-grey"},[
-              "买挂单: "
+              gDI18n.$t('10177') + "："//"买挂单: "
             ]),
             m('span',{class : "has-text-black"},[
               pos.aQtyBuy || 0
@@ -348,7 +348,7 @@ let obj = {
           ]),
           m('td',{class : ""},[
             m('span',{class : "has-text-grey"},[
-              "卖挂单: "
+              gDI18n.$t('10178') + "："//"卖挂单: "
             ]),
             m('span',{class : "has-text-black"},[
               pos.aQtySell || 0
@@ -371,7 +371,7 @@ let obj = {
         m("div", { class: "modal-card card-first-head" }, [
           m("header", { class: "pub-select-pos-model-header modal-card-head modal-card-body-list" }, [
             m("p", { class: "modal-card-title" }, [
-              '仓位选择'
+              gDI18n.$t('10176'/*'仓位选择'*/)
             ]),
             m("button", {
               class: "delete", "aria-label": "close", onclick: function () {
@@ -388,7 +388,7 @@ let obj = {
                 obj.addPos()
               }
             }, [
-              '新增仓位'
+              gDI18n.$t('10179'/*'新增仓位'*/)
             ])
           ]),
         ])
@@ -421,7 +421,7 @@ export default {
             m("div", { class: "modal-card" }, [
               m("header", { class: "pub-select-pos-model-header modal-card-head" }, [
                 m("p", { class: "modal-card-title" }, [
-                  '仓位选择'
+                  gDI18n.$t('10176'/*'仓位选择'*/)
                 ]),
                 m("button", {
                   class: "delete", "aria-label": "close", onclick: function () {

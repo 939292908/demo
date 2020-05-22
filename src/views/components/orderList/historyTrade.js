@@ -167,8 +167,9 @@ let obj = {
                 ]),
                 m('.spacer'),
                 m("p",{class : "delegation-list-phistory navbar-item has-text-black"},[
-                    "历史成交"
+                    gDI18n.$t('10237')//"历史成交"
                     ]),
+                m('.spacer'),
                 m('.spacer'),
                 ]),
             ]),
@@ -200,19 +201,19 @@ let obj = {
                         m("div",{class :  ""},[
                             m("div",{class : "theadList-profit-loss" ,},[
                                 m("div",{class  : "theadList-profit-loss-p1 has-text-grey"},[
-                                    "成交均价：" ,
+                                    gDI18n.$t('10060') + "：",//"成交均价：" ,
                                     m("p",{class : "has-text-dark"},[
                                         item.Prz
                                     ])
                                 ]),
                                 m("div",{class  : "theadList-profit-loss-p1 has-text-grey"},[
-                                    "成交数量：" ,
+                                    gDI18n.$t('10061') + "：",//"成交数量：" ,
                                     m("p",{class : "has-text-dark"},[
                                         item.Sz
                                     ])
                                 ]),
                                 m("div",{class  : "theadList-profit-loss-p1 has-text-grey"},[
-                                    "平仓盈亏：" ,
+                                    gDI18n.$t('10062') + "：",//"平仓盈亏：" ,
                                     m("p",{class : "has-text-dark"},[
                                         item.PnlCls
                                     ])
@@ -222,7 +223,7 @@ let obj = {
                             m("div",{class : "theadList-profit-loss" ,},[
                                 m("div",{class  : "theadList-profit-loss-p1 has-text-grey theadList-profit2"},[
                                     m("p",{class: ""},[
-                                       "手续费：" 
+                                        gDI18n.$t('10063') + "：",//"手续费：" 
                                     ]),
                                     m("p",{class : "has-text-dark" + item.Fee>0?"has-text-danger" :"has-text-primary"},[
                                         item.Fee
@@ -234,7 +235,7 @@ let obj = {
                                 m("div",{class:"cursor-pointer theadList-profit-loss-p2 has-text-grey theadList-profit2 fomt-blacl text-right"+(" historyOrdTableListItemCopy"+i), "data-clipboard-text": item.PId, onclick: function(e){
                                     window.$copy(".historyOrdTableListItemCopy"+i)
                                 }},[
-                                    "仓位ID：",
+                                    gDI18n.$t('10067') + "：",//"仓位ID：",
                                     m("p",{class : "has-text-dark"},[
                                         item.PId.substr(-4),
                                         m("i",{class : ""},[ " "]),
@@ -249,7 +250,7 @@ let obj = {
                 m("i",{class : "iconfont icon-box" ,style:"font-size: 60px",},[
                     
                 ]),
-                "暂无历史成交记录"
+                gDI18n.$t('10465'),//"暂无历史成交记录"
             ])
         ])
     ])

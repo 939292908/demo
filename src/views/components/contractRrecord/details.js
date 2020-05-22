@@ -26,8 +26,9 @@ export default {
                 ]),
                 m('.spacer'),
                 m("p",{class : "delegation-list-phistory navbar-item has-text-black"},[
-                    "委托详情"
-                    ]),
+                    gDI18n.$t('10428')//"委托详情"
+                ]),
+                m('.spacer'),
                 m('.spacer'),
                 ]),
             ]),
@@ -36,31 +37,32 @@ export default {
                 
                 m("hr",{class : ""}),
                 m("div",{class : "details-body-list",},[
-                   m("p",{class : "details-body-title"},[
+                   m("p",{class : "details-body-title title-header"},[
                         utils.getSymDisplayName(window.gMkt.AssetD, item.Sym)
                     ]), 
-                   m("p",{class : "details-body-title2 has-text-primary"},[
+                   m("p",{class : "details-body-title2 has-text-primary title-header"},[
                     item.displayLever
                     ]), 
-                   m("p",{class : "details-body-title2 has-text-primary"},[
+                   m("p",{class : "details-body-title2 has-text-primary title-header font-right"},[
                     item.StatusStr
                     ]), 
                 ]),
                 m("div",{class : "details-body-conent",},[
                     m("div",{class : "font-div has-text-grey-light"},[
-                        "委托数量(张)",
+                        gDI18n.$t('10059') + "(" + gDI18n.$t('10423') + ")",//"委托数量(张)",
                         m("p",{class : "font-p has-text-black"},[
                             item.Qty
                         ])
                     ]),
                     m("div",{class : "font-div has-text-grey-light"},[
-                        "委托价格",
+                        gDI18n.$t('10058'),//"委托价格",
                         m("p",{class : "font-p has-text-black"},[
                             item.Qty
                         ])
                     ]),
-                    m("div",{class : "font-div has-text-grey-light"},[
-                        "手续费用(" + item.FeeCoin + ")",
+                    m("div",{class : "font-div font-right has-text-grey-light"},[
+                        gDI18n.$t('10429',{value : item.FeeCoin}),
+                        // "手续费用(" + item.FeeCoin + ")",
                         m("p",{class : "font-p p-only has-text-black"},[
                             item.Fee
                         ])
@@ -68,19 +70,23 @@ export default {
                 ]), 
                 m("div",{class : "details-body-conent",},[
                     m("div",{class : "font-div has-text-grey-light"},[
-                        "成交数量(张)",
+                        gDI18n.$t('10061') + "(" + gDI18n.$t('10423') + ")",//"成交数量(张)",
                         m("p",{class : "font-p  has-text-danger"},[
                             item.QtyF
                         ])
                     ]),
                     m("div",{class : "font-div has-text-grey-light"},[
-                        "成交均价",
+                        gDI18n.$t('10060'),//"成交均价",
                         m("p",{class : "font-p has-text-black"},[
                             item.PrzF
                         ])
                     ]),
-                    m("div",{class : "font-div has-text-grey-light"},[
-                        "平仓盈亏(" + item.FeeCoin + ")",
+                    m("div",{class : "font-div font-right has-text-grey-light"},[
+                        m('div',{class : ""},[
+                            gDI18n.$t('10062') + "(" + item.FeeCoin + ")",
+                        ]),
+                        
+                        // "平仓盈亏(" + item.FeeCoin + ")",
                         m("p",{class : "font-p p-only has-text-danger"},[
                             item.PnlCls
                         ])
@@ -88,32 +94,32 @@ export default {
                 ]), 
                 m("div",{class : "details-body-conent",},[
                     m("div",{class : "font-div has-text-grey-light"},[
-                        "触发条件",
+                        gDI18n.$t('10064'),//"触发条件",
                         m("p",{class : "font-p has-text-black"},[
                             item.cond
                         ])
                     ]),
                     m("div",{class : "font-div has-text-grey-light"},[
-                        "委托类型 ",
+                        gDI18n.$t('10056'),//"委托类型 ",
                         m("p",{class : "font-p has-text-black"},[
                             item.OTypeStr
                         ])
                     ]),
-                    m("div",{class : "font-div has-text-grey-light"},[
-                        "交易类型",
+                    m("div",{class : "font-div font-right has-text-grey-light"},[
+                        gDI18n.$t('10055'),//"交易类型",
                         item.Dir == 1?
-                        m("p",{class : "font-default-color2" },[
+                        m("p",{class : "has-text-success" },[
                             item.DirStr
                         ])
                         :
-                        m("p",{class : "font-default-color" },[
+                        m("p",{class : "has-text-danger" },[
                             item.DirStr
                         ]),
                     ]),
                 ]), 
                 m("div",{class : "details-body-conent",},[
                     m("div",{class : "font-div-bottom has-text-black"},[
-                        "成交时间",
+                        gDI18n.$t('10073'),//"成交时间",
                     ]),
                     m("div",{class : "font-div-bottom has-text-black"},[
                         " ",
@@ -124,9 +130,9 @@ export default {
                 ]), 
                 m("div",{class : "details-body-conent",},[
                     m("div",{class : "font-div-bottom has-text-black"},[
-                        "仓位ID",
+                        gDI18n.$t('10067'),//"仓位ID",
                     ]),
-                    m("div",{class : "font-div has-text-grey-light"},[
+                    m("div",{class : "has-text-grey-light"},[
                         " ",
                     ]),
                     m("div",{class : "font-div-bottom has-text-black"},[
@@ -135,7 +141,7 @@ export default {
                         }},[
                             m("p",{class : "font-color"},[
                                 item.PId,
-                                m("i",{class : ""}),
+                                m("i",{class : ""},[ " "]),
                                 m("i",{class:"iconfont iconcopy"}),
                             ])  
                         ]),
@@ -143,7 +149,7 @@ export default {
                 ]), 
                 m("div",{class : "details-body-conent",},[
                     m("div",{class : "font-div-bottom has-text-black"},[
-                        "委托来源",
+                        gDI18n.$t('10066'),//"委托来源",
                     ]),
                     m("div",{class : "font-div"},[
                         " ",
@@ -159,23 +165,23 @@ export default {
                 //底部成交记录
                 m("div",{class : ""},[
                     m("div",{class : "bottom-sty" },[
-                        "成交记录"
+                        gDI18n.$t('10078'),//"成交记录"
                     ]),
                     m("div",{class : "details-body-conent",},[
                         m("div",{class : "font-div has-text-black"},[
-                            "成交数量",
+                            gDI18n.$t('10061'),//"成交数量",
                             m("p",{class : "font-p has-text-grey-light"},[
                                 item.Qty
                             ])
                         ]),
                         m("div",{class : "font-div has-text-black"},[
-                            "成交价格 ",
+                            gDI18n.$t('10430'),//"成交价格 ",
                             m("p",{class : "font-p has-text-grey-light"},[
                                 item.Prz
                             ])
                         ]),
                         m("div",{class : "font-div has-text-black" ,style: "text-align: right"},[
-                            "时间",
+                            gDI18n.$t('10103'),//"时间",
                             m("p",{class : "p-only has-text-grey-light"},[
                                 item.AtStr
                             ])

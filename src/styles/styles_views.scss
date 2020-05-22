@@ -674,7 +674,7 @@ hr {
 
     .theadList-profit-loss{
         display: flex;
-        justify-content:start;
+        justify-content:space-between;
         text-align: left;
         @extend %side-mt;
         @extend %font-1;
@@ -716,6 +716,26 @@ hr {
 }
 
 //移动端详情 start
+.table-list{
+    width: 100%;
+}
+
+.font-right{
+    text-align: right;
+}
+
+.title-header{
+    width: 50%;
+}
+
+.flex-right{
+    display: flex;
+    justify-content: end;
+}
+
+.ord-pad{
+    @extend %pr-3;
+}
 .details-header{
      
     .navbar-item{
@@ -747,6 +767,7 @@ hr {
 
             .font-div{
                 @extend %font-3;
+                width: 50%;
 
                 .font-p{
                     @extend %font-3;
@@ -907,6 +928,12 @@ hr {
     @extend %font-7;
 }
 //通用字体大小end
+//多元
+.langageus-text{
+    display: flex;
+    justify-content: space-between;
+    @extend %side-pa;
+}
 //首页仓位选择框样式start
 .pos-id{
     @extend %side-mb;

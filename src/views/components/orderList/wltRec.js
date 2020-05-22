@@ -3,12 +3,12 @@ let obj = {
     list: [],
     setType : false,
     navCoinInfo:{
-        Coin: '全部',
-        Stat: '全部',
+        Coin: gDI18n.$t('10394'),//'全部',
+        Stat: gDI18n.$t('10394'),//'全部',
     },
     oldNavCoinInfo:{
-        Coin: '全部',
-        Stat: '全部',
+        Coin: gDI18n.$t('10394'),//'全部',
+        Stat: gDI18n.$t('10394'),//'全部',
     },
     theadList: [
         {
@@ -26,40 +26,44 @@ let obj = {
         }
     ],
     tabsList:[
-        "全部","USDT","BTC","ETH","UT"
+        gDI18n.$t('10394'),//"全部",
+        "USDT",
+        "BTC",
+        "ETH",
+        "UT"
     ],
     tabsActive:0,
     tabsListOpen: false,
     type:[
         {
-            name:"全部"
+            name: gDI18n.$t('10394')//"全部"
         },
         {
-            name:"强制平仓"
+            name: gDI18n.$t('10385')//"强制平仓"
         },
         {
-            name:"自动减仓"
+            name: gDI18n.$t('10386')//"自动减仓"
         },
         {
-            name:"交割结算"
+            name: gDI18n.$t('10387')//"交割结算"
         },
         {
-            name:"平仓盈亏"
+            name: gDI18n.$t('10062')//"平仓盈亏"
         },
         {
-            name:"手续费"
+            name: gDI18n.$t('10063')//"手续费"
         },
         {
-            name:"账户划入"
+            name: gDI18n.$t('10389')//"账户划入"
         },
         {
-            name:"账户划出"
+            name: gDI18n.$t('10390')//"账户划出"
         },
         {
-            name:"资金费用"
+            name: gDI18n.$t('10391')//"资金费用"
         },
         {
-            name:"合约赠金"
+            name: gDI18n.$t('10393')//"合约赠金"
         },
     ],
     //初始化全局广播
@@ -200,8 +204,8 @@ let obj = {
     },
     //重置按钮
     resetNavDrawerInfo:function(){
-        obj.navCoinInfo.Coin = "全部";
-        obj.navCoinInfo.Stat = "全部";
+        obj.navCoinInfo.Coin = gDI18n.$t('10394');//"全部";
+        obj.navCoinInfo.Stat = gDI18n.$t('10394');//"全部";
         obj.initObj()
         obj.tabsActive = 0;
     },
@@ -255,7 +259,7 @@ let obj = {
                 m("div", { class: "modal-card" }, [
                 m("header", { class: "pub-set-lever-head modal-card-head modal-card-body-list" }, [
                     m("p", { class: "modal-card-title" }, [
-                        '筛选'
+                        gDI18n.$t('10455')//'筛选'
                         ]),
                     m("button", {class: "delete", "aria-label": "close", onclick: function () {
                         obj.closeLeverageMode()
@@ -265,7 +269,7 @@ let obj = {
                 m("section", { class: "pub-set-lever-content modal-card-body modal-card-body-list" }, [
                     m("div",{class : "search-bi-name"},[
                         m("p",{class : "search-bi-name-p"},[
-                            "币种名称"
+                            gDI18n.$t('10463')//"币种名称"
                         ]),
                         m("div",{class:" pub-place-order-m pub-order-m"},[
                             m('div', {class: "dropdown pub-place-order-select is-hidden-desktop" + (obj.tabsListOpen?' is-active':'')}, [
@@ -292,7 +296,7 @@ let obj = {
                     ]),
                     m("div",{class : "search-bi-name"},[
                         m("p",{class : "search-bi-name-p"},[
-                            "类型"
+                            gDI18n.$t('10102')//"类型"
                         ]),
                         m("div",{class : "search-k-d"},[
                             obj.type.map(function (item,i){
@@ -311,12 +315,12 @@ let obj = {
                         m("a",{class : "reset-button button is-primary is-outlined", onclick:function(){
                             obj.resetNavDrawerInfo()
                         }},[
-                            "重置"
+                            gDI18n.$t('10458')//"重置"
                         ]),
                         m("a",{class : "reset-button button is-primary is-outlined",onclick:function (){
                             obj.submitNavDrawer()
                         }},[
-                            "完成"
+                            gDI18n.$t('10459')//"完成"
                         ]),
                     ])
                 ])
@@ -340,7 +344,7 @@ let obj = {
                         ]),
                         m('.spacer'),
                         m("p",{class : "delegation-list-phistory navbar-item has-text-black"},[
-                            "合约账单"
+                            gDI18n.$t('10079')//"合约账单"
                             ]),
                         m('.spacer'),
                         m('a', {class:"navbar-item"}, [
@@ -372,13 +376,13 @@ let obj = {
                     //底部排列
                     m("div",{class : "theadList-profit-loss" },[
                         m("div",{class  : "theadList-profit-loss-p1"},[
-                            "金额：" ,
+                            gDI18n.$t('10421') + "：",//"金额：" ,
                             m("p",{class : "" + item.Qty>0?"has-text-danger" : "has-text-primary"},[
                                 item.Qty
                             ])
                         ]),
                         m("div",{class  : "theadList-time"},[
-                            "时间：" ,
+                            gDI18n.$t('10103') + "：",//"时间：" ,
                             m("p",{class : ""},[
                                 item.AtStr
                             ])
@@ -390,7 +394,7 @@ let obj = {
                 m("i",{class : "iconfont icon-box" ,style:"font-size: 60px",},[
                     
                 ]),
-                "暂无账单记录"
+                gDI18n.$t('10464')//"暂无账单记录"
             ])
         ])
     ])
