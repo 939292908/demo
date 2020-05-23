@@ -57,11 +57,31 @@ let obj = {
         }else{
             return null
         }
+    },
+    //初始化全局广播
+    initEVBUS: function () {
+        let that = this
+
+        if (this.EV_CHANGELOCALE_UPD_unbinder) {
+            this.EV_CHANGELOCALE_UPD_unbinder()
+        }
+        this.EV_CHANGELOCALE_UPD_unbinder = window.gEVBUS.on(gDI18n.EV_CHANGELOCALE_UPD, arg => {
+            that.initLanguage()
+        })
+    },
+    //删除全局广播
+    rmEVBUS: function () {
+        if (this.EV_CHANGELOCALE_UPD_unbinder) {
+            this.EV_CHANGELOCALE_UPD_unbinder()
+        }
+    },
+    initLanguage: function(){
+        this.tabsList = [gDI18n.$t('10117'),gDI18n.$t('10118'),gDI18n.$t('10119'),gDI18n.$t('10120')]
     }
 }
 export default {
     oninit: function(vnode){
-        
+        obj.initEVBUS()
     },
     oncreate: function(vnode){
         
@@ -77,5 +97,8 @@ export default {
             ]),
             obj.getTabsActiveContent()
         ])
-    }
+    },
+    onbeforeremove: function (vnode) {
+        obj.rmEVBUS()
+    },
 }
