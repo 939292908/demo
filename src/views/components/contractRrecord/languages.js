@@ -94,7 +94,7 @@ export default {
             ]),
             m('.spacer'),
             m("p",{class : "delegation-list-phistory navbar-item has-text-black"},[
-              gDI18n.$t('10431')//"切换语言"
+              gDI18n.$t('10434')//"切换语言"
                 ]),
             m('.spacer'),
             m('.spacer'),

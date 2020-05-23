@@ -259,7 +259,7 @@ let obj = {
                 m("div", { class: "modal-card" }, [
                 m("header", { class: "pub-set-lever-head modal-card-head modal-card-body-list" }, [
                     m("p", { class: "modal-card-title" }, [
-                        gDI18n.$t('10455')//'筛选'
+                        gDI18n.$t('10458')//'筛选'
                         ]),
                     m("button", {class: "delete", "aria-label": "close", onclick: function () {
                         obj.closeLeverageMode()
@@ -269,7 +269,7 @@ let obj = {
                 m("section", { class: "pub-set-lever-content modal-card-body modal-card-body-list" }, [
                     m("div",{class : "search-bi-name"},[
                         m("p",{class : "search-bi-name-p"},[
-                            gDI18n.$t('10463')//"币种名称"
+                            gDI18n.$t('10466')//"币种名称"
                         ]),
                         m("div",{class:" pub-place-order-m pub-order-m"},[
                             m('div', {class: "dropdown pub-place-order-select is-hidden-desktop" + (obj.tabsListOpen?' is-active':'')}, [
@@ -315,12 +315,12 @@ let obj = {
                         m("a",{class : "reset-button button is-primary is-outlined", onclick:function(){
                             obj.resetNavDrawerInfo()
                         }},[
-                            gDI18n.$t('10458')//"重置"
+                            gDI18n.$t('10461')//"重置"
                         ]),
                         m("a",{class : "reset-button button is-primary is-outlined",onclick:function (){
                             obj.submitNavDrawer()
                         }},[
-                            gDI18n.$t('10459')//"完成"
+                            gDI18n.$t('10462')//"完成"
                         ]),
                     ])
                 ])
@@ -377,7 +377,7 @@ let obj = {
                     m("div",{class : "theadList-profit-loss" },[
                         m("div",{class  : "theadList-profit-loss-p1"},[
                             gDI18n.$t('10421') + "：",//"金额：" ,
-                            m("p",{class : "" + item.Qty>0?"has-text-danger" : "has-text-primary"},[
+                            m("p",{class : "" + item.Qty>0?"has-text-primary " : "has-text-danger"},[
                                 item.Qty
                             ])
                         ]),
@@ -394,7 +394,7 @@ let obj = {
                 m("i",{class : "iconfont icon-box" ,style:"font-size: 60px",},[
                     
                 ]),
-                gDI18n.$t('10464')//"暂无账单记录"
+                gDI18n.$t('10467')//"暂无账单记录"
             ])
         ])
     ])

@@ -26,7 +26,7 @@ export default {
                 ]),
                 m('.spacer'),
                 m("p",{class : "delegation-list-phistory navbar-item has-text-black"},[
-                    gDI18n.$t('10428')//"委托详情"
+                    gDI18n.$t('10431')//"委托详情"
                 ]),
                 m('.spacer'),
                 m('.spacer'),
@@ -151,9 +151,9 @@ export default {
                     m("div",{class : "font-div-bottom has-text-black"},[
                         gDI18n.$t('10066'),//"委托来源",
                     ]),
-                    m("div",{class : "font-div"},[
-                        " ",
-                    ]),
+                    // m("div",{class : "font-div"},[
+                    //     " ",
+                    // ]),
                     m("div",{class : "font-div-bottom has-text-black"},[
                         item.OrdFromStr,
                     ]),

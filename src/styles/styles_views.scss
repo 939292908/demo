@@ -88,7 +88,9 @@ hr {
 //header样式 end
 
 //pc端主体结构样式 start
+//买入卖出样式start
 
+//买入卖出样式end
 .pub-layout {
     @extend %pa-2;
 
@@ -259,6 +261,10 @@ hr {
                 }
             }
         }
+    }
+
+    .dropdown-select{
+        @extend %pt-0;
     }
 }
 // 交易对下拉 end
@@ -440,6 +446,13 @@ hr {
     }
 
     .pub-place-order-form {
+
+        .button-default-width{
+            width: 100%;
+        }
+        .button-width{
+            width: 45%;
+        }
 
         .pub-place-order-form-lever-input {
             input {
@@ -642,7 +655,8 @@ hr {
 
 .scroll-y{
     max-height: 194px;
-    overflow-y: scroll
+    overflow-y: scroll;
+    width: 100%;
 }
 
 //筛选框样式 end
@@ -710,6 +724,11 @@ hr {
         text-align: right;
     }
 }
+
+.theadList-profit3{
+    display: flex;
+    justify-content: space-between;
+}
 //移动端列表 end
 .pub-layout-m-details{
     @extend %side-px;
@@ -728,9 +747,19 @@ hr {
     width: 50%;
 }
 
+.header-flex{
+    display: flex;
+    justify-content: start;
+    @extend %font-2;
+}
+
+.padd-left{
+    @extend %pl-4;
+}
+
 .flex-right{
     display: flex;
-    justify-content: end;
+    justify-content: space-between;
 }
 
 .ord-pad{
@@ -851,7 +880,7 @@ hr {
     }
 
     .button-styl{
-        width:65px;
+        width:29%;
         height:28px;
         @extend %font-2; 
         @extend %mb-3;
@@ -891,7 +920,7 @@ hr {
 }
 
 .width-div-right{
-    width: 45%;
+    width: 50%;
 }
 .width-div-left{
     width: 70%;

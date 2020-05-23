@@ -437,16 +437,16 @@ let obj = {
         m('col', {name: "pub-table-11",width: 590}),
       ])
       return m('div', { class: " table-container"}, [
-        m('div', { class: "pub-table-head-box", style: "width: 2080px" }, [
-          m("table",{class:"table is-hoverable ", width: '2080px', cellpadding: 0, cellspacing: 0},[
+        m('div', { class: "pub-table-head-box", style: "width: 2150px" }, [
+          m("table",{class:"table is-hoverable ", width: '2150px', cellpadding: 0, cellspacing: 0},[
             colgroup,
             m("tr",{class:""},[
               obj.getTheadList()
             ])
           ]),
         ]),
-        m('div', {class: "pub-table-body-box", style:"width: 2080px"}, [
-          m("table",{class:"table is-hoverable ", width: '2080px', cellpadding: 0, cellspacing: 0},[
+        m('div', {class: "pub-table-body-box", style:"width: 2150px"}, [
+          m("table",{class:"table is-hoverable ", width: '2150px', cellpadding: 0, cellspacing: 0},[
             colgroup,
             obj.getPosList()
           ])
