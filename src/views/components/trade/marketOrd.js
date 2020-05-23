@@ -200,7 +200,7 @@ let obj = {
                 if (this.form.LeverForBuy == 0) {
                     this.form.LeverForBuyInputValue = (this.form.maxLeverForBuy ? gDI18n.$t('10137'/*'买 全仓*/) + this.form.maxLeverForBuy + 'X' : gDI18n.$t('10133'/*'买 杠杆'*/))
                 } else {
-                    this.form.LeverForBuyInputValue = gDI18n.$t('10137'/*'买 逐仓'*/) + Number(this.form.LeverForBuy).toFixed2(2) + 'X'
+                    this.form.LeverForBuyInputValue = gDI18n.$t('10138'/*'买 逐仓'*/) + Number(this.form.LeverForBuy).toFixed2(2) + 'X'
                 }
                 if (this.form.LeverForSell == 0) {
                     this.form.LeverForSellInputValue = (this.form.maxLeverForSell ? gDI18n.$t('10139'/*'卖 全仓'*/) + this.form.maxLeverForSell + 'X' : gDI18n.$t('10134'/*'卖 杠杆'*/))
