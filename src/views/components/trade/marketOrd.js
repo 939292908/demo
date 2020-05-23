@@ -714,7 +714,7 @@ let obj = {
         let tradeType = window.$config.future.tradeType
         switch(tradeType){
             case 2:
-                return m("div", { class: "pub-place-order-form-lever-input field has-addons" }, [
+                return m("div", { class: "pub-place-order-form-lever-input field" +(!window.isMobile?" has-addons":"")}, [
                     m("div", { class: "control is-expanded" }, [
                         m("button", { class: "button is-outline is-fullwidth has-text-success", onclick: function () {
                             obj.setLeverage(1)
@@ -851,8 +851,8 @@ export default {
             m('.spacer'),
             m("div", { class: "pub-place-order-form-buttons field" }, [
                 m("div", { class: "level" }, [
-                    m("div", { class: "level-left" }, [
-                        m('div', {}, [
+                    m("div", { class: "level-left button-width" }, [
+                        m('div', {class:"button-default-width"}, [
                             m("button", { class: "button is-success is-fullwidth", onclick: function(){
                                 obj.submit(1)
                             }}, [
@@ -869,8 +869,8 @@ export default {
                             ])
                         ])
                     ]),
-                    m("div", { class: "level-right" }, [
-                        m('div', {}, [
+                    m("div", { class: "level-right button-width" }, [
+                        m('div', {class:"button-default-width"}, [
                             m("button", { class: "button is-danger is-fullwidth", onclick: function(){
                                 obj.submit(-1)
                             }}, [
@@ -896,7 +896,8 @@ export default {
                 ]),
                 m('.spacer'),
                 m('div', {class: ""}, [
-                    obj.wlt.aWdrawable?Number(obj.wlt.aWdrawable).toFixed2(8): (0).toFixed2(8)
+                    window.isMobile?(obj.wlt.aWdrawable?Number(obj.wlt.aWdrawable).toFixed2(2): (0).toFixed2(2)):
+                    (obj.wlt.aWdrawable?Number(obj.wlt.aWdrawable).toFixed2(8): (0).toFixed2(8))
                 ])
             ])
         ])

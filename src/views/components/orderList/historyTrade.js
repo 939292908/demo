@@ -180,12 +180,13 @@ let obj = {
                     //顶部排列
                     m("div",{class : "card-content mobile-list"},[
                         m("div",{class : "theadList-transaction"},[
-                            m("p",{class : "theadList-transaction-p1"},[
-                                utils.getSymDisplayName(window.gMkt.AssetD, item.displaySym)
+                            m("p",{class : "theadList-transaction-p1  header-flex"},[
+                                utils.getSymDisplayName(window.gMkt.AssetD, item.displaySym),
+                                m("p",{class : "padd-left " + utils.getColorStr(item.Dir, 'font') },[
+                                    item.DirStr
+                                ]),
                             ]),
-                            m("p",{class : " " + utils.getColorStr(item.Dir, 'font') },[
-                                item.DirStr
-                            ]),
+                            
                             m("div",{class  : ""},[
                                 " ",
                                 m("p",{class : " "},[
@@ -201,19 +202,19 @@ let obj = {
                         m("div",{class :  ""},[
                             m("div",{class : "theadList-profit-loss" ,},[
                                 m("div",{class  : "theadList-profit-loss-p1 has-text-grey"},[
-                                    gDI18n.$t('10060') + "：",//"成交均价：" ,
+                                    gDI18n.$t('10060') + ":",//"成交均价：" ,
                                     m("p",{class : "has-text-dark"},[
                                         item.Prz
                                     ])
                                 ]),
                                 m("div",{class  : "theadList-profit-loss-p1 has-text-grey"},[
-                                    gDI18n.$t('10061') + "：",//"成交数量：" ,
+                                    gDI18n.$t('10061') + ":",//"成交数量：" ,
                                     m("p",{class : "has-text-dark"},[
                                         item.Sz
                                     ])
                                 ]),
-                                m("div",{class  : "theadList-profit-loss-p1 has-text-grey"},[
-                                    gDI18n.$t('10062') + "：",//"平仓盈亏：" ,
+                                m("div",{class  : "theadList-profit-loss-p1 has-text-grey font-right"},[
+                                    gDI18n.$t('10062') + ":",//"平仓盈亏：" ,
                                     m("p",{class : "has-text-dark"},[
                                         item.PnlCls
                                     ])
@@ -223,20 +224,23 @@ let obj = {
                             m("div",{class : "theadList-profit-loss" ,},[
                                 m("div",{class  : "theadList-profit-loss-p1 has-text-grey theadList-profit2"},[
                                     m("p",{class: ""},[
-                                        gDI18n.$t('10063') + "：",//"手续费：" 
+                                        gDI18n.$t('10063') + ":",//"手续费：" 
                                     ]),
+                                    
+                                ]),
+                                m("div",{class  : "theadList-profit-loss-p2"},[
                                     m("p",{class : "has-text-dark" + item.Fee>0?"has-text-danger" :"has-text-primary"},[
                                         item.Fee
                                     ])
                                 ]),
-                                m("div",{class  : "theadList-profit-loss-p2"},[
-                                    " ",
-                                ]),
-                                m("div",{class:"cursor-pointer theadList-profit-loss-p2 has-text-grey theadList-profit2 fomt-blacl text-right"+(" historyOrdTableListItemCopy"+i), "data-clipboard-text": item.PId, onclick: function(e){
+                                m("div",{class:"cursor-pointer theadList-profit-loss-p2 theadList-profit3 has-text-grey fomt-blacl text-right"+(" historyOrdTableListItemCopy"+i), "data-clipboard-text": item.PId, onclick: function(e){
                                     window.$copy(".historyOrdTableListItemCopy"+i)
                                 }},[
-                                    gDI18n.$t('10067') + "：",//"仓位ID：",
-                                    m("p",{class : "has-text-dark"},[
+                                    m('div',[
+                                        gDI18n.$t('10067') + "：",//"仓位ID：",
+                                    ]),
+                                    
+                                    m("div",{class : "has-text-dark"},[
                                         item.PId.substr(-4),
                                         m("i",{class : ""},[ " "]),
                                         m("i",{class:"iconfont iconcopy"}),
@@ -250,7 +254,7 @@ let obj = {
                 m("i",{class : "iconfont icon-box" ,style:"font-size: 60px",},[
                     
                 ]),
-                gDI18n.$t('10465'),//"暂无历史成交记录"
+                gDI18n.$t('10468'),//"暂无历史成交记录"
             ])
         ])
     ])

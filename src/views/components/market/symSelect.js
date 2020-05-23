@@ -254,7 +254,7 @@ let symSelect = {
                             ]),
                         ]),
                     ]),
-                    m('.dropdown-menu', {class:"", id: "dropdown-menu2", role: "menu"}, [
+                    m('.dropdown-menu', {class:"dropdown-select", id: "dropdown-menu2", role: "menu"}, [
                         m('.dropdown-content', {class:""}, [
                             symSelect.getSymList()
                         ]),

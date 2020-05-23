@@ -175,7 +175,7 @@ let spotTick = {
                         m("table",{class : ""},[
                             m("tr",{class : ""},[
                                 m("td",{class : "currency-font has-text-grey table-margin2"},[
-                                    gDI18n.$t('10433')//"标记价格："
+                                    gDI18n.$t('10436')//"标记价格："
                                 ]),
                                 m("td",{class : "currency-font has-text-grey width-curren table-margin2"},[
                                     spotTick.getLastTick().SettPrz || '--'
@@ -183,7 +183,7 @@ let spotTick = {
                             ]),
                             m("tr",{class : ""},[
                                 m("td",{class : "currency-font has-text-grey table-margin2"},[
-                                    gDI18n.$t('10434')//"指数价格："
+                                    gDI18n.$t('10437')//"指数价格："
                                 ]),
                                 m("td",{class : "currency-font has-text-grey width-curren table-margin2"},[
                                     spotTick.getLastTick().indexPrz || '--'
@@ -196,7 +196,7 @@ let spotTick = {
                         m("table",{class : "currency-font table-width"},[
                             m("tr",{class :"table-margin"},[
                                 m("td",{class :"has-text-grey table-margin"},[
-                                    gDI18n.$t('10435')//"24H最高："
+                                    gDI18n.$t('10438')//"24H最高："
                                 ]),
                                 m("td",{class :"font-textalent-right has-text-black  table-margin"},[
                                     spotTick.getLastTick().High24 || '--'
@@ -204,7 +204,7 @@ let spotTick = {
                             ]),
                             m("tr",{class :"table-margin"},[
                                 m("td",{class :"has-text-grey table-margin"},[
-                                    gDI18n.$t('10436')//"24H最低："
+                                    gDI18n.$t('10439')//"24H最低："
                                 ]),
                                 m("td",{class :"font-textalent-right has-text-black table-margin"},[
                                     spotTick.getLastTick().Low24 || '--'
@@ -212,7 +212,7 @@ let spotTick = {
                             ]),
                             m("tr",{class :"table-margin"},[
                                 m("td",{class :"has-text-grey table-margin"},[
-                                    gDI18n.$t('10437')//"持仓量："
+                                    gDI18n.$t('10440')//"持仓量："
                                 ]),
                                 m("td",{class :"font-textalent-right has-text-black  table-margin"},[
                                     spotTick.getLastTick().Turnover24 || '--'
@@ -293,7 +293,7 @@ export default {
                         m("a",{class:"", onclick: function(){
                             spotTick.setTabsActive(1)
                         }},[
-                            gDI18n.$t('10438')//'合约简介'
+                            gDI18n.$t('10441')//'合约简介'
                         ])
                       ])
                     ]),

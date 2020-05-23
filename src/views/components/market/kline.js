@@ -968,13 +968,13 @@ export default {
                     obj.setKCrossTime('1')
                     // obj.klineTimeListOpen = false
                 }}, [
-                    gDI18n.$t('10439')//'1分'
+                    gDI18n.$t('10442')//'1分'
                 ]),
                 m('button', {class:"button is-selected"+(gMkt.CtxPlaying.Typ == '30m'?' has-text-primary':''), onclick: function(){
                     obj.setKCrossTime('30')
                     // obj.klineTimeListOpen = false
                 }}, [
-                    gDI18n.$t('10440')//'30分'
+                    gDI18n.$t('10443')//'30分'
                 ]),
                 m('button', {class:"button is-selected"+(gMkt.CtxPlaying.Typ == '1h'?' has-text-primary':''), onclick: function(){
                     obj.setKCrossTime('60')
@@ -989,7 +989,7 @@ export default {
                         window.stopBubble(e)
                     }}, [
                         m('button', {class:"button is-selected"}, [
-                            gDI18n.$t('10432')//'指标'
+                            gDI18n.$t('10435')//'指标'
                         ]),
                     ]),
                     m('div', {class:"dropdown-menu"}, [

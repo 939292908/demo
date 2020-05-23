@@ -45,18 +45,18 @@ let obj = {
         gDI18n.$t('10394'),//"全部",
         gDI18n.$t('10326'),//"买入",
         gDI18n.$t('10327'),//"卖出",
-        gDI18n.$t('10442'),//"买入强平",
-        gDI18n.$t('10443'),//"卖出强平",
-        gDI18n.$t('10444'),//"买入开多",
-        gDI18n.$t('10445'),//"卖出开空",
-        gDI18n.$t('10446'),//"买入平空",
-        gDI18n.$t('10447'),//"卖出平多",
-        gDI18n.$t('10448'),//"买入强制平空",
-        gDI18n.$t('10449'),//"卖出强制平多",
-        gDI18n.$t('10450'),//"买入ADL平空",
-        gDI18n.$t('10451'),//"卖出ADL平多",
-        gDI18n.$t('10452'),//"买入平空并开多",
-        gDI18n.$t('10453'),//"卖出平多并开空"
+        gDI18n.$t('10445'),//"买入强平",
+        gDI18n.$t('10446'),//"卖出强平",
+        gDI18n.$t('10447'),//"买入开多",
+        gDI18n.$t('10448'),//"卖出开空",
+        gDI18n.$t('10449'),//"买入平空",
+        gDI18n.$t('10450'),//"卖出平多",
+        gDI18n.$t('10451'),//"买入强制平空",
+        gDI18n.$t('10452'),//"卖出强制平多",
+        gDI18n.$t('10453'),//"买入ADL平空",
+        gDI18n.$t('10454'),//"卖出ADL平多",
+        gDI18n.$t('10455'),//"买入平空并开多",
+        gDI18n.$t('10456'),//"卖出平多并开空"
     ],
     statusStrList:[
         {
@@ -64,7 +64,7 @@ let obj = {
             id:0
         },
         {
-            name: gDI18n.$t('10454'),//"成交",
+            name: gDI18n.$t('10457'),//"成交",
             id:1
         },
         {
@@ -518,7 +518,7 @@ let obj = {
               m("div", { class: "modal-card" }, [
                 m("header", { class: "pub-set-lever-head modal-card-head modal-card-body-list" }, [
                     m("p", { class: "modal-card-title" }, [
-                        gDI18n.$t('10455'),//'筛选'
+                        gDI18n.$t('10458'),//'筛选'
                       ]),
                     m("button", {
                     class: "delete", "aria-label": "close", onclick: function () {
@@ -557,7 +557,7 @@ let obj = {
                     ]),
                     m("div",{class : "search-bi-name"},[
                         m("p",{class : "search-bi-name-p"},[
-                            gDI18n.$t('10456'),//"买入/卖出"
+                            gDI18n.$t('10459'),//"买入/卖出"
                         ]),
                         m("div",{class:" pub-place-order-m pub-order-m"},[
                             m('div', {class: "dropdown pub-place-order-select is-hidden-desktop" + (obj.tabsListOpen2?' is-active':'')}, [
@@ -588,7 +588,7 @@ let obj = {
                         m("div",{class : "search-k-d"},[
                             obj.statusStrList.map(function (item,i){
                                 return m("a",{class : "button is-primary is-outlined button-styl",onclick:function(i){
-                                    if(item.name == gDI18n.$t('10457'/*"成交"*/)){
+                                    if(item.name == gDI18n.$t('10460'/*"成交"*/)){
                                         obj.navDrawerInfo.status = gDI18n.$t('10398'/*"全部成交"*/)
                                     }else if (item.name == gDI18n.$t('10082'/*"撤单"*/)){
                                         obj.navDrawerInfo.status = gDI18n.$t('10399'/*"已撤单"*/)
@@ -607,12 +607,12 @@ let obj = {
                         m("a",{class : "reset-button button is-primary is-outlined",onclick: function (){
                             obj.resetNavDrawerInfo()
                         }},[
-                            gDI18n.$t('10458'/*"重置"*/)
+                            gDI18n.$t('10461'/*"重置"*/)
                         ]),
                         m("a",{class : "reset-button button is-primary is-outlined",onclick:function(){
                             obj.submitNavDrawer()
                         }},[
-                            gDI18n.$t('10459'/*"完成"*/)
+                            gDI18n.$t('10462'/*"完成"*/)
                         ]),
                     ])
                 ])
@@ -657,45 +657,60 @@ let obj = {
                             return m("div",{ key: "historyOrdtHeadItem" + i, class: "card" },[
                                 m("div",{class : "card-content mobile-list"},[
                                 //顶部排列
-                                m("header",{class : "theadList-transaction"},[
-                                    m("p",{class : "theadList-transaction-p1"},[
-                                        utils.getSymDisplayName(window.gMkt.AssetD, item.Sym),
-                                    ]),
-                                    m("p",{class : "theadList-transaction-p2 has-text-primary"},[
-                                        item.displayLever
-                                    ]),
-                                    m("p",{class : "theadList-transaction-p2" + utils.getColorStr(item.Dir, 'font') },[
-                                        item.DirStr
-                                    ]),
+                                m("header",{class : ""},[
                                     item.StatusStr == gDI18n.$t('10398'/*"全部成交"*/)?
-                                    m('a',{class : 'theadList-transaction-p2 has-text-primary',href:"/#!/details" + qs.stringify(item)},[
-                                        item.StatusStr
+                                    m('a',{class : "theadList-transaction has-text-black",href:"/#!/details" + qs.stringify(item)},[
+                                        m("p",{class : "theadList-transaction-p1 header-flex"},[
+                                            utils.getSymDisplayName(window.gMkt.AssetD, item.Sym),
+                                            m("p",{class : " padd-left theadList-transaction-p2 has-text-primary"},[
+                                                item.displayLever
+                                            ]),
+                                        ]),
+                                        
+                                        m("p",{class : "theadList-transaction-p2" + utils.getColorStr(item.Dir, 'font') },[
+                                            item.DirStr
+                                        ]),
+                                        m('p',{class : 'theadList-transaction-p2 has-text-primary',},[
+                                            item.StatusStr
+                                        ])
+                                    ]):
+                                    m('a',{class : "theadList-transaction has-text-black",},[
+                                        m("p",{class : "theadList-transaction-p1 header-flex"},[
+                                            utils.getSymDisplayName(window.gMkt.AssetD, item.Sym),
+                                            m("p",{class : "padd-left theadList-transaction-p2 has-text-primary"},[
+                                                item.displayLever
+                                            ]),
+                                        ]),
+                                        
+                                        m("p",{class : "theadList-transaction-p2" + utils.getColorStr(item.Dir, 'font') },[
+                                            item.DirStr
+                                        ]),
+                                        m('p',{class : 'theadList-transaction-p2 has-text-grey',disabled:"disabled"},[
+                                            item.StatusStr
+                                        ])
                                     ])
-                                    :
-                                    m('a',{class : 'button is-white theadList-transaction-p2',disabled:"disabled"},[
-                                        item.StatusStr
-                                    ])
+                                    
                                 ]),
                                 m("hr",{class :" "}),
                                 //中间排列
                                 m("div",{class : ""},[
                                     m("div",{class : "theadList-profit-loss" },[
                                         m("div",{class  : "theadList-profit-loss-p1 has-text-grey-light"},[
-                                            gDI18n.$t('10058') + "：",//"委托价格："
+                                            gDI18n.$t('10058') + ":",//"委托价格："
                                             m("p",{class : "has-text-black"},[
                                                 item.Prz
                     
                                             ])
                                         ]),
                                         m("div",{class  : "theadList-profit-loss-p1  has-text-grey-light"},[
-                                            gDI18n.$t('10060') + "：",//"成交均价：",
+                                            gDI18n.$t('10060') + ":",//"成交均价：",
                                             m("p",{class : "has-text-black"},[
                                                 item.PrzF
                                             ])
                                         ]),
                                         m("div",{class  : "theadList-profit-loss-p2 font-right has-text-grey-light"},[
-                                            gDI18n.$t('10059') + "：",//"委托数量：",
-                                            m("p",{class : "has-text-black ord-pad"},[
+                                            gDI18n.$t('10059') + ":",//"委托数量：",
+                                            m("p",{class : "has-text-black"},[
                                                 item.Qty
                                             ])
                                         ]),
@@ -703,19 +718,19 @@ let obj = {
                                     //平仓手续
                                     m("div",{class : "theadList-profit-loss"},[
                                         m("div",{class  : "theadList-profit-loss-p2 has-text-grey-light"},[
-                                            gDI18n.$t('10061') + "：",//"成交数量：" ,
+                                            gDI18n.$t('10061') + ":",//"成交数量：" ,
                                             m("p",{class : "has-text-black"},[
                                                 item.QtyF
                                             ])
                                         ]),
                                         m("div",{class  : "theadList-profit-loss-p2 has-text-grey-light"},[
-                                            gDI18n.$t('10062') + "：",//"平仓盈亏：",
+                                            gDI18n.$t('10062') + ":",//"平仓盈亏：",
                                             m("p",{class : "has-text-black"},[
                                                 item.PnlCls
                                             ])
                                         ]),
                                         m("div",{class  : "theadList-profit-loss-p2 font-right has-text-grey-light"},[
-                                            gDI18n.$t('10063'/*手续费*/) + "：" + item.FeeCoin,
+                                            gDI18n.$t('10063'/*手续费*/) + ":" + item.FeeCoin,
                                             m("p",{class : "has-text-black"},[
                                                 item.Fee
                                             ])
@@ -724,19 +739,19 @@ let obj = {
                     
                                     m("div",{class : "theadList-profit-loss"},[
                                         m("div",{class  : "theadList-profit-loss-p2 has-text-grey-light"},[
-                                            gDI18n.$t('10056') + "：",//"委托类型：" ,
+                                            gDI18n.$t('10056') + ":",//"委托类型：" ,
                                             m("p",{class : "has-text-black"},[
                                                 item.OTypeStr
                                             ])
                                         ]),
                                         m("div",{class  : "theadList-profit-loss-p2 has-text-grey-light"},[
-                                            gDI18n.$t('10064') + "：",//"触发条件：",
+                                            gDI18n.$t('10064') + ":",//"触发条件：",
                                             m("p",{class : "has-text-black"},[
                                                 item.cond
                                             ])
                                         ]),
                                         m("div",{class  : "theadList-profit-loss-p2 font-right has-text-grey-light"},[
-                                            gDI18n.$t('10065') + "：",//"委托时间：",
+                                            gDI18n.$t('10065') + ":",//"委托时间：",
                                             m("p",{class : "has-text-black"},[
                                                 item.AtStr
                                             ])
@@ -778,7 +793,7 @@ let obj = {
                             m("i",{class : "iconfont icon-box" ,style:"font-size: 60px",},[
                                 
                             ]),
-                            gDI18n.$t('10460')//"暂无委托记录"
+                            gDI18n.$t('10463')//"暂无委托记录"
                         ])
                     ])
                 ])     

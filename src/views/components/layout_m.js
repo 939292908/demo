@@ -423,11 +423,11 @@ export default {
                     ]),
                   ]),
                   m("a",{class:"navbar-link"},[
-                    gDI18n.$t('10461')//'设置'
+                    gDI18n.$t('10464')//'设置'
                   ]),
                   m("div",{class:"navbar-dropdown"},[
                     m("a",{class:"navbar-item", onclick: this.signOut,href:"/#!/setlanguages"},[
-                      gDI18n.$t('10462')//"切换语言"
+                      gDI18n.$t('10434')//"切换语言"
                     ]),
                   ])
                 ])

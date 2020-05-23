@@ -80,7 +80,8 @@ let obj = {
     
   },
   selectPosItem: function(param){
-    if(!param || this.posActive == param.PId) return
+    // if(!param || this.posActive == param.PId) return
+    if(!param) return
     this.posActive = param.PId
     this.openSelect = false
     window.gTrd.CtxPlaying.activePId = param.PId
