@@ -403,10 +403,10 @@ export default {
             
             m("div",{class:"pub-layout-m-header-menu navbar-menu is-hidden-desktop"+(obj.leftMenu?' is-active':' is-hidden')},[
               m("div",{class:"navbar-end"},[
-                m("aside",{class:"menu"},[
+                m("aside",{class:"menu"+(window.$config.loginType == 0?"":" is-hidden")},[
                   obj.getUserInfoCon()
                 ]),
-                m('hr'),
+                m('hr', {class: ""+(window.$config.loginType == 0?"":" is-hidden")}),
                 m("div",{class:"navbar-item has-dropdown is-hoverable"},[
                   m("a",{class:"navbar-link"},[
                     gDI18n.$t('10236')//'合约记录'
