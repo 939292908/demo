@@ -76,20 +76,20 @@ class router {
     push(param){
         
         if(typeof param == 'string'){
-            if(this.path != param){
+            if(this.path && this.path != param){
                 this.historyRouteList.unshift({path: this.path, data: this.params})
             }
             console.log('router.push', param)
             this.path = param
             this.route.set(param)
         }else{
-            if(this.path != param.path){
+            if(this.path && this.path != param.path){
                 this.historyRouteList.unshift({path: this.path, data: this.params})
             }
             console.log('router.push', param)
             this.path = param.path
             this.params = param.data
-            this.route.set(param.path, param.data, path.options)
+            this.route.set(param.path, param.data, param.options)
         }
         console.log(this.historyRouteList)
     }
@@ -98,10 +98,10 @@ class router {
      * 路由返回
      */
     back(){
-        let routeData = this.historyRouteList.splice(0, 1)
+        let routeData = this.historyRouteList.shift()
         routeData = routeData[0] || {path: defaultRoutePath}
-        console.log('router back', routeData, routeData.path, routeData.data)
-        this.route.set(routeData.path, routeData.data)
+        console.log('router back', routeData, this.historyRouteList)
+        this.push(routeData)
     }
 
     /**
@@ -117,7 +117,8 @@ class router {
         if(!route){
             return 
         }
-        this.route.set(route.path, route.data)
+        console.log('router go', param, route, this.historyRouteList)
+        this.push(route)
     }
 }
 
