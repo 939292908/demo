@@ -403,24 +403,40 @@ export default {
             
             m("div",{class:"pub-layout-m-header-menu navbar-menu is-hidden-desktop"+(obj.leftMenu?' is-active':' is-hidden')},[
               m("div",{class:"navbar-end"},[
-                m("aside",{class:"menu"},[
+                m("aside",{class:"menu"+(window.$config.loginType == 0?"":" is-hidden")},[
                   obj.getUserInfoCon()
                 ]),
-                m('hr'),
+                m('hr', {class: ""+(window.$config.loginType == 0?"":" is-hidden")}),
                 m("div",{class:"navbar-item has-dropdown is-hoverable"},[
                   m("a",{class:"navbar-link"},[
                     gDI18n.$t('10236')//'合约记录'
                   ]),
                   m("div",{class:"navbar-dropdown"},[
-                    m("a",{class:"navbar-item", onclick: this.signOut,href:"/#!/delegation"},[
+                    m("a",{class:"navbar-item", onclick: function(){
+                      router.push('/delegation')
+                    }},[
                       gDI18n.$t('10077')//'历史委托'
                     ]),
-                    m("a",{class:"navbar-item", onclick: this.signOut,href:"/#!/deal"},[
+                    m("a",{class:"navbar-item", onclick: function(){
+                      router.push('/deal')
+                    }},[
                       gDI18n.$t('10237')//'历史成交'
                     ]),
-                    m("a",{class:"navbar-item", onclick: this.signOut,href:"/#!/contractbill"},[
+                    m("a",{class:"navbar-item", onclick: function(){
+                      router.push('/contractbill')
+                    }},[
                       gDI18n.$t('10079')//'合约账单'
-                    ])
+                    ]),
+                  ]),
+                  m("a",{class:"navbar-link"},[
+                    gDI18n.$t('10464')//'设置'
+                  ]),
+                  m("div",{class:"navbar-dropdown"},[
+                    m("a",{class:"navbar-item", onclick: function(){
+                      router.push('/setlanguages')
+                    }},[
+                      gDI18n.$t('10434')//"切换语言"
+                    ]),
                   ])
                 ])
                 

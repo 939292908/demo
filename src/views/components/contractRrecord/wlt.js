@@ -29,7 +29,7 @@ let obj = {
         if (ass && ass.TrdCls != 1) {
             let info = {
                 disSym: utils.getSymDisplayName(window.gMkt.AssetD, Sym), // 合约显示名称
-                ExpireStr: ass.TrdCls == 3 ? '永续' : new Date(ass.Expire).format('yyyy-MM-dd'), // 到期日
+                ExpireStr: ass.TrdCls == 3 ? gDI18n.$t('10422'/*'永续'*/) : new Date(ass.Expire).format('yyyy-MM-dd'), // 到期日
                 FundingNext: new Date(ass.FundingNext).format('yyyy-MM-dd'), 
                 PrzMinInc: utils.getFullNum(ass.PrzMinInc), //最小价格变动
                 FundingLongR: (ass.FundingLongR * 100).toSubstrFixed(4) + '%', //资金费率
@@ -43,14 +43,14 @@ let obj = {
                 LotSz: '', //合约大小
             };
             if (ass.TrdCls == 2) {
-                info.typeName = '交割合约'
-                info.LotSz = ass.LotSz + ' ' + ass.QuoteCoin + ' / ' +  '张'
+                info.typeName = gDI18n.$t('10105')//'交割合约'
+                info.LotSz = ass.LotSz + ' ' + ass.QuoteCoin + ' / ' +  gDI18n.$t('10423')//'张'
             } else if (ass.TrdCls == 3 && (ass['Flag']&1) == 1) {
-                info.typeName = '反向永续'
-                info.LotSz = ass.LotSz + ' ' + ass.QuoteCoin + ' / ' + '张'
+                info.typeName = gDI18n.$t('10106')//'反向永续'
+                info.LotSz = ass.LotSz + ' ' + ass.QuoteCoin + ' / ' + gDI18n.$t('10423')//'张'
             } else if (ass.TrdCls == 3) {
-                info.typeName = '正向永续'
-                info.LotSz = ass.LotSz + ' ' + ass.ToC + ' / ' + '张'
+                info.typeName = gDI18n.$t('10107')//'正向永续'
+                info.LotSz = ass.LotSz + ' ' + ass.ToC + ' / ' + gDI18n.$t('10423')//'张'
             }
             this.spotInfo = info;
         }else{
@@ -88,7 +88,7 @@ export default {
             m('div', {class:"pub-spot-info-content"}, [
                 m('div', {class: 'level pos-info'}, [
                     m('div', {class: 'level-left text--secondary'}, [
-                        '合约名称'
+                        gDI18n.$t('10110')//'合约名称'
                     ]),
                     m('div', {class: 'level-right-m'}, [
                         obj.spotInfo.disSym || '--'
@@ -96,7 +96,7 @@ export default {
                 ]),
                 m('div', {class: 'level pos-info'}, [
                     m('div', {class: 'level-left text--secondary'}, [
-                        '到期日'
+                        gDI18n.$t('10111')//'到期日'
                     ]),
                     m('div', {class: ''}, [
                         obj.spotInfo.ExpireStr || '--'
@@ -104,7 +104,7 @@ export default {
                 ]),
                 m('div', {class: 'level pos-info'}, [
                     m('div', {class: 'level-left text--secondary'}, [
-                        '计价货币'
+                        gDI18n.$t('10112')//'计价货币'
                     ]),
                     m('div', {class: ''}, [
                         obj.spotInfo.QuoteCoin || '--'
@@ -112,7 +112,7 @@ export default {
                 ]),
                 m('div', {class: 'level pos-info'}, [
                     m('div', {class: 'level-left text--secondary'}, [
-                        '结算货币'
+                        gDI18n.$t('10113')//'结算货币'
                     ]),
                     m('div', {class: ''}, [
                         obj.spotInfo.SettleCoin || '--'
@@ -120,7 +120,7 @@ export default {
                 ]),
                 m('div', {class: 'level pos-info'}, [
                     m('div', {class: 'level-left text--secondary'}, [
-                        '合约大小'
+                        gDI18n.$t('10114')//'合约大小'
                     ]),
                     m('div', {class: ''}, [
                         obj.spotInfo.LotSz || '--'
@@ -128,7 +128,7 @@ export default {
                 ]),
                 m('div', {class: 'level pos-info'}, [
                     m('div', {class: 'level-left text--secondary'}, [
-                        '最小价格变动'
+                        gDI18n.$t('10115')//'最小价格变动'
                     ]),
                     m('div', {class: ''}, [
                         obj.spotInfo.PrzMinInc || '--'
@@ -136,7 +136,7 @@ export default {
                 ]),
                 m('div', {class: 'level pos-info'}, [
                     m('div', {class: 'level-left text--secondary'}, [
-                        '最小数量变动'
+                        gDI18n.$t('10116')//'最小数量变动'
                     ]),
                     m('div', {class: ''}, [
                         obj.spotInfo.Mult || '--'

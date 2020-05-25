@@ -80,7 +80,8 @@ let obj = {
     
   },
   selectPosItem: function(param){
-    if(!param || this.posActive == param.PId) return
+    // if(!param || this.posActive == param.PId) return
+    if(!param) return
     this.posActive = param.PId
     this.openSelect = false
     window.gTrd.CtxPlaying.activePId = param.PId
@@ -122,18 +123,17 @@ let obj = {
         m('td', {class: '', align: 'center'},[
           pos.aQtySell || 0
         ]),
-        m('td', {class: '', align: 'center', onclick: function (e) {
-          obj.delPos(pos)
-          window.stopBubble(e)
-        }},[
+        m('td', {class: '', align: 'center'},[
           m("button", {
-            class: "delete"+(obj.checkPosDelShow(pos)?'':' is-hidden'), 
+            class: "button is-white"+(obj.checkPosDelShow(pos)?'':' is-hidden')+(pos.loading?' is-loading':''), 
             "aria-label": "close", 
             onclick: function (e) {
               obj.delPos(pos)
               window.stopBubble(e)
             }
-          }),
+          },[
+            m('span.delete', {class:""+(pos.loading?' is-hidden':'')})
+          ]),
         ])
       ])
     } 
@@ -246,6 +246,7 @@ let obj = {
     let AId = window.gTrd.RT["UserId"]+'01'
     let Sym = param.Sym
     let PId = param.PId
+    param.loading = true
     window.gTrd.ReqTrdPosOp({
       "AId":AId,
       "Sym": Sym,
@@ -255,10 +256,13 @@ let obj = {
       console.log("ReqTrdPosOp ==>>> ", arg)
       if(arg.code == 0 && !arg.data.ErrCode){
         window.$message({title: gDI18n.$t('10175'/*'仓位删除成功！'*/), content: gDI18n.$t('10175'/*'仓位删除成功！'*/), type: 'success'})
+      }else if(arg.code == 15){
+        window.$message({title: "仓位删除失败", content: "仓位删除失败", type: 'success'})
       }else{
         console.log(arg)
         window.$message({title: utils.getTradeErrorCode(arg.code || arg.data.ErrCode), content: utils.getTradeErrorCode(arg.code || arg.data.ErrCode), type: 'danger'})
       }
+      param.loading = false
     })
   },
   closeMode: function(){
@@ -291,7 +295,7 @@ let obj = {
         m('tr',{class : ""},[
           m('td',{class : ""},[
             m('span',{class : "has-text-grey"},[
-              "仓位ID: "
+              gDI18n.$t('10067') + "："//"仓位ID: "
             ]),
             m('span',{class : "has-text-black"},[
               pos.PId.substr(-4)
@@ -299,10 +303,10 @@ let obj = {
           ]),
           m('td',{class : ""},[
             m('span',{class : "has-text-grey"},[
-              "方向: "
+              gDI18n.$t('10172') + "："//"方向: "
             ]),
             m('span',{class : "has-text-black"},[
-              (pos.Sz>0?'多仓':pos.Sz<0?'空仓':'--')
+              (pos.Sz>0?gDI18n.$t('10170'/*'多仓'*/):pos.Sz<0?gDI18n.$t('10171'/*'空仓'*/):'--')
             ]),
           ]),
           m('td', {class: '', align: 'center', onclick: function (e) {
@@ -310,19 +314,21 @@ let obj = {
             window.stopBubble(e)
           }},[
             m("button", {
-              class: "delete"+(obj.checkPosDelShow(pos)?'':' is-hidden'), 
+              class: "button is-white"+(obj.checkPosDelShow(pos)?'':' is-hidden')+(pos.loading?' is-loading':''), 
               "aria-label": "close", 
               onclick: function (e) {
                 obj.delPos(pos)
                 window.stopBubble(e)
               }
-            }),
+            }, [
+              m('span.delete', {class:""+(pos.loading?' is-hidden':'')})
+            ]),
           ])
         ]),
         m('tr',{class : ""},[
           m('td',{class : ""},[
             m('span',{class : "has-text-grey"},[
-              "杠杆: "
+              gDI18n.$t('10054') + "："//"杠杆: "
             ]),
             m('span',{class : "has-text-black"},[
               pos.displayLever
@@ -330,7 +336,7 @@ let obj = {
           ]),
           m('td',{class : ""},[
             m('span',{class : "has-text-grey"},[
-              "数量/价格: "
+              gDI18n.$t('10173') + "："//"数量/价格: "
             ]),
             m('span',{class : "has-text-black"},[
               (pos.PrzIni)+'/'+(pos.Sz),
@@ -340,7 +346,7 @@ let obj = {
         m('tr',{class : ""},[
           m('td',{class : ""},[
             m('span',{class : "has-text-grey"},[
-              "买挂单: "
+              gDI18n.$t('10177') + "："//"买挂单: "
             ]),
             m('span',{class : "has-text-black"},[
               pos.aQtyBuy || 0
@@ -348,7 +354,7 @@ let obj = {
           ]),
           m('td',{class : ""},[
             m('span',{class : "has-text-grey"},[
-              "卖挂单: "
+              gDI18n.$t('10178') + "："//"卖挂单: "
             ]),
             m('span',{class : "has-text-black"},[
               pos.aQtySell || 0
@@ -371,7 +377,7 @@ let obj = {
         m("div", { class: "modal-card card-first-head" }, [
           m("header", { class: "pub-select-pos-model-header modal-card-head modal-card-body-list" }, [
             m("p", { class: "modal-card-title" }, [
-              '仓位选择'
+              gDI18n.$t('10176'/*'仓位选择'*/)
             ]),
             m("button", {
               class: "delete", "aria-label": "close", onclick: function () {
@@ -388,7 +394,7 @@ let obj = {
                 obj.addPos()
               }
             }, [
-              '新增仓位'
+              gDI18n.$t('10179'/*'新增仓位'*/)
             ])
           ]),
         ])
@@ -421,7 +427,7 @@ export default {
             m("div", { class: "modal-card" }, [
               m("header", { class: "pub-select-pos-model-header modal-card-head" }, [
                 m("p", { class: "modal-card-title" }, [
-                  '仓位选择'
+                  gDI18n.$t('10176'/*'仓位选择'*/)
                 ]),
                 m("button", {
                   class: "delete", "aria-label": "close", onclick: function () {
