@@ -412,13 +412,19 @@ export default {
                     gDI18n.$t('10236')//'合约记录'
                   ]),
                   m("div",{class:"navbar-dropdown"},[
-                    m("a",{class:"navbar-item", onclick: this.signOut,href:"/#!/delegation"},[
+                    m("a",{class:"navbar-item", onclick: function(){
+                      router.push('/delegation')
+                    }},[
                       gDI18n.$t('10077')//'历史委托'
                     ]),
-                    m("a",{class:"navbar-item", onclick: this.signOut,href:"/#!/deal"},[
+                    m("a",{class:"navbar-item", onclick: function(){
+                      router.push('/deal')
+                    }},[
                       gDI18n.$t('10237')//'历史成交'
                     ]),
-                    m("a",{class:"navbar-item", onclick: this.signOut,href:"/#!/contractbill"},[
+                    m("a",{class:"navbar-item", onclick: function(){
+                      router.push('/contractbill')
+                    }},[
                       gDI18n.$t('10079')//'合约账单'
                     ]),
                   ]),
@@ -426,7 +432,9 @@ export default {
                     gDI18n.$t('10464')//'设置'
                   ]),
                   m("div",{class:"navbar-dropdown"},[
-                    m("a",{class:"navbar-item", onclick: this.signOut,href:"/#!/setlanguages"},[
+                    m("a",{class:"navbar-item", onclick: function(){
+                      router.push('/setlanguages')
+                    }},[
                       gDI18n.$t('10434')//"切换语言"
                     ]),
                   ])

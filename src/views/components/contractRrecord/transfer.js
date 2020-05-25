@@ -45,10 +45,10 @@ let obj = {
     let that = this
     this.TradeObj.push(param.data)
     let tm = Date.now()
-    console.log(this.TradeObj)
+    // console.log(this.TradeObj)
     if(!this.updateTradeTimer){
       this.updateTradeTimer = setTimeout(()=>{
-        console.log('updateTrade timer==>>>', this.TradeObj, this.updateTradeTimer)
+        // console.log('updateTrade timer==>>>', this.TradeObj, this.updateTradeTimer)
         that.updateTrade(that.TradeObj)
         that.TradeObj = []
         that.lastTmForTrade = tm
@@ -57,7 +57,7 @@ let obj = {
     }
     
     if(tm - this.lastTmForTrade > this.TRADECLACTNTERVAL){
-      console.log('updateTrade==>>>', this.TradeObj, this.updateTradeTimer)
+      // console.log('updateTrade==>>>', this.TradeObj, this.updateTradeTimer)
       this.updateTrade(this.TradeObj)
       this.TradeObj = []
       this.lastTmForTrade = tm

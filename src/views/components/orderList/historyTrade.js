@@ -159,7 +159,9 @@ let obj = {
             m("nav",{class:"pub-layout-m-header is-fixed-top navbar is-transparent", role:"navigation", "aria-label":"main navigation"},[
                 m('div', {class:"navbar-brand is-flex"}, [
                 m('a', {class:"navbar-item"}, [
-                    m('a', {class:"",href:"/#!/future"}, [
+                    m('a', {class:"",onclick: function(){
+                        router.back()
+                    }}, [
                         m('span', {class:"icon icon-right-i"}, [
                             m('i', {class:"iconfont has-text-black iconarrow-left"}),
                         ]),
