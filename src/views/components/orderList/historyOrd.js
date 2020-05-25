@@ -660,7 +660,12 @@ let obj = {
                                 //顶部排列
                                 m("header",{class : ""},[
                                     item.StatusStr == gDI18n.$t('10398'/*"全部成交"*/)?
-                                    m('a',{class : "theadList-transaction has-text-black",href:"/#!/details" + qs.stringify(item)},[
+                                    m('a',{class : "theadList-transaction has-text-black",onclick: function(){
+                                        router.push({
+                                            path:"/details",
+                                            data: item
+                                        })
+                                    }},[
                                         m("p",{class : "theadList-transaction-p1 header-flex"},[
                                             utils.getSymDisplayName(window.gMkt.AssetD, item.Sym),
                                             m("p",{class : " padd-left theadList-transaction-p2 has-text-primary"},[

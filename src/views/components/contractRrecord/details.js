@@ -12,13 +12,16 @@ export default {
 
     },
     view:function(vnode){
-        let item =qs.parse(vnode.attrs.item)
+        // let item =qs.parse(vnode.attrs.item)
+        let item = m.route.param()
         return m("div",{class: "details-header"},[
             //顶部导航栏
             m("nav",{class:"pub-layout-m-header is-fixed-top navbar is-transparent", role:"navigation", "aria-label":"main navigation"},[
                 m('div', {class:"navbar-brand is-flex"}, [
                 m('a', {class:"navbar-item"}, [
-                    m('a', {class:"",href:"/#!/delegation"}, [
+                    m('a', {class:"",onclick : function (){
+                        router.back()
+                    }}, [
                         m('span', {class:"icon icon-right-i"}, [
                             m('i', {class:"iconfont iconarrow-left"}),
                         ]),

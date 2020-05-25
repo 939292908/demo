@@ -316,7 +316,7 @@ let obj = {
   },
   setLeverage: function(pos){
     if(!window.isMobile && !window.$config.positionBtns.desktop.leverage.open) return
-    if(window.isMobile && !window.$config.positionBtns.mobile.leverage.open) return
+    // if(window.isMobile && !window.$config.positionBtns.mobile.leverage.open) return
     let Sym = pos.Sym
     let PId = pos.PId
     window.$openLeverageMode({
