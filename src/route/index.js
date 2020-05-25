@@ -56,6 +56,7 @@ class router {
 
     constructor(){
         this.route = m.route
+        this.historyRouteList = new Array()
     }
 
     /**
@@ -73,17 +74,17 @@ class router {
     }
      * 详细： http://www.mithriljs.net/route.html#mrouteset
      */
-    push(param){
+    push(param, replace = true){
         console.log(param)
         if(typeof param == 'string'){
-            if(this.path && this.path != param){
+            if(replace && this.path && this.path != param){
                 this.historyRouteList.unshift({path: this.path, data: this.params})
             }
             console.log('router.push', param)
             this.path = param
             this.route.set(param)
         }else{
-            if(this.path && this.path != param.path){
+            if(replace && this.path && this.path != param.path){
                 this.historyRouteList.unshift({path: this.path, data: this.params})
             }
             console.log('router.push', param)
@@ -98,10 +99,13 @@ class router {
      * 路由返回
      */
     back(){
-        let routeData = this.historyRouteList.shift()
+        let routeData = this.historyRouteList.splice(0,1)
         routeData = routeData[0] || {path: defaultRoutePath}
-        console.log('router back', routeData, this.historyRouteList)
-        this.push(routeData)
+        console.log('router back', routeData, routeData[0], this.historyRouteList)
+        this.path = null
+        this.params = {}
+        this.push(routeData, false)
+        
     }
 
     /**
@@ -118,7 +122,9 @@ class router {
             return 
         }
         console.log('router go', param, route, this.historyRouteList)
-        this.push(route)
+        this.path = null
+        this.params = {}
+        this.push(route, false)
     }
 }
 
