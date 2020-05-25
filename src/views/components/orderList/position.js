@@ -316,7 +316,7 @@ let obj = {
   },
   setLeverage: function(pos){
     if(!window.isMobile && !window.$config.positionBtns.desktop.leverage.open) return
-    // if(window.isMobile && !window.$config.positionBtns.mobile.leverage.open) return
+    if(window.isMobile && !window.$config.positionBtns.mobile.leverage.positionList) return
     let Sym = pos.Sym
     let PId = pos.PId
     window.$openLeverageMode({
@@ -414,7 +414,7 @@ let obj = {
   },
   setStopPL: function(pos){
     if(!window.isMobile && !window.$config.positionBtns.desktop.stopPL.open) return
-    if(window.isMobile && !window.$config.positionBtns.mobile.stopPL.open) return
+    if(window.isMobile && !window.$config.positionBtns.mobile.stopPL.positionList) return
     if(window.$openStopPLMode){
       window.$openStopPLMode(pos)
     }
