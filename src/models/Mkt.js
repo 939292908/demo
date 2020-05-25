@@ -956,70 +956,29 @@ class Mkt {
          }
         s.WSCall_Mkt("UnSub",aTpcArray)
     }
-    ReqKLineLastest(aSym, aTyp, aCount) {
+    /**
+     * 
+     * @param {Object} aParam {"Sym":aSym,"Typ":aTyp,"Count":aCount}
+     * @param {Function} aFunc 
+     */
+    ReqKLineLastest(aParam, aFunc) {
         let s = this;
-        s.ReqKLine("GetLatestKLine",{"Sym":aSym,"Typ":aTyp,"Count":aCount})
+        s.WSCall_Trade("GetLatestKLine",aParam, aFunc)
     }
-    ReqKLineHist(aArg) {
+    /**
+     * 
+     * @param {Object} aParam {
+                                "Sym": "BTC.USDT",
+                                "Typ": "1m",
+                                "Sec": start - 100 * 60,
+                                "Offset": 0,
+                                "Count": 10
+                            }
+     * @param {Function} aFunc 
+     */
+    ReqKLineHist(aParam, aFunc) {
         let s = this;
-        s.ReqKLine("GetHistKLine",aArg)
-    }
-    ReqKLine(aCmd,aArg) {
-        /*
-            {
-                code: 0
-                Count: 10
-                data:{
-                    PrzClose: (10) [3573.27, 3572.29, 3574.77, 3571.97, 3570.04, 3566.71, 3568.62, 3568.5, 3568.97, 3571.3]
-                    PrzHigh: (10) [3577.35, 3574.5, 3576.93, 3574.85, 3572.05, 3571.42, 3569.16, 3570.21, 3570.05, 3571.84]
-                    PrzLow: (10) [3572.59, 3571.64, 3572.13, 3571.97, 3568.65, 3566.71, 3564.97, 3566.84, 3567.99, 3569.15]
-                    PrzOpen: (10) [3576.57, 3572.63, 3573.18, 3574.6, 3572.05, 3569.13, 3567.02, 3567.65, 3568.69, 3569.23]
-                    Sec: (10) [1545152760, 1545152820, 1545152880, 1545152940, 1545153000, 1545153060, 1545153120, 1545153180, 1545153240, 1545153300]
-                    Turnover: (10) [4219.19275, 4359.23295, 5897.19215, 11273.735, 4999.18465, 11917.71345, 7312.07915, 19681.22855, 9620.2384, 10569.21635]
-                    Volume: (10) [236, 244, 330, 631, 280, 668, 410, 1103, 539, 592]
-                }
-                Sym: "BTC.USDT"
-                Typ: "1m"
-                rid: "2"
-            }
-        */
-        let s = this
-        s.WSCall_Mkt(aCmd,aArg,function(aMkt, aRaw) {
-                let s = aMkt
-                // 收回来的K线一定是连续的,所以，我们先和本地的头尾比较
-                if(DBG_WSCALL){console.log(__filename,aCmd,aRaw)}
-                let aD = aRaw.data
-                if (aD.hasOwnProperty("Count")) {
-                    let secs = aD.Sec
-                    let sym = aD.Sym
-                    let Typ = aD.Typ
-                    console.log('ReqKLine WSCall_Mkt', aArg, aRaw)
-                    if(aD.Count < aArg.Count){
-                        s.kline_data_over[aD.Sym] = s.kline_data_over[aD.Sym]?s.kline_data_over[aD.Sym]:{}
-                        s.kline_data_over[aD.Sym][aD.Typ] = 1
-                    }
-
-                    let intervalInSec = Typ2Sec[Typ];
-                    if (intervalInSec) {
-                        let oldKline = s.AffirmKline(aD.Sym, aD.Typ)
-                        let converted = s.convertHist(aD, 0, aD.Count)
-                        
-                        if (oldKline.length == 0) {
-                            s.replaceKline(sym, Typ, converted)
-                        } else {
-                            s.replaceKline(sym, Typ, s.util_MergeKline(sym, Typ, oldKline, converted, intervalInSec))
-                        }
-                        if (converted.length>0) {
-                            s.UpdateKlineLastMs(sym,Typ,converted[converted.length-1].Ms);
-                            let intervalInMs = intervalInSec*1000;
-                            s.Empty_RefreshRange(sym,Typ,converted[0].Ms,converted[converted.length-1].Ms + intervalInMs,intervalInMs);
-                            console.log(EV_HIST_UPD + sym + Typ,50,EV_HIST_UPD, {Ev: EV_HIST_UPD, Sym: sym, Typ: Typ}, converted)
-                            gEVBUS.EmitDeDuplicate(EV_HIST_UPD + sym + Typ,50,EV_HIST_UPD, {Ev: EV_HIST_UPD, Sym: sym, Typ: Typ})
-                        }
-                    }
-                }
-            }
-        )
+        s.WSCall_Trade("GetHistKLine",aParam, aFunc)
     }
 
     WSCall_Trade(aCmd,aParam,aFunc) {
