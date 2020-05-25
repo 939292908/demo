@@ -256,6 +256,8 @@ let obj = {
       console.log("ReqTrdPosOp ==>>> ", arg)
       if(arg.code == 0 && !arg.data.ErrCode){
         window.$message({title: gDI18n.$t('10175'/*'仓位删除成功！'*/), content: gDI18n.$t('10175'/*'仓位删除成功！'*/), type: 'success'})
+      }else if(arg.code == 15){
+        window.$message({title: "仓位删除失败", content: "仓位删除失败", type: 'success'})
       }else{
         console.log(arg)
         window.$message({title: utils.getTradeErrorCode(arg.code || arg.data.ErrCode), content: utils.getTradeErrorCode(arg.code || arg.data.ErrCode), type: 'danger'})
