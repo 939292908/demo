@@ -837,6 +837,7 @@ let obj = {
         }else{
             this.setPId()
         }
+        this.setMgnNeed()
     }
 }
 export default {

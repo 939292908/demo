@@ -825,7 +825,7 @@ let obj = {
         let Poss = window.gTrd.Poss
         let ass = window.gMkt.AssetD[Sym]
         if(!ass) return
-        
+
         if(this.form.PIdForBuy && this.form.PIdForSell){
             this.setPId()
         }else if(this.form.PIdForBuy){
@@ -843,6 +843,7 @@ let obj = {
         }else{
             this.setPId()
         }
+        this.setMgnNeed()
     }
 }
 export default {
