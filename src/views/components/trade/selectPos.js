@@ -123,18 +123,17 @@ let obj = {
         m('td', {class: '', align: 'center'},[
           pos.aQtySell || 0
         ]),
-        m('td', {class: '', align: 'center', onclick: function (e) {
-          obj.delPos(pos)
-          window.stopBubble(e)
-        }},[
+        m('td', {class: '', align: 'center'},[
           m("button", {
-            class: "delete"+(obj.checkPosDelShow(pos)?'':' is-hidden'), 
+            class: "button is-white"+(obj.checkPosDelShow(pos)?'':' is-hidden')+(pos.loading?' is-loading':''), 
             "aria-label": "close", 
             onclick: function (e) {
               obj.delPos(pos)
               window.stopBubble(e)
             }
-          }),
+          },[
+            m('span.delete', {class:""+(pos.loading?' is-hidden':'')})
+          ]),
         ])
       ])
     } 
@@ -247,6 +246,7 @@ let obj = {
     let AId = window.gTrd.RT["UserId"]+'01'
     let Sym = param.Sym
     let PId = param.PId
+    param.loading = true
     window.gTrd.ReqTrdPosOp({
       "AId":AId,
       "Sym": Sym,
@@ -260,6 +260,7 @@ let obj = {
         console.log(arg)
         window.$message({title: utils.getTradeErrorCode(arg.code || arg.data.ErrCode), content: utils.getTradeErrorCode(arg.code || arg.data.ErrCode), type: 'danger'})
       }
+      param.loading = false
     })
   },
   closeMode: function(){
@@ -311,13 +312,15 @@ let obj = {
             window.stopBubble(e)
           }},[
             m("button", {
-              class: "delete"+(obj.checkPosDelShow(pos)?'':' is-hidden'), 
+              class: "button is-white"+(obj.checkPosDelShow(pos)?'':' is-hidden')+(pos.loading?' is-loading':''), 
               "aria-label": "close", 
               onclick: function (e) {
                 obj.delPos(pos)
                 window.stopBubble(e)
               }
-            }),
+            }, [
+              m('span.delete', {class:""+(pos.loading?' is-hidden':'')})
+            ]),
           ])
         ]),
         m('tr',{class : ""},[

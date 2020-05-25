@@ -640,7 +640,7 @@ let obj = {
 
 
         clacMgnNeed.calcFutureWltAndPosAndMI(pos, wallet, _order, RSdata, assetD, lastTick, window.$config.future.UPNLPrzActive, newOrderForBuy, window.$config.future.MMType, res => {
-            console.log('bug 成本计算结果： ', res)
+            // console.log('bug 成本计算结果： ', res)
             that.MgnNeedForBuy = Number(res || 0)
         })
 
@@ -671,11 +671,11 @@ let obj = {
                 }
         }
         clacMgnNeed.calcFutureWltAndPosAndMI(pos, wallet, _order, RSdata, assetD, lastTick, window.$config.future.UPNLPrzActive, newOrderForSell, window.$config.future.MMType, res => {
-            console.log('sell 成本计算结果： ', res)
+            // console.log('sell 成本计算结果： ', res)
             that.MgnNeedForSell = Number(res || 0)
         })
 
-        console.log(newOrderForBuy, newOrderForSell)
+        // console.log(newOrderForBuy, newOrderForSell)
         
     },
     getStopPL: function(){
