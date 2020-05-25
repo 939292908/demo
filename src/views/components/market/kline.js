@@ -980,7 +980,7 @@ export default {
                     obj.setKCrossTime('60')
                     // obj.klineTimeListOpen = false
                 }}, [
-                    gDI18n.$t('10029')//'1小时'
+                    gDI18n.$t('10469')//'1小时'
                 ]),
                 
                 m('div', {class:"dropdown is-hidden-desktop is-right"+(obj.klineTargetListOpen?' is-active':'')}, [

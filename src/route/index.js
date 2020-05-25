@@ -25,7 +25,7 @@ m.route(document.body, defaultRoutePath,{
             return m(delegation,vnode.attrs)
         },
     },
-    "/details:item":{
+    "/details":{
         render:function(vnode){
             return m(details,vnode.attrs)
         }
@@ -74,7 +74,7 @@ class router {
      * 详细： http://www.mithriljs.net/route.html#mrouteset
      */
     push(param){
-        
+        console.log(param)
         if(typeof param == 'string'){
             if(this.path && this.path != param){
                 this.historyRouteList.unshift({path: this.path, data: this.params})

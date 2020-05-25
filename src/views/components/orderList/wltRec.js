@@ -334,8 +334,9 @@ let obj = {
                 m("nav",{class:"pub-layout-m-header is-fixed-top navbar is-transparent", role:"navigation", "aria-label":"main navigation"},[
                     m('div', {class:"navbar-brand is-flex"}, [
                         m('a', {class:"navbar-item"}, [
-                            m('a', {class:"",href:"/#!/future",onclick :function(){
+                            m('a', {class:"",onclick :function(){
                                 obj.resetNavDrawerInfo()
+                                router.back()
                             }}, [
                                 m('span', {class:"icon icon-right-i"}, [
                                     m('i', {class:"iconfont iconarrow-left has-text-black"}),
