@@ -133,6 +133,7 @@ let obj = {
         //监听多元
         this.EV_CHANGELOCALE_UPD_unbinder = window.gEVBUS.on(gDI18n.EV_CHANGELOCALE_UPD, arg => {
             that.initLanguage()
+            that.initObj()
         })
     },
     initLanguage: function(){

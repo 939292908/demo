@@ -86,6 +86,12 @@ hr {
     @extend %px-4;
 }
 
+//table子项垂直居中start
+.table-tr-td-vertical{
+    vertical-align: middle !important;
+}
+//table子项垂直居中end
+
 //覆盖ui样式end
 //header样式 start
 

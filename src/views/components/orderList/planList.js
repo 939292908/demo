@@ -60,6 +60,7 @@ let obj = {
         //监听多元改变
         this.EV_CHANGELOCALE_UPD_unbinder = window.gEVBUS.on(gDI18n.EV_CHANGELOCALE_UPD, arg => {
             that.initLanguage()
+            that.initObj()
         })
         //assetD合约详情全局广播
         if (this.EV_ASSETD_UPD_unbinder) {
@@ -206,41 +207,41 @@ let obj = {
     getOrdList: function () {
         return this.posList.map(function (item, i) {
             return m("tr", { key: "planListTableListItem" + i, class: "" }, [
-                m("td", { class: " " }, [
+                m("td", { class: " table-tr-td-vertical" }, [
                     item.PId ? item.PId.substr(-4) : '--'
                 ]),
-                m("td", { class: "" }, [
+                m("td", { class: "table-tr-td-vertical" }, [
                     m("p", { class: " " }, [
                         utils.getSymDisplayName(window.gMkt.AssetD, item.Sym)
                     ])
                 ]),
-                m("td", { class: "" }, [
+                m("td", { class: "table-tr-td-vertical" }, [
                     m("p", { class: " " }, [
                         item.displayLever
                     ]),
                 ]),
-                m("td", { class: " " + utils.getColorStr(item.Dir, 'font') }, [
+                m("td", { class: " table-tr-td-vertical" + utils.getColorStr(item.Dir, 'font') }, [
                     item.DirStr
                 ]),
-                m("td", { class: " " }, [
+                m("td", { class: " table-tr-td-vertical" }, [
                     item.OTypeStr
                 ]),
-                m("td", { class: " " }, [
+                m("td", { class: " table-tr-td-vertical" }, [
                     item.displayPrz
                 ]),
-                m("td", { class: " " }, [
+                m("td", { class: " table-tr-td-vertical" }, [
                     item.Qty
                 ]),
-                m("td", { class: "" }, [
+                m("td", { class: "table-tr-td-vertical" }, [
                     (item.StopP || '--') + '/' + (item.StopL || '--')
                 ]),
-                m("td", { class: "" }, [
+                m("td", { class: "table-tr-td-vertical" }, [
                     item.cond
                 ]),
-                m("td", { class: "" }, [
+                m("td", { class: "table-tr-td-vertical" }, [
                     item.AtStr
                 ]),
-                m("td", { class: "" }, [
+                m("td", { class: "table-tr-td-vertical" }, [
                     m("button", {
                         class: "button is-primary " + (item.loading ? ' is-loading' : ''),
                         onclick: function () {

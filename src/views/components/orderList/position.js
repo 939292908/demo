@@ -158,10 +158,10 @@ let obj = {
     let btnsOpen = window.$config.positionBtns.desktop
     return this.posList.map(function(item, i){
       return m("tr",{key: "posTableListItem"+i, class:""},[
-        m("td",{class:""},[
+        m("td",{class:"table-tr-td-vertical"},[
           item.PId.substr(-4)
         ]),
-        m("td",{class:""},[
+        m("td",{class:"table-tr-td-vertical"},[
           m("p",{class:""},[
             utils.getSymDisplayName(window.gMkt.AssetD, item.Sym)
           ]),
@@ -174,19 +174,19 @@ let obj = {
             m("i",{class:"iconfont iconotc-editName iconfont-medium"+(btnsOpen.leverage.open?'':' is-hidden')}),
           ]),
         ]),
-        m("td",{class:""},[
+        m("td",{class:"table-tr-td-vertical"},[
           item.Sz
         ]),
-        m("td",{class:""},[
+        m("td",{class:"table-tr-td-vertical"},[
           item.PrzIni
         ]),
-        m("td",{class:""},[
+        m("td",{class:"table-tr-td-vertical"},[
           item.aPrzLiq
         ]),
-        m("td",{class:""},[
+        m("td",{class:"table-tr-td-vertical"},[
           item.aMgnRateforPrzMStr+'/'+item.aMgnRateforLiqStr
         ]),
-        m("td",{class:"pub-pos-changeMgn", onclick: function(){
+        m("td",{class:"pub-pos-changeMgn table-tr-td-vertical", onclick: function(){
           obj.changeMgn(item)
         }},[
           m('span', {class:""}, [
@@ -194,13 +194,13 @@ let obj = {
           ]),
           m("i",{class:"iconfont iconotc-editName iconfont-medium"+(btnsOpen.changeMgn.open && item.Lever != 0?'':' is-hidden')}),
         ]),
-        m("td",{class:""+utils.getColorStr(item.UPNLColor, 'font')},[
+        m("td",{class:"table-tr-td-vertical"+utils.getColorStr(item.UPNLColor, 'font')},[
           item.aUPNL+'('+item.aProfitPerStr+')'
         ]),
-        m("td",{class:""+utils.getColorStr(item.PNLColor, 'font')},[
+        m("td",{class:"table-tr-td-vertical"+utils.getColorStr(item.PNLColor, 'font')},[
           item.RPNL
         ]),
-        m("td",{class:"pub-pos-stoppl", onclick: function(){
+        m("td",{class:"pub-pos-stoppl table-tr-td-vertical", onclick: function(){
           obj.setStopPL(item)
         }},[
           m('span', {class:""}, [
@@ -208,28 +208,28 @@ let obj = {
           ]),
           m("i",{class:"iconfont iconotc-editName iconfont-medium"+(btnsOpen.stopPL.open?'':' is-hidden')}),
         ]),
-        m("td",{class:"pub-pos-buttons"},[
+        m("td",{class:"pub-pos-buttons table-tr-td-vertical"},[
           m("button",{class:"button is-primary "+(item.loading?' is-loading': '')+(btnsOpen.marketClose.open?'':' is-hidden'), onclick: function(){
             obj.placeOrder('close', item)
           }},[
             gDI18n.$t('10093')//'市价平仓'
           ]),
-          m("button",{class:"button is-primary "+(item.loading?' is-loading': '')+(btnsOpen.doubleOpen.open?'':' is-hidden'), onclick: function(){
+          m("button",{class:"button is-primary table-tr-td-vertical"+(item.loading?' is-loading': '')+(btnsOpen.doubleOpen.open?'':' is-hidden'), onclick: function(){
             obj.placeOrder('add', item)
           }},[
             gDI18n.$t('10094')//'加倍开仓'
           ]),
-          m("button",{class:"button is-primary "+(item.loading?' is-loading': '')+(btnsOpen.backOpen.open?'':' is-hidden'), onclick: function(){
+          m("button",{class:"button is-primary table-tr-td-vertical"+(item.loading?' is-loading': '')+(btnsOpen.backOpen.open?'':' is-hidden'), onclick: function(){
             obj.placeOrder('back', item)
           }},[
             gDI18n.$t('10095')//'反向开仓'
           ]),
-          m("button",{class:"button is-primary "+(item.loading?' is-loading': '')+(btnsOpen.narketAdd.open?'':' is-hidden'), onclick: function(){
+          m("button",{class:"button is-primary table-tr-td-vertical"+(item.loading?' is-loading': '')+(btnsOpen.narketAdd.open?'':' is-hidden'), onclick: function(){
             obj.placeOrder('marketAdd', item)
           }},[
             gDI18n.$t('10096')//'市价加仓'
           ]),
-          m("button",{class:"button is-primary "+(item.loading?' is-loading': '')+(btnsOpen.marketSomeClose.open || btnsOpen.limitSomeClose.open?'':' is-hidden'), onclick: function(){
+          m("button",{class:"button is-primary table-tr-td-vertical"+(item.loading?' is-loading': '')+(btnsOpen.marketSomeClose.open || btnsOpen.limitSomeClose.open?'':' is-hidden'), onclick: function(){
             obj.placeOrder('someClose', item)
           }},[
             btnsOpen.marketSomeClose.open && btnsOpen.limitSomeClose.open ?gDI18n.$t('10097'/*'平仓'*/): btnsOpen.marketSomeClose.open ?gDI18n.$t('10093'/*'市价平仓'*/):btnsOpen.limitSomeClose.open ?gDI18n.$t('10098'/*'限价平仓'*/): gDI18n.$t('10097'/*'平仓'*/)
