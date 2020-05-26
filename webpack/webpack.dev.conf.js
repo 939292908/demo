@@ -81,6 +81,9 @@ const config = {
         new CopyPlugin([
             { from: './tplibs/iconfont', to: 'libs/iconfont' },
         ]),
+        new CopyPlugin([
+            { from: './tplibs/kline', to: 'libs/kline' },
+        ]),
         new webpack.DefinePlugin({
             'process.env.BUILD_ENV': JSON.stringify(process.env.BUILD_ENV)
         })
