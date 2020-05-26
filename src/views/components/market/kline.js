@@ -1,4 +1,4 @@
-import {dispose, init} from 'klinecharts'
+// import {dispose, init} from 'klinecharts'
 var m = require("mithril")
 
 
@@ -347,7 +347,7 @@ let obj = {
             return
         }
         this.targetActive = param;
-        this.targetActive.id = window._chart.addTechnicalIndicator(param.name, 60, false)
+        this.targetActive.id = window._chart.createTechnicalIndicator(param.name, 60, false)
 
     },
     setKCrossTime: function (val) {
@@ -396,9 +396,8 @@ let obj = {
         }else{
             return timeList.map((key, i) =>{
                 let item = that.targetList[key]
-                return m('a', {key: "klineTimeListItem"+i, class:"dropdown-item", onclick: function(){
+                return m('a', {key: "klineTimeListItem"+i, class:"dropdown-item"+(obj.targetActive.name == item.name?' has-text-primary':''), onclick: function(){
                         obj.createTarget(item)
-                        
                     }}, [
                         item.name
                 ])
@@ -436,7 +435,7 @@ let obj = {
         let fontSize = window.isMobile? 8: 12
         console.log('init chart')
         // 初始化图表
-        window._chart = init("tv_chart_container", {
+        window._chart = klinecharts.init("tv_chart_container", {
             grid: {
                 display: true,
                 horizontal: {
@@ -730,7 +729,7 @@ let obj = {
             }
         });
         window._chart.setDataSpace(1)
-        window._chart.addTechnicalIndicator('VOL', 80, false)
+        window._chart.createTechnicalIndicator('VOL', 80, false)
         window._chart.setTechnicalIndicatorParams('VOL', [])
         // window._chart.setOffsetRightSpace(50)
         // window._chart.setLeftMinVisibleBarCount(50)
@@ -1217,7 +1216,7 @@ export default {
     },
     onbeforeremove: function (vnode) {
         if (window._chart) {
-            dispose('tv_chart_container')
+            klinecharts.dispose('tv_chart_container')
             window._chart = null
         }
         obj.rmEVBUS()
