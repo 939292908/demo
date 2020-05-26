@@ -10,10 +10,10 @@ let obj = {
         //     name: 'VOL',
         //     title: 'Volume'
         // },
-        // {
-        //     name: 'MA',
-        //     title: 'Moving Average'
-        // },
+        {
+            name: 'MA',
+            title: 'Moving Average'
+        },
         {
             name: 'MACD',
             title: 'Moving Average Convergence / Divergence'
@@ -30,10 +30,10 @@ let obj = {
             name: 'EMA',
             title: 'Moving Average Exponential'
         },
-        {
-            name: 'StochRSI',
-            title: 'Stochastic RSI'
-        },
+        // {
+        //     name: 'StochRSI',
+        //     title: 'Stochastic RSI'
+        // },
         {
             name: 'RSI',
             title: 'Relative Strength Index'
@@ -42,10 +42,10 @@ let obj = {
             name: 'CCI',
             title: 'Commodity Channel Index'
         },
-        {
-            name: 'ATR',
-            title: 'Average True Range'
-        },
+        // {
+        //     name: 'ATR',
+        //     title: 'Average True Range'
+        // },
         {
             name: 'SAR',
             title: 'Parabolic SAR'
@@ -58,16 +58,16 @@ let obj = {
             name: 'OBV',
             title: 'On Balance Volume'
         },
-        {
-            name: 'ROC',
-            title: 'Rate Of Change'
-        },
+        // {
+        //     name: 'ROC',
+        //     title: 'Rate Of Change'
+        // },
     ],
     targetActive: {}, //tradingview选中的指标
     timeList: {
         '0': {
             type: '0',
-            name: gDI18n.$t('10023'),//"分时",
+            name: '0',//"分时",
             title: gDI18n.$t('10024'),//"分时图"
         },
         '1': {
@@ -183,6 +183,7 @@ let obj = {
     isGetKlineDataLoading: false, //是否正在获取数据
     getKlineTimeoutTimer: null,
     klineShow: false,
+    fullscreen: false, //是否为全屏
     //初始化全局广播
     initEVBUS: function () {
         let that = this
@@ -197,28 +198,6 @@ let obj = {
             that.setSymbol()
         })
 
-
-        if (this.EV_HIST_UPD_unbinder) {
-            this.EV_HIST_UPD_unbinder();
-        }
-        this.EV_HIST_UPD_unbinder = gEVBUS.on(gMkt.EV_HIST_UPD, arg => {
-            let tv = window.gTvWidgetFT
-            if (tv) {
-                try {
-                    tv = tv.chart();
-                    if (tv) {
-                        if ((tv.symbolExt().symbol == arg.Sym) && (gMkt.Res2Typ[tv.resolution()] == arg.Typ)) {
-                            if (this.onResetCacheNeededCallback) {
-                                this.onResetCacheNeededCallback();
-                            }
-                            tv.resetData();
-                        }
-                    }
-                } catch (e) {
-                    // 可以忽略这个错误，因为这时候Tradingview还没正确的初始化
-                }
-            }
-        })
 
         if (this.EV_REALTIME_UPD_unbinder) {
             this.EV_REALTIME_UPD_unbinder();
@@ -254,6 +233,15 @@ let obj = {
         }
         this.EV_CHANGELOCALE_UPD_unbinder = window.gEVBUS.on(gDI18n.EV_CHANGELOCALE_UPD,arg=> {
             // that.setKlineLanguage()
+        })
+
+        
+
+        if(this.EV_ONRESIZE_UPD_unbinder){
+            this.EV_ONRESIZE_UPD_unbinder()
+        }
+        this.EV_ONRESIZE_UPD_unbinder = window.gEVBUS.on(gEVBUS.EV_ONRESIZE_UPD,arg=> {
+            that.onResize()
         })
         
 
@@ -291,231 +279,83 @@ let obj = {
         this.setKcross()
     },
     createTarget: function (param) {
-        return
+        if(!window._chart)return
         if (this.targetActive.id) {
-            gTvWidgetFT.chart().removeEntity(this.targetActive.id)
+            window._chart.removeTechnicalIndicator(this.targetActive.id)
         }
-
-        if (param == this.targetActive.name) {
+        if(this.targetActive.title == param.title){
             this.targetActive = {};
-            return;
-        };
-        this.targetActive = {
-            name: param
+            return
         }
+        this.targetActive = param;
+        this.targetActive.id = window._chart.addTechnicalIndicator(param.name, 60, false)
 
-        switch (param) {
-            case 'VOL':
-                gTvWidgetFT.chart().createStudy('Volume', false, false, null, (data) => {
-                    this.targetActive.id = data;
-                })
-                break;
-            case 'MA':
-                gTvWidgetFT.chart().createStudy('Moving Average', false, false, [30], (data) => {
-                    this.targetActive.id = data;
-                }, {
-                    "Plot.color.0": '#02AE8D',
-                    'Plot.linewidth': 2
-                })
-                break;
-            case 'MACD':
-                gTvWidgetFT.chart().createStudy("MACD", false, false, [14, 30, "close", 9], (data) => {
-                    this.targetActive.id = data;
-                }, {
-                    "Histogram.color": '#D04B65',
-                    "MACD.color": '#84aad5',
-                    "Signal.color": '#02AE8D',
-                    "Histogram.linewidth": 2,
-                    "MACD.linewidth": 4,
-                    "Signal.linewidth": 4,
-                })
-
-                break;
-            case 'KDJ':
-                gTvWidgetFT.chart().createStudy('Stochastic', false, false, [26], (data) => {
-                    this.targetActive.id = data;
-                }, {
-                    "%d.color": '#02AE8D',
-                    "%k.color": '#84aad5',
-                    "%d.linewidth": 4,
-                    "%k.linewidth": 4,
-                    "UpperLimit.color": '#6577A4', //dark：'#385181',
-                    "UpperLimit.linewidth": 4,
-                    "LowerLimit.color": '#6577A4', //dark：'#385181',
-                    "LowerLimit.linewidth": 4,
-                    "Hlines Background.color": '#EAF0FF', //dark： '#1C2332',
-                })
-                break;
-            case 'BOLL':
-                gTvWidgetFT.chart().createStudy('Bollinger Bands', false, false, [20], (data) => {
-                    this.targetActive.id = data;
-                }, {
-                    'Median.color': '#84aad5',
-                    'Median.linewidth': 4,
-                    'Upper.color': '#02AE8D',
-                    'Upper.linewidth': 4,
-                    'Lower.color': '#965fc4',
-                    'Lower.linewidth': 4,
-                    "Plots Background.color": '#EAF0FF', //dark： '#1C2332',
-                })
-                break;
-            case 'EMA':
-                gTvWidgetFT.chart().createStudy('Moving Average Exponential', false, false, [26], (data) => {
-                    this.targetActive.id = data;
-                }, {
-                    "Plot.color": '#84aad5',
-                    'Plot.linewidth': 4
-                })
-                break;
-            case 'StochRSI':
-                gTvWidgetFT.chart().createStudy('Stochastic RSI', false, false, [20], (data) => {
-                    this.targetActive.id = data;
-                }, {
-                    "%d.color": '#02AE8D',
-                    "%k.color": '#84aad5',
-                    "%d.linewidth": 4,
-                    "%k.linewidth": 4,
-                    "UpperLimit.color": '#6577A4', //dark：'#385181',
-                    "UpperLimit.linewidth": 4,
-                    "LowerLimit.color": '#6577A4', //dark：'#385181',
-                    "LowerLimit.linewidth": 4,
-                    "Hlines Background.color": '#EAF0FF', //dark： '#1C2332',
-                })
-                break;
-            case 'RSI':
-                gTvWidgetFT.chart().createStudy('Relative Strength Index', false, false, [14], (data) => {
-                    this.targetActive.id = data;
-                }, {
-                    'Plot.color': '#84aad5',
-                    'Plot.linewidth': 4,
-                    "UpperLimit.color": '#6577A4', //dark：'#385181',
-                    "UpperLimit.linewidth": 4,
-                    "LowerLimit.color": '#6577A4', //dark：'#385181',
-                    "LowerLimit.linewidth": 4,
-                    "Hlines Background.color": '#EAF0FF', //dark： '#1C2332',
-                })
-                break;
-            case 'CCI':
-                gTvWidgetFT.chart().createStudy('Commodity Channel Index', false, false, [20], (data) => {
-                    this.targetActive.id = data;
-                }, {
-                    'Plot.color': '#84aad5',
-                    'Plot.linewidth': 4,
-                    "UpperLimit.color": '#6577A4', //dark：'#385181',
-                    "UpperLimit.linewidth": 4,
-                    "LowerLimit.color": '#6577A4', //dark：'#385181',
-                    "LowerLimit.linewidth": 4,
-                    "Hlines Background.color": '#EAF0FF', //dark： '#1C2332',
-                })
-                break;
-            case 'ATR':
-                gTvWidgetFT.chart().createStudy('Average True Range', false, false, [14], (data) => {
-                    this.targetActive.id = data;
-                }, {
-                    'Plot.color': '#84aad5',
-                    'Plot.linewidth': 4
-                })
-                break;
-            case 'SAR':
-                gTvWidgetFT.chart().createStudy('Parabolic SAR', false, false, [0.02], (data) => {
-                    this.targetActive.id = data;
-                }, {
-                    'Plot.color': '#84aad5',
-                    'Plot.linewidth': 2
-                })
-                break;
-            case 'DMI':
-                gTvWidgetFT.chart().createStudy('Directional Movement', false, false, [14], (data) => {
-                    this.targetActive.id = data;
-                }, {
-                    "+DI.color": '#02AE8D',
-                    "+DI.linewidth": 4,
-                    "-DI.color": '#84aad5',
-                    "-DI.linewidth": 4,
-                    "ADX.color": '#965fc4',
-                    "ADX.linewidth": 4,
-                })
-                break;
-            case 'OBV':
-                gTvWidgetFT.chart().createStudy('On Balance Volume', false, false, null, (data) => {
-                    this.targetActive.id = data;
-                }, {
-                    'Plot.color': '#84aad5',
-                    'Plot.linewidth': 4
-                })
-                break;
-            case 'ROC':
-                gTvWidgetFT.chart().createStudy('Rate Of Change', false, false, [14], (data) => {
-                    this.targetActive.id = data;
-                }, {
-                    'ROC.color': '#84aad5',
-                    'ROC.linewidth': 4
-                })
-                break;
-        }
     },
     setKCrossTime: function (val) {
         let that = this;
-        return
-
-        if (!window.gTvWidgetFT) return
-        if (val != '0') {
-            window.gTvWidgetFT.chart().setChartType(1)
-            this.setMA();
-        }
-        switch (val) {
-            case '0':
-                if (window.gTvWidgetFT.chart().chartType() == 1) {
-                    if (this.targetAverage.MA5.id) {
-                        gTvWidgetFT.chart().removeEntity(this.targetAverage.MA5.id)
-                        this.targetAverage.MA5.id = null;
-                    }
-                    if (this.targetAverage.MA10.id) {
-                        gTvWidgetFT.chart().removeEntity(this.targetAverage.MA10.id)
-                        this.targetAverage.MA10.id = null;
-                    }
-                    window.gTvWidgetFT.chart().setChartType(3)
-                    window.gTvWidgetFT.chart().setResolution('1', () => { // 1代表1分钟
-
-                    });
-                } else if (window.gTvWidgetFT.chart().chartType() == 3) {
-                    window.gTvWidgetFT.chart().setChartType(1)
-                    this.setMA();
-                }
-                break;
-            default:
-                window.gTvWidgetFT.setSymbol(this.Sym, val, function () {
-
-                })
-        }
+        window.gMkt.CtxPlaying.Typ = this.Typ = val;
+        this.setKlineData()
     },
     getTimeList: function(){
         let that = this
         let timeList = Object.keys(this.timeList)
-        return timeList.map((key, i) =>{
-            let item = that.timeList[key]
-            return m('button', {key: "klineTimeListItem"+i,class: "button"+(gMkt.CtxPlaying.Typ == item.name?' has-text-primary':''), onclick: function(){
-                obj.setKCrossTime(item.type)
-            }}, [
-                item.title
-            ])
-        })
+        if(window.isMobile){
+            return timeList.map((key, i) =>{
+                let item = that.timeList[key]
+                return m('button', {key: "klineTimeListItem"+i,class: "button is-white"+(obj.Typ == item.name?' has-text-primary':''), onclick: function(){
+                    obj.setKCrossTime(item.name)
+                }}, [
+                    item.title
+                ])
+            })
+        }else{
+            return timeList.map((key, i) =>{
+                let item = that.timeList[key]
+                return m('button', {key: "klineTimeListItemForPC"+i,class: "button is-white"+(obj.Typ == item.name?' has-text-primary':''), onclick: function(){
+                    obj.setKCrossTime(item.name)
+                }}, [
+                    item.title
+                ])
+            })
+        }
+        
     },
     getTargetList: function(){
         let that = this
         let timeList = Object.keys(this.targetList)
-        return timeList.map((key, i) =>{
-            let item = that.targetList[key]
-            return m('button', {key: "klineTimeListItem"+i,class: "button"+(obj.targetActive.name == item.name?' has-text-primary':''), onclick: function(){
-                obj.createTarget(item.name)
-                
-            }}, [
-                item.name
-            ])
-        })
+        
+        if(window.isMobile){
+            return timeList.map((key, i) =>{
+                let item = that.targetList[key]
+                return m('button', {key: "klineTimeListItem"+i,class: "button"+(obj.targetActive.name == item.name?' has-text-primary':''), onclick: function(){
+                    obj.createTarget(item)
+                    
+                }}, [
+                    item.name
+                ])
+            })
+        }else{
+            return timeList.map((key, i) =>{
+                let item = that.targetList[key]
+                return m('a', {key: "klineTimeListItem"+i, class:"dropdown-item", onclick: function(){
+                        obj.createTarget(item)
+                        
+                    }}, [
+                        item.name
+                ])
+            })
+        }
     },
-    setKcross() {
+    setKcross: function() {
         console.log(window._chart, this.Sym)
+
+        // 动态设置k线高度
+        if(window.isMobile){
+            let h = parseInt(window.getComputedStyle(document.querySelector('body')).height)
+            document.querySelector('.pub-kline-iframe-m').style.height = (h/2) + 'px'
+        }
+        
+
         this.klineShow = true
         if (window._chart) {
             if (this.Sym) {
@@ -525,7 +365,7 @@ let obj = {
             this.initChart();
         }
     },
-    initChart() {
+    initChart: function() {
         let self = this;
         if (window._chart) return;
         let lineColor = "#f4f4f4"
@@ -721,10 +561,10 @@ let obj = {
                             color: fontPrimary, // "#D9D9D9",
                             size: fontSize,
                             family: "Roboto",
-                            paddingLeft: 0,
-                            paddingRight: 0,
-                            paddingTop: 2,
-                            paddingBottom: 2,
+                            paddingLeft: 6,
+                            paddingRight: 6,
+                            paddingTop: 6,
+                            paddingBottom: 6,
                             borderSize: 1,
                             borderColor: lineColor,
                             backgroundColor: lineColor
@@ -745,10 +585,10 @@ let obj = {
                             color: fontPrimary, //"#D9D9D9",
                             size: fontSize,
                             family: "Roboto",
-                            paddingLeft: 0,
-                            paddingRight: 0,
-                            paddingTop: 2,
-                            paddingBottom: 2,
+                            paddingLeft: 6,
+                            paddingRight: 6,
+                            paddingTop: 6,
+                            paddingBottom: 6,
                             borderSize: 1,
                             borderColor: lineColor,
                             backgroundColor: lineColor
@@ -844,7 +684,7 @@ let obj = {
         this.setKlineData()
 
     },
-    setKlineData(){
+    setKlineData: function(){
         if(!window._chart || !this.Sym || !this.Typ) return
         this.klineShow = true
         // 清除图表数据
@@ -857,7 +697,7 @@ let obj = {
         }else{
             window._chart.setCandleStickChartType('candle_stick')
         }
-        Typ = Typ == '0'?'1':Typ
+        Typ = Typ == '0'?'1m':Typ
         if(window._chart.Sym != Sym || window._chart.Typ != Typ){
             if(window._chart.Sym && window._chart.Typ){
                 gMkt.ReqUnSub(["kline_" + Typ + "_" + Sym])
@@ -916,13 +756,13 @@ let obj = {
         window._chart.setPrecision(PrzMinIncSize, VolMinValSize)
     },
     // 获取最近历史数据
-    getLastKlineData() {
+    getLastKlineData: function() {
         let that = this
         if(!window._chart || !this.Sym) return
         
         let Sym = window._chart.Sym
         let Typ = window._chart.Typ || '1m';
-        Typ = Typ == '0'?'1':Typ
+        Typ = Typ == '0'?'1m':Typ
         if(this.isGetKlineDataLoading) return
         this.isGetKlineDataLoading = true
         gMkt.ReqKLineLastest({
@@ -951,7 +791,7 @@ let obj = {
         }, 3*1000)
     },
     // 获取更多历史k线
-    loadMoreKline(tm, count, type) {
+    loadMoreKline: function(tm, count, type) {
         console.log('loadMoreKline need more data', tm, count, this.isGetKlineDataLoading, window._chart, this.Sym, window._chart.Sym)
         let that = obj
         if(!window._chart || !window._chart.Sym) return
@@ -990,7 +830,7 @@ let obj = {
         }, 3*1000)
     },
     // k线数据填充
-    applyNewDataToChart(arg, type, more) {
+    applyNewDataToChart: function(arg, type, more) {
         console.log(arg, type, more)
         if(!window._chart) return
         
@@ -1073,9 +913,8 @@ let obj = {
         }
         this.klineShow = false
     },
-    updateKlineForTrade(param){
+    updateKlineForTrade: function(param){
         let arg = param.data
-        console.log('updateKlineForTrade', arg)
         let Sym = window._chart.Sym
         let Typ = window._chart.Typ || '1m';
         if (window._chart && Sym == window._chart.Sym) {
@@ -1117,9 +956,8 @@ let obj = {
             }
         }
     },
-    updateKline(param){
+    updateKline: function(param){
         let arg = param.data
-        console.log('updateKline', arg)
         let Typ = arg.Typ
         let Sym = arg.Sym
         let _Typ = window._chart.Typ == '0'?'1m':window._chart.Typ
@@ -1163,6 +1001,52 @@ let obj = {
             
         }
     },
+    // 控制全屏
+    enterfullscreen: function(target) { //进入全屏
+        let docElm = document.querySelector(target);
+        //W3C
+        if(docElm.requestFullscreen) {
+            docElm.requestFullscreen();
+        }
+        //FireFox
+        else if(docElm.mozRequestFullScreen) {
+            docElm.mozRequestFullScreen();
+        }
+        //Chrome等
+        else if(docElm.webkitRequestFullScreen) {
+            docElm.webkitRequestFullScreen();
+        }
+        //IE11
+        else if(elem.msRequestFullscreen) {
+            elem.msRequestFullscreen();
+        }
+    },
+
+    exitfullscreen: function() { //退出全屏
+        if(document.exitFullscreen) {
+            document.exitFullscreen();
+        } else if(document.mozCancelFullScreen) {
+            document.mozCancelFullScreen();
+        } else if(document.webkitCancelFullScreen) {
+            document.webkitCancelFullScreen();
+        } else if(document.msExitFullscreen) {
+            document.msExitFullscreen();
+        }
+    },
+    setFullscreen: function(){
+        if(this.fullscreen){
+            this.fullscreen = false
+                this.exitfullscreen(".pub-kline")
+        }else{
+            this.fullscreen = true
+            this.enterfullscreen(".pub-kline")
+        }
+    },
+    onResize: function(){
+        if(window._chart){
+            window._chart.resize()
+        }
+    }
 }
 
 export default {
@@ -1177,16 +1061,17 @@ export default {
 
         return m("div", { class: "pub-kline"+(window.isMobile?'':' box') }, [
             m('div', {class:"pub-kline-btns buttons has-addons is-hidden-desktop"}, [
-                // m('button', {class:"button is-selected"}, [
-                //     '分时'
-                // ]),
                 m('div', {class:"dropdown is-hidden-desktop"+(obj.klineTimeListOpen?' is-active':'')}, [
                     m('div', {class:"dropdown-trigger", onclick: function(e){
                         obj.klineTimeListOpen = !obj.klineTimeListOpen
                         window.stopBubble(e)
                     }}, [
                         m('button', {class:"button is-selected"+(obj.klineTimeListOpen?' has-text-primary':'')}, [
-                            gDI18n.$t('10023')//'分时'
+                            gDI18n.$t('10023'),//'分时'
+                            m('.spacer'),
+                            m('span', {class:"icon"}, [
+                                m('i', {class:"iconfont iconxiala has-text-primary is-size-7"})
+                            ]),
                         ]),
                     ]),
                     m('div', {class:"dropdown-menu"}, [
@@ -1195,20 +1080,20 @@ export default {
                         ]),
                     ]),
                 ]),
-                m('button', {class:"button is-selected"+(gMkt.CtxPlaying.Typ == '1m'?' has-text-primary':''), onclick: function(){
-                    obj.setKCrossTime('1')
+                m('button', {class:"button is-selected"+(obj.Typ == '1m'?' has-text-primary':''), onclick: function(){
+                    obj.setKCrossTime('1m')
                     // obj.klineTimeListOpen = false
                 }}, [
                     gDI18n.$t('10442')//'1分'
                 ]),
-                m('button', {class:"button is-selected"+(gMkt.CtxPlaying.Typ == '30m'?' has-text-primary':''), onclick: function(){
-                    obj.setKCrossTime('30')
+                m('button', {class:"button is-selected"+(obj.Typ == '30m'?' has-text-primary':''), onclick: function(){
+                    obj.setKCrossTime('30m')
                     // obj.klineTimeListOpen = false
                 }}, [
                     gDI18n.$t('10443')//'30分'
                 ]),
-                m('button', {class:"button is-selected"+(gMkt.CtxPlaying.Typ == '1h'?' has-text-primary':''), onclick: function(){
-                    obj.setKCrossTime('60')
+                m('button', {class:"button is-selected"+(obj.Typ == '1h'?' has-text-primary':''), onclick: function(){
+                    obj.setKCrossTime('1h')
                     // obj.klineTimeListOpen = false
                 }}, [
                     gDI18n.$t('10469')//'1小时'
@@ -1220,7 +1105,11 @@ export default {
                         window.stopBubble(e)
                     }}, [
                         m('button', {class:"button is-selected"}, [
-                            gDI18n.$t('10435')//'指标'
+                            obj.targetActive.name || gDI18n.$t('10435'), //'指标'
+                            m('.spacer'),
+                            m('span', {class:"icon"}, [
+                                m('i', {class:"iconfont iconxiala has-text-primary is-size-7"})
+                            ]),
                         ]),
                     ]),
                     m('div', {class:"dropdown-menu"}, [
@@ -1230,23 +1119,47 @@ export default {
                     ]),
                 ]),
             ]),
-            
-            /**
-             * <div class="buttons has-addons">
-                <button class="button is-success is-selected">Yes</button>
-                <button class="button">Maybe</button>
-                <button class="button">No</button>
-                </div>
-             */
-            m("div", { class: "pub-kline-iframe"}, [
+            m('div', {class:"pub-kline-btns-pc is-hidden-touch"}, [
+                obj.getTimeList(),
+                m('span',{class:"has-text-light"}, ['|']),
+                m('div', {class:"dropdown is-hidden-touch"+(obj.klineTargetListOpen?' is-active':'')}, [
+                    m('div', {class:"dropdown-trigger", onclick: function(e){
+                        obj.klineTargetListOpen = !obj.klineTargetListOpen
+                        window.stopBubble(e)
+                    }}, [
+                        m('button', {class:"button is-white"}, [
+                            obj.targetActive.name || gDI18n.$t('10435'), //'指标'
+                            m('.spacer'),
+                            m('span', {class:"icon"}, [
+                                m('i', {class:"iconfont iconxiala has-text-primary is-size-7"})
+                            ]),
+                        ]),
+                    ]),
+                    m('div', {class:"dropdown-menu"}, [
+                        m('div', {class:"dropdown-content"}, [
+                            obj.getTargetList()
+                        ]),
+                    ]),
+                ]),
+                m('span',{class:"has-text-light"}, ['|']),
+                m('button', {class:"button is-white", onclick: function(){
+                    obj.setFullscreen();
+                }}, [
+                    m('span', {class:"icon"}, [
+                        m('i', {class:"iconfont"+(obj.fullscreen?" iconguanbiquanping1":" iconquanping1")})
+                    ]),
+                ]),
+            ]),
+            m('hr.is-hidden-touch'),
+            m("div", { class: ""+(window.isMobile?" pub-kline-iframe-m":" pub-kline-iframe")}, [
                 m('#tv_chart_container', { class: "" })
             ])
         ])
     },
     onbeforeremove: function (vnode) {
-        if (window.gTvWidgetFT) {
-            window.gTvWidgetFT.remove()
-            window.gTvWidgetFT = null
+        if (window._chart) {
+            dispose('tv_chart_container')
+            window._chart = null
         }
         obj.rmEVBUS()
     },
