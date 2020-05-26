@@ -173,7 +173,8 @@ let spotTick = {
                             ]),
                             m('td', {class:""}, [
                                 m('p', {class:""}, [
-                                    gDI18n.$t('10018',{value : (spotTick.getLastTick().High24 || '--')})//"24H最高："+(spotTick.getLastTick().High24 || '--')
+                                    gDI18n.$t('10018') + (spotTick.getLastTick().High24 || '--')
+                                    //"24H最高："+(spotTick.getLastTick().High24 || '--')
                                 ]),
                                 m('p', {class:""}, [
                                     gDI18n.$t('10019',{value : (spotTick.getLastTick().Low24 || '--')})//"24H最低："+(spotTick.getLastTick().Low24 || '--')
