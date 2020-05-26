@@ -79,9 +79,6 @@ const config = {
             filename: 'css/mystyles.css'
         }), 
         new CopyPlugin([
-            { from: './tplibs/tradingview', to: 'libs/tradingview' },
-        ]),
-        new CopyPlugin([
             { from: './tplibs/iconfont', to: 'libs/iconfont' },
         ]),
         new webpack.DefinePlugin({
