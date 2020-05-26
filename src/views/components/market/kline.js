@@ -107,17 +107,17 @@ let obj = {
         // },
         'D': {
             type: 'D',
-            name: "D",
+            name: "1d",
             title: gDI18n.$t('10032'),//"1天"
         },
         'W': {
             type: 'W',
-            name: "W",
+            name: "1w",
             title: gDI18n.$t('10033'),//"1周"
         },
         'M': {
             type: 'M',
-            name: "M",
+            name: "1M",
             title: gDI18n.$t('10034'),//"1月"
         },
     },
@@ -198,11 +198,6 @@ let obj = {
             that.setSymbol()
         })
 
-        //监听多元
-        this.EV_CHANGELOCALE_UPD_unbinder = window.gEVBUS.on(gDI18n.EV_CHANGELOCALE_UPD, arg => {
-            that.initLanguage()
-        })
-
         if (this.EV_REALTIME_UPD_unbinder) {
             this.EV_REALTIME_UPD_unbinder();
         }
@@ -237,6 +232,7 @@ let obj = {
         }
         this.EV_CHANGELOCALE_UPD_unbinder = window.gEVBUS.on(gDI18n.EV_CHANGELOCALE_UPD,arg=> {
             // that.setKlineLanguage()
+            that.initLanguage()
         })
 
         
@@ -295,17 +291,17 @@ let obj = {
             // },
             'D': {
                 type: 'D',
-                name: "D",
+                name: "1d",
                 title: gDI18n.$t('10032'),//"1天"
             },
             'W': {
                 type: 'W',
-                name: "W",
+                name: "1w",
                 title: gDI18n.$t('10033'),//"1周"
             },
             'M': {
                 type: 'M',
-                name: "M",
+                name: "1M",
                 title: gDI18n.$t('10034'),//"1月"
             },
         }
