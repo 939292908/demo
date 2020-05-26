@@ -60,6 +60,12 @@ let dish = {
         this.EV_ORDER20_UPD_unbinder = window.gEVBUS.on(gMkt.EV_ORDER20_UPD,arg=> {
             that.onOrder20(arg)
         })
+        this.EV_CHANGELOCALE_UPD_unbinder = window.gEVBUS.on(gDI18n.EV_CHANGELOCALE_UPD, arg => {
+            that.initLanguage()
+        })
+    },
+    initLanguage: function(){
+        this.dishTypeList = [gDI18n.$t('10007'/*'买卖盘口'*/), gDI18n.$t('10008'/*'买盘盘口'*/), gDI18n.$t('10009'/*'卖盘盘口'*/)]
     },
     //删除全局广播
     rmEVBUS: function(){
@@ -314,6 +320,7 @@ let dish = {
 
 export default {
     oninit: function(vnode){
+        dish.initLanguage()
         if(window.isMobile){
             // 手机端根据合约模式调整盘口
             let tradeType = window.$config.future.tradeType

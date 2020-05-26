@@ -57,6 +57,10 @@ let obj = {
             that.subPosNeedSymTick()
         })
 
+        //监听多元改变
+        this.EV_CHANGELOCALE_UPD_unbinder = window.gEVBUS.on(gDI18n.EV_CHANGELOCALE_UPD, arg => {
+            that.initLanguage()
+        })
         //assetD合约详情全局广播
         if (this.EV_ASSETD_UPD_unbinder) {
             this.EV_ASSETD_UPD_unbinder()
@@ -72,6 +76,41 @@ let obj = {
         })
 
 
+    },
+    initLanguage: function(){
+        this.theadList = [
+            {
+                title: gDI18n.$t('10067'),//'仓位ID',
+                class: ""
+            }, {
+                title: gDI18n.$t('10053'),//'合约',
+                class: ""
+            }, {
+                title: gDI18n.$t('10054'),//'杠杆',
+                class: ""
+            }, {
+                title: gDI18n.$t('10055'),//'交易类型',
+                class: ""
+            }, {
+                title: gDI18n.$t('10056'),//'委托类型',
+                class: ""
+            }, {
+                title: gDI18n.$t('10058'),//'委托价格',
+                class: ""
+            }, {
+                title: gDI18n.$t('10059'),//'委托数量',
+                class: ""
+            }, {
+                title: gDI18n.$t('10080') + "/" +gDI18n.$t('10101'),//'止盈/止损',
+                class: ""
+            }, {
+                title: gDI18n.$t('10064'),//'触发条件',
+                class: ""
+            }, {
+                title: gDI18n.$t('10065'),//'委托时间',
+                class: ""
+            }
+        ]
     },
     //删除全局广播
     rmEVBUS: function () {
@@ -345,7 +384,7 @@ let obj = {
 
 export default {
     oninit: function (vnode) {
-
+        obj.initLanguage()
     },
     oncreate: function (vnode) {
         obj.initEVBUS()

@@ -15,6 +15,9 @@ let obj = {
         this.EV_CHANGESYM_UPD_unbinder = window.gEVBUS.on(gMkt.EV_CHANGESYM_UPD,arg=> {
             that.updateSpotInfo(arg)
         })
+        this.EV_CHANGELOCALE_UPD_unbinder = window.gEVBUS.on(gDI18n.EV_CHANGELOCALE_UPD, arg => {
+            that.updateSpotInfo()
+        })
     },
     //删除全局广播
     rmEVBUS: function(){

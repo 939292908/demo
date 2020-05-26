@@ -82,6 +82,7 @@ let obj = {
 export default {
     oninit: function(vnode){
         obj.initEVBUS()
+        obj.initLanguage()
     },
     oncreate: function(vnode){
         

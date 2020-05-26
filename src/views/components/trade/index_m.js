@@ -23,7 +23,14 @@ let obj = {
         this.EV_ClICKBODY_unbinder = window.gEVBUS.on(gEVBUS.EV_ClICKBODY,arg=> {
             that.tabsListOpen = false
         })
+        //监听多元
+        this.EV_CHANGELOCALE_UPD_unbinder = window.gEVBUS.on(gDI18n.EV_CHANGELOCALE_UPD, arg => {
+            that.initLanguage()
+        })
 
+    },
+    initLanguage: function(){
+        this.tabsList = [gDI18n.$t('10117'),gDI18n.$t('10118'),gDI18n.$t('10119'),gDI18n.$t('10120')]
     },
     rmEVBUS: function(){
         if(this.EV_ClICKBODY_unbinder){
@@ -94,7 +101,7 @@ let obj = {
 }
 export default {
     oninit: function(vnode){
-        
+        obj.initLanguage()
     },
     oncreate: function(vnode){
         obj.initEVBUS()

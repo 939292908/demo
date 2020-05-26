@@ -55,7 +55,19 @@ let obj = {
         this.EV_WEB_LOGIN_unbinder = window.gEVBUS.on(gWebAPI.EV_WEB_LOGIN,arg=> {
             that.getWallet()
         })
+        //监听多元
+        this.EV_CHANGELOCALE_UPD_unbinder = window.gEVBUS.on(gDI18n.EV_CHANGELOCALE_UPD, arg => {
+            that.initLanguage()
+        })
         
+    },
+    initLanguage: function(){
+        this.wltList = {
+            '01': gDI18n.$t('10217'),//'合约账户',
+            '02': gDI18n.$t('10218'),//'币币账户',
+            '03': gDI18n.$t('10219'),//'我的钱包',
+            '04': gDI18n.$t('10220'),//'法币账户',
+        }
     },
     //删除全局广播
     rmEVBUS: function(){
@@ -219,7 +231,7 @@ let obj = {
 
 export default {
     oninit: function(vnode){
-        
+        obj.initLanguage()
     },
     oncreate: function(vnode){
         obj.initEVBUS()

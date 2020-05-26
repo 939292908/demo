@@ -45,6 +45,39 @@ let obj = {
         this.EV_WEB_LOGOUT_unbinder = window.gEVBUS.on(gWebAPI.EV_WEB_LOGOUT, arg => {
             that.initObj()
         })
+        //监听多元
+        this.EV_CHANGELOCALE_UPD_unbinder = window.gEVBUS.on(gDI18n.EV_CHANGELOCALE_UPD, arg => {
+            that.initLanguage()
+        })
+    },
+    initLanguage: function(){
+        this.theadList = [
+            {
+                title: gDI18n.$t('10053'),//'合约',
+                class: ""
+            },{
+                title: gDI18n.$t('10055'),//'交易类型',
+                class: ""
+            }, {
+                title: gDI18n.$t('10060'),//'成交均价',
+                class: ""
+            }, {
+                title: gDI18n.$t('10061'),//'成交数量',
+                class: ""
+            }, {
+                title: gDI18n.$t('10062'),//'平仓盈亏',
+                class: ""
+            }, {
+                title: gDI18n.$t('10063'),//'手续费',
+                class: ""
+            }, {
+                title: gDI18n.$t('10073'),//'成交时间',
+                class: ""
+            },{
+                title: gDI18n.$t('10067'),//'仓位ID',
+                class: ""
+            }
+        ]
     },
     //删除全局广播
     rmEVBUS: function () {
@@ -298,7 +331,7 @@ let obj = {
 
 export default {
     oninit: function(vnode){
-        
+        obj.initLanguage()
     },
     oncreate: function(vnode){
         obj.initEVBUS()

@@ -58,6 +58,11 @@ let obj = {
         that.subPosNeedSymTick()
     })
 
+    //监听多元
+    this.EV_CHANGELOCALE_UPD_unbinder = window.gEVBUS.on(gDI18n.EV_CHANGELOCALE_UPD, arg => {
+      that.initLanguage()
+    })
+
     //assetD合约详情全局广播
     if(this.EV_ASSETD_UPD_unbinder){
       this.EV_ASSETD_UPD_unbinder()
@@ -74,6 +79,44 @@ let obj = {
         that.initObj()
     })
     
+  },
+  initLanguage: function(){
+    this.theadList = [
+      {
+        title: gDI18n.$t('10067'),//'仓位ID',
+        class: "position-pid pub-table-1"
+      }, {
+        title: gDI18n.$t('10053'),//'合约',
+        class: "position-sym pub-table-2"
+      }, {
+        title: gDI18n.$t('10087'),//'数量',
+        class: "position-sz pub-table-3"
+      }, {
+        title: gDI18n.$t('10416'),//'开仓均价',
+        class: "position-prz pub-table-4"
+      }, {
+        title: gDI18n.$t('10417'),//'强平价格',
+        class: "position-przLiq pub-table-5"
+      }, {
+        title: gDI18n.$t('10088'),//'风险度',
+        class: "position-rate pub-table-6"
+      }, {
+        title: gDI18n.$t('10418',{value : "USDT"}),//'保证金',
+        class: "position-mm pub-table-7"
+      }, {
+        title: gDI18n.$t('10419'),//'未实现盈亏(回报率)',
+        class: "position-upnl pub-table-8"
+      }, {
+        title: gDI18n.$t('10091'),//'已实现盈亏',
+        class: "position-pnl pub-table-9"
+      }, {
+        title: gDI18n.$t('10080') + "/" +gDI18n.$t('10101'),//'止盈/止损',
+        class: "position-stoppl pub-table-10"
+      }, {
+        title: gDI18n.$t('10092'),//'策略',
+        class: "position-buttons pub-table-11"
+      } 
+    ]
   },
   //删除全局广播
   rmEVBUS: function(){
@@ -466,7 +509,7 @@ let obj = {
 
 export default {
     oninit: function(vnode){
-        
+      obj.initLanguage()
     },
     oncreate: function(vnode){
         obj.initEVBUS()

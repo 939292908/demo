@@ -26,21 +26,6 @@ let obj = {
         dir: gDI18n.$t('10394'),//'全部',
         status: gDI18n.$t('10394'),//'全部'
     },
-    tabsList:[
-        "全部",
-        "BTC/USDT永续",
-        "ETH/USDT永续",
-        "XRP/USDT永续",
-        "EOS/USDT永续",
-        "LTC/USDT永续",
-        "ETC/USDT永续",
-        "BCH/USDT永续",
-        "BTC永续",
-        "ETH永续",
-        "BTC 季度0626",
-        "ETH 季度0626",
-        "BTC/UT永续"
-    ],
     dirStrList:[
         gDI18n.$t('10394'),//"全部",
         gDI18n.$t('10326'),//"买入",
@@ -144,6 +129,102 @@ let obj = {
         this.EV_WEB_LOGOUT_unbinder = window.gEVBUS.on(gWebAPI.EV_WEB_LOGOUT, arg => {
             that.initObj()
         })
+
+        //监听多元
+        this.EV_CHANGELOCALE_UPD_unbinder = window.gEVBUS.on(gDI18n.EV_CHANGELOCALE_UPD, arg => {
+            that.initLanguage()
+        })
+    },
+    initLanguage: function(){
+        this.theadList = [
+            {
+                title: gDI18n.$t('10053'),//'合约',
+                class: ""
+            }, {
+                title: gDI18n.$t('10054'),//'杠杆',
+                class: ""
+            }, {
+                title: gDI18n.$t('10055'),//'交易类型',
+                class: ""
+            }, {
+                title: gDI18n.$t('10056'),//'委托类型',
+                class: ""
+            }, {
+                title: gDI18n.$t('10057'),//'状态',
+                class: ""
+            }, {
+                title: gDI18n.$t('10058'),//'委托价格',
+                class: ""
+            }, {
+                title: gDI18n.$t('10059'),//'委托数量',
+                class: ""
+            }, {
+                title: gDI18n.$t('10060'),//'成交均价',
+                class: ""
+            }, {
+                title: gDI18n.$t('10061'),//'成交数量',
+                class: ""
+            }, {
+                title: gDI18n.$t('10062'),//'平仓盈亏',
+                class: ""
+            }, {
+                title: gDI18n.$t('10063'),//'手续费',
+                class: ""
+            }, {
+                title: gDI18n.$t('10064'),//'触发条件',
+                class: ""
+            }, {
+                title: gDI18n.$t('10065'),//'委托时间',
+                class: ""
+            }, {
+                title: gDI18n.$t('10066'),//'委托来源',
+                class: ""
+            }, {
+                title: gDI18n.$t('10067'),//'仓位ID',
+                class: ""
+            }, 
+        ]
+        this.statusStrList = [
+            {
+                name: gDI18n.$t('10394'),//"全部",
+                id:0
+            },
+            {
+                name: gDI18n.$t('10457'),//"成交",
+                id:1
+            },
+            {
+                name: gDI18n.$t('10082'),//"撤单",
+                id:2
+            },
+        ]
+        this.navDrawerInfo = {
+            Sym: gDI18n.$t('10394'),//'全部',
+            dir: gDI18n.$t('10394'),//'全部',
+            status: gDI18n.$t('10394'),//'全部'
+        }
+        this.oldNavDrawerInfo = {
+            Sym: gDI18n.$t('10394'),//'全部',
+            dir: gDI18n.$t('10394'),//'全部',
+            status: gDI18n.$t('10394'),//'全部'
+        }
+        this.dirStrList = [
+            gDI18n.$t('10394'),//"全部",
+            gDI18n.$t('10326'),//"买入",
+            gDI18n.$t('10327'),//"卖出",
+            gDI18n.$t('10445'),//"买入强平",
+            gDI18n.$t('10446'),//"卖出强平",
+            gDI18n.$t('10447'),//"买入开多",
+            gDI18n.$t('10448'),//"卖出开空",
+            gDI18n.$t('10449'),//"买入平空",
+            gDI18n.$t('10450'),//"卖出平多",
+            gDI18n.$t('10451'),//"买入强制平空",
+            gDI18n.$t('10452'),//"卖出强制平多",
+            gDI18n.$t('10453'),//"买入ADL平空",
+            gDI18n.$t('10454'),//"卖出ADL平多",
+            gDI18n.$t('10455'),//"买入平空并开多",
+            gDI18n.$t('10456'),//"卖出平多并开空"
+        ]
     },
     //删除全局广播
     rmEVBUS: function () {
@@ -881,7 +962,7 @@ let obj = {
 
 export default {
     oninit: function (vnode) {
-        
+        obj.initLanguage()
     },
     oncreate: function (vnode) {
         obj.initEVBUS()

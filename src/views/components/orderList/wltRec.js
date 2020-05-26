@@ -83,6 +83,75 @@ let obj = {
             that.initObj()
         })
 
+        //监听多元
+        this.EV_CHANGELOCALE_UPD_unbinder = window.gEVBUS.on(gDI18n.EV_CHANGELOCALE_UPD, arg => {
+            that.initLanguage()
+        })
+
+    },
+    initLanguage: function(){
+        this.theadList = [
+            {
+                title: gDI18n.$t('10420'),//'币种',
+                class: ""
+            }, {
+                title: gDI18n.$t('10102'),//'类型',
+                class: ""
+            }, {
+                title: gDI18n.$t('10421'),//'金额',
+                class: ""
+            }, {
+                title: gDI18n.$t('10103'),//'时间',
+                class: ""
+            }
+        ]
+        this.type = [
+            {
+                name: gDI18n.$t('10394')//"全部"
+            },
+            {
+                name: gDI18n.$t('10385')//"强制平仓"
+            },
+            {
+                name: gDI18n.$t('10386')//"自动减仓"
+            },
+            {
+                name: gDI18n.$t('10387')//"交割结算"
+            },
+            {
+                name: gDI18n.$t('10062')//"平仓盈亏"
+            },
+            {
+                name: gDI18n.$t('10063')//"手续费"
+            },
+            {
+                name: gDI18n.$t('10389')//"账户划入"
+            },
+            {
+                name: gDI18n.$t('10390')//"账户划出"
+            },
+            {
+                name: gDI18n.$t('10391')//"资金费用"
+            },
+            {
+                name: gDI18n.$t('10393')//"合约赠金"
+            },
+        ]
+        this.tabsList = [
+            gDI18n.$t('10394'),//"全部",
+            "USDT",
+            "BTC",
+            "ETH",
+            "UT"
+        ]
+        this.navCoinInfo = {
+            Coin: gDI18n.$t('10394'),//'全部',
+            Stat: gDI18n.$t('10394'),//'全部',
+        }
+        this.oldNavCoinInfo = {
+            Coin: gDI18n.$t('10394'),//'全部',
+            Stat: gDI18n.$t('10394'),//'全部',
+        }
     },
     //删除全局广播
     rmEVBUS: function () {
@@ -433,7 +502,7 @@ let obj = {
 
 export default {
     oninit: function (vnode) {
-
+        obj.initLanguage()
     },
     oncreate: function (vnode) {
         obj.initEVBUS()
