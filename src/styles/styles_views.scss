@@ -270,13 +270,22 @@ hr {
 // 交易对下拉 end
 
 
-//tradingview模块 start
+//k线模块 start
 
 .pub-kline  {
     @extend %side-pa;
     height: 100%;
-    .pub-kline-iframe {
+    hr {
+        @extend %ma-0;
+        height: 1px;
+    }
+
+
+    .pub-kline-iframe_m {
         height: 100%;
+    }
+    .pub-kline-iframe {
+        height: calc(100% - 40px);
     }
 
     .pub-kline-btns {
@@ -289,25 +298,36 @@ hr {
         button {
             @extend %ma-0;
             border-radius: 0;
-            border-bottom: 0;
+            // border-bottom: 0;
             border-color: $tradingview-bg;
         }
-
-        .dropdown-content {
-            @extend %pa-0;
-            button {
-                width: 50%;
+        .dropdown-menu {
+            z-index: 99;
+            .dropdown-content {
+                @extend %pa-0;
+                
+                button {
+                    width: 50%;
+                }
+                
             }
         }
+
+        
+    }
+
+    .pub-kline-btns-pc {
+        display: flex;
+        align-items: center;
     }
 
     #tv_chart_container {
         height: 100%;
-        border: 1px solid $tradingview-bg;
+        // border: 1px solid $tradingview-bg;
     }
 }
 
-// tradingview模块 end
+// k线模块 end
 
 
 //pc端盘口和最新成交结构样式 start
@@ -1332,6 +1352,11 @@ hr {
     }
 
     //消息弹框样式 start
+
+
+    .pub-kline  {
+        min-width: 886px;
+    }
 }
 @media screen and (max-width: 1024px){
     .pub-header-tick {
