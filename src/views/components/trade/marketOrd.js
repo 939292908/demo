@@ -47,6 +47,10 @@ let obj = {
             that.setFaceV()
         })
 
+        //监听多元
+        this.EV_CHANGELOCALE_UPD_unbinder = window.gEVBUS.on(gDI18n.EV_CHANGELOCALE_UPD, arg => {
+            that.initLanguage()
+        })
         //tick行情全局广播
         if (this.EV_TICK_UPD_unbinder) {
             this.EV_TICK_UPD_unbinder()
@@ -119,6 +123,9 @@ let obj = {
             that.onPosUpd(arg)
         })
 
+    },
+    initLanguage : function (){
+        obj.updateSpotInfo()
     },
     //删除全局广播
     rmEVBUS: function () {
@@ -842,7 +849,7 @@ let obj = {
 }
 export default {
     oninit: function (vnode) {
-
+        obj.initLanguage()
     },
     oncreate: function (vnode) {
         obj.initEVBUS()
