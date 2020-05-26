@@ -95,6 +95,7 @@ if(config.mobile){
 
     window.onresize = function(arg){
         window.isMobile = utils.isMobile()
+        gEVBUS.emit(gEVBUS.EV_ONRESIZE_UPD, {Ev: gEVBUS.EV_ONRESIZE_UPD})
     }
 }
 
