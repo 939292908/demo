@@ -266,32 +266,32 @@ let obj = {
           ]),
         ]),
         m('footer', { class: 'card-footer' }, [
-          m("a",{class:"button is-primary is-outlined card-footer-item"+(item.loading?' is-loading': '')+(btnsOpen.stopPL.positionList?'':' is-hidden'), onclick: function(){
+          m("a",{class:"button button-sty-pad is-primary is-outlined card-footer-item"+(item.loading?' is-loading': '')+(btnsOpen.stopPL.positionList?'':' is-hidden'), onclick: function(){
             obj.setStopPL(item)
           }},[
             gDI18n.$t('10325')//'止盈止损'
           ]),
-          m("a",{class:"button is-primary is-outlined card-footer-item"+(item.loading?' is-loading': '')+(btnsOpen.marketClose.positionList?'':' is-hidden'), onclick: function(){
+          m("a",{class:"button button-sty-pad is-primary is-outlined card-footer-item"+(item.loading?' is-loading': '')+(btnsOpen.marketClose.positionList?'':' is-hidden'), onclick: function(){
             obj.placeOrder('close', item)
           }},[
             gDI18n.$t('10093')//'市价平仓'
           ]),
-          m("a",{class:"button is-primary is-outlined card-footer-item"+(item.loading?' is-loading': '')+(btnsOpen.doubleOpen.positionList?'':' is-hidden'), onclick: function(){
+          m("a",{class:"button button-sty-pad is-primary is-outlined card-footer-item"+(item.loading?' is-loading': '')+(btnsOpen.doubleOpen.positionList?'':' is-hidden'), onclick: function(){
             obj.placeOrder('add', item)
           }},[
             gDI18n.$t('10094')//'加倍开仓'
           ]),
-          m("a",{class:" button is-primary is-outlined card-footer-item"+(item.loading?' is-loading': '')+(btnsOpen.backOpen.positionList?'':' is-hidden'), onclick: function(){
+          m("a",{class:" button button-sty-pad is-primary is-outlined card-footer-item"+(item.loading?' is-loading': '')+(btnsOpen.backOpen.positionList?'':' is-hidden'), onclick: function(){
             obj.placeOrder('back', item)
           }},[
             gDI18n.$t('10095')//'反向开仓'
           ]),
-          m("a",{class:"button is-primary is-outlined card-footer-item"+(item.loading?' is-loading': '')+(btnsOpen.narketAdd.positionList?'':' is-hidden'), onclick: function(){
+          m("a",{class:"button button-sty-pad is-primary is-outlined card-footer-item"+(item.loading?' is-loading': '')+(btnsOpen.narketAdd.positionList?'':' is-hidden'), onclick: function(){
             obj.placeOrder('marketAdd', item)
           }},[
             gDI18n.$t('10096')//'市价加仓'
           ]),
-          m("a",{class:"button is-primary is-outlined card-footer-item"+(item.loading?' is-loading': '')+(btnsOpen.marketSomeClose.positionList || btnsOpen.limitSomeClose.positionList?'':' is-hidden'), onclick: function(){
+          m("a",{class:"button button-sty-pad is-primary is-outlined card-footer-item"+(item.loading?' is-loading': '')+(btnsOpen.marketSomeClose.positionList || btnsOpen.limitSomeClose.positionList?'':' is-hidden'), onclick: function(){
             obj.placeOrder('someClose', item)
           }},[
             btnsOpen.marketSomeClose.positionList && btnsOpen.limitSomeClose.positionList ?gDI18n.$t('10097'/*'平仓'*/): btnsOpen.marketSomeClose.positionList ?gDI18n.$t('10093'/*'市价平仓'*/):btnsOpen.limitSomeClose.positionList ?gDI18n.$t('10098'/*'限价平仓'*/): gDI18n.$t('10097'/*'平仓'*/)

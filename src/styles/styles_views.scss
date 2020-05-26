@@ -949,6 +949,9 @@ hr {
     @extend %font-2;
 }
 
+.button-sty-pad{
+    @extend %pa-2;
+}
 .centent-a-default{
     @extend %font-5;
 }
