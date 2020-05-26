@@ -21,6 +21,7 @@
     "clipboard": "^2.0.6",
     "di18n-translate": "0.0.9",
     "driver.js": "^0.9.8",
+    "klinecharts": "^5.2.2",
     "md5": "^2.2.1",
     "mini.css": "^3.0.1",
     "mithril": "^2.0.4",
