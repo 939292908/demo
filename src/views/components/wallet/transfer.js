@@ -267,7 +267,7 @@ export default {
                 m("div", { class: "pub-transfer-transfer-select-left control is-expanded" }, [
                     m('div', {class:"dropdown is-hoverable"}, [
                         m('div', {class:"dropdown-trigger"}, [
-                            m('button', {class:"button is-outline is-fullwidth"}, [
+                            m('button', {class:"button button-default-padding is-outline is-fullwidth"}, [
                                 // m('div', {class:"button-content is-flex"}, [
                                 //     "我的钱包",
                                 //     m('.spacer'),
@@ -293,7 +293,7 @@ export default {
                 m("div", { class: "pub-transfer-transfer-select-right control is-expanded" }, [
                     m('div', {class:"dropdown is-hoverable"}, [
                         m('div', {class:"dropdown-trigger"}, [
-                            m('button', {class:"button is-outline is-fullwidth"}, [
+                            m('button', {class:"button button-default-padding is-outline is-fullwidth"}, [
                                 // m('div', {class:"button-content is-flex"}, [
                                 //     "合约账户",
                                 //     m('.spacer'),
