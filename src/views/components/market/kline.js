@@ -379,6 +379,10 @@ let obj = {
             that.setSymbol()
         })
 
+        //监听多元
+        this.EV_CHANGELOCALE_UPD_unbinder = window.gEVBUS.on(gDI18n.EV_CHANGELOCALE_UPD, arg => {
+            that.initLanguage()
+        })
 
         if (this.EV_HIST_UPD_unbinder) {
             this.EV_HIST_UPD_unbinder();
@@ -521,6 +525,65 @@ let obj = {
         
 
 
+    },
+    initLanguage: function(){
+        this.timeList = {
+            '0': {
+                type: '0',
+                name: gDI18n.$t('10023'),//"分时",
+                title: gDI18n.$t('10024'),//"分时图"
+            },
+            '1': {
+                type: '1',
+                name: "1m",
+                title: gDI18n.$t('10025'),//"1分钟"
+            },
+            '3': {
+                type: '3',
+                name: "3m",
+                title: gDI18n.$t('10026'),//"3分钟"
+            },
+            '5': {
+                type: '5',
+                name: "5m",
+                title: gDI18n.$t('10027'),//"5分钟"
+            },
+            '30': {
+                type: '30',
+                name: "30m",
+                title: gDI18n.$t('10028'),//"30分钟"
+            },
+            '60': {
+                type: '60',
+                name: "1h",
+                title: gDI18n.$t('10029'),//"1小时"
+            },
+            '120': {
+                type: '120',
+                name: "2h",
+                title: gDI18n.$t('10030'),//"2小时"
+            },
+            // '240': {
+            //     type: '240',
+            //     name: "4h",
+            //     title: gDI18n.$t('10031'),//"4小时"
+            // },
+            'D': {
+                type: 'D',
+                name: "D",
+                title: gDI18n.$t('10032'),//"1天"
+            },
+            'W': {
+                type: 'W',
+                name: "W",
+                title: gDI18n.$t('10033'),//"1周"
+            },
+            'M': {
+                type: 'M',
+                name: "M",
+                title: gDI18n.$t('10034'),//"1月"
+            },
+        }
     },
     //删除全局广播
     rmEVBUS: function () {
@@ -936,7 +999,7 @@ let obj = {
 
 export default {
     oninit: function (vnode) {
-
+        obj.initLanguage()
     },
     oncreate: function (vnode) {
         obj.initEVBUS()
