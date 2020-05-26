@@ -128,7 +128,7 @@ export default {
                         ])
                     ]),
                 ]),
-                m('.dropdown-menu', {class:"max-height-500 scroll-y", id: "dropdown-menu2", role: "menu"}, [
+                m('.dropdown-menu', {class:"max-height-500 scroll-y dropdown-paddng-top", id: "dropdown-menu2", role: "menu"}, [
                     m('.dropdown-content', {class:"has-text-centered"}, [
                         obj.getTabsList()
                     ]),
