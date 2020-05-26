@@ -60,7 +60,7 @@ export default {
                     m("div",{class : "font-div has-text-grey-light"},[
                         gDI18n.$t('10058'),//"委托价格",
                         m("p",{class : "font-p has-text-black"},[
-                            item.Qty
+                            item.Prz
                         ])
                     ]),
                     m("div",{class : "font-div font-right has-text-grey-light"},[
