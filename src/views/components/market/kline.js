@@ -70,32 +70,32 @@ let obj = {
             name: '0',//"分时",
             title: gDI18n.$t('10024'),//"分时图"
         },
-        '1': {
+        '1m': {
             type: '1',
             name: "1m",
             title: gDI18n.$t('10025'),//"1分钟"
         },
-        '3': {
+        '3m': {
             type: '3',
             name: "3m",
             title: gDI18n.$t('10026'),//"3分钟"
         },
-        '5': {
+        '5m': {
             type: '5',
             name: "5m",
             title: gDI18n.$t('10027'),//"5分钟"
         },
-        '30': {
+        '30m': {
             type: '30',
             name: "30m",
             title: gDI18n.$t('10028'),//"30分钟"
         },
-        '60': {
+        '1h': {
             type: '60',
             name: "1h",
             title: gDI18n.$t('10029'),//"1小时"
         },
-        '120': {
+        '2h': {
             type: '120',
             name: "2h",
             title: gDI18n.$t('10030'),//"2小时"
@@ -105,17 +105,17 @@ let obj = {
         //     name: "4h",
         //     title: gDI18n.$t('10031'),//"4小时"
         // },
-        'D': {
+        '1d': {
             type: 'D',
             name: "1d",
             title: gDI18n.$t('10032'),//"1天"
         },
-        'W': {
+        '1w': {
             type: 'W',
             name: "1w",
             title: gDI18n.$t('10033'),//"1周"
         },
-        'M': {
+        '1M': {
             type: 'M',
             name: "1M",
             title: gDI18n.$t('10034'),//"1月"
@@ -251,35 +251,35 @@ let obj = {
         this.timeList = {
             '0': {
                 type: '0',
-                name: gDI18n.$t('10023'),//"分时",
+                name: '0',//"分时",
                 title: gDI18n.$t('10024'),//"分时图"
             },
-            '1': {
+            '1m': {
                 type: '1',
                 name: "1m",
                 title: gDI18n.$t('10025'),//"1分钟"
             },
-            '3': {
+            '3m': {
                 type: '3',
                 name: "3m",
                 title: gDI18n.$t('10026'),//"3分钟"
             },
-            '5': {
+            '5m': {
                 type: '5',
                 name: "5m",
                 title: gDI18n.$t('10027'),//"5分钟"
             },
-            '30': {
+            '30m': {
                 type: '30',
                 name: "30m",
                 title: gDI18n.$t('10028'),//"30分钟"
             },
-            '60': {
+            '1h': {
                 type: '60',
                 name: "1h",
                 title: gDI18n.$t('10029'),//"1小时"
             },
-            '120': {
+            '2h': {
                 type: '120',
                 name: "2h",
                 title: gDI18n.$t('10030'),//"2小时"
@@ -289,17 +289,17 @@ let obj = {
             //     name: "4h",
             //     title: gDI18n.$t('10031'),//"4小时"
             // },
-            'D': {
+            '1d': {
                 type: 'D',
                 name: "1d",
                 title: gDI18n.$t('10032'),//"1天"
             },
-            'W': {
+            '1w': {
                 type: 'W',
                 name: "1w",
                 title: gDI18n.$t('10033'),//"1周"
             },
-            'M': {
+            '1M': {
                 type: 'M',
                 name: "1M",
                 title: gDI18n.$t('10034'),//"1月"
@@ -353,9 +353,10 @@ let obj = {
     setKCrossTime: function (val) {
         let that = this;
         window.gMkt.CtxPlaying.Typ = this.Typ = val;
+        console.log(obj.timeList[obj.Typ], this.Typ ,obj.timeList)
         this.setKlineData()
     },
-    getTimeList: function(){
+    getTimeList: function(type){
         let that = this
         let timeList = Object.keys(this.timeList)
         if(window.isMobile){
@@ -367,10 +368,19 @@ let obj = {
                     item.title
                 ])
             })
+        }else if(type == 'dropdown'){
+            return timeList.map((key, i) =>{
+                let item = that.timeList[key]
+                return m('a', {key: "klineTimeListItemForPC"+i,class: "dropdown-item"+(obj.Typ == item.name?' has-text-primary':''), onclick: function(){
+                    obj.setKCrossTime(item.name)
+                }}, [
+                    item.title
+                ])
+            })
         }else{
             return timeList.map((key, i) =>{
                 let item = that.timeList[key]
-                return m('button', {key: "klineTimeListItemForPC"+i,class: "button is-white"+(obj.Typ == item.name?' has-text-primary':''), onclick: function(){
+                return m('button', {key: "klineTimeListItemForPC"+i,class: "button is-white is-flex-fullhd"+(obj.Typ == item.name?' has-text-primary':''), onclick: function(){
                     obj.setKCrossTime(item.name)
                 }}, [
                     item.title
@@ -1178,7 +1188,28 @@ export default {
                 ]),
             ]),
             m('div', {class:"pub-kline-btns-pc is-hidden-touch"}, [
-                obj.getTimeList(),
+                m('div', { class: "pub-kline-btns-pc-time" }, [
+                    obj.getTimeList(),
+                ]),
+                m('div', {class:"pub-kline-btns-pc-time-dropdown dropdown is-hidden-touch"+(obj.klineTimeListOpen?' is-active':'')}, [
+                    m('div', {class:"dropdown-trigger", onclick: function(e){
+                        obj.klineTimeListOpen = !obj.klineTimeListOpen
+                        window.stopBubble(e)
+                    }}, [
+                        m('button', {class:"button is-white"}, [
+                            obj.timeList[obj.Typ] && obj.timeList[obj.Typ].title || '时间',
+                            m('.spacer'),
+                            m('span', {class:"icon"}, [
+                                m('i', {class:"iconfont iconxiala has-text-primary is-size-7"})
+                            ]),
+                        ]),
+                    ]),
+                    m('div', {class:"dropdown-menu"}, [
+                        m('div', {class:"dropdown-content"}, [
+                            obj.getTimeList('dropdown')
+                        ]),
+                    ]),
+                ]),
                 m('span',{class:"has-text-light"}, ['|']),
                 m('div', {class:"dropdown is-hidden-touch"+(obj.klineTargetListOpen?' is-active':'')}, [
                     m('div', {class:"dropdown-trigger", onclick: function(e){

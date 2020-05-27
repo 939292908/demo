@@ -337,6 +337,10 @@ hr {
     .pub-kline-btns-pc {
         display: flex;
         align-items: center;
+
+        .pub-kline-btns-pc-time {
+            display: flex;
+        } 
     }
 
     #tv_chart_container {
@@ -1356,6 +1360,14 @@ hr {
 // 手机端k线页面 end
 
 // 屏幕适配相关 start
+@media screen and (min-width: 1630px){
+    
+}
+@media screen and (max-width: 1630px){
+    .pub-kline-btns-pc-time {
+        display: none!important;
+    }
+}
 @media screen and (min-width: 1025px){
     body > section {
         min-width: 1280px;
@@ -1375,9 +1387,6 @@ hr {
     //消息弹框样式 start
 
 
-    .pub-kline  {
-        min-width: 886px;
-    }
 }
 @media screen and (max-width: 1024px){
     .pub-header-tick {
