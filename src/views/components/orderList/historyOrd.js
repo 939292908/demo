@@ -129,7 +129,14 @@ let obj = {
         this.EV_WEB_LOGOUT_unbinder = window.gEVBUS.on(gWebAPI.EV_WEB_LOGOUT, arg => {
             that.initObj()
         })
-
+        
+        //添加监听登录
+        if (this.EV_WEB_LOGIN_unbinder) {
+            this.EV_WEB_LOGIN_unbinder()
+        }   
+        this.EV_WEB_LOGIN_unbinder = window.gEVBUS.on(gWebAPI.EV_WEB_LOGIN, arg => {
+            that.getHistoryOrd()
+        })
         //监听多元
         this.EV_CHANGELOCALE_UPD_unbinder = window.gEVBUS.on(gDI18n.EV_CHANGELOCALE_UPD, arg => {
             that.initLanguage()

@@ -555,16 +555,18 @@ let obj = {
         }
     },
     onInputForNum: function(e){
+        let val = e.target.value
+        let value = val.split(".")[0]
         let Sym = window.gMkt.CtxPlaying.Sym
         let ass = window.gMkt.AssetD[Sym]
         let maxNum = Number(ass?ass.OrderMaxQty:0)
         let minNum = Number(ass?ass.OrderMinQty:0)
-        if(Number(e.target.value) > maxNum){
+        if(Number(value) > maxNum){
             this.form.Num = maxNum
-        }else if(Number(e.target.value) < 0){
+        }else if(Number(value) < 0){
             this.form.Num = minNum
         }else {
-            this.form.Num = e.target.value
+            this.form.Num = value
         }
         this.setFaceV()
         this.setMgnNeed()

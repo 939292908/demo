@@ -542,19 +542,22 @@ let obj = {
         }
     },
     onInputForNum: function(e){
+        let val = e.target.value
+        // let reg = /^[+]{0,1}(\d+)$/
+        let value = val.split(".")[0]
         let Sym = window.gMkt.CtxPlaying.Sym
         let ass = window.gMkt.AssetD[Sym]
         let maxNum = Number(ass?ass.OrderMaxQty:0)
         let minNum = Number(ass?ass.OrderMinQty:0)
-        if(Number(e.target.value) > maxNum){
+        if(Number(value) > maxNum){
             this.form.Num = maxNum
-        }else if(Number(e.target.value) < 0){
+        }else if(Number(value) < 0){
             this.form.Num = minNum
         }else {
-            this.form.Num = e.target.value
+            this.form.Num = value
         }
         this.setFaceV()
-        this.setMgnNeed()
+        this.setMgnNeed()     
     },
     onInputForPrz: function(e){
         let Sym = window.gMkt.CtxPlaying.Sym
@@ -597,17 +600,24 @@ let obj = {
         }
     },
     onInputFortriggerPrz: function(e){
-        let Sym = window.gMkt.CtxPlaying.Sym
-        let ass = window.gMkt.AssetD[Sym]
-        let maxPrz = Number(ass?ass.PrzMax:0)
-        let minPrz = Number(ass?ass.PrzMinInc:0)
-        if(Number(e.target.value) > maxPrz){
-            this.form.triggerPrz = maxPrz
-        }else if(Number(e.target.value) < 0){
-            this.form.triggerPrz = minPrz
-        }else {
-            this.form.triggerPrz = e.target.value
-        }
+        // let val = e.target.value
+        // let reg = /^[1-9]\d*\.[5]$|[1-9]\d*\.[0]$|^[1-9]\d*$/
+        // if(reg.test(val)){
+            let Sym = window.gMkt.CtxPlaying.Sym
+            let ass = window.gMkt.AssetD[Sym]
+            let maxPrz = Number(ass?ass.PrzMax:0)
+            let minPrz = Number(ass?ass.PrzMinInc:0)
+            if(Number(e.target.value) > maxPrz){
+                this.form.triggerPrz = maxPrz
+            }else if(Number(e.target.value) < 0){
+                this.form.triggerPrz = minPrz
+            }else {
+                this.form.triggerPrz = e.target.value
+            }
+        // }else{
+        //     e.target.value = ""
+        // }
+        
     },
     initWlt: function(arg){
         let Sym = window.gMkt.CtxPlaying.Sym
