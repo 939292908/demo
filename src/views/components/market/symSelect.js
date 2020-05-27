@@ -165,6 +165,11 @@ let symSelect = {
                 }
             }
         }
+        CoinList.sort(function(a,b){
+            let idx1 = window.$config.symSort[a] || 999;
+            let idx2 = window.$config.symSort[b] || 999;
+            return idx1 - idx2
+        })
         console.log(CoinList, PTSymList, NTSymList, symList, futureList)
         this.futureCoin = CoinList
         this.futureSymObj = futureList
