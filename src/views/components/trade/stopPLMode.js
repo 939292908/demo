@@ -70,16 +70,19 @@ let obj = {
       "Param": Number(this.openStopL?this.param.StopL:-1),      // float64 值, 参数值, 对应仓位的 StopL
       "P2": Number(this.openStopP?this.param.StopP:-1),        // float64 值, 参数值, 对应仓位的 StopP
     }
-    window.gTrd.ReqTrdPosStopLP(param,function(gTrd, arg){
-      if(arg.code == 0 && !arg.data.ErrCode){
-        that.open = false
-        that.showTip = false
-        that.stopPLCallback && that.stopPLCallback(arg)
-        window.$message({title: gDI18n.$t('10195'/*'止盈止损设置成功！'*/), content: gDI18n.$t('10195'/*'止盈止损设置成功！'*/), type: 'success'})
-      }else{
-        window.$message({title: utils.getTradeErrorCode(arg.code || arg.data.ErrCode), content: utils.getTradeErrorCode(arg.code || arg.data.ErrCode), type: 'danger'})
-      }
-    })
+    if(this.openStopP || this.openStopL){
+      window.gTrd.ReqTrdPosStopLP(param,function(gTrd, arg){
+        if(arg.code == 0 && !arg.data.ErrCode){
+          
+          that.showTip = false
+          that.stopPLCallback && that.stopPLCallback(arg)
+          window.$message({title: gDI18n.$t('10195'/*'止盈止损设置成功！'*/), content: gDI18n.$t('10195'/*'止盈止损设置成功！'*/), type: 'success'})
+        }else{
+          window.$message({title: utils.getTradeErrorCode(arg.code || arg.data.ErrCode), content: utils.getTradeErrorCode(arg.code || arg.data.ErrCode), type: 'danger'})
+        }
+      })
+    }
+    that.open = false
   },
   setTabsActive: function (param) {
     this.tabsActive = param
