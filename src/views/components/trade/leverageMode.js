@@ -209,22 +209,26 @@ let obj = {
     })
   },
   onLeverInput: function(e){
-    if(Number(e.target.value) > Number(this.maxLever)){
+    let val = e.target.value
+    let value = val.split(".")[0]
+    if(Number(value) > Number(this.maxLever)){
       obj.Lever = Number(this.maxLever)
-    }else if(Number(e.target.value) < 0){
+    }else if(Number(value) < 0){
       obj.Lever = 1
     }else{
-      obj.Lever = e.target.value
+      obj.Lever = value
     }
     obj.calcNeedMgn()
   },
   onLeverForMyInput: function(e){
-    if(Number(e.target.value) > Number(this.maxLever)){
+    let val = e.target.value
+    let value = val.split(".")[0]
+    if(Number(value) > Number(this.maxLever)){
       obj.LeverForMy = Number(this.maxLever)
-    }else if(Number(e.target.value) < 0){
+    }else if(Number(value) < 0){
       obj.LeverForMy = 1
     }else{
-      obj.LeverForMy = e.target.value
+      obj.LeverForMy = value
     }
     this.MIRMy = Number(1/Number(obj.LeverForMy || 0).toFixed2(8))
     obj.calcNeedMgn()
