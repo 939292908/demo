@@ -4,7 +4,7 @@ var m = require("mithril")
 let obj = {
   EV_OPENSOMECLOSEMODE_UPD: 'EV_openSomeCloseMode_UPD',
   open: false,
-  tabsActive: 0,
+  tabsActive: 1,
   form: {
     prz: '',
     num: '',
