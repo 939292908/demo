@@ -33,6 +33,7 @@ const ST_WORKING = 'AUTHORIZING'
 
 const WT_REQ = 1;
 
+const EV_LOGIN_TRADE = "ev_login_trade"
 const EV_HIST_UPD = "evHistUpd"
 const EV_REALTIME_UPD = "evRealtimeUpd";
 const EV_ORDER20_UPD = "evOrder20Upd"
@@ -141,6 +142,7 @@ class Mkt {
 
     Typ2Res = Typ2Res;
 
+    EV_LOGIN_TRADE = EV_LOGIN_TRADE
     EV_HIST_UPD = EV_HIST_UPD;
     EV_REALTIME_UPD = EV_REALTIME_UPD;
     EV_ORDER20_UPD = EV_ORDER20_UPD;
@@ -540,6 +542,7 @@ class Mkt {
                                                             aObj.RT.Authrized = AUTH_ST_NO;
                                                             break;
                                                     }
+                                                    gEVBUS.emit(EV_LOGIN_TRADE, {ev: EV_LOGIN_TRADE})
                                                 })
                                             })
                                             break;
@@ -849,6 +852,24 @@ class Mkt {
         s.WltLog = {
             "01": [],
             "02": []
+        }
+        s.trdInfoStatus = {
+            pos: 0,
+            ord: 0,
+            wlt: 0,
+            rs: 0,
+            historyOrd: {
+                '01':0,
+                '02':0
+            },
+            trade: {
+                '01':0,
+                '02':0
+            },
+            wltLog: {
+                '01':0,
+                '02':0
+            },
         }
     }
 
