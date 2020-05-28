@@ -133,7 +133,7 @@ let obj = {
         //添加监听交易登录
         if (this.EV_LOGIN_TRADE_unbinder) {
             this.EV_LOGIN_TRADE_unbinder()
-        }   
+        }
         this.EV_LOGIN_TRADE_unbinder = window.gEVBUS.on(gTrd.EV_LOGIN_TRADE, arg => {
             that.getHistoryOrd()
             that.initObj()
