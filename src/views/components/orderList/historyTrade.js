@@ -46,9 +46,19 @@ let obj = {
             that.initObj()
         })
         //监听多元
+        if (this.EV_CHANGELOCALE_UPD_unbinder) {
+            this.EV_CHANGELOCALE_UPD_unbinder()
+        }
         this.EV_CHANGELOCALE_UPD_unbinder = window.gEVBUS.on(gDI18n.EV_CHANGELOCALE_UPD, arg => {
             that.initLanguage()
             that.initObj()
+        })
+        //添加监听交易登录
+        if (this.EV_LOGIN_TRADE_unbinder) {
+            this.EV_LOGIN_TRADE_unbinder()
+        }   
+        this.EV_LOGIN_TRADE_unbinder = window.gEVBUS.on(gTrd.EV_LOGIN_TRADE, arg => {
+            that.getHistoryList()
         })
     },
     initLanguage: function(){
@@ -88,6 +98,12 @@ let obj = {
         if (this.EV_WEB_LOGOUT_unbinder) {
             this.EV_WEB_LOGOUT_unbinder()
         }
+        if (this.EV_CHANGELOCALE_UPD_unbinder) {
+            this.EV_CHANGELOCALE_UPD_unbinder()
+        }
+        if (this.EV_LOGIN_TRADE_unbinder) {
+            this.EV_LOGIN_TRADE_unbinder()
+        }   
     },
     getHistoryList: function(){
         let that = this
