@@ -50,6 +50,15 @@ let obj = {
             that.initLanguage()
             that.initObj()
         })
+
+        //添加监听登录
+        if (this.EV_WEB_LOGIN_unbinder) {
+            this.EV_WEB_LOGIN_unbinder()
+        }
+        this.EV_WEB_LOGIN_unbinder = window.gEVBUS.on(gWebAPI.EV_WEB_LOGIN, arg => {
+            that.getHistoryList()
+            that.initObj()
+        })
     },
     initLanguage: function(){
         this.theadList = [
@@ -287,7 +296,7 @@ let obj = {
                     ])
                 ])
             }):m("div",{class : "text-none has-text-grey"},[
-                m("i",{class : "iconfont icon-box" ,style:"font-size: 60px",},[
+                m("i",{class : "iconfont iconbox" ,style:"font-size: 60px",},[
                     
                 ]),
                 gDI18n.$t('10468'),//"暂无历史成交记录"

@@ -60,7 +60,7 @@ let languages = {
             m("p",{key: "ChangeLangListItem"+i+item, class:""+(item.key == gDI18n.locale?' has-text-primary':''),},[
               item.language
             ]),
-            item.key == gDI18n.locale?m("i",{class : "iconfont icon-xuanze has-text-primary" + (item.key == gDI18n.locale?' ':''),key: "ChangeLangListItem"+i+item }):m("i",{class : {},key: "ChangeLangListItem"+i+item }),
+            item.key == gDI18n.locale?m("i",{class : "iconfont iconxuanze has-text-primary" + (item.key == gDI18n.locale?' ':''),key: "ChangeLangListItem"+i+item }):m("i",{class : {},key: "ChangeLangListItem"+i+item }),
           ])
         ]) 
     })

@@ -133,9 +133,10 @@ let obj = {
         //添加监听登录
         if (this.EV_WEB_LOGIN_unbinder) {
             this.EV_WEB_LOGIN_unbinder()
-        }   
+        }
         this.EV_WEB_LOGIN_unbinder = window.gEVBUS.on(gWebAPI.EV_WEB_LOGIN, arg => {
             that.getHistoryOrd()
+            that.initObj()
         })
         //监听多元
         this.EV_CHANGELOCALE_UPD_unbinder = window.gEVBUS.on(gDI18n.EV_CHANGELOCALE_UPD, arg => {
@@ -766,7 +767,8 @@ let obj = {
                                             item.DirStr
                                         ]),
                                         m('p',{class : 'theadList-transaction-p2 has-text-primary',},[
-                                            item.StatusStr
+                                            item.StatusStr,
+                                            m('i',{class : "iconfont iconarrow-right icon-font-size"})
                                         ])
                                     ]):
                                     m('a',{class : "theadList-transaction has-text-black",},[
@@ -885,7 +887,7 @@ let obj = {
                             ])
                         ])
                         }):m("div",{class : "text-none has-text-grey-light"},[
-                            m("i",{class : "iconfont icon-box" ,style:"font-size: 60px",},[
+                            m("i",{class : "iconfont iconbox" ,style:"font-size: 60px",},[
                                 
                             ]),
                             gDI18n.$t('10463')//"暂无委托记录"

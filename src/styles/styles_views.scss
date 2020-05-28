@@ -1002,12 +1002,19 @@ hr {
     @extend %font-7;
 }
 //通用字体大小end
-//多元
+//多元start
 .langageus-text{
     display: flex;
     justify-content: space-between;
     @extend %side-pa;
 }
+//多元end
+
+//icon图标大小start
+.icon-font-size{
+    @extend %iconfont-small;
+}
+//icon图标大小end
 //首页仓位选择框样式start
 .pos-id{
     @extend %side-mb;
