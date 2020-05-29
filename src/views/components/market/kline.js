@@ -836,7 +836,7 @@ let obj = {
         gMkt.ReqKLineLastest({
             Sym: Sym,
             Typ: Typ,
-            Count: 300
+            Count: window.isMobile?300:1500
         }, function(aTrd, arg){
             console.log("GetLatestKLine", arg);
             if (arg.code == 0) {
@@ -863,12 +863,12 @@ let obj = {
         console.log('loadMoreKline need more data', tm, count, this.isGetKlineDataLoading, window._chart, this.Sym, window._chart.Sym)
         let that = obj
         if(!window._chart || !window._chart.Sym) return
-        let Count = count?count:100
+        let Count = count?count:window.isMobile?300:1500
         let Sym = window._chart.Sym
         let Typ = window._chart.Typ || '1m';
         Typ = Typ == '0'?'1m':Typ
         let Sec = Math.floor((tm - that.inter_obj[that.TypK2[Typ]] * Count) / 1000)
-        if(that.isGetKlineDataLoading) return
+        if(that.isGetKlineDataLoading || (typeof tm) != "number") return
         that.isGetKlineDataLoading = true
         gMkt.ReqKLineHist({
             Sym: Sym,
@@ -967,6 +967,11 @@ let obj = {
             });
         }
 
+        // 检查是否是当前选中的合约和时间，如果不是则不对k线增加数据
+        let _Typ = window._chart.Typ
+        _Typ = _Typ == '0'?'1':_Typ
+        if(Sym != window._chart.Sym || Typ != _Typ) return
+
         if (type == 'addNew') {
             // window._chart.applyNewDataToChart(this.historyKline[Sym][Typ]);
             for(let item of klineList){
@@ -1026,23 +1031,22 @@ let obj = {
     },
     updateKline: function(param){
         let arg = param.data
-        let Typ = arg.Typ
-        let Sym = arg.Sym
+        let Typ = param.Typ
+        let Sym = param.Sym
         let _Typ = window._chart.Typ == '0'?'1m':window._chart.Typ
         if(Sym != window._chart.Sym || Typ != _Typ) return
-        let interval = this.inter_obj[this.TypK2[arg.Typ]] || 1000
-        
+        let interval = this.inter_obj[this.TypK2[param.Typ]] || 1000
         if(window._chart){
             let obj = {
-                open: arg.PrzOpen,
-                close: arg.PrzClose,
-                high: arg.PrzHigh,
-                low: arg.PrzLow,
-                volume: arg.Volume,
-                turnover: (arg.PrzOpen + arg.PrzClose + arg.PrzHigh + arg.PrzLow) / 4 * arg.Volume,
-                timestamp: arg.Sec * 1000
+                open: arg.open,
+                close: arg.close,
+                high: arg.high,
+                low: arg.low,
+                volume: arg.volume,
+                turnover: (arg.open + arg.close + arg.high + arg.low) / 4 * arg.volume,
+                timestamp: arg.time
             }
-            // console.log('updateKline', obj,obj.turnover,arg.Turnover)
+            console.log('updateKline', obj,obj.turnover,arg.Turnover, param)
             // 将数据放入历史数据中
             if(this.historyKline[Sym] && this.historyKline[Sym][Typ]){
                 let historyKline = this.historyKline[Sym][Typ]
@@ -1050,19 +1054,19 @@ let obj = {
                     let lastKlineData = historyKline && historyKline[historyKline.length - 1]
                     if(lastKlineData.timestamp == obj.timestamp){
                         historyKline[historyKline.length - 1] = obj
-                        // console.log('update for kline ', obj.timestamp, new Date(obj.timestamp), obj, this.historyKline[Sym][Typ])
+                        console.log('update for kline ', obj.timestamp, new Date(obj.timestamp), obj, this.historyKline[Sym][Typ])
                         window._chart.updateData(obj)
                     }else if(lastKlineData.timestamp < obj.timestamp){
                         if(obj.timestamp - lastKlineData.timestamp > interval){
                             // 此时正在获取最新的数据，用于补充缺少的k线数据，等最新数据回来之后，再更新
                         }else{
                             this.historyKline[Sym][Typ].push(obj)
-                            // console.log('update for kline ', obj.timestamp, new Date(obj.timestamp), obj, this.historyKline[Sym][Typ])
+                            console.log('update for kline ', obj.timestamp, new Date(obj.timestamp), obj, this.historyKline[Sym][Typ])
                             window._chart.updateData(obj)
                         }
                     }
                 }else{
-                    // console.log('update for kline ', obj.timestamp, new Date(obj.timestamp), obj)
+                    console.log('update for kline ', obj.timestamp, new Date(obj.timestamp), obj)
                     window._chart.updateData(obj)
                 }
             }
