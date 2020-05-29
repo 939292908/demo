@@ -36,7 +36,13 @@ let dish = {
     initEVBUS: function(){
         let that = this
         
-
+        //body点击事件广播
+        if(this.EV_ClICKBODY_unbinder){
+            this.EV_ClICKBODY_unbinder()
+        }
+        this.EV_ClICKBODY_unbinder = window.gEVBUS.on(gEVBUS.EV_ClICKBODY,arg=> {
+            that.dishTypeListOpen = false
+        })
         //tick行情全局广播
         if(this.EV_TICK_UPD_unbinder){
             this.EV_TICK_UPD_unbinder()
