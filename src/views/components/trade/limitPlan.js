@@ -623,26 +623,112 @@ let obj = {
         let ass = window.gMkt.AssetD[Sym]
         let maxPrz = Number(ass?ass.PrzMax:0)
         let minPrz = Number(ass?ass.PrzMinInc:0)
-        if(Number(e.target.value) > maxPrz){
-            this.form.stopP = maxPrz
-        }else if(Number(e.target.value) < 0){
-            this.form.stopP = minPrz
-        }else {
-            this.form.stopP = e.target.value
+        //获取合约允许变动的最小区间
+        let numb = ass.PrzMinInc.toString()
+        //获取合约允许的小数点长度
+        let numb2 = numb.split(".")[1]
+        let numb2Length = numb2.length
+        //获取合约允许的小数最后一位数字
+        let lastNumbMin =  numb2.substr(numb2.length-1,1)
+        //根据输入的是否含有“.”判断是否为小数
+        if(e.target.value.includes(".")){
+            //获取输入数字小数点后长度
+            let eValue = e.target.value.split(".")[1]
+            let eValueLength = eValue.length
+            let lastValue = eValue.substr(eValue.length-1,1)
+            //判断小数长度是否与合约要求长度相等
+            if(numb2Length == eValueLength){
+                //判断输入小数最后一位是否与合约要求的最后一位相等
+                if(lastValue == "0" || lastValue == lastNumbMin){
+                    if(Number(e.target.value) > maxPrz){
+                        this.form.stopP = maxPrz
+                    }else if(Number(e.target.value) < 0){
+                        this.form.stopP = minPrz
+                    }else {
+                        this.form.stopP = e.target.value
+                    }
+                }else{
+                    //不相等的情况下判断输入的最后一位能否将合约要求的最后一位数字取余为0
+                    if(Number(lastValue) % Number(lastNumbMin) == 0){
+                        if(Number(e.target.value) > maxPrz){
+                            this.form.stopP = maxPrz
+                        }else if(Number(e.target.value) < 0){
+                            this.form.stopP = minPrz
+                        }else {
+                            this.form.stopP = e.target.value
+                        }
+                    }
+                }  
+            }else{
+                this.form.stopP = e.target.value.split(".")[0] + "." + eValue.substring(0,numb2Length)
+            }
+        }else{
+            if(Number(e.target.value) > maxPrz){
+                this.form.stopP = maxPrz
+            }else if(Number(e.target.value) < 0){
+                this.form.stopP = minPrz
+            }else {
+                this.form.stopP = e.target.value
+            }
         }
+        //
+        
     },
     onStopLInput: function(e){
         let Sym = window.gMkt.CtxPlaying.Sym
         let ass = window.gMkt.AssetD[Sym]
         let maxPrz = Number(ass?ass.PrzMax:0)
         let minPrz = Number(ass?ass.PrzMinInc:0)
-        if(Number(e.target.value) > maxPrz){
-            this.form.stopL = maxPrz
-        }else if(Number(e.target.value) < 0){
-            this.form.stopL = minPrz
-        }else {
-            this.form.stopL = e.target.value
+        //获取合约允许变动的最小区间
+        let numb = ass.PrzMinInc.toString()
+        //获取合约允许的小数点长度
+        let numb2 = numb.split(".")[1]
+        let numb2Length = numb2.length
+        //获取合约允许的小数最后一位数字
+        let lastNumbMin =  numb2.substr(numb2.length-1,1)
+        //根据输入的是否含有“.”判断是否为小数
+        if(e.target.value.includes(".")){
+            //获取输入数字小数点后长度
+            let eValue = e.target.value.split(".")[1]
+            let eValueLength = eValue.length
+            let lastValue = eValue.substr(eValue.length-1,1)
+            //判断小数长度是否与合约要求长度相等
+            if(numb2Length == eValueLength){
+                //判断输入小数最后一位是否与合约要求的最后一位相等
+                if(lastValue == "0" || lastValue == lastNumbMin){
+                    if(Number(e.target.value) > maxPrz){
+                        this.form.stopL = maxPrz
+                    }else if(Number(e.target.value) < 0){
+                        this.form.stopL = minPrz
+                    }else {
+                        this.form.stopL = e.target.value
+                    }
+                }else{
+                    //不相等的情况下判断输入的最后一位能否将合约要求的最后一位数字取余为0
+                    if(Number(lastValue) % Number(lastNumbMin) == 0){
+                        if(Number(e.target.value) > maxPrz){
+                            this.form.stopL = maxPrz
+                        }else if(Number(e.target.value) < 0){
+                            this.form.stopL = minPrz
+                        }else {
+                            this.form.stopL = e.target.value
+                        }
+                    }
+                }  
+            }else{
+                this.form.stopL = e.target.value.split(".")[0] + "." + eValue.substring(0,numb2Length)
+            }
+        }else{
+            if(Number(e.target.value) > maxPrz){
+                this.form.stopL = maxPrz
+            }else if(Number(e.target.value) < 0){
+                this.form.stopL = minPrz
+            }else {
+                this.form.stopL = e.target.value
+            }
         }
+        //
+        
     },
     onInputFortriggerPrz: function(e){
         let Sym = window.gMkt.CtxPlaying.Sym
