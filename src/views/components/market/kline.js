@@ -246,6 +246,13 @@ let obj = {
         
 
 
+        if (window.addEventListener) {
+            document.addEventListener('fullscreenchange', obj.fullScreenShange);
+            document.addEventListener('webkitfullscreenchange', obj.fullScreenShange);
+            document.addEventListener('mozfullscreenchange', obj.fullScreenShange);
+            document.addEventListener('MSFullscreenChange', obj.fullScreenShange);
+        }
+
     },
     initLanguage: function(){
         this.timeList = {
@@ -334,6 +341,13 @@ let obj = {
         }
         if(this.EV_CHANGELOCALE_UPD_unbinder){
             this.EV_CHANGELOCALE_UPD_unbinder()
+        }
+
+        if (window.removeEventListener) {
+            document.removeEventListener('fullscreenchange', obj.fullScreenShange);
+            document.removeEventListener('webkitfullscreenchange', obj.fullScreenShange);
+            document.removeEventListener('mozfullscreenchange', obj.fullScreenShange);
+            document.removeEventListener('MSFullscreenChange', obj.fullScreenShange);
         }
     },
     
@@ -1113,10 +1127,8 @@ let obj = {
     },
     setFullscreen: function(){
         if(this.fullscreen){
-            this.fullscreen = false
                 this.exitfullscreen(".pub-kline")
         }else{
-            this.fullscreen = true
             this.enterfullscreen(".pub-kline")
         }
     },
@@ -1124,6 +1136,16 @@ let obj = {
         if(window._chart){
             window._chart.resize()
         }
+        console.log('checkFull', this.checkFull())
+    },
+    checkFull: function() {
+        let isFull = document.fullscreenEnabled || window.fullScreen || document.webkitIsFullScreen || document.msFullscreenEnabled;
+        //to fix : false || undefined == undefined
+        if (isFull === undefined) {isFull = false;}
+        return isFull;
+    },
+    fullScreenShange: function(e){
+        obj.fullscreen = !obj.fullscreen
     }
 }
 
