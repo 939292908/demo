@@ -313,10 +313,16 @@ let obj = {
             },
         }
 
-        // 注销k线重新加载
-        if (window._chart) {
-            klinecharts.dispose('tv_chart_container')
-            window._chart = null
+        if(window.isMobile){
+            // 注销k线重新加载
+            if (window._chart) {
+                klinecharts.dispose('tv_chart_container')
+                window._chart = null
+            }
+        }
+        // 重新设置k线配置，用于修改多语言
+        if(window._chart){
+            this.setKlineOptions()
         }
     },
     //删除全局广播
@@ -456,6 +462,26 @@ let obj = {
     initChart: function() {
         let self = this;
         if (window._chart) return;
+       
+        console.log('init chart')
+        // 初始化图表
+        window._chart = klinecharts.init("tv_chart_container", {});
+        this.setKlineOptions()
+        window._chart.setDataSpace(1)
+        window._chart.createTechnicalIndicator('VOL', 80, false)
+        window._chart.setTechnicalIndicatorParams('VOL', [])
+        // window._chart.setOffsetRightSpace(50)
+        // window._chart.setLeftMinVisibleBarCount(50)
+        // window._chart.setRightMinVisibleBarCount(50)
+        // 设置k线柱的宽度
+        window._chart.setDataSpace(8)
+        window._chart.loadMore(this.loadMoreKline)
+        window._chart.Sym = ''
+        window._chart.Typ = ''
+        this.setKlineData()
+
+    },
+    setKlineOptions: function(){
         let lineColor = "#f4f4f4"
         let fontPrimary = "#111"
         let fontSecondary = "#8e8e8e"
@@ -463,9 +489,7 @@ let obj = {
         let downColor = "#f14668"
         let promptFont = "#f6f6f6"
         let fontSize = window.isMobile? 8: 12
-        console.log('init chart')
-        // 初始化图表
-        window._chart = klinecharts.init("tv_chart_container", {
+        let options = {
             grid: {
                 display: true,
                 horizontal: {
@@ -757,20 +781,8 @@ let obj = {
                     marginBottom: 6
                 }
             }
-        });
-        window._chart.setDataSpace(1)
-        window._chart.createTechnicalIndicator('VOL', 80, false)
-        window._chart.setTechnicalIndicatorParams('VOL', [])
-        // window._chart.setOffsetRightSpace(50)
-        // window._chart.setLeftMinVisibleBarCount(50)
-        // window._chart.setRightMinVisibleBarCount(50)
-        // 设置k线柱的宽度
-        window._chart.setDataSpace(8)
-        window._chart.loadMore(this.loadMoreKline)
-        window._chart.Sym = ''
-        window._chart.Typ = ''
-        this.setKlineData()
-
+        }
+        window._chart.setStyleOptions(options)
     },
     setKlineData: function(){
         if(!window._chart || !this.Sym || !this.Typ) return
@@ -1066,7 +1078,7 @@ let obj = {
                 turnover: (arg.open + arg.close + arg.high + arg.low) / 4 * arg.volume,
                 timestamp: arg.time
             }
-            console.log('updateKline', obj,obj.turnover,arg.Turnover, param)
+            // console.log('updateKline', obj,obj.turnover,arg.Turnover, param)
             // 将数据放入历史数据中
             if(this.historyKline[Sym] && this.historyKline[Sym][Typ]){
                 let historyKline = this.historyKline[Sym][Typ]
@@ -1074,19 +1086,19 @@ let obj = {
                     let lastKlineData = historyKline && historyKline[historyKline.length - 1]
                     if(lastKlineData.timestamp == obj.timestamp){
                         historyKline[historyKline.length - 1] = obj
-                        console.log('update for kline ', obj.timestamp, new Date(obj.timestamp), obj, this.historyKline[Sym][Typ])
+                        // console.log('update for kline ', obj.timestamp, new Date(obj.timestamp), obj, this.historyKline[Sym][Typ])
                         window._chart.updateData(obj)
                     }else if(lastKlineData.timestamp < obj.timestamp){
                         if(obj.timestamp - lastKlineData.timestamp > interval){
                             // 此时正在获取最新的数据，用于补充缺少的k线数据，等最新数据回来之后，再更新
                         }else{
                             this.historyKline[Sym][Typ].push(obj)
-                            console.log('update for kline ', obj.timestamp, new Date(obj.timestamp), obj, this.historyKline[Sym][Typ])
+                            // console.log('update for kline ', obj.timestamp, new Date(obj.timestamp), obj, this.historyKline[Sym][Typ])
                             window._chart.updateData(obj)
                         }
                     }
                 }else{
-                    console.log('update for kline ', obj.timestamp, new Date(obj.timestamp), obj)
+                    // console.log('update for kline ', obj.timestamp, new Date(obj.timestamp), obj)
                     window._chart.updateData(obj)
                 }
             }
