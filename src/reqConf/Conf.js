@@ -11,7 +11,7 @@ export class CConf  {
             Name:"开发89环境",
             WebAPI:"http://192.168.2.89:8888", //"http://gs.gmex.in:8888",
             WSMKT:"ws://192.168.2.85:20080/v1/market", //"ws://gs.gmex.in:20080/v1/market",
-            WSTRD: "ws://192.168.2.85:20082/v1/rest", //"ws://gs.gmex.in:50301/v1/trade"
+            WSTRD: "ws://192.168.2.85:50301/v1/trade", //"ws://gs.gmex.in:50301/v1/trade"
         }
         ,"prod": {
             Name:"www.gmex.io",
