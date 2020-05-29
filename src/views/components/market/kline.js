@@ -690,8 +690,8 @@ let obj = {
                             color: window.isMobile?promptFont:fontPrimary,
                             family: "Roboto",
                             marginLeft: 0,
-                            marginTop: 0,
-                            marginRight: 0,
+                            marginTop: 6,
+                            marginRight: 6,
                             marginBottom: 6
                         }
                     },
