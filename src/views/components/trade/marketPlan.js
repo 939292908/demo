@@ -602,8 +602,9 @@ let obj = {
         let lastNumbMin =  numb2.substr(numb2.length-1,1)
         //根据输入的是否含有“.”判断是否为小数
         if(e.target.value.includes(".")){
+            let beforValue = e.target.value.split(".")[0]? e.target.value.split(".")[0] : "0"
+            let eValue = e.target.value.split(".")[1] ? e.target.value.split(".")[1] : "0"
             //获取输入数字小数点后长度
-            let eValue = e.target.value.split(".")[1]
             let eValueLength = eValue.length
             let lastValue = eValue.substr(eValue.length-1,1)
             //判断小数长度是否与合约要求长度相等
@@ -615,22 +616,20 @@ let obj = {
                     }else if(Number(e.target.value) < 0){
                         this.form.stopP = minPrz
                     }else {
-                        this.form.stopP = e.target.value
+                        this.form.stopP = beforValue + "." + eValue
                     }
-                }else{
+                }else if(Number(lastValue) % Number(lastNumbMin) == 0){
                     //不相等的情况下判断输入的最后一位能否将合约要求的最后一位数字取余为0
-                    if(Number(lastValue) % Number(lastNumbMin) == 0){
-                        if(Number(e.target.value) > maxPrz){
-                            this.form.stopP = maxPrz
-                        }else if(Number(e.target.value) < 0){
-                            this.form.stopP = minPrz
-                        }else {
-                            this.form.stopP = e.target.value
-                        }
-                    }
+                    if(Number(e.target.value) > maxPrz){
+                        this.form.stopP = maxPrz
+                    }else if(Number(e.target.value) < 0){
+                        this.form.stopP = minPrz
+                    }else {
+                        this.form.stopP = beforValue + "." + eValue
+                    } 
                 }  
             }else{
-                this.form.stopP = e.target.value.split(".")[0] + "." + eValue.substring(0,numb2Length)
+                this.form.stopP = beforValue + "." + eValue.substring(0,numb2Length)
             }
         }else{
             if(Number(e.target.value) > maxPrz){
@@ -658,8 +657,9 @@ let obj = {
         let lastNumbMin =  numb2.substr(numb2.length-1,1)
         //根据输入的是否含有“.”判断是否为小数
         if(e.target.value.includes(".")){
+            let beforValue = e.target.value.split(".")[0]? e.target.value.split(".")[0] : "0"
+            let eValue = e.target.value.split(".")[1] ? e.target.value.split(".")[1] : "0"
             //获取输入数字小数点后长度
-            let eValue = e.target.value.split(".")[1]
             let eValueLength = eValue.length
             let lastValue = eValue.substr(eValue.length-1,1)
             //判断小数长度是否与合约要求长度相等
@@ -671,22 +671,20 @@ let obj = {
                     }else if(Number(e.target.value) < 0){
                         this.form.stopL = minPrz
                     }else {
-                        this.form.stopL = e.target.value
+                        this.form.stopL = beforValue + "." + eValue
                     }
-                }else{
+                }else if(Number(lastValue) % Number(lastNumbMin) == 0){
                     //不相等的情况下判断输入的最后一位能否将合约要求的最后一位数字取余为0
-                    if(Number(lastValue) % Number(lastNumbMin) == 0){
-                        if(Number(e.target.value) > maxPrz){
-                            this.form.stopL = maxPrz
-                        }else if(Number(e.target.value) < 0){
-                            this.form.stopL = minPrz
-                        }else {
-                            this.form.stopL = e.target.value
-                        }
+                    if(Number(e.target.value) > maxPrz){
+                        this.form.stopL = maxPrz
+                    }else if(Number(e.target.value) < 0){
+                        this.form.stopL = minPrz
+                    }else {
+                        this.form.stopL = beforValue + "." + eValue
                     }
                 }  
             }else{
-                this.form.stopL = e.target.value.split(".")[0] + "." + eValue.substring(0,numb2Length)
+                this.form.stopL = beforValue + "." + eValue.substring(0,numb2Length)
             }
         }else{
             if(Number(e.target.value) > maxPrz){
@@ -714,8 +712,9 @@ let obj = {
         let lastNumbMin =  numb2.substr(numb2.length-1,1)
         //根据输入的是否含有“.”判断是否为小数
         if(e.target.value.includes(".")){
+            let beforValue = e.target.value.split(".")[0]? e.target.value.split(".")[0] : "0"
+            let eValue = e.target.value.split(".")[1] ? e.target.value.split(".")[1] : "0"
             //获取输入数字小数点后长度
-            let eValue = e.target.value.split(".")[1]
             let eValueLength = eValue.length
             let lastValue = eValue.substr(eValue.length-1,1)
             //判断小数长度是否与合约要求长度相等
@@ -727,22 +726,20 @@ let obj = {
                     }else if(Number(e.target.value) < 0){
                         this.form.triggerPrz = minPrz
                     }else {
-                        this.form.triggerPrz = e.target.value
+                        this.form.triggerPrz = beforValue + "." + eValue
                     }
-                }else{
+                }else if(Number(lastValue) % Number(lastNumbMin) == 0){
                     //不相等的情况下判断输入的最后一位能否将合约要求的最后一位数字取余为0
-                    if(Number(lastValue) % Number(lastNumbMin) == 0){
-                        if(Number(e.target.value) > maxPrz){
-                            this.form.triggerPrz = maxPrz
-                        }else if(Number(e.target.value) < 0){
-                            this.form.triggerPrz = minPrz
-                        }else {
-                            this.form.triggerPrz = e.target.value
-                        }
-                    }
+                    if(Number(e.target.value) > maxPrz){
+                        this.form.triggerPrz = maxPrz
+                    }else if(Number(e.target.value) < 0){
+                        this.form.triggerPrz = minPrz
+                    }else {
+                        this.form.triggerPrz = beforValue + "." + eValue
+                    } 
                 }  
             }else{
-                this.form.triggerPrz = e.target.value.split(".")[0] + "." + eValue.substring(0,numb2Length)
+                this.form.triggerPrz = beforValue + "." + eValue.substring(0,numb2Length)
             }
         }else{
             if(Number(e.target.value) > maxPrz){
