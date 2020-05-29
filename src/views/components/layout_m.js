@@ -463,7 +463,7 @@ export default {
           obj.getValidateMode(),
           obj.marketAddMode(),
           obj.someCloseMode(),
-          m(login)
+          window.$config.loginType == 0?m(login):''
         ])
     },
     onbeforeremove: function(){
