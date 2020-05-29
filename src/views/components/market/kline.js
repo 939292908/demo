@@ -305,6 +305,12 @@ let obj = {
                 title: gDI18n.$t('10034'),//"1月"
             },
         }
+
+        // 注销k线重新加载
+        if (window._chart) {
+            klinecharts.dispose('tv_chart_container')
+            window._chart = null
+        }
     },
     //删除全局广播
     rmEVBUS: function () {
