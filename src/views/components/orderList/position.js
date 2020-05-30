@@ -158,6 +158,7 @@ let obj = {
     })
   },
   getPosList: function(){
+    console.log(this.posList,"列表数据")
     let btnsOpen = window.$config.positionBtns.desktop
     return this.posList.map(function(item, i){
       return m("tr",{key: "posTableListItem"+i, class:""},[
@@ -278,6 +279,12 @@ let obj = {
               m('p', {}, [
                 item.PrzIni
               ]),
+              m('p',{class : ""},[
+                gDI18n.$t('10150')//"止盈价格"
+              ]),
+              m('p',{},[
+                item.StopP?item.StopP:"--"
+              ])
             ]),
             m('.spacer'),
             m('div', {}, [
@@ -308,6 +315,12 @@ let obj = {
               m('p', {class:""+utils.getColorStr(item.aProfitPerColor, 'font')}, [
                 item.aProfitPerStr
               ]),
+              m('p',{},[
+                gDI18n.$t('10151')//"止损价格"
+              ]),
+              m('p',{},[
+                item.StopL?item.StopL:"--"
+              ])
             ]),
           ]),
         ]),
