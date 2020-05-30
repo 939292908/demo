@@ -408,7 +408,9 @@ export default {
                 ]),
                 m('hr', {class: ""+(window.$config.loginType == 0?"":" is-hidden")}),
                 m("div",{class:"navbar-item has-dropdown is-hoverable"},[
-                  m("a",{class:"navbar-link"},[
+                  m("a",{class:"navbar-link ",onclick:function(){
+                    return false;
+                  }},[
                     gDI18n.$t('10236')//'合约记录'
                   ]),
                   m("div",{class:"navbar-dropdown"},[
@@ -428,7 +430,9 @@ export default {
                       gDI18n.$t('10079')//'合约账单'
                     ]),
                   ]),
-                  m("a",{class:"navbar-link"},[
+                  m("a",{class:"navbar-link",onclick:function(){
+                    return false;
+                  }},[
                     gDI18n.$t('10464')//'设置'
                   ]),
                   m("div",{class:"navbar-dropdown"},[
