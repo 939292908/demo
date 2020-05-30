@@ -43,7 +43,7 @@ export default {
                    m("p",{class : "details-body-title title-header"},[
                         utils.getSymDisplayName(window.gMkt.AssetD, item.Sym)
                     ]), 
-                   m("p",{class : "details-body-title2 has-text-primary title-header"},[
+                   m("p",{class : "details-body-title2 has-text-primary title-header padd-left"},[
                     item.displayLever
                     ]), 
                    m("p",{class : "details-body-title2 has-text-primary title-header font-right"},[
@@ -57,7 +57,7 @@ export default {
                             item.Qty
                         ])
                     ]),
-                    m("div",{class : "font-div has-text-grey-light"},[
+                    m("div",{class : "font-div has-text-grey-light padd-left"},[
                         gDI18n.$t('10058'),//"委托价格",
                         m("p",{class : "font-p has-text-black"},[
                             item.Prz
@@ -78,7 +78,7 @@ export default {
                             item.QtyF
                         ])
                     ]),
-                    m("div",{class : "font-div has-text-grey-light"},[
+                    m("div",{class : "font-div has-text-grey-light padd-left"},[
                         gDI18n.$t('10060'),//"成交均价",
                         m("p",{class : "font-p has-text-black"},[
                             item.PrzF
@@ -102,7 +102,7 @@ export default {
                             item.cond
                         ])
                     ]),
-                    m("div",{class : "font-div has-text-grey-light"},[
+                    m("div",{class : "font-div has-text-grey-light padd-left"},[
                         gDI18n.$t('10056'),//"委托类型 ",
                         m("p",{class : "font-p has-text-black"},[
                             item.OTypeStr
@@ -177,8 +177,8 @@ export default {
                                 item.Qty
                             ])
                         ]),
-                        m("div",{class : "font-div has-text-black"},[
-                            gDI18n.$t('10430'),//"成交价格 ",
+                        m("div",{class : "font-div has-text-black padd-left"},[
+                            gDI18n.$t('10433'),//"成交价格 ",
                             m("p",{class : "font-p has-text-grey-light"},[
                                 item.Prz
                             ])
