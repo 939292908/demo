@@ -1178,7 +1178,7 @@ export default {
                         obj.klineTimeListOpen = !obj.klineTimeListOpen
                         window.stopBubble(e)
                     }}, [
-                        m('button', {class:"button is-selected"+(obj.klineTimeListOpen?' has-text-primary':'')}, [
+                        m('button', {class:"button kline-index-pad is-selected"+(obj.klineTimeListOpen?' has-text-primary':'')}, [
                             gDI18n.$t('10023'),//'分时'
                             m('.spacer'),
                             m('span', {class:"icon"}, [
@@ -1192,19 +1192,19 @@ export default {
                         ]),
                     ]),
                 ]),
-                m('button', {class:"button is-selected"+(obj.Typ == '1m'?' has-text-primary':''), onclick: function(){
+                m('button', {class:"button kline-index-pad is-selected"+(obj.Typ == '1m'?' has-text-primary':''), onclick: function(){
                     obj.setKCrossTime('1m')
                     // obj.klineTimeListOpen = false
                 }}, [
                     gDI18n.$t('10442')//'1分'
                 ]),
-                m('button', {class:"button is-selected"+(obj.Typ == '30m'?' has-text-primary':''), onclick: function(){
+                m('button', {class:"button kline-index-pad is-selected"+(obj.Typ == '30m'?' has-text-primary':''), onclick: function(){
                     obj.setKCrossTime('30m')
                     // obj.klineTimeListOpen = false
                 }}, [
                     gDI18n.$t('10443')//'30分'
                 ]),
-                m('button', {class:"button is-selected"+(obj.Typ == '1h'?' has-text-primary':''), onclick: function(){
+                m('button', {class:"button kline-index-pad is-selected"+(obj.Typ == '1h'?' has-text-primary':''), onclick: function(){
                     obj.setKCrossTime('1h')
                     // obj.klineTimeListOpen = false
                 }}, [
@@ -1216,7 +1216,7 @@ export default {
                         obj.klineTargetListOpen = !obj.klineTargetListOpen
                         window.stopBubble(e)
                     }}, [
-                        m('button', {class:"button is-selected"}, [
+                        m('button', {class:"button kline-index-pad is-selected"}, [
                             obj.targetActive.name || gDI18n.$t('10435'), //'指标'
                             m('.spacer'),
                             m('span', {class:"icon"}, [

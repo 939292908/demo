@@ -1040,6 +1040,10 @@ hr {
     height: 100%;
     overflow-y: scroll;
 }
+
+.kline-index-pad{
+    @extend %pa-2;
+}
 //k线页面样式end
 
 
