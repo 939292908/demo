@@ -9,6 +9,7 @@ let obj = {
     StopL: '',
     StopLPBy: 1,
   },
+  oldParam:{},
   openStopP: false,
   openStopL: false,
   // 立即成交提示
@@ -76,7 +77,12 @@ let obj = {
           that.open = false
           that.showTip = false
           that.stopPLCallback && that.stopPLCallback(arg)
-          window.$message({title: gDI18n.$t('10195'/*'止盈止损设置成功！'*/), content: gDI18n.$t('10195'/*'止盈止损设置成功！'*/), type: 'success'})
+          let oldParamStopP = Number(obj.oldParam.StopP ? obj.oldParam.StopP :-1)
+          let oldParamStopL = Number(obj.oldParam.StopL ? obj.oldParam.StopL :-1)
+          if(param.P2 !=oldParamStopP || param.Param !=oldParamStopL){
+            window.$message({title: gDI18n.$t('10195'/*'止盈止损设置成功！'*/), content: gDI18n.$t('10195'/*'止盈止损设置成功！'*/), type: 'success'})
+          }
+          
         }else{
           window.$message({title: utils.getTradeErrorCode(arg.code || arg.data.ErrCode), content: utils.getTradeErrorCode(arg.code || arg.data.ErrCode), type: 'danger'})
         }
@@ -94,6 +100,8 @@ let obj = {
   },
   initStopPLInfo: function (param) {
     console.log('initStopPLInfo', param)
+    utils.copyTab(this.oldParam,param)
+    console.log(this.oldParam,"copy数据")
 
     let obj = {
       AId: param.AId, 
