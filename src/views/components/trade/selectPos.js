@@ -124,8 +124,8 @@ let obj = {
           pos.aQtySell || 0
         ]),
         m('td', {class: '', align: 'center'},[
-          m("button", {
-            class: "button is-white"+(obj.checkPosDelShow(pos)?'':' is-hidden')+(pos.loading?' is-loading':''), 
+          m("a", {
+            class: "is-white"+(obj.checkPosDelShow(pos)?'':' is-hidden')+(pos.loading?' is-loading':''), 
             "aria-label": "close", 
             onclick: function (e) {
               obj.delPos(pos)
@@ -313,8 +313,8 @@ let obj = {
             obj.delPos(pos)
             window.stopBubble(e)
           }},[
-            m("button", {
-              class: "button is-white"+(obj.checkPosDelShow(pos)?'':' is-hidden')+(pos.loading?' is-loading':''), 
+            m("a", {
+              class: "is-white"+(obj.checkPosDelShow(pos)?'':' is-hidden')+(pos.loading?' is-loading':''), 
               "aria-label": "close", 
               onclick: function (e) {
                 obj.delPos(pos)
@@ -429,7 +429,7 @@ export default {
                 m("p", { class: "modal-card-title" }, [
                   gDI18n.$t('10176'/*'仓位选择'*/)
                 ]),
-                m("button", {
+                m("a", {
                   class: "delete", "aria-label": "close", onclick: function () {
                     obj.closeMode()
                   }
