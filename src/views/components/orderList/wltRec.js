@@ -65,6 +65,9 @@ let obj = {
         {
             name: gDI18n.$t('10393')//"合约赠金"
         },
+        {
+            name: gDI18n.$t('10388')//"普通交易"
+        },
     ],
     //初始化全局广播
     initEVBUS: function () {
@@ -147,6 +150,9 @@ let obj = {
             },
             {
                 name: gDI18n.$t('10393')//"合约赠金"
+            },
+            {
+                name: gDI18n.$t('10388')//"普通交易"
             },
         ]
         this.tabsList = [
