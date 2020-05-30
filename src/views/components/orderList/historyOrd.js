@@ -806,20 +806,20 @@ let obj = {
                                 m("div",{class : ""},[
                                     m("div",{class : "theadList-profit-loss" },[
                                         m("div",{class  : "theadList-profit-loss-p1 has-text-grey-light"},[
-                                            gDI18n.$t('10058') + ":",//"委托价格："
+                                            gDI18n.$t('10058'),//"委托价格"
                                             m("p",{class : "has-text-black"},[
                                                 item.Prz
                     
                                             ])
                                         ]),
                                         m("div",{class  : "theadList-profit-loss-p1  has-text-grey-light"},[
-                                            gDI18n.$t('10060') + ":",//"成交均价：",
+                                            gDI18n.$t('10060'),//"成交均价",
                                             m("p",{class : "has-text-black"},[
                                                 item.PrzF
                                             ])
                                         ]),
                                         m("div",{class  : "theadList-profit-loss-p2 font-right has-text-grey-light"},[
-                                            gDI18n.$t('10059') + ":",//"委托数量：",
+                                            gDI18n.$t('10059'),//"委托数量",
                                             m("p",{class : "has-text-black"},[
                                                 item.Qty
                                             ])
@@ -828,19 +828,19 @@ let obj = {
                                     //平仓手续
                                     m("div",{class : "theadList-profit-loss"},[
                                         m("div",{class  : "theadList-profit-loss-p2 has-text-grey-light"},[
-                                            gDI18n.$t('10061') + ":",//"成交数量：" ,
+                                            gDI18n.$t('10061'),//"成交数量" ,
                                             m("p",{class : "has-text-black"},[
                                                 item.QtyF
                                             ])
                                         ]),
                                         m("div",{class  : "theadList-profit-loss-p2 has-text-grey-light"},[
-                                            gDI18n.$t('10062') + ":",//"平仓盈亏：",
+                                            gDI18n.$t('10062'),//"平仓盈亏",
                                             m("p",{class : "has-text-black"},[
                                                 item.PnlCls
                                             ])
                                         ]),
                                         m("div",{class  : "theadList-profit-loss-p2 font-right has-text-grey-light"},[
-                                            gDI18n.$t('10063'/*手续费*/) + ":" + item.FeeCoin,
+                                            gDI18n.$t('10063'/*手续费*/)+ item.FeeCoin,
                                             m("p",{class : "has-text-black"},[
                                                 item.Fee
                                             ])
@@ -849,19 +849,19 @@ let obj = {
                     
                                     m("div",{class : "theadList-profit-loss"},[
                                         m("div",{class  : "theadList-profit-loss-p2 has-text-grey-light"},[
-                                            gDI18n.$t('10056') + ":",//"委托类型：" ,
+                                            gDI18n.$t('10056'),//"委托类型",
                                             m("p",{class : "has-text-black"},[
                                                 item.OTypeStr
                                             ])
                                         ]),
                                         m("div",{class  : "theadList-profit-loss-p2 has-text-grey-light"},[
-                                            gDI18n.$t('10064') + ":",//"触发条件：",
+                                            gDI18n.$t('10064'),//"触发条件",
                                             m("p",{class : "has-text-black"},[
                                                 item.cond
                                             ])
                                         ]),
                                         m("div",{class  : "theadList-profit-loss-p2 font-right has-text-grey-light"},[
-                                            gDI18n.$t('10065') + ":",//"委托时间：",
+                                            gDI18n.$t('10065'),//"委托时间",
                                             m("p",{class : "has-text-black"},[
                                                 item.AtStr
                                             ])

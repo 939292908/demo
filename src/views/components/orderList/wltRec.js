@@ -458,13 +458,13 @@ let obj = {
                     //底部排列
                     m("div",{class : "theadList-profit-loss" },[
                         m("div",{class  : "theadList-profit-loss-p1"},[
-                            gDI18n.$t('10421') + "：",//"金额：" ,
+                            gDI18n.$t('10421'),//"金额" ,
                             m("p",{class : "" + item.Qty>0?"has-text-primary " : "has-text-danger"},[
                                 item.Qty
                             ])
                         ]),
                         m("div",{class  : "theadList-time"},[
-                            gDI18n.$t('10103') + "：",//"时间：" ,
+                            gDI18n.$t('10103'),//"时间" ,
                             m("p",{class : ""},[
                                 item.AtStr
                             ])

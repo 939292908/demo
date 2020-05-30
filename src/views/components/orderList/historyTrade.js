@@ -254,19 +254,19 @@ let obj = {
                         m("div",{class :  ""},[
                             m("div",{class : "theadList-profit-loss" ,},[
                                 m("div",{class  : "theadList-profit-loss-p1 has-text-grey"},[
-                                    gDI18n.$t('10060') + ":",//"成交均价：" ,
+                                    gDI18n.$t('10060'),//"成交均价" ,
                                     m("p",{class : "has-text-dark"},[
                                         item.Prz
                                     ])
                                 ]),
                                 m("div",{class  : "theadList-profit-loss-p1 has-text-grey"},[
-                                    gDI18n.$t('10061') + ":",//"成交数量：" ,
+                                    gDI18n.$t('10061'),//"成交数量" ,
                                     m("p",{class : "has-text-dark"},[
                                         item.Sz
                                     ])
                                 ]),
                                 m("div",{class  : "theadList-profit-loss-p1 has-text-grey font-right"},[
-                                    gDI18n.$t('10062') + ":",//"平仓盈亏：" ,
+                                    gDI18n.$t('10062'),//"平仓盈亏" ,
                                     m("p",{class : "has-text-dark"},[
                                         item.PnlCls
                                     ])
