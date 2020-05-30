@@ -323,7 +323,7 @@ let obj = {
                 // 仓位合并标志
                 p.OrdFlag = (p.OrdFlag | 1024)
                 if(dir == 1){
-                    p.PId = this.form.PIdForBuy || 'new'
+                    p.PId = this.form.PIdForBuy || ''
                     p.lvr = this.form.LeverForBuy
                     // 判断是否开启了全仓杠杠调节 start
                     if(window.$config.future.setMIRMy && p.lvr == 0){
@@ -331,7 +331,7 @@ let obj = {
                     }
                     // 判断是否开启了全仓杠杠调节 end
                 }else{
-                    p.PId = this.form.PIdForSell || 'new'
+                    p.PId = this.form.PIdForSell || ''
                     p.lvr = this.form.LeverForSell
                     // 判断是否开启了全仓杠杠调节 start
                     if(window.$config.future.setMIRMy && p.lvr == 0){

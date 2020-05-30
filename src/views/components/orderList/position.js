@@ -158,7 +158,6 @@ let obj = {
     })
   },
   getPosList: function(){
-    console.log(this.posList,"列表数据")
     let btnsOpen = window.$config.positionBtns.desktop
     return this.posList.map(function(item, i){
       return m("tr",{key: "posTableListItem"+i, class:""},[

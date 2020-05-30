@@ -70,10 +70,10 @@ let obj = {
       "Param": Number(this.openStopL?this.param.StopL:-1),      // float64 值, 参数值, 对应仓位的 StopL
       "P2": Number(this.openStopP?this.param.StopP:-1),        // float64 值, 参数值, 对应仓位的 StopP
     }
-    if(this.openStopP || this.openStopL){
+    // if(this.openStopP || this.openStopL){
       window.gTrd.ReqTrdPosStopLP(param,function(gTrd, arg){
         if(arg.code == 0 && !arg.data.ErrCode){
-          
+          that.open = false
           that.showTip = false
           that.stopPLCallback && that.stopPLCallback(arg)
           window.$message({title: gDI18n.$t('10195'/*'止盈止损设置成功！'*/), content: gDI18n.$t('10195'/*'止盈止损设置成功！'*/), type: 'success'})
@@ -81,8 +81,7 @@ let obj = {
           window.$message({title: utils.getTradeErrorCode(arg.code || arg.data.ErrCode), content: utils.getTradeErrorCode(arg.code || arg.data.ErrCode), type: 'danger'})
         }
       })
-    }
-    that.open = false
+    // }
   },
   setTabsActive: function (param) {
     this.tabsActive = param
@@ -136,23 +135,102 @@ let obj = {
     let Sym = this.param.Sym
     let ass = window.gMkt.AssetD[Sym]
     let maxPrz = Number(ass?ass.PrzMax:0)
-    if(Number(e.target.value) > maxPrz){
-      obj.param.StopP = maxPrz
+    //获取合约允许变动的最小区间
+    let numb = ass.PrzMinInc.toString()
+    //获取合约允许的小数点长度
+    let numb2 = numb.split(".")[1]
+    let numb2Length = numb2.length
+    //获取合约允许的小数最后一位数字
+    let lastNumbMin =  numb2.substr(numb2.length-1,1)
+    //根据输入的是否含有“.”判断是否为小数
+    if(e.target.value.includes(".")){
+        let beforValue = e.target.value.split(".")[0]? e.target.value.split(".")[0] : "0"
+        let eValue = e.target.value.split(".")[1] ? e.target.value.split(".")[1] : "0"
+        //获取输入数字小数点后长度
+        let eValueLength = eValue.length
+        let lastValue = eValue.substr(eValue.length-1,1)
+        //判断小数长度是否与合约要求长度相等
+        if(numb2Length == eValueLength){
+            //判断输入小数最后一位是否与合约要求的最后一位相等
+            if(lastValue == "0" || lastValue == lastNumbMin){
+              if(Number(e.target.value) > maxPrz){
+                obj.param.StopP = maxPrz
+              }else{
+                obj.param.StopP = beforValue + "." + eValue
+              }
+            }else{
+                //不相等的情况下判断输入的最后一位能否将合约要求的最后一位数字取余为0
+                if(Number(lastValue) % Number(lastNumbMin) == 0){
+                  if(Number(e.target.value) > maxPrz){
+                    obj.param.StopP = maxPrz
+                  }else{
+                    obj.param.StopP = beforValue + "." + eValue
+                  }
+                }
+            }  
+        }else{
+          obj.param.StopP = beforValue + "." + eValue.substring(0,numb2Length)
+        }
     }else{
-      obj.param.StopP = e.target.value
+      if(Number(e.target.value) > maxPrz){
+        obj.param.StopP = maxPrz
+      }else{
+        obj.param.StopP = e.target.value
+      }
     }
+    //
     this.setTipStatus()
   },
   onStopLInput: function(e){
     let Sym = this.param.Sym
     let ass = window.gMkt.AssetD[Sym]
     let maxPrz = Number(ass?ass.PrzMax:0)
-    console.log(e.target.value, Number(e.target.value), maxPrz)
-    if(Number(e.target.value) > maxPrz){
-      obj.param.StopL = maxPrz
+    // console.log(e.target.value, Number(e.target.value), maxPrz)
+    //获取合约允许变动的最小区间
+    let numb = ass.PrzMinInc.toString()
+    //获取合约允许的小数点长度
+    let numb2 = numb.split(".")[1]
+    let numb2Length = numb2.length
+    //获取合约允许的小数最后一位数字
+    let lastNumbMin =  numb2.substr(numb2.length-1,1)
+    //根据输入的是否含有“.”判断是否为小数
+    if(e.target.value.includes(".")){
+        let beforValue = e.target.value.split(".")[0]? e.target.value.split(".")[0] : "0"
+        let eValue = e.target.value.split(".")[1] ? e.target.value.split(".")[1] : "0"
+        //获取输入数字小数点后长度
+        let eValueLength = eValue.length
+        let lastValue = eValue.substr(eValue.length-1,1)
+        //判断小数长度是否与合约要求长度相等
+        if(numb2Length == eValueLength){
+            //判断输入小数最后一位是否与合约要求的最后一位相等
+            if(lastValue == "0" || lastValue == lastNumbMin){
+              if(Number(e.target.value) > maxPrz){
+                obj.param.StopL = maxPrz
+              }else{
+                obj.param.StopL = beforValue + "." + eValue
+              }
+            }else{
+                //不相等的情况下判断输入的最后一位能否将合约要求的最后一位数字取余为0
+                if(Number(lastValue) % Number(lastNumbMin) == 0){
+                  if(Number(e.target.value) > maxPrz){
+                    obj.param.StopL = maxPrz
+                  }else{
+                    obj.param.StopL = beforValue + "." + eValue
+                  }
+                }
+            }  
+        }else{
+          obj.param.StopL = beforValue + "." + eValue.substring(0,numb2Length)
+        }
     }else{
-      obj.param.StopL = e.target.value
+      if(Number(e.target.value) > maxPrz){
+        obj.param.StopL = maxPrz
+      }else{
+        obj.param.StopL = e.target.value
+      }
     }
+    //
+    
     this.setTipStatus()
   },
   setTipStatus: function(){
