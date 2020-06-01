@@ -225,7 +225,7 @@ let obj = {
                 break;
             default:
                 if (this.form.Lever == 0) {
-                    this.LeverInputValue = (this.form.maxLever ? gDI18n.$t('10068',{value : this.form.maxLever}): gDI18n.$t('10054'))
+                    this.LeverInputValue = (this.form.maxLever ? gDI18n.$t('10068',{value : Number(this.form.maxLever).toFixed2(2)}): gDI18n.$t('10054'))
                     // this.LeverInputValue = (this.form.maxLever ? '全仓' + this.form.maxLever + 'X' : '杠杆')
                 } else {
                     this.LeverInputValue = gDI18n.$t('10069',{value : Number(this.form.Lever).toFixed2(2)})
