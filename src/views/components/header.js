@@ -76,16 +76,12 @@ let header = {
         document.querySelector('body').setAttribute('id', header.theme)
     },
     getSwitchTheme: function () {
-        return m("div", { class: "navbar-item has-dropdown is-hoverable" }, [
-            m("a", {
-                class: "navbar-link", onclick: function () {
+        return m("a", { class: "navbar-item", onclick: function () {
                     header.setTheme()
                 }
             }, [
                 '切换主题',
-                m('i', { class: "" })
-            ]),
-        ])
+            ])
     },
     signOut: function () {
         let loginType = window.$config.loginType
