@@ -13,27 +13,31 @@ $white-standard-red:#F57340;
 //标准色end
 
 //标记色start
-$white-marker-color-blue:#00BDBD;
 $white-marker-color-green:#22B992;
 $white-marker-color-red:#CB5F35;
 //标记色end
 
 //背景色start
-$white-background-color-once-level:#101217;
+$white-background-color-once-level:#EDF1F1;
 $white-background-color-second-level:#FFFFFF;
-$white-background-color-three-level:#F5F5F5;
+$white-background-color-three-level:#F1F6F6;
 $white-background-mask:rgba(16, 18, 23, .8);
 //背景色end
 
 //字体颜色start
-$white-font-color-title:#E9E9E9;
-$white-font-color-conent:#555A69;
-$white-font-color-light:#414450;
+$white-font-color-title:#081111;
+$white-font-color-conent:#869595;
+$white-font-color-light:#A2ADAD;
 //字体颜色end
 
-//输入框背景色start
-$white-input-background:#F1F6F6;
-//输入框背景色end
+//按钮默认色start
+$white-button-mask-color:#EFF5F5;
+//按钮默认色end
+
+//列表选中颜色start
+$white-list-color:#F7FBFB;
+//列表选中颜色end
+
 //白色主题end
 
 
@@ -48,15 +52,9 @@ $black-standard-green:#22B992;
 $black-standard-red:#CB5F35;
 //标准色end
 
-//标记色start
-$black-marker-color-blue:#00BDBD;
-$black-marker-color-green:#22B992;
-$black-marker-color-red:#CB5F35;
-//标记色end
-
 //背景色start
 $black-background-color-once-level:#101217;
-$black-background-color-second-level:#D9DCE2;
+$black-background-color-second-level:#171A21;
 $black-background-color-three-level:#1E222B;
 $black-background-mask:rgba(16, 18, 23, .8);
 //背景色end
@@ -67,9 +65,10 @@ $black-font-color-conent:#555A69;
 $black-font-color-light:#414450;
 //字体颜色end
 
-//输入框背景色start
-$black-input-background:#1E222B;
-//输入框背景色end
+//列表选中颜色start
+$black-list-color:#20252F;
+//列表选中颜色end
+
 //黑色主题end
 
 // Import only what you need from Bulma

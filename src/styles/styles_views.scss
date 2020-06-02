@@ -2,6 +2,8 @@
 
 @import './styles_public.scss';
 
+@import './styles_bulma.scss';
+
 //此文件主要内容为界面模块相关样式，建议不要直接修改，可在mystyles.scss中进行样式覆盖
 
 //自定义变量 start
@@ -1450,8 +1452,8 @@ hr {
 }
 // 屏幕适配相关 end
 #white {
-    background-color: #fff;
+    background-color: white;
 }
 #black {
-    background-color: #000;
+    background-color: black;
 }
