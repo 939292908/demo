@@ -1306,7 +1306,7 @@ hr {
 }
 
 .a-button-pad{
-    padding:0.5em 0.7em !important;
+    @extend %pd-2;
 }
 // 资产模块 end
 
