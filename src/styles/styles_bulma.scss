@@ -2,6 +2,76 @@
 
 $modal-background-background-color: rgba(0, 0, 0, .4);
 
+//白色主题start
+//主题色start
+$white-main-color:#00BDBD;
+//主题色end
+
+//标准色start
+$white-standard-green:#2AD7AA;
+$white-standard-red:#F57340;
+//标准色end
+
+//标记色start
+$white-marker-color-blue:#00BDBD;
+$white-marker-color-green:#22B992;
+$white-marker-color-red:#CB5F35;
+//标记色end
+
+//背景色start
+$white-background-color-once-level:#101217;
+$white-background-color-second-level:#FFFFFF;
+$white-background-color-three-level:#F5F5F5;
+$white-background-mask:rgba(16, 18, 23, .8);
+//背景色end
+
+//字体颜色start
+$white-font-color-title:#E9E9E9;
+$white-font-color-conent:#555A69;
+$white-font-color-light:#414450;
+//字体颜色end
+
+//输入框背景色start
+$white-input-background:#F1F6F6;
+//输入框背景色end
+//白色主题end
+
+
+
+//黑色主题start
+//主题色start
+$black-main-color:#00BDBD;
+//主题色end
+
+//标准色start
+$black-standard-green:#22B992;
+$black-standard-red:#CB5F35;
+//标准色end
+
+//标记色start
+$black-marker-color-blue:#00BDBD;
+$black-marker-color-green:#22B992;
+$black-marker-color-red:#CB5F35;
+//标记色end
+
+//背景色start
+$black-background-color-once-level:#101217;
+$black-background-color-second-level:#D9DCE2;
+$black-background-color-three-level:#1E222B;
+$black-background-mask:rgba(16, 18, 23, .8);
+//背景色end
+
+//字体颜色start
+$black-font-color-title:#E9E9E9;
+$black-font-color-conent:#555A69;
+$black-font-color-light:#414450;
+//字体颜色end
+
+//输入框背景色start
+$black-input-background:#1E222B;
+//输入框背景色end
+//黑色主题end
+
 // Import only what you need from Bulma
 @import "../../node_modules/bulma/sass/utilities/_all.sass";
 @import "../../node_modules/bulma/sass/base/_all.sass";

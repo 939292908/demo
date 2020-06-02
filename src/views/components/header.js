@@ -4,6 +4,7 @@ let header = {
   islogin: false,
   userName: '',
   headerMenu: false,
+  changeTheme:false,
   initEVBUS: function(){
     let that = this
     
@@ -68,6 +69,20 @@ let header = {
       
     }
   },
+  getTheme: function (){
+    header.changeTheme = !header.changeTheme
+    console.log(header.changeTheme)
+  },
+  getSwitchTheme: function(){
+    return m("div",{class:"navbar-item has-dropdown is-hoverable"},[
+      m("a",{class:"navbar-link",onclick : function (){
+        header.getTheme()
+      }},[
+        '切换主题',
+        m('i',{class :""})
+      ]),
+    ])
+  },
   signOut: function(){
     let loginType = window.$config.loginType
     switch(loginType){
@@ -128,6 +143,7 @@ let header = {
     if(type == 0){
       return m("div",{class:"navbar-menu"},[
         m("div",{class:"navbar-end"},[
+          header.getSwitchTheme(),
           header.getChangeLangDom(),
           header.getLoginDom()
         ])
