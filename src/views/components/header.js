@@ -4,7 +4,7 @@ let header = {
   islogin: false,
   userName: '',
   headerMenu: false,
-  changeTheme:false,
+  theme: "white",
   initEVBUS: function(){
     let that = this
     
@@ -69,16 +69,15 @@ let header = {
       
     }
   },
-  getTheme: function (){
-    header.changeTheme = !header.changeTheme
-    localStorage.setItem("theme", header.changeTheme)
-    document.querySelector('body').setAttribute('id',header.changeTheme ? 'black': 'white')
-    console.log(header.changeTheme)
+  setTheme: function (){
+    header.theme = header.theme == 'white' ? 'black': 'white'
+    localStorage.setItem("theme", header.theme)
+    document.querySelector('body').setAttribute('id',header.theme)
   },
   getSwitchTheme: function(){
     return m("div",{class:"navbar-item has-dropdown is-hoverable"},[
       m("a",{class:"navbar-link",onclick : function (){
-        header.getTheme()
+        header.setTheme()
       }},[
         '切换主题',
         m('i',{class :""})
@@ -246,8 +245,8 @@ export default {
     },
     oncreate: function(vnode){
         header.initEVBUS()
-        header.changeTheme = localStorage.getItem("theme")
-        document.querySelector('body').setAttribute('id',header.changeTheme ? 'black': 'white')
+        header.theme = localStorage.getItem("theme") == 'black' ? 'black' : 'white'
+        document.querySelector('body').setAttribute('id',header.theme)
     },
     view: function(vnode) {
         
