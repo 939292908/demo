@@ -4,7 +4,7 @@ let header = {
     islogin: false,
     userName: '',
     headerMenu: false,
-    theme: "white",
+    theme: "light",
     initEVBUS: function () {
         let that = this
 
@@ -71,7 +71,7 @@ let header = {
     },
     // 设置主题
     setTheme: function () {
-        header.theme = header.theme == 'white' ? 'black' : 'white'
+        header.theme = header.theme == 'light' ? 'dark' : 'light'
         localStorage.setItem("theme", header.theme)
         document.querySelector('body').setAttribute('id', header.theme)
     },
@@ -252,7 +252,7 @@ export default {
     },
     oncreate: function (vnode) {
         header.initEVBUS()
-        header.theme = localStorage.getItem("theme") == 'black' ? 'black' : 'white'
+        header.theme = localStorage.getItem("theme") == 'dark' ? 'dark' : 'light'
         document.querySelector('body').setAttribute('id', header.theme)
     },
     view: function (vnode) {
