@@ -71,6 +71,8 @@ let header = {
   },
   getTheme: function (){
     header.changeTheme = !header.changeTheme
+    localStorage.setItem("theme", header.changeTheme)
+    document.querySelector('body').setAttribute('id',header.changeTheme ? 'black': 'white')
     console.log(header.changeTheme)
   },
   getSwitchTheme: function(){
@@ -244,6 +246,8 @@ export default {
     },
     oncreate: function(vnode){
         header.initEVBUS()
+        header.changeTheme = localStorage.getItem("theme")
+        document.querySelector('body').setAttribute('id',header.changeTheme ? 'black': 'white')
     },
     view: function(vnode) {
         
