@@ -16,7 +16,7 @@ let obj = {
     getTabsList: function(){
         return this.tabsList.map(function(item,i){
             return m("li",{class:""+(obj.tabsActive == i?' is-active':'')},[
-                m("a",{key: "orderListTabsItem"+i, class:"", href:"javascript:void(0);", onclick: function(){
+                m("a",{key: "orderListTabsItem"+i, class:"a-button-pad", href:"javascript:void(0);", onclick: function(){
                     obj.setTabsActive(i)
                 }},[
                     item
