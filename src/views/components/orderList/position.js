@@ -203,7 +203,7 @@ let obj = {
         m("td",{class:"table-tr-td-vertical"+utils.getColorStr(item.PNLColor, 'font')},[
           item.RPNL
         ]),
-        m("td",{class:"pub-pos-stoppl table-tr-td-vertical has-text-2", onclick: function(){
+        m("td",{class:"pub-pos-stoppl table-tr-td-vertical has-text-2-important", onclick: function(){
           obj.setStopPL(item)
         }},[
           m('span', {class:""}, [

@@ -1412,6 +1412,9 @@ hr {
     .has-text-1-important {  // 特殊情况 加权重
         color: $black-font-color-title !important;
     }
+    .has-text-2-important {  // 特殊情况 加权重
+        color: $black-font-color-conent !important;
+    }
     // ------------------------ 背景 ------------------------
     .is-background-one { // 背景-1
         background-color: $black-background-color-once-level;
@@ -1421,6 +1424,9 @@ hr {
     }
     .is-background-three { // 背景-3
         background-color: $black-background-color-three-level;
+    }
+    .is-background-primary { // 背景-主题色
+        background-color: $black-main-color;
     }
     .is-danger { // 背景-红
         background-color: $black-standard-red !important;
@@ -1442,19 +1448,29 @@ hr {
     }
     .navbar { // 导航
         background-color: $black-background-color-second-level;
-    }
-    tr {
-        &:hover {
-            background-color: $black-list-color;
+        .navbar-item {
+            color: $black-font-color-title;
+            &:hover {
+                color: $black-font-color-title;
+            }
+            .navbar-link {
+                color: $black-font-color-title;
+                &:hover {
+                    color: $black-font-color-title;
+                }
+
+            }
         }
-    }
-    th {
-        color: $black-font-color-conent;
-        border-bottom: 1px solid $black-border-bottom;
-    }
-    td {
-        color: $black-font-color-title;
-        border-bottom: 1px solid $black-border-bottom;
+        .navbar-dropdown { // 下拉框
+            background-color: $black-background-color-three-level;
+            border-top: 2px solid $black-background-color-once-level;
+            .navbar-item {
+                color: $black-font-color-conent;
+                &:hover {
+                    background-color: $black-list-color !important;
+                }
+            }
+        }
     }
     .tabs { // 切换栏
         ul {
@@ -1484,6 +1500,7 @@ hr {
     }
     .dropdown-menu { // 下拉菜单
         overflow: hidden;
+        @include scrollBar;
         &:hover {
             overflow: auto;
         }
@@ -1495,6 +1512,30 @@ hr {
                     background-color: $black-list-color;
                 }
             }
+        }
+    }
+    .dropdown { // 下拉
+        .dropdown-trigger {
+            color: $black-font-color-conent;
+            button {
+                background-color: $black-background-color-three-level;
+                color: $black-font-color-conent;
+                border: none;
+            }
+        }
+    }
+    .modal-card { // 模态框
+        .modal-card-head {
+            background-color: $black-background-color-three-level;
+            .modal-card-title {
+                color: $black-font-color-title;
+            }
+        }
+        .modal-card-body {
+            background-color: $black-background-color-three-level;
+        }
+        .modal-card-foot {
+            background-color: $black-background-color-three-level;
         }
     }
     // ------------------------ 局部 ------------------------
@@ -1531,9 +1572,21 @@ hr {
     .pub-trade-list {
         // table
         .table-container {
+            @include scrollBar;
             table {
                 background-color: $black-background-color-second-level;
+                tr {
+                    &:hover {
+                        background-color: $black-list-color;
+                    }
+                }
+                th {
+                    color: $black-font-color-conent;
+                    border-bottom: 1px solid $black-border-bottom;
+                }
                 td {
+                    color: $black-font-color-title;
+                    border-bottom: 1px solid $black-border-bottom;
                     &.strong-pair {
                         color: $black-main-color;
                     }
@@ -1541,4 +1594,12 @@ hr {
             }
         }
     }
+    // 合约资产/资产转换模块
+    .pub-wallet-box {
+        .pub-transfer {
+            color: $black-font-color-conent;
+        }
+    }
+    
+    
 }

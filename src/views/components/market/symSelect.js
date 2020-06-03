@@ -203,7 +203,7 @@ let symSelect = {
                     })
                     return m('dev', {key: 'dropdown-item'+coin+i, class: ""}, [
                         m('div',{class:"dropdown-item"}, [
-                            m('span',{class:"tag is-rounded"}, [
+                            m('span',{class:"tag is-rounded is-background-two has-text-1"}, [
                                 coin
                             ]),
                         ]),
