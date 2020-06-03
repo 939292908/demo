@@ -251,7 +251,6 @@ hr {
     }
 
     .dropdown-menu {
-        @include scrollBar;
         @extend %box-shadow;
         max-height: 500px;
         overflow: auto;
@@ -309,7 +308,6 @@ hr {
             border-color: $tradingview-bg;
         }
         .dropdown-menu {
-            @include scrollBar;
             z-index: 99;
             .dropdown-content {
                 @extend %pa-0;
@@ -1012,13 +1010,11 @@ hr {
     }
 
     .table-container {
-        @include scrollBar;
         overflow-x: auto;
         overflow-y: hidden;
         width: 100%;
         height: 391px;
         .pub-table-head-box {
-            @include scrollBar;
             min-width: 100%;
             overflow-x: hidden;
             overflow-y: scroll;
@@ -1035,7 +1031,6 @@ hr {
         }
 
         .pub-table-body-box {
-            @include scrollBar;
             overflow-x: hidden;
             overflow-y: scroll;
             height: 335px;
@@ -1262,7 +1257,6 @@ hr {
         }
 
         .dropdown-menu {
-            @include scrollBar;
             @extend %box-shadow;
             width: 100%;
             max-height: 300px;
@@ -1382,7 +1376,6 @@ hr {
         position: inherit;
 
         .dropdown-menu {
-            @include scrollBar;
             max-width: 100%;
         }
     }
@@ -1414,17 +1407,247 @@ hr {
 .has-text-white { // 文字-白
     color: $black-font-color-title !important;
 }
-// 滚动条
-.scrollBar {
-    @include scrollBar;
-}
+// // 白天模式
+// #light {
+//     background-color: white;
+// }
 // 白天模式
 #light {
-    background-color: white;
+    @mixin scrollBar {
+        &::-webkit-scrollbar-track-piece {
+          background: #d3dce6;
+        }
+        &::-webkit-scrollbar {
+          width: 6px;
+          height: 10px;
+        }
+        &::-webkit-scrollbar-thumb {
+          background: #99a9bf;
+          border-radius: 20px;
+        }
+    }
+    .scrollBar, .dropdown-menu, .table-container, .pub-table-head-box, .pub-table-body-box { // 滚动条
+        @include scrollBar;
+    }
+    background-color: $white-background-color-once-level;
+    // ------------------------ 文字 ------------------------
+    .has-text-1 {  // 文字-1
+        color: $white-font-color-title;
+    }
+    .has-text-2 {  // 文字-2
+        color: $white-font-color-conent;
+    }
+    .has-text-3 {  // 文字-3
+        color: $white-font-color-light;
+    }
+    .has-text-primary { // 文字-蓝
+        color: $white-main-color !important;
+    }
+    .has-text-danger { // 文字-红
+        color: $white-standard-red !important;
+    }
+    .has-text-success { // 文字-绿
+        color: $white-standard-green !important;
+    }
+    .has-text-1-important {  // 特殊情况 加权重
+        color: $white-font-color-title !important;
+    }
+    .has-text-2-important {  // 特殊情况 加权重
+        color: $white-font-color-conent !important;
+    }
+    // ------------------------ 背景 ------------------------
+    .is-background-one { // 背景-1
+        background-color: $white-background-color-once-level;
+    }
+    .is-background-two { // 背景-2
+        background-color: $white-background-color-second-level;
+    }
+    .is-background-three { // 背景-3
+        background-color: $white-background-color-three-level;
+    }
+    .is-primary { // 背景-主题色
+        background-color: $white-main-color !important;
+    }
+    .is-danger { // 背景-红
+        background-color: $white-standard-red !important;
+    }
+    .is-success { // 背景-绿
+        background-color: $white-standard-green !important;
+    }
+    .has-background-danger { // 背景-透明红
+        background-color: $white-standard-red !important;
+        opacity: 0.1;
+    }
+    .has-background-success { // 背景-透明绿
+        background-color: $white-standard-green !important;
+        opacity: 0.1;
+    }
+    // ------------------------ 公共 ------------------------
+    button { // 按钮
+        border: none;
+    }
+    .box { // 卡片
+        background-color: $white-background-color-second-level;
+    }
+    .navbar { // 导航
+        background-color: $white-background-color-second-level;
+        .navbar-item {
+            color: $white-font-color-title;
+            &:hover {
+                color: $white-font-color-title;
+            }
+            .navbar-link {
+                color: $white-font-color-title;
+                &:hover {
+                    color: $white-font-color-title;
+                }
+            }
+        }
+        .navbar-dropdown { // 下拉框
+            background-color: $white-background-color-three-level;
+            border-top: 2px solid $white-background-color-once-level;
+            .navbar-item {
+                color: $white-font-color-conent;
+                &:hover {
+                    background-color: $white-list-color !important;
+                }
+            }
+        }
+    }
+    .tabs { // 切换栏
+        ul {
+            border-bottom-color: $white-border-bottom;
+            li {
+                a {
+                    color: $white-font-color-conent;
+                    border-bottom-color: $white-border-bottom;
+                }
+                &.is-active {
+                    a {
+                        border-bottom-width: 2px;
+                        color: $white-font-color-title;
+                        border-bottom-color: $white-main-color;
+                    }
+                }
+            }
+        }
+    }
+    .input { // input
+        border: none;
+        background-color: $white-background-color-three-level;
+        color: $white-font-color-conent;
+        &::placeholder {
+            color: $white-font-color-light;
+        }
+    }
+    .dropdown-menu { // 下拉菜单
+        @include scrollBar;
+        // overflow: hidden;
+        // &:hover {
+        //     overflow: auto;
+        // }
+        .dropdown-content {
+            background-color: $white-background-color-three-level;
+            .dropdown-item {
+                color: $white-font-color-conent;
+                &:hover {
+                    background-color: $white-list-color;
+                }
+            }
+        }
+    }
+    .dropdown { // 下拉
+        .dropdown-trigger {
+            color: $white-font-color-conent;
+            button {
+                background-color: $white-background-color-three-level;
+                color: $white-font-color-conent;
+                border: none;
+            }
+        }
+    }
+    .modal-card { // 模态框
+        .modal-card-head {
+            background-color: $white-background-color-three-level;
+            border-bottom: none;
+            .modal-card-title {
+                color: $white-font-color-title;
+            }
+        }
+        .modal-card-body {
+            background-color: $white-background-color-three-level;
+            @include tableStyle;
+        }
+        .modal-card-foot {
+            background-color: $white-background-color-three-level;
+            border-top: none;
+        }
+    }
+    // ------------------------ 局部 ------------------------
+    //头部行情模块样式
+    .pub-header-tick {
+        .pub-header-tick-left-pre-prz {
+            color: $white-font-color-title;
+        }
+        .is-hidden-touch {
+            p {
+                color: $white-font-color-conent;
+            }
+        }
+    }
+    // k线
+    .pub-layout-content {
+        .pub-kline {
+            .pub-kline-btns-pc {
+                button {
+                    background-color: $white-background-color-second-level;
+                    color: $white-font-color-conent;
+                    &:focus {
+                        outline: none;
+                    }
+                }
+                button:focus {
+                    outline: none;
+                }
+                
+            }
+        }
+    }
+    // table 切换
+    .pub-trade-list {
+        // table
+        .table-container {
+            @include tableStyle;
+        }
+    }
+    // 合约资产/资产转换模块
+    .pub-wallet-box {
+        .pub-transfer {
+            color: $white-font-color-conent;
+        }
+    }
+    
+    
 }
 
 // 黑夜模式
 #dark {
+    @mixin scrollBar {
+        &::-webkit-scrollbar-track-piece {
+          background: #d3dce6;
+        }
+        &::-webkit-scrollbar {
+          width: 6px;
+          height: 10px;
+        }
+        &::-webkit-scrollbar-thumb {
+          background: #99a9bf;
+          border-radius: 20px;
+        }
+    }
+    .scrollBar, .dropdown-menu, .table-container, .pub-table-head-box, .pub-table-body-box { // 滚动条
+        @include scrollBar;
+    }
     background-color: $black-background-color-once-level;
     // ------------------------ 文字 ------------------------
     .has-text-1 {  // 文字-1

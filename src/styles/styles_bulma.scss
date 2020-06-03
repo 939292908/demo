@@ -30,12 +30,10 @@ $white-font-color-conent:#869595;
 $white-font-color-light:#A2ADAD;
 //字体颜色end
 
-//按钮默认色start
-$white-button-mask-color:#EFF5F5;
-//按钮默认色end
-
 //选中-高亮
 $white-list-color:#F7FBFB;
+// 下边线
+$white-border-bottom:#EFF5F5;
 //白色主题end
 
 
@@ -70,20 +68,6 @@ $black-list-color:#20252F;
 $black-border-bottom:#1D212B;
 //黑色主题end
 
-// 滚动条
-@mixin scrollBar {
-    &::-webkit-scrollbar-track-piece {
-      background: #d3dce6;
-    }
-    &::-webkit-scrollbar {
-      width: 6px;
-      height: 10px;
-    }
-    &::-webkit-scrollbar-thumb {
-      background: #99a9bf;
-      border-radius: 20px;
-    }
-}
 
 // Import only what you need from Bulma
 @import "../../node_modules/bulma/sass/utilities/_all.sass";
