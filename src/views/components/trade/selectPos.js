@@ -158,7 +158,7 @@ let obj = {
           gDI18n.$t('10173'/*'数量/价格 '*/)+(pos.PrzIni)+'/'+(pos.Sz)
         ]),
         (isSelect?m('span', {class: "icon"},[
-          m('i', {class: "iconfont iconxiala iconfont-medium", "aria-hidden": true })
+          m('i', {class: "iconfont iconxiala iconfont-medium has-text-primary", "aria-hidden": true })
         ]):'')
       ])
     }else{
@@ -176,7 +176,7 @@ let obj = {
         ]),
         m('.spacer'),
         (isSelect?m('span', {class: "icon"},[
-          m('i', {class: "iconfont iconxiala iconfont-medium", "aria-hidden": true })
+          m('i', {class: "iconfont iconxiala iconfont-medium has-text-primary", "aria-hidden": true })
         ]):'')
       ])
     }
@@ -367,7 +367,7 @@ let obj = {
   //移动端selectpos界面
   getselectPos_m:function (){
     return m("div",{class:"pub-select-pos"},[
-      m('button', {class: "pub-select-pos-open-btn button is-primary is-inverted is-small is-background-two",'aria-haspopup':true, "aria-controls": "dropdown-menu2", onclick: function(){
+      m('button', {class: "pub-select-pos-open-btn button is-inverted is-small is-background-two",'aria-haspopup':true, "aria-controls": "dropdown-menu2", onclick: function(){
         obj.openMode()
       }}, [
           obj.getPosListItem(obj.posList_obj[obj.posActive], true)
@@ -390,7 +390,7 @@ let obj = {
           ]),
           m("footer", { class: "pub-select-pos-model-foot modal-card-foot modal-card-body-list" }, [
             m("button", {
-              class: "button is-success", onclick: function () {
+              class: "button is-primary has-text-white", onclick: function () {
                 obj.addPos()
               }
             }, [
@@ -415,7 +415,7 @@ export default {
         return obj.getselectPos_m()
       } else {
         return m("div",{class:"pub-select-pos"},[
-          m('button', {class: "pub-select-pos-open-btn button is-primary is-inverted is-small is-background-two",'aria-haspopup':true, "aria-controls": "dropdown-menu2", onclick: function(){
+          m('button', {class: "pub-select-pos-open-btn button is-inverted is-small is-background-two has-text-2",'aria-haspopup':true, "aria-controls": "dropdown-menu2", onclick: function(){
             // obj.openSelect = !obj.openSelect
             obj.openMode()
           }}, [
@@ -468,7 +468,7 @@ export default {
               ]),
               m("footer", { class: "pub-select-pos-model-foot modal-card-foot" }, [
                 m("button", {
-                  class: "button is-success", onclick: function () {
+                  class: "button is-primary has-text-white", onclick: function () {
                     obj.addPos()
                   }
                 }, [

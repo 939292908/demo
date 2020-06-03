@@ -236,7 +236,7 @@ let obj = {
   getQuickLeverBtns: function(){
     let LeverList = this.leverList[this.maxLever] || []
     return LeverList.map(function(item,i){
-      return m('button', {key: "leverBtnsItem"+i,class:"button level-item is-background-primary has-text-1",onclick: function(){
+      return m('button', {key: "leverBtnsItem"+i,class:"button level-item is-primary has-text-1",onclick: function(){
         obj.setQuickLever(item)
       }}, [
         item
@@ -310,7 +310,7 @@ export default {
               ]),
               m('div', { class: "field has-addons"+(window.$config.future.setMIRMy?'':' is-hidden') }, [
                 m('div', { class: "control" }, [
-                  m('button', { class: "button is-static" }, [
+                  m('button', { class: "button is-background-three has-text-1" }, [
                     gDI18n.$t('10130',{value : obj.maxLever})//'最高'+obj.maxLever+'X'
                   ]),
                 ]),
@@ -341,7 +341,7 @@ export default {
                 obj.getQuickLeverBtns()
               ])
             ]),
-            m('div', { class: "pub-set-lever-content-mm level" }, [
+            m('div', { class: "pub-set-lever-content-mm level has-text-2" }, [
               m('p', { class: "level-left" }, [
                 gDI18n.$t('10131')//'当前仓位保证金'
               ]),
@@ -349,7 +349,7 @@ export default {
                 obj.posInfo?obj.posInfo.aMM:'0.0000'
               ])
             ]),
-            m('div', { class: "pub-set-lever-content-need-mgn level" }, [
+            m('div', { class: "pub-set-lever-content-need-mgn level has-text-2" }, [
               m('p', { class: "level-left" }, [
                 gDI18n.$t('10132')//'需要追加保证金'
               ]),
@@ -360,7 +360,7 @@ export default {
           ]),
           m("footer", { class: "pub-set-lever-foot modal-card-foot" }, [
             m("button", {
-              class: "button is-success", onclick: function () {
+              class: "button is-primary has-text-white", onclick: function () {
                 obj.submit()
               }
             }, [

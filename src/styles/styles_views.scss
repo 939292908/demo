@@ -251,6 +251,7 @@ hr {
     }
 
     .dropdown-menu {
+        @include scrollBar;
         @extend %box-shadow;
         max-height: 500px;
         overflow: auto;
@@ -308,6 +309,7 @@ hr {
             border-color: $tradingview-bg;
         }
         .dropdown-menu {
+            @include scrollBar;
             z-index: 99;
             .dropdown-content {
                 @extend %pa-0;
@@ -1010,11 +1012,13 @@ hr {
     }
 
     .table-container {
+        @include scrollBar;
         overflow-x: auto;
         overflow-y: hidden;
         width: 100%;
         height: 391px;
         .pub-table-head-box {
+            @include scrollBar;
             min-width: 100%;
             overflow-x: hidden;
             overflow-y: scroll;
@@ -1031,6 +1035,7 @@ hr {
         }
 
         .pub-table-body-box {
+            @include scrollBar;
             overflow-x: hidden;
             overflow-y: scroll;
             height: 335px;
@@ -1257,6 +1262,7 @@ hr {
         }
 
         .dropdown-menu {
+            @include scrollBar;
             @extend %box-shadow;
             width: 100%;
             max-height: 300px;
@@ -1376,12 +1382,42 @@ hr {
         position: inherit;
 
         .dropdown-menu {
+            @include scrollBar;
             max-width: 100%;
         }
     }
 }
 // 屏幕适配相关 end
 
+// 所有模式
+@mixin tableStyle { // table
+    .table {
+        background-color: $black-background-color-second-level;
+        tr {
+            &:hover {
+                background-color: $black-list-color;
+            }
+        }
+        th {
+            color: $black-font-color-conent;
+            border-bottom: 1px solid $black-border-bottom;
+        }
+        td {
+            color: $black-font-color-title;
+            border-bottom: 1px solid $black-border-bottom;
+            &.strong-pair {
+                color: $black-main-color;
+            }
+        }
+    }
+}
+.has-text-white { // 文字-白
+    color: $black-font-color-title !important;
+}
+// 滚动条
+.scrollBar {
+    @include scrollBar;
+}
 // 白天模式
 #light {
     background-color: white;
@@ -1425,8 +1461,8 @@ hr {
     .is-background-three { // 背景-3
         background-color: $black-background-color-three-level;
     }
-    .is-background-primary { // 背景-主题色
-        background-color: $black-main-color;
+    .is-primary { // 背景-主题色
+        background-color: $black-main-color !important;
     }
     .is-danger { // 背景-红
         background-color: $black-standard-red !important;
@@ -1443,6 +1479,9 @@ hr {
         opacity: 0.1;
     }
     // ------------------------ 公共 ------------------------
+    button { // 按钮
+        border: none;
+    }
     .box { // 卡片
         background-color: $black-background-color-second-level;
     }
@@ -1499,11 +1538,11 @@ hr {
         }
     }
     .dropdown-menu { // 下拉菜单
-        overflow: hidden;
         @include scrollBar;
-        &:hover {
-            overflow: auto;
-        }
+        // overflow: hidden;
+        // &:hover {
+        //     overflow: auto;
+        // }
         .dropdown-content {
             background-color: $black-background-color-three-level;
             .dropdown-item {
@@ -1527,15 +1566,18 @@ hr {
     .modal-card { // 模态框
         .modal-card-head {
             background-color: $black-background-color-three-level;
+            border-bottom: none;
             .modal-card-title {
                 color: $black-font-color-title;
             }
         }
         .modal-card-body {
             background-color: $black-background-color-three-level;
+            @include tableStyle;
         }
         .modal-card-foot {
             background-color: $black-background-color-three-level;
+            border-top: none;
         }
     }
     // ------------------------ 局部 ------------------------
@@ -1572,26 +1614,7 @@ hr {
     .pub-trade-list {
         // table
         .table-container {
-            @include scrollBar;
-            table {
-                background-color: $black-background-color-second-level;
-                tr {
-                    &:hover {
-                        background-color: $black-list-color;
-                    }
-                }
-                th {
-                    color: $black-font-color-conent;
-                    border-bottom: 1px solid $black-border-bottom;
-                }
-                td {
-                    color: $black-font-color-title;
-                    border-bottom: 1px solid $black-border-bottom;
-                    &.strong-pair {
-                        color: $black-main-color;
-                    }
-                }
-            }
+            @include tableStyle;
         }
     }
     // 合约资产/资产转换模块
