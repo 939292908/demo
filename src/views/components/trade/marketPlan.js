@@ -281,11 +281,14 @@ let obj = {
         let tradeType = window.$config.future.tradeType
         switch(tradeType){
             case 3:
-                if( dir == 1 && this.form.stopP <= this.form.stopL){
-                    return $message({title: gDI18n.$t('10193'/*'该仓位为多仓，止盈价需大于止损价'*/), content: gDI18n.$t('10193'/*'该仓位为多仓，止盈价需大于止损价'*/), type: 'danger'})
-                }else if(dir == -1 && this.form.stopP >= this.form.stopL){
-                    return $message({title: gDI18n.$t('10194'/*'该仓位为空仓，止盈价需小于止损价'*/), content: gDI18n.$t('10194'/*'该仓位为空仓，止盈价需小于止损价'*/), type: 'danger'})
+                if(this.form.stopP !="" && this.form.stopL !=""){
+                    if( dir == 1 && this.form.stopP <= this.form.stopL){
+                        return $message({title: gDI18n.$t('10193'/*'该仓位为多仓，止盈价需大于止损价'*/), content: gDI18n.$t('10193'/*'该仓位为多仓，止盈价需大于止损价'*/), type: 'danger'})
+                    }else if(dir == -1 && this.form.stopP >= this.form.stopL){
+                        return $message({title: gDI18n.$t('10194'/*'该仓位为空仓，止盈价需小于止损价'*/), content: gDI18n.$t('10194'/*'该仓位为空仓，止盈价需小于止损价'*/), type: 'danger'})
+                    }
                 }
+                
         }
         
         if(this.form.Prz === '0'){
