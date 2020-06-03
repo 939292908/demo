@@ -442,7 +442,8 @@ type V2AssetCfg struct {
  *  "expires":1538222696758,    			// 消息超时时间
  *  "args":{                    			// 服务端所需的参数
  *      "UserName":"example@gaea.com",              	// 账号
- *      "UserCred":"mVAAADjNHzhvehaEvU$BMJoU7BZk"   	// APIKey
+ *      "UserCred":"mVAAADjNHzhvehaEvU$BMJoU7BZk",   	// APIKey
+ *      "vp": 0                                         // 渠道ID
  *  },
  *  "signature": "74c33368e9a1f8d6d13cdf0bf5aa02a8" 	// 签名,可参考生产签名的方法
  * }
@@ -453,10 +454,11 @@ type V2AssetCfg struct {
  *  UserName: "example@gaea.com",
  *  UserCred: "mVAAADjNHzhvehaEvU$BMJoU7BZk"
  *  SecretKey: "uLgAAHMw62di3hUPypuETMWGzHx852swxM7V0b2HObba5gYNNrLkuvQ4I"
+ *  vp: 0 
  *  Req: "Login"
  *  rid: 1
  * 根据上面的信息可以生成如下签名:
- * signature = md5("Login"+"1"+ JSON.stringify({UserName:"example@gaea.com",UserCred:"mVAAADjNHzhvehaEvU$BMJoU7BZk"}) +"1538222696758" + "uLgAAHMw62di3hUPypuETMWGzHx852swxM7V0b2HObba5gYNNrLkuvQ4I")
+ * signature = md5("Login"+"1"+ JSON.stringify({UserName:"example@gaea.com",UserCred:"mVAAADjNHzhvehaEvU$BMJoU7BZk",vp:0}) +"1538222696758" + "uLgAAHMw62di3hUPypuETMWGzHx852swxM7V0b2HObba5gYNNrLkuvQ4I")
  * signature结果为:"74c33368e9a1f8d6d13cdf0bf5aa02a8"
  * 
  * 
