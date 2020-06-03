@@ -997,7 +997,7 @@ export default {
     },
     view: function (vnode) {
 
-        return m("div", { class: "pub-place-order-form" }, [
+        return m("div", { class: "pub-place-order-form has-text-2" }, [
             obj.getLeverChange(),
             m("div", { class: "pub-place-order-form-prz-input field" }, [
                 m("div", { class: "control" }, [

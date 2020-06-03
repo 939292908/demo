@@ -1,7 +1,6 @@
 @charset "utf-8";
 
-@import './styles_public.scss';
-
+@import "./styles_public.scss";
 
 //此文件主要内容为界面模块相关样式，建议不要直接修改，可在mystyles.scss中进行样式覆盖
 
@@ -10,9 +9,6 @@
 $tradingview-bg: #e7ebee;
 
 //自定义变量 end
-
-
-
 
 //html标签样式覆盖 start
 
@@ -28,35 +24,40 @@ hr {
 
 //动画相关 start
 @keyframes sliding-out-from-right {
-    from {transform:translateX(100%);}
-    to {transform:translateX(0%);}
+    from {
+        transform: translateX(100%);
+    }
+    to {
+        transform: translateX(0%);
+    }
 }
 @keyframes sliding-out-from-top {
-    from {transform:translateY(-100%);}
-    to {transform:translateY(0%);}
+    from {
+        transform: translateY(-100%);
+    }
+    to {
+        transform: translateY(0%);
+    }
 }
 
 //动画相关 end
 
-
-
 // 通用类名 start
 
-.opacity-0{
+.opacity-0 {
     opacity: 0;
     cursor: default;
 }
 
 .spacer {
-    flex-grow: 1!important;
-    -webkit-box-flex: 1!important;
+    flex-grow: 1 !important;
+    -webkit-box-flex: 1 !important;
 }
 .cursor-pointer {
     cursor: pointer;
 }
 
 // 通用类名 end
-
 
 // UI库样式覆盖 start
 .modal-card {
@@ -68,27 +69,26 @@ hr {
 .window-message-box {
     position: fixed;
     z-index: 999;
-    
+
     article {
         @extend %pa-0;
         @extend %side-ma;
 
-        transition: all .2s;
-        animation:sliding-out-from-right 0.2s;
+        transition: all 0.2s;
+        animation: sliding-out-from-right 0.2s;
     }
 }
 
 //消息弹框样式 end
 
-
 //覆盖ui样式start
 
-.button-default-padding{
+.button-default-padding {
     @extend %px-4;
 }
 
 //table子项垂直居中start
-.table-tr-td-vertical{
+.table-tr-td-vertical {
     vertical-align: middle !important;
 }
 //table子项垂直居中end
@@ -117,7 +117,7 @@ hr {
         // display: flex;
         // flex-direction: column;
         height: 100%;
-        
+
         .pub-layout-content-left {
             width: calc(100% - 350px);
             min-width: 900px;
@@ -156,8 +156,6 @@ hr {
                 @extend %pa-2;
             }
         }
-
-        
     }
 }
 
@@ -168,7 +166,6 @@ hr {
     // z-index: 1;
 
     .navbar-item {
-
         .iconfont {
             @extend %iconfont-large;
         }
@@ -177,7 +174,6 @@ hr {
     .pub-layout-m-header-menu {
         @extend %px-3;
     }
-    
 }
 
 .pub-layout-m {
@@ -186,16 +182,14 @@ hr {
 
     .pub-layout-m-content {
         @extend %mb-2;
-        
+
         .pub-layout-m-content-left {
             @extend %pr-2;
             width: 50%;
-        
         }
         .pub-layout-m-content-right {
             @extend %pl-2;
             width: 50%;
-        
         }
         .pub-trade-list {
             @extend %ma-0;
@@ -218,7 +212,6 @@ hr {
         > * {
             @extend %mr-3;
         }
-        
 
         .dropdown {
             button {
@@ -228,15 +221,13 @@ hr {
             }
         }
 
-        .pub-header-tick-left-pre-prz  {
+        .pub-header-tick-left-pre-prz {
             @extend %font-10;
         }
-
 
         table {
             @extend %font-2;
             display: inline-table;
-
 
             td {
                 @extend %pr-3;
@@ -245,7 +236,6 @@ hr {
     }
 
     .pub-header-tick-right {
-
         .iconfont {
             @extend %iconfont-large;
         }
@@ -255,7 +245,6 @@ hr {
 
 // 交易对下拉 start
 .pub-sym-select {
-
     .dropdown-trigger {
         display: flex;
         align-items: center;
@@ -271,34 +260,32 @@ hr {
 
             .dropdown-item {
                 cursor: pointer;
-                > div:not(.spacer){
-                    width: 33.33%
+                > div:not(.spacer) {
+                    width: 33.33%;
                 }
             }
         }
     }
 
-    .dropdown-select{
+    .dropdown-select {
         @extend %pt-0;
     }
 }
 
-.dropdown-paddng-top{
+.dropdown-paddng-top {
     @extend %pt-0;
 }
 // 交易对下拉 end
 
-
 //k线模块 start
 
-.pub-kline  {
+.pub-kline {
     @extend %side-pa;
     height: 100%;
     hr {
         @extend %ma-0;
         height: 1px;
     }
-
 
     .pub-kline-iframe_m {
         height: 100%;
@@ -310,7 +297,7 @@ hr {
     .pub-kline-btns {
         @extend %ma-0;
         display: flex;
-        >*{
+        > * {
             flex: 1;
         }
 
@@ -324,15 +311,12 @@ hr {
             z-index: 99;
             .dropdown-content {
                 @extend %pa-0;
-                
+
                 button {
                     width: 50%;
                 }
-                
             }
         }
-
-        
     }
 
     .pub-kline-btns-pc {
@@ -341,7 +325,7 @@ hr {
 
         .pub-kline-btns-pc-time {
             display: flex;
-        } 
+        }
     }
 
     #tv_chart_container {
@@ -352,10 +336,9 @@ hr {
 
 // k线模块 end
 
-
 //pc端盘口和最新成交结构样式 start
 
-.pub-dish-and-new-trade  {
+.pub-dish-and-new-trade {
     @extend %pa-0;
     height: 100%;
 
@@ -379,7 +362,7 @@ hr {
         div {
             z-index: 1;
             width: 33.33%;
-            p{
+            p {
                 cursor: pointer;
             }
         }
@@ -395,7 +378,7 @@ hr {
             top: 0;
             right: 0;
             z-index: 0;
-            opacity: .2;
+            opacity: 0.2;
         }
     }
 
@@ -409,7 +392,7 @@ hr {
 
     .pub-dish-bottom {
         @extend %pa-3;
-        
+
         button {
             @extend %mb-0;
         }
@@ -431,7 +414,7 @@ hr {
         .pub-dish-tick {
             @extend %pl-2;
             @extend %pr-3;
-    
+
             div {
                 @extend %ma-0;
             }
@@ -448,14 +431,11 @@ hr {
     }
 }
 
-
 //盘口相关样式 end
 
 //最新成交相关样式 start
 .pub-new-trade {
-
     .pub-new-trade-list {
-
         .pub-new-trade-list-item {
             @extend %ma-0;
             @extend %py-2;
@@ -465,13 +445,13 @@ hr {
             div {
                 width: 33.33%;
             }
-    
-            div:first-child p{
+
+            div:first-child p {
                 width: 100%;
                 text-align: left;
             }
-    
-            div:last-child p{
+
+            div:last-child p {
                 width: 100%;
                 text-align: right;
             }
@@ -489,11 +469,10 @@ hr {
     }
 
     .pub-place-order-form {
-
-        .button-default-width{
+        .button-default-width {
             width: 100%;
         }
-        .button-width{
+        .button-width {
             width: 45%;
         }
 
@@ -504,15 +483,12 @@ hr {
         }
 
         .pub-place-order-form-num-input {
-
-
             .pub-place-order-form-num-input-face-value {
                 @extend %font-2;
             }
         }
 
         .pub-place-order-form-stop-pl {
-
             .pub-place-order-form-stop-pl-label {
                 @extend %font-2;
             }
@@ -524,9 +500,7 @@ hr {
                     text-align: center;
                 }
             }
-
         }
-        
 
         .pub-place-order-form-need-mgn {
             @extend %font-2;
@@ -535,7 +509,6 @@ hr {
         .pub-place-order-form-wallet {
             @extend %font-2;
         }
-        
     }
 }
 
@@ -547,7 +520,7 @@ hr {
     .pub-place-order-tabs {
         @extend %mb-3;
     }
-    
+
     .pub-place-order-select {
         width: 100%;
         .dropdown-trigger {
@@ -560,14 +533,12 @@ hr {
                 }
             }
         }
-        
     }
 
     .pub-place-order-form {
         height: calc(100% - 40px);
         display: flex;
-        flex-direction: column;//row-reverse;//row | row-reverse | column | column-reverse;
-
+        flex-direction: column; //row-reverse;//row | row-reverse | column | column-reverse;
 
         .pub-place-order-form-lever-input {
             input {
@@ -576,15 +547,12 @@ hr {
         }
 
         .pub-place-order-form-num-input {
-
-
             .pub-place-order-form-num-input-face-value {
                 @extend %font-2;
             }
         }
 
         .pub-place-order-form-stop-pl {
-
             .pub-place-order-form-stop-pl-label {
                 @extend %font-2;
             }
@@ -596,9 +564,7 @@ hr {
                     text-align: center;
                 }
             }
-
         }
-        
 
         .pub-place-order-form-need-mgn {
             @extend %font-2;
@@ -607,14 +573,12 @@ hr {
         .pub-place-order-form-wallet {
             @extend %font-2;
         }
-        
     }
 }
 //下单面板相关 end
 
 // 仓位选择 start
 .pub-select-pos {
-
     .pub-select-pos-open-btn {
         @extend %pa-0;
         width: 100%;
@@ -630,14 +594,12 @@ hr {
     }
 
     .pub-select-pos-model {
-
         .pub-select-pos-model-content {
-
             table {
                 min-width: 100%;
 
                 td {
-                    white-space:nowrap;
+                    white-space: nowrap;
                 }
             }
         }
@@ -650,12 +612,9 @@ hr {
 }
 // 仓位选择 end
 
-
 // 杠杠调整 start
 .pub-set-lever {
-
     .pub-set-lever-content {
-
         .pub-set-lever-content-mm {
             @extend %my-3;
         }
@@ -664,209 +623,205 @@ hr {
 // 杠杠调整 end
 
 //移动端列表 start
-.pub-layout-m{
+.pub-layout-m {
     @extend %py-2;
     margin-top: 3.25rem;
 }
-.card-content{
+.card-content {
     @extend %pa-3;
 }
-.delegation-list-phistory{
+.delegation-list-phistory {
     @extend %font-6;
 }
-.text-none{
+.text-none {
     text-align: center;
     @extend %font-4;
     display: flex;
     flex-direction: column;
     padding-top: 45%;
 }
-.icon-right-i{
+.icon-right-i {
     width: 2rem;
 }
 
 //筛选框样式 start
-.a-text-left{
+.a-text-left {
     text-align: left;
     @extend %side-px;
     @extend %py-2;
 }
 
-.pub-order-m{
+.pub-order-m {
     @extend %pl-0;
 }
 
-.scroll-y{
+.scroll-y {
     max-height: 194px;
     overflow-y: scroll;
     width: 100%;
 }
 
 //筛选框样式 end
-.transform-for-icon{
+.transform-for-icon {
     transform: rotate(180deg);
-    -ms-transform:rotate(180deg); /* Internet Explorer */
-    -moz-transform:rotate(180deg); /* Firefox */
-    -webkit-transform:rotate(180deg); /* Safari 和 Chrome */
-    -o-transform:rotate(180deg);
+    -ms-transform: rotate(180deg); /* Internet Explorer */
+    -moz-transform: rotate(180deg); /* Firefox */
+    -webkit-transform: rotate(180deg); /* Safari 和 Chrome */
+    -o-transform: rotate(180deg);
 }
 
-.mobile-list{
+.mobile-list {
     width: 100%;
     @extend %pa-3;
     @extend %side-my;
 
-    .theadList-transaction{
+    .theadList-transaction {
         display: flex;
-        justify-content:space-between;
+        justify-content: space-between;
         text-align: left;
 
-        .theadList-transaction-p1{
+        .theadList-transaction-p1 {
             @extend %font-4;
         }
-        .theadList-transaction-p2{
+        .theadList-transaction-p2 {
             @extend %font-3;
         }
     }
 
-    .theadList-profit-loss{
+    .theadList-profit-loss {
         display: flex;
-        justify-content:space-between;
+        justify-content: space-between;
         text-align: left;
         @extend %side-mt;
         @extend %font-1;
 
         .theadList-profit-loss-p1,
-        .theadList-profit-loss-p2{
+        .theadList-profit-loss-p2 {
             width: 50%;
         }
-        .text-right{
+        .text-right {
             text-align: right;
         }
-        .theadList-profit2{
+        .theadList-profit2 {
             display: flex;
             justify-content: start;
         }
-        .fomt-blacl{
+        .fomt-blacl {
             align-items: center;
         }
     }
 
-    .mobile-div{
+    .mobile-div {
         @extend %font-5;
     }
 
-    .mobile-font{
+    .mobile-font {
         display: inline-block;
         @extend %pl-2;
         @extend %font-1;
     }
 
-    .theadList-time{
+    .theadList-time {
         width: 50%;
         text-align: right;
     }
 }
 
-.theadList-profit3{
+.theadList-profit3 {
     display: flex;
     justify-content: space-between;
 }
 //移动端列表 end
-.pub-layout-m-details{
+.pub-layout-m-details {
     @extend %side-px;
 }
 
 //移动端详情 start
-.table-list{
+.table-list {
     width: 100%;
 }
 
-.font-right{
+.font-right {
     text-align: right;
 }
 
-.title-header{
+.title-header {
     width: 50%;
 }
 
-.header-flex{
+.header-flex {
     display: flex;
     justify-content: start;
     @extend %font-2;
 }
 
-.padd-left{
+.padd-left {
     @extend %pl-4;
 }
 
-.flex-right{
+.flex-right {
     display: flex;
     justify-content: space-between;
 }
 
-.ord-pad{
+.ord-pad {
     @extend %pr-3;
 }
-.details-header{
-     
-    .navbar-item{
+.details-header {
+    .navbar-item {
         display: inline-block;
         @extend %side-pa;
     }
 
     //中间内容
-    .details-body{
-
-        .details-body-list{
+    .details-body {
+        .details-body-list {
             @extend %pb-3;
             display: flex;
             justify-content: space-between;
 
-            .details-body-title{
+            .details-body-title {
                 @extend %font-5;
             }
 
-            .details-body-title2{
+            .details-body-title2 {
                 @extend %font-3;
             }
-        } 
+        }
 
-        .details-body-conent{
+        .details-body-conent {
             @extend %side-py;
             display: flex;
             justify-content: space-between;
 
-            .font-div{
+            .font-div {
                 @extend %font-3;
                 width: 50%;
 
-                .font-p{
+                .font-p {
                     @extend %font-3;
                 }
 
-                .p-only{
+                .p-only {
                     text-align: right;
                 }
             }
 
-            .font-div-bottom{
+            .font-div-bottom {
                 @extend %font-3;
             }
         }
 
-        .bottom-sty{
+        .bottom-sty {
             @extend %pt-3;
             @extend %font-5;
-
         }
     }
 }
 
-
 //移动端详情 end
 //移动端搜索框
-.search-bar{
+.search-bar {
     width: 100%;
     z-index: 999;
     @extend %box-shadow;
@@ -875,136 +830,135 @@ hr {
     left: 0;
     @extend %side-pa;
 }
-    .modal-card-body-list{
-        @extend %side-pa;
-    }
-    .search-bar-header{
-        display: flex;
-        justify-content: space-between;
-    }
+.modal-card-body-list {
+    @extend %side-pa;
+}
+.search-bar-header {
+    display: flex;
+    justify-content: space-between;
+}
 
-    .search-gmex{
-        @extend %font-5;
-    }
+.search-gmex {
+    @extend %font-5;
+}
 
-    .search-bi-name{
-        @extend %pt-3;
-    } 
-       
-    .search-bi-name-p{
-        @extend %font-3;
-        @extend %pb-3;
-    }
+.search-bi-name {
+    @extend %pt-3;
+}
 
-    .search-k-d{
-        width: 100%;
-    }
+.search-bi-name-p {
+    @extend %font-3;
+    @extend %pb-3;
+}
 
-    .select-sty{
-        width: 100%;
-        @extend %font-3;
-    }
+.search-k-d {
+    width: 100%;
+}
 
-    .option-list{
-        @extend %font-3;
-    }
+.select-sty {
+    width: 100%;
+    @extend %font-3;
+}
 
-    //重置完成按钮
-    .reset-complete{
-        width: 100%;
-        display: flex;
-        justify-content: space-around;
-        @extend %pt-3;
-    }
+.option-list {
+    @extend %font-3;
+}
 
-    .reset-button{
-        width: 48%;
-        height: 35px;
-    }
+//重置完成按钮
+.reset-complete {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    @extend %pt-3;
+}
 
-    .button-styl{
-        width:29%;
-        height:28px;
-        @extend %font-2; 
-        @extend %mb-3;
-        &:not(:last-child){
-            @extend %mr-3;
-        }
+.reset-button {
+    width: 48%;
+    height: 35px;
+}
+
+.button-styl {
+    width: 29%;
+    height: 28px;
+    @extend %font-2;
+    @extend %mb-3;
+    &:not(:last-child) {
+        @extend %mr-3;
     }
+}
 
 //k线页面样式start
-.kline-top{
+.kline-top {
     @extend %side-px;
     display: flex;
     justify-content: space-between;
-    height:100%;
-    
+    height: 100%;
 
-    .spotTick{
+    .spotTick {
         display: flex;
         justify-content: start;
 
-        .spotTick-left{
+        .spotTick-left {
             @extend %font-8;
             @extend %font-weight-bold;
         }
 
-        .spotTick-right{
+        .spotTick-right {
             display: inline-block;
             @extend %pl-3;
             line-height: 2.3;
         }
     }
 
-    .spotTick-buttom{
+    .spotTick-buttom {
         display: flex;
         justify-content: start;
     }
 }
 
-.width-div-right{
+.width-div-right {
     width: 50%;
 }
-.width-div-left{
+.width-div-left {
     width: 70%;
 }
-.width-curren{
+.width-curren {
     width: 65%;
 }
-.font-textalent-right{
+.font-textalent-right {
     text-align: right !important;
 }
 
-.table-width{
+.table-width {
     width: 100%;
 }
 
-.table-margin{
+.table-margin {
     // display: inline-block;
     @extend %pt-4;
 }
-.table-margin2{
+.table-margin2 {
     // display: inline-block;
     @extend %pt-2;
 }
 //通用字体大小start
-.currency-font{
+.currency-font {
     @extend %font-2;
 }
 
-.button-sty-pad{
+.button-sty-pad {
     @extend %pa-2;
 }
-.centent-a-default{
+.centent-a-default {
     @extend %font-5;
 }
 
-.centent-a{
+.centent-a {
     @extend %font-7;
 }
 //通用字体大小end
 //多元start
-.langageus-text{
+.langageus-text {
     display: flex;
     justify-content: space-between;
     @extend %side-pa;
@@ -1012,43 +966,40 @@ hr {
 //多元end
 
 //icon图标大小start
-.icon-font-size{
+.icon-font-size {
     @extend %iconfont-small;
 }
 //icon图标大小end
 //首页仓位选择框样式start
-.pos-id{
+.pos-id {
     @extend %side-mb;
 }
 
-.card-first-head{
+.card-first-head {
     max-height: 600px;
     overflow-y: scroll;
 }
 
 //首页仓位选择框样式end
-.pos-info{
+.pos-info {
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
-.level-right-m{
+.level-right-m {
     @extend %mt-0;
 }
 
-.kLine-body-list{
+.kLine-body-list {
     height: 100%;
     overflow-y: scroll;
 }
 
-.kline-index-pad{
+.kline-index-pad {
     @extend %pa-2;
 }
 //k线页面样式end
-
-
-
 
 // pc端列表 start
 .pub-trade-list {
@@ -1058,7 +1009,6 @@ hr {
         @extend %mb-3;
     }
 
-    
     .table-container {
         overflow-x: auto;
         overflow-y: hidden;
@@ -1071,14 +1021,15 @@ hr {
             table {
                 min-width: 100%;
                 @extend %ma-0;
-                tr{
-                    td,th {
+                tr {
+                    td,
+                    th {
                         @extend %px-0;
                     }
                 }
             }
         }
-        
+
         .pub-table-body-box {
             overflow-x: hidden;
             overflow-y: scroll;
@@ -1086,39 +1037,35 @@ hr {
             min-width: 100%;
             table {
                 min-width: 100%;
-                tr{
-                    td,th {
+                tr {
+                    td,
+                    th {
                         @extend %px-0;
                     }
                 }
             }
         }
     }
-
-    
 }
 // pc端列表 end
 
 // 仓位列表 start
 .pub-pos {
-
     .pub-pos-change-lever {
         @extend %font-2;
         display: flex;
         align-items: center;
         cursor: pointer;
 
-        > *{
+        > * {
             @extend %pr-2;
         }
-
-        
     }
 
     .pub-pos-stoppl {
         cursor: pointer;
 
-        > *{
+        > * {
             @extend %pr-2;
         }
     }
@@ -1132,7 +1079,7 @@ hr {
     .pub-pos-changeMgn {
         cursor: pointer;
 
-        > *{
+        > * {
             @extend %pr-2;
         }
     }
@@ -1150,7 +1097,6 @@ hr {
                 .card-header {
                     .card-header-title {
                         @extend %pa-3;
-                        
                     }
                 }
                 .card-content {
@@ -1160,7 +1106,7 @@ hr {
                         @extend %mb-3;
                         display: flex;
                         align-items: center;
-                        > *{
+                        > * {
                             @extend %pr-3;
                         }
 
@@ -1177,16 +1123,14 @@ hr {
                     }
                 }
             }
-            
-        }   
+        }
     }
-    
 }
 // 仓位列表 end
 
-// 委托列表 start 
+// 委托列表 start
 // .pub-order {
-    
+
 // }
 .pub-layout-m {
     .pub-trade-list {
@@ -1201,25 +1145,22 @@ hr {
                 .pub-order-m-content-header {
                     display: flex;
                     align-items: center;
-            
+
                     .pub-order-change-lever {
                         @extend %font-2;
                     }
                 }
-                
-                
+
                 .pub-order-m-content {
                     @extend %font-2;
                     @extend %py-3;
                 }
-            
+
                 .pub-order-m-content-footer {
                     display: flex;
                     align-items: center;
-            
                 }
             }
-            
         }
     }
 }
@@ -1236,25 +1177,22 @@ hr {
                 .pub-plan-m-content-header {
                     display: flex;
                     align-items: center;
-            
+
                     .pub-plan-change-lever {
                         @extend %font-2;
                     }
                 }
-                
-                
+
                 .pub-plan-m-content {
                     @extend %font-2;
                     @extend %py-3;
                 }
-            
+
                 .pub-plan-m-content-footer {
                     display: flex;
                     align-items: center;
-            
                 }
             }
-            
         }
     }
 }
@@ -1296,7 +1234,6 @@ hr {
     }
 }
 .pub-wallet {
-
     .pub-wallet-content {
         @extend %font-2;
 
@@ -1324,12 +1261,10 @@ hr {
             width: 100%;
             max-height: 300px;
             overflow: auto;
-
         }
     }
 
     .pub-transfer-transfer-select {
-        
         .pub-transfer-transfer-select-center {
             display: flex;
             align-items: center;
@@ -1354,17 +1289,16 @@ hr {
     height: 100%;
     z-index: 31;
     transform: translateX(100%);
-    transition: all .2s;
+    transition: all 0.2s;
     overflow: auto;
 }
 
 //新增k线顶部样式 start
-.conent-div-top{
-    height:7%;
-    width:100%;
+.conent-div-top {
+    height: 7%;
+    width: 100%;
 }
 //新增k线顶部样式 end
-
 
 .pub-m-kline-box.open {
     transform: translateX(0);
@@ -1372,15 +1306,14 @@ hr {
 // 手机端k线页面 end
 
 // 屏幕适配相关 start
-@media screen and (min-width: 1630px){
-    
+@media screen and (min-width: 1630px) {
 }
-@media screen and (max-width: 1630px){
+@media screen and (max-width: 1630px) {
     .pub-kline-btns-pc-time {
-        display: none!important;
+        display: none !important;
     }
 }
-@media screen and (min-width: 1025px){
+@media screen and (min-width: 1025px) {
     body > section {
         min-width: 1280px;
         min-height: 100%;
@@ -1397,10 +1330,8 @@ hr {
     }
 
     //消息弹框样式 start
-
-
 }
-@media screen and (max-width: 1024px){
+@media screen and (max-width: 1024px) {
     .pub-header-tick {
         .pub-header-tick-left {
             .dropdown {
@@ -1430,8 +1361,8 @@ hr {
             top: 0;
             left: 0;
             width: calc(100% - 24px);
-            transition: all .2s;
-            animation:sliding-out-from-top 0.2s;
+            transition: all 0.2s;
+            animation: sliding-out-from-top 0.2s;
 
             .message-header {
                 border-radius: 4px;
@@ -1459,4 +1390,155 @@ hr {
 // 黑夜模式
 #dark {
     background-color: $black-background-color-once-level;
+    // ------------------------ 文字 ------------------------
+    .has-text-1 {  // 文字-1
+        color: $black-font-color-title;
+    }
+    .has-text-2 {  // 文字-2
+        color: $black-font-color-conent;
+    }
+    .has-text-3 {  // 文字-3
+        color: $black-font-color-light;
+    }
+    .has-text-primary { // 文字-蓝
+        color: $black-main-color !important;
+    }
+    .has-text-danger { // 文字-红
+        color: $black-standard-red !important;
+    }
+    .has-text-success { // 文字-绿
+        color: $black-standard-green !important;
+    }
+    .has-text-1-important {  // 特殊情况 加权重
+        color: $black-font-color-title !important;
+    }
+    // ------------------------ 背景 ------------------------
+    .is-background-one { // 背景-1
+        background-color: $black-background-color-once-level;
+    }
+    .is-background-two { // 背景-2
+        background-color: $black-background-color-second-level;
+    }
+    .is-background-three { // 背景-3
+        background-color: $black-background-color-three-level;
+    }
+    .is-danger { // 背景-红
+        background-color: $black-standard-red !important;
+    }
+    .is-success { // 背景-绿
+        background-color: $black-standard-green !important;
+    }
+    .has-background-danger { // 背景-透明红
+        background-color: $black-standard-red !important;
+        opacity: 0.1;
+    }
+    .has-background-success { // 背景-透明绿
+        background-color: $black-standard-green !important;
+        opacity: 0.1;
+    }
+    // ------------------------ 公共 ------------------------
+    .box { // 卡片
+        background-color: $black-background-color-second-level;
+    }
+    .navbar { // 导航
+        background-color: $black-background-color-second-level;
+    }
+    tr {
+        &:hover {
+            background-color: $black-list-color;
+        }
+    }
+    th {
+        color: $black-font-color-conent;
+        border-bottom: 1px solid $black-border-bottom;
+    }
+    td {
+        color: $black-font-color-title;
+        border-bottom: 1px solid $black-border-bottom;
+    }
+    .tabs { // 切换栏
+        ul {
+            border-bottom-color: $black-border-bottom;
+            li {
+                a {
+                    color: $black-font-color-conent;
+                    border-bottom-color: $black-border-bottom;
+                }
+                &.is-active {
+                    a {
+                        border-bottom-width: 2px;
+                        color: $black-font-color-title;
+                        border-bottom-color: $black-main-color;
+                    }
+                }
+            }
+        }
+    }
+    .input { // input
+        border: none;
+        background-color: $black-background-color-three-level;
+        color: $black-font-color-conent;
+        &::placeholder {
+            color: $black-font-color-light;
+        }
+    }
+    .dropdown-menu { // 下拉菜单
+        overflow: hidden;
+        &:hover {
+            overflow: auto;
+        }
+        .dropdown-content {
+            background-color: $black-background-color-three-level;
+            .dropdown-item {
+                color: $black-font-color-conent;
+                &:hover {
+                    background-color: $black-list-color;
+                }
+            }
+        }
+    }
+    // ------------------------ 局部 ------------------------
+    //头部行情模块样式
+    .pub-header-tick {
+        .pub-header-tick-left-pre-prz {
+            color: $black-font-color-title;
+        }
+        .is-hidden-touch {
+            p {
+                color: $black-font-color-conent;
+            }
+        }
+    }
+    // k线
+    .pub-layout-content {
+        .pub-kline {
+            .pub-kline-btns-pc {
+                button {
+                    background-color: $black-background-color-second-level;
+                    color: $black-font-color-conent;
+                    &:focus {
+                        outline: none;
+                    }
+                }
+                button:focus {
+                    outline: none;
+                }
+                
+            }
+        }
+    }
+    // table 切换
+    .pub-trade-list {
+        // table
+        .table-container {
+            table {
+                background-color: $black-background-color-second-level;
+                td {
+                    &.strong-pair {
+                        color: $black-main-color;
+                    }
+                }
+            }
+        }
+    }
 }

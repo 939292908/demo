@@ -183,7 +183,7 @@ let obj = {
         m("td",{class:"table-tr-td-vertical"},[
           item.PrzIni
         ]),
-        m("td",{class:"table-tr-td-vertical"},[
+        m("td",{class:"table-tr-td-vertical strong-pair"},[
           item.aPrzLiq
         ]),
         m("td",{class:"table-tr-td-vertical"},[
@@ -203,7 +203,7 @@ let obj = {
         m("td",{class:"table-tr-td-vertical"+utils.getColorStr(item.PNLColor, 'font')},[
           item.RPNL
         ]),
-        m("td",{class:"pub-pos-stoppl table-tr-td-vertical", onclick: function(){
+        m("td",{class:"pub-pos-stoppl table-tr-td-vertical has-text-2", onclick: function(){
           obj.setStopPL(item)
         }},[
           m('span', {class:""}, [

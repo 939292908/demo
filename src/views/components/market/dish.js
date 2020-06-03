@@ -350,12 +350,12 @@ export default {
     },
     view: function(vnode) {
         
-        return m("div",{class:"pub-dish"},[
+        return m("div",{class:"pub-dish has-text-1"},[
             dish.getOrder20ForSellList(),
             m("div",{class:"pub-dish-tick"},[
                 m("div",{class:"is-flex"},[
                     m("div",{class:""},[
-                        m('span', {class:"has-text-weight-semibold is-size-4 "+utils.getColorStr(dish.getLastTick().color, 'font')},[
+                        m('span', {class:"has-text-weight-semibold is-size-4"+utils.getColorStr(dish.getLastTick().color, 'font')},[
                             dish.getLastTick().LastPrz || '--'
                         ]),
                     ]),
@@ -366,7 +366,7 @@ export default {
                         ]),
                     ]),
                 ]),
-                m("div",{class:"is-flex "},[
+                m("div",{class:"is-flex has-text-3"},[
                     m("div",{class:""},[
                         m('span', {class:" is-size-7 "},[
                             gDI18n.$t('10010',{value :(dish.getLastTick().indexPrz || '--')})//'指数：'+(dish.getLastTick().indexPrz || '--')

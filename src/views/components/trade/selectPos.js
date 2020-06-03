@@ -367,7 +367,7 @@ let obj = {
   //移动端selectpos界面
   getselectPos_m:function (){
     return m("div",{class:"pub-select-pos"},[
-      m('button', {class: "pub-select-pos-open-btn button is-primary is-inverted is-small",'aria-haspopup':true, "aria-controls": "dropdown-menu2", onclick: function(){
+      m('button', {class: "pub-select-pos-open-btn button is-primary is-inverted is-small is-background-two",'aria-haspopup':true, "aria-controls": "dropdown-menu2", onclick: function(){
         obj.openMode()
       }}, [
           obj.getPosListItem(obj.posList_obj[obj.posActive], true)
@@ -415,7 +415,7 @@ export default {
         return obj.getselectPos_m()
       } else {
         return m("div",{class:"pub-select-pos"},[
-          m('button', {class: "pub-select-pos-open-btn button is-primary is-inverted is-small",'aria-haspopup':true, "aria-controls": "dropdown-menu2", onclick: function(){
+          m('button', {class: "pub-select-pos-open-btn button is-primary is-inverted is-small is-background-two",'aria-haspopup':true, "aria-controls": "dropdown-menu2", onclick: function(){
             // obj.openSelect = !obj.openSelect
             obj.openMode()
           }}, [

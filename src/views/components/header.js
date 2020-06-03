@@ -122,7 +122,7 @@ let header = {
             return m("div", { class: "navbar-menu" }, [
                 m("div", { class: "navbar-start" }, [
                     m('a', {
-                        class: "navbar-item" + (window.gMkt.CtxPlaying.pageTradeStatus == 1 ? ' has-text-primary' : ''), onclick: function () {
+                        class: "navbar-item" + (window.gMkt.CtxPlaying.pageTradeStatus == 1 ? ' has-text-1' : ''), onclick: function () {
                             header.setTradeStatus(1)
                         }
                     }, [
