@@ -577,7 +577,7 @@ let obj = {
         //根据输入的是否含有“.”判断是否为小数
         if(e.target.value.includes(".")){
             let beforValue = e.target.value.split(".")[0]?e.target.value.split(".")[0] :"0"
-            let eValue = e.target.value.split(".")[1] ? e.target.value.split(".")[1] : "0"
+            let eValue = e.target.value.split(".")[1] ? e.target.value.split(".")[1] : ""
             //获取输入数字小数点后长度
             let eValueLength = eValue.length
             let lastValue = eValue.substr(eValue.length-1,1)
@@ -632,7 +632,7 @@ let obj = {
         //根据输入的是否含有“.”判断是否为小数
         if(e.target.value.includes(".")){
             let beforValue = e.target.value.split(".")[0]? e.target.value.split(".")[0] : "0"
-            let eValue = e.target.value.split(".")[1] ? e.target.value.split(".")[1] : "0"
+            let eValue = e.target.value.split(".")[1] ? e.target.value.split(".")[1] : ""
             //获取输入数字小数点后长度
             let eValueLength = eValue.length
             let lastValue = eValue.substr(eValue.length-1,1)
@@ -689,7 +689,7 @@ let obj = {
         //根据输入的是否含有“.”判断是否为小数
         if(e.target.value.includes(".")){
             let beforValue = e.target.value.split(".")[0]? e.target.value.split(".")[0] : "0"
-            let eValue = e.target.value.split(".")[1] ? e.target.value.split(".")[1] : "0"
+            let eValue = e.target.value.split(".")[1] ? e.target.value.split(".")[1] : ""
             //获取输入数字小数点后长度
             let eValueLength = eValue.length
             let lastValue = eValue.substr(eValue.length-1,1)
@@ -746,7 +746,7 @@ let obj = {
         //根据输入的是否含有“.”判断是否为小数
         if(e.target.value.includes(".")){
             let beforValue = e.target.value.split(".")[0]? e.target.value.split(".")[0] : "0"
-            let eValue = e.target.value.split(".")[1] ? e.target.value.split(".")[1] : "0"
+            let eValue = e.target.value.split(".")[1] ? e.target.value.split(".")[1] : ""
             //获取输入数字小数点后长度
             let eValueLength = eValue.length
             let lastValue = eValue.substr(eValue.length-1,1)
