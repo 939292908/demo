@@ -28,8 +28,10 @@ $white-font-color-conent:var(--font-lighten1);//#869595;
 $white-font-color-light:var(--font-lighten2);//#A2ADAD;
 //字体颜色end
 
-// 下边线
-$white-border-bottom:#EFF5F5;
+// 线
+$white-line1:var(--line-lighten);//EFF5F5
+$white-line2:var(--line-lighten1);//#E9ECEC
+$white-line3:var(--line-lighten2);//#E9ECEC
 
 //选中-高亮
 $white-list-color:var(--background-lighten5);//#F7FBFB;
@@ -63,8 +65,10 @@ $black-font-color-light:var(--font-darken2);//#414450;
 //选中-高亮
 $black-list-color:var(--background-darken4);//#20252F;
 
-// 下边线
-$black-border-bottom:var(--line-darken);//#1D212B;
+// 线
+$black-line1:var(--line-darken);//#1D212B;
+$black-line2:var(--line-darken1);//#2C3240;
+$black-line3:var(--line-darken2);//#2C3240;
 //黑色主题end
 
 
