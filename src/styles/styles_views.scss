@@ -11,6 +11,9 @@ $tradingview-bg: #e7ebee;
 //自定义变量 end
 
 //html标签样式覆盖 start
+html, body {
+    height: 100%;
+}
 
 button {
     outline: none;
@@ -178,7 +181,7 @@ hr {
 
 .pub-layout-m {
     @extend %py-2;
-    margin-top: 3.25rem;
+    padding-top: 3.25rem;
 
     .pub-layout-m-content {
         @extend %mb-2;
@@ -625,7 +628,7 @@ hr {
 //移动端列表 start
 .pub-layout-m {
     @extend %py-2;
-    margin-top: 3.25rem;
+    padding-top: 3.25rem;
     width: 100%;
     height: 100%;
 }
@@ -639,12 +642,7 @@ hr {
     text-align: center;
     @extend %font-4;
     display: flex;
-    flex-direction: column;   
-    position:absolute;
-    left: 0;
-    right: 0;
-    top: 0;
-    bottom: 0;
+    flex-direction: column; 
     margin:auto;
 }
 .icon-right-i {
@@ -1328,7 +1326,7 @@ hr {
     body > section {
         min-width: 1280px;
         min-height: 100%;
-        margin-top: 3.25rem;
+        padding-top: 3.25rem;
     }
 
     //消息弹框样式 start
