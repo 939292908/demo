@@ -4,70 +4,70 @@ $modal-background-background-color: rgba(0, 0, 0, .4);
 
 //白色主题start
 //主题色start
-$white-main-color:#00BDBD;
+$white-main-color: var(--primary-lighten);//#00BDBD;
 //主题色end
 
 //标准色start
-$white-standard-green:#2AD7AA;
-$white-standard-red:#F57340;
+$white-standard-green:var(--success-lighten);//#2AD7AA;
+$white-standard-red:var(--error-lighten);//#F57340;
 //标准色end
 
 //标记色start
-$white-marker-color-green:#22B992;
-$white-marker-color-red:#CB5F35;
+$white-marker-color-green:var(--success-lighten1);//#22B992;
+$white-marker-color-red:var(--error-lighten1);//#CB5F35;
 //标记色end
 
 //背景色start
-$white-background-color-once-level:#EDF1F1;
-$white-background-color-second-level:#FFFFFF;
-$white-background-color-three-level:#F1F6F6;
-$white-background-mask:rgba(16, 18, 23, .8);
+$white-background-color-once-level:var(--background-lighten);//#EDF1F1;
+$white-background-color-second-level:var(--background-lighten1);//#FFFFFF;
+$white-background-color-three-level:var(--background-lighten2);//#F1F6F6;
+$white-background-mask:var(--mode-lighten);//rgba(16, 18, 23, .8);
 //背景色end
 
 //字体颜色start
-$white-font-color-title:#081111;
-$white-font-color-conent:#869595;
-$white-font-color-light:#A2ADAD;
+$white-font-color-title:var(--font-lighten);//#081111;
+$white-font-color-conent:var(--font-lighten1);//#869595;
+$white-font-color-light:var(--font-lighten2);//#A2ADAD;
 //字体颜色end
 
 //按钮默认色start
-$white-button-mask-color:#EFF5F5;
+$white-button-mask-color:var(--background-lighten4);//#EFF5F5;
 //按钮默认色end
 
 //选中-高亮
-$white-list-color:#F7FBFB;
+$white-list-color:var(--background-lighten5);//#F7FBFB;
 //白色主题end
 
 
 
 //黑色主题start
 //主题色start
-$black-main-color:#00BDBD;
+$black-main-color:var(--primary-darken);//#00BDBD;
 //主题色end
 
 //标准色start
-$black-standard-green:#22B992;
-$black-standard-red:#CB5F35;
+$black-standard-green:var(--success-darken);//#22B992;
+$black-standard-red:var(--error-darken);//#CB5F35;
 //标准色end
 
 //背景色start
-$black-background-color-once-level:#101217;
-$black-background-color-second-level:#171A21;
-$black-background-color-three-level:#1E222B;
-$black-background-mask:rgba(16, 18, 23, .8);
+$black-background-color-once-level:var(--background-darken);//#101217;
+$black-background-color-second-level:var(--background-darken1);//#171A21;
+$black-background-color-three-level:var(--background-darken2);//#1E222B;
+$black-background-mask:var(--mode-darken);//rgba(16, 18, 23, .8);
 //背景色end
 
 //字体颜色start
-$black-font-color-title:#E9E9E9;
-$black-font-color-conent:#555A69;
-$black-font-color-light:#414450;
+$black-font-color-title:var(--font-darken);//#E9E9E9;
+$black-font-color-conent:var(--font-darken1);//#555A69;
+$black-font-color-light:var(--font-darken2);//#414450;
 //字体颜色end
 
 //选中-高亮
-$black-list-color:#20252F;
+$black-list-color:var(--background-darken4);//#20252F;
 
 // 下边线
-$black-border-bottom:#1D212B;
+$black-border-bottom:var(--line-darken);//#1D212B;
 //黑色主题end
 
 // Import only what you need from Bulma
