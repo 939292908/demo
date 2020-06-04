@@ -920,7 +920,7 @@ let obj = {
             case 2:
                 return m("div", { class: "pub-place-order-form-lever-input field" +(!window.isMobile?" has-addons":"")}, [
                     m("div", { class: "control is-expanded" }, [
-                        m("button", { class: "button is-outline is-fullwidth is-background-three has-text-success", onclick: function () {
+                        m("button", { class: "button is-outline is-fullwidth is-background-3 has-text-success", onclick: function () {
                             obj.setLeverage(1)
                         }}, [
                             obj.form.LeverForBuyInputValue
@@ -932,7 +932,7 @@ let obj = {
                         ]),
                     ]),
                     m("div", { class: "control is-expanded" }, [
-                        m("button", { class: "button is-outline is-fullwidth is-background-three has-text-danger", onclick: function () {
+                        m("button", { class: "button is-outline is-fullwidth is-background-3 has-text-danger", onclick: function () {
                             obj.setLeverage(-1)
                         }}, [
                             obj.form.LeverForSellInputValue

@@ -310,7 +310,7 @@ export default {
               ]),
               m('div', { class: "field has-addons"+(window.$config.future.setMIRMy?'':' is-hidden') }, [
                 m('div', { class: "control" }, [
-                  m('button', { class: "button is-background-three has-text-1" }, [
+                  m('button', { class: "button is-background-3 has-text-1" }, [
                     gDI18n.$t('10130',{value : obj.maxLever})//'最高'+obj.maxLever+'X'
                   ]),
                 ]),
@@ -327,7 +327,7 @@ export default {
             m('div', { class: "" + (obj.tabsActive != 1 ? " is-hidden" : '') }, [
               m('div', { class: "field has-addons" }, [
                 m('div', { class: "control" }, [
-                  m('button', { class: "button is-static" }, [
+                  m('button', { class: "button is-static is-background-3 has-text-1" }, [
                     gDI18n.$t('10130',{value : obj.maxLever})//'最高'+obj.maxLever+'X'
                   ]),
                 ]),

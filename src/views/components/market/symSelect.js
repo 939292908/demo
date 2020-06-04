@@ -203,7 +203,7 @@ let symSelect = {
                     })
                     return m('dev', {key: 'dropdown-item'+coin+i, class: ""}, [
                         m('div',{class:"dropdown-item"}, [
-                            m('span',{class:"tag is-rounded is-background-two has-text-1"}, [
+                            m('span',{class:"tag is-rounded is-background-2 has-text-1"}, [
                                 coin
                             ]),
                         ]),
@@ -250,7 +250,7 @@ let symSelect = {
             case 0: 
                 return m('div', {class: "dropdown pub-sym-select" + (symSelect.symListOpen?' is-active':'')}, [
                     m('.dropdown-trigger', {}, [
-                        m('button', {class: "button is-background-two  is-inverted h-auto",'aria-haspopup':true, "aria-controls": "dropdown-menu2", onclick: function(e){
+                        m('button', {class: "button is-background-2  is-inverted h-auto",'aria-haspopup':true, "aria-controls": "dropdown-menu2", onclick: function(e){
                             symSelect.openSelect(e)
                         }}, [
                             m('span',{ class: ""}, utils.getSymDisplayName(window.gMkt.AssetD, window.gMkt.CtxPlaying.Sym)),

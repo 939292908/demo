@@ -175,7 +175,7 @@ export default {
     view: function(vnode) {
         
         return m('div', {class:'pub-login'}, [
-            m('button', {class: "pub-login-btn button is-light is-hidden-touch", onclick: function(){
+            m('button', {class: "pub-login-btn button is-primary has-text-white is-hidden-touch", onclick: function(){
                 obj.openLoginMode()
             }}, [
                 gDI18n.$t('10136')//'登录'
@@ -220,7 +220,7 @@ export default {
                         ]),
                     ]),
                     m("footer",{class:"pub-login-foot modal-card-foot pl-30"},[
-                        m("button",{class:"button is-success"+(obj.loginLoading?" is-loading":""), onclick: function(){
+                        m("button",{class:"button is-primary has-text-white"+(obj.loginLoading?" is-loading":""), onclick: function(){
                             obj.submit()
                         }},[
                             gDI18n.$t('10136')//'登录'

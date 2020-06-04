@@ -285,7 +285,7 @@ export default {
               }
             }),
           ]),
-          m("section", { class: "pub-stoppl-content modal-card-body" }, [
+          m("section", { class: "pub-stoppl-content modal-card-body has-text-2" }, [
             m("div", { class: "pub-stoppl-content-message message is-danger"+(obj.showTip?'':' is-hidden') }, [
               m("div", { class: "message-body" }, [
                 gDI18n.$t('10197')//'当前设置的价格会导致仓位立即平仓，请谨慎设置！'
@@ -307,7 +307,7 @@ export default {
             ]),
             m('div', { class: "pub-stoppl-content-stopp-input field has-addons" }, [
               m('div', { class: "control" }, [
-                m('button', { class: "button is-static" }, [
+                m('button', { class: "button is-background-3 has-text-1" }, [
                   utils.getStopPLByStr(obj.param.StopLPBy)+' '+(obj.param.Sz > 0?'≥':'≤')
                 ]),
               ]),
@@ -325,7 +325,7 @@ export default {
             ]),
             m('div', { class: "pub-stoppl-content-stopl-input field has-addons" }, [
               m('div', { class: "control" }, [
-                m('button', { class: "button is-static" }, [
+                m('button', { class: "button is-background-3 has-text-1" }, [
                   utils.getStopPLByStr(obj.param.StopLPBy)+' '+(obj.param.Sz > 0?'≤':'≥')
                 ]),
               ]),
@@ -347,7 +347,7 @@ export default {
           ]),
           m("footer", { class: "pub-stoppl-foot modal-card-foot" }, [
             m("button", {
-              class: "button is-success", onclick: function () {
+              class: "button is-primary has-text-white", onclick: function () {
                 obj.submit()
               }
             }, [
