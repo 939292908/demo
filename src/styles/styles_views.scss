@@ -667,6 +667,8 @@ hr {
 .pub-layout-m{
     @extend %py-2;
     margin-top: 3.25rem;
+    width: 100%;
+    height: 100%;
 }
 .card-content{
     @extend %pa-3;
@@ -675,11 +677,18 @@ hr {
     @extend %font-6;
 }
 .text-none{
+    height: 20%;
+    width: 50%;
     text-align: center;
     @extend %font-4;
     display: flex;
-    flex-direction: column;
-    padding-top: 45%;
+    flex-direction: column;   
+    position:absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    margin:auto;
 }
 .icon-right-i{
     width: 2rem;
@@ -1304,6 +1313,10 @@ hr {
             @extend %mb-3;
         }
     }
+}
+
+.a-button-pad{
+    @extend %pd-2;
 }
 // 资产模块 end
 
