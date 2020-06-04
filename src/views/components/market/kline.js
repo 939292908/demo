@@ -1254,7 +1254,7 @@ export default {
                         ]),
                     ]),
                 ]),
-                m('span',{class:"has-text-light"}, ['|']),
+                m('span',{class:"has-text-2"}, ['|']),
                 m('div', {class:"dropdown is-hidden-touch"+(obj.klineTargetListOpen?' is-active':'')}, [
                     m('div', {class:"dropdown-trigger", onclick: function(e){
                         obj.klineTargetListOpen = !obj.klineTargetListOpen
@@ -1274,7 +1274,7 @@ export default {
                         ]),
                     ]),
                 ]),
-                m('span',{class:"has-text-light"}, ['|']),
+                m('span',{class:"has-text-2"}, ['|']),
                 m('button', {class:"button is-white", onclick: function(){
                     obj.setFullscreen();
                 }}, [

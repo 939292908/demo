@@ -828,7 +828,7 @@ let obj = {
             case 2:
                 return m("div", { class: "pub-place-order-form-lever-input field" +(!window.isMobile?" has-addons":"")}, [
                     m("div", { class: "control is-expanded" }, [
-                        m("button", { class: "button is-outline is-fullwidth has-text-success", onclick: function () {
+                        m("button", { class: "button is-outline is-fullwidth is-background-three has-text-success", onclick: function () {
                             obj.setLeverage(1)
                         }}, [
                             obj.form.LeverForBuyInputValue
@@ -840,7 +840,7 @@ let obj = {
                         ]),
                     ]),
                     m("div", { class: "control is-expanded" }, [
-                        m("button", { class: "button is-outline is-fullwidth has-text-danger", onclick: function () {
+                        m("button", { class: "button is-outline is-fullwidth is-background-three has-text-danger", onclick: function () {
                             obj.setLeverage(-1)
                         }}, [
                             obj.form.LeverForSellInputValue
@@ -962,7 +962,7 @@ export default {
     },
     view: function (vnode) {
 
-        return m("div", { class: "pub-place-order-form" }, [
+        return m("div", { class: "pub-place-order-form has-text-2" }, [
             obj.getLeverChange(),
             m("div", { class: "pub-place-order-form-prz-input field" }, [
                 m("div", { class: "control" }, [

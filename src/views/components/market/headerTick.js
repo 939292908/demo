@@ -168,7 +168,7 @@ let spotTick = {
                                     m('span',[
                                         gDI18n.$t('10475')//"指数价格："
                                     ]),
-                                    m('span',[
+                                    m('span.has-text-1',[
                                         spotTick.getLastTick().indexPrz || '--'
                                     ])
                                     //gDI18n.$t('10016',{value : (spotTick.getLastTick().indexPrz || '--')})//"指数价格："+(spotTick.getLastTick().indexPrz || '--')
@@ -177,7 +177,7 @@ let spotTick = {
                                     m('span',[
                                         gDI18n.$t('10476')//"标记价格："
                                     ]),
-                                    m('span',[
+                                    m('span.has-text-1',[
                                         spotTick.getLastTick().SettPrz || '--'
                                     ])
                                     //gDI18n.$t('10017',{value : (spotTick.getLastTick().SettPrz || '--')})//"标记价格："+(spotTick.getLastTick().SettPrz || '--')
@@ -188,7 +188,7 @@ let spotTick = {
                                     m('span',[
                                         gDI18n.$t('10477')//"24H最高："
                                     ]),
-                                    m('span',[
+                                    m('span.has-text-1',[
                                         spotTick.getLastTick().High24 || '--'
                                     ])
                                     //gDI18n.$t('10018') + (spotTick.getLastTick().High24 || '--')
@@ -198,7 +198,7 @@ let spotTick = {
                                     m('span',[
                                         gDI18n.$t('10478')//"24H最低："
                                     ]),
-                                    m('span',[
+                                    m('span.has-text-1',[
                                         spotTick.getLastTick().Low24 || '--'
                                     ])
                                     //gDI18n.$t('10019',{value : (spotTick.getLastTick().Low24 || '--')})//"24H最低："+(spotTick.getLastTick().Low24 || '--')
@@ -225,7 +225,7 @@ let spotTick = {
                                         ]),
                                     ]),
                                 ]),
-                                m('p', {class:""}, [
+                                m('p', {class:"has-text-1-important"}, [
                                     spotTick.getLastTick().FundingLongR || '--'
                                 ]),
                             ]),
@@ -234,12 +234,12 @@ let spotTick = {
                                     m('span',[
                                         gDI18n.$t('10479')//"24H成交量："
                                     ]),
-                                    m('span',[
+                                    m('span.has-text-1',[
                                         spotTick.getLastTick().Volume24 || '--'
                                     ])
                                     //gDI18n.$t('10021',{value : (spotTick.getLastTick().Volume24 || '--')})//"24H成交量："+(spotTick.getLastTick().Volume24 || '--')
                                 ]),
-                                m('p', {class:""}, [
+                                m('p', {class:"has-text-1-important"}, [
                                     '≈ '+(spotTick.getLastTick().Volume24ForUSDT || '--')+'USDT'
                                 ]),
                             ]),
@@ -248,12 +248,12 @@ let spotTick = {
                                     m('span',[
                                         gDI18n.$t('10480')//"持仓量："
                                     ]),
-                                    m('span',[
+                                    m('span.has-text-1',[
                                         spotTick.getLastTick().Turnover24 || '--'
                                     ])
                                     //gDI18n.$t('10022',{value : (spotTick.getLastTick().Turnover24 || '--')})//"持仓量："+(spotTick.getLastTick().Turnover24 || '--')
                                 ]),
-                                m('p', {class:""}, [
+                                m('p', {class:"has-text-1-important"}, [
                                     '≈ '+(spotTick.getLastTick().Turnover24ForUSDT || '--')+'USDT'
                                 ]),
                             ]),

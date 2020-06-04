@@ -4,7 +4,7 @@ let header = {
     islogin: false,
     userName: '',
     headerMenu: false,
-    theme: "white",
+    theme: "light",
     initEVBUS: function () {
         let that = this
 
@@ -71,7 +71,7 @@ let header = {
     },
     // 设置主题
     setTheme: function () {
-        header.theme = header.theme == 'white' ? 'black' : 'white'
+        header.theme = header.theme == 'light' ? 'dark' : 'light'
         localStorage.setItem("theme", header.theme)
         document.querySelector('body').setAttribute('id', header.theme)
     },
@@ -122,7 +122,7 @@ let header = {
             return m("div", { class: "navbar-menu" }, [
                 m("div", { class: "navbar-start" }, [
                     m('a', {
-                        class: "navbar-item" + (window.gMkt.CtxPlaying.pageTradeStatus == 1 ? ' has-text-primary' : ''), onclick: function () {
+                        class: "navbar-item" + (window.gMkt.CtxPlaying.pageTradeStatus == 1 ? ' has-text-1' : ''), onclick: function () {
                             header.setTradeStatus(1)
                         }
                     }, [
@@ -252,7 +252,7 @@ export default {
     },
     oncreate: function (vnode) {
         header.initEVBUS()
-        header.theme = localStorage.getItem("theme") == 'black' ? 'black' : 'white'
+        header.theme = localStorage.getItem("theme") == 'dark' ? 'dark' : 'light'
         document.querySelector('body').setAttribute('id', header.theme)
     },
     view: function (vnode) {
