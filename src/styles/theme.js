@@ -75,13 +75,20 @@ const theme = {
     chart
 }
 
+let styleStr = ':root{'
 // 设置html的css变量
 for(let key in theme){
     let item = theme[key]
     for(let k in item){
         let it = item[k]
-        window.document.children[0].style.setProperty(`--${key}-${k}`,it)
+        styleStr+=`--${key}-${k}: ${it};`
     }
 }
+styleStr+='}'
+var style = document.createElement('style'); 
+style.type = 'text/css'; 
+style.innerHTML=styleStr; 
+document.getElementsByTagName('head').item(0).appendChild(style); 
+
 
 export default theme
