@@ -105,7 +105,10 @@ if(config.mobile){
 //路由
 require('./route');
 
+// require('./styles/theme.js')
+import theme from './styles/theme.js'
 
+window.theme = theme
 
 
 
