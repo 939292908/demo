@@ -1496,6 +1496,7 @@ hr {
     }
     .box { // 卡片
         background-color: $white-background-color-second-level;
+        box-shadow: none;
     }
     .navbar { // 导航
         background-color: $white-background-color-second-level;
@@ -1742,6 +1743,7 @@ hr {
     }
     .box { // 卡片
         background-color: $black-background-color-second-level;
+        box-shadow: none;
     }
     .navbar { // 导航
         background-color: $black-background-color-second-level;
