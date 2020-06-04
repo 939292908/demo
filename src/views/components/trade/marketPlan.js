@@ -210,14 +210,14 @@ let obj = {
             case 2:
                 if(!type || type == 'buy'){
                     if (this.form.LeverForBuy == 0) {
-                        this.form.LeverForBuyInputValue = (this.form.maxLeverForBuy ? gDI18n.$t('10137'/*'买 全仓*/) + this.form.maxLeverForBuy + 'X' : gDI18n.$t('10133'/*'买 杠杆'*/))
+                        this.form.LeverForBuyInputValue = (this.form.maxLeverForBuy ? gDI18n.$t('10137'/*'买 全仓*/) + Number(this.form.maxLeverForBuy).toFixed2(2) + 'X' : gDI18n.$t('10133'/*'买 杠杆'*/))
                     } else {
                         this.form.LeverForBuyInputValue = gDI18n.$t('10138'/*'买 逐仓'*/) + Number(this.form.LeverForBuy).toFixed2(2) + 'X'
                     }
                 }
                 if(!type || type == 'sell'){
                     if (this.form.LeverForSell == 0) {
-                        this.form.LeverForSellInputValue = (this.form.maxLeverForSell ? gDI18n.$t('10139'/*'卖 全仓'*/) + this.form.maxLeverForSell + 'X' : gDI18n.$t('10134'/*'卖 杠杆'*/))
+                        this.form.LeverForSellInputValue = (this.form.maxLeverForSell ? gDI18n.$t('10139'/*'卖 全仓'*/) + Number( this.form.maxLeverForSell).toFixed2(2)+ 'X' : gDI18n.$t('10134'/*'卖 杠杆'*/))
                     } else {
                         this.form.LeverForSellInputValue = gDI18n.$t('10140'/*'卖 逐仓'*/) + Number(this.form.LeverForSell).toFixed2(2) + 'X'
                     }
@@ -225,7 +225,7 @@ let obj = {
                 break;
             default:
                 if (this.form.Lever == 0) {
-                    this.LeverInputValue = (this.form.maxLever ? gDI18n.$t('10068',{value : this.form.maxLever}): gDI18n.$t('10054'))
+                    this.LeverInputValue = (this.form.maxLever ? gDI18n.$t('10068',{value : Number(this.form.maxLever).toFixed2(2)}): gDI18n.$t('10054'))
                     // this.LeverInputValue = (this.form.maxLever ? '全仓' + this.form.maxLever + 'X' : '杠杆')
                 } else {
                     this.LeverInputValue = gDI18n.$t('10069',{value : Number(this.form.Lever).toFixed2(2)})
@@ -278,6 +278,19 @@ let obj = {
         if(!window.gWebAPI.isLogin()){
             return window.gWebAPI.needLogin()
         }
+        let tradeType = window.$config.future.tradeType
+        switch(tradeType){
+            case 3:
+                if(this.form.stopP !="" && this.form.stopL !=""){
+                    if( dir == 1 && this.form.stopP <= this.form.stopL){
+                        return $message({title: gDI18n.$t('10193'/*'该仓位为多仓，止盈价需大于止损价'*/), content: gDI18n.$t('10193'/*'该仓位为多仓，止盈价需大于止损价'*/), type: 'danger'})
+                    }else if(dir == -1 && this.form.stopP >= this.form.stopL){
+                        return $message({title: gDI18n.$t('10194'/*'该仓位为空仓，止盈价需小于止损价'*/), content: gDI18n.$t('10194'/*'该仓位为空仓，止盈价需小于止损价'*/), type: 'danger'})
+                    }
+                }
+                
+        }
+        
         if(this.form.Prz === '0'){
             return $message({title: gDI18n.$t('10141'/*'下单价格不能为0'*/), content: gDI18n.$t('10141'/*'下单价格不能为0'*/), type: 'danger'})
         }else if(!this.form.Prz){
@@ -367,7 +380,7 @@ let obj = {
         }
 
         // 根据配置判断处理
-        let tradeType = window.$config.future.tradeType
+        // let tradeType = window.$config.future.tradeType
         switch(tradeType){
             case 2:
                 // 只开仓标志
