@@ -1383,36 +1383,33 @@ hr {
 // 屏幕适配相关 end
 
 // 所有模式
-@mixin tableStyle { // table
-    .table {
-        background-color: $black-background-color-second-level;
-        tr {
-            &:hover {
-                background-color: $black-list-color;
-            }
-        }
-        th {
-            color: $black-font-color-conent;
-            border-bottom: 1px solid $black-border-bottom;
-        }
-        td {
-            color: $black-font-color-title;
-            border-bottom: 1px solid $black-border-bottom;
-            &.strong-pair {
-                color: $black-main-color;
-            }
-        }
-    }
-}
 .has-text-white { // 文字-白
     color: $black-font-color-title !important;
 }
-// // 白天模式
-// #light {
-//     background-color: white;
-// }
+
 // 白天模式
 #light {
+    @mixin tableStyle { // table
+        .table {
+            background-color: $white-background-color-second-level;
+            tr {
+                &:hover {
+                    background-color: $white-list-color;
+                }
+                th {
+                    color: $white-font-color-conent;
+                    border-bottom: 1px solid $white-border-bottom;
+                }
+                td {
+                    color: $white-font-color-title;
+                    border-bottom: 1px solid $white-border-bottom;
+                    &.strong-pair {
+                        color: $white-main-color;
+                    }
+                }
+            }
+        }
+    }
     @mixin scrollBar {
         &::-webkit-scrollbar-track-piece {
           background: #d3dce6;
@@ -1632,6 +1629,27 @@ hr {
 
 // 黑夜模式
 #dark {
+    @mixin tableStyle { // table
+        .table {
+            background-color: $black-background-color-second-level;
+            tr {
+                &:hover {
+                    background-color: $black-list-color;
+                }
+            }
+            th {
+                color: $black-font-color-conent;
+                border-bottom: 1px solid $black-border-bottom;
+            }
+            td {
+                color: $black-font-color-title;
+                border-bottom: 1px solid $black-border-bottom;
+                &.strong-pair {
+                    color: $black-main-color;
+                }
+            }
+        }
+    }
     @mixin scrollBar {
         &::-webkit-scrollbar-track-piece {
           background: #d3dce6;

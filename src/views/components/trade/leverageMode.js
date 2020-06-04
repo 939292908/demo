@@ -236,7 +236,7 @@ let obj = {
   getQuickLeverBtns: function(){
     let LeverList = this.leverList[this.maxLever] || []
     return LeverList.map(function(item,i){
-      return m('button', {key: "leverBtnsItem"+i,class:"button level-item is-primary has-text-1",onclick: function(){
+      return m('button', {key: "leverBtnsItem"+i,class:"button level-item is-primary has-text-white",onclick: function(){
         obj.setQuickLever(item)
       }}, [
         item
