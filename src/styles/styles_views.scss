@@ -1410,7 +1410,7 @@ hr {
             }
         }
     }
-    @mixin scrollBar {
+    @mixin scrollBar { // 滚动条
         &::-webkit-scrollbar-track-piece {
           background: #d3dce6;
         }
@@ -1600,20 +1600,15 @@ hr {
                     background-color: $white-background-color-second-level;
                     color: $white-font-color-conent;
                     &:focus {
-                        outline: none;
+                        box-shadow: none;
                     }
                 }
-                button:focus {
-                    outline: none;
-                }
-                
             }
         }
     }
     // table 切换
     .pub-trade-list {
-        // table
-        .table-container {
+        .table-container { // table
             @include tableStyle;
         }
     }
@@ -1650,7 +1645,7 @@ hr {
             }
         }
     }
-    @mixin scrollBar {
+    @mixin scrollBar { // 滚动条
         &::-webkit-scrollbar-track-piece {
           background: #d3dce6;
         }
@@ -1841,13 +1836,9 @@ hr {
                     background-color: $black-background-color-second-level;
                     color: $black-font-color-conent;
                     &:focus {
-                        outline: none;
+                        box-shadow: none;
                     }
                 }
-                button:focus {
-                    outline: none;
-                }
-                
             }
         }
     }
