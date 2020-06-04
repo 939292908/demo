@@ -37,7 +37,7 @@ const line = Object.freeze({
 });
 
 const background = Object.freeze({
-    lighten: '#EDF1F1',
+    lighten: '#EFF3F3',
     lighten1: '#FFFFFF',
     lighten2: '#F1F6F6',
     lighten3: 'rgba(0, 189, 189, .1)',

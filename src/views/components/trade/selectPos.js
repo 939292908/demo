@@ -385,7 +385,7 @@ let obj = {
               }
             }),
           ]),
-          m("section", { class: "pub-select-pos-model-content modal-card-body modal-card-body-list scrollBar" }, [
+          m("section", { class: "pub-select-pos-model-content modal-card-body modal-card-body-list" }, [
             obj.getPosList_m()
           ]),
           m("footer", { class: "pub-select-pos-model-foot modal-card-foot modal-card-body-list" }, [
@@ -435,7 +435,7 @@ export default {
                   }
                 }),
               ]),
-              m("section", { class: "pub-select-pos-model-content modal-card-body scrollBar" }, [
+              m("section", { class: "pub-select-pos-model-content modal-card-body" }, [
                 m("table", { class: "table is-hoverable ", cellpadding: 0, cellspacing: 0 }, [
                   m("thead", { class: "" }, [
                       m("tr", { class: "" }, [
