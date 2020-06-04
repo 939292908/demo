@@ -1434,7 +1434,7 @@ hr {
           border-radius: 20px;
         }
     }
-    .scrollBar, .dropdown-menu, .table-container, .pub-table-head-box, .pub-table-body-box { // 滚动条
+    * { // 滚动条
         @include scrollBar;
     }
     background-color: $white-background-color-once-level;
@@ -1550,7 +1550,6 @@ hr {
         }
     }
     .dropdown-menu { // 下拉菜单
-        @include scrollBar;
         // overflow: hidden;
         // &:hover {
         //     overflow: auto;
@@ -1681,7 +1680,7 @@ hr {
           border-radius: 20px;
         }
     }
-    .scrollBar, .dropdown-menu, .table-container, .pub-table-head-box, .pub-table-body-box { // 滚动条
+    * { // 滚动条
         @include scrollBar;
     }
     background-color: $black-background-color-once-level;
@@ -1798,7 +1797,6 @@ hr {
         }
     }
     .dropdown-menu { // 下拉菜单
-        @include scrollBar;
         // overflow: hidden;
         // &:hover {
         //     overflow: auto;
