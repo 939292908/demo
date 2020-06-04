@@ -56,6 +56,14 @@ const mode = Object.freeze({
     darken: 'rgba(16, 18, 23, .8)',
 });
 
+// 图标颜色
+const chart = Object.freeze({
+    lighten: '#2AD7AA',
+    lighten1: '#22B992',
+    darken: '#22B992',
+    darken1: '#22B992'
+});
+
 const theme = {
     primary,
     success,
@@ -63,9 +71,10 @@ const theme = {
     font,
     line,
     background,
-    mode
+    mode,
+    chart
 }
-console.log(theme)
+
 // 设置html的css变量
 for(let key in theme){
     let item = theme[key]
