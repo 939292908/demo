@@ -367,7 +367,7 @@ let obj = {
   //移动端selectpos界面
   getselectPos_m:function (){
     return m("div",{class:"pub-select-pos"},[
-      m('button', {class: "pub-select-pos-open-btn button is-inverted is-small is-background-two",'aria-haspopup':true, "aria-controls": "dropdown-menu2", onclick: function(){
+      m('button', {class: "pub-select-pos-open-btn button is-inverted is-small is-background-2",'aria-haspopup':true, "aria-controls": "dropdown-menu2", onclick: function(){
         obj.openMode()
       }}, [
           obj.getPosListItem(obj.posList_obj[obj.posActive], true)
@@ -385,7 +385,7 @@ let obj = {
               }
             }),
           ]),
-          m("section", { class: "pub-select-pos-model-content modal-card-body modal-card-body-list " }, [
+          m("section", { class: "pub-select-pos-model-content modal-card-body modal-card-body-list scrollBar" }, [
             obj.getPosList_m()
           ]),
           m("footer", { class: "pub-select-pos-model-foot modal-card-foot modal-card-body-list" }, [
@@ -415,7 +415,7 @@ export default {
         return obj.getselectPos_m()
       } else {
         return m("div",{class:"pub-select-pos"},[
-          m('button', {class: "pub-select-pos-open-btn button is-inverted is-small is-background-two has-text-2",'aria-haspopup':true, "aria-controls": "dropdown-menu2", onclick: function(){
+          m('button', {class: "pub-select-pos-open-btn button is-inverted is-small is-background-2 has-text-2",'aria-haspopup':true, "aria-controls": "dropdown-menu2", onclick: function(){
             // obj.openSelect = !obj.openSelect
             obj.openMode()
           }}, [
@@ -435,7 +435,7 @@ export default {
                   }
                 }),
               ]),
-              m("section", { class: "pub-select-pos-model-content modal-card-body " }, [
+              m("section", { class: "pub-select-pos-model-content modal-card-body scrollBar" }, [
                 m("table", { class: "table is-hoverable ", cellpadding: 0, cellspacing: 0 }, [
                   m("thead", { class: "" }, [
                       m("tr", { class: "" }, [

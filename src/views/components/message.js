@@ -62,7 +62,7 @@ let msg = {
                         }
                     })
                 ]),
-                m('div', { class: "message-body" }, [
+                m('div', { class: "message-body has-text-white" }, [
                     content
                 ])
             ])

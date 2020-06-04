@@ -1407,11 +1407,11 @@ hr {
                 }
                 th {
                     color: $white-font-color-conent;
-                    border-bottom: 1px solid $white-border-bottom;
+                    border-bottom: 1px solid $white-line1;
                 }
                 td {
                     color: $white-font-color-title;
-                    border-bottom: 1px solid $white-border-bottom;
+                    border-bottom: 1px solid $white-line1;
                     &.strong-pair {
                         color: $white-main-color;
                     }
@@ -1462,13 +1462,13 @@ hr {
         color: $white-font-color-conent !important;
     }
     // ------------------------ 背景 ------------------------
-    .is-background-one { // 背景-1
+    .is-background-1 { // 背景-1
         background-color: $white-background-color-once-level;
     }
-    .is-background-two { // 背景-2
+    .is-background-2 { // 背景-2
         background-color: $white-background-color-second-level;
     }
-    .is-background-three { // 背景-3
+    .is-background-3 { // 背景-3
         background-color: $white-background-color-three-level;
     }
     .is-primary { // 背景-主题色
@@ -1522,11 +1522,11 @@ hr {
     }
     .tabs { // 切换栏
         ul {
-            border-bottom-color: $white-border-bottom;
+            border-bottom-color: $white-line1;
             li {
                 a {
                     color: $white-font-color-conent;
-                    border-bottom-color: $white-border-bottom;
+                    border-bottom-color: $white-line1;
                 }
                 &.is-active {
                     a {
@@ -1572,22 +1572,33 @@ hr {
             }
         }
     }
-    .modal-card { // 模态框
-        .modal-card-head {
-            background-color: $white-background-color-three-level;
-            border-bottom: none;
-            .modal-card-title {
-                color: $white-font-color-title;
+    .modal { // 模态框
+        .modal-background {
+            background-color: $white-background-mask;
+        }
+        .modal-card {
+            .modal-card-head {
+                background-color: $white-background-color-three-level;
+                border-bottom: none;
+                .modal-card-title {
+                    color: $white-font-color-title;
+                }
+            }
+            .modal-card-body {
+                background-color: $white-background-color-three-level;
+                @include tableStyle;
+            }
+            .modal-card-foot {
+                background-color: $white-background-color-three-level;
+                border-top: none;
             }
         }
-        .modal-card-body {
-            background-color: $white-background-color-three-level;
-            @include tableStyle;
-        }
-        .modal-card-foot {
-            background-color: $white-background-color-three-level;
-            border-top: none;
-        }
+    }
+    .is-message-success {
+        
+    }  
+    .is-message-danger {
+
     }
     // ------------------------ 局部 ------------------------
     //头部行情模块样式
@@ -1643,11 +1654,11 @@ hr {
             }
             th {
                 color: $black-font-color-conent;
-                border-bottom: 1px solid $black-border-bottom;
+                border-bottom: 1px solid $black-line1;
             }
             td {
                 color: $black-font-color-title;
-                border-bottom: 1px solid $black-border-bottom;
+                border-bottom: 1px solid $black-line1;
                 &.strong-pair {
                     color: $black-main-color;
                 }
@@ -1697,13 +1708,13 @@ hr {
         color: $black-font-color-conent !important;
     }
     // ------------------------ 背景 ------------------------
-    .is-background-one { // 背景-1
+    .is-background-1 { // 背景-1
         background-color: $black-background-color-once-level;
     }
-    .is-background-two { // 背景-2
+    .is-background-2 { // 背景-2
         background-color: $black-background-color-second-level;
     }
-    .is-background-three { // 背景-3
+    .is-background-3 { // 背景-3
         background-color: $black-background-color-three-level;
     }
     .is-primary { // 背景-主题色
@@ -1758,11 +1769,11 @@ hr {
     }
     .tabs { // 切换栏
         ul {
-            border-bottom-color: $black-border-bottom;
+            border-bottom-color: $black-line1;
             li {
                 a {
                     color: $black-font-color-conent;
-                    border-bottom-color: $black-border-bottom;
+                    border-bottom-color: $black-line1;
                 }
                 &.is-active {
                     a {
@@ -1808,22 +1819,33 @@ hr {
             }
         }
     }
-    .modal-card { // 模态框
-        .modal-card-head {
-            background-color: $black-background-color-three-level;
-            border-bottom: none;
-            .modal-card-title {
-                color: $black-font-color-title;
+    .modal { // 模态框
+        .modal-background {
+            background-color: $black-background-mask;
+        }
+        .modal-card {
+            .modal-card-head {
+                background-color: $black-background-color-three-level;
+                border-bottom: none;
+                .modal-card-title {
+                    color: $black-font-color-title;
+                }
+            }
+            .modal-card-body {
+                background-color: $black-background-color-three-level;
+                @include tableStyle;
+            }
+            .modal-card-foot {
+                background-color: $black-background-color-three-level;
+                border-top: none;
             }
         }
-        .modal-card-body {
-            background-color: $black-background-color-three-level;
-            @include tableStyle;
-        }
-        .modal-card-foot {
-            background-color: $black-background-color-three-level;
-            border-top: none;
-        }
+    }
+    .is-message-success {
+        
+    }  
+    .is-message-danger {
+
     }
     // ------------------------ 局部 ------------------------
     //头部行情模块样式
