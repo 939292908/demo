@@ -2,7 +2,6 @@
 import Conf from "./Conf"
 let instConf = new Conf(process.env.BUILD_ENV)
 
-instConf.SetActive(1)
 let api = instConf.GetActive()
 
 console.log('instConf.GetActive', api, api.WSMKT, api.WSTRD, api.WebAPI)

@@ -1,4 +1,5 @@
 import _axios from '../libs/_axios'
+import utils from '../utils/utils'
 let reqest = new _axios()
 class Conf  {
 
@@ -68,6 +69,17 @@ class Conf  {
     }
     constructor(aKey){
         this.BUILD_ENV = aKey
+        let lines = localStorage.getItem('net_lines_config')
+        if(lines){
+            lines = JSON.parse(lines)
+            this.M[aKey].netLines = lines
+        }
+
+        let active = localStorage.getItem('net_lines_active')
+        if(active){
+            active = JSON.parse(active)
+            this.Active = active
+        }
     }
 
     GetActive() {
@@ -80,6 +92,7 @@ class Conf  {
         let newCfg = this.M[this.BUILD_ENV]
         if (newCfg) {
             this.Active = newCfg.netLines[idx]
+            localStorage.setItem('net_lines_active', JSON.stringify(this.Active))
         }
     }
     updateNetLines(){
@@ -98,7 +111,11 @@ class Conf  {
                     }
                     lines.push(obj)
                 }
-                s.M[s.BUILD_ENV].netLines = lines
+                if(lines.length > 0){
+                    s.M[s.BUILD_ENV].netLines = lines
+                    localStorage.setItem('net_lines_config', JSON.stringify(lines))
+                }
+                
                 gEVBUS.emit(gEVBUS.EV_NET_LINES_UPD, {Ev: gEVBUS.EV_NET_LINES_UPD, lines:lines})
             }
         }).catch((err)=>{
