@@ -3,13 +3,7 @@ import utils from '../utils/utils'
 let reqest = new _axios()
 class Conf  {
 
-    Active = {
-        Id: 0,
-        Name:"www.gmex.io",
-        WebAPI:"https://ss.abkjl.com/www",
-        WSMKT:"wss://ss.abkjl.com/v1/market",
-        WSTRD:"wss://ss.abkjl.com/v1/trade"
-    }
+    Active = {}
     M = {
         "dev": {
             "data": [],
@@ -69,6 +63,9 @@ class Conf  {
     }
     constructor(aKey){
         this.BUILD_ENV = aKey
+        //设置默认线路
+        this.Active = this.M[aKey].netLines[0]
+
         let lines = localStorage.getItem('net_lines_config')
         if(lines){
             lines = JSON.parse(lines)
@@ -80,6 +77,8 @@ class Conf  {
             active = JSON.parse(active)
             this.Active = active
         }
+
+
     }
 
     GetActive() {
