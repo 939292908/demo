@@ -174,7 +174,7 @@ class Mkt {
         ApiKey: "",
         Type: "mkt", //mkt/ trd
         SecretKey : "从用户个人信息中查询",
-        UserName:"kinba@sina.com"
+        UserName:""
     }
 
     RT = {
@@ -368,14 +368,6 @@ class Mkt {
                 s.Conf.AuthType = account.AuthType || 2;
                 s.Conf.UserCred = account.token
 
-                switch (s.Conf.Type) {
-                    case "trd":
-                        s.Conf.Host = ctx.Conf.WSTRD
-                        break;
-                    case "mkt":
-                        s.Conf.Host = ctx.Conf.WSMKT
-                        break;
-                }
             })
             gEVBUS.on(WEBAPI_EV_WEB_LOGOUT,data=> {
                 s.Conf.UserName = '';
@@ -1703,6 +1695,12 @@ class Mkt {
                 gEVBUS.emit(EV_GET_WLT_LOG_READY, {ev:EV_GET_WLT_LOG_READY, aType: aType, data: aArg.data})
             }
         })
+    }
+
+    setSocketUrl(url){
+        let s = this
+        s.Conf.Host = url
+        s.close()
     }
 
 
