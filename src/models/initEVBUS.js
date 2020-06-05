@@ -11,7 +11,9 @@ const ev_name = Object.freeze({
      
     EV_ONRESIZE_UPD: "EV_ONRESIZE_UPD",
 
-    EV_NET_LINES_UPD: "EV_NET_LINES_UPD"
+    EV_NET_LINES_UPD: "EV_NET_LINES_UPD",
+
+    EV_OPEN_NET_SWITCH: "EV_OPEN_NET_SWITCH"
 })
 
 window.gEVBUS = Object.assign(window.gEVBUS, ev_name)

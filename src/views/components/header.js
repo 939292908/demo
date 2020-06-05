@@ -6,7 +6,7 @@ let header = {
     headerMenu: false,
     theme: "light",
     // 线路切换弹框
-    netLineOpen: true,
+    netLineOpen: false,
     initEVBUS: function () {
         let that = this
 
@@ -251,8 +251,9 @@ let header = {
             class: "navbar-item has-dropdown"+(header.netLineOpen? ' is-active':'') , 
             onmouseover: function(){
                 header.netLineOpen = true
+                gEVBUS.emit(gEVBUS.EV_OPEN_NET_SWITCH, {Ev: gEVBUS.EV_OPEN_NET_SWITCH, lines:header.netLineOpen})
             },onmouseout: function(){
-                // header.netLineOpen = false
+                header.netLineOpen = false
             }
         }, [
             m("a", {class: "navbar-item"}, [

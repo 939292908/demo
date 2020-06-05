@@ -22,14 +22,24 @@ let obj = {
             this.EV_NET_LINES_UPD_unbinder()
         }
         this.EV_NET_LINES_UPD_unbinder = window.gEVBUS.on(gEVBUS.EV_NET_LINES_UPD,arg=> {
-            console.log('EV_NET_LINES_UPD',arg)
             that.initLines()
+        })
+
+        // pc端显示线路切换通知
+        if(this.EV_OPEN_NET_SWITCH_unbinder){
+            this.EV_OPEN_NET_SWITCH_unbinder()
+        }
+        this.EV_OPEN_NET_SWITCH_unbinder = window.gEVBUS.on(gEVBUS.EV_OPEN_NET_SWITCH,arg=> {
+            that.testTick()
         })
     },
     //删除全局广播
     rmEVBUS: function(){
         if(this.EV_NET_LINES_UPD_unbinder){
             this.EV_NET_LINES_UPD_unbinder()
+        }
+        if(this.EV_OPEN_NET_SWITCH_unbinder){
+            this.EV_OPEN_NET_SWITCH_unbinder()
         }
     },
     initLines: function(){
@@ -59,6 +69,8 @@ let obj = {
         window.gWebAPI.setWebApiUrl(param.WebAPI)
     },
     testTick: function() {
+        let tm = Date.now()
+        if(tm - this.testStartTime < 60 * 1000)return 
         this.testStartTime = Date.now();
         //ws测速
         this.testTradeNetSpeed();
