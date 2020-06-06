@@ -25,10 +25,7 @@ class Conf  {
             ]
         }
         ,"prod": {
-            "data": [
-                "https://exsoss.oss-cn-hongkong.aliyuncs.com/svrs/gmex_lines_conf.json",
-                "https://np-oss-web.oss-cn-shanghai.aliyuncs.com/svrs/gmex_lines_conf.json"
-            ],
+            "data": [],
             netLines:[
                 {
                     Id: 0,
