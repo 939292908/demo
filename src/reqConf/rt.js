@@ -1,6 +1,10 @@
 
-import { Conf } from "./Conf"
-let api = Conf.GetActive()
+import Conf from "./Conf"
+let instConf = new Conf(process.env.BUILD_ENV)
+
+let api = instConf.GetActive()
+
+console.log('instConf.GetActive', api, api.WSMKT, api.WSTRD, api.WebAPI)
 
 export default {
     Mkt:{
@@ -14,5 +18,10 @@ export default {
         SecretKey: "",//请自行申请
         UserName: "",//请自行申请
         AuthType: 2
-    }
+    },
+    Web:{
+        WebAPI: api.WebAPI,//"wss://ws-v1-01.xmex.co/v1/trade",
+        Type: "web", 
+    },
+    Conf: instConf
 }

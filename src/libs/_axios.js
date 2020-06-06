@@ -68,6 +68,19 @@ class _axios {
     return this.service(config);
   };
 
+  /**
+   * 竞赛方式请求
+   * @param params
+   * @returns {Promise<any>}
+   */
+  racerequest(params) {
+    let pool = []
+    for(let url of params){
+      pool.push(this.service.get(url + '?timestamp=' + (new Date()).getTime()))
+    }
+    return Promise.race(pool);
+  }
+
   //实例化请求
   static inst() {
     if (!this.instance) {

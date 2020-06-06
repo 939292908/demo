@@ -5,6 +5,8 @@ let header = {
     userName: '',
     headerMenu: false,
     theme: "light",
+    // 线路切换弹框
+    netLineOpen: false,
     initEVBUS: function () {
         let that = this
 
@@ -147,6 +149,7 @@ let header = {
         if (type == 0) {
             return m("div", { class: "navbar-menu" }, [
                 m("div", { class: "navbar-end" }, [
+                    header.getSwitchLine(),
                     header.getSwitchTheme(),
                     header.getChangeLangDom(),
                     header.getLoginDom()
@@ -242,10 +245,31 @@ let header = {
             console.log('change lang suc', arg)
             gEVBUS.emit(gDI18n.EV_CHANGELOCALE_UPD, { Ev: gDI18n.EV_CHANGELOCALE_UPD, locale: arg })
         })
+    },
+    getSwitchLine: function(){
+        return m("div", { 
+            class: "navbar-item has-dropdown"+(header.netLineOpen? ' is-active':'') , 
+            onmouseover: function(){
+                header.netLineOpen = true
+                gEVBUS.emit(gEVBUS.EV_OPEN_NET_SWITCH, {Ev: gEVBUS.EV_OPEN_NET_SWITCH, lines:header.netLineOpen})
+            },onmouseout: function(){
+                header.netLineOpen = false
+            }
+        }, [
+            m("a", {class: "navbar-item"}, [
+                m('span', {class: "icon "},[
+                    m('i', {class: "iconfont iconsignal", "aria-hidden": true })
+                ]),
+            ]),
+            m("div", { class: "navbar-dropdown" }, [
+                m(netLines)
+            ])
+        ])
     }
 }
 import headerLogo from '../../../tplibs/img/header-logo.png'
 import login from './userCenter/login'
+import netLines from './network/netLines'
 export default {
     oninit: function (vnode) {
 
