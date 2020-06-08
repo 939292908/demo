@@ -97,14 +97,16 @@ window.$message = function({title = gDI18n.$t('10037'/*'提示'*/), content = ''
 }
 //////////////////////////////////////////////////////////////////////
 
+window.onresize = function(arg){
+    // 判断是否是移动端
+    if(config.mobile){
+        window.isMobile = utils.isMobile()
+    }
+    gEVBUS.emit(gEVBUS.EV_ONRESIZE_UPD, {Ev: gEVBUS.EV_ONRESIZE_UPD})
+}
 // 判断是否是移动端
 if(config.mobile){
     window.isMobile = utils.isMobile()
-
-    window.onresize = function(arg){
-        window.isMobile = utils.isMobile()
-        gEVBUS.emit(gEVBUS.EV_ONRESIZE_UPD, {Ev: gEVBUS.EV_ONRESIZE_UPD})
-    }
 }
 
 

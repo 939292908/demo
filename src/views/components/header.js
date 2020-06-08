@@ -298,7 +298,7 @@ export default {
             header.getMenuCon()
         ])
     },
-    onbeforeremove: function (vnode) {
+    onremove: function (vnode) {
         header.rmEVBUS()
     },
 }

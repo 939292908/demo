@@ -186,7 +186,7 @@ export default {
             obj.getTabsActiveContent()
         ])
     },
-    onbeforeremove: function(){
+    onremove: function(){
         obj.rmEVBUS()
     }
 }

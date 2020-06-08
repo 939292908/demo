@@ -106,7 +106,7 @@ export default {
 
         return msg.getMessage()
     },
-    onbeforeremove: function () {
+    onremove: function () {
         msg.rmEVBUS()
     }
 }

@@ -470,7 +470,7 @@ export default {
           window.$config.loginType == 0?m(login):''
         ])
     },
-    onbeforeremove: function(){
+    onremove: function(){
       obj.rmEVBUS()
     }
 }

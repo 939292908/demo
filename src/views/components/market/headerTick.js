@@ -309,7 +309,7 @@ export default {
             spotTick.getRightTick()
         ])
     },
-    onbeforeremove: function(vnode) {
+    onremove: function(vnode) {
         spotTick.rmEVBUS()
     },
     

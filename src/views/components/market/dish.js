@@ -406,7 +406,7 @@ export default {
             ]),
         ])
     },
-    onbeforeremove: function(vnode) {
+    onremove: function(vnode) {
         dish.rmEVBUS()
     },
 }
