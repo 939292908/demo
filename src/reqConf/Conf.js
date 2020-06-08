@@ -11,16 +11,23 @@ class Conf  {
                 {
                     Id: 0,
                     Name:"测试线路1",
-                    WebAPI:"http://192.168.2.89:8888", //"http://gs.gmex.in:8888",
-                    WSMKT:"ws://192.168.2.85:20080/v1/market", //"ws://gs.gmex.in:20080/v1/market",
-                    WSTRD: "ws://192.168.2.85:50301/v1/trade", //"ws://gs.gmex.in:50301/v1/trade"
+                    WebAPI:"http://192.168.2.89:8888", 
+                    WSMKT:"ws://192.168.2.85:20080/v1/market", 
+                    WSTRD: "ws://192.168.2.85:50301/v1/trade", 
                 },
                 {
                     Id: 1,
-                    Name:"测试线路1",
-                    WebAPI:"http://192.168.2.89:8888", //"http://gs.gmex.in:8888",
-                    WSMKT:"ws://192.168.2.85:20080/v1/market", //"ws://gs.gmex.in:20080/v1/market",
-                    WSTRD: "ws://192.168.2.85:50301/v1/trade", //"ws://gs.gmex.in:50301/v1/trade"
+                    Name:"测试线路2",
+                    WebAPI:"http://192.168.2.89:8888", 
+                    WSMKT:"ws://192.168.2.85:20080/v1/market", 
+                    WSTRD: "ws://192.168.2.85:50301/v1/trade", 
+                },
+                {
+                    Id: 1,
+                    Name:"测试线路3",
+                    WebAPI:"http://gs.eeeecloud.com:8888", 
+                    WSMKT:"ws://gs.eeeecloud.com:20080/v1/market", 
+                    WSTRD: "ws://gs.eeeecloud.com:50301/v1/trade", 
                 }
             ]
         }
