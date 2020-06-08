@@ -9,17 +9,45 @@ import selectPos from './selectPos'
 
 let obj = {
     tabsActive: 0,
-    tabsList: [gDI18n.$t('10117'),gDI18n.$t('10118'),gDI18n.$t('10119'),gDI18n.$t('10120')],//['限价委托', '市价委托', '限价计划', '市价计划'],
+    tabsList: {
+        limitOrd: {
+            id: 0,
+            name: gDI18n.$t('10117'), //'限价委托'
+            open: true
+        },
+        marketOrd: {
+            id: 1,
+            name: gDI18n.$t('10118'), //'市价委托' 
+            open: true
+        },
+        limitPlan: {
+            id: 2,
+            name: gDI18n.$t('10119'), //'限价计划'
+            open: true
+        },
+        marketPlan: {
+            id: 3,
+            name: gDI18n.$t('10120'), //'市价计划'
+            open: true
+        },
+    },
     setTabsActive: function(param){
         this.tabsActive = param
     },
     getTabsList: function(){
-        return this.tabsList.map(function(item,i){
-            return m("li",{class:""+(obj.tabsActive == i?' is-active':'')},[
+        let that = this
+        let tabsList = Object.keys(this.tabsList)
+        // 根据配置筛选出需要现实的tab
+        tabsList = tabsList.filter(key =>{
+            return window.$config.future.placeOrder[key]
+        })
+        return tabsList.map(function(key,i){
+            let item = that.tabsList[key]
+            return m("li",{key: 'placeOrdTabsItem'+i, class:""+(obj.tabsActive == item.id?' is-active':'')},[
                 m("a",{key: "orderListTabsItem"+i, class:"a-button-pad", href:"javascript:void(0);", onclick: function(){
-                    obj.setTabsActive(i)
+                    obj.setTabsActive(item.id)
                 }},[
-                    item
+                    item.name
                 ])
             ])
         })
@@ -76,7 +104,28 @@ let obj = {
         }
     },
     initLanguage: function(){
-        this.tabsList = [gDI18n.$t('10117'),gDI18n.$t('10118'),gDI18n.$t('10119'),gDI18n.$t('10120')]
+        this.tabsList = {
+            limitOrd: {
+                id: 0,
+                name: gDI18n.$t('10117'), //'限价委托'
+                open: true
+            },
+            marketOrd: {
+                id: 1,
+                name: gDI18n.$t('10118'), //'市价委托' 
+                open: true
+            },
+            limitPlan: {
+                id: 2,
+                name: gDI18n.$t('10119'), //'限价计划'
+                open: true
+            },
+            marketPlan: {
+                id: 3,
+                name: gDI18n.$t('10120'), //'市价计划'
+                open: true
+            },
+        }
     }
 }
 export default {
