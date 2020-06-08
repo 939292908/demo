@@ -12,6 +12,13 @@ const config = {
         PrzLiqType: 0, // 仓位强平价计算公式选择，0: 默认，1: 默认公式中的MMR风险修改为MAX(MIRMy/2，MMR风险)
         maxPosNum: 10, // 同合约最大仓位数量
         setMIRMy: 1, // 全仓杠杠调节，0:关闭，1:开启
+        //下单面板类型开关,0:关闭，1:开启
+        placeOrder: {
+            limitOrd: 1,
+            marketOrd: 1,
+            limitPlan: 0,
+            marketPlan: 0,
+        }, 
     },
     views: {
         // type 0:默认， 1: 自定义
