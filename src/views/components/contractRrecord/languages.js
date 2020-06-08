@@ -107,7 +107,7 @@ export default {
         ]), 
         ])
     },
-    onbeforeremove:function (vnode) {
+    onremove:function (vnode) {
       languages.rmEVBUS()
     }
 }

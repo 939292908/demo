@@ -379,7 +379,7 @@ export default {
     ])
 
   },
-  onbeforeremove: function (vnode) {
+  onremove: function (vnode) {
     obj.rmEVBUS()
     window.$openLeverageMode = null
   },

@@ -141,7 +141,7 @@ export default {
             obj.getLinesDom()
         ])
     },
-    onbeforeremove: function(){
+    onremove: function(){
         obj.rmEVBUS()
     }
 }

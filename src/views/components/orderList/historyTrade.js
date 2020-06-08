@@ -361,7 +361,7 @@ export default {
             obj.getContent()
         ])
     },
-    onbeforeremove: function(){
+    onremove: function(){
         obj.rmEVBUS()
     }
 }

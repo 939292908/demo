@@ -405,7 +405,7 @@ export default {
             m(message)
         ])
     },
-    onbeforeremove: function () {
+    onremove: function () {
         main.rmEVBUS()
     }
 }

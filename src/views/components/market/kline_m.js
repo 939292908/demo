@@ -302,7 +302,7 @@ export default {
             ]),
         ])
     },
-    onbeforeremove: function(vnode) {
+    onremove: function(vnode) {
         spotTick.rmEVBUS()
     },
 }

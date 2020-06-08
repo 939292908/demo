@@ -1289,7 +1289,7 @@ export default {
             ])
         ])
     },
-    onbeforeremove: function (vnode) {
+    onremove: function (vnode) {
         if (window._chart) {
             klinecharts.dispose('tv_chart_container')
             window._chart = null

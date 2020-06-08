@@ -236,7 +236,7 @@ export default {
         ])
         
     },
-    onbeforeremove: function(vnode) {
+    onremove: function(vnode) {
         obj.rmEVBUS()
         obj.gt?obj.gt.destroy():''
     },
