@@ -11,6 +11,7 @@ window.utils = utils
 
 import config from './config'
 window.$config = config
+window.$theme = utils.getItem("theme") ? utils.getItem("theme") : config.theme
 //////////////////////////////////////////////////////////////////////
 
 // 多语言模块 start
@@ -20,6 +21,11 @@ window.gDI18n = new di18n()
 
 import Mkt from "./models/Mkt"
 import rt_conf from "./reqConf/rt"
+console.log(rt_conf.Mkt, rt_conf.Trd, rt_conf.Web)
+// window.updateNetLines = rt_conf.Conf.updateNetLines
+window.netConf = rt_conf.Conf
+window.netConf.updateNetLines()
+console.log(rt_conf)
 if (true) {
     let mkt = new Mkt(rt_conf.Mkt)
     window.gMkt = mkt    //全局变量
@@ -35,11 +41,12 @@ if (true) {
     }, 500)
 }
 
-import { API } from "./models/WebAPI"
+import API from "./models/WebAPI"
 if (true) {
-    window.gWebAPI = API
+    let instAPI = new API(rt_conf.Web)
+    window.gWebAPI = instAPI
     setInterval(function () {
-        API.stately.tick(API);
+        instAPI.stately.tick(instAPI);
     }, 100)
 }
 
@@ -50,6 +57,7 @@ import Driver from 'driver.js';
 import 'driver.js/dist/driver.min.css';
 window.gDriver = Driver
 //////////////////////////////////////////////////////////////////////
+
 
 //极验对象
 require("../tplibs/geetest/gt");

@@ -11,7 +11,7 @@ const EV_OPENLOGINMODE = "EV_OPENLOGINMODE"
 var m = require("mithril")
 let Stately = require('stately.js');
 
-import { Conf } from "../reqConf/Conf"
+import Conf from "../reqConf/Conf"
 import { RequestWarp } from "../libs/webcall"
 import config from '../config'
 
@@ -482,10 +482,18 @@ class CAPI {
     needLogin(){
         gEVBUS.emit(EV_OPENLOGINMODE,{})
     }
+
+
+    setWebApiUrl(param){
+        let s = this
+        s.CTX.Conf.WebAPI = param
+
+    }
 }
 
-let instAPI = new CAPI(Conf.GetActive())
-export { instAPI as API,CAPI }
+export default CAPI
+// let instAPI = new CAPI(Conf.GetActive())
+// export { instAPI as API,CAPI }
 
 
 

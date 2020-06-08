@@ -3,6 +3,7 @@ const config = {
     exchId: 0, //渠道ID
     loginType: 0, // 登录类型，0:默认,账号密码登录，1: token登录
     mobile: 1, // 是否适配移动端界面，0: 不适配，1: 开始适配
+    theme:"light",//白天主题：light  黑夜主题：dark
     langList: ['zh', 'en','tw'], //多语言显示列表
     symSort: {'BTC':1, 'ETH':2, 'BCH':3, 'XRP':4, 'EOS':5, 'ETC':6}, //合约列表排序
     future: {
@@ -12,6 +13,22 @@ const config = {
         PrzLiqType: 0, // 仓位强平价计算公式选择，0: 默认，1: 默认公式中的MMR风险修改为MAX(MIRMy/2，MMR风险)
         maxPosNum: 10, // 同合约最大仓位数量
         setMIRMy: 1, // 全仓杠杠调节，0:关闭，1:开启
+        //下单面板类型开关,0:关闭，1:开启
+        placeOrder: {
+            limitOrd: 1,
+            marketOrd: 1,
+            limitPlan: 1,
+            marketPlan: 1,
+        }, 
+        //交易相关列表开关,0:关闭，1:开启
+        orderList: {
+            pos: 1,
+            ord: 1,
+            plan: 1,
+            historyOrd: 1,
+            historyTrd: 1,
+            wlt: 1,
+        }, 
     },
     views: {
         // type 0:默认， 1: 自定义

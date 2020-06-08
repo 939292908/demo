@@ -8,8 +8,38 @@ import marketPlan from './marketPlan'
 import selectPos from './selectPos'
 
 let obj = {
-    tabsActive: 0,
-    tabsList: [gDI18n.$t('10117'),gDI18n.$t('10118'),gDI18n.$t('10119'),gDI18n.$t('10120')],//['限价委托', '市价委托', '限价计划', '市价计划'],
+    tabsActive: {
+        id: 0,
+        key: 'limitOrd',
+        name: gDI18n.$t('10117'), //'限价委托'
+        open: true
+    },
+    tabsList: {
+        limitOrd: {
+            id: 0,
+            key: 'limitOrd',
+            name: gDI18n.$t('10117'), //'限价委托'
+            open: true
+        },
+        marketOrd: {
+            id: 1,
+            key: 'marketOrd',
+            name: gDI18n.$t('10118'), //'市价委托' 
+            open: true
+        },
+        limitPlan: {
+            id: 2,
+            key: 'limitPlan',
+            name: gDI18n.$t('10119'), //'限价计划'
+            open: true
+        },
+        marketPlan: {
+            id: 3,
+            key: 'marketPlan',
+            name: gDI18n.$t('10120'), //'市价计划'
+            open: true
+        },
+    },
     tabsListOpen: false,
 
     //初始化全局广播
@@ -33,7 +63,32 @@ let obj = {
 
     },
     initLanguage: function(){
-        this.tabsList = [gDI18n.$t('10117'),gDI18n.$t('10118'),gDI18n.$t('10119'),gDI18n.$t('10120')]
+        this.tabsList = {
+            limitOrd: {
+                id: 0,
+                key: 'limitOrd',
+                name: gDI18n.$t('10117'), //'限价委托'
+                open: true
+            },
+            marketOrd: {
+                id: 1,
+                key: 'marketOrd',
+                name: gDI18n.$t('10118'), //'市价委托' 
+                open: true
+            },
+            limitPlan: {
+                id: 2,
+                key: 'limitPlan',
+                name: gDI18n.$t('10119'), //'限价计划'
+                open: true
+            },
+            marketPlan: {
+                id: 3,
+                key: 'marketPlan',
+                name: gDI18n.$t('10120'), //'市价计划'
+                open: true
+            },
+        }
     },
     rmEVBUS: function(){
         if(this.EV_ClICKBODY_unbinder){
@@ -42,20 +97,29 @@ let obj = {
     },
     setTabsActive: function(param){
         this.tabsActive = param
+        console
     },
     getTabsList: function(){
-        return this.tabsList.map(function(item,i){
-            return m("li",{class:""+(obj.tabsActive == i?' is-active':'')},[
-                m("a",{key: "orderListTabsItem"+i, class:"", href:"javascript:void(0);", onclick: function(){
-                    obj.setTabsActive(i)
+        let that = this
+        let tabsList = Object.keys(this.tabsList)
+        // 根据配置筛选出需要现实的tab
+        tabsList = tabsList.filter(key =>{
+            return window.$config.future.placeOrder[key]
+        })
+        return tabsList.map(function(key,i){
+            let item = that.tabsList[key]
+            return m('dev', {key: 'dropdown-item'+key+i, class: ""}, [
+                // m('hr', {class: "dropdown-divider "}),
+                m('a', { href: "javascript:void(0);", class: "dropdown-item"+(obj.tabsActive == item.id?' has-text-primary':''), onclick: function(){
+                    obj.setTabsActive(item)
                 }},[
-                    item
+                    item.name
                 ])
             ])
         })
     },
     getTabsActiveContent: function(){
-        switch(this.tabsActive){
+        switch(this.tabsActive.id){
             case 0: 
                 return m(limitOrd)
             case 1: 
@@ -88,19 +152,6 @@ let obj = {
             return null
         }
     },
-    getTabsList: function(){
-        return this.tabsList.map((item, i)=>{
-            return m('dev', {key: 'dropdown-item'+item+i, class: ""}, [
-                // m('hr', {class: "dropdown-divider "}),
-                m('a', { href: "javascript:void(0);", class: "dropdown-item"+(obj.tabsActive == i?' has-text-primary':''), onclick: function(){
-                    obj.setTabsActive(i)
-                }},[
-                    item
-                ])
-            ])
-            
-        })
-    }
 }
 export default {
     oninit: function(vnode){
@@ -112,19 +163,14 @@ export default {
     view: function(vnode) {
         
         return m("div",{class:"pub-place-order-m"},[
-            m("div",{class:"pub-place-order-tabs tabs is-small is-hidden-touch"},[
-                m("ul",[
-                    obj.getTabsList()
-                ])
-            ]),
-            m('div', {class: "dropdown pub-place-order-select is-hidden-desktop" + (obj.tabsListOpen?' is-active':'')}, [
+            m('div', {class: "dropdown pub-place-order-select" + (obj.tabsListOpen?' is-active':'')}, [
                 m('.dropdown-trigger', {}, [
                     m('button', {class: "button is-white is-fullwidth",'aria-haspopup':true, "aria-controls": "dropdown-menu2", onclick: function(e){
                         obj.tabsListOpen = !obj.tabsListOpen
                         window.stopBubble(e)
                     }}, [
                         m('div', {}, [
-                            m('span',{ class: ""}, obj.tabsList[obj.tabsActive]),
+                            m('span',{ class: ""}, obj.tabsList[obj.tabsActive.key].name),
                             m('span', {class: "icon "},[
                                 m('i', {class: "iconfont iconxiala has-text-primary", "aria-hidden": true })
                             ]),

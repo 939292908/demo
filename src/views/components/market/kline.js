@@ -5,6 +5,7 @@ var m = require("mithril")
 let obj = {
     Sym: '',
     Typ: '',
+    theme: window.$theme,
     targetList: [
         // {
         //     name: 'VOL',
@@ -235,6 +236,16 @@ let obj = {
             that.initLanguage()
         })
 
+        //监听主题变化
+        if(this.EV_THEME_UP_unbinder){
+            this.EV_THEME_UP_unbinder()
+        }
+        this.EV_THEME_UP_unbinder = window.gEVBUS.on(gEVBUS.EV_THEME_UP,arg=> {
+            // obj.theme = arg.data.theme
+            window.$theme = arg.data.theme
+            console.log(obj.theme)
+            obj.setKlineOptions()
+        })
         
 
         if(this.EV_ONRESIZE_UPD_unbinder){
@@ -244,8 +255,6 @@ let obj = {
             that.onResize()
         })
         
-
-
         if (window.addEventListener) {
             document.addEventListener('fullscreenchange', obj.fullScreenShange);
             document.addEventListener('webkitfullscreenchange', obj.fullScreenShange);
@@ -482,12 +491,34 @@ let obj = {
 
     },
     setKlineOptions: function(){
-        let lineColor = "#f4f4f4"
-        let fontPrimary = "#111"
-        let fontSecondary = "#8e8e8e"
-        let upColor = "#48c774"
-        let downColor = "#f14668"
-        let promptFont = "#f6f6f6"
+
+        // let lineColor = "#f4f4f4"
+        // let fontPrimary = "#111"
+        // let fontSecondary = "#8e8e8e"
+        // let upColor = "#48c774"
+        // let downColor = "#f14668"
+        // let promptFont = "#f6f6f6"
+        let lineColor = "";
+        let fontPrimary = "";
+        let fontSecondary = "";
+        let upColor = "";
+        let downColor = "";
+        let promptFont = "";
+        if(window.$theme == "light"){
+            lineColor = "#f4f4f4"
+            fontPrimary = "#111"
+            fontSecondary = "#8e8e8e"
+            upColor = "#48c774"
+            downColor = "#f14668"
+            promptFont = "#f6f6f6"
+        }else if(window.$theme == "dark"){
+            lineColor = "#f4f4f4"
+            fontPrimary = "#111"
+            fontSecondary = "#8e8e8e"
+            upColor = "#48c774"
+            downColor = "#f14668"
+            promptFont = "#f6f6f6"
+        }
         let fontSize = window.isMobile? 8: 12
         let options = {
             grid: {

@@ -6,6 +6,90 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "15101569",
+      "name": "白天",
+      "font_class": "baitian",
+      "unicode": "e600",
+      "unicode_decimal": 58880
+    },
+    {
+      "icon_id": "15101589",
+      "name": "下载",
+      "font_class": "xiazai",
+      "unicode": "e601",
+      "unicode_decimal": 58881
+    },
+    {
+      "icon_id": "14395551",
+      "name": "编辑",
+      "font_class": "etc-editName",
+      "unicode": "e603",
+      "unicode_decimal": 58883
+    },
+    {
+      "icon_id": "15101611",
+      "name": "卖盘",
+      "font_class": "maipan",
+      "unicode": "e602",
+      "unicode_decimal": 58882
+    },
+    {
+      "icon_id": "15101612",
+      "name": "买盘",
+      "font_class": "maipan1",
+      "unicode": "e604",
+      "unicode_decimal": 58884
+    },
+    {
+      "icon_id": "15101613",
+      "name": "买卖盘",
+      "font_class": "maimaipan",
+      "unicode": "e606",
+      "unicode_decimal": 58886
+    },
+    {
+      "icon_id": "14395557",
+      "name": "全屏",
+      "font_class": "fullScreen",
+      "unicode": "e609",
+      "unicode_decimal": 58889
+    },
+    {
+      "icon_id": "14395573",
+      "name": "信号",
+      "font_class": "signal",
+      "unicode": "e619",
+      "unicode_decimal": 58905
+    },
+    {
+      "icon_id": "14396187",
+      "name": "下拉",
+      "font_class": "xiala1",
+      "unicode": "e625",
+      "unicode_decimal": 58917
+    },
+    {
+      "icon_id": "14397009",
+      "name": "夜间",
+      "font_class": "night",
+      "unicode": "e62c",
+      "unicode_decimal": 58924
+    },
+    {
+      "icon_id": "1272654",
+      "name": "盒子",
+      "font_class": "box",
+      "unicode": "e63a",
+      "unicode_decimal": 58938
+    },
+    {
+      "icon_id": "9280776",
+      "name": "选择-√",
+      "font_class": "xuanze",
+      "unicode": "e664",
+      "unicode_decimal": 58980
+    },
+    {
       "icon_id": "12438340",
       "name": "全屏",
       "font_class": "quanping1",

@@ -4,7 +4,9 @@ let header = {
     islogin: false,
     userName: '',
     headerMenu: false,
-    theme: "light",
+    theme: window.$theme,//"light",
+    // 线路切换弹框
+    netLineOpen: false,
     initEVBUS: function () {
         let that = this
 
@@ -71,9 +73,17 @@ let header = {
     },
     // 设置主题
     setTheme: function () {
-        header.theme = header.theme == 'light' ? 'dark' : 'light'
-        localStorage.setItem("theme", header.theme)
+        // header.theme = header.theme == 'light' ? 'dark' : 'light'
+        header.theme = header.theme == "light" ? "dark" :"light"
+        
+        let theme = header.theme
+        // localStorage.setItem("theme", header.theme)
+        utils.setItem("theme", header.theme)
         document.querySelector('body').setAttribute('id', header.theme)
+        window.$message({ title: "主题设置成功", content: "主题设置成功", type: 'success' })
+
+
+        gEVBUS.emit(gEVBUS.EV_THEME_UP, {Ev: gEVBUS.EV_THEME_UP, data: {theme}})
     },
     getSwitchTheme: function () {
         return m("a", { class: "navbar-item", onclick: function () {
@@ -147,6 +157,7 @@ let header = {
         if (type == 0) {
             return m("div", { class: "navbar-menu" }, [
                 m("div", { class: "navbar-end" }, [
+                    header.getSwitchLine(),
                     header.getSwitchTheme(),
                     header.getChangeLangDom(),
                     header.getLoginDom()
@@ -242,17 +253,40 @@ let header = {
             console.log('change lang suc', arg)
             gEVBUS.emit(gDI18n.EV_CHANGELOCALE_UPD, { Ev: gDI18n.EV_CHANGELOCALE_UPD, locale: arg })
         })
+    },
+    getSwitchLine: function(){
+        return m("div", { 
+            class: "navbar-item has-dropdown"+(header.netLineOpen? ' is-active':'') , 
+            onmouseover: function(){
+                header.netLineOpen = true
+                gEVBUS.emit(gEVBUS.EV_OPEN_NET_SWITCH, {Ev: gEVBUS.EV_OPEN_NET_SWITCH, lines:header.netLineOpen})
+            },onmouseout: function(){
+                header.netLineOpen = false
+            }
+        }, [
+            m("a", {class: "navbar-item"}, [
+                m('span', {class: "icon "},[
+                    m('i', {class: "iconfont iconsignal", "aria-hidden": true })
+                ]),
+            ]),
+            m("div", { class: "navbar-dropdown" }, [
+                m(netLines)
+            ])
+        ])
     }
 }
 import headerLogo from '../../../tplibs/img/header-logo.png'
 import login from './userCenter/login'
+import netLines from './network/netLines'
+import utils from '../../utils/utils'
 export default {
     oninit: function (vnode) {
 
     },
     oncreate: function (vnode) {
         header.initEVBUS()
-        header.theme = localStorage.getItem("theme") == 'dark' ? 'dark' : 'light'
+        // header.theme = localStorage.getItem("theme") == 'dark' ? 'dark' : 'light'
+        header.theme = window.$theme?window.$theme : header.theme
         document.querySelector('body').setAttribute('id', header.theme)
     },
     view: function (vnode) {
