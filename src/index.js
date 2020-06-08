@@ -11,6 +11,7 @@ window.utils = utils
 
 import config from './config'
 window.$config = config
+window.$theme = utils.getItem("theme") ? utils.getItem("theme") : config.theme
 //////////////////////////////////////////////////////////////////////
 
 // 多语言模块 start
