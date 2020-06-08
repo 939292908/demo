@@ -16,8 +16,17 @@ const config = {
         placeOrder: {
             limitOrd: 1,
             marketOrd: 1,
-            limitPlan: 0,
-            marketPlan: 0,
+            limitPlan: 1,
+            marketPlan: 1,
+        }, 
+        //交易相关列表开关,0:关闭，1:开启
+        orderList: {
+            pos: 1,
+            ord: 1,
+            plan: 1,
+            historyOrd: 1,
+            historyTrd: 1,
+            wlt: 1,
         }, 
     },
     views: {
