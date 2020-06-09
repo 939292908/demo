@@ -23,7 +23,7 @@ class Conf  {
                     WSTRD: "ws://192.168.2.85:50301/v1/trade", 
                 },
                 {
-                    Id: 1,
+                    Id: 2,
                     Name:"测试线路3",
                     WebAPI:"http://gs.eeeecloud.com:8888", 
                     WSMKT:"ws://gs.eeeecloud.com:20080/v1/market", 
