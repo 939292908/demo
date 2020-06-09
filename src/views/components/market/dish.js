@@ -32,6 +32,7 @@ let dish = {
     dishType: 0, //0:买卖盘口，1:买盘盘口，2:卖盘盘口
     dishTypeList: [gDI18n.$t('10007'/*'买卖盘口'*/), gDI18n.$t('10008'/*'买盘盘口'*/), gDI18n.$t('10009'/*'卖盘盘口'*/)],
     dishTypeListOpen: false,
+    QuoteCoin: "", // 当前合约QuoteCoin
     //初始化全局广播
     initEVBUS: function(){
         let that = this
@@ -225,10 +226,14 @@ let dish = {
 
     //获取当前合约最新行情
     getLastTick: function(){
+        dish.getQuoteCoin() // 获取QuoteCoin
         let Sym = window.gMkt.CtxPlaying.Sym
         return this.lastTick[Sym] || {}
     },
-
+    // 获取QuoteCoin
+    getQuoteCoin () {
+        this.QuoteCoin = window.gMkt.AssetD[window.gMkt.CtxPlaying.Sym] ? window.gMkt.AssetD[window.gMkt.CtxPlaying.Sym].QuoteCoin : ""
+    },
     getOrder20ForSellList: function(){
         let order20ForSell = this.order20ForSell
         if(!order20ForSell) return ''
@@ -262,6 +267,8 @@ let dish = {
 
     getOrder20ForBuyList: function(){
         let order20ForBuy = this.order20ForBuy
+        // console.log("this.order20ForBuy",this.order20ForBuy);
+        
         if(!order20ForBuy) return ''
         return order20ForBuy.Bids.map(function(item,i){
             return m("div",{class:"pub-dish-list-item is-flex"},[
@@ -351,6 +358,11 @@ export default {
     view: function(vnode) {
         
         return m("div",{class:"pub-dish has-text-1"},[
+            m('div', { class: `pub-dish-top` }, [
+                m('p', { class: `pub-dish-top-pic` }, `价格 ${dish.QuoteCoin}`),
+                m('p', { class: `pub-dish-top-num` }, '数量'),
+                m('p', { class: `pub-dish-top-time` }, '总量')
+            ]),
             dish.getOrder20ForSellList(),
             m("div",{class:"pub-dish-tick"},[
                 m("div",{class:"is-flex"},[
