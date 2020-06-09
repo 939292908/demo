@@ -26,19 +26,21 @@ console.log(rt_conf.Mkt, rt_conf.Trd, rt_conf.Web)
 window.netConf = rt_conf.Conf
 window.netConf.updateNetLines()
 console.log(rt_conf)
+
+let Interval = process.env.BUILD_ENV == 'dev'?1000:50
 if (true) {
     let mkt = new Mkt(rt_conf.Mkt)
     window.gMkt = mkt    //全局变量
     setInterval(function () {
         mkt.stately.tick(mkt);
-    }, 1000)
+    }, Interval)
 }
 if (true) {
     let trd = new Mkt(rt_conf.Trd)
     window.gTrd = trd    //全局变量
     setInterval(function () {
         trd.stately.tick(trd);
-    }, 500)
+    }, Interval)
 }
 
 import API from "./models/WebAPI"
@@ -47,7 +49,7 @@ if (true) {
     window.gWebAPI = instAPI
     setInterval(function () {
         instAPI.stately.tick(instAPI);
-    }, 100)
+    }, Interval)
 }
 
 
