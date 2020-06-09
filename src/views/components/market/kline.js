@@ -5,7 +5,6 @@ var m = require("mithril")
 let obj = {
     Sym: '',
     Typ: '',
-    theme: window.$theme,
     targetList: [
         // {
         //     name: 'VOL',
@@ -241,9 +240,6 @@ let obj = {
             this.EV_THEME_UP_unbinder()
         }
         this.EV_THEME_UP_unbinder = window.gEVBUS.on(gEVBUS.EV_THEME_UP,arg=> {
-            // obj.theme = arg.data.theme
-            window.$theme = arg.data.theme
-            console.log(obj.theme)
             obj.setKlineOptions()
         })
         
@@ -491,7 +487,8 @@ let obj = {
 
     },
     setKlineOptions: function(){
-
+        let $color = window.themeColors
+        console.log(obj.theme,"主题类型")
         // let lineColor = "#f4f4f4"
         // let fontPrimary = "#111"
         // let fontSecondary = "#8e8e8e"
@@ -505,19 +502,19 @@ let obj = {
         let downColor = "";
         let promptFont = "";
         if(window.$theme == "light"){
-            lineColor = "#f4f4f4"
-            fontPrimary = "#111"
-            fontSecondary = "#8e8e8e"
-            upColor = "#48c774"
-            downColor = "#f14668"
-            promptFont = "#f6f6f6"
+            lineColor =  $color.line.lighten
+            fontPrimary = $color.font.lighten1
+            fontSecondary = $color.font.lighten1
+            upColor = $color.success.lighten1
+            downColor = $color.error.lighten1
+            promptFont = $color.font.lighten
         }else if(window.$theme == "dark"){
-            lineColor = "#f4f4f4"
-            fontPrimary = "#111"
-            fontSecondary = "#8e8e8e"
-            upColor = "#48c774"
-            downColor = "#f14668"
-            promptFont = "#f6f6f6"
+            lineColor =  $color.line.darken1
+            fontPrimary = $color.font.darken1
+            fontSecondary = $color.font.darken2
+            upColor = $color.success.darken1
+            downColor = $color.error.darken1
+            promptFont = $color.font.darken
         }
         let fontSize = window.isMobile? 8: 12
         let options = {

@@ -1410,6 +1410,10 @@ hr {
 
 // 白天模式
 #light {
+
+    .pub-kline hr{
+        background-color: $white-line2;
+    }
     @mixin tableStyle { // table
         .table {
             background-color: $white-background-color-second-level;
@@ -1656,6 +1660,13 @@ hr {
 
 // 黑夜模式
 #dark {
+
+    //k线样式
+    .pub-kline hr{
+        background-color: $black-line2;
+    }
+
+
     @mixin tableStyle { // table
         .table {
             background-color: $black-background-color-second-level;

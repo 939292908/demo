@@ -4,7 +4,6 @@ let header = {
     islogin: false,
     userName: '',
     headerMenu: false,
-    theme: window.$theme,//"light",
     // 线路切换弹框
     netLineOpen: false,
     initEVBUS: function () {
@@ -74,16 +73,16 @@ let header = {
     // 设置主题
     setTheme: function () {
         // header.theme = header.theme == 'light' ? 'dark' : 'light'
-        header.theme = header.theme == "light" ? "dark" :"light"
+        window.$theme = window.$theme == "light" ? "dark" :"light"
         
         let theme = header.theme
         // localStorage.setItem("theme", header.theme)
-        utils.setItem("theme", header.theme)
-        document.querySelector('body').setAttribute('id', header.theme)
+        utils.setItem("theme", window.$theme)
+        document.querySelector('body').setAttribute('id', window.$theme)
         window.$message({ title: "主题设置成功", content: "主题设置成功", type: 'success' })
 
 
-        gEVBUS.emit(gEVBUS.EV_THEME_UP, {Ev: gEVBUS.EV_THEME_UP, data: {theme}})
+        gEVBUS.emit(gEVBUS.EV_THEME_UP, {Ev: gEVBUS.EV_THEME_UP, data: {theme:window.$theme}})
     },
     getSwitchTheme: function () {
         return m("a", { class: "navbar-item", onclick: function () {
