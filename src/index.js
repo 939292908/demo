@@ -20,19 +20,21 @@ window.gDI18n = new di18n()
 
 import Mkt from "./models/Mkt"
 import rt_conf from "./reqConf/rt"
+
+let Interval = process.env.BUILD_ENV == 'dev'?1000:50
 if (true) {
     let mkt = new Mkt(rt_conf.Mkt)
     window.gMkt = mkt    //全局变量
     setInterval(function () {
         mkt.stately.tick(mkt);
-    }, 1000)
+    }, Interval)
 }
 if (true) {
     let trd = new Mkt(rt_conf.Trd)
     window.gTrd = trd    //全局变量
     setInterval(function () {
         trd.stately.tick(trd);
-    }, 500)
+    }, Interval)
 }
 
 import { API } from "./models/WebAPI"
@@ -40,7 +42,7 @@ if (true) {
     window.gWebAPI = API
     setInterval(function () {
         API.stately.tick(API);
-    }, 100)
+    }, Interval)
 }
 
 
