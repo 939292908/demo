@@ -128,19 +128,19 @@ hr {
             .pub-layout-content-left-kline {
                 @extend %pa-2;
                 width: calc(100% - 350px);
-                height: 605px;
+                height: 636px;
             }
 
             .pub-layout-content-left-dish {
                 @extend %pa-2;
                 width: 350px;
-                height: 605px;
+                height: 636px;
             }
 
             .pub-layout-content-left-list {
                 @extend %pa-2;
                 width: 100%;
-                height: calc(100% - 605px);
+                height: calc(100% - 636px);
             }
         }
 
@@ -355,6 +355,14 @@ hr {
 //盘口相关样式 start
 
 .pub-dish {
+    .pub-dish-top {
+        display: flex;
+        justify-content: space-between;
+        @extend %ma-0;
+        @extend %py-2;
+        @extend %px-3;
+        @extend %font-2;
+    }
     .pub-dish-list-item {
         @extend %ma-0;
         @extend %py-2;
@@ -438,6 +446,15 @@ hr {
 
 //最新成交相关样式 start
 .pub-new-trade {
+
+    .pub-new-trade-top {
+        display: flex;
+        justify-content: space-between;
+        @extend %ma-0;
+        @extend %py-2;
+        @extend %px-3;
+        @extend %font-2;
+    }
     .pub-new-trade-list {
         .pub-new-trade-list-item {
             @extend %ma-0;
