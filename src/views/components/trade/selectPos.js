@@ -56,11 +56,11 @@ let obj = {
     let that = this
     let Poss = window.gTrd.Poss
     let posList = []
+    let UPNLPrzActive = window.$config.future.UPNLPrzActive
     this.posList_obj = {}
     for(let key in Poss){
       let pos = Poss[key]
       let ass = window.gMkt.AssetD[pos.Sym]
-      let UPNLPrzActive = window.$config.future.UPNLPrzActive
       let _obj = utils.getPosInfo(pos, ass,UPNLPrzActive)
       if(_obj && _obj.Sym == window.gMkt.CtxPlaying.Sym){
         posList.push(_obj)
