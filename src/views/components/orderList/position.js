@@ -139,10 +139,11 @@ let obj = {
   initObj(){
     let Poss =window.gTrd.Poss
     let posList = []
+    let UPNLPrzActive = window.$config.future.UPNLPrzActive
     for(let key in Poss){
       let pos = Poss[key]
       let ass = window.gMkt.AssetD[pos.Sym]
-      let obj = utils.getPosInfo(pos, ass)
+      let obj = utils.getPosInfo(pos, ass,UPNLPrzActive)
       if(obj && obj.Sz != 0){
         posList.push(obj)
       }

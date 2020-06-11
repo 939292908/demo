@@ -149,7 +149,8 @@ let obj = {
     let MIRMy = param.MIRMy
     let needReq = param.needReq
     let ass = window.gMkt.AssetD[Sym]
-    let pos = utils.getPosInfo(window.gTrd.Poss[PId], ass)
+    let UPNLPrzActive = window.$config.future.UPNLPrzActive
+    let pos = utils.getPosInfo(window.gTrd.Poss[PId], ass,UPNLPrzActive)
 
     let maxLever = ass?1/ass.MIR:0
     if(Lever == 0){

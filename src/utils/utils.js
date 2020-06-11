@@ -556,7 +556,7 @@ utils.getStopPLByStr = function(dir){
  * @pos 仓位数据信息
  * @assetD 仓位对应合约的合约详情
  */
-utils.getPosInfo = function(pos,assetD){
+utils.getPosInfo = function(pos,assetD,UPNLPrzActive){
     if(assetD){
         let obj = {}
         this.copyTab(obj, pos)
@@ -584,7 +584,7 @@ utils.getPosInfo = function(pos,assetD){
         //仓位保证金
         obj.aMM = Number(obj.aMM || 0)> 1000?Number(obj.aMM || 0).toFixed2(4):Number(obj.aMM || 0).toPrecision2(6,8)
         //未实现盈亏
-        let UPNL = (obj.aUPNLforM  || 0)// 1?(obj.aUPNLforLast || 0):(obj.aUPNLforM  || 0)
+        let UPNL = UPNLPrzActive?(obj.aUPNLforLast || 0):(obj.aUPNLforM  || 0)
         obj.aUPNL = Number(UPNL)> 1000?Number(UPNL).toFixed2(4):Number(UPNL).toPrecision2(6,8)
         obj.UPNLColor = Number(UPNL)>0?1:Number(UPNL)<0?-1:0
         // 已实现盈亏
