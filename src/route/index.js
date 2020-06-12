@@ -11,6 +11,7 @@ import deal from '../views/components/contractRrecord/historicalDeal'
 import contractbill from '../views/components/contractRrecord/contractBill'
 import details from '../views/components/contractRrecord/details'
 import languages from '../views/components/contractRrecord/languages'
+import switchLines from '../views/components/contractRrecord/switchLines'
 
 const defaultRoutePath = "/future"
 
@@ -44,7 +45,11 @@ m.route(document.body, defaultRoutePath,{
         render:function (vnode){
             return m(languages,vnode.attrs)
         },
-
+    },
+    "/switchLines": {
+        render:function (vnode){
+            return m(switchLines,vnode.attrs)
+        },
     },
 })
 class router {

@@ -793,5 +793,12 @@ utils.getOrderFrom = function(Via) {
         return gDI18n.$t('10404');//"用户委托"
     }
 }
+// 设置主题
+utils.switchTheme = function () {
+    window.$theme = window.$theme == "light" ? "dark" :"light"
+    utils.setItem("theme", window.$theme)
+    document.querySelector('body').setAttribute('id', window.$theme)
+    return Promise.resolve( window.$theme )
+}
 
 export default utils

@@ -169,11 +169,9 @@ export default {
                         obj.tabsListOpen = !obj.tabsListOpen
                         window.stopBubble(e)
                     }}, [
-                        m('div', {}, [
+                        m('div.is-between', {}, [
                             m('span',{ class: ""}, obj.tabsList[obj.tabsActive.key].name),
-                            m('span', {class: "icon "},[
-                                m('i', {class: "iconfont iconxiala has-text-primary", "aria-hidden": true })
-                            ]),
+                            m('i', {class: "iconfont iconxiala has-text-primary", "aria-hidden": true })
                         ])
                     ]),
                 ]),

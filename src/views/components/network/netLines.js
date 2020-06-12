@@ -46,6 +46,7 @@ let obj = {
         this.netLines = window.netConf.GetLines().netLines
         this.apiResponseSpeed = []
         this.wsResponseSpeed = []
+        m.redraw()
         // this.testTick()
     },
     getLinesDom: function(){
@@ -90,9 +91,11 @@ let obj = {
             testItem.test().then(net => {
                 // vm.$set(this.wsResponseSpeed, i, net.duration);
                 that.wsResponseSpeed[i] = net.duration;
+                m.redraw()
                 console.log('----------ws test ok speeds----------: ', net.duration, net.name, that.wsResponseSpeed);
             }).catch(net => {
                 that.wsResponseSpeed[i] = '--';
+                m.redraw()
                 console.log('----------ws test CANCEL speeds----------: ', net.duration, net.name, that.wsResponseSpeed);
             });
             testWsList.push(testItem)
@@ -113,9 +116,11 @@ let obj = {
             netSpeed.test().then(net => {
                 // vm.$set(this.apiResponseSpeed, i, net.duration);
                 that.apiResponseSpeed[i] = net.duration;
+                m.redraw()
                 console.log('**********api test ok speeds*********: ', net.duration, net.name, i, that.apiResponseSpeed);
             }).catch(net => {
                 that.apiResponseSpeed[i] = '--';
+                m.redraw()
                 console.log('**********api test CANCEL speeds*********: ', net.duration, net.name, i, that.apiResponseSpeed);
             });
         }

@@ -799,7 +799,7 @@ let obj = {
         }
         if(show){
             return m('div', { class: 'pub-place-order-form-stop-pl field' }, [
-                m("label", { class: "pub-place-order-form-stop-pl-label label" }, [
+                m("label", { class: "pub-place-order-form-stop-pl-label label has-text-2" }, [
                     gDI18n.$t('10149')//'止盈止损设置（选填）'
                 ]),
                 m("div", { class: "pub-place-order-form-stop-pl-input field has-addons" }, [
