@@ -393,7 +393,7 @@ let obj = {
         if(window.isMobile){
             return timeList.map((key, i) =>{
                 let item = that.timeList[key]
-                return m('button', {key: "klineTimeListItem"+i,class: "button is-white"+(obj.Typ == item.name?' has-text-primary':''), onclick: function(){
+                return m('button', {key: "klineTimeListItem"+i,class: "button is-background-2 has-text-2"+(obj.Typ == item.name?' has-text-primary':''), onclick: function(){
                     obj.setKCrossTime(item.name)
                 }}, [
                     item.title
@@ -411,7 +411,7 @@ let obj = {
         }else{
             return timeList.map((key, i) =>{
                 let item = that.timeList[key]
-                return m('button', {key: "klineTimeListItemForPC"+i,class: "button is-white is-flex-fullhd"+(obj.Typ == item.name?' has-text-primary':''), onclick: function(){
+                return m('button', {key: "klineTimeListItemForPC"+i,class: "button is-background-2 has-text-2 is-flex-fullhd"+(obj.Typ == item.name?' has-text-primary':''), onclick: function(){
                     obj.setKCrossTime(item.name)
                 }}, [
                     item.title
@@ -427,7 +427,7 @@ let obj = {
         if(window.isMobile){
             return timeList.map((key, i) =>{
                 let item = that.targetList[key]
-                return m('button', {key: "klineTimeListItem"+i,class: "button"+(obj.targetActive.name == item.name?' has-text-primary':''), onclick: function(){
+                return m('button', {key: "klineTimeListItem"+i,class: "button is-background-2 has-text-2"+(obj.targetActive.name == item.name?' has-text-primary':''), onclick: function(){
                     obj.createTarget(item)
                     
                 }}, [
@@ -1206,7 +1206,7 @@ export default {
                         obj.klineTimeListOpen = !obj.klineTimeListOpen
                         window.stopBubble(e)
                     }}, [
-                        m('button', {class:"button kline-index-pad is-selected"+(obj.klineTimeListOpen?' has-text-primary':'')}, [
+                        m('button', {class:"button kline-index-pad is-selected is-background-3 has-text-2"+(obj.klineTimeListOpen?' has-text-primary':'')}, [
                             gDI18n.$t('10023'),//'分时'
                             m('.spacer'),
                             m('span', {class:"icon"}, [
@@ -1220,19 +1220,19 @@ export default {
                         ]),
                     ]),
                 ]),
-                m('button', {class:"button kline-index-pad is-selected"+(obj.Typ == '1m'?' has-text-primary':''), onclick: function(){
+                m('button', {class:"button kline-index-pad is-selected is-background-3 has-text-2"+(obj.Typ == '1m'?' has-text-primary':''), onclick: function(){
                     obj.setKCrossTime('1m')
                     // obj.klineTimeListOpen = false
                 }}, [
                     gDI18n.$t('10442')//'1分'
                 ]),
-                m('button', {class:"button kline-index-pad is-selected"+(obj.Typ == '30m'?' has-text-primary':''), onclick: function(){
+                m('button', {class:"button kline-index-pad is-selected is-background-3 has-text-2"+(obj.Typ == '30m'?' has-text-primary':''), onclick: function(){
                     obj.setKCrossTime('30m')
                     // obj.klineTimeListOpen = false
                 }}, [
                     gDI18n.$t('10443')//'30分'
                 ]),
-                m('button', {class:"button kline-index-pad is-selected"+(obj.Typ == '1h'?' has-text-primary':''), onclick: function(){
+                m('button', {class:"button kline-index-pad is-selected is-background-3 has-text-2"+(obj.Typ == '1h'?' has-text-primary':''), onclick: function(){
                     obj.setKCrossTime('1h')
                     // obj.klineTimeListOpen = false
                 }}, [
@@ -1244,7 +1244,7 @@ export default {
                         obj.klineTargetListOpen = !obj.klineTargetListOpen
                         window.stopBubble(e)
                     }}, [
-                        m('button', {class:"button kline-index-pad is-selected"}, [
+                        m('button', {class:"button kline-index-pad is-selected is-background-3 has-text-2"}, [
                             obj.targetActive.name || gDI18n.$t('10435'), //'指标'
                             m('.spacer'),
                             m('span', {class:"icon"}, [
@@ -1268,7 +1268,7 @@ export default {
                         obj.klineTimeListOpen = !obj.klineTimeListOpen
                         window.stopBubble(e)
                     }}, [
-                        m('button', {class:"button is-white"}, [
+                        m('button', {class:"button is-background-2 has-text-2"}, [
                             obj.timeList[obj.Typ] && obj.timeList[obj.Typ].title || '时间',
                             m('.spacer'),
                             m('span', {class:"icon"}, [
@@ -1288,7 +1288,7 @@ export default {
                         obj.klineTargetListOpen = !obj.klineTargetListOpen
                         window.stopBubble(e)
                     }}, [
-                        m('button', {class:"button is-white"}, [
+                        m('button', {class:"button is-background-2 has-text-2"}, [
                             obj.targetActive.name || gDI18n.$t('10435'), //'指标'
                             m('.spacer'),
                             m('span', {class:"icon"}, [
@@ -1303,7 +1303,7 @@ export default {
                     ]),
                 ]),
                 m('span',{class:"has-text-2"}, ['|']),
-                m('button', {class:"button is-white", onclick: function(){
+                m('button', {class:"button is-background-2 has-text-2", onclick: function(){
                     obj.setFullscreen();
                 }}, [
                     m('span', {class:"icon"}, [

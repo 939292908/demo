@@ -15,7 +15,7 @@ export default {
 
     },
     view:function(vnode){
-        return m("div",{class:""},[
+        return m("div",{class:"historical-delegation"},[
             m(historyOrd),
             m(message)
           ])

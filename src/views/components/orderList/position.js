@@ -265,7 +265,7 @@ let obj = {
               m("i",{class:"iconfont iconotc-editName iconfont-medium"+(btnsOpen.leverage.positionList?'':' is-hidden')}),
             ]),
           ]),
-          m('div', { class: 'pub-pos-m-content content is-flex has-text-2' }, [
+          m('div', { class: 'pub-pos-m-content content is-flex' }, [
             m('div', {}, [
               m('p', {}, [
                 gDI18n.$t('10099')//'持仓数量(张)'

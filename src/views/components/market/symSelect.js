@@ -255,7 +255,7 @@ let symSelect = {
                         }}, [
                             m('span',{ class: ""}, utils.getSymDisplayName(window.gMkt.AssetD, window.gMkt.CtxPlaying.Sym)),
                             m('span', {class: "icon "},[
-                                m('i', {class: "iconfont iconxiala has-text-primary", "aria-hidden": true })
+                                m('i', {class: "iconfont iconxiala has-text-primary is-size-6", "aria-hidden": true })
                             ]),
                         ]),
                     ]),

@@ -120,6 +120,9 @@ window.themeColors = theme
 //路由
 require('./route');
 
+document.querySelector('body').setAttribute('id', window.$theme) // 设置主题
+
+
 
 
 

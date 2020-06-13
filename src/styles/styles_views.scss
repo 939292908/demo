@@ -11,7 +11,10 @@ $tradingview-bg: #e7ebee;
 //自定义变量 end
 
 //html标签样式覆盖 start
-html,
+html {
+    height: 100%;
+}
+
 body {
     min-height: 100%;
 }
@@ -170,6 +173,7 @@ hr {
     // z-index: 1;
 
     .navbar-item {
+        position: static;
         .iconfont {
             @extend %iconfont-large;
         }
@@ -1131,7 +1135,6 @@ hr {
 
                     .pub-pos-m-content-header {
                         @extend %mb-3;
-                        @extend .has-text-1;
                         display: flex;
                         align-items: center;
                         > * {
@@ -1781,6 +1784,13 @@ hr {
             color: $white-font-color-conent;
         }
     }
+    // 手机 card 
+    .pub-layout-m {
+        .card {
+            @extend .is-background-2;
+            @extend .has-text-2;
+        }
+    }
 }
 
 // 黑夜模式
@@ -2062,6 +2072,13 @@ hr {
     .pub-wallet-box {
         .pub-transfer {
             color: $black-font-color-conent;
+        }
+    }
+    // 手机 card 
+    .pub-layout-m {
+        .card {
+            @extend .is-background-2;
+            @extend .has-text-2;
         }
     }
 }

@@ -1,40 +1,50 @@
 var m = require("mithril")
 // {
-//     class: "", // 添加类名
-//     type : true, // 可自定义初始化type
-//     onclick (type) {}, // 点击事件 type 为switch状态
+//  onLeftClick: fn, // 左 click
+//  onCenterClick: fn, // 中 click
+//  onRightClick: fn, // 右 click
+//  slot: {
+//     left: [], // 左 插槽
+//     center: [], // 中 插槽
+//     right: [], // 右 插槽
+//     menu: [] // 菜单 插槽
+//  }
 // }
 export default {
+    onLeftClick (vnode) { // 左 click
+        vnode.attrs.onLeftClick && vnode.attrs.onLeftClick()
+        router.back()
+    },
+    onCenterClick (vnode) { // 中 click
+        vnode.attrs.onCenterClick && vnode.attrs.onCenterClick()
+    },
+    onRightClick (vnode) { // 右 click
+        vnode.attrs.onRightClick && vnode.attrs.onRightClick()
+    },
 
     oninit (vnode) {
     },
     oncreate (vnode) {
     },
     view (vnode) {
-        return m("nav",{class:"pub-layout-m-header is-fixed-top navbar is-transparent", role:"navigation", "aria-label":"main navigation"},[
-            m('div', {class:"navbar-brand is-flex"}, [
-                m('a', {class:"navbar-item"}, [
-                    m('a', {class:"", onclick () {
-                        router.back()
-                    }}, [
-                    m('span', {class:"icon icon-right-i"}, [
-                        m('i', {class:"iconfont iconarrow-left  has-text-black"}),
-                    ]),
-                    ]),
-                ]),
-                m('.spacer'),
-                m("p",{class : "delegation-list-phistory navbar-item has-text-black"},[
-                    "6666"
-                    ]),
-                m('.spacer'),
-                m('a', {class:"navbar-item"}, [
-                    m('a', {class:"icon icon-right-i navbar-item transform-for-icon",onclick: function(){
-                        // obj.setType = true
-                    }}, [
-                        m('i', {class:"iconfont icontoolbar-side"}),
-                    ]),
-                ]),
+        // 手机端头部
+        return m("nav", { class: "pub-layout-m-header is-fixed-top navbar", role: "navigation", "aria-label": "main navigation" }, [
+            m('div', { class: "navbar-brand is-between has-text-1" }, [
+                // 左
+                m('a', { class: "navbar-item", onclick: () => this.onLeftClick(vnode) },
+                    vnode.attrs.slot ? vnode.attrs.slot.left ? vnode.attrs.slot.left : m('i', { class: "iconfont iconarrow-left" }) : m('i', { class: "iconfont iconarrow-left" })
+                ),
+                // 中
+                m("a", { class: "navbar-item is-size-5", onclick: () => this.onCenterClick(vnode) },
+                    vnode.attrs.slot ? vnode.attrs.slot.center ? vnode.attrs.slot.center : "" : ""
+                ),
+                // 右
+                m('a', { class: "navbar-item", onclick: () => this.onRightClick(vnode) },
+                    vnode.attrs.slot ? vnode.attrs.slot.right ? vnode.attrs.slot.right : "" : ""
+                ),
             ]),
+            // 菜单
+            vnode.attrs.slot ? vnode.attrs.slot.menu ? vnode.attrs.slot.menu : "" : ""
         ])
     },
     onbeforeremove (vnode) {

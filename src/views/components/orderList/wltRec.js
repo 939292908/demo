@@ -1,4 +1,7 @@
 var m = require("mithril")
+// Header
+import Header from "../common/Header_m"
+
 let obj = {
     list: [],
     setType : false,
@@ -103,6 +106,13 @@ let obj = {
             that.getHistoryList()
         })
 
+        //assetD合约详情全局广播
+        if (this.EV_ASSETD_UPD_unbinder) {
+            this.EV_ASSETD_UPD_unbinder()
+        }
+        this.EV_ASSETD_UPD_unbinder = window.gEVBUS.on(gMkt.EV_ASSETD_UPD, arg => {
+            that.initObj()
+        })
     },
     initLanguage: function(){
         this.theadList = [
@@ -179,6 +189,9 @@ let obj = {
         if (this.EV_WEB_LOGOUT_unbinder) {
             this.EV_WEB_LOGOUT_unbinder()
         }
+        if (this.EV_ASSETD_UPD_unbinder) {
+            this.EV_ASSETD_UPD_unbinder()
+        }
     },
     getHistoryList: function () {
         let that = this
@@ -252,7 +265,7 @@ let obj = {
             this.list = newList
             console.log(newList,"币种名称和类型选择后数据")
         }
-
+        m.redraw()
     },
     getTheadItem: function () {
         return this.theadList.map(function (item, i) {
@@ -314,7 +327,7 @@ let obj = {
     getTabsList: function(){
         return this.tabsList.map(function(item,i){
             return m("p",{class:"a-text-left"+(obj.tabsActive == i?' is-active':'')},[
-                m("a",{class:"has-text-black",key: "orderListTabsItem"+i, class:"", href:"javascript:void(0);", onclick: function(){
+                m("a",{class:"has-text-1",key: "orderListTabsItem"+i, class:"", href:"javascript:void(0);", onclick: function(){
                     obj.setTabsActive(i)
                     obj.tabsListOpen = !obj.tabsListOpen
                     obj.getOptions(obj.tabsList[obj.tabsActive])
@@ -355,7 +368,7 @@ let obj = {
                 ]),
                 m("section", { class: "pub-set-lever-content modal-card-body modal-card-body-list" }, [
                     m("div",{class : "search-bi-name"},[
-                        m("p",{class : "search-bi-name-p"},[
+                        m("p",{class : "search-bi-name-p has-text-2"},[
                             gDI18n.$t('10466')//"币种名称"
                         ]),
                         m("div",{class:" pub-place-order-m pub-order-m"},[
@@ -382,7 +395,7 @@ let obj = {
 
                     ]),
                     m("div",{class : "search-bi-name"},[
-                        m("p",{class : "search-bi-name-p"},[
+                        m("p",{class : "search-bi-name-p has-text-2"},[
                             gDI18n.$t('10102')//"类型"
                         ]),
                         m("div",{class : "search-k-d"},[
@@ -417,34 +430,19 @@ let obj = {
     },
     getContentList: function () {
         return m("div",{class : "delegation-list"},[
-            m("div",{class : "delegation-list-header"},[
-                m("nav",{class:"pub-layout-m-header is-fixed-top navbar is-transparent", role:"navigation", "aria-label":"main navigation"},[
-                    m('div', {class:"navbar-brand is-flex"}, [
-                        m('a', {class:"navbar-item"}, [
-                            m('a', {class:"",onclick :function(){
-                                obj.resetNavDrawerInfo()
-                                router.back()
-                            }}, [
-                                m('span', {class:"icon icon-right-i"}, [
-                                    m('i', {class:"iconfont iconarrow-left has-text-black"}),
-                                ]),
-                            ]),
-                        ]),
-                        m('.spacer'),
-                        m("p",{class : "delegation-list-phistory navbar-item has-text-black"},[
-                            gDI18n.$t('10079')//"合约账单"
-                            ]),
-                        m('.spacer'),
-                        m('a', {class:"navbar-item"}, [
-                            m('a', {class:"icon icon-right-i navbar-item transform-for-icon",onclick: function(){
-                                obj.setType = true
-                            }}, [
-                                m('i', {class:"iconfont icontoolbar-side"}),
-                            ]),
-                        ]),
-                    ]),
-                ]),
-            ]),
+            // 头部
+            m(Header, {
+                onLeftClick () {
+                    obj.resetNavDrawerInfo()
+                },
+                onRightClick () {
+                    obj.setType = true
+                },
+                slot: {
+                    center: gDI18n.$t('10079'),//"合约账单"
+                    right: m('i', { class: "iconfont icontoolbar-side" })
+                }
+            }),
             // 搜索框
             obj.getSelectOptions(),
 
@@ -454,13 +452,13 @@ let obj = {
                 return m("div",{ key: "historyOrdtHeadItem" + i, class: "card"},[
                     m("div",{class : "card-content mobile-list"},[
                     //顶部排列
-                    m("div",{class : "mobile-div has-text-black"},[
+                    m("div",{class : "mobile-div has-text-1"},[
                         item.Coin,
-                        m("span",{class : "mobile-font has-text-black"},[
+                        m("span",{class : "mobile-font has-text-1"},[
                         item.ViaStr 
                         ]),
                     ]),
-                    m("hr",{class :""}),
+                    m("hr",{class :"is-primary"}),
                     //底部排列
                     m("div",{class : "theadList-profit-loss" },[
                         m("div",{class  : "theadList-profit-loss-p1"},[

@@ -794,10 +794,16 @@ utils.getOrderFrom = function(Via) {
     }
 }
 // 设置主题
-utils.switchTheme = function () {
-    window.$theme = window.$theme == "light" ? "dark" :"light"
-    utils.setItem("theme", window.$theme)
+utils.switchTheme = function ( theme ) {
+    // 传参:指定主题  不传:切换主题
+    if (theme) {
+        window.$theme = theme
+    } else {
+        window.$theme = window.$theme == "light" ? "dark" :"light"
+    }
     document.querySelector('body').setAttribute('id', window.$theme)
+    utils.setItem("theme", window.$theme)
+
     return Promise.resolve( window.$theme )
 }
 

@@ -200,7 +200,7 @@ export default {
     },
     view: function (vnode) {
 
-        return m("div", { class: "pub-new-trade" }, [
+        return m("div", { class: "pub-new-trade has-text-1" }, [
             m('div', { class: `pub-new-trade-top` }, [
                 m('p', { class: `pub-new-trade-top-pic` }, `价格 ${obj.QuoteCoin}`),
                 m('p', { class: `pub-new-trade-top-num` }, '数量'),

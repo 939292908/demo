@@ -284,9 +284,7 @@ export default {
     },
     oncreate: function (vnode) {
         header.initEVBUS()
-        // header.theme = localStorage.getItem("theme") == 'dark' ? 'dark' : 'light'
         header.theme = window.$theme?window.$theme : header.theme
-        document.querySelector('body').setAttribute('id', header.theme)
     },
     view: function (vnode) {
 

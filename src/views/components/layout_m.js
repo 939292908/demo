@@ -23,6 +23,8 @@ import selectPos from './trade/selectPos'
 import klineM from "./market/kline_m"
 // switch开关
 import Switch from "./common/Switch"
+// Header
+import Header from "./common/Header_m"
 
 let obj = {
     oldSubArr: [],
@@ -349,6 +351,91 @@ let obj = {
 
         }
     },
+    // 头部下拉菜单
+    getMenu () {
+        return m("div", { class: "pub-layout-m-header-menu navbar-menu is-hidden-desktop is-background-2" + (obj.leftMenu ? ' is-active' : ' is-hidden') }, [
+            m("div", { class: "navbar-end" }, [
+                m("aside", { class: "menu" + (window.$config.loginType == 0 ? "" : " is-hidden") }, [
+                    obj.getUserInfoCon()
+                ]),
+                m('hr', { class: "is-primary" + (window.$config.loginType == 0 ? "" : " is-hidden") }),
+                m("div", { class: "navbar-item has-dropdown is-hoverable" }, [
+                    m("a", {
+                        class: "navbar-link ", onclick: function () {
+                            return false;
+                        }
+                    }, [
+                        gDI18n.$t('10236')//'合约记录'
+                    ]),
+                    m("div", { class: "navbar-dropdown" }, [
+                        m("a", {
+                            class: "navbar-item", onclick: function () {
+                                router.push('/delegation')
+                            }
+                        }, [
+                            gDI18n.$t('10077')//'历史委托'
+                        ]),
+                        m("a", {
+                            class: "navbar-item", onclick: function () {
+                                router.push('/deal')
+                            }
+                        }, [
+                            gDI18n.$t('10237')//'历史成交'
+                        ]),
+                        m("a", {
+                            class: "navbar-item", onclick: function () {
+                                router.push('/contractbill')
+                            }
+                        }, [
+                            gDI18n.$t('10079')//'合约账单'
+                        ]),
+                    ]),
+                    m("a", {
+                        class: "navbar-link", onclick: function () {
+                            return false;
+                        }
+                    }, [
+                        gDI18n.$t('10464')//'设置'
+                    ]),
+                    m("div", { class: "navbar-dropdown" }, [
+                        m("a", {
+                            class: "navbar-item", onclick: function () {
+                                router.push('/setlanguages')
+                            }
+                        }, [
+                            gDI18n.$t('10434')//"切换语言"
+                        ]),
+                        m("a", {
+                            class: "navbar-item", onclick: function () {
+                                router.push('/switchLines')
+                            }
+                        }, [
+                            "切换线路" //"切换线路"
+                        ]),
+                        m("a", {
+                            class: "navbar-item", onclick: function (event) {
+                                event.stopPropagation()
+                            }
+                        }, [
+                            "切换主题", //"切换主题"
+                            m(Switch, {
+                                class: 'is-pulled-right',
+                                type: window.$theme == 'light',
+                                onclick (type) {
+                                    console.log('switch', type)
+                                    utils.switchTheme()
+                                    .then( theme => {
+                                        console.log(theme);
+                                    })
+                                },
+                            })
+                        ]),
+                    ])
+                ])
+
+            ])
+        ])
+    }
 }
 
 
@@ -360,143 +447,27 @@ export default {
     },
     oncreate: function (vnode) {
         obj.initEVBUS()
-        document.querySelector('body').setAttribute('id', window.$theme)
     },
     view: function (vnode) {
         return m("div", { class: "" }, [
-            m('div', { class: 'pub-m-kline-box has-background-white ' + (obj.klineOpen ? ' open' : '') }, [
-                m("nav", { class: "pub-layout-m-header is-fixed-top navbar is-transparent ", role: "navigation", "aria-label": "main navigation" }, [
-                    m('div', { class: "navbar-brand is-flex" }, [
-                        m('a', {
-                            class: "navbar-item", onclick: function (e) {
-                                obj.klineOpen = false
-                            }
-                        }, [
-                            m('span', { class: "icon is-medium" }, [
-                                m('i', { class: "iconfont iconarrow-left" }),
-                            ]),
-                        ]),
-                        m('.spacer'),
-                        m(symSelect),
-                        m('.spacer'),
-                        m('.spacer'),
-                    ]),
-                ]),
-                //右进k线
-                m("div", { class: "kLine-body-list" }, [
-                    obj.getMobilekLine()
-                ])
-            ]),
-            m("nav", { class: "pub-layout-m-header is-fixed-top navbar is-transparent", role: "navigation", "aria-label": "main navigation" }, [
-                m('div', { class: "navbar-brand is-flex" }, [
-                    m('a', {
-                        class: "navbar-item", onclick: function (e) {
-                            obj.leftMenu = !obj.leftMenu
-                            gEVBUS.emit(gEVBUS.EV_ClOSEHEADERMENU, { ev: gEVBUS.EV_ClOSEHEADERMENU, from: 'leftMenu' })
-                            window.stopBubble(e)
-                        }
-                    }, [
-                        m('span', { class: "icon is-medium" }, [
-                            m('i', { class: "iconfont icontoolbar-side" }),
-                        ]),
-                    ]),
-                    m('.spacer'),
-                    m(symSelect),
-                    m('.spacer'),
-                    m('a', { class: "navbar-item" }, [
-                        m('span', {
-                            class: "icon is-medium", onclick: function () {
-                                obj.klineOpen = true
-                            }
-                        }, [
-                            m('i', { class: "iconfont iconhangqing" }),
-                        ]),
-                    ]),
-                ]),
-
-                m("div", { class: "pub-layout-m-header-menu navbar-menu is-hidden-desktop is-background-2" + (obj.leftMenu ? ' is-active' : ' is-hidden') }, [
-                    m("div", { class: "navbar-end" }, [
-                        m("aside", { class: "menu" + (window.$config.loginType == 0 ? "" : " is-hidden") }, [
-                            obj.getUserInfoCon()
-                        ]),
-                        m('hr', { class: "is-primary" + (window.$config.loginType == 0 ? "" : " is-hidden") }),
-                        m("div", { class: "navbar-item has-dropdown is-hoverable" }, [
-                            m("a", {
-                                class: "navbar-link ", onclick: function () {
-                                    return false;
-                                }
-                            }, [
-                                gDI18n.$t('10236')//'合约记录'
-                            ]),
-                            m("div", { class: "navbar-dropdown" }, [
-                                m("a", {
-                                    class: "navbar-item", onclick: function () {
-                                        router.push('/delegation')
-                                    }
-                                }, [
-                                    gDI18n.$t('10077')//'历史委托'
-                                ]),
-                                m("a", {
-                                    class: "navbar-item", onclick: function () {
-                                        router.push('/deal')
-                                    }
-                                }, [
-                                    gDI18n.$t('10237')//'历史成交'
-                                ]),
-                                m("a", {
-                                    class: "navbar-item", onclick: function () {
-                                        router.push('/contractbill')
-                                    }
-                                }, [
-                                    gDI18n.$t('10079')//'合约账单'
-                                ]),
-                            ]),
-                            m("a", {
-                                class: "navbar-link", onclick: function () {
-                                    return false;
-                                }
-                            }, [
-                                gDI18n.$t('10464')//'设置'
-                            ]),
-                            m("div", { class: "navbar-dropdown" }, [
-                                m("a", {
-                                    class: "navbar-item", onclick: function () {
-                                        router.push('/setlanguages')
-                                    }
-                                }, [
-                                    gDI18n.$t('10434')//"切换语言"
-                                ]),
-                                m("a", {
-                                    class: "navbar-item", onclick: function () {
-                                        router.push('/switchLines')
-                                    }
-                                }, [
-                                    "切换线路" //"切换线路"
-                                ]),
-                                m("a", {
-                                    class: "navbar-item", onclick: function (event) {
-                                        event.stopPropagation()
-                                    }
-                                }, [
-                                    "切换主题", //"切换主题"
-                                    m(Switch, {
-                                        class: 'is-pulled-right',
-                                        type: window.$theme == 'light',
-                                        onclick (type) {
-                                            console.log('switch', type)
-                                            utils.switchTheme()
-                                            .then((them) => {
-                                                console.log(them);
-                                            })
-                                        },
-                                    })
-                                ]),
-                            ])
-                        ])
-
-                    ])
-                ])
-            ]),
+            // 头部
+            m(Header, {
+                onLeftClick (e) {
+                    obj.leftMenu = !obj.leftMenu
+                    gEVBUS.emit(gEVBUS.EV_ClOSEHEADERMENU, { ev: gEVBUS.EV_ClOSEHEADERMENU, from: 'leftMenu' })
+                    window.stopBubble(e)
+                },
+                onRightClick () {
+                    obj.klineOpen = true
+                },
+                slot: {
+                    left: m('i', { class: "iconfont icontoolbar-side" }),
+                    center: m(symSelect),
+                    right: m('i', { class: "iconfont iconhangqing" }),
+                    menu: obj.getMenu(),
+                }
+            }),
+            // 主体
             m("div", { class: "pub-layout-m" }, [
                 obj.getSelectPos(),
                 m('div', { class: "pub-layout-m-content is-flex" }, [
@@ -510,6 +481,22 @@ export default {
                 ]),
                 obj.getBottomList(),
 
+            ]),
+            // k线弹框
+            m('div', { class: 'pub-m-kline-box has-background-white ' + (obj.klineOpen ? ' open' : '') }, [
+                // 头部
+                m(Header, {
+                    onLeftClick () {
+                        obj.klineOpen = false
+                    },
+                    slot: {
+                        center: m(symSelect)
+                    }
+                }),
+                //右进k线
+                m("div", { class: "kLine-body-list is-background-2" }, [
+                    obj.getMobilekLine()
+                ])
             ]),
 
             obj.getStopPLMode(),

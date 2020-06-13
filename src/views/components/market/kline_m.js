@@ -160,11 +160,11 @@ let spotTick = {
         let type = window.$config.views.headerTick.left.type
         switch(type){
             case 0: 
-                return m("header",{class : "kline-top"},[
+                return m("header",{class : "kline-top has-text-2"},[
                     //左边
                     m("div",{class : "width-div-left"},[
                         m("div",{class : "spotTick"},[
-                            m("p",{class : "spotTick-left" + utils.getColorStr(spotTick.getLastTick().color, 'font')},[
+                            m("p",{class : "spotTick-left has-text-1" + utils.getColorStr(spotTick.getLastTick().color, 'font')},[
                                 spotTick.getLastTick().LastPrz || '--'
                             ]),
                             "",
@@ -174,18 +174,18 @@ let spotTick = {
                         ]),
                         m("table",{class : ""},[
                             m("tr",{class : ""},[
-                                m("td",{class : "currency-font has-text-grey table-margin2"},[
+                                m("td",{class : "currency-font  table-margin2"},[
                                     gDI18n.$t('10436')//"标记价格："
                                 ]),
-                                m("td",{class : "currency-font has-text-grey width-curren table-margin2"},[
+                                m("td",{class : "currency-font  width-curren table-margin2"},[
                                     spotTick.getLastTick().SettPrz || '--'
                                 ]),
                             ]),
                             m("tr",{class : ""},[
-                                m("td",{class : "currency-font has-text-grey table-margin2"},[
+                                m("td",{class : "currency-font  table-margin2"},[
                                     gDI18n.$t('10437')//"指数价格："
                                 ]),
-                                m("td",{class : "currency-font has-text-grey width-curren table-margin2"},[
+                                m("td",{class : "currency-font  width-curren table-margin2"},[
                                     spotTick.getLastTick().indexPrz || '--'
                                 ]),
                             ]) 
@@ -195,7 +195,7 @@ let spotTick = {
                     m("div",{class : "width-div-right"},[
                         m("table",{class : "currency-font table-width"},[
                             m("tr",{class :"table-margin"},[
-                                m("td",{class :"has-text-grey table-margin"},[
+                                m("td",{class :" table-margin"},[
                                     gDI18n.$t('10438')//"24H最高："
                                 ]),
                                 m("td",{class :"font-textalent-right has-text-black  table-margin"},[
@@ -203,7 +203,7 @@ let spotTick = {
                                 ]),
                             ]),
                             m("tr",{class :"table-margin"},[
-                                m("td",{class :"has-text-grey table-margin"},[
+                                m("td",{class :" table-margin"},[
                                     gDI18n.$t('10439')//"24H最低："
                                 ]),
                                 m("td",{class :"font-textalent-right has-text-black table-margin"},[
@@ -211,7 +211,7 @@ let spotTick = {
                                 ]),
                             ]),
                             m("tr",{class :"table-margin"},[
-                                m("td",{class :"has-text-grey table-margin"},[
+                                m("td",{class :" table-margin"},[
                                     gDI18n.$t('10440')//"持仓量："
                                 ]),
                                 m("td",{class :"font-textalent-right has-text-black  table-margin"},[
