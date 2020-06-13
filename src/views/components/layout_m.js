@@ -286,24 +286,24 @@ let obj = {
             return m("ul", { class: "menu-list pub-layout-m-header-menu-user-info" }, [
                 m("li", { class: "is-flex" }, [
                     m("div", { class: "" }, [
-                        m("p", { class: "is-size-3" }, [
+                        m("p", { class: "is-size-3 has-text-1" }, [
                             window.gWebAPI.CTX.account.accountName
                         ]),
-                        m("p", { class: "is-size-7" }, [
+                        m("p", { class: "is-size-7 has-text-2" }, [
                             'UID:' + window.gWebAPI.CTX.account.uid
                         ]),
                     ]),
                     m('.spacer'),
 
-                    m("button", { class: "button is-white is-large", onclick: obj.signOut }, [
+                    m("button", { class: "button is-white is-large is-background-3", onclick: obj.signOut }, [
                         m("span", { class: "icon is-large" }, [
-                            m('i', { class: 'iconfont iconweibiaoti-- is-size-3' })
+                            m('i', { class: 'iconfont iconweibiaoti-- is-size-3 has-text-1' })
                         ]),
                     ]),
                 ]),
             ])
         } else {
-            return m("ul", { class: "menu-list pub-layout-m-header-menu-login" }, [
+            return m("ul", { class: "menu-list pub-layout-m-header-menu-login has-text-1" }, [
                 m("li", {
                     class: "is-flex", onclick: function () {
                         window.gWebAPI.needLogin()
@@ -414,12 +414,12 @@ export default {
                     ]),
                 ]),
 
-                m("div", { class: "pub-layout-m-header-menu navbar-menu is-hidden-desktop" + (obj.leftMenu ? ' is-active' : ' is-hidden') }, [
+                m("div", { class: "pub-layout-m-header-menu navbar-menu is-hidden-desktop is-background-2" + (obj.leftMenu ? ' is-active' : ' is-hidden') }, [
                     m("div", { class: "navbar-end" }, [
                         m("aside", { class: "menu" + (window.$config.loginType == 0 ? "" : " is-hidden") }, [
                             obj.getUserInfoCon()
                         ]),
-                        m('hr', { class: "" + (window.$config.loginType == 0 ? "" : " is-hidden") }),
+                        m('hr', { class: "is-primary" + (window.$config.loginType == 0 ? "" : " is-hidden") }),
                         m("div", { class: "navbar-item has-dropdown is-hoverable" }, [
                             m("a", {
                                 class: "navbar-link ", onclick: function () {

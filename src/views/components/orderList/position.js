@@ -245,9 +245,9 @@ let obj = {
   getPosListForM: function(){
     let btnsOpen = window.$config.positionBtns.mobile
     return this.posList.map(function(item, i){
-      return m('.card', {key: "posTableListItemForM"+i}, [
+      return m('.card.is-background-2', {key: "posTableListItemForM"+i}, [
         m('header', { class: 'card-header' }, [
-          m('p', { class: 'card-header-title' }, [
+          m('p', { class: 'card-header-title has-text-1' }, [
             gDI18n.$t('10067'/*'仓位ID: '*/) + ":" +item.PId.substr(-4)
           ]),
         ]),
@@ -265,7 +265,7 @@ let obj = {
               m("i",{class:"iconfont iconotc-editName iconfont-medium"+(btnsOpen.leverage.positionList?'':' is-hidden')}),
             ]),
           ]),
-          m('div', { class: 'pub-pos-m-content content is-flex' }, [
+          m('div', { class: 'pub-pos-m-content content is-flex has-text-2' }, [
             m('div', {}, [
               m('p', {}, [
                 gDI18n.$t('10099')//'持仓数量(张)'
@@ -324,7 +324,7 @@ let obj = {
             ]),
           ]),
         ]),
-        m('footer', { class: 'card-footer' }, [
+        m('footer', { class: 'card-footer pub-pos-m-footer' }, [
           m("a",{class:"button button-sty-pad is-primary is-outlined card-footer-item"+(item.loading?' is-loading': '')+(btnsOpen.stopPL.positionList?'':' is-hidden'), onclick: function(){
             obj.setStopPL(item)
           }},[

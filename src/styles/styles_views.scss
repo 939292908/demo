@@ -1131,6 +1131,7 @@ hr {
 
                     .pub-pos-m-content-header {
                         @extend %mb-3;
+                        @extend .has-text-1;
                         display: flex;
                         align-items: center;
                         > * {
@@ -1147,6 +1148,13 @@ hr {
                     }
                     .pub-pos-m-content {
                         @extend %font-2;
+                    }
+                }
+                .pub-pos-m-footer {
+                    border: none;
+                    .card-footer-item {
+                        @extend .has-text-white;
+                        @extend %mx-1;
                     }
                 }
             }
@@ -1430,6 +1438,18 @@ hr {
     // 文字-白
     color: $black-font-color-title !important;
 }
+.columns {
+    margin: 0;
+    &:last-child {
+        margin-bottom: 0;
+    }
+    &:not(:last-child) {
+        margin-bottom: 0;
+    }
+    .column {
+        padding: 0;
+    }
+}
 .cursor-pointer {
     cursor: pointer;
 }
@@ -1471,8 +1491,10 @@ hr {
         background-color: #fff;
     }
     &.is-checked {
-        background-color: rgb(19, 206, 102);
-        border-color: rgb(19, 206, 102);
+        // background-color: rgb(19, 206, 102);
+        // border-color: rgb(19, 206, 102);
+        background-color: $white-standard-green !important;
+        border-color: $white-standard-green !important;;
         &::after {
             left: 100%;
             transform: translateX(calc( -100% - 1px));
@@ -1616,6 +1638,13 @@ hr {
                 color: $white-font-color-title;
                 &:hover {
                     color: $white-font-color-title;
+                    background-color: transparent !important;
+                }
+                &:active {
+                    background-color: transparent !important;
+                }
+                &:focus {
+                    background-color: transparent !important;
                 }
             }
         }
@@ -1892,6 +1921,13 @@ hr {
                 color: $black-font-color-title;
                 &:hover {
                     color: $black-font-color-title;
+                    background-color: transparent !important;
+                }
+                &:active {
+                    background-color: transparent !important;
+                }
+                &:focus {
+                    background-color: transparent !important;
                 }
             }
         }

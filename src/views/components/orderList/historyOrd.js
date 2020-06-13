@@ -1,4 +1,6 @@
 var m = require("mithril")
+// Header
+import Header from "../common/Header_m"
 
 let obj = {
     posList: [],
@@ -754,6 +756,7 @@ let obj = {
                         ]),
                     ]),
                 ]),
+                // m(Header),
                 //搜索框
                 obj.getSelectOptions(),
                 m("div",{class : "pub-trade-list  pub-layout-m"},[
