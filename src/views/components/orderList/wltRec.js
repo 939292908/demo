@@ -1,6 +1,7 @@
 var m = require("mithril")
 // Header
 import Header from "../common/Header_m"
+import Modal from "../common/Modal"
 
 let obj = {
     list: [],
@@ -353,80 +354,76 @@ let obj = {
         })
     },
     getSelectOptions:function (){
-        return m('div', {class: 'pub-set-lever'}, [
-            m("div", { class: "modal" + (obj.setType ? " is-active" : ''), }, [
-                m("div", { class: "modal-background" }),
-                m("div", { class: "modal-card" }, [
-                m("header", { class: "pub-set-lever-head modal-card-head modal-card-body-list" }, [
-                    m("p", { class: "modal-card-title" }, [
-                        gDI18n.$t('10458')//'筛选'
-                        ]),
-                    m("button", {class: "delete", "aria-label": "close", onclick: function () {
-                        obj.closeLeverageMode()
-                    }
-                    }),
+         // 弹框 body
+         let modalBody = [
+            m("div",{class : "search-bi-name"},[
+                m("p",{class : "search-bi-name-p has-text-2"},[
+                    gDI18n.$t('10466')//"币种名称"
                 ]),
-                m("section", { class: "pub-set-lever-content modal-card-body modal-card-body-list" }, [
-                    m("div",{class : "search-bi-name"},[
-                        m("p",{class : "search-bi-name-p has-text-2"},[
-                            gDI18n.$t('10466')//"币种名称"
-                        ]),
-                        m("div",{class:" pub-place-order-m pub-order-m"},[
-                            m('div', {class: "dropdown pub-place-order-select is-hidden-desktop" + (obj.tabsListOpen?' is-active':'')}, [
-                                m('.dropdown-trigger', {}, [
-                                    m('button', {class: "button is-white is-fullwidth",'aria-haspopup':true, "aria-controls": "dropdown-menu2", onclick: function(e){
-                                        obj.tabsListOpen = !obj.tabsListOpen
-                                    }}, [
-                                        m('div', {}, [
-                                            m('span',{ class: "",id:"selectId"}, obj.tabsList[obj.tabsActive]),
-                                            m('span', {class: "icon "},[
-                                                m('i', {class: "iconfont iconxiala has-text-primary", "aria-hidden": true })
-                                            ]),
-                                        ])
+                m("div",{class:" pub-place-order-m pub-order-m"},[
+                    m('div', {class: "dropdown pub-place-order-select is-hidden-desktop" + (obj.tabsListOpen?' is-active':'')}, [
+                        m('.dropdown-trigger', {}, [
+                            m('button', {class: "button is-white is-fullwidth",'aria-haspopup':true, "aria-controls": "dropdown-menu2", onclick: function(e){
+                                obj.tabsListOpen = !obj.tabsListOpen
+                            }}, [
+                                m('div', {}, [
+                                    m('span',{ class: "",id:"selectId"}, obj.tabsList[obj.tabsActive]),
+                                    m('span', {class: "icon "},[
+                                        m('i', {class: "iconfont iconxiala has-text-primary", "aria-hidden": true })
                                     ]),
-                                ]),
-                                m('.dropdown-menu', {class:"scroll-y", id: "dropdown-menu2", role: "menu"}, [
-                                    m('.dropdown-content', {class:"has-text-centered"}, [
-                                        obj.getTabsList()
-                                    ]),
-                                ]),
-                            ]),
-                        ])
-
-                    ]),
-                    m("div",{class : "search-bi-name"},[
-                        m("p",{class : "search-bi-name-p has-text-2"},[
-                            gDI18n.$t('10102')//"类型"
-                        ]),
-                        m("div",{class : "search-k-d"},[
-                            obj.type.map(function (item,i){
-                                return m("a",{class : "button is-primary is-outlined button-styl",onclick:function(i){
-                                    obj.navCoinInfo.Stat = item.name
-                                    console.log(obj.navCoinInfo.Stat,"类型")
-                                }},[
-                                    item.name
                                 ])
-                            })
+                            ]),
                         ]),
-                    ])
-                ]),
-                m("footer", { class: "pub-set-lever-foot modal-card-foot modal-card-body-list" }, [
-                    m("div",{class : "reset-complete"},[
-                        m("a",{class : "reset-button button is-primary is-outlined", onclick:function(){
-                            obj.resetNavDrawerInfo()
-                        }},[
-                            gDI18n.$t('10461')//"重置"
+                        m('.dropdown-menu', {class:"scroll-y", id: "dropdown-menu2", role: "menu"}, [
+                            m('.dropdown-content', {class:"has-text-centered"}, [
+                                obj.getTabsList()
+                            ]),
                         ]),
-                        m("a",{class : "reset-button button is-primary is-outlined",onclick:function (){
-                            obj.submitNavDrawer()
-                        }},[
-                            gDI18n.$t('10462')//"完成"
-                        ]),
-                    ])
+                    ]),
                 ])
+
             ]),
+            m("div",{class : "search-bi-name"},[
+                m("p",{class : "search-bi-name-p has-text-2"},[
+                    gDI18n.$t('10102')//"类型"
+                ]),
+                m("div",{class : "search-k-d"},[
+                    obj.type.map(function (item,i){
+                        return m("a",{class : "button is-primary is-outlined button-styl",onclick:function(i){
+                            obj.navCoinInfo.Stat = item.name
+                            console.log(obj.navCoinInfo.Stat,"类型")
+                        }},[
+                            item.name
+                        ])
+                    })
+                ]),
             ])
-        ])
+        ]
+         // 弹框 footer
+        let modalFooter = [
+            m("div",{class : "reset-complete"},[
+                m("a",{class : "reset-button button is-primary is-outlined", onclick:function(){
+                    obj.resetNavDrawerInfo()
+                }},[
+                    gDI18n.$t('10461')//"重置"
+                ]),
+                m("a",{class : "reset-button button is-primary is-outlined",onclick:function (){
+                    obj.submitNavDrawer()
+                }},[
+                    gDI18n.$t('10462')//"完成"
+                ]),
+            ])
+        ]
+        // 弹框
+        return m( Modal, {
+            isShow: obj.setType,
+            onClose: () => obj.closeLeverageMode(), // 关闭事件
+            slot: {
+                header: gDI18n.$t('10458'),//'筛选'
+                body: modalBody,
+                footer: modalFooter
+            }
+        })
     },
     getContentList: function () {
         return m("div",{class : "delegation-list"},[
