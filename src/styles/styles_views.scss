@@ -1514,7 +1514,6 @@ hr {
     transition: all 0.2s;
     &.open {
         transform: translate(0,0) !important;
-        overflow: auto;
     }
     &.left {
         transform: translateX(-100%);
@@ -1570,6 +1569,7 @@ hr {
 
 // -------------- 白天模式 --------------
 #light {
+    background-color: $white-background-color-once-level;
     .pub-kline hr {
         background-color: $white-line2;
     }
@@ -1595,25 +1595,23 @@ hr {
             }
         }
     }
-    @mixin scrollBar {
-        // 滚动条
+    @mixin scrollBar ($bgColor: $white-background-color-second-level, $barColor: $white-background-color-three-level) { // 滚动条
         &::-webkit-scrollbar-track-piece {
-            background: #d3dce6;
+          background: $bgColor;
         }
         &::-webkit-scrollbar {
-            width: 6px;
-            height: 10px;
+          width: 6px;
+          height: 10px;
         }
         &::-webkit-scrollbar-thumb {
-            background: #99a9bf;
-            border-radius: 20px;
+          background: $barColor;
+          border-radius: 20px;
         }
     }
     * {
         // 滚动条
         @include scrollBar;
     }
-    background-color: $white-background-color-once-level;
     // ------------------------ 文字 ------------------------
     .has-text-1 {
         // 文字-1
@@ -1854,10 +1852,15 @@ hr {
             @extend .has-text-2;
         }
     }
+    // tick 头部的下拉行情
+    .pub-header-tick-left-market {
+        @include scrollBar( $white-background-color-three-level, $white-background-color-second-level);
+    }
 }
 
 // -------------- 黑夜模式 --------------
 #dark {
+    background-color: $black-background-color-once-level;
     //k线样式
     .pub-kline hr {
         background-color: $black-line2;
@@ -1885,25 +1888,23 @@ hr {
             }
         }
     }
-    @mixin scrollBar {
-        // 滚动条
+    @mixin scrollBar ($bgColor: $black-background-color-second-level, $barColor: $black-background-color-three-level) { // 滚动条
         &::-webkit-scrollbar-track-piece {
-            background: #d3dce6;
+          background: $bgColor;
         }
         &::-webkit-scrollbar {
-            width: 6px;
-            height: 10px;
+          width: 6px;
+          height: 10px;
         }
         &::-webkit-scrollbar-thumb {
-            background: #99a9bf;
-            border-radius: 20px;
+          background: $barColor;
+          border-radius: 20px;
         }
     }
     * {
         // 滚动条
         @include scrollBar;
     }
-    background-color: $black-background-color-once-level;
     // ------------------------ 文字 ------------------------
     .has-text-1 {
         // 文字-1
@@ -2143,5 +2144,9 @@ hr {
             @extend .is-background-2;
             @extend .has-text-2;
         }
+    }
+    // tick 头部的下拉行情
+    .pub-header-tick-left-market {
+        @include scrollBar( $black-background-color-three-level, $black-background-color-second-level);
     }
 }

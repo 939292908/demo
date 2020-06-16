@@ -259,7 +259,7 @@ let symSelect = {
                             ]),
                         ]),
                     ]),
-                    m('.dropdown-menu', {class:`dropdown-select my-drawer-2 top ${symSelect.symListOpen ? ' open':''}`, id: "dropdown-menu2", role: "menu"}, [
+                    m('.dropdown-menu', {class:`pub-header-tick-left-market dropdown-select my-drawer-2 top ${symSelect.symListOpen ? ' open':''}`, id: "dropdown-menu2", role: "menu"}, [
                         m('.dropdown-content', {class:""}, [
                             symSelect.getSymList()
                         ]),
