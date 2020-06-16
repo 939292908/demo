@@ -1019,6 +1019,8 @@ let obj = {
         this.klineShow = false
     },
     updateKlineForTrade: function(param){
+        if(!window._chart) return
+
         let arg = param.data
         let Sym = window._chart.Sym
         let Typ = window._chart.Typ || '1m';
@@ -1062,6 +1064,8 @@ let obj = {
         }
     },
     updateKline: function(param){
+        if(!window._chart) return
+        
         let arg = param.data
         let Typ = param.Typ
         let Sym = param.Sym
