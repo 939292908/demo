@@ -264,9 +264,9 @@ utils.getTickObj = function(assetD, AssetEx, tick, oldTick, indexTick){
             //24小时最低
             obj.Low24 = Number(tick.Low24).toFixed(PrzMinIncSize);
             //当前周期资金费率
-            obj.FundingLongR = Number(tick.FundingLongR || 0).toFixed(4)+'%';
+            obj.FundingLongR = (Number(tick.FundingLongR || 0)*100).toFixed(4)+'%';
             //下个周期预测的资金费率
-            obj.FundingPredictedR = Number(tick.FundingPredictedR || 0).toFixed(4)+'%';
+            obj.FundingPredictedR = (Number(tick.FundingPredictedR || 0)*100).toFixed(4)+'%';
 
             obj.TrdCls = ass.TrdCls
             obj.FromC = ass.FromC
