@@ -2,6 +2,7 @@
 
 let m = require("mithril")
 
+import Header from "../common/Header_m"
 
 let languages = {
 
@@ -53,10 +54,10 @@ let languages = {
       }
     }
     return langList.map(function(item,i){
-        return m('div',{class : ""+(item.key == gDI18n.locale?' has-background-white-ter':''), onclick: function(){
+        return m('div',{class : ""+(item.key == gDI18n.locale?' is-background-2':''), onclick: function(){
           languages.setLang(item.key)
         }},[
-          m('div',{class :"langageus-text",key: "ChangeLangListItem"+i+item},[
+          m('div',{class :"langageus-text has-text-2",key: "ChangeLangListItem"+i+item},[
             m("p",{key: "ChangeLangListItem"+i+item, class:""+(item.key == gDI18n.locale?' has-text-primary':''),},[
               item.language
             ]),
@@ -82,29 +83,15 @@ export default {
       languages.initEVBUS()
     },
     view:function(vnode){
-        return m("div",{class: "details-header"},[
-          m("nav",{class:"pub-layout-m-header is-fixed-top navbar is-transparent", role:"navigation", "aria-label":"main navigation"},[
-            m('div', {class:"navbar-brand is-flex"}, [
-            m('a', {class:"navbar-item"}, [
-                m('a', {class:"", onclick :function (){
-                  router.back()
-                }}, [
-                    m('span', {class:"icon icon-right-i"}, [
-                        m('i', {class:"iconfont has-text-black iconarrow-left"}),
-                    ]),
-                ]),
-            ]),
-            m('.spacer'),
-            m("p",{class : "delegation-list-phistory navbar-item has-text-black"},[
-              gDI18n.$t('10434')//"切换语言"
-                ]),
-            m('.spacer'),
-            m('.spacer'),
-            ]),
-        ]),
-        m('div',{class :"pub-layout-m"},[
-          languages.getChangeLangList()
-        ]), 
+        return m('div', { class: `languages-page` }, [
+            m( Header, {
+                slot: {
+                    center: gDI18n.$t('10434')//"切换语言"
+                }
+            }),
+            m('div',{class :"pub-layout-m"},[
+                languages.getChangeLangList()
+            ]), 
         ])
     },
     onremove:function (vnode) {

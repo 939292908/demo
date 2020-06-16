@@ -353,7 +353,8 @@ let obj = {
     },
     // 头部下拉菜单
     getMenu () {
-        return m("div", { class: "pub-layout-m-header-menu navbar-menu is-hidden-desktop is-background-2" + (obj.leftMenu ? ' is-active' : ' is-hidden') }, [
+        // m("div", { class: "pub-layout-m-header-menu navbar-menu is-hidden-desktop is-background-2" + (obj.leftMenu ? ' is-active' : ' is-hidden')
+        return m("div", { class: "pub-layout-m-header-menu navbar-menu is-hidden-desktop is-background-2 is-active my-drawer-2" + (obj.leftMenu ? ' open' : '') }, [
             m("div", { class: "navbar-end" }, [
                 m("aside", { class: "menu" + (window.$config.loginType == 0 ? "" : " is-hidden") }, [
                     obj.getUserInfoCon()

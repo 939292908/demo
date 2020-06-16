@@ -248,7 +248,7 @@ let symSelect = {
         let type = window.$config.views.headerTick.left.symSelect.type
         switch(type){
             case 0: 
-                return m('div', {class: "dropdown pub-sym-select" + (symSelect.symListOpen?' is-active':'')}, [
+                return m('div', {class: "dropdown pub-sym-select " + (symSelect.symListOpen?' is-active':' is-active')}, [
                     m('.dropdown-trigger', {}, [
                         m('button', {class: "button is-background-2  is-inverted h-auto",'aria-haspopup':true, "aria-controls": "dropdown-menu2", onclick: function(e){
                             symSelect.openSelect(e)
@@ -259,7 +259,7 @@ let symSelect = {
                             ]),
                         ]),
                     ]),
-                    m('.dropdown-menu', {class:"dropdown-select", id: "dropdown-menu2", role: "menu"}, [
+                    m('.dropdown-menu', {class:`dropdown-select my-drawer-2 top ${symSelect.symListOpen ? ' open':''}`, id: "dropdown-menu2", role: "menu"}, [
                         m('.dropdown-content', {class:""}, [
                             symSelect.getSymList()
                         ]),
@@ -332,7 +332,7 @@ let symSelect = {
         }
     },
     updateTick: function(ticks){
-        console.log(ticks)
+        // console.log(ticks)
         for(let key in ticks){
             let item = ticks[key];
             let gmexCI = utils.getGmexCi(window.gMkt.AssetD, item.Sym)

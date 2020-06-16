@@ -51,7 +51,7 @@ let obj = {
     },
     getLinesDom: function(){
         return this.netLines.map((item,i) =>{
-            return m('a', {key: "pub-netlines-item"+i, class:"pub-netlines-item navbar-item"+(window.netConf.GetActive().Id == item.Id?" has-text-primary":"" ), onclick: function(){
+            return m('a', {key: "pub-netlines-item"+i, class:"pub-netlines-item navbar-item has-text-2 "+(window.netConf.GetActive().Id == item.Id?" has-text-primary is-background-2":"" ), onclick: function(){
                 obj.setNetLine(item, i)
             }}, [
                 item.Name,

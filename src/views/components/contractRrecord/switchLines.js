@@ -2,71 +2,64 @@
 
 let m = require("mithril")
 
+import Header from "../common/Header_m"
+import netLines from '../network/netLines'
 
 let obj = {
     count: 10,
     intervalId: null,
     // 获取线路数据
-    init () {
+    initLinesData () {
         gEVBUS.emit(gEVBUS.EV_OPEN_NET_SWITCH, { Ev: gEVBUS.EV_OPEN_NET_SWITCH, lines: true })
         m.redraw()
         console.log(" --------- init 线路 ---------")
     },
-    // 倒计时
-    setCount () {
+    // 开始 倒计时
+    openTiming () {
         if ( obj.intervalId ) return;
         obj.intervalId = setInterval(() => {
             obj.count = obj.count > 0 ? obj.count - 1 :  10
-            if ( obj.count == 0 ) obj.init()
+            if ( obj.count == 0 ) obj.initLinesData()
             m.redraw()
-            // console.log('count',obj.count);
         }, 1000);
     },
     // 重置 定时器器/倒计时等
-    reset () {
+    resetPage () {
         clearInterval(obj.intervalId);
         obj.intervalId = null;
         obj.count = 10;
+    },
+    initEVBUS () {
+        //assetD合约详情全局广播
+        if (this.EV_ASSETD_UPD_unbinder) this.EV_ASSETD_UPD_unbinder()
+        this.EV_ASSETD_UPD_unbinder = window.gEVBUS.on( gMkt.EV_ASSETD_UPD, arg => {
+            obj.initLinesData()
+            obj.openTiming()
+        } )
+    },
+    rmEVBUS () {
+        if (this.EV_ASSETD_UPD_unbinder) this.EV_ASSETD_UPD_unbinder()
     }
 }
-import netLines from '../network/netLines'
 
 export default {
     oninit: function (vnode) {
     },
     oncreate: function (vnode) {
-        obj.init()
-        obj.setCount()
-        // document.querySelector('.delegation-list-phistory').click()
+        obj.initEVBUS()
     },
     view: function (vnode) {
-        return m("div", { class: "details-header" }, [
-            m("nav", { class: "pub-layout-m-header is-fixed-top navbar is-transparent", role: "navigation", "aria-label": "main navigation" }, [
-                m('div', { class: "navbar-brand is-flex" }, [
-                    m('a', { class: "navbar-item" }, [
-                        m('a', {
-                            class: "", onclick () { router.back() }
-                        }, [
-                            m('span', { class: "icon icon-right-i" }, [
-                                m('i', { class: "iconfont has-text-black iconarrow-left" }),
-                            ]),
-                        ]),
-                    ]),
-                    m('.spacer'),
-                    // onclick () { obj.init() }
-                    m("p", { class: "delegation-list-phistory navbar-item has-text-black" }, [
-                        `切换线路 (${obj.count})` //"切换线路"
-                    ]),
-                    m('.spacer'),
-                    m('.spacer'),
-                ]),
-            ]),
-            m('div', { class: "pub-layout-m" }, [
-                m(netLines)
-            ]),
+        return m('div', { class: `switchLines-page` }, [
+            m( Header, {
+                slot: {
+                    center: `切换线路 (${obj.count})` //"切换线路"
+                }
+            }),
+            m('div', { class: `pub-layout-m` }, m(netLines))
         ])
     },
     onremove: function (vnode) {
-        obj.reset();
+        obj.rmEVBUS()
+        obj.resetPage()
     }
 }

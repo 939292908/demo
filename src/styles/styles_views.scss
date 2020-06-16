@@ -688,7 +688,8 @@ hr {
 
 .scroll-y {
     max-height: 194px;
-    overflow-y: scroll;
+    // overflow-y: scroll;
+    overflow-y: auto;
     width: 100%;
 }
 
@@ -1155,6 +1156,7 @@ hr {
                 }
                 .pub-pos-m-footer {
                     border: none;
+                    @extend %pb-2;
                     .card-footer-item {
                         @extend .has-text-white;
                         @extend %mx-1;
@@ -1436,38 +1438,7 @@ hr {
 }
 // 屏幕适配相关 end
 
-// 所有模式
-.has-text-white {
-    // 文字-白
-    color: $black-font-color-title !important;
-}
-.columns {
-    margin: 0;
-    &:last-child {
-        margin-bottom: 0;
-    }
-    &:not(:last-child) {
-        margin-bottom: 0;
-    }
-    .column {
-        padding: 0;
-    }
-}
-.cursor-pointer {
-    cursor: pointer;
-}
-.is-center { // 水平垂直居中
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-.is-between { // 两端对齐
-    display: flex;
-    justify-content: space-between!important;
-}
-.input:focus, .button:focus {
-    box-shadow: none!important;
-}
+// -------------- 组件 --------------
 // switch开关
 .my-switch {
     background: #dcdfe6;
@@ -1505,7 +1476,99 @@ hr {
     }
     
 }
-// 白天模式
+// 侧边框 fixed 定位
+.my-drawer {
+    background-color: #f99;
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    overflow: hidden;
+    margin: 0;
+    z-index: 99;
+    transform: translateX(-100%);
+    transition: transform 0.2s;
+    &.left {
+        transform: translateX(-100%);
+    }
+    &.right {
+        transform: translateX(100%);
+    }
+    &.top {
+        transform: translateY(-100%);
+    }
+    &.bottom {
+        transform: translateY(100%);
+    }
+    &.open {
+        transform: translate(0,0);
+    }
+}
+// 侧边框 absolute 定位
+.my-drawer-2 {
+    position: absolute;
+    z-index: 999;
+    width: 100%;
+    transform: translateX(-100%);
+    transition: all 0.2s;
+    &.open {
+        transform: translate(0,0) !important;
+        overflow: auto;
+    }
+    &.left {
+        transform: translateX(-100%);
+    }
+    &.right {
+        transform: translateX(100%);
+    }
+    &.top {
+        // transform: translateY(-100%);
+        transform: translateX(0);
+        max-height: 0px;
+        &.open {
+            max-height: 500px;
+        }
+    }
+    // &.bottom {
+    //     transform: translateY(100%);
+    // }
+    
+}
+// -------------- 所有模式 --------------
+.has-text-white {
+    // 文字-白
+    color: $black-font-color-title !important;
+}
+.columns {
+    margin: 0;
+    &:last-child {
+        margin-bottom: 0;
+    }
+    &:not(:last-child) {
+        margin-bottom: 0;
+    }
+    .column {
+        padding: 0;
+    }
+}
+.cursor-pointer {
+    cursor: pointer;
+}
+.is-center { // 水平垂直居中
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.is-between { // 两端对齐
+    display: flex;
+    justify-content: space-between!important;
+}
+.input:focus, .button:focus {
+    box-shadow: none!important;
+}
+
+// -------------- 白天模式 --------------
 #light {
     .pub-kline hr {
         background-color: $white-line2;
@@ -1793,7 +1856,7 @@ hr {
     }
 }
 
-// 黑夜模式
+// -------------- 黑夜模式 --------------
 #dark {
     //k线样式
     .pub-kline hr {

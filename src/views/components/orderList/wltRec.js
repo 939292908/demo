@@ -316,6 +316,7 @@ let obj = {
         obj.initObj()
         setTimeout(function(){
             that.setType = false
+            m.redraw()
         },200)
         console.log(obj.navCoinInfo,"选择后状态")
     },
@@ -354,7 +355,7 @@ let obj = {
         })
     },
     getSelectOptions:function (){
-         // 弹框 body
+        // 弹框 body
          let modalBody = [
             m("div",{class : "search-bi-name"},[
                 m("p",{class : "search-bi-name-p has-text-2"},[
@@ -389,7 +390,7 @@ let obj = {
                 ]),
                 m("div",{class : "search-k-d"},[
                     obj.type.map(function (item,i){
-                        return m("a",{class : "button is-primary is-outlined button-styl",onclick:function(i){
+                        return m("a",{class : "button is-primary has-text-white is-outlined button-styl",onclick:function(i){
                             obj.navCoinInfo.Stat = item.name
                             console.log(obj.navCoinInfo.Stat,"类型")
                         }},[
@@ -399,15 +400,15 @@ let obj = {
                 ]),
             ])
         ]
-         // 弹框 footer
+        // 弹框 footer
         let modalFooter = [
             m("div",{class : "reset-complete"},[
-                m("a",{class : "reset-button button is-primary is-outlined", onclick:function(){
+                m("a",{class : "reset-button button is-primary has-text-white is-outlined", onclick:function(){
                     obj.resetNavDrawerInfo()
                 }},[
                     gDI18n.$t('10461')//"重置"
                 ]),
-                m("a",{class : "reset-button button is-primary is-outlined",onclick:function (){
+                m("a",{class : "reset-button button is-primary has-text-white is-outlined",onclick:function (){
                     obj.submitNavDrawer()
                 }},[
                     gDI18n.$t('10462')//"完成"
@@ -437,7 +438,7 @@ let obj = {
                 },
                 slot: {
                     center: gDI18n.$t('10079'),//"合约账单"
-                    right: m('i', { class: "iconfont icontoolbar-side" })
+                    right: m('i', { class: "iconfont icondaohang" })
                 }
             }),
             // 搜索框

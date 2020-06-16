@@ -537,6 +537,7 @@ let obj = {
         obj.initObj()
         setTimeout(function () {
             that.setType = false
+            m.redraw()
         }, 200)
         console.log(obj.navDrawerInfo, "新状态")
     },
@@ -767,7 +768,7 @@ let obj = {
                 },
                 slot: {
                     center: gDI18n.$t('10077'/*"历史委托"*/),
-                    right: m('i', { class: "iconfont icontoolbar-side" })
+                    right: m('i', { class: "iconfont icondaohang" })
                 }
             }),
             //搜索框
