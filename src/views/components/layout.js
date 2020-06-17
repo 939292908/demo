@@ -18,7 +18,7 @@ import someCloseMode from './trade/someCloseMode'
 import stopPLMode from './trade/stopPLMode'
 //二次验证google和sms
 import validateMode from './userCenter/validateMode'
-//二次验证google和sms
+//调整保证金
 import changeMgnMode from './orderList/changeMgnMode'
 
 

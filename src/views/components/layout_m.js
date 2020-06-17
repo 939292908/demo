@@ -14,6 +14,8 @@ import someCloseMode from './trade/someCloseMode'
 import stopPLMode from './trade/stopPLMode'
 //二次验证google和sms
 import validateMode from './userCenter/validateMode'
+//调整保证金
+import changeMgnMode from './orderList/changeMgnMode'
 
 import dish from './market/dish'
 import symSelect from './market/symSelect'
@@ -467,6 +469,7 @@ export default {
           obj.getValidateMode(),
           obj.marketAddMode(),
           obj.someCloseMode(),
+          m(changeMgnMode),
           window.$config.loginType == 0?m(login):''
         ])
     },

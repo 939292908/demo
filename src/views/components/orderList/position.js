@@ -287,10 +287,16 @@ let obj = {
             ]),
             m('.spacer'),
             m('div', {}, [
-              m('p', {}, [
-                gDI18n.$t('10089',{value :item.SettleCoin})//'保证金('+item.SettleCoin+')'
+              m('p', {onclick: function(){
+                obj.changeMgn(item)
+              }}, [
+                gDI18n.$t('10089',{value :item.SettleCoin}),//'保证金('+item.SettleCoin+')'
+                ' ',
+                m("i",{class:"iconfont iconotc-editName iconfont-small"+(btnsOpen.changeMgn.positionList&&item.Lever != 0?'':' is-hidden')}),
               ]),
-              m('p', {}, [
+              m('p', {onclick: function(){
+                obj.changeMgn(item)
+              }}, [
                 item.aMM 
               ]),
               m('p', {}, [
@@ -514,7 +520,7 @@ let obj = {
   },
   changeMgn: function(pos){
     if(!window.isMobile && !window.$config.positionBtns.desktop.changeMgn.open) return
-    if(window.isMobile && !window.$config.positionBtns.mobile.changeMgn.open) return
+    if(window.isMobile && !window.$config.positionBtns.mobile.changeMgn.positionList) return
     if(pos.Lever == 0) return
     if(window.$openChangeMgnMode){
       window.$openChangeMgnMode({pos:pos,cb:function(){}})
