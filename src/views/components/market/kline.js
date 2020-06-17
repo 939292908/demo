@@ -5,65 +5,121 @@ var m = require("mithril")
 let obj = {
     Sym: '',
     Typ: '',
-    targetList: [
-        // {
-        //     name: 'VOL',
-        //     title: 'Volume'
-        // },
+    // targetList: [
+    //     // {
+    //     //     name: 'VOL',
+    //     //     title: 'Volume'
+    //     // },
+    //     {
+    //         name: 'MA',
+    //         title: 'Moving Average'
+    //     },
+    //     {
+    //         name: 'MACD',
+    //         title: 'Moving Average Convergence / Divergence'
+    //     },
+    //     {
+    //         name: 'KDJ',
+    //         title: 'Stochastic'
+    //     },
+    //     {
+    //         name: 'BOLL',
+    //         title: 'Bollinger Bands'
+    //     },
+    //     {
+    //         name: 'EMA',
+    //         title: 'Moving Average Exponential'
+    //     },
+    //     // {
+    //     //     name: 'StochRSI',
+    //     //     title: 'Stochastic RSI'
+    //     // },
+    //     {
+    //         name: 'RSI',
+    //         title: 'Relative Strength Index'
+    //     },
+    //     {
+    //         name: 'CCI',
+    //         title: 'Commodity Channel Index'
+    //     },
+    //     // {
+    //     //     name: 'ATR',
+    //     //     title: 'Average True Range'
+    //     // },
+    //     {
+    //         name: 'SAR',
+    //         title: 'Parabolic SAR'
+    //     },
+    //     {
+    //         name: 'DMI',
+    //         title: 'Directional Movement'
+    //     },
+    //     {
+    //         name: 'OBV',
+    //         title: 'On Balance Volume'
+    //     },
+    //     // {
+    //     //     name: 'ROC',
+    //     //     title: 'Rate Of Change'
+    //     // },
+    // ],
+    targetList_main: [ //指标
+        // {title:'VOL',name:"Volume"},
         {
             name: 'MA',
-            title: 'Moving Average'
-        },
-        {
-            name: 'MACD',
-            title: 'Moving Average Convergence / Divergence'
-        },
-        {
-            name: 'KDJ',
-            title: 'Stochastic'
+            title: "Moving Average",
+            Lbl: "main"
         },
         {
             name: 'BOLL',
-            title: 'Bollinger Bands'
+            title: "Bollinger Bands",
+            Lbl: "main"
         },
         {
             name: 'EMA',
-            title: 'Moving Average Exponential'
+            title: "Moving Average Exponential",
+            Lbl: "main"
         },
-        // {
-        //     name: 'StochRSI',
-        //     title: 'Stochastic RSI'
-        // },
+        {
+            name: 'SAR',
+            title: "Parabolic SAR",
+            Lbl: "main"
+        },
+    ],
+    targetList_second: [ //指标
+        {
+            name: 'MACD',
+            title: "MACD",
+            Lbl: "second"
+        },
+        {
+            name: 'KDJ',
+            title: "Stochastic",
+            Lbl: "second"
+        },
         {
             name: 'RSI',
-            title: 'Relative Strength Index'
+            title: "Relative Strength Index",
+            Lbl: "second"
         },
         {
             name: 'CCI',
-            title: 'Commodity Channel Index'
-        },
-        // {
-        //     name: 'ATR',
-        //     title: 'Average True Range'
-        // },
-        {
-            name: 'SAR',
-            title: 'Parabolic SAR'
+            title: "Commodity Channel Index",
+            Lbl: "second"
         },
         {
             name: 'DMI',
-            title: 'Directional Movement'
+            title: "Directional Movement Index",
+            Lbl: "second"
         },
         {
             name: 'OBV',
-            title: 'On Balance Volume'
+            title: "On Balance Volume",
+            Lbl: "second"
         },
-        // {
-        //     name: 'ROC',
-        //     title: 'Rate Of Change'
-        // },
     ],
-    targetActive: {}, //tradingview选中的指标
+    targetActive: {}, //tradingview选中的指标 主图
+    targetActive_second: {}, //tradingview选中的指标 幅图
     timeList: {
         '0': {
             type: '0',
@@ -370,15 +426,39 @@ let obj = {
     },
     createTarget: function (param) {
         if(!window._chart)return
-        if (this.targetActive.id) {
-            window._chart.removeTechnicalIndicator(this.targetActive.id)
+        // if (this.targetActive.id) {
+        //     window._chart.removeTechnicalIndicator(this.targetActive.id)
+        // }
+        // if(this.targetActive.title == param.title){
+        //     this.targetActive = {};
+        //     return
+        // }
+        // this.targetActive = param;
+        // this.targetActive.id = window._chart.createTechnicalIndicator(param.name, 60, false)
+
+        if (param.Lbl == 'main') {
+            if (this.targetActive.Lbl && this.targetActive.name == param.name) {
+                // 主图指标清空
+                window._chart.setCandleStickTechnicalIndicatorType('NO')
+                this.targetActive = {};
+                return
+            }
+            this.targetActive = param;
+            // 设置主图指标
+            this.targetActive.id = window._chart.setCandleStickTechnicalIndicatorType(param.name);
+        } else if (param.Lbl == 'second') {
+            if (this.targetActive_second.Lbl) {
+                // 副图指标删除
+                window._chart.removeTechnicalIndicator(this.targetActive_second.id)
+                if (this.targetActive_second.name == param.name) {
+                    this.targetActive_second = {};
+                    return
+                }
+            }
+            this.targetActive_second = param
+            // 添加副图指标
+            this.targetActive_second.id = window._chart.createTechnicalIndicator(param.name, 80, false)
         }
-        if(this.targetActive.title == param.title){
-            this.targetActive = {};
-            return
-        }
-        this.targetActive = param;
-        this.targetActive.id = window._chart.createTechnicalIndicator(param.name, 60, false)
 
     },
     setKCrossTime: function (val) {
@@ -420,29 +500,105 @@ let obj = {
         }
         
     },
-    getTargetList: function(){
-        let that = this
-        let timeList = Object.keys(this.targetList)
+    // getTargetList: function(){
+    //     let that = this
+    //     let timeList = Object.keys(this.targetList)
         
-        if(window.isMobile){
-            return timeList.map((key, i) =>{
-                let item = that.targetList[key]
-                return m('button', {key: "klineTimeListItem"+i,class: "button"+(obj.targetActive.name == item.name?' has-text-primary':''), onclick: function(){
-                    obj.createTarget(item)
+    //     if(window.isMobile){
+    //         return timeList.map((key, i) =>{
+    //             let item = that.targetList[key]
+    //             return m('button', {key: "klineTimeListItem"+i,class: "button"+(obj.targetActive.name == item.name?' has-text-primary':''), onclick: function(){
+    //                 obj.createTarget(item)
                     
-                }}, [
-                    item.name
-                ])
-            })
-        }else{
-            return timeList.map((key, i) =>{
-                let item = that.targetList[key]
-                return m('a', {key: "klineTimeListItem"+i, class:"dropdown-item"+(obj.targetActive.name == item.name?' has-text-primary':''), onclick: function(){
-                        obj.createTarget(item)
-                    }}, [
-                        item.name
-                ])
-            })
+    //             }}, [
+    //                 item.name
+    //             ])
+    //         })
+    //     }else{
+    //         return timeList.map((key, i) =>{
+    //             let item = that.targetList[key]
+    //             return m('a', {key: "klineTimeListItem"+i, class:"dropdown-item"+(obj.targetActive.name == item.name?' has-text-primary':''), onclick: function(){
+    //                     obj.createTarget(item)
+    //                 }}, [
+    //                     item.name
+    //             ])
+    //         })
+    //     }
+    // },
+    getTargetList: function () {
+        let that = this
+        let timeList_main = Object.keys(this.targetList_main)
+        let timeList_second = Object.keys(this.targetList_second)
+
+        if (window.isMobile) {
+            return m('div',[
+                m('div',{class:""},[
+                    m("p", { class: "dropdown-item k-line-button2" }, [
+                        gDI18n.$t('10510')//"主图"
+                    ]),
+                    timeList_main.map((key, i) => {
+                        let item = that.targetList_main[key]
+                        return m('button', {
+                            key: "klineTimeListItemMain" + i, class: "button" + (obj.targetActive.name == item.name ? ' has-text-primary' : ''), onclick: function () {
+                                obj.createTarget(item)
+
+                            }
+                        }, [
+                            item.name
+                        ])
+                    })
+                ]),
+                m('div',{class:""},[
+                    m("p", { class: "dropdown-item k-line-button2" }, [
+                        gDI18n.$t('10511')//"副图"
+                    ]),
+                    timeList_second.map((key, i) => {
+                        let item = that.targetList_second[key]
+                        return m('button', {
+                            key: "klineTimeListItemSecond" + i, class: "button" + (obj.targetActive_second.name == item.name ? ' has-text-primary' : ''), onclick: function () {
+                                obj.createTarget(item)
+
+                            }
+                        }, [
+                            item.name
+                        ])
+                    })
+                ]),
+            ])
+        } else {
+            return m('div', [
+                m('div', { class: "" }, [
+                    m("p", { class: "dropdown-item k-line-button2" }, [
+                        gDI18n.$t('10510')//"主图"
+                    ]),
+                    timeList_main.map((key, i) => {
+                        let item = that.targetList_main[key]
+                        return m('a', {
+                            key: "klineTimeListItemMain" + i, class: "dropdown-item k-line-button" + (obj.targetActive.name == item.name ? ' has-text-primary' : ''), onclick: function () {
+                                obj.createTarget(item)
+                            }
+                        }, [
+                            item.name
+                        ])
+                    })
+                ]),
+                m('div', { class: "" }, [
+                    m("p", { class: "dropdown-item k-line-button2" }, [
+                        gDI18n.$t('10511')//"副图"
+                    ]),
+                    timeList_second.map((key, i) => {
+                        let item = that.targetList_second[key]
+                        return m('a', {
+                            key: "klineTimeListItemSecond" + i, class: "dropdown-item k-line-button" + (obj.targetActive_second.name == item.name ? ' has-text-primary' : ''), onclick: function () {
+                                obj.createTarget(item)
+                            }
+                        }, [
+                            item.name
+                        ])
+                    })
+                ]),
+
+            ])
         }
     },
     setKcross: function() {
@@ -478,6 +634,16 @@ let obj = {
         // window._chart.setOffsetRightSpace(50)
         // window._chart.setLeftMinVisibleBarCount(50)
         // window._chart.setRightMinVisibleBarCount(50)
+
+        // 根据是否选中指标来初始化k线指标
+        if (this.targetActive.name) {
+            window._chart.setCandleStickTechnicalIndicatorType(this.targetActive.name)
+        } else if (!this.targetActive.name) {
+            window._chart.setCandleStickTechnicalIndicatorType('NO')
+        }
+        if (this.targetActive_second.id) {
+            window._chart.createTechnicalIndicator(this.targetActive_second.name, 80, false)
+        }
         // 设置k线柱的宽度
         window._chart.setDataSpace(8)
         window._chart.loadMore(this.loadMoreKline)
@@ -1249,7 +1415,8 @@ export default {
                         window.stopBubble(e)
                     }}, [
                         m('button', {class:"button kline-index-pad is-selected"}, [
-                            obj.targetActive.name || gDI18n.$t('10435'), //'指标'
+                            gDI18n.$t('10435'), //'指标'
+                            //obj.targetActive.name || gDI18n.$t('10435'), //'指标'
                             m('.spacer'),
                             m('span', {class:"icon"}, [
                                 m('i', {class:"iconfont iconxiala has-text-primary is-size-7"})
@@ -1293,7 +1460,8 @@ export default {
                         window.stopBubble(e)
                     }}, [
                         m('button', {class:"button is-white"}, [
-                            obj.targetActive.name || gDI18n.$t('10435'), //'指标'
+                            gDI18n.$t('10435'), //'指标'
+                            //obj.targetActive.name || gDI18n.$t('10435'), //'指标'
                             m('.spacer'),
                             m('span', {class:"icon"}, [
                                 m('i', {class:"iconfont iconxiala has-text-primary is-size-7"})

@@ -282,6 +282,13 @@ hr {
 
 //k线模块 start
 
+//k线导航栏
+
+
+.max-index{
+    z-index: 50;
+}
+
 .pub-kline {
     @extend %side-pa;
     height: 100%;
