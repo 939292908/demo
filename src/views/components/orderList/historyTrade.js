@@ -126,11 +126,12 @@ let obj = {
     initObj: function(){
         let trade = window.gTrd.MyTrades['01']
         let list = []
+        let viaArr = [4,5,7,13]
         for(let k of trade){
             let item = {}
             let Sym = k.Sym
             let ass = window.gMkt.AssetD[Sym]
-            if(ass){
+            if(ass && viaArr.includes(k.Via)){
                 utils.copyTab(item, k)
 
                 let PrzMinIncSize = utils.getFloatSize(utils.getFullNum(ass.PrzMinInc || 6));
