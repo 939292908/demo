@@ -203,18 +203,21 @@ let obj = {
 
         let list = []
         for (let k of WltLog) {
-            let item = {}
-            utils.copyTab(item, k)
+            
+            //Via == 14 是大钱包没钱，从逐仓保证金转钱出来抵扣资金费率
+            if(k.Via != 14){
+                let item = {}
+                utils.copyTab(item, k)
 
+                //金额
+                item.Qty = Number(item.Qty || 0).toPrecision2(6, 8)
 
-            //金额
-            item.Qty = Number(item.Qty || 0).toPrecision2(6, 8)
+                item.ViaStr = utils.WltViaStr(item.Via)
 
-            item.ViaStr = utils.WltViaStr(item.Via)
-
-            item.AtStr = new Date(item.At).format('MM/dd hh:mm:ss'),
+                item.AtStr = new Date(item.At).format('MM/dd hh:mm:ss'),
 
                 list.push(item)
+            }
         }
         list.sort(function (a, b) {
             return b.At - a.At
