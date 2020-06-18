@@ -249,12 +249,12 @@ let spotTick = {
                                         gDI18n.$t('10480')//"持仓量："
                                     ]),
                                     m('span.has-text-1',[
-                                        spotTick.getLastTick().Turnover24 || '--'
+                                        spotTick.getLastTick().OpenInterest || '--'
                                     ])
-                                    //gDI18n.$t('10022',{value : (spotTick.getLastTick().Turnover24 || '--')})//"持仓量："+(spotTick.getLastTick().Turnover24 || '--')
+                                    //gDI18n.$t('10022',{value : (spotTick.getLastTick().OpenInterest || '--')})//"持仓量："+(spotTick.getLastTick().OpenInterest || '--')
                                 ]),
                                 m('p', {class:"has-text-1-important"}, [
-                                    '≈ '+(spotTick.getLastTick().Turnover24ForUSDT || '--')+'USDT'
+                                    '≈ '+(spotTick.getLastTick().OpenInterestForUSDT || '--')+'USDT'
                                 ]),
                             ]),
                         ])
