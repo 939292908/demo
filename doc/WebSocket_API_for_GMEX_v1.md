@@ -1739,6 +1739,22 @@ const (
     // 数据Reset
     WltOp_WLT_RESET WltOp = 99
 )
+
+/* 仓位标志 */
+type PosFlag int32
+const (
+    PF_NO_USE = 0;
+    //缺省仓位
+    IS_MASTER = 1;
+    //启用止盈价
+    ENABLE_STOPP = 2;
+    //启用止损价
+    ENABLE_STOPL = 4;
+    //禁止做空
+    DISABLE_SHORT = 8;
+    //禁止做多
+    DISABLE_LONG  = 16;
+)
 ```
 
 
