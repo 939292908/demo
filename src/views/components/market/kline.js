@@ -1337,7 +1337,7 @@ let obj = {
     },
     setFullscreen: function(){
         if(this.fullscreen){
-                this.exitfullscreen(".pub-kline")
+            this.exitfullscreen(".pub-kline")
         }else{
             this.enterfullscreen(".pub-kline")
         }
@@ -1355,6 +1355,9 @@ let obj = {
         return isFull;
     },
     fullScreenShange: function(e){
+        if(window._chart){
+            window._chart.resize()
+        }
         obj.fullscreen = !obj.fullscreen
     }
 }
