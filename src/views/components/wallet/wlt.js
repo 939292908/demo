@@ -101,7 +101,7 @@ export default {
                         gDI18n.$t('10231')//'账户权益'
                     ]),
                     m('div', {class: 'level-right has-text-1'}, [
-                        obj.wlt.WltBal?Number(obj.wlt.WltBal).toFixed2(8): (0).toFixed2(8)
+                        obj.wlt.WltBal?Number(obj.wlt.MgnBal).toFixed2(8): (0).toFixed2(8)
                     ])
                 ]),
                 m('div', {class: 'level'}, [
