@@ -292,6 +292,7 @@ hr {
 .pub-kline {
     @extend %side-pa;
     height: 100%;
+    width: 100%;
     hr {
         @extend %ma-0;
         height: 1px;
