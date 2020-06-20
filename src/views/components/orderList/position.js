@@ -392,6 +392,10 @@ let obj = {
   placeOrder(status, pos){
     let that = this;
     let p = null;
+
+    let Lever = pos.Lever || 0
+    let MIRMy = pos.MIRMy || 0
+
     pos.loading = true
     switch(status){
         case 'add':
@@ -408,6 +412,8 @@ let obj = {
             OrdFlag: 0,
             PrzChg: 10,
             PId: pos.PId,
+            lvr: Lever,
+            MIRMy: MIRMy,
             isAdd: true
           }
           break;
@@ -425,6 +431,8 @@ let obj = {
             OrdFlag: 0,
             PrzChg: 10,
             PId: pos.PId,
+            lvr: Lever,
+            MIRMy: MIRMy,
             isBack: true
           }
           break;
@@ -442,6 +450,8 @@ let obj = {
             OrdFlag: 2, //只减仓
             PrzChg: 10,
             PId: pos.PId,
+            lvr: Lever,
+            MIRMy: MIRMy,
             isClose: true
           }
           break;
