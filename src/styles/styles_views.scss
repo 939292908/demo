@@ -1048,6 +1048,7 @@ hr {
     @extend %side-pa;
 
     .pub-trade-list-tabs {
+        overflow: visible;
         @extend %mb-3;
     }
 
@@ -1549,6 +1550,49 @@ hr {
     // }
     
 }
+// 下拉组件
+.my-dropdown {
+    .dropdown-trigger {
+        .button {
+            @extend %py-2;
+            @extend %px-4;
+            @extend %font-2;
+            height: auto;
+            .button-content {
+                @extend .is-between;
+                align-items: center;
+                width: 100%;
+                .my-trigger-icon {
+                    @extend %font-2;
+                    @extend %ml-2;
+                }
+            }
+            .button-span-icon{
+                @extend %pr-2;
+            }
+        }
+    }
+    .dropdown-menu {
+        .dropdown-content {
+            .dropdown-item {
+                justify-content: space-between;
+                border: none;
+                @extend %px-3;
+                @extend %py-4;
+                @extend %font-2;
+                .my-menu-label {
+                    @extend %py-1;
+                }
+                .my-menu-icon {
+                }
+            }
+        }
+    }
+
+    .dropdown-width{
+        min-width: 103px;
+    }
+}
 // -------------- 所有模式 --------------
 .has-text-white {
     // 文字-白
@@ -1873,6 +1917,26 @@ hr {
     .pub-header-tick-left-market {
         @include scrollBar( $white-background-color-three-level, $white-background-color-second-level);
     }
+    // trade 的下拉
+    .pub-trade-list-tabs-dropdown {
+        border-bottom: 1px solid $white-line1;
+        .dropdown-content {
+            .dropdown-item {
+                &.has-active {
+                    // background-color: #000!important;
+                    // color: #eee!important;
+                    @extend .is-background-2;
+                    @extend .has-text-1;
+                }
+                &.has-hover:hover {
+                    // background-color: #000!important;
+                    // color: #eee!important;
+                    @extend .is-background-2;
+                    @extend .has-text-1;
+                }
+            }
+        }
+    }
 }
 
 // -------------- 黑夜模式 --------------
@@ -2165,5 +2229,25 @@ hr {
     // tick 头部的下拉行情
     .pub-header-tick-left-market {
         @include scrollBar( $black-background-color-three-level, $black-background-color-second-level);
+    }
+    // trade 的下拉
+    .pub-trade-list-tabs-dropdown {
+        border-bottom: 1px solid $black-line1;
+        .dropdown-content {
+            .dropdown-item {
+                &.has-active {
+                    // background-color: #000!important;
+                    // color: #eee!important;
+                    @extend .is-background-2;
+                    @extend .has-text-1;
+                }
+                &.has-hover:hover {
+                    // background-color: #000!important;
+                    // color: #eee!important;
+                    @extend .is-background-2;
+                    @extend .has-text-1;
+                }
+            }
+        }
     }
 }

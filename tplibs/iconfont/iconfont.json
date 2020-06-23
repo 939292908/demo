@@ -6,6 +6,48 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "15455940",
+      "name": "logo-1",
+      "font_class": "logo-1",
+      "unicode": "e638",
+      "unicode_decimal": 58936
+    },
+    {
+      "icon_id": "15455941",
+      "name": "logo-2",
+      "font_class": "logo-21",
+      "unicode": "e639",
+      "unicode_decimal": 58937
+    },
+    {
+      "icon_id": "14395550",
+      "name": "法币交易完成",
+      "font_class": "fabijiaoyiwancheng",
+      "unicode": "e608",
+      "unicode_decimal": 58888
+    },
+    {
+      "icon_id": "14396191",
+      "name": "隐藏关闭",
+      "font_class": "zichanzhengyan",
+      "unicode": "e628",
+      "unicode_decimal": 58920
+    },
+    {
+      "icon_id": "14396193",
+      "name": "隐藏",
+      "font_class": "yincang",
+      "unicode": "e62a",
+      "unicode_decimal": 58922
+    },
+    {
+      "icon_id": "15146789",
+      "name": "logo-2",
+      "font_class": "logo-2",
+      "unicode": "e607",
+      "unicode_decimal": 58887
+    },
+    {
       "icon_id": "15101569",
       "name": "白天",
       "font_class": "baitian",

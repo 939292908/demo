@@ -148,7 +148,26 @@ export default {
             m("div",{class:"pub-trade-list-tabs tabs "},[
                 m("ul",[
                     obj.getTabsList()
-                ])
+                ]),
+                m( Dropdown, {
+                    class: 'pub-trade-list-tabs-dropdown',
+                    triggerId: 2,
+                    onClick (itme) {
+                        console.log(itme);
+                    },
+                    getList () {
+                        return [
+                            {
+                                id: 1,
+                                label: gDI18n.$t('10076')
+                            },
+                            {
+                                id: 2,
+                                label: gDI18n.$t('10077')
+                            }
+                        ]
+                    }
+                })
             ]),
             obj.getTabsActiveContent()
         ])
