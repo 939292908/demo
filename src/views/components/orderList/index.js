@@ -151,7 +151,7 @@ export default {
                 ]),
                 m( Dropdown, {
                     class: 'pub-trade-list-tabs-dropdown',
-                    triggerId: 2,
+                    triggerId: 1,
                     onClick (itme) {
                         console.log(itme);
                     },
@@ -159,11 +159,11 @@ export default {
                         return [
                             {
                                 id: 1,
-                                label: gDI18n.$t('10076')
+                                label: gDI18n.$t('10517')//"显示全部"
                             },
                             {
                                 id: 2,
-                                label: gDI18n.$t('10077')
+                                label: gDI18n.$t('10518')//显示当前合约
                             }
                         ]
                     }
