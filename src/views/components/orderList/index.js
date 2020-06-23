@@ -6,7 +6,7 @@ import planList from './planList'
 import historyOrd from './historyOrd'
 import historyTrade from './historyTrade'
 import wltRec from './wltRec'
-
+import Dropdown from '../common/Dropdown'
 
 let obj = {
     tabsActive: 0,

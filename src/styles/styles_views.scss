@@ -17,6 +17,16 @@ html {
 
 body {
     min-height: 100%;
+    overflow-x: auto;
+    width: 100%;
+}
+
+.box {
+    .level-item {
+        display: flex;
+        justify-content: space-between;
+        @extend %mb-3;
+    }
 }
 
 button {
@@ -1259,7 +1269,7 @@ hr {
 // 资产模块 start
 .pub-wallet-box {
     @extend %side-pa;
-    height: 303px;
+    // height: 303px;
 
     .pub-wallet-box-tabs {
         @extend %mb-3;
@@ -1362,7 +1372,12 @@ hr {
 // 线路切换 end
 
 // 屏幕适配相关 start
-@media screen and (min-width: 1630px) {
+@media screen and (min-width: 769px) {
+    body {
+        > section {
+            min-width: 1280px;
+        }
+    }
 }
 @media screen and (max-width: 1630px) {
     .pub-kline-btns-pc-time {
@@ -1566,7 +1581,9 @@ hr {
 .input:focus, .button:focus {
     box-shadow: none!important;
 }
-
+.mb-0-important {
+    margin-bottom: 0 !important;
+}
 // -------------- 白天模式 --------------
 #light {
     background-color: $white-background-color-once-level;

@@ -96,19 +96,19 @@ export default {
         
         return m("div",{class:"pub-wallet"},[
             m('div', {class:"pub-wallet-content"}, [
-                m('div', {class: 'level'}, [
-                    m('div', {class: 'level-left text--secondary has-text-2'}, [
+                m('div', {class: 'level-item'}, [
+                    m('div', {class: 'text--secondary has-text-2'}, [
                         gDI18n.$t('10231')//'账户权益'
                     ]),
-                    m('div', {class: 'level-right has-text-1'}, [
+                    m('div', {class: 'has-text-1'}, [
                         obj.wlt.WltBal?Number(obj.wlt.WltBal).toFixed2(8): (0).toFixed2(8)
                     ])
                 ]),
-                m('div', {class: 'level'}, [
-                    m('div', {class: 'level-left text--secondary has-text-2'}, [
+                m('div', {class: 'level-item'}, [
+                    m('div', {class: 'text--secondary has-text-2'}, [
                         gDI18n.$t('10427')//'未实现盈亏'
                     ]),
-                    m('div', {class: 'level-right has-text-1 '}, [
+                    m('div', {class: 'has-text-1 '}, [
                         Number(obj.wlt.aUPNL)>=0?m('div',{class:"has-text-success"},[
                             obj.wlt.aUPNL?Number(obj.wlt.aUPNL).toFixed2(8): (0).toFixed2(8)
                         ]):m('div',{class:"has-text-danger "},[
@@ -117,43 +117,43 @@ export default {
                         
                     ])
                 ]),
-                m('div', {class: 'level'}, [
-                    m('div', {class: 'level-left text--secondary has-text-2'}, [
+                m('div', {class: 'level-item'}, [
+                    m('div', {class: 'text--secondary has-text-2'}, [
                         gDI18n.$t('10232')//'仓位保证金'
                     ]),
-                    m('div', {class: 'level-right has-text-1'}, [
+                    m('div', {class: 'has-text-1'}, [
                         obj.wlt.aMM?Number(obj.wlt.aMM).toFixed2(8): (0).toFixed2(8)
                     ])
                 ]),
-                m('div', {class: 'level'}, [
-                    m('div', {class: 'level-left text--secondary has-text-2'}, [
+                m('div', {class: 'level-item'}, [
+                    m('div', {class: 'text--secondary has-text-2'}, [
                         gDI18n.$t('10167')//'委托保证金'
                     ]),
-                    m('div', {class: 'level-right has-text-1'}, [
+                    m('div', {class: 'has-text-1'}, [
                         obj.wlt.aMI?Number(obj.wlt.aMI).toFixed2(8): (0).toFixed2(8)
                     ])
                 ]),
-                m('div', {class: 'level'}, [
-                    m('div', {class: 'level-left text--secondary has-text-2'}, [
+                m('div', {class: 'level-item'}, [
+                    m('div', {class: 'text--secondary has-text-2'}, [
                         gDI18n.$t('10157')//'可用保证金'
                     ]),
-                    m('div', {class: 'level-right has-text-1'}, [
+                    m('div', {class: 'has-text-1'}, [
                         obj.wlt.aWdrawable?Number(obj.wlt.aWdrawable).toFixed2(8): (0).toFixed2(8)
                     ])
                 ]),
-                m('div', {class: 'level'}, [
-                    m('div', {class: 'level-left text--secondary has-text-2'}, [
+                m('div', {class: 'level-item'}, [
+                    m('div', {class: 'text--secondary has-text-2'}, [
                         gDI18n.$t('10233')//'可用赠金'
                     ]),
-                    m('div', {class: 'level-right has-text-1'}, [
+                    m('div', {class: 'has-text-1'}, [
                         obj.wlt.aGift?Number(obj.wlt.aGift).toFixed2(8): (0).toFixed2(8)
                     ])
                 ]),
-                m('div', {class: 'level'}, [
-                    m('div', {class: 'level-left text--secondary has-text-2'}, [
+                m('div', {class: 'level-item mb-0-important'}, [
+                    m('div', {class: 'text--secondary has-text-2'}, [
                         gDI18n.$t('10234')//'资金使用率'
                     ]),
-                    m('div', {class: 'level-right has-text-1'}, [
+                    m('div', {class: 'has-text-1'}, [
                         obj.wlt.walletRate?(Number(obj.wlt.walletRate)*100).toFixed2(2)+'%': (0).toFixed2(2)+'%'
                     ])
                 ]),

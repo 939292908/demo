@@ -987,8 +987,8 @@ export default {
             ]),
             m('.spacer'),
             m("div", { class: "pub-place-order-form-buttons field" }, [
-                m("div", { class: "level" }, [
-                    m("div", { class: "level-left button-width" }, [
+                m("div", { class: "level-item" }, [
+                    m("div", { class: "button-width" }, [
                         m('div', {class:"button-default-width"}, [
                             m("button", { class: "button is-success is-fullwidth", onclick: function(){
                                 obj.submit(1)
@@ -1006,7 +1006,7 @@ export default {
                             ])
                         ])
                     ]),
-                    m("div", { class: "level-right button-width" }, [
+                    m("div", { class: "button-width" }, [
                         m('div', {class:"button-default-width"}, [
                             m("button", { class: "button is-danger is-fullwidth", onclick: function(){
                                 obj.submit(-1)
