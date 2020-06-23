@@ -151,7 +151,7 @@ export default {
                 ]),
                 m( Dropdown, {
                     class: 'pub-trade-list-tabs-dropdown',
-                    triggerId: 2,
+                    triggerId: 1,
                     onClick (itme) {
                         console.log(itme);
                     },
