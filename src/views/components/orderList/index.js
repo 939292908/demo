@@ -143,6 +143,7 @@ export default {
     oninit: function(vnode){
         obj.initEVBUS()
         obj.initLanguage()
+        window.$dropdownType = 1
     },
     oncreate: function(vnode){
         
