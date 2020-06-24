@@ -102,6 +102,11 @@ let obj = {
         ]
     },
 
+    myclickType(item) {
+        window.$dropdownType = item.id
+        gEVBUS.emit(gEVBUS.EV_DROPDOWN_UP, { Ev: gEVBUS.EV_DROPDOWN_UP, data: { item: window.$dropdownType } })
+    },
+
     getTabsList: function(){
         let tabsList = this.tabsList.filter(item =>{
             return window.$config.future.orderList[item.key]
@@ -138,6 +143,7 @@ export default {
     oninit: function(vnode){
         obj.initEVBUS()
         obj.initLanguage()
+        window.$dropdownType = 1
     },
     oncreate: function(vnode){
         
@@ -150,10 +156,12 @@ export default {
                     obj.getTabsList()
                 ]),
                 m( Dropdown, {
-                    class: 'pub-trade-list-tabs-dropdown is-hidden-mobile',
+                    class: 'pub-trade-list-tabs-dropdown' + (obj.tabsActive == 5 ? " is-hidden" : ""),
                     triggerId: 1,
+                    menuWidth:110,
                     onClick (itme) {
                         console.log(itme);
+                        obj.myclickType(itme)
                     },
                     getList () {
                         return [

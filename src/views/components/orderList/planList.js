@@ -79,6 +79,24 @@ let obj = {
             that.initObj()
         })
 
+        //仓位选择筛选
+        if (this.EV_DROPDOWN_UP_unbinder) {
+            this.EV_DROPDOWN_UP_unbinder()
+        }
+        this.EV_DROPDOWN_UP_unbinder = window.gEVBUS.on(gEVBUS.EV_DROPDOWN_UP, arg => {
+            // obj.dropdownType = arg.data.item.xx
+            // console.log(obj.dropdownType, "筛选类型")
+            obj.initObj()
+        })
+
+        //当前选中合约变化全局广播
+        if (this.EV_CHANGESYM_UPD_unbinder) {
+            this.EV_CHANGESYM_UPD_unbinder()
+        }
+        this.EV_CHANGESYM_UPD_unbinder = window.gEVBUS.on(gMkt.EV_CHANGESYM_UPD, arg => {
+            obj.initObj()
+        }) 
+
 
     },
     initLanguage: function(){
@@ -129,7 +147,13 @@ let obj = {
         }
         if (this.EV_WEB_LOGOUT_unbinder) {
             this.EV_WEB_LOGOUT_unbinder()
-        }  
+        }
+        if (this.EV_DROPDOWN_UP_unbinder) {
+            this.EV_DROPDOWN_UP_unbinder()
+        } 
+        if (this.EV_CHANGESYM_UPD_unbinder) {
+            this.EV_CHANGESYM_UPD_unbinder()
+        } 
     },
     initObj() {
         let Orders = window.gTrd.Orders['01']
@@ -193,7 +217,14 @@ let obj = {
 
                 obj.loading = false
 
-                posList.push(obj)
+                if (window.$dropdownType == 1) {
+                    posList.push(obj)
+                } else {
+                    let Sym = window.gMkt.CtxPlaying.Sym
+                    if (obj.Sym == Sym) {
+                        posList.push(obj)
+                    }
+                }
             }
 
         }

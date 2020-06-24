@@ -70,6 +70,24 @@ let obj = {
         this.EV_ASSETD_UPD_unbinder = window.gEVBUS.on(gMkt.EV_ASSETD_UPD, arg => {
             that.initObj()
         })
+
+        //仓位选择筛选
+        if (this.EV_DROPDOWN_UP_unbinder) {
+            this.EV_DROPDOWN_UP_unbinder()
+        }
+        this.EV_DROPDOWN_UP_unbinder = window.gEVBUS.on(gEVBUS.EV_DROPDOWN_UP, arg => {
+            // obj.dropdownType = arg.data.item.xx
+            obj.initObj()
+            // console.log(obj.dropdownType, "筛选类型")
+        })
+
+        //当前选中合约变化全局广播
+        if (this.EV_CHANGESYM_UPD_unbinder) {
+            this.EV_CHANGESYM_UPD_unbinder()
+        }
+        this.EV_CHANGESYM_UPD_unbinder = window.gEVBUS.on(gMkt.EV_CHANGESYM_UPD, arg => {
+            obj.initObj()
+        })
     },
     initLanguage: function(){
         this.theadList = [
@@ -117,6 +135,12 @@ let obj = {
         if (this.EV_ASSETD_UPD_unbinder) {
             this.EV_ASSETD_UPD_unbinder()
         }
+        if (this.EV_DROPDOWN_UP_unbinder) {
+            this.EV_DROPDOWN_UP_unbinder()
+        }
+        if (this.EV_CHANGESYM_UPD_unbinder) {
+            this.EV_CHANGESYM_UPD_unbinder()
+        }
     },
     getHistoryList: function(){
         let that = this
@@ -161,9 +185,16 @@ let obj = {
                 item.Dir = item.Sz > 0?1:-1
                 item.DirStr = utils.getDirByStr(item.Dir)
 
-                item.AtStr = new Date(item.At).format('MM/dd hh:mm:ss'),
+                item.AtStr = new Date(item.At).format('MM/dd hh:mm:ss')
 
-                list.push(item)
+                if (window.$dropdownType == 1) {
+                    list.push(item)
+                } else {
+                    let Sym = window.gMkt.CtxPlaying.Sym
+                    if (item.Sym == Sym) {
+                        list.push(item)
+                    }
+                }
             }
         }
         list.sort(function(a,b){

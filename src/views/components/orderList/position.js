@@ -81,6 +81,23 @@ let obj = {
     this.EV_POSABDWLTCALCOVER_UPD_unbinder = window.gEVBUS.on(window.gTrd.EV_POSABDWLTCALCOVER_UPD,arg=> {
         that.initObj()
     })
+
+    //仓位选择筛选
+    if (this.EV_DROPDOWN_UP_unbinder) {
+      this.EV_DROPDOWN_UP_unbinder()
+    }
+    this.EV_DROPDOWN_UP_unbinder = window.gEVBUS.on(gEVBUS.EV_DROPDOWN_UP, arg => {
+      // obj.dropdownType = arg.data.item.xx
+      obj.initObj()
+    })
+
+    //当前选中合约变化全局广播
+    if (this.EV_CHANGESYM_UPD_unbinder) {
+      this.EV_CHANGESYM_UPD_unbinder()
+    }
+    this.EV_CHANGESYM_UPD_unbinder = window.gEVBUS.on(gMkt.EV_CHANGESYM_UPD, arg => {
+      obj.initObj()
+    }) 
     
   },
   initLanguage: function(){
@@ -135,6 +152,12 @@ let obj = {
       if(this.EV_POSABDWLTCALCOVER_UPD_unbinder){
         this.EV_POSABDWLTCALCOVER_UPD_unbinder()
       }
+      if (this.EV_DROPDOWN_UP_unbinder) {
+        this.EV_DROPDOWN_UP_unbinder()
+      }
+      if (this.EV_CHANGESYM_UPD_unbinder) {
+        this.EV_CHANGESYM_UPD_unbinder()
+      }
   },
   initObj(){
     let Poss =window.gTrd.Poss
@@ -145,7 +168,15 @@ let obj = {
       let ass = window.gMkt.AssetD[pos.Sym]
       let obj = utils.getPosInfo(pos, ass,UPNLPrzActive)
       if(obj && obj.Sz != 0){
-        posList.push(obj)
+        if (window.$dropdownType == 1){
+          posList.push(obj)
+        }else{
+          let Sym = window.gMkt.CtxPlaying.Sym
+          if (obj.Sym == Sym){
+            posList.push(obj)
+          }
+        }
+        
       }
     }
     this.posList = posList
