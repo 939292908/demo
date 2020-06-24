@@ -156,7 +156,7 @@ export default {
                     obj.getTabsList()
                 ]),
                 m( Dropdown, {
-                    class: 'pub-trade-list-tabs-dropdown' + (obj.tabsActive == 5 ? " is-hidden" : ""),
+                    class: 'pub-trade-list-tabs-dropdown is-hidden-mobile' + (obj.tabsActive == 5 ? " is-hidden" : ""),
                     triggerId: 1,
                     menuWidth:110,
                     onClick (itme) {
