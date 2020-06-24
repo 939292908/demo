@@ -210,11 +210,21 @@ let obj = {
             ])
         })
     },
+    //设置合约
+    setSym(Sym) {
+        window.gMkt.CtxPlaying.Sym = Sym // window 保存选中
+        // this.symListOpen = false
+        // this.unSubSym()
+        utils.setItem('futureActiveSymbol', Sym)
+        gEVBUS.emit(gMkt.EV_CHANGESYM_UPD, { Ev: gMkt.EV_CHANGESYM_UPD, Sym: Sym })
+    },
     getListItem: function () {
         return this.list.map(function (item, i) {
             return m("tr", { key: "historyTrdTableListItem" + i, class: "" }, [
                 
-                m("td", { class: "" }, [
+                m("td", { class: "cursor-pointer" ,onclick:function(){
+                    obj.setSym(item.Sym)
+                }}, [
                     m("p", { class: " " }, [
                         item.displaySym
                     ])

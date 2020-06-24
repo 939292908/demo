@@ -485,11 +485,18 @@ let obj = {
             ])
         })
     },
-
+    //设置合约
+    setSym(Sym) {
+        window.gMkt.CtxPlaying.Sym = Sym // window 保存选中
+        utils.setItem('futureActiveSymbol', Sym)
+        gEVBUS.emit(gMkt.EV_CHANGESYM_UPD, { Ev: gMkt.EV_CHANGESYM_UPD, Sym: Sym })
+    },
     getPosList: function () {
         return this.posList.map(function (item, i) {
             return m("tr", { key: "historyOrdTableListItem" + i, class: " " }, [
-                m("td", { class: "" }, [
+                m("td", { class: "cursor-pointer" ,onclick:function(){
+                    obj.setSym(item.Sym)
+                }}, [
                     m("p", { class: " " }, [
                         utils.getSymDisplayName(window.gMkt.AssetD, item.Sym)
                     ])

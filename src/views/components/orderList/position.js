@@ -189,6 +189,12 @@ let obj = {
       ])
     })
   },
+  //设置合约
+  setSym(Sym) {
+    window.gMkt.CtxPlaying.Sym = Sym // window 保存选中
+    utils.setItem('futureActiveSymbol', Sym)
+    gEVBUS.emit(gMkt.EV_CHANGESYM_UPD, { Ev: gMkt.EV_CHANGESYM_UPD, Sym: Sym })
+  },
   getPosList: function(){
     let btnsOpen = window.$config.positionBtns.desktop
     return this.posList.map(function(item, i){
@@ -196,7 +202,9 @@ let obj = {
         m("td",{class:"table-tr-td-vertical"},[
           item.PId.substr(-4)
         ]),
-        m("td",{class:"table-tr-td-vertical"},[
+        m("td", { class:"table-tr-td-vertical cursor-pointer",onclick:function(){
+          obj.setSym(item.Sym)
+        }},[
           m("p",{class:""},[
             utils.getSymDisplayName(window.gMkt.AssetD, item.Sym)
           ]),
