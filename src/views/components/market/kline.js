@@ -533,13 +533,13 @@ let obj = {
         if (window.isMobile) {
             return m('div', [
                 m('div', { class: "" }, [
-                    m("p", { class: "dropdown-item k-line-button2" }, [
+                    m("p", { class: "dropdown-item k-line-button2 has-text-2 is-background-3" }, [
                         gDI18n.$t('10510')//"主图"
                     ]),
                     timeList_main.map((key, i) => {
                         let item = that.targetList_main[key]
                         return m('button', {
-                            key: "klineTimeListItemMain" + i, class: "button" + (obj.targetActive.name == item.name ? ' has-text-primary' : ''), onclick: function () {
+                            key: "klineTimeListItemMain" + i, class: "button has-text-2 is-background-3" + (obj.targetActive.name == item.name ? ' has-text-primary' : ''), onclick: function () {
                                 obj.createTarget(item)
 
                             }
@@ -549,13 +549,13 @@ let obj = {
                     })
                 ]),
                 m('div', { class: "" }, [
-                    m("p", { class: "dropdown-item k-line-button2" }, [
+                    m("p", { class: "dropdown-item k-line-button2 has-text-2 is-background-3" }, [
                         gDI18n.$t('10511')//"副图"
                     ]),
                     timeList_second.map((key, i) => {
                         let item = that.targetList_second[key]
                         return m('button', {
-                            key: "klineTimeListItemSecond" + i, class: "button" + (obj.targetActive_second.name == item.name ? ' has-text-primary' : ''), onclick: function () {
+                            key: "klineTimeListItemSecond" + i, class: "button has-text-2 is-background-3" + (obj.targetActive_second.name == item.name ? ' has-text-primary' : ''), onclick: function () {
                                 obj.createTarget(item)
 
                             }
@@ -568,7 +568,7 @@ let obj = {
         } else {
             return m('div', [
                 m('div', { class: "" }, [
-                    m("p", { class: "dropdown-item k-line-button2" }, [
+                    m("p", { class: "dropdown-item k-line-button2 has-text-2 is-background-3" }, [
                         gDI18n.$t('10510')//"主图"
                     ]),
                     timeList_main.map((key, i) => {
@@ -583,7 +583,7 @@ let obj = {
                     })
                 ]),
                 m('div', { class: "" }, [
-                    m("p", { class: "dropdown-item k-line-button2" }, [
+                    m("p", { class: "dropdown-item k-line-button2 has-text-2 is-background-3" }, [
                         gDI18n.$t('10511')//"副图"
                     ]),
                     timeList_second.map((key, i) => {

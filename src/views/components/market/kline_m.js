@@ -198,7 +198,7 @@ let spotTick = {
                                 m("td",{class :" table-margin"},[
                                     gDI18n.$t('10438')//"24H最高："
                                 ]),
-                                m("td",{class :"font-textalent-right has-text-black  table-margin"},[
+                                m("td",{class :"font-textalent-right has-text-2  table-margin"},[
                                     spotTick.getLastTick().High24 || '--'
                                 ]),
                             ]),
@@ -206,7 +206,7 @@ let spotTick = {
                                 m("td",{class :" table-margin"},[
                                     gDI18n.$t('10439')//"24H最低："
                                 ]),
-                                m("td",{class :"font-textalent-right has-text-black table-margin"},[
+                                m("td",{class :"font-textalent-right has-text-2 table-margin"},[
                                     spotTick.getLastTick().Low24 || '--'
                                 ]),
                             ]),
@@ -214,7 +214,7 @@ let spotTick = {
                                 m("td",{class :" table-margin"},[
                                     gDI18n.$t('10440')//"持仓量："
                                 ]),
-                                m("td",{class :"font-textalent-right has-text-black  table-margin"},[
+                                m("td",{class :"font-textalent-right has-text-2  table-margin"},[
                                     spotTick.getLastTick().Turnover24 || '--'
                                 ]),
                             ]),
