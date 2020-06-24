@@ -644,7 +644,7 @@ let obj = {
     },
     setKlineOptions: function(){
         let $color = window.themeColors
-        console.log(obj.theme,"主题类型")
+        console.log(window.$theme,"主题类型")
         // let lineColor = "#f4f4f4"
         // let fontPrimary = "#111"
         // let fontSecondary = "#8e8e8e"
