@@ -1,10 +1,10 @@
 // 传递参数说明
-// getList() {return [{ id:xxx, label:xxx,... }, { id:xxx, label:xxx,... }]} 菜单数据 (id, label必须项)
-// onClick(item) {} 点击事件 可获取item
-// class 自定义类名
-// triggerId 默认选中的id
-// triggerWidth 触发box 自定义宽
-// menuWidth 菜单 自定义宽
+// getList() {return [{ id:xxx, label:xxx,... }, { id:xxx, label:xxx,... }]} 菜单数据 (id, label必须项) (必填)
+// onClick(item) {} 点击事件 可获取item (选填)
+// class 自定义类名 (选填)
+// triggerId 默认选中id (选填)
+// triggerWidth 触发 宽 (选填)
+// menuWidth 菜单 宽 (选填)
 
 var m = require("mithril")
 let obj = {

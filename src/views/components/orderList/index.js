@@ -150,7 +150,7 @@ export default {
                     obj.getTabsList()
                 ]),
                 m( Dropdown, {
-                    class: 'pub-trade-list-tabs-dropdown',
+                    class: 'pub-trade-list-tabs-dropdown is-hidden-mobile',
                     triggerId: 1,
                     onClick (itme) {
                         console.log(itme);
