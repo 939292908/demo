@@ -297,6 +297,14 @@ hr {
 
 //k线模块 start
 
+.max-index {
+    z-index: 50;
+}
+
+.k-line-button2 {
+    @extend %font-3;
+}
+
 .pub-kline {
     @extend %side-pa;
     height: 100%;
