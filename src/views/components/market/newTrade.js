@@ -160,18 +160,18 @@ let obj = {
         if (!tradeList) return ''
         return tradeList.map(function (item, i) {
             return m("div", { class: "pub-new-trade-list-item level is-relative" }, [
-                m('div', { class: "level-item w30" }, [
+                m('div', { class: " w30" }, [
                     m('p', { class: "w100 has-text-left " + utils.getColorStr(item.Dir, 'font') }, [
                         item.Prz
                     ]),
                 ]),
-                m('div', { class: "level-item w30" }, [
-                    m('p', { class: "w100 has-text-left" }, [
+                m('div', { class: " w30" }, [
+                    m('p', { class: "w100  has-text-1" }, [
                         item.Sz
                     ]),
                 ]),
-                m('div', { class: "level-item w30" }, [
-                    m('p', { class: "w100 has-text-right" }, [
+                m('div', { class: " w30" }, [
+                    m('p', { class: "w100 has-text-2" }, [
                         item.AtStr
                     ]),
                 ]),
@@ -200,11 +200,17 @@ export default {
     },
     view: function (vnode) {
 
-        return m("div", { class: "pub-new-trade has-text-1" }, [
+        return m("div", { class: "pub-new-trade" }, [
             m('div', { class: `pub-new-trade-top` }, [
-                m('p', { class: `pub-new-trade-top-pic` }, `价格 ${obj.QuoteCoin}`),
-                m('p', { class: `pub-new-trade-top-num` }, '数量'),
-                m('p', { class: `pub-new-trade-top-time` }, '时间')
+                m('p', { class: `pub-new-trade-top-pic has-text-2` }, [
+                    gDI18n.$t('10186') + " " + obj.QuoteCoin//`价格 ${obj.QuoteCoin}`
+                ]),
+                m('p', { class: `pub-new-trade-top-num has-text-2` }, [
+                    gDI18n.$t('10087') + "(" + gDI18n.$t('10423') + ")"//'数量(张)'
+                ]),
+                m('p', { class: `pub-new-trade-top-time has-text-2` }, [
+                    gDI18n.$t('10103')//'时间'
+                ])
             ]),
             m("div", { class: "pub-new-trade-list" }, [
                 // JSON.stringify(obj.tradeList)+''

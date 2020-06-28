@@ -359,9 +359,15 @@ export default {
         
         return m("div",{class:"pub-dish has-text-1"},[
             m('div', { class: `pub-dish-top` }, [
-                m('p', { class: `pub-dish-top-pic` }, `价格 ${dish.QuoteCoin}`),
-                m('p', { class: `pub-dish-top-num` }, '数量'),
-                m('p', { class: `pub-dish-top-time` }, '总量')
+                m('p', { class: `pub-dish-top-pic` }, [
+                    gDI18n.$t('10186') + " " + dish.QuoteCoin//`价格 ${dish.QuoteCoin}`
+                ]),
+                m('p', { class: `pub-dish-top-num` }, [
+                    gDI18n.$t('10087') + "(" + gDI18n.$t('10423') + ")"//'数量(张)'
+                ]),
+                m('p', { class: `pub-dish-top-time` }, [
+                    gDI18n.$t('10493') + "(" + gDI18n.$t('10423') + ")"//'总量(张)'
+                ])
             ]),
             dish.getOrder20ForSellList(),
             m("div",{class:"pub-dish-tick"},[

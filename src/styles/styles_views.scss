@@ -383,7 +383,19 @@ hr {
 .pub-dish {
     .pub-dish-top {
         display: flex;
-        justify-content: space-between;
+        // justify-content: space-between;
+        .pub-dish-top-pic {
+            text-align: left;
+        }
+        .pub-dish-top-num {
+            text-align: center;
+        }
+        .pub-dish-top-time {
+            text-align: right;
+        }
+        > p {
+            width: 33.33%;
+        }
         @extend %ma-0;
         @extend %py-2;
         @extend %px-3;
@@ -474,7 +486,19 @@ hr {
 .pub-new-trade {
     .pub-new-trade-top {
         display: flex;
-        justify-content: space-between;
+        // justify-content: space-between;
+        .pub-new-trade-top-pic {
+            text-align: left;
+        }
+        .pub-new-trade-top-num {
+            text-align: center;
+        }
+        .pub-new-trade-top-time {
+            text-align: right;
+        }
+        > p {
+            width: 33.33%;
+        }
         @extend %ma-0;
         @extend %py-2;
         @extend %px-3;
