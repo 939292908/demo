@@ -941,7 +941,7 @@ let obj = {
                                 m("div", {
                                     class: "cursor-pointer theadList-profit-loss-p2 has-text-2 flex-right fomt-blacl" + (" historyOrdTableListItemCopy" + i), "data-clipboard-text": item.PId, onclick: function (e) {
                                         window.$copy(".historyOrdTableListItemCopy" + i)
-                                        obj.copyPid(item.PId)
+                                        // obj.copyPid(item.PId)
                                     }
                                 }, [
                                     m("p", { class: "" }, [
