@@ -1636,6 +1636,11 @@ hr {
 .mb-0-important {
     margin-bottom: 0 !important;
 }
+
+//headerTick行情下拉样式
+.dropdown-button{
+    min-width: 288px;
+}
 // -------------- 白天模式 --------------
 #light {
     background-color: $white-background-color-once-level;
