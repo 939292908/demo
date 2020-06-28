@@ -253,7 +253,7 @@ let symSelect = {
                         m('button', {class: "button is-background-2 dropdown-button  is-inverted h-auto",'aria-haspopup':true, "aria-controls": "dropdown-menu2", onclick: function(e){
                             symSelect.openSelect(e)
                         }}, [
-                            m('span',{ class: ""}, utils.getSymDisplayName(window.gMkt.AssetD, window.gMkt.CtxPlaying.Sym)),
+                            m('span',{ class: "pub-sym-select-title"}, utils.getSymDisplayName(window.gMkt.AssetD, window.gMkt.CtxPlaying.Sym)),
                             m('span', {class: "icon "},[
                                 m('i', {class: "iconfont iconxiala has-text-primary is-size-6", "aria-hidden": true })
                             ]),

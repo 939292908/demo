@@ -2,7 +2,7 @@
 // getList() {return [{ id:xxx, label:xxx,... }, { id:xxx, label:xxx,... }]} 菜单数据 (id, label必须项) (必填)
 // onClick(item) {} 点击事件 可获取item (选填)
 // class 自定义类名 (选填)
-// triggerId 默认选中id (选填)
+// activeId 默认选中id (选填)
 // triggerWidth 触发 宽 (选填)
 // menuWidth 菜单 宽 (选填)
 
@@ -10,14 +10,14 @@ var m = require("mithril")
 let obj = {
     showMenu: false,
     triggerText: "click me",
-    triggerId: "",
+    activeId: "",
     // 初始化 id
     initId (vnode) {
-        vnode.attrs.triggerId && ( obj.triggerId = vnode.attrs.triggerId )
+        vnode.attrs.activeId && ( obj.activeId = vnode.attrs.activeId )
     },
     // 初始化 选中的文字
     initTriggerText (vnode) {
-        let curItem = vnode.attrs.getList().find( item => item.id == obj.triggerId ) // 当前id 对应的元素
+        let curItem = vnode.attrs.getList().find( item => item.id == obj.activeId ) // 当前id 对应的元素
         if ( curItem ) obj.triggerText = curItem.label
     },
     //初始化 全局广播
@@ -42,7 +42,7 @@ export default {
         obj.initEVBUS(vnode)
     },
     oncreate (vnode) {
-
+        // document.querySelector('body').addEventListener('click', () => obj.showMenu = false, true) // 点击body关闭下拉
     },
     view (vnode) {
         return m('div', {class:`${vnode.attrs.class || ''} my-dropdown dropdown ${obj.showMenu ? ' is-active' : ''}`}, [
@@ -64,14 +64,14 @@ export default {
             m('div', {class:"dropdown-menu"}, [
                 m('div', { class: "dropdown-content", style: vnode.attrs.menuWidth ? `width:${vnode.attrs.menuWidth}px`: ''}, 
                     vnode.attrs.getList().map((item, index) => {
-                        return m('a', { class: `dropdown-item has-hover ${obj.triggerId == item.id ? 'has-active': ''}`, key: item.label+index, onclick() {
+                        return m('a', { class: `dropdown-item has-hover ${obj.activeId == item.id ? 'has-active': ''}`, key: item.label+index, onclick() {
                             obj.triggerText = item.label
-                            obj.triggerId = item.id
+                            obj.activeId = item.id
                             vnode.attrs.onClick && vnode.attrs.onClick(item)
                             obj.showMenu = false
                         }}, [
                             m('span', { class: `my-menu-label` }, item.label),
-                                m('i', { class:`my-menu-icon iconfont iconfabijiaoyiwancheng ${obj.triggerId == item.id ? '': 'is-hidden'}`}), // icon
+                                m('i', { class:`my-menu-icon iconfont iconfabijiaoyiwancheng ${obj.activeId == item.id ? '': 'is-hidden'}`}), // icon
                         ])
                     })
                 ),
