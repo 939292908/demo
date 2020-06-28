@@ -274,10 +274,72 @@ let obj = {
         }
         this.setLever()
     },
+    // 校验
+    submitVerify (dir) {
+        let tradeType = window.$config.future.tradeType
+        switch(tradeType){
+            case 3:
+                // 买
+                if(dir == 1){
+                    if(this.form.stopP !="" && this.form.stopL !=""){
+                        if (Number(this.form.stopP) <= Number(obj.form.Prz)){
+                            return $message({ title: gDI18n.$t('10037'/*"提示"*/), content: gDI18n.$t('10512'/*"止盈触发价不能小于委托价格！"*/), type: 'danger'})
+                        }
+                        if (Number(this.form.stopL) >= Number(obj.form.Prz)){
+                            return $message({ title: gDI18n.$t('10037'/*"提示"*/), content: gDI18n.$t('10513'/*"止损触发价不能大于委托价格！"*/), type: 'danger'})
+                        }
+                        if (Number(this.form.stopP) <= Number(this.form.stopL)){
+                            return $message({ title: gDI18n.$t('10037'/*"提示"*/), content: gDI18n.$t('10193'/*'该仓位为多仓，止盈价需大于止损价'*/), type: 'danger'})
+                        }
+                    }else if(this.form.stopP !=""){
+                        if (Number(this.form.stopP) <= Number(obj.form.Prz)){
+                            return $message({ title: gDI18n.$t('10037'/*"提示"*/), content: gDI18n.$t('10512'/*"止盈触发价不能小于委托价格！"*/), type: 'danger'})
+                        }
+                    }else if(this.form.stopL !=""){
+                        if (Number(this.form.stopL) >= Number(obj.form.Prz)){
+                            return $message({ title: gDI18n.$t('10037'/*"提示"*/), content: gDI18n.$t('10513'/*"止损触发价不能大于委托价格！"*/), type: 'danger'})
+                        }
+                    }
+                // 卖
+                }else if(dir == -1){
+                    if(this.form.stopP !="" && this.form.stopL !=""){
+                        if (Number(this.form.stopP) >= Number(obj.form.Prz)){
+                            return $message({ title: gDI18n.$t('10037'/*"提示"*/), content: gDI18n.$t('10514'/*"止盈触发价不能大于委托价格！"*/), type: 'danger'})
+                        }
+                        if (Number(this.form.stopL) <= Number(obj.form.Prz)){
+                            return $message({
+                                title: gDI18n.$t('10037'/*"提示"*/), content: gDI18n.$t('10515'/*"止损触发价不能小于委托价格！"*/), type: 'danger'})
+                        }
+                        if (Number(this.form.stopP) >= Number(this.form.stopL)){
+                            return $message({title: gDI18n.$t('10194'/*'该仓位为空仓，止盈价需小于止损价'*/), content: gDI18n.$t('10194'/*'该仓位为空仓，止盈价需小于止损价'*/), type: 'danger'})
+                        }
+                    }else if(this.form.stopP !=""){
+                        if (Number(this.form.stopP) >= Number(obj.form.Prz)){
+                            return $message({ title: gDI18n.$t('10037'/*"提示"*/), content: gDI18n.$t('10514'/*"止盈触发价不能大于委托价格！"*/), type: 'danger'})
+                        }
+                    }else if(this.form.stopL !=""){
+                        if (Number(this.form.stopL) <= Number(obj.form.Prz)){
+                            return $message({ title: gDI18n.$t('10037'/*"提示"*/), content: gDI18n.$t('10515'/*"止损触发价不能小于委托价格！"*/), type: 'danger'})
+                        }
+                    }
+                }
+                // if(this.form.stopP !="" && this.form.stopL !=""){
+                //     if( dir == 1 && this.form.stopP <= this.form.stopL){
+                //         return $message({title: gDI18n.$t('10193'/*'该仓位为多仓，止盈价需大于止损价'*/), content: gDI18n.$t('10193'/*'该仓位为多仓，止盈价需大于止损价'*/), type: 'danger'})
+                //     }else if(dir == -1 && this.form.stopP >= this.form.stopL){
+                //         return $message({title: gDI18n.$t('10194'/*'该仓位为空仓，止盈价需小于止损价'*/), content: gDI18n.$t('10194'/*'该仓位为空仓，止盈价需小于止损价'*/), type: 'danger'})
+                //     }
+                // }
+        }
+        return true
+    },
     submit: function(dir){
         if(!window.gWebAPI.isLogin()){
             return window.gWebAPI.needLogin()
         }
+        
+        if ( !this.submitVerify(dir) ) return; // 校验 
+        
         let tradeType = window.$config.future.tradeType
         switch(tradeType){
             case 3:

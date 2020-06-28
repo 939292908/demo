@@ -32,7 +32,72 @@ let obj = {
       this.EV_OPENSTOPPLMODE_UPD_unbinder()
     }
   },
+  // 校验   
+  submitVerify () {
+    // console.log(this.param, '99999999');
+    let tradeType = window.$config.future.tradeType
+    let dir = this.param.Sz // 全仓/空仓类型
+    let Prz = this.param.PrzIni // 价格
+    let StopP = obj.param.StopP // 止盈价
+    let StopL = obj.param.StopL // 止损价
+    let StopPCheckBox = obj.openStopP // 勾选状态
+    let StopLCheckBox = obj.openStopL // 勾选状态
+    // 校验逻辑
+    switch (tradeType) {
+        case 3:
+            // 全仓
+            if (dir > 0) {
+                if (StopPCheckBox && StopLCheckBox && StopP != "" && StopL != "") {
+                    if (Number(StopP) <= Number(Prz)) {
+                        return $message({ title: gDI18n.$t('10037'/*"提示"*/), content: gDI18n.$t('10512'/*"止盈触发价不能小于委托价格！"*/), type: 'danger' })
+                    }
+                    if (Number(StopL) >= Number(Prz)) {
+                        return $message({ title: gDI18n.$t('10037'/*"提示"*/), content: gDI18n.$t('10513'/*"止损触发价不能大于委托价格！"*/), type: 'danger' })
+                    }
+                    if (Number(StopP) <= Number(StopL)) {
+                        return $message({ title: gDI18n.$t('10037'/*"提示"*/), content: gDI18n.$t('10193'/*'该仓位为多仓，止盈价需大于止损价'*/), type: 'danger' })
+                    }
+                } else if ( StopPCheckBox && StopP != "") {
+                    if (Number(StopP) <= Number(Prz)) {
+                        return $message({ title: gDI18n.$t('10037'/*"提示"*/), content: gDI18n.$t('10512'/*"止盈触发价不能小于委托价格！"*/), type: 'danger' })
+                    }
+                } else if (StopLCheckBox && StopL != "") {
+                    if (Number(StopL) >= Number(Prz)) {
+                        return $message({ title: gDI18n.$t('10037'/*"提示"*/), content: gDI18n.$t('10513'/*"止损触发价不能大于委托价格！"*/), type: 'danger' })
+                    }
+                }
+                // 空仓
+            } else if (dir < 0) {
+                if (StopPCheckBox && StopLCheckBox && StopP != "" && StopL != "") {
+                    if (Number(StopP) >= Number(Prz)) {
+                        return $message({ title: gDI18n.$t('10037'/*"提示"*/), content: gDI18n.$t('10514'/*"止盈触发价不能大于委托价格！"*/), type: 'danger' })
+                    }
+                    if (Number(StopL) <= Number(Prz)) {
+                        return $message({
+                            title: gDI18n.$t('10037'/*"提示"*/), content: gDI18n.$t('10515'/*"止损触发价不能小于委托价格！"*/), type: 'danger'
+                        })
+                    }
+                    if (Number(StopP) >= Number(StopL)) {
+                        return $message({ title: gDI18n.$t('10194'/*'该仓位为空仓，止盈价需小于止损价'*/), content: gDI18n.$t('10194'/*'该仓位为空仓，止盈价需小于止损价'*/), type: 'danger' })
+                    }
+                } else if (StopPCheckBox && StopP != "") {
+                    if (Number(StopP) >= Number(Prz)) {
+                        return $message({ title: gDI18n.$t('10037'/*"提示"*/), content: gDI18n.$t('10514'/*"止盈触发价不能大于委托价格！"*/), type: 'danger' })
+                    }
+                } else if (StopLCheckBox && StopL != "") {
+                    if (Number(StopL) <= Number(Prz)) {
+                        return $message({ title: gDI18n.$t('10037'/*"提示"*/), content: gDI18n.$t('10515'/*"止损触发价不能小于委托价格！"*/), type: 'danger' })
+                    }
+                }
+            }
+    }
+    // 通过校验
+    return true
+  },
   submit: function () {
+
+    if ( !this.submitVerify() ) return; // 校验 
+
     let that = this
 
     if(this.openStopP){
