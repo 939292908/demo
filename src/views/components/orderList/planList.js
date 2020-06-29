@@ -174,8 +174,8 @@ let obj = {
                 //杠杆
                 if (ass.MIR) {
                     let lvr = obj.Lvr || (pos && pos.Lever) || 0
-                    let maxLever = Number(1 / Math.max(ass.MIR || 0, obj.MIRMy || 0)).toFixed2(2)
-                    obj.displayLever = lvr == 0 ? gDI18n.$t('10068',{value :maxLever }) : gDI18n.$t('10069',{value :Number(lvr || 0).toFixed2(2) })
+                    let maxLever = Number(1 / Math.max(ass.MIR || 0, obj.MIRMy || 0)).toFixed2(0)
+                    obj.displayLever = lvr == 0 ? gDI18n.$t('10068',{value :maxLever }) : gDI18n.$t('10069',{value :Number(lvr || 0).toFixed2(0) })
                     // obj.displayLever = lvr == 0 ? '全仓' + maxLever + 'X' : '逐仓' + Number(lvr || 0).toFixed2(2) + 'X'
                 } else {
                     obj.displayLever = '--'

@@ -211,25 +211,25 @@ let obj = {
             case 2:
                     if(!type || type == 'buy'){
                         if (this.form.LeverForBuy == 0) {
-                            this.form.LeverForBuyInputValue = (this.form.maxLeverForBuy ? gDI18n.$t('10137'/*'买 全仓*/) + Number(this.form.maxLeverForBuy).toFixed2(2) + 'X' : gDI18n.$t('10133'/*'买 杠杆'*/))
+                            this.form.LeverForBuyInputValue = (this.form.maxLeverForBuy ? gDI18n.$t('10137'/*'买 全仓*/) + Number(this.form.maxLeverForBuy).toFixed2(0) + 'X' : gDI18n.$t('10133'/*'买 杠杆'*/))
                         } else {
-                            this.form.LeverForBuyInputValue = gDI18n.$t('10138'/*'买 逐仓'*/) + Number(this.form.LeverForBuy).toFixed2(2) + 'X'
+                            this.form.LeverForBuyInputValue = gDI18n.$t('10138'/*'买 逐仓'*/) + Number(this.form.LeverForBuy).toFixed2(0) + 'X'
                         }
                     }
                     if(!type || type == 'sell'){
                         if (this.form.LeverForSell == 0) {
-                            this.form.LeverForSellInputValue = (this.form.maxLeverForSell ? gDI18n.$t('10139'/*'卖 全仓'*/) + Number(this.form.maxLeverForSell).toFixed2(2)+ 'X' : gDI18n.$t('10134'/*'卖 杠杆'*/))
+                            this.form.LeverForSellInputValue = (this.form.maxLeverForSell ? gDI18n.$t('10139'/*'卖 全仓'*/) + Number(this.form.maxLeverForSell).toFixed2(0)+ 'X' : gDI18n.$t('10134'/*'卖 杠杆'*/))
                         } else {
-                            this.form.LeverForSellInputValue = gDI18n.$t('10140'/*'卖 逐仓'*/) + Number(this.form.LeverForSell).toFixed2(2) + 'X'
+                            this.form.LeverForSellInputValue = gDI18n.$t('10140'/*'卖 逐仓'*/) + Number(this.form.LeverForSell).toFixed2(0) + 'X'
                         }
                     }
                 break;
             default:
                 if (this.form.Lever == 0) {
-                    this.LeverInputValue = (this.form.maxLever ? gDI18n.$t('10068',{value : Number(this.form.maxLever).toFixed2(2)}): gDI18n.$t('10054'))
+                    this.LeverInputValue = (this.form.maxLever ? gDI18n.$t('10068',{value : Number(this.form.maxLever).toFixed2(0)}): gDI18n.$t('10054'))
                     // this.LeverInputValue = (this.form.maxLever ? '全仓' + this.form.maxLever + 'X' : '杠杆')
                 } else {
-                    this.LeverInputValue = gDI18n.$t('10069',{value : Number(this.form.Lever).toFixed2(2)})
+                    this.LeverInputValue = gDI18n.$t('10069',{value : Number(this.form.Lever).toFixed2(0)})
                     // this.LeverInputValue = '逐仓' + Number(this.form.Lever).toFixed2(2) + 'X'
                 } 
         }

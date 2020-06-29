@@ -566,8 +566,8 @@ utils.getPosInfo = function(pos,assetD,UPNLPrzActive){
 
         //杠杆
         if(assetD.MIR){
-          let maxLever = Number(1/Math.max(assetD.MIR || 0, obj.MIRMy || 0)).toFixed2(2)
-          obj.displayLever = obj.Lever== 0? gDI18n.$t('10068',{value :maxLever}/*'全仓'+maxLever+'X'*/):gDI18n.$t('10069',{value :Number(obj.Lever || 0).toFixed2(2)}/*'逐仓'+Number(obj.Lever || 0).toFixed2(2)+'X'*/)
+          let maxLever = Number(1/Math.max(assetD.MIR || 0, obj.MIRMy || 0)).toFixed2(0)
+          obj.displayLever = obj.Lever== 0? gDI18n.$t('10068',{value :maxLever}/*'全仓'+maxLever+'X'*/):gDI18n.$t('10069',{value :Number(obj.Lever || 0).toFixed2(0)}/*'逐仓'+Number(obj.Lever || 0).toFixed2(2)+'X'*/)
           obj.displayLever = (obj.Sz > 0? gDI18n.$t('10071'/*'多@'*/):obj.Sz < 0?gDI18n.$t('10328'/*'空@'*/):'')+obj.displayLever
         }else{
           obj.displayLever = '--'
