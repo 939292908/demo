@@ -98,7 +98,13 @@ let obj = {
     this.EV_CHANGESYM_UPD_unbinder = window.gEVBUS.on(gMkt.EV_CHANGESYM_UPD, arg => {
       obj.initObj()
     }) 
-    
+    // 退出登录
+    if (this.EV_WEB_LOGOUT_unbinder) {
+        this.EV_WEB_LOGOUT_unbinder()
+    }
+    this.EV_WEB_LOGOUT_unbinder = window.gEVBUS.on(gWebAPI.EV_WEB_LOGOUT, arg => {
+        this.posList = []
+    })
   },
   initLanguage: function(){
     this.theadList = [
@@ -158,6 +164,9 @@ let obj = {
       if (this.EV_CHANGESYM_UPD_unbinder) {
         this.EV_CHANGESYM_UPD_unbinder()
       }
+      if (this.EV_WEB_LOGOUT_unbinder) {
+        this.EV_WEB_LOGOUT_unbinder()
+    }
   },
   initObj(){
     let Poss =window.gTrd.Poss
