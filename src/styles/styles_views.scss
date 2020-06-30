@@ -406,6 +406,9 @@ hr {
         @extend %py-2;
         @extend %px-3;
         @extend %font-2;
+        .pub-dish-list-item-mode {
+            @extend %mt-1;
+        }
         position: relative;
 
         div {
@@ -421,7 +424,7 @@ hr {
         }
 
         .pub-dish-list-item-mode {
-            height: 100%;
+            height: calc(100% - 2px);
             width: 0;
             position: absolute;
             top: 0;
