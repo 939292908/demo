@@ -360,7 +360,13 @@ export default {
         return m("div",{class:"pub-dish has-text-1"},[
             m('div', { class: `pub-dish-top` }, [
                 m('p', { class: `pub-dish-top-pic` }, [
-                    gDI18n.$t('10186') + " " + dish.QuoteCoin//`价格 ${dish.QuoteCoin}`
+                    m("span",[
+                        gDI18n.$t('10186'),
+                    ]),
+                    " ",
+                    m("span",{class :"is-hidden-touch"},[
+                        dish.QuoteCoin//`价格 ${dish.QuoteCoin}`
+                    ])
                 ]),
                 m('p', { class: `pub-dish-top-num` }, [
                     gDI18n.$t('10087') + "(" + gDI18n.$t('10423') + ")"//'数量(张)'
