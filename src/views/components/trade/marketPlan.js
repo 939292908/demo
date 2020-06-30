@@ -69,6 +69,7 @@ let obj = {
             this.EV_CHANGESYM_UPD_unbinder()
         }
         this.EV_CHANGESYM_UPD_unbinder = window.gEVBUS.on(gMkt.EV_CHANGESYM_UPD,arg=> {
+            that.rmLocalAllLever()
             that.updateSpotInfo(arg)
             that.initPos()
             that.setFaceV()
@@ -170,6 +171,15 @@ let obj = {
           this.EV_POS_UPD_unbinder()
         }
     },
+    // 杠杆 存本地
+    setLocalAllLever(MIRMy, Lever) {
+        utils.setItem('MIRMy', MIRMy)
+        utils.setItem('Lever', Lever)
+    },
+    rmLocalAllLever() {
+        utils.setItem('MIRMy', 0)
+        utils.setItem('Lever', 0)
+    },
     initPos: function (param) {
         
         let tradeType = window.$config.future.tradeType
@@ -181,7 +191,7 @@ let obj = {
                 let PId = window.gTrd.CtxPlaying.activePId
                 let pos = window.gTrd.Poss[PId]
 
-                let Lever = 0, maxLever = 0,MIRMy = 0;
+                let Lever = 0, maxLever = 0, MIRMy = 0, MIR = 0;
                 if (pos) {
                     let ass = window.gMkt.AssetD[pos.Sym]
                     if (ass) {
@@ -192,8 +202,20 @@ let obj = {
                 } else {
                     let Sym = window.gMkt.CtxPlaying.Sym
                     let ass = window.gMkt.AssetD[Sym]
+                    // if (ass) {
+                    //     maxLever = 1 / ass.MIR
+                    // }
                     if (ass) {
+                        MIR = ass.MIR
                         maxLever = 1 / ass.MIR
+                        if (utils.getItem('MIRMy')) {
+                            // 如果储存的MIRMy小于合约配置的MIR就取合约配置
+                            MIRMy = utils.getItem('MIRMy') < MIR ? MIR : utils.getItem('MIRMy')
+                        }
+                        if (utils.getItem('Lever')) {
+                            // 如果储存的MIRMy大于合约配置的MIR就取合约配置
+                            Lever = (utils.getItem('Lever') > maxLever) ? maxLever : utils.getItem('Lever')
+                        }
                     }
                 }
                 this.form.MIRMy = MIRMy
@@ -210,14 +232,16 @@ let obj = {
             case 2:
                 if(!type || type == 'buy'){
                     if (this.form.LeverForBuy == 0) {
-                        this.form.LeverForBuyInputValue = (this.form.maxLeverForBuy ? gDI18n.$t('10137'/*'买 全仓*/) + Number(this.form.maxLeverForBuy).toFixed2(0) + 'X' : gDI18n.$t('10133'/*'买 杠杆'*/))
+                        let LeverForBuy = Math.min(this.form.maxLeverForBuy, 1 / this.form.MIRMyForBuy)
+                        this.form.LeverForBuyInputValue = (LeverForBuy ? gDI18n.$t('10137'/*'买 全仓*/) + Number(LeverForBuy).toFixed2(0) + 'X' : gDI18n.$t('10133'/*'买 杠杆'*/))
                     } else {
                         this.form.LeverForBuyInputValue = gDI18n.$t('10138'/*'买 逐仓'*/) + Number(this.form.LeverForBuy).toFixed2(0) + 'X'
                     }
                 }
                 if(!type || type == 'sell'){
                     if (this.form.LeverForSell == 0) {
-                        this.form.LeverForSellInputValue = (this.form.maxLeverForSell ? gDI18n.$t('10139'/*'卖 全仓'*/) + Number( this.form.maxLeverForSell).toFixed2(0)+ 'X' : gDI18n.$t('10134'/*'卖 杠杆'*/))
+                        let LeverForSell = Math.min(this.form.maxLeverForSell, 1 / this.form.MIRMyForSell)
+                        this.form.LeverForSellInputValue = (LeverForSell ? gDI18n.$t('10139'/*'卖 全仓'*/) + Number(LeverForSell).toFixed2(0)+ 'X' : gDI18n.$t('10134'/*'卖 杠杆'*/))
                     } else {
                         this.form.LeverForSellInputValue = gDI18n.$t('10140'/*'卖 逐仓'*/) + Number(this.form.LeverForSell).toFixed2(0) + 'X'
                     }
@@ -225,7 +249,9 @@ let obj = {
                 break;
             default:
                 if (this.form.Lever == 0) {
-                    this.LeverInputValue = (this.form.maxLever ? gDI18n.$t('10068',{value : Number(this.form.maxLever).toFixed2(0)}): gDI18n.$t('10054'))
+                    let LeverForMy = Math.min(this.form.maxLever, 1 / this.form.MIRMy)
+                    this.LeverInputValue = (this.form.maxLever ? gDI18n.$t('10068', { value: Number(LeverForMy).toFixed2(0) }) : gDI18n.$t('10054'))
+                    // this.LeverInputValue = (this.form.maxLever ? gDI18n.$t('10068',{value : Number(this.form.maxLever).toFixed2(0)}): gDI18n.$t('10054'))
                     // this.LeverInputValue = (this.form.maxLever ? '全仓' + this.form.maxLever + 'X' : '杠杆')
                 } else {
                     this.LeverInputValue = gDI18n.$t('10069',{value : Number(this.form.Lever).toFixed2(0)})
@@ -560,11 +586,11 @@ let obj = {
                         if(dir == 1){
                             that.form.LeverForBuy = arg.Lever
                             that.form.MIRMyForBuy = arg.MIRMy
-                            that.form.maxLeverForBuy = 1/Math.max(arg.MIRMy || 0, ass.MIR)
+                            // that.form.maxLeverForBuy = 1/Math.max(arg.MIRMy || 0, ass.MIR)
                         }else{
                             that.form.LeverForSell = arg.Lever
                             that.form.MIRMyForSell = arg.MIRMy
-                            that.form.maxLeverForSell = 1/Math.max(arg.MIRMy || 0, ass.MIR)
+                            // that.form.maxLeverForSell = 1/Math.max(arg.MIRMy || 0, ass.MIR)
                         }
                         
                         that.setMgnNeed()
@@ -583,7 +609,8 @@ let obj = {
                         console.log('change Lever callback', arg)
                         that.form.Lever = arg.Lever
                         that.form.MIRMy = arg.MIRMy
-                        that.form.maxLever = 1/Math.max(arg.MIRMy || 0, ass.MIR)
+                        // that.form.maxLever = 1/Math.max(arg.MIRMy || 0, ass.MIR)
+                        obj.setLocalAllLever(that.form.MIRMy, that.form.Lever) // 杠杆倍数 存本地
                         that.setMgnNeed()
                         that.setLever()
                     }
@@ -603,7 +630,8 @@ let obj = {
                         console.log('change Lever callback', arg)
                         that.form.Lever = arg.Lever
                         that.form.MIRMy = arg.MIRMy
-                        that.form.maxLever = 1/Math.max(arg.MIRMy || 0, ass.MIR)
+                        // that.form.maxLever = 1/Math.max(arg.MIRMy || 0, ass.MIR)
+                        obj.setLocalAllLever(that.form.MIRMy, that.form.Lever) // 杠杆倍数 存本地
                         that.setMgnNeed()
                         that.setLever()
                     }
@@ -1081,12 +1109,14 @@ let obj = {
         let posForBuy = Poss[this.form.PIdForBuy] || {}
         this.form.LeverForBuy = posForBuy.Lever || 0
         this.form.MIRMyForBuy = posForBuy.MIRMy || 0
-        this.form.maxLeverForBuy = 1 / Math.max(ass.MIR, posForBuy.MIRMy || 0)
+        // this.form.maxLeverForBuy = 1 / Math.max(ass.MIR, posForBuy.MIRMy || 0)
+        this.form.maxLeverForBuy = 1 / ass.MIR
 
         let posForSell = Poss[this.form.PIdForSell] || {}
         this.form.LeverForSell = posForSell.Lever || 0
         this.form.MIRMyForSell = posForSell.MIRMy || 0
-        this.form.maxLeverForSell = 1 / Math.max(ass.MIR, posForSell.MIRMy || 0)
+        // this.form.maxLeverForSell = 1 / Math.max(ass.MIR, posForSell.MIRMy || 0)
+        this.form.maxLeverForSell = 1 / ass.MIR
 
         this.setLever()
     },
@@ -1102,13 +1132,15 @@ let obj = {
             let posForBuy = Poss[this.form.PIdForBuy] || {}
             this.form.LeverForBuy = posForBuy.Lever || 0
             this.form.MIRMyForBuy = posForBuy.MIRMy || 0
-            this.form.maxLeverForBuy = 1 / Math.max(ass.MIR, posForBuy.MIRMy || 0)
+            // this.form.maxLeverForBuy = 1 / Math.max(ass.MIR, posForBuy.MIRMy || 0)
+            this.form.maxLeverForBuy = 1 / ass.MIR
             this.setLever('buy')
         }else if(this.form.PIdForSell){
             let posForSell = Poss[this.form.PIdForSell] || {}
             this.form.LeverForSell = posForSell.Lever || 0
             this.form.MIRMyForSell = posForSell.MIRMy || 0
-            this.form.maxLeverForSell = 1 / Math.max(ass.MIR, posForSell.MIRMy || 0)
+            // this.form.maxLeverForSell = 1 / Math.max(ass.MIR, posForSell.MIRMy || 0)
+            this.form.maxLeverForSell = 1 / ass.MIR
             this.setLever('sell')
         }else{
             this.setPId()
