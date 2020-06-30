@@ -514,7 +514,7 @@ let obj = {
     window.gTrd.ReqTrdOrderNew(p, function(gTrd, arg){
       pos.loading = false
       if (arg.code != 0 || arg.data.ErrCode) {
-          window.$message({title: utils.getTradeErrorCode(msg.code || arg.data.ErrCode),content: utils.getTradeErrorCode(msg.code || arg.data.ErrCode), type: 'danger'})
+        window.$message({ title: gDI18n.$t('10037'/*"提示"*/),content: utils.getTradeErrorCode(msg.code || arg.data.ErrCode), type: 'danger'})
       }
     })
     

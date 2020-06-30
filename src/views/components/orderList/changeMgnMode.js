@@ -60,11 +60,11 @@ let obj = {
 
         
         if (this.form.num === '0') {
-            return $message({ title: gDI18n.$t('10035'/*'调整金额不能为0'*/), content: gDI18n.$t('10035'/*'调整金额不能为0'*/), type: 'danger' })
+            return $message({ title: gDI18n.$t('10037'/*"提示"*/), content: gDI18n.$t('10035'/*'调整金额不能为0'*/), type: 'danger' })
         } else if (!this.form.num) {
-            return $message({ title: gDI18n.$t('10036'/*'调整金额不能为空'*/), content: gDI18n.$t('10036'/*'调整金额不能为空'*/), type: 'danger' })
+            return $message({ title: gDI18n.$t('10037'/*"提示"*/), content: gDI18n.$t('10036'/*'调整金额不能为空'*/), type: 'danger' })
         }else if(Number(this.form.num) == 0){
-            return $message({ title: gDI18n.$t('10035'/*'调整金额不能为0'*/), content: gDI18n.$t('10035'/*'调整金额不能为0'*/), type: 'danger' })
+            return $message({ title: gDI18n.$t('10037'/*"提示"*/), content: gDI18n.$t('10035'/*'调整金额不能为0'*/), type: 'danger' })
         }
 
         let Sym = this.param.pos.Sym

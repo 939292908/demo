@@ -55,7 +55,7 @@ let obj = {
             that.sms = ''
             that.validateCallback && that.validateCallback()
           }else{
-            window.$message({title: utils.getWebApiErrorCode(arg.result.code), content: utils.getWebApiErrorCode(arg.result.code), type: 'danger'})
+            window.$message({ title: gDI18n.$t('10037'/*"提示"*/), content: utils.getWebApiErrorCode(arg.result.code), type: 'danger'})
           }
         },function(err){
           that.submitLoading = false
@@ -78,7 +78,7 @@ let obj = {
             that.sms = ''
             that.validateCallback && that.validateCallback()
           }else{
-            window.$message({title: utils.getWebApiErrorCode(arg.result.code), content: utils.getWebApiErrorCode(arg.result.code || arg.result), type: 'danger'})
+            window.$message({ title: gDI18n.$t('10037'/*"提示"*/), content: utils.getWebApiErrorCode(arg.result.code || arg.result), type: 'danger'})
           }
         },function(err){
           that.submitLoading = false
@@ -156,16 +156,16 @@ let obj = {
     }, function(param){
         if(param.result.code == 0){
             that.getSMSLoading = false
-            window.$message({title: gDI18n.$t('10208'/*'验证码发送成功！'*/), content: gDI18n.$t('10208'/*'验证码发送成功！'*/), type: 'success'})
+          window.$message({ title: gDI18n.$t('10037'/*"提示"*/), content: gDI18n.$t('10208'/*'验证码发送成功！'*/), type: 'success'})
             console.log(that)
             that.setCountDown()
         }else{
-            window.$message({title: utils.getWebApiErrorCode(arg.result.code), content: utils.getWebApiErrorCode(res.result.code), type: 'danger'})
+          window.$message({ title: gDI18n.$t('10037'/*"提示"*/), content: utils.getWebApiErrorCode(res.result.code), type: 'danger'})
         }
         console.log('ReqSMSVerifyCode success ==>',param)
     }, function(error){
         that.getSMSLoading = false
-        window.$message({title: gDI18n.$t('10205'/*'操作超时！'*/), content: gDI18n.$t('10205'/*'操作超时！'*/), type: 'danger'})
+        window.$message({ title: gDI18n.$t('10037'/*"提示"*/), content: gDI18n.$t('10205'/*'操作超时！'*/), type: 'danger'})
         console.log('ReqSMSVerifyCode => ', error)
     })
   },

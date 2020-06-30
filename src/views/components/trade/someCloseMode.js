@@ -40,16 +40,16 @@ let obj = {
         console.log('some close submit', this.form)
         if (this.tabsActive == 0) {
             if (this.form.prz === '0') {
-                return $message({ title: gDI18n.$t('10180'/*'平仓价格不能为0'*/), content: gDI18n.$t('10180'/*'平仓价格不能为0'*/), type: 'danger' })
+                return $message({ title: gDI18n.$t('10037'/*"提示"*/), content: gDI18n.$t('10180'/*'平仓价格不能为0'*/), type: 'danger' })
             } else if (!this.form.prz) {
-                return $message({ title: gDI18n.$t('10181'/*'平仓价格不能为空'*/), content: gDI18n.$t('10181'/*'平仓价格不能为空'*/), type: 'danger' })
+                return $message({ title: gDI18n.$t('10037'/*"提示"*/), content: gDI18n.$t('10181'/*'平仓价格不能为空'*/), type: 'danger' })
             }
         }
 
         if (this.form.num === '0') {
-            return $message({ title: gDI18n.$t('10182'/*'平仓数量不能为0'*/), content: gDI18n.$t('10182'/*'平仓数量不能为0'*/), type: 'danger' })
+            return $message({ title: gDI18n.$t('10037'/*"提示"*/), content: gDI18n.$t('10182'/*'平仓数量不能为0'*/), type: 'danger' })
         } else if (!this.form.num) {
-            return $message({ title: gDI18n.$t('10181'/*'平仓数量不能为空'*/), content: gDI18n.$t('10181'/*'平仓数量不能为空'*/), type: 'danger' })
+            return $message({ title: gDI18n.$t('10037'/*"提示"*/), content: gDI18n.$t('10181'/*'平仓数量不能为空'*/), type: 'danger' })
         }
 
         let Sym = this.param.pos.Sym
@@ -95,7 +95,7 @@ let obj = {
             if (aArg.code == 0 && !aArg.data.ErrCode) {
                 that.open = false
             } else {
-                window.$message({ title: utils.getTradeErrorCode(aArg.code || aArg.data.ErrCode), content: utils.getTradeErrorCode(aArg.code || aArg.data.ErrCode), type: 'danger' })
+                window.$message({ title: gDI18n.$t('10037'/*"提示"*/), content: utils.getTradeErrorCode(aArg.code || aArg.data.ErrCode), type: 'danger' })
             }
         })
     },

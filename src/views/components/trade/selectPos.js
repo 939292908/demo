@@ -207,7 +207,7 @@ let obj = {
       }
     }
     if(!Wlts || aWdrawable == 0){
-        return window.$message({title: gDI18n.$t('10038'/*'可用资金不足！'*/), content: gDI18n.$t('10038'/*'可用资金不足！'*/), type: 'danger'})
+      return window.$message({ title: gDI18n.$t('10037'/*"提示"*/), content: gDI18n.$t('10038'/*'可用资金不足！'*/), type: 'danger'})
     }
     // 判断资金情况 end
 
@@ -235,10 +235,10 @@ let obj = {
     },function(gTrd, arg){
       console.log("ReqTrdPosOp ==>>> ", arg)
       if(arg.code == 0 && !arg.data.ErrCode){
-        window.$message({title: gDI18n.$t('10174'/*'新增仓位成功！'*/), content: gDI18n.$t('10174'/*'新增仓位成功！'*/), type: 'success'})
+        window.$message({ title: gDI18n.$t('10037'/*"提示"*/), content: gDI18n.$t('10174'/*'新增仓位成功！'*/), type: 'success'})
       }else{
         console.log(arg)
-        window.$message({title: utils.getTradeErrorCode(arg.code || arg.data.ErrCode), content: utils.getTradeErrorCode(arg.code || arg.data.ErrCode), type: 'danger'})
+        window.$message({ title: gDI18n.$t('10037'/*"提示"*/), content: utils.getTradeErrorCode(arg.code || arg.data.ErrCode), type: 'danger'})
       }
     })
   },
@@ -256,12 +256,12 @@ let obj = {
     },function(gTrd, arg){
       console.log("ReqTrdPosOp ==>>> ", arg)
       if(arg.code == 0 && !arg.data.ErrCode){
-        window.$message({title: gDI18n.$t('10175'/*'仓位删除成功！'*/), content: gDI18n.$t('10175'/*'仓位删除成功！'*/), type: 'success'})
+        window.$message({ title: gDI18n.$t('10037'/*"提示"*/), content: gDI18n.$t('10175'/*'仓位删除成功！'*/), type: 'success'})
       }else if(arg.code == 15){
-        window.$message({title: gDI18n.$t("10470"/*"仓位删除失败"*/), content: gDI18n.$t("10470"/*"仓位删除失败"*/), type: 'danger'})
+        window.$message({ title: gDI18n.$t('10037'/*"提示"*/), content: gDI18n.$t("10470"/*"仓位删除失败"*/), type: 'danger'})
       }else{
         console.log(arg)
-        window.$message({title: utils.getTradeErrorCode(arg.code || arg.data.ErrCode), content: utils.getTradeErrorCode(arg.code || arg.data.ErrCode), type: 'danger'})
+        window.$message({ title: gDI18n.$t('10037'/*"提示"*/), content: utils.getTradeErrorCode(arg.code || arg.data.ErrCode), type: 'danger'})
       }
       param.loading = false
     })

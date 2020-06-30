@@ -78,7 +78,7 @@ let obj = {
                         })
                     }
                     if (Number(StopP) >= Number(StopL)) {
-                        return $message({ title: gDI18n.$t('10194'/*'该仓位为空仓，止盈价需小于止损价'*/), content: gDI18n.$t('10194'/*'该仓位为空仓，止盈价需小于止损价'*/), type: 'danger' })
+                      return $message({ title: gDI18n.$t('10037'/*"提示"*/), content: gDI18n.$t('10194'/*'该仓位为空仓，止盈价需小于止损价'*/), type: 'danger' })
                     }
                 } else if (StopPCheckBox && StopP != "") {
                     if (Number(StopP) >= Number(Prz)) {
@@ -102,27 +102,27 @@ let obj = {
 
     if(this.openStopP){
       if(this.param.StopP === '0'){
-        return window.$message({title: gDI18n.$t('10189'/*'止盈价不能为0'*/), content: gDI18n.$t('10189'/*'止盈价不能为0'*/), type: 'danger'})
+        return window.$message({ title: gDI18n.$t('10037'/*"提示"*/), content: gDI18n.$t('10189'/*'止盈价不能为0'*/), type: 'danger'})
       }else if(!this.param.StopP){
-        return window.$message({title: gDI18n.$t('10190'/*'请输入止盈价'*/), content: gDI18n.$t('10190'/*'请输入止盈价'*/), type: 'danger'})
+        return window.$message({ title: gDI18n.$t('10037'/*"提示"*/), content: gDI18n.$t('10190'/*'请输入止盈价'*/), type: 'danger'})
       }
     }
     if(this.openStopL){
       if(this.param.StopL === '0'){
-        return window.$message({title: gDI18n.$t('10191'/*'止损价不能为0'*/), content: gDI18n.$t('10191'/*'止损价不能为0'*/), type: 'danger'})
+        return window.$message({ title: gDI18n.$t('10037'/*"提示"*/), content: gDI18n.$t('10191'/*'止损价不能为0'*/), type: 'danger'})
       }else if(!this.param.StopL){
-        return window.$message({title: gDI18n.$t('10192'/*'请输入止损价'*/), content: gDI18n.$t('10192'/*'请输入止损价'*/), type: 'danger'})
+        return window.$message({ title: gDI18n.$t('10037'/*"提示"*/), content: gDI18n.$t('10192'/*'请输入止损价'*/), type: 'danger'})
       }
     }
 
     if(this.openStopP && this.openStopL && this.param.StopP && this.param.StopL) {
       if(this.param.Sz > 0) {
         if(Number(this.param.StopP) < Number(this.param.StopL)) {
-          return window.$message({title: gDI18n.$t('10193'/*'该仓位为多仓，止盈价需大于止损价'*/), content: gDI18n.$t('10193'/*'该仓位为多仓，止盈价需大于止损价'*/), type: 'danger'})
+          return window.$message({ title: gDI18n.$t('10037'/*"提示"*/), content: gDI18n.$t('10193'/*'该仓位为多仓，止盈价需大于止损价'*/), type: 'danger'})
         }
       }else if(this.param.Sz < 0){
         if(Number(this.param.StopP) > Number(this.param.StopL)) {
-          return window.$message({title: gDI18n.$t('10194'/*'该仓位为空仓，止盈价需小于止损价'*/), content: gDI18n.$t('10194'/*'该仓位为空仓，止盈价需小于止损价'*/), type: 'danger'})
+          return window.$message({ title: gDI18n.$t('10037'/*"提示"*/), content: gDI18n.$t('10194'/*'该仓位为空仓，止盈价需小于止损价'*/), type: 'danger'})
         }
       }
     }
@@ -145,11 +145,11 @@ let obj = {
           let oldParamStopP = Number(obj.oldParam.StopP ? obj.oldParam.StopP :-1)
           let oldParamStopL = Number(obj.oldParam.StopL ? obj.oldParam.StopL :-1)
           if(param.P2 !=oldParamStopP || param.Param !=oldParamStopL){
-            window.$message({title: gDI18n.$t('10195'/*'止盈止损设置成功！'*/), content: gDI18n.$t('10195'/*'止盈止损设置成功！'*/), type: 'success'})
+            window.$message({ title: gDI18n.$t('10037'/*"提示"*/), content: gDI18n.$t('10195'/*'止盈止损设置成功！'*/), type: 'success'})
           }
           
         }else{
-          window.$message({title: utils.getTradeErrorCode(arg.code || arg.data.ErrCode), content: utils.getTradeErrorCode(arg.code || arg.data.ErrCode), type: 'danger'})
+          window.$message({ title: gDI18n.$t('10037'/*"提示"*/), content: utils.getTradeErrorCode(arg.code || arg.data.ErrCode), type: 'danger'})
         }
       })
     // }

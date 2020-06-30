@@ -330,7 +330,7 @@ let obj = {
                                 title: gDI18n.$t('10037'/*"提示"*/), content: gDI18n.$t('10515'/*"止损触发价不能小于委托价格！"*/), type: 'danger'})
                         }
                         if (Number(this.form.stopP) >= Number(this.form.stopL)){
-                            return $message({title: gDI18n.$t('10194'/*'该仓位为空仓，止盈价需小于止损价'*/), content: gDI18n.$t('10194'/*'该仓位为空仓，止盈价需小于止损价'*/), type: 'danger'})
+                            return $message({ title: gDI18n.$t('10037'/*"提示"*/), content: gDI18n.$t('10194'/*'该仓位为空仓，止盈价需小于止损价'*/), type: 'danger'})
                         }
                     }else if(this.form.stopP !=""){
                         if (Number(this.form.stopP) >= Number(obj.form.Prz)){
@@ -361,23 +361,23 @@ let obj = {
 
         let tradeType = window.$config.future.tradeType
         if(this.form.Prz === '0'){
-            return $message({title: gDI18n.$t('10141'/*'下单价格不能为0'*/), content: gDI18n.$t('10141'/*'下单价格不能为0'*/), type: 'danger'})
+            return $message({ title: gDI18n.$t('10037'/*"提示"*/), content: gDI18n.$t('10141'/*'下单价格不能为0'*/), type: 'danger'})
         }else if(!this.form.Prz){
-            return $message({title: gDI18n.$t('10142'/*'下单价格不能为空'*/), content: gDI18n.$t('10142'/*'下单价格不能为空'*/), type: 'danger'})
+            return $message({ title: gDI18n.$t('10037'/*"提示"*/), content: gDI18n.$t('10142'/*'下单价格不能为空'*/), type: 'danger'})
         }else if(Number(this.form.Prz) == 0){
-            return $message({title: gDI18n.$t('10141'/*'下单价格不能为0'*/), content: gDI18n.$t('10141'/*'下单价格不能为0'*/), type: 'danger'})
+            return $message({ title: gDI18n.$t('10037'/*"提示"*/), content: gDI18n.$t('10141'/*'下单价格不能为0'*/), type: 'danger'})
         }else if(isNaN(Number(this.form.Prz))){
-            return $message({title: gDI18n.$t('10143'/*'请输入正确的价格'*/), content: gDI18n.$t('10143'/*'请输入正确的价格'*/), type: 'danger'})
+            return $message({ title: gDI18n.$t('10037'/*"提示"*/), content: gDI18n.$t('10143'/*'请输入正确的价格'*/), type: 'danger'})
         }
 
         if(this.form.Num === '0'){
-            return $message({title: gDI18n.$t('10144'/*'下单数量不能为0'*/), content: gDI18n.$t('10144'/*'下单数量不能为0'*/), type: 'danger'})
+            return $message({ title: gDI18n.$t('10037'/*"提示"*/), content: gDI18n.$t('10144'/*'下单数量不能为0'*/), type: 'danger'})
         }else if(!this.form.Num){
-            return $message({title: gDI18n.$t('10145'/*'下单数量不能为空'*/), content: gDI18n.$t('10145'/*'下单数量不能为空'*/), type: 'danger'})
+            return $message({ title: gDI18n.$t('10037'/*"提示"*/), content: gDI18n.$t('10145'/*'下单数量不能为空'*/), type: 'danger'})
         }else if(Number(this.form.Num) == 0){
-            return $message({title: gDI18n.$t('10144'/*'下单数量不能为0'*/), content: gDI18n.$t('10144'/*'下单数量不能为0'*/), type: 'danger'})
+            return $message({ title: gDI18n.$t('10037'/*"提示"*/), content: gDI18n.$t('10144'/*'下单数量不能为0'*/), type: 'danger'})
         }else if(isNaN(Number(this.form.Num))){
-            return $message({title: gDI18n.$t('10146'/*'请输入正确的数量'*/), content: gDI18n.$t('10146'/*'请输入正确的数量'*/), type: 'danger'})
+            return $message({ title: gDI18n.$t('10037'/*"提示"*/), content: gDI18n.$t('10146'/*'请输入正确的数量'*/), type: 'danger'})
         }
 
         let Sym = window.gMkt.CtxPlaying.Sym
@@ -450,7 +450,7 @@ let obj = {
                         }
                     }
                     if(posArr.length >= window.$config.future.maxPosNum){
-                        return window.$message({title: gDI18n.$t('10037'), content: gDI18n.$t('10147',{value : window.$config.future.maxPosNum}), type: 'danger'})
+                        return window.$message({ title: gDI18n.$t('10037'/*"提示"*/), content: gDI18n.$t('10147',{value : window.$config.future.maxPosNum}), type: 'danger'})
                         // return window.$message({title: '提示', content: '同一合约最多同时存在'+window.$config.future.maxPosNum+'个仓位!', type: 'danger'})
                     }
                 // 判断仓位数量是否超限 end
@@ -462,7 +462,7 @@ let obj = {
                 break;
             default:
                 if(!PId){
-                    return window.$message({title: gDI18n.$t('10148'), content: gDI18n.$t('10148'), type: 'danger'})
+                    return window.$message({ title: gDI18n.$t('10037'/*"提示"*/), content: gDI18n.$t('10148'), type: 'danger'})
                     // return window.$message({title: '请先选择您要调整的仓位！', content: '请先选择您要调整的仓位！', type: 'danger'})
                 }
                 // 判断是否开启了全仓杠杠调节 start
@@ -477,19 +477,19 @@ let obj = {
 
         let aWdrawable = Number(obj.wlt.aWdrawable || 0 )
         if(aWdrawable == 0){
-            return window.$message({title: gDI18n.$t('10038'), content: gDI18n.$t('10038'), type: 'danger'})
+            return window.$message({ title: gDI18n.$t('10037'/*"提示"*/), content: gDI18n.$t('10038'), type: 'danger'})
             // return window.$message({title: '可用资金不足！', content: '可用资金不足！', type: 'danger'})
         }else if(dir == 1 && aWdrawable < Number(this.MgnNeedForBuy)){
-            return window.$message({title: gDI18n.$t('10038'), content: gDI18n.$t('10038'), type: 'danger'})
+            return window.$message({ title: gDI18n.$t('10037'/*"提示"*/), content: gDI18n.$t('10038'), type: 'danger'})
             // return window.$message({title: '可用资金不足！', content: '可用资金不足！', type: 'danger'})
         }else if(dir == -1 && aWdrawable < Number(this.MgnNeedForSell)){
-            return window.$message({title: gDI18n.$t('10038'), content: gDI18n.$t('10038'), type: 'danger'})
+            return window.$message({ title: gDI18n.$t('10037'/*"提示"*/), content: gDI18n.$t('10038'), type: 'danger'})
             // return window.$message({title: '可用资金不足！', content: '可用资金不足！', type: 'danger'})
         }
         
         window.gTrd.ReqTrdOrderNew(p, function(aTrd, arg){
             if (arg.code != 0 || arg.data.ErrCode) {
-                window.$message({title: utils.getTradeErrorCode(arg.code || arg.data.ErrCode), content: utils.getTradeErrorCode(arg.code || arg.data.ErrCode), type: 'danger'})
+                window.$message({ title: gDI18n.$t('10037'/*"提示"*/), content: utils.getTradeErrorCode(arg.code || arg.data.ErrCode), type: 'danger'})
             }
         })
     },
@@ -556,7 +556,7 @@ let obj = {
                 break;
             default:
                 if(!PId){
-                    return window.$message({title: gDI18n.$t('10148'), content: gDI18n.$t('10148'), type: 'danger'})
+                    return window.$message({ title: gDI18n.$t('10037'/*"提示"*/), content: gDI18n.$t('10148'), type: 'danger'})
                     // return window.$message({title: '请先选择您要调整的仓位！', content: '请先选择您要调整的仓位！', type: 'danger'})
                 }
                 window.$openLeverageMode({

@@ -48,9 +48,9 @@ let obj = {
         let that = this
 
         if (this.form.num === '0') {
-            return $message({ title: gDI18n.$t('10165'/*'加仓数量不能为0'*/), content: gDI18n.$t('10165'/*'加仓数量不能为0'*/), type: 'danger' })
+            return $message({ title: gDI18n.$t('10037'/*"提示"*/), content: gDI18n.$t('10165'/*'加仓数量不能为0'*/), type: 'danger' })
         } else if (!this.form.num) {
-            return $message({ title: gDI18n.$t('10166'/*'加仓数量不能为空'*/), content: gDI18n.$t('10166'/*'加仓数量不能为空'*/), type: 'danger' })
+            return $message({ title: gDI18n.$t('10037'/*"提示"*/), content: gDI18n.$t('10166'/*'加仓数量不能为空'*/), type: 'danger' })
         }
 
         let Sym = this.param.pos.Sym
@@ -77,9 +77,9 @@ let obj = {
 
         let aWdrawable = Number(obj.wlt.aWdrawable || 0)
         if (aWdrawable == 0) {
-            return window.$message({ title: gDI18n.$t('10038'/*'可用资金不足！'*/), content: gDI18n.$t('10038'/*'可用资金不足！'*/), type: 'danger' })
+            return window.$message({ title: gDI18n.$t('10037'/*"提示"*/), content: gDI18n.$t('10038'/*'可用资金不足！'*/), type: 'danger' })
         } else if (aWdrawable < Number(this.MgnNeed)) {
-            return window.$message({ title: gDI18n.$t('10038'/*'可用资金不足！'*/), content: gDI18n.$t('10038'/*'可用资金不足！'*/), type: 'danger' })
+            return window.$message({ title: gDI18n.$t('10037'/*"提示"*/), content: gDI18n.$t('10038'/*'可用资金不足！'*/), type: 'danger' })
         }
 
         window.gTrd.ReqTrdOrderNew(p, function (aTrd, aArg) {
@@ -87,7 +87,7 @@ let obj = {
             if (aArg.code == 0 && !aArg.data.ErrCode) {
                 that.open = false
             } else {
-                window.$message({ title: utils.getTradeErrorCode(aArg.code || aArg.data.ErrCode), content: utils.getTradeErrorCode(aArg.code || aArg.data.ErrCode), type: 'danger' })
+                window.$message({ title: gDI18n.$t('10037'/*"提示"*/), content: utils.getTradeErrorCode(aArg.code || aArg.data.ErrCode), type: 'danger' })
             }
         })
     },

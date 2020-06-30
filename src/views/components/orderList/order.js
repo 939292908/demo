@@ -409,7 +409,7 @@ let obj = {
         }, function (gTrd, arg) {
             if (arg.code != 0 || arg.data.ErrCode) {
                 param.loading = false
-                window.$message({ title: utils.getTradeErrorCode(arg.code || arg.data.ErrCode), content: utils.getTradeErrorCode(arg.code || arg.data.ErrCode), type: 'danger' })
+                window.$message({ title: gDI18n.$t('10037'/*"提示"*/), content: utils.getTradeErrorCode(arg.code || arg.data.ErrCode), type: 'danger' })
             } else {
                 param.loading = false
             }
