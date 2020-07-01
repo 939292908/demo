@@ -1029,8 +1029,8 @@ let obj = {
                             obj.form.LeverForBuyInputValue
                         ])
                     ]),
-                    m("div", { class: "control" }, [
-                        m("div", { class: "" }, [
+                    m("div", { class: "control is-expanded" }, [
+                        m("div", { class: " is-fullwidth" }, [
                             ' '
                         ]),
                     ]),

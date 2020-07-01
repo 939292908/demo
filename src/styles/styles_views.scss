@@ -218,6 +218,10 @@ hr {
 //移动端主体结构样式 end
 
 //头部行情模块样式 start
+.pub-button-font{
+    @extend %font-3;
+}
+
 .pub-header-tick {
     @extend %side-pa;
     z-index: 1;
