@@ -154,8 +154,15 @@ let obj = {
         let maxNum = this.maxNum || Number(ass ? ass.OrderMaxQty : 0)
         if (Number(e.target.value) > maxNum) {
             this.form.num = maxNum
-        } else {
-            this.form.num = e.target.value
+        } else if (Number(e.target.value) < 0){
+            this.form.num = 0
+        }else{
+            // this.form.num = e.target.value
+            if (e.target.value.includes(".")){
+                this.form.num = e.target.value.split(".")[0]
+            }else{
+                this.form.num = e.target.value
+            }
         }
     },
     setTabsActive: function (param) {

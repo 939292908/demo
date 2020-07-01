@@ -247,6 +247,8 @@ let obj = {
     }else{
       if(Number(e.target.value) > maxPrz){
         obj.param.StopP = maxPrz
+      } else if (Number(e.target.value) < 0){
+        obj.param.StopP = 0
       }else{
         obj.param.StopP = e.target.value
       }
@@ -298,6 +300,8 @@ let obj = {
     }else{
       if(Number(e.target.value) > maxPrz){
         obj.param.StopL = maxPrz
+      } else if (Number(e.target.value) < 0){
+        obj.param.StopL = 0
       }else{
         obj.param.StopL = e.target.value
       }

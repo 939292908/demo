@@ -22,7 +22,7 @@ let obj = {
       title: gDI18n.$t('10088'),//'风险度',
       class: "position-rate pub-table-6"
     }, {
-      title: gDI18n.$t('10418',{value : "USDT"}),//'保证金',
+      title: gDI18n.$t('10500'),//'保证金',
       class: "position-mm pub-table-7"
     }, {
       title: gDI18n.$t('10419'),//'未实现盈亏(回报率)',
@@ -127,7 +127,7 @@ let obj = {
         title: gDI18n.$t('10088'),//'风险度',
         class: "position-rate pub-table-6"
       }, {
-        title: gDI18n.$t('10418',{value : "USDT"}),//'保证金',
+        title: gDI18n.$t('10500'),//'保证金',
         class: "position-mm pub-table-7"
       }, {
         title: gDI18n.$t('10419'),//'未实现盈亏(回报率)',
