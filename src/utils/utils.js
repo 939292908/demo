@@ -295,6 +295,20 @@ utils.getColorStr = function(status, type){
     return colorClass
 }
 
+//数字加逗号
+utils.toThousands = function (num) {
+    if (!num) return 0
+    if (isNaN(num)) return 0
+    let str = num.toString().split('.')
+    var num1 = (str[0] || 0).toString(), result = '';
+    while (num1.length > 3) {
+        result = ',' + num1.slice(-3) + result;
+        num1 = num1.slice(0, num1.length - 3);
+    }
+    if (num1) { result = num1 + result; }
+    return result + (num.toString().includes('.') ? '.' + str[1] || '' : '');
+}
+
 ///获取小数位数
 utils.getFloatSize = function (val) {
     if (val.toString().indexOf(".") == -1) {

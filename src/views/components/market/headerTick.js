@@ -148,6 +148,15 @@ let spotTick = {
 
     getLeftTick: function(){
         let type = window.$config.views.headerTick.left.type
+        let Volume24ForUSDT = Number(spotTick.getLastTick().Volume24ForUSDT)
+        let Turnover24ForUSDT = Number(spotTick.getLastTick().Turnover24ForUSDT)
+        if (Volume24ForUSDT) {
+            Volume24ForUSDT = Volume24ForUSDT.toFixed(0)
+        }
+
+        if (Turnover24ForUSDT) {
+            Turnover24ForUSDT = Turnover24ForUSDT.toFixed(0)
+        }
         switch(type){
             case 0: 
                 return m("div",{class:"pub-header-tick-left"},[
@@ -235,12 +244,14 @@ let spotTick = {
                                         gDI18n.$t('10479')//"24H成交量："
                                     ]),
                                     m('span.has-text-1',[
-                                        spotTick.getLastTick().Volume24 || '--'
+                                        utils.toThousands(spotTick.getLastTick().Volume24) || '--'
+                                        // spotTick.getLastTick().Volume24 || '--'
                                     ])
                                     //gDI18n.$t('10021',{value : (spotTick.getLastTick().Volume24 || '--')})//"24H成交量："+(spotTick.getLastTick().Volume24 || '--')
                                 ]),
                                 m('p', {class:"has-text-1-important"}, [
-                                    '≈ '+(spotTick.getLastTick().Volume24ForUSDT || '--')+'USDT'
+                                    '≈ ' + (utils.toThousands(Volume24ForUSDT) || '--') + " " + (spotTick.getLastTick().FromC || "--")//' USDT'
+                                    // '≈ '+(spotTick.getLastTick().Volume24ForUSDT || '--')+'USDT'
                                 ]),
                             ]),
                             m('td', {}, [
@@ -249,12 +260,14 @@ let spotTick = {
                                         gDI18n.$t('10480')//"持仓量："
                                     ]),
                                     m('span.has-text-1',[
-                                        spotTick.getLastTick().Turnover24 || '--'
+                                        utils.toThousands(spotTick.getLastTick().Turnover24) || '--'
+                                        // spotTick.getLastTick().Turnover24 || '--'
                                     ])
                                     //gDI18n.$t('10022',{value : (spotTick.getLastTick().Turnover24 || '--')})//"持仓量："+(spotTick.getLastTick().Turnover24 || '--')
                                 ]),
                                 m('p', {class:"has-text-1-important"}, [
-                                    '≈ '+(spotTick.getLastTick().Turnover24ForUSDT || '--')+'USDT'
+                                    '≈ ' + (utils.toThousands(Turnover24ForUSDT) || '--') + " " + (spotTick.getLastTick().FromC || "--")//' USDT'
+                                    // '≈ '+(spotTick.getLastTick().Turnover24ForUSDT || '--')+'USDT'
                                 ]),
                             ]),
                         ])
