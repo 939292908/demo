@@ -369,10 +369,21 @@ export default {
                     ])
                 ]),
                 m('p', { class: `pub-dish-top-num` }, [
-                    gDI18n.$t('10087') + "(" + gDI18n.$t('10423') + ")"//'数量(张)'
+                    // + 
+                    m('span',[
+                        gDI18n.$t('10087')//'数量'
+                    ]),
+                    m('span', { class: "is-hidden-touch" },[
+                        "(" + gDI18n.$t('10423') + ")"//'(张)'
+                    ]),
                 ]),
                 m('p', { class: `pub-dish-top-time` }, [
-                    gDI18n.$t('10493') + "(" + gDI18n.$t('10423') + ")"//'总量(张)'
+                    m('span', [
+                        gDI18n.$t('10493')//"总量"
+                    ]),
+                    m('span', { class: "is-hidden-touch" }, [
+                        "(" + gDI18n.$t('10423') + ")"//'(张)'
+                    ]),
                 ])
             ]),
             dish.getOrder20ForSellList(),
@@ -422,7 +433,7 @@ export default {
                         ])
                     ]),
                 ]),
-                m('.dropdown-menu', {class:"max-height-500 scroll-y", id: "dropdown-menu2", role: "menu"}, [
+                m('.dropdown-menu', { class:"max-height-500 scroll-y dropdown-pad-right", id: "dropdown-menu2", role: "menu"}, [
                     m('.dropdown-content', {class:"has-text-centered"}, [
                         dish.getMenuDishTypeList()
                     ]),

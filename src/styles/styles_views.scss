@@ -384,6 +384,10 @@ hr {
 
 //盘口相关样式 start
 
+.dropdown-pad-right{
+    padding-right: 21px;
+}
+
 .pub-dish {
     .pub-dish-top {
         display: flex;
@@ -402,7 +406,7 @@ hr {
         }
         @extend %ma-0;
         @extend %py-2;
-        @extend %px-3;
+        @extend %pr-3;
         @extend %font-2;
     }
     .pub-dish-list-item {
