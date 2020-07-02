@@ -406,6 +406,23 @@ hr {
         }
         @extend %ma-0;
         @extend %py-2;
+        @extend %px-3;
+        @extend %font-2;
+    }
+    //移动端
+    .pub-dish-top-m{
+        display: flex;
+        .pub-dish-top-pic {
+            text-align: left;
+        }
+        .pub-dish-top-num {
+            text-align: right;
+        }
+        > p {
+            width: 50%;
+        }
+        @extend %ma-0;
+        @extend %py-2;
         @extend %pr-3;
         @extend %font-2;
     }
@@ -1984,6 +2001,16 @@ hr {
             }
         }
     }
+
+    //盘口交易
+    //按钮
+    .is-primary-font{
+        color: $white-background-color-once-level !important;
+    }
+    .trade-button-bg{
+        background-color: $white-background-color-three-level;
+        color: $white-font-color-title;
+    }
 }
 
 // -------------- 黑夜模式 --------------
@@ -2296,5 +2323,15 @@ hr {
                 }
             }
         }
+    }
+
+    //盘口交易
+    //按钮
+    .is-primary-font{
+        color: $black-font-color-title !important;
+    }
+    .trade-button-bg{
+        background-color: $black-background-color-three-level;
+        color: $black-font-color-title;
     }
 }
