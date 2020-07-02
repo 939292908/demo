@@ -89,7 +89,7 @@ let header = {
                     header.setTheme()
                 }
             }, [
-                '切换主题',
+                gDI18n.$t('10522')//'切换主题',
             ])
     },
     signOut: function () {

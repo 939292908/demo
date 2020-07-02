@@ -411,14 +411,14 @@ let obj = {
                                 router.push('/switchLines')
                             }
                         }, [
-                            "切换线路" //"切换线路"
+                                gDI18n.$t('10523')//"切换线路"
                         ]),
                         m("a", {
                             class: "navbar-item", onclick: function (event) {
                                 event.stopPropagation()
                             }
                         }, [
-                            "切换主题", //"切换主题"
+                            gDI18n.$t('10522'),//"切换主题",
                             m(Switch, {
                                 class: 'is-pulled-right',
                                 type: window.$theme == 'light',

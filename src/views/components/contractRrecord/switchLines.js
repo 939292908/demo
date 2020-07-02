@@ -52,7 +52,7 @@ export default {
         return m('div', { class: `switchLines-page` }, [
             m( Header, {
                 slot: {
-                    center: `切换线路 (${obj.count})` //"切换线路"
+                    center: gDI18n.$t('10523') + "(" + obj.count + ")"//`切换线路 (${obj.count})` //"切换线路"
                 }
             }),
             m('div', { class: `pub-layout-m` }, m(netLines))
