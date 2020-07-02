@@ -1691,6 +1691,43 @@ hr {
 .mb-0-important {
     margin-bottom: 0 !important;
 }
+//文字14px
+.stop-PLM-1{
+    @extend %font-3;
+}
+//文字18px
+.stop-PLM-2{
+    @extend %font-5;
+}
+
+input[type="checkbox"] {
+    // checkbox 样式
+    width: 14px;
+    height: 14px;
+    display: inline-block;
+    text-align: center;
+    vertical-align: middle;
+    line-height: 12px;
+    position: relative;
+    @extend %mr-2;
+    &::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+    }
+    &:checked::before {
+        content: "\2713";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        font-size: 12px;
+        font-weight: bold;
+    }
+}
 
 // -------------- 白天模式 --------------
 #light {
@@ -2010,6 +2047,19 @@ hr {
     .trade-button-bg{
         background-color: $white-background-color-three-level;
         color: $white-font-color-title;
+    }
+
+    //止盈止损弹窗
+    input[type="checkbox"] {
+        // checkbox 样式
+        &::before {
+            background: $white-background-color-three-level;
+            border: 1px solid $white-main-color;
+        }
+        &:checked::before {
+            color: $white-main-color;
+            background: $white-background-color-three-level;
+        }
     }
 }
 
@@ -2333,5 +2383,18 @@ hr {
     .trade-button-bg{
         background-color: $black-background-color-three-level;
         color: $black-font-color-title;
+    }
+
+    //止盈止损弹窗
+    input[type="checkbox"] {
+        // checkbox 样式
+        &::before {
+            background: $black-background-color-three-level;
+            border: 1px solid $black-main-color;
+        }
+        &:checked::before {
+            color: $black-main-color;
+            background: $black-background-color-three-level;
+        }
     }
 }

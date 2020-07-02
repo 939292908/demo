@@ -342,7 +342,7 @@ export default {
 
     return m('div', {class: 'pub-stoppl'}, [
       m("div", { class: "modal" + (obj.open ? " is-active" : ''), }, [
-        m("div", { class: "modal-background" }),
+        m("div", { class: "modal-background", onclick: () => { obj.open = false}}),
         m("div", { class: "modal-card" }, [
           m("header", { class: "pub-stoppl-head modal-card-head" }, [
             m("p", { class: "modal-card-title" }, [
@@ -362,13 +362,19 @@ export default {
             ]),
             m("div", { class: "pub-stoppl-content-pos-info level" }, [
               m("div", { class: "level-left" }, [
-                (obj.param.displayDir || '') + ' ' + (obj.param.displaySym || '')
+                m('span', { class: "stop-PLM-2" + (obj.param.displayDir == gDI18n.$t('10170'/*"多仓"*/) ? " has-text-success" : " has-text-danger") }, [
+                  obj.param.displayDir || ''
+                ]),
+                m('span', { class: "stop-PLM-1" }, [
+                  (obj.param.displaySym || '')
+                ]),
+                // (obj.param.displayDir || '') + ' ' + (obj.param.displaySym || '')
               ]),
-              m("div", { class: "level-right" }, [
+              m("div", { class: "level-right stop-PLM-1" }, [
                 (obj.param.Sz || '0') + '/' + (obj.param.PrzIni || '0.0')
               ]),
             ]),
-            m('label', { class: "pub-stoppl-content-stopp-label checkbox" }, [
+            m('label', { class: "cursor-pointer" }, [
               m('input', { type: "checkbox", checked: obj.openStopP, oninput: function(e){
                 obj.openStopP = e.target.checked
               } }),
@@ -386,7 +392,7 @@ export default {
                 }})
               ])
             ]),
-            m('label', { class: "pub-stoppl-content-stopl-label checkbox" }, [
+            m('label', { class: "cursor-pointer" }, [
               m('input', { type: "checkbox", checked: obj.openStopL, oninput: function(e){
                 obj.openStopL = e.target.checked
               } }),
