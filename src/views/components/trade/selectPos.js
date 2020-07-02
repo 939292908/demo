@@ -310,17 +310,17 @@ let obj = {
               (pos.Sz>0?gDI18n.$t('10170'/*'多仓'*/):pos.Sz<0?gDI18n.$t('10171'/*'空仓'*/):'--')
             ]),
           ]),
-          m('td', {class: '', align: 'center', onclick: function (e) {
+          m('td', {class: 'midel-pos-close', align: 'center', onclick: function (e) {
             obj.delPos(pos)
             window.stopBubble(e)
           }},[
             m("a", {
               class: "is-white"+(obj.checkPosDelShow(pos)?'':' is-hidden')+(pos.loading?' is-loading':''), 
               "aria-label": "close", 
-              onclick: function (e) {
-                obj.delPos(pos)
-                window.stopBubble(e)
-              }
+              // onclick: function (e) {
+              //   obj.delPos(pos)
+              //   window.stopBubble(e)
+              // }
             }, [
               m('span.delete', {class:""+(pos.loading?' is-hidden':'')})
             ]),

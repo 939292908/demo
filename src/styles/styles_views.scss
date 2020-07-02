@@ -1052,7 +1052,7 @@ hr {
 }
 
 .button-sty-pad {
-    @extend %pa-2;
+    @extend %pa-4;
 }
 .centent-a-default {
     @extend %font-5;
@@ -1727,6 +1727,12 @@ input[type="checkbox"] {
         font-size: 12px;
         font-weight: bold;
     }
+}
+
+//新增仓位弹窗
+.midel-pos-close{
+    width: 29px;
+    height: 20px;
 }
 
 // -------------- 白天模式 --------------
