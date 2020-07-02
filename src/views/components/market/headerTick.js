@@ -26,6 +26,7 @@ let spotTick = {
         }
         this.EV_TICK_UPD_unbinder = window.gEVBUS.on(gMkt.EV_TICK_UPD,arg=> {
             that.onTick(arg)
+            spotTick.setWebPageTitle()
         })
         
         //指数行情全局广播
@@ -34,6 +35,7 @@ let spotTick = {
         }
         this.EV_INDEX_UPD_unbinder = window.gEVBUS.on(gMkt.EV_INDEX_UPD,arg=> {
             that.onTick(arg)
+            spotTick.setWebPageTitle()
         })
 
         //当前选中合约变化全局广播
@@ -144,6 +146,16 @@ let spotTick = {
     getLastTick: function(){
         let Sym = window.gMkt.CtxPlaying.Sym
         return this.lastTick[Sym] || {}
+    },
+
+    //设置网页标题
+    setWebPageTitle: function () {
+        let WebTitle = window.gMkt.CtxPlaying.Sym
+        if (WebTitle) {
+            let LastPrz = spotTick.getLastTick().LastPrz || " "
+            let title = utils.getSymDisplayName(window.gMkt.AssetD, WebTitle)
+            document.title = LastPrz + " " + title
+        }
     },
 
     getLeftTick: function(){

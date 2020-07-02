@@ -54,7 +54,7 @@ let symSelect = {
         }
         this.EV_TICK_UPD_unbinder = window.gEVBUS.on(gMkt.EV_TICK_UPD,arg=> {
             that.onTick(arg)
-            symSelect.setWebPageTitle()
+            // symSelect.setWebPageTitle()
         })
         
 
@@ -189,7 +189,7 @@ let symSelect = {
                         return m('div', {key: 'dropdown-item'+Sym+i,  href: "javascript:void(0);", class: "dropdown-item is-flex", onclick: function(){
                                 that.setSym(Sym)
                                 //修改网页标题
-                                that.setWebPageTitle()
+                                // that.setWebPageTitle()
                             }},[
                                 m('div',{class:""}, [
                                     utils.getSymDisplayName(window.gMkt.AssetD, Sym)
@@ -239,14 +239,14 @@ let symSelect = {
         
     },
     //设置网页标题
-    setWebPageTitle: function () {
-        let WebTitle = window.gMkt.CtxPlaying.Sym
-        if (WebTitle) {
-            let LastPrz = symSelect.lastTick[WebTitle] && symSelect.lastTick[WebTitle].LastPrz || " "
-            let title = utils.getSymDisplayName(window.gMkt.AssetD, WebTitle)
-            document.title = LastPrz + " " + title
-        }
-    },
+    // setWebPageTitle: function () {
+    //     let WebTitle = window.gMkt.CtxPlaying.Sym
+    //     if (WebTitle) {
+    //         let LastPrz = symSelect.lastTick[WebTitle] && symSelect.lastTick[WebTitle].LastPrz || " "
+    //         let title = utils.getSymDisplayName(window.gMkt.AssetD, WebTitle)
+    //         document.title = LastPrz + " " + title
+    //     }
+    // },
     //设置合约
     setSym: function(Sym){
         window.gMkt.CtxPlaying.Sym = Sym
