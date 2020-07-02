@@ -295,18 +295,18 @@ let obj = {
       m('table',{class : "currency-font"},[
         m('tr',{class : ""},[
           m('td',{class : ""},[
-            m('span',{class : "has-text-grey"},[
+            m('span', { class: "has-text-1"},[
               gDI18n.$t('10067') + "："//"仓位ID: "
             ]),
-            m('span',{class : "has-text-black"},[
+            m('span', { class: "has-text-2"},[
               pos.PId.substr(-4)
             ]),
           ]),
           m('td',{class : ""},[
-            m('span',{class : "has-text-grey"},[
+            m('span', { class: "has-text-1"},[
               gDI18n.$t('10172') + "："//"方向: "
             ]),
-            m('span',{class : "has-text-black"},[
+            m('span', { class: "has-text-2"},[
               (pos.Sz>0?gDI18n.$t('10170'/*'多仓'*/):pos.Sz<0?gDI18n.$t('10171'/*'空仓'*/):'--')
             ]),
           ]),
@@ -328,36 +328,36 @@ let obj = {
         ]),
         m('tr',{class : ""},[
           m('td',{class : ""},[
-            m('span',{class : "has-text-grey"},[
+            m('span', { class: "has-text-1"},[
               gDI18n.$t('10054') + "："//"杠杆: "
             ]),
-            m('span',{class : "has-text-black"},[
+            m('span', { class: "has-text-2"},[
               pos.displayLever
             ]),
           ]),
           m('td',{class : ""},[
-            m('span',{class : "has-text-grey"},[
+            m('span', { class: "has-text-1"},[
               gDI18n.$t('10173') + "："//"数量/价格: "
             ]),
-            m('span',{class : "has-text-black"},[
+            m('span', { class: "has-text-2"},[
               (pos.PrzIni)+'/'+(pos.Sz),
             ]),
           ]),
         ]),
         m('tr',{class : ""},[
           m('td',{class : ""},[
-            m('span',{class : "has-text-grey"},[
+            m('span', { class: "has-text-1"},[
               gDI18n.$t('10177') + "："//"买挂单: "
             ]),
-            m('span',{class : "has-text-black"},[
+            m('span', { class: "has-text-2"},[
               pos.aQtyBuy || 0
             ]),
           ]),
           m('td',{class : ""},[
-            m('span',{class : "has-text-grey"},[
+            m('span', { class: "has-text-1"},[
               gDI18n.$t('10178') + "："//"卖挂单: "
             ]),
-            m('span',{class : "has-text-black"},[
+            m('span', { class: "has-text-2"},[
               pos.aQtySell || 0
             ]),
           ]),
@@ -368,7 +368,7 @@ let obj = {
   //移动端selectpos界面
   getselectPos_m:function (){
     return m("div",{class:"pub-select-pos"},[
-      m('button', {class: "pub-select-pos-open-btn button is-inverted is-small is-background-2",'aria-haspopup':true, "aria-controls": "dropdown-menu2", onclick: function(){
+      m('button', {class: "pub-select-pos-open-btn button is-inverted is-small is-background-1 has-text-1",'aria-haspopup':true, "aria-controls": "dropdown-menu2", onclick: function(){
         obj.openMode()
       }}, [
           obj.getPosListItem(obj.posList_obj[obj.posActive], true)
