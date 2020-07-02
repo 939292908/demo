@@ -270,7 +270,7 @@ export default {
 
     return m('div', {class: 'pub-set-lever'}, [
       m("div", { class: "modal" + (obj.open ? " is-active" : ''), }, [
-        m("div", { class: "modal-background" }),
+        m("div", { class: "modal-background", onclick: () => { obj.open = false} }),
         m("div", { class: "modal-card" }, [
           m("header", { class: "pub-set-lever-head modal-card-head" }, [
             m("p", { class: "modal-card-title" }, [
