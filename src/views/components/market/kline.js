@@ -283,6 +283,7 @@ let obj = {
             that.klineTargetListOpen = false
         })
 
+        //监听多元
         if(this.EV_CHANGELOCALE_UPD_unbinder){
             this.EV_CHANGELOCALE_UPD_unbinder()
         }
@@ -296,7 +297,7 @@ let obj = {
             this.EV_THEME_UP_unbinder()
         }
         this.EV_THEME_UP_unbinder = window.gEVBUS.on(gEVBUS.EV_THEME_UP,arg=> {
-            obj.setKlineOptions()
+            that.setKlineOptions()
         })
         
 
@@ -898,7 +899,15 @@ let obj = {
                         // 'standard' | 'rect'
                         showType: window.isMobile?"rect":"standard",
                         //   ["时间", "开", "收", "高", "低", "成交量"],
-                        labels: ["时间", "开", "收", "高", "低", "成交量"],
+                        // labels: ["时间", "开", "收", "高", "低", "成交量"],
+                        labels: [
+                            gDI18n.$t('10103'),//"时间"
+                            gDI18n.$t('10501'),//"开",
+                            gDI18n.$t('10502'),//"收",
+                            gDI18n.$t('10503'),//"高",
+                            gDI18n.$t('10504'),//"低",
+                            gDI18n.$t('10505'),//"成交量"
+                        ],
                         values: null,
                         rect: {
                             paddingLeft: 6,

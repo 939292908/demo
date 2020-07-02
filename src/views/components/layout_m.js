@@ -428,6 +428,7 @@ let obj = {
                                     .then( theme => {
                                         console.log(theme);
                                     })
+                                    gEVBUS.emit(gEVBUS.EV_THEME_UP, { Ev: gEVBUS.EV_THEME_UP, data: { theme: window.$theme } })
                                 },
                             })
                         ]),
