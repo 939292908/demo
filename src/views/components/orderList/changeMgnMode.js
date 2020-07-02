@@ -173,10 +173,9 @@ export default {
         window.$openChangeMgnMode = obj.openMode
     },
     view: function (vnode) {
-
         return m('div', { class: 'pub-change-mgn' }, [
             m("div", { class: "modal" + (obj.open ? " is-active" : ''), }, [
-                m("div", { class: "modal-background" }),
+                m("div", { class: "modal-background", onclick: () => { obj.open = false}}),
                 m("div", { class: "modal-card" }, [
                     m("header", { class: "pub-change-mgn-head modal-card-head" }, [
                         m("p", { class: "modal-card-title" }, [
@@ -214,7 +213,7 @@ export default {
 
                         m('div', { class: "is-flex field has-text-2" }, [
                             m('div', { class: ""}, [
-                                m('span', { class: ""+utils.getColorStr(obj.param.Sz > 0?1:-1, 'font') }, [
+                                m('span', { class: "" + utils.getColorStr(obj.param.pos&&obj.param.pos.Sz > 0?1:-1, 'font') }, [
                                     obj.param.pos && obj.param.pos.dirStr
                                 ]),
                                 m('span', { class: ""}, [
