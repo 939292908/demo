@@ -89,6 +89,24 @@ let obj = {
         this.EV_WEB_LOGOUT_unbinder = window.gEVBUS.on(gWebAPI.EV_WEB_LOGOUT, arg => {
             that.initObj()
         })
+
+        //仓位选择筛选
+        if (this.EV_DROPDOWN_UP_unbinder) {
+            this.EV_DROPDOWN_UP_unbinder()
+        }
+        this.EV_DROPDOWN_UP_unbinder = window.gEVBUS.on(gEVBUS.EV_DROPDOWN_UP, arg => {
+            // obj.dropdownType = arg.data.item.xx
+            // console.log(obj.dropdownType, "筛选类型")
+            obj.initObj()
+        })
+
+        //当前选中合约变化全局广播
+        if (this.EV_CHANGESYM_UPD_unbinder) {
+            this.EV_CHANGESYM_UPD_unbinder()
+        }
+        this.EV_CHANGESYM_UPD_unbinder = window.gEVBUS.on(gMkt.EV_CHANGESYM_UPD, arg => {
+            obj.initObj()
+        })
     },
     initLanguage: function(){
         this.theadList = [
@@ -149,6 +167,12 @@ let obj = {
         if (this.EV_WEB_LOGOUT_unbinder) {
             this.EV_WEB_LOGOUT_unbinder()
         }
+        if (this.EV_DROPDOWN_UP_unbinder) {
+            this.EV_DROPDOWN_UP_unbinder()
+        }
+        if (this.EV_CHANGESYM_UPD_unbinder) {
+            this.EV_CHANGESYM_UPD_unbinder()
+        }
     },
     initObj() {
         let Orders = window.gTrd.Orders['01']
@@ -169,8 +193,8 @@ let obj = {
                 //杠杆
                 if (ass.MIR) {
                     let lvr = obj.Lvr || (pos && pos.Lever) || 0
-                    let maxLever = Number(1 / Math.max(ass.MIR || 0, obj.MIRMy || 0)).toFixed2(2)
-                    obj.displayLever = lvr == 0 ? gDI18n.$t('10068',{value : maxLever}) : gDI18n.$t('10069',{value : Number(lvr || 0).toFixed2(2)})
+                    let maxLever = Number(1 / Math.max(ass.MIR || 0, obj.MIRMy || 0)).toFixed2(0)
+                    obj.displayLever = lvr == 0 ? gDI18n.$t('10068',{value : maxLever}) : gDI18n.$t('10069',{value : Number(lvr || 0).toFixed2(0)})
                     // obj.displayLever = lvr == 0 ? '全仓' + maxLever + 'X' : '逐仓' + Number(lvr || 0).toFixed2(2) + 'X'
                 } else {
                     obj.displayLever = '--'
@@ -212,7 +236,14 @@ let obj = {
 
                 obj.loading = false
 
-                posList.push(obj)
+                if (window.$dropdownType == 1) {
+                    posList.push(obj)
+                } else {
+                    let Sym = window.gMkt.CtxPlaying.Sym
+                    if (obj.Sym == Sym) {
+                        posList.push(obj)
+                    }
+                }
             }
 
         }
@@ -226,13 +257,21 @@ let obj = {
             ])
         })
     },
+    //设置合约
+    setSym(Sym) {
+        window.gMkt.CtxPlaying.Sym = Sym // window 保存选中
+        utils.setItem('futureActiveSymbol', Sym)
+        gEVBUS.emit(gMkt.EV_CHANGESYM_UPD, { Ev: gMkt.EV_CHANGESYM_UPD, Sym: Sym })
+    },
     getOrdList: function () {
         return this.posList.map(function (item, i) {
             return m("tr", { key: "orderTableListItem" + i, class: "" }, [
                 m("td", { class: " table-tr-td-vertical" }, [
                     item.PId ? item.PId.substr(-4) : '--'
                 ]),
-                m("td", { class: "table-tr-td-vertical" }, [
+                m("td", { class: "table-tr-td-vertical cursor-pointer" ,onclick :function(){
+                    obj.setSym(item.Sym)
+                }}, [
                     m("p", { class: " " }, [
                         utils.getSymDisplayName(window.gMkt.AssetD, item.Sym)
                     ])
@@ -370,7 +409,7 @@ let obj = {
         }, function (gTrd, arg) {
             if (arg.code != 0 || arg.data.ErrCode) {
                 param.loading = false
-                window.$message({ title: utils.getTradeErrorCode(arg.code || arg.data.ErrCode), content: utils.getTradeErrorCode(arg.code || arg.data.ErrCode), type: 'danger' })
+                window.$message({ title: gDI18n.$t('10037'/*"提示"*/), content: utils.getTradeErrorCode(arg.code || arg.data.ErrCode), type: 'danger' })
             } else {
                 param.loading = false
             }

@@ -299,6 +299,20 @@ utils.getColorStr = function(status, type){
     return colorClass
 }
 
+//数字加逗号
+utils.toThousands = function (num) {
+    if (!num) return 0
+    if (isNaN(num)) return 0
+    let str = num.toString().split('.')
+    var num1 = (str[0] || 0).toString(), result = '';
+    while (num1.length > 3) {
+        result = ',' + num1.slice(-3) + result;
+        num1 = num1.slice(0, num1.length - 3);
+    }
+    if (num1) { result = num1 + result; }
+    return result + (num.toString().includes('.') ? '.' + str[1] || '' : '');
+}
+
 ///获取小数位数
 utils.getFloatSize = function (val) {
     if (val.toString().indexOf(".") == -1) {
@@ -570,8 +584,8 @@ utils.getPosInfo = function(pos,assetD,UPNLPrzActive){
 
         //杠杆
         if(assetD.MIR){
-          let maxLever = Number(1/Math.max(assetD.MIR || 0, obj.MIRMy || 0)).toFixed2(2)
-          obj.displayLever = obj.Lever== 0? gDI18n.$t('10068',{value :maxLever}/*'全仓'+maxLever+'X'*/):gDI18n.$t('10069',{value :Number(obj.Lever || 0).toFixed2(2)}/*'逐仓'+Number(obj.Lever || 0).toFixed2(2)+'X'*/)
+          let maxLever = Number(1/Math.max(assetD.MIR || 0, obj.MIRMy || 0)).toFixed2(0)
+          obj.displayLever = obj.Lever== 0? gDI18n.$t('10068',{value :maxLever}/*'全仓'+maxLever+'X'*/):gDI18n.$t('10069',{value :Number(obj.Lever || 0).toFixed2(0)}/*'逐仓'+Number(obj.Lever || 0).toFixed2(2)+'X'*/)
           obj.displayLever = (obj.Sz > 0? gDI18n.$t('10071'/*'多@'*/):obj.Sz < 0?gDI18n.$t('10328'/*'空@'*/):'')+obj.displayLever
         }else{
           obj.displayLever = '--'
@@ -796,6 +810,19 @@ utils.getOrderFrom = function(Via) {
     }else {
         return gDI18n.$t('10404');//"用户委托"
     }
+}
+// 设置主题
+utils.switchTheme = function ( theme ) {
+    // 传参:指定主题  不传:切换主题
+    if (theme) {
+        window.$theme = theme
+    } else {
+        window.$theme = window.$theme == "light" ? "dark" :"light"
+    }
+    document.querySelector('body').setAttribute('id', window.$theme)
+    utils.setItem("theme", window.$theme)
+
+    return Promise.resolve( window.$theme )
 }
 
 export default utils

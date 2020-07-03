@@ -68,6 +68,7 @@ let obj = {
             this.EV_CHANGESYM_UPD_unbinder()
         }
         this.EV_CHANGESYM_UPD_unbinder = window.gEVBUS.on(gMkt.EV_CHANGESYM_UPD,arg=> {
+            that.rmLocalAllLever()
             that.updateSpotInfo(arg)
             that.initPos()
             that.setFaceV()
@@ -169,6 +170,15 @@ let obj = {
           this.EV_POS_UPD_unbinder()
         }
     },
+    // 杠杆 存本地
+    setLocalAllLever(MIRMy, Lever) {
+        utils.setItem('MIRMy', MIRMy)
+        utils.setItem('Lever', Lever)
+    },
+    rmLocalAllLever() {
+        utils.setItem('MIRMy', 0)
+        utils.setItem('Lever', 0)
+    },
     initPos: function (param) {
         
         let tradeType = window.$config.future.tradeType
@@ -180,19 +190,29 @@ let obj = {
                 let PId = window.gTrd.CtxPlaying.activePId
                 let pos = window.gTrd.Poss[PId]
 
-                let Lever = 0, maxLever = 0,MIRMy = 0;
+                let Lever = 0, maxLever = 0, MIRMy = 0, MIR = 0;
                 if (pos) {
                     let ass = window.gMkt.AssetD[pos.Sym]
                     if (ass) {
                         maxLever = 1 / Math.max(ass.MIR, pos.MIRMy || 0)
                     }
+                    
                     MIRMy = pos.MIRMy
                     Lever = pos.Lever
                 } else {
                     let Sym = window.gMkt.CtxPlaying.Sym
                     let ass = window.gMkt.AssetD[Sym]
                     if (ass) {
+                        MIR = ass.MIR
                         maxLever = 1 / ass.MIR
+                        if (utils.getItem('MIRMy')) {
+                            // 如果储存的MIRMy小于合约配置的MIR就取合约配置
+                            MIRMy = utils.getItem('MIRMy') < MIR ? MIR : utils.getItem('MIRMy')
+                        }
+                        if (utils.getItem('Lever')) {
+                            // 如果储存的MIRMy大于合约配置的MIR就取合约配置
+                            Lever = (utils.getItem('Lever') > maxLever) ? maxLever : utils.getItem('Lever')
+                        }
                     }
                 }
                 this.form.MIRMy = MIRMy
@@ -209,25 +229,29 @@ let obj = {
             case 2:
                     if(!type || type == 'buy'){
                         if (this.form.LeverForBuy == 0) {
-                            this.form.LeverForBuyInputValue = (this.form.maxLeverForBuy ? gDI18n.$t('10137'/*'买 全仓*/) + Number(this.form.maxLeverForBuy ).toFixed2(2) + 'X' : gDI18n.$t('10133'/*'买 杠杆'*/))
+                            let LeverForBuy = Math.min(this.form.maxLeverForBuy, 1 / this.form.MIRMyForBuy)
+                            this.form.LeverForBuyInputValue = (LeverForBuy ? gDI18n.$t('10137'/*'买 全仓*/) + Number(LeverForBuy).toFixed2(0) + 'X' : gDI18n.$t('10133'/*'买 杠杆'*/))
                         } else {
-                            this.form.LeverForBuyInputValue = gDI18n.$t('10138'/*'买 逐仓'*/) + Number(this.form.LeverForBuy).toFixed2(2) + 'X'
+                            this.form.LeverForBuyInputValue = gDI18n.$t('10138'/*'买 逐仓'*/) + Number(this.form.LeverForBuy).toFixed2(0) + 'X'
                         }
                     }
                     if(!type || type == 'sell'){
                         if (this.form.LeverForSell == 0) {
-                            this.form.LeverForSellInputValue = (this.form.maxLeverForSell ? gDI18n.$t('10139'/*'卖 全仓'*/) + Number(this.form.maxLeverForSell).toFixed2(2)+ 'X' : gDI18n.$t('10134'/*'卖 杠杆'*/))
+                            let LeverForSell = Math.min(this.form.maxLeverForSell, 1 / this.form.MIRMyForSell)
+                            this.form.LeverForSellInputValue = (LeverForSell ? gDI18n.$t('10139'/*'卖 全仓'*/) + Number(LeverForSell).toFixed2(0)+ 'X' : gDI18n.$t('10134'/*'卖 杠杆'*/))
                         } else {
-                            this.form.LeverForSellInputValue = gDI18n.$t('10140'/*'卖 逐仓'*/) + Number(this.form.LeverForSell).toFixed2(2) + 'X'
+                            this.form.LeverForSellInputValue = gDI18n.$t('10140'/*'卖 逐仓'*/) + Number(this.form.LeverForSell).toFixed2(0) + 'X'
                         }
                     }
                 break;
             default:
                 if (this.form.Lever == 0) {
-                    this.LeverInputValue = (this.form.maxLever ? gDI18n.$t('10068',{value : Number(this.form.maxLever).toFixed2(2)}): gDI18n.$t('10054'))
+                    let LeverForMy = Math.min(this.form.maxLever, 1 / this.form.MIRMy)
+                    this.LeverInputValue = (this.form.maxLever ? gDI18n.$t('10068', { value: Number(LeverForMy).toFixed2(0) }) : gDI18n.$t('10054'))
+                    // this.LeverInputValue = (this.form.maxLever ? gDI18n.$t('10068',{value : Number(this.form.maxLever).toFixed2(0)}): gDI18n.$t('10054'))
                     // this.LeverInputValue = (this.form.maxLever ? '全仓' + this.form.maxLever + 'X' : '杠杆')
                 } else {
-                    this.LeverInputValue = gDI18n.$t('10069',{value : Number(this.form.Lever).toFixed2(2)})
+                    this.LeverInputValue = gDI18n.$t('10069',{value : Number(this.form.Lever).toFixed2(0)})
                     // this.LeverInputValue = '逐仓' + Number(this.form.Lever).toFixed2(2) + 'X'
                 } 
         }
@@ -272,39 +296,101 @@ let obj = {
         }
         this.setLever()
     },
+    // 校验
+    submitVerify (dir) {
+        let tradeType = window.$config.future.tradeType
+        switch(tradeType){
+            case 3:
+                // 买
+                if(dir == 1){
+                    if(this.form.stopP !="" && this.form.stopL !=""){
+                        if (Number(this.form.stopP) <= Number(obj.form.Prz)){
+                            return $message({ title: gDI18n.$t('10037'/*"提示"*/), content: gDI18n.$t('10512'/*"止盈触发价不能小于委托价格！"*/), type: 'danger'})
+                        }
+                        if (Number(this.form.stopL) >= Number(obj.form.Prz)){
+                            return $message({ title: gDI18n.$t('10037'/*"提示"*/), content: gDI18n.$t('10513'/*"止损触发价不能大于委托价格！"*/), type: 'danger'})
+                        }
+                        if (Number(this.form.stopP) <= Number(this.form.stopL)){
+                            return $message({ title: gDI18n.$t('10037'/*"提示"*/), content: gDI18n.$t('10193'/*'该仓位为多仓，止盈价需大于止损价'*/), type: 'danger'})
+                        }
+                    }else if(this.form.stopP !=""){
+                        if (Number(this.form.stopP) <= Number(obj.form.Prz)){
+                            return $message({ title: gDI18n.$t('10037'/*"提示"*/), content: gDI18n.$t('10512'/*"止盈触发价不能小于委托价格！"*/), type: 'danger'})
+                        }
+                    }else if(this.form.stopL !=""){
+                        if (Number(this.form.stopL) >= Number(obj.form.Prz)){
+                            return $message({ title: gDI18n.$t('10037'/*"提示"*/), content: gDI18n.$t('10513'/*"止损触发价不能大于委托价格！"*/), type: 'danger'})
+                        }
+                    }
+                // 卖
+                }else if(dir == -1){
+                    if(this.form.stopP !="" && this.form.stopL !=""){
+                        if (Number(this.form.stopP) >= Number(obj.form.Prz)){
+                            return $message({ title: gDI18n.$t('10037'/*"提示"*/), content: gDI18n.$t('10514'/*"止盈触发价不能大于委托价格！"*/), type: 'danger'})
+                        }
+                        if (Number(this.form.stopL) <= Number(obj.form.Prz)){
+                            return $message({
+                                title: gDI18n.$t('10037'/*"提示"*/), content: gDI18n.$t('10515'/*"止损触发价不能小于委托价格！"*/), type: 'danger'})
+                        }
+                        if (Number(this.form.stopP) >= Number(this.form.stopL)){
+                            return $message({ title: gDI18n.$t('10037'/*"提示"*/), content: gDI18n.$t('10194'/*'该仓位为空仓，止盈价需小于止损价'*/), type: 'danger'})
+                        }
+                    }else if(this.form.stopP !=""){
+                        if (Number(this.form.stopP) >= Number(obj.form.Prz)){
+                            return $message({ title: gDI18n.$t('10037'/*"提示"*/), content: gDI18n.$t('10514'/*"止盈触发价不能大于委托价格！"*/), type: 'danger'})
+                        }
+                    }else if(this.form.stopL !=""){
+                        if (Number(this.form.stopL) <= Number(obj.form.Prz)){
+                            return $message({ title: gDI18n.$t('10037'/*"提示"*/), content: gDI18n.$t('10515'/*"止损触发价不能小于委托价格！"*/), type: 'danger'})
+                        }
+                    }
+                }
+                // if(this.form.stopP !="" && this.form.stopL !=""){
+                //     if( dir == 1 && this.form.stopP <= this.form.stopL){
+                //         return $message({title: gDI18n.$t('10193'/*'该仓位为多仓，止盈价需大于止损价'*/), content: gDI18n.$t('10193'/*'该仓位为多仓，止盈价需大于止损价'*/), type: 'danger'})
+                //     }else if(dir == -1 && this.form.stopP >= this.form.stopL){
+                //         return $message({title: gDI18n.$t('10194'/*'该仓位为空仓，止盈价需小于止损价'*/), content: gDI18n.$t('10194'/*'该仓位为空仓，止盈价需小于止损价'*/), type: 'danger'})
+                //     }
+                // }
+        }
+        return true
+    },
     submit: function(dir){
         if(!window.gWebAPI.isLogin()){
             return window.gWebAPI.needLogin()
         }
+        
+        if ( !this.submitVerify(dir) ) return; // 校验 
+
         let tradeType = window.$config.future.tradeType
         switch(tradeType){
             case 3:
                 if(this.form.stopP !="" && this.form.stopL !=""){
                     if( dir == 1 && this.form.stopP <= this.form.stopL){
-                        return $message({title: gDI18n.$t('10193'/*'该仓位为多仓，止盈价需大于止损价'*/), content: gDI18n.$t('10193'/*'该仓位为多仓，止盈价需大于止损价'*/), type: 'danger'})
+                        return $message({ title: gDI18n.$t('10037'/*"提示"*/), content: gDI18n.$t('10193'/*'该仓位为多仓，止盈价需大于止损价'*/), type: 'danger'})
                     }else if(dir == -1 && this.form.stopP >= this.form.stopL){
-                        return $message({title: gDI18n.$t('10194'/*'该仓位为空仓，止盈价需小于止损价'*/), content: gDI18n.$t('10194'/*'该仓位为空仓，止盈价需小于止损价'*/), type: 'danger'})
+                        return $message({ title: gDI18n.$t('10037'/*"提示"*/), content: gDI18n.$t('10194'/*'该仓位为空仓，止盈价需小于止损价'*/), type: 'danger'})
                     }
                 }
         }
         if(this.form.Prz === '0'){
-            return $message({title: gDI18n.$t('10141'/*'下单价格不能为0'*/), content: gDI18n.$t('10141'/*'下单价格不能为0'*/), type: 'danger'})
+            return $message({ title: gDI18n.$t('10037'/*"提示"*/), content: gDI18n.$t('10141'/*'下单价格不能为0'*/), type: 'danger'})
         }else if(!this.form.Prz){
-            return $message({title: gDI18n.$t('10142'/*'下单价格不能为空'*/), content: gDI18n.$t('10142'/*'下单价格不能为空'*/), type: 'danger'})
+            return $message({ title: gDI18n.$t('10037'/*"提示"*/), content: gDI18n.$t('10142'/*'下单价格不能为空'*/), type: 'danger'})
         }else if(Number(this.form.Prz) == 0){
-            return $message({title: gDI18n.$t('10141'/*'下单价格不能为0'*/), content: gDI18n.$t('10141'/*'下单价格不能为0'*/), type: 'danger'})
+            return $message({ title: gDI18n.$t('10037'/*"提示"*/), content: gDI18n.$t('10141'/*'下单价格不能为0'*/), type: 'danger'})
         }else if(isNaN(Number(this.form.Prz))){
-            return $message({title: gDI18n.$t('10143'/*'请输入正确的价格'*/), content: gDI18n.$t('10143'/*'请输入正确的价格'*/), type: 'danger'})
+            return $message({ title: gDI18n.$t('10037'/*"提示"*/), content: gDI18n.$t('10143'/*'请输入正确的价格'*/), type: 'danger'})
         }
 
         if(this.form.Num === '0'){
-            return $message({title: gDI18n.$t('10144'/*'下单数量不能为0'*/), content: gDI18n.$t('10144'/*'下单数量不能为0'*/), type: 'danger'})
+            return $message({ title: gDI18n.$t('10037'/*"提示"*/), content: gDI18n.$t('10144'/*'下单数量不能为0'*/), type: 'danger'})
         }else if(!this.form.Num){
-            return $message({title: gDI18n.$t('10145'/*'下单数量不能为空'*/), content: gDI18n.$t('10145'/*'下单数量不能为空'*/), type: 'danger'})
+            return $message({ title: gDI18n.$t('10037'/*"提示"*/), content: gDI18n.$t('10145'/*'下单数量不能为空'*/), type: 'danger'})
         }else if(Number(this.form.Num) == 0){
-            return $message({title: gDI18n.$t('10144'/*'下单数量不能为0'*/), content: gDI18n.$t('10144'/*'下单数量不能为0'*/), type: 'danger'})
+            return $message({ title: gDI18n.$t('10037'/*"提示"*/), content: gDI18n.$t('10144'/*'下单数量不能为0'*/), type: 'danger'})
         }else if(isNaN(Number(this.form.Num))){
-            return $message({title: gDI18n.$t('10146'/*'请输入正确的数量'*/), content: gDI18n.$t('10146'/*'请输入正确的数量'*/), type: 'danger'})
+            return $message({ title: gDI18n.$t('10037'/*"提示"*/), content: gDI18n.$t('10146'/*'请输入正确的数量'*/), type: 'danger'})
         }
 
         let Sym = window.gMkt.CtxPlaying.Sym
@@ -377,7 +463,7 @@ let obj = {
                         }
                     }
                     if(posArr.length >= window.$config.future.maxPosNum){
-                        return window.$message({title: gDI18n.$t('10037'), content: gDI18n.$t('10147',{value : window.$config.future.maxPosNum}), type: 'danger'})
+                        return window.$message({ title: gDI18n.$t('10037'/*"提示"*/), content: gDI18n.$t('10147',{value : window.$config.future.maxPosNum}), type: 'danger'})
                         // return window.$message({title: '提示', content: '同一合约最多同时存在'+window.$config.future.maxPosNum+'个仓位!', type: 'danger'})
                     }
                 // 判断仓位数量是否超限 end
@@ -389,7 +475,7 @@ let obj = {
                 break;
             default:
                 if(!PId){
-                    return window.$message({title: gDI18n.$t('10148'), content: gDI18n.$t('10148'), type: 'danger'})
+                    return window.$message({ title: gDI18n.$t('10037'/*"提示"*/), content: gDI18n.$t('10148'), type: 'danger'})
                     // return window.$message({title: '请先选择您要调整的仓位！', content: '请先选择您要调整的仓位！', type: 'danger'})
                 }
                 // 判断是否开启了全仓杠杠调节 start
@@ -402,11 +488,11 @@ let obj = {
 
         let aWdrawable = Number(obj.wlt.aWdrawable || 0 )
         if(aWdrawable == 0){
-            return window.$message({title: gDI18n.$t('10038'/*'可用资金不足！'*/), content: gDI18n.$t('10038'/*'可用资金不足！'*/), type: 'danger'})
+            return window.$message({ title: gDI18n.$t('10037'/*"提示"*/), content: gDI18n.$t('10038'/*'可用资金不足！'*/), type: 'danger'})
         }else if(dir == 1 && aWdrawable < Number(this.MgnNeedForBuy)){
-            return window.$message({title: gDI18n.$t('10038'/*'可用资金不足！'*/), content: gDI18n.$t('10038'/*'可用资金不足！'*/), type: 'danger'})
+            return window.$message({ title: gDI18n.$t('10037'/*"提示"*/), content: gDI18n.$t('10038'/*'可用资金不足！'*/), type: 'danger'})
         }else if(dir == -1 && aWdrawable < Number(this.MgnNeedForSell)){
-            return window.$message({title: gDI18n.$t('10038'/*'可用资金不足！'*/), content: gDI18n.$t('10038'/*'可用资金不足！'*/), type: 'danger'})
+            return window.$message({ title: gDI18n.$t('10037'/*"提示"*/), content: gDI18n.$t('10038'/*'可用资金不足！'*/), type: 'danger'})
         }
 
         window.gTrd.ReqTrdOrderNew(p, function(aTrd, arg){
@@ -446,11 +532,11 @@ let obj = {
                         if(dir == 1){
                             that.form.LeverForBuy = arg.Lever
                             that.form.MIRMyForBuy = arg.MIRMy
-                            that.form.maxLeverForBuy = 1/Math.max(arg.MIRMy || 0, ass.MIR)
+                            // that.form.maxLeverForBuy = 1/Math.max(arg.MIRMy || 0, ass.MIR)
                         }else{
                             that.form.LeverForSell = arg.Lever
                             that.form.MIRMyForSell = arg.MIRMy
-                            that.form.maxLeverForSell = 1/Math.max(arg.MIRMy || 0, ass.MIR)
+                            // that.form.maxLeverForSell = 1/Math.max(arg.MIRMy || 0, ass.MIR)
                         }
                         
                         that.setMgnNeed()
@@ -469,7 +555,9 @@ let obj = {
                         console.log('change Lever callback', arg)
                         that.form.Lever = arg.Lever
                         that.form.MIRMy = arg.MIRMy
-                        that.form.maxLever = 1/Math.max(arg.MIRMy || 0, ass.MIR)
+                        // that.form.maxLever = 1/Math.max(arg.MIRMy || 0, ass.MIR)
+                        // obj.setLocalAllLever(that.form.MIRMy, that.form.Lever) // 杠杆倍数 存本地
+                        obj.setLocalAllLever(that.form.MIRMy, that.form.Lever) // 杠杆倍数 存本地
                         that.setMgnNeed()
                         that.setLever()
                     }
@@ -477,7 +565,7 @@ let obj = {
                 break;
             default:
                 if(!PId){
-                    return window.$message({title: gDI18n.$t('10148'/*'请先选择您要调整的仓位！'*/), content: gDI18n.$t('10148'/*'请先选择您要调整的仓位！'*/), type: 'danger'})
+                    return window.$message({ title: gDI18n.$t('10037'/*"提示"*/), content: gDI18n.$t('10148'/*'请先选择您要调整的仓位！'*/), type: 'danger'})
                 }
                 window.$openLeverageMode({
                     Sym: Sym,
@@ -799,7 +887,7 @@ let obj = {
         }
         if(show){
             return m('div', { class: 'pub-place-order-form-stop-pl field' }, [
-                m("label", { class: "pub-place-order-form-stop-pl-label label" }, [
+                m("label", { class: "pub-place-order-form-stop-pl-label label has-text-2" }, [
                     gDI18n.$t('10149')//'止盈止损设置（选填）'
                 ]),
                 m("div", { class: "pub-place-order-form-stop-pl-input field has-addons" }, [
@@ -834,7 +922,7 @@ let obj = {
                             obj.form.LeverForBuyInputValue
                         ])
                     ]),
-                    m("div", { class: "control" }, [
+                    m("div", { class: "control is-expanded" }, [
                         m("div", { class: "" }, [
                             ' '
                         ]),
@@ -914,12 +1002,14 @@ let obj = {
         let posForBuy = Poss[this.form.PIdForBuy] || {}
         this.form.LeverForBuy = posForBuy.Lever || 0
         this.form.MIRMyForBuy = posForBuy.MIRMy || 0
-        this.form.maxLeverForBuy = 1 / Math.max(ass.MIR, posForBuy.MIRMy || 0)
+        // this.form.maxLeverForBuy = 1 / Math.max(ass.MIR, posForBuy.MIRMy || 0)
+        this.form.maxLeverForBuy = 1 / ass.MIR
 
         let posForSell = Poss[this.form.PIdForSell] || {}
         this.form.LeverForSell = posForSell.Lever || 0
         this.form.MIRMyForSell = posForSell.MIRMy || 0
-        this.form.maxLeverForSell = 1 / Math.max(ass.MIR, posForSell.MIRMy || 0)
+        // this.form.maxLeverForSell = 1 / Math.max(ass.MIR, posForSell.MIRMy || 0)
+        this.form.maxLeverForSell = 1 / ass.MIR
 
         this.setLever()
     },
@@ -935,13 +1025,15 @@ let obj = {
             let posForBuy = Poss[this.form.PIdForBuy] || {}
             this.form.LeverForBuy = posForBuy.Lever || 0
             this.form.MIRMyForBuy = posForBuy.MIRMy || 0
-            this.form.maxLeverForBuy = 1 / Math.max(ass.MIR, posForBuy.MIRMy || 0)
+            // this.form.maxLeverForBuy = 1 / Math.max(ass.MIR, posForBuy.MIRMy || 0)
+            this.form.maxLeverForBuy = 1 / ass.MIR
             this.setLever('buy')
         }else if(this.form.PIdForSell){
             let posForSell = Poss[this.form.PIdForSell] || {}
             this.form.LeverForSell = posForSell.Lever || 0
             this.form.MIRMyForSell = posForSell.MIRMy || 0
-            this.form.maxLeverForSell = 1 / Math.max(ass.MIR, posForSell.MIRMy || 0)
+            // this.form.maxLeverForSell = 1 / Math.max(ass.MIR, posForSell.MIRMy || 0)
+            this.form.maxLeverForSell = 1 / ass.MIR
             this.setLever('sell')
         }else{
             this.setPId()

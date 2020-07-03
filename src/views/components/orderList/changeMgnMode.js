@@ -60,11 +60,11 @@ let obj = {
 
         
         if (this.form.num === '0') {
-            return $message({ title: gDI18n.$t('10035'/*'调整金额不能为0'*/), content: gDI18n.$t('10035'/*'调整金额不能为0'*/), type: 'danger' })
+            return $message({ title: gDI18n.$t('10037'/*"提示"*/), content: gDI18n.$t('10035'/*'调整金额不能为0'*/), type: 'danger' })
         } else if (!this.form.num) {
-            return $message({ title: gDI18n.$t('10036'/*'调整金额不能为空'*/), content: gDI18n.$t('10036'/*'调整金额不能为空'*/), type: 'danger' })
+            return $message({ title: gDI18n.$t('10037'/*"提示"*/), content: gDI18n.$t('10036'/*'调整金额不能为空'*/), type: 'danger' })
         }else if(Number(this.form.num) == 0){
-            return $message({ title: gDI18n.$t('10035'/*'调整金额不能为0'*/), content: gDI18n.$t('10035'/*'调整金额不能为0'*/), type: 'danger' })
+            return $message({ title: gDI18n.$t('10037'/*"提示"*/), content: gDI18n.$t('10035'/*'调整金额不能为0'*/), type: 'danger' })
         }
 
         let Sym = this.param.pos.Sym
@@ -173,10 +173,9 @@ export default {
         window.$openChangeMgnMode = obj.openMode
     },
     view: function (vnode) {
-
         return m('div', { class: 'pub-change-mgn' }, [
             m("div", { class: "modal" + (obj.open ? " is-active" : ''), }, [
-                m("div", { class: "modal-background" }),
+                m("div", { class: "modal-background", onclick: () => { obj.open = false}}),
                 m("div", { class: "modal-card" }, [
                     m("header", { class: "pub-change-mgn-head modal-card-head" }, [
                         m("p", { class: "modal-card-title" }, [
@@ -212,9 +211,9 @@ export default {
                             ])
                         ]),
 
-                        m('div', { class: "is-flex field" }, [
+                        m('div', { class: "is-flex field has-text-2" }, [
                             m('div', { class: ""}, [
-                                m('span', { class: ""+utils.getColorStr(obj.param.Sz > 0?1:-1, 'font') }, [
+                                m('span', { class: "" + utils.getColorStr(obj.param.pos&&obj.param.pos.Sz > 0?1:-1, 'font') }, [
                                     obj.param.pos && obj.param.pos.dirStr
                                 ]),
                                 m('span', { class: ""}, [
@@ -231,7 +230,7 @@ export default {
                                 ]),
                             ]),
                         ]),
-                        m('div', { class: "is-flex field" }, [
+                        m('div', { class: "is-flex field has-text-2" }, [
                             m('div', { class: ""}, [
                                 m('span', { class: ""}, [
                                     gDI18n.$t('10047')//'当前保证金：'
@@ -250,7 +249,7 @@ export default {
                                 ]),
                             ]),
                         ]),
-                        m('div', { class: "pub-change-mgn-content-stopl-input field" }, [
+                        m('div', { class: "pub-change-mgn-content-stopl-input field has-text-2" }, [
                             m('div', { class: "control is-expanded" }, [
                                 m('input', {
                                     class: "input ", type: 'number', placeholder: obj.placeholder, value: obj.form.num, oninput: function (e) {
@@ -259,7 +258,7 @@ export default {
                                 })
                             ])
                         ]),
-                        m('div', { class: "is-flex"+(obj.tabsActive == 0?'':' is-hidden') }, [
+                        m('div', { class: "is-flex has-text-2"+(obj.tabsActive == 0?'':' is-hidden') }, [
                             m('div', { class: ""}, [
                                 gDI18n.$t('10049')//'最多可增加资产'
                             ]),
@@ -270,7 +269,7 @@ export default {
                                 obj.maxAddMgn
                             ]),
                         ]),
-                        m('div', { class: "is-flex"+(obj.tabsActive == 1?'':' is-hidden') }, [
+                        m('div', { class: "is-flex has-text-2"+(obj.tabsActive == 1?'':' is-hidden') }, [
                             m('div', { class: ""}, [
                                 gDI18n.$t('10050')//'最多可减少资产'
                             ]),

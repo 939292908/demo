@@ -159,7 +159,7 @@ let obj = {
     let tradeList = this.tradeList
     if(!tradeList) return ''
     return tradeList.map(function(item,i){
-        return m("div",{class:"pub-new-trade-list-item level is-relative pos-info"},[
+        return m("div",{class:"pub-new-trade-list-item level is-relative pos-info has-text-1"},[
             m('div', {class: ""},[
                 m('p', {class: ""+utils.getColorStr(item.Dir, 'font')},[
                     item.Prz
@@ -179,7 +179,7 @@ let obj = {
     })
   },
   getListInfo:function (){
-    return m("div",{class:"pub-new-trade-list-item level is-relative pos-info"},[
+    return m("div",{class:"pub-new-trade-list-item level is-relative pos-info has-text-1"},[
       m('div', {class: ""},[
           m('p', {class: ""},[
             gDI18n.$t('10186')//"价格"
@@ -212,7 +212,7 @@ export default {
     },
     view: function(vnode) {
         
-        return m("div",{class:"pub-new-trade"},[
+        return m("div",{class:"pub-new-trade has-text-1"},[
           m("div",{class:"pub-new-trade-list"},[
           // JSON.stringify(obj.tradeList)+''
             obj.getListInfo(),

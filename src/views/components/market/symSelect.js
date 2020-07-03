@@ -54,6 +54,7 @@ let symSelect = {
         }
         this.EV_TICK_UPD_unbinder = window.gEVBUS.on(gMkt.EV_TICK_UPD,arg=> {
             that.onTick(arg)
+            // symSelect.setWebPageTitle()
         })
         
 
@@ -187,6 +188,8 @@ let symSelect = {
                     let list = SymList[coin].map(function(Sym, i){
                         return m('div', {key: 'dropdown-item'+Sym+i,  href: "javascript:void(0);", class: "dropdown-item is-flex", onclick: function(){
                                 that.setSym(Sym)
+                                //修改网页标题
+                                // that.setWebPageTitle()
                             }},[
                                 m('div',{class:""}, [
                                     utils.getSymDisplayName(window.gMkt.AssetD, Sym)
@@ -235,7 +238,15 @@ let symSelect = {
         }
         
     },
-
+    //设置网页标题
+    // setWebPageTitle: function () {
+    //     let WebTitle = window.gMkt.CtxPlaying.Sym
+    //     if (WebTitle) {
+    //         let LastPrz = symSelect.lastTick[WebTitle] && symSelect.lastTick[WebTitle].LastPrz || " "
+    //         let title = utils.getSymDisplayName(window.gMkt.AssetD, WebTitle)
+    //         document.title = LastPrz + " " + title
+    //     }
+    // },
     //设置合约
     setSym: function(Sym){
         window.gMkt.CtxPlaying.Sym = Sym
@@ -248,18 +259,18 @@ let symSelect = {
         let type = window.$config.views.headerTick.left.symSelect.type
         switch(type){
             case 0: 
-                return m('div', {class: "dropdown pub-sym-select" + (symSelect.symListOpen?' is-active':'')}, [
+                return m('div', {class: "dropdown pub-sym-select " + (symSelect.symListOpen?' is-active':' is-active')}, [
                     m('.dropdown-trigger', {}, [
-                        m('button', {class: "button is-background-2  is-inverted h-auto",'aria-haspopup':true, "aria-controls": "dropdown-menu2", onclick: function(e){
+                        m('button', {class: "button is-background-2 dropdown-button  is-inverted h-auto pub-button-font",'aria-haspopup':true, "aria-controls": "dropdown-menu2", onclick: function(e){
                             symSelect.openSelect(e)
                         }}, [
-                            m('span',{ class: ""}, utils.getSymDisplayName(window.gMkt.AssetD, window.gMkt.CtxPlaying.Sym)),
+                            m('span',{ class: "pub-sym-select-title"}, utils.getSymDisplayName(window.gMkt.AssetD, window.gMkt.CtxPlaying.Sym)),
                             m('span', {class: "icon "},[
-                                m('i', {class: "iconfont iconxiala has-text-primary", "aria-hidden": true })
+                                m('i', {class: "iconfont iconxiala has-text-primary is-size-6", "aria-hidden": true })
                             ]),
                         ]),
                     ]),
-                    m('.dropdown-menu', {class:"dropdown-select", id: "dropdown-menu2", role: "menu"}, [
+                    m('.dropdown-menu', {class:`pub-header-tick-left-market dropdown-select my-drawer-2 top ${symSelect.symListOpen ? ' open':''}`, id: "dropdown-menu2", role: "menu"}, [
                         m('.dropdown-content', {class:""}, [
                             symSelect.getSymList()
                         ]),
@@ -332,7 +343,7 @@ let symSelect = {
         }
     },
     updateTick: function(ticks){
-        console.log(ticks)
+        // console.log(ticks)
         for(let key in ticks){
             let item = ticks[key];
             let gmexCI = utils.getGmexCi(window.gMkt.AssetD, item.Sym)

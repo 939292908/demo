@@ -81,16 +81,16 @@ let obj = {
                         })
                         break;
                     default:
-                        $message({title: gDI18n.$t('10203'/*'未知错误'*/), content: gDI18n.$t('10203'/*'未知错误'*/), type: 'danger'});
+                        $message({ title: gDI18n.$t('10037'/*"提示"*/), content: gDI18n.$t('10203'/*'未知错误'*/), type: 'danger'});
                         that.loginLoading = false;
                 }
             }else{
                 that.loginLoading = false
-                window.$message({title: utils.getWebApiErrorCode(res.result.code), content: utils.getWebApiErrorCode(res.result.code), type: 'danger'})
+                window.$message({ title: gDI18n.$t('10037'/*"提示"*/), content: utils.getWebApiErrorCode(res.result.code), type: 'danger'})
             }
         }, function(err){
             that.loginLoading = false
-            window.$message({content: gDI18n.$t('10205'/*'操作超时'*/), type: 'danger'})
+                window.$message({ content: gDI18n.$t('10037'/*"提示"*/), type: 'danger'})
             console.log('ReqUserLoginCheck => ', err)
         })
     },
@@ -106,7 +106,7 @@ let obj = {
             if(arg.result.code == 0){
                 that.getUserInfo()
             }else{
-                window.$message({title: utils.getWebApiErrorCode(res.result.code), content: utils.getWebApiErrorCode(res.result.code), type: 'danger'})
+                window.$message({ title: gDI18n.$t('10037'/*"提示"*/), content: utils.getWebApiErrorCode(res.result.code), type: 'danger'})
             }
         }, function(err){
             console.log('ReqUserLoginWeb => ', err)
@@ -117,16 +117,16 @@ let obj = {
         window.gWebAPI.ReqUserInfo({}, function(param){
             if(param.result.code == 0){
                 that.closeMode()
-                window.$message({title: gDI18n.$t('10204'/*'登录成功！'*/), content: gDI18n.$t('10204'/*'登录成功！'*/), type: 'success'})
+                window.$message({ title: gDI18n.$t('10037'/*"提示"*/), content: gDI18n.$t('10204'/*'登录成功！'*/), type: 'success'})
                 utils.setItem('login-user-name', param.account.accountName)
             }else{
-                window.$message({title: utils.getWebApiErrorCode(res.result.code), content: utils.getWebApiErrorCode(res.result.code), type: 'danger'})
+                window.$message({ title: gDI18n.$t('10037'/*"提示"*/), content: utils.getWebApiErrorCode(res.result.code), type: 'danger'})
             }
             
             console.log('ReqUserInfo success ==>',param)
         }, function(error){
             that.loginLoading = false
-            window.$message({title: gDI18n.$t('10205'/*'操作超时！'*/), content: gDI18n.$t('10205'/*'操作超时！'*/), type: 'danger'})
+                window.$message({ title: gDI18n.$t('10037'/*"提示"*/), content: gDI18n.$t('10205'/*'操作超时！'*/), type: 'danger'})
             console.log('ReqUserInfo => ', error)
         })
     },

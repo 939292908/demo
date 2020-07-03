@@ -305,7 +305,8 @@ let dish = {
     },
     getDishTypeBtns: function(){
         return this.dishTypeList.map(function(item,i){
-            return m('button', { key: 'dish-type-btns'+item+i, class:"button "+(dish.dishType == i?' is-primary':' is-outlined'), onclick:function(){
+            return m('button', {
+                key: 'dish-type-btns' + item + i, class: "button trade-button-bg" + (dish.dishType == i ?' is-primary is-primary-font':' is-outlined'), onclick:function(){
                 dish.setdishType(i)
             }}, [
                 item
@@ -358,10 +359,33 @@ export default {
     view: function(vnode) {
         
         return m("div",{class:"pub-dish has-text-1"},[
-            m('div', { class: `pub-dish-top` }, [
-                m('p', { class: `pub-dish-top-pic` }, `价格 ${dish.QuoteCoin}`),
-                m('p', { class: `pub-dish-top-num` }, '数量'),
-                m('p', { class: `pub-dish-top-time` }, '总量')
+            m('div', { class: `` + (window.isMobile ? "pub-dish-top-m" : " pub-dish-top")}, [
+                m('p', { class: `pub-dish-top-pic` }, [
+                    m("span",[
+                        gDI18n.$t('10186'),
+                    ]),
+                    " ",
+                    m("span",{class :""},[
+                        dish.QuoteCoin//`价格 ${dish.QuoteCoin}`
+                    ])
+                ]),
+                m('p', { class: `pub-dish-top-num` }, [
+                    // + 
+                    m('span',[
+                        gDI18n.$t('10087')//'数量'
+                    ]),
+                    m('span', { class: "" },[
+                        "(" + gDI18n.$t('10423') + ")"//'(张)'
+                    ]),
+                ]),
+                m('p', { class: `pub-dish-top-time is-hidden-touch` }, [
+                    m('span', [
+                        gDI18n.$t('10493')//"总量"
+                    ]),
+                    m('span', { class: "" }, [
+                        "(" + gDI18n.$t('10423') + ")"//'(张)'
+                    ]),
+                ])
             ]),
             dish.getOrder20ForSellList(),
             m("div",{class:"pub-dish-tick"},[
@@ -410,7 +434,7 @@ export default {
                         ])
                     ]),
                 ]),
-                m('.dropdown-menu', {class:"max-height-500 scroll-y", id: "dropdown-menu2", role: "menu"}, [
+                m('.dropdown-menu', { class:"max-height-500 scroll-y dropdown-pad-right", id: "dropdown-menu2", role: "menu"}, [
                     m('.dropdown-content', {class:"has-text-centered"}, [
                         dish.getMenuDishTypeList()
                     ]),

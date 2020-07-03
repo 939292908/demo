@@ -6,7 +6,7 @@ import planList from './planList'
 import historyOrd from './historyOrd'
 import historyTrade from './historyTrade'
 import wltRec from './wltRec'
-
+import Dropdown from '../common/Dropdown'
 
 let obj = {
     tabsActive: 0,
@@ -102,6 +102,11 @@ let obj = {
         ]
     },
 
+    myclickType(item) {
+        window.$dropdownType = item.id
+        gEVBUS.emit(gEVBUS.EV_DROPDOWN_UP, { Ev: gEVBUS.EV_DROPDOWN_UP, data: { item: window.$dropdownType } })
+    },
+
     getTabsList: function(){
         let tabsList = this.tabsList.filter(item =>{
             return window.$config.future.orderList[item.key]
@@ -138,6 +143,7 @@ export default {
     oninit: function(vnode){
         obj.initEVBUS()
         obj.initLanguage()
+        window.$dropdownType = 1
     },
     oncreate: function(vnode){
         
@@ -148,7 +154,28 @@ export default {
             m("div",{class:"pub-trade-list-tabs tabs "},[
                 m("ul",[
                     obj.getTabsList()
-                ])
+                ]),
+                m( Dropdown, {
+                    class: 'pub-trade-list-tabs-dropdown is-hidden-mobile' + (obj.tabsActive == 5 ? " is-hidden" : ""),
+                    activeId: 1,
+                    menuWidth:110,
+                    onClick (itme) {
+                        console.log(itme);
+                        obj.myclickType(itme)
+                    },
+                    getList () {
+                        return [
+                            {
+                                id: 1,
+                                label: gDI18n.$t('10517')//"显示全部"
+                            },
+                            {
+                                id: 2,
+                                label: gDI18n.$t('10518')//显示当前合约
+                            }
+                        ]
+                    }
+                })
             ]),
             obj.getTabsActiveContent()
         ])

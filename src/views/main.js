@@ -391,7 +391,6 @@ export default {
         }, false)
         main.delNullPosPlan()
 
-        
     },
     view: function (vnode) {
 

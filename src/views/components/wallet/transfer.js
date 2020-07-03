@@ -201,13 +201,13 @@ let obj = {
         let that = this
 
         if(this.form.num === '0'){
-            return $message({title: gDI18n.$t('10221'/*'划转数量不能为0'*/), content: gDI18n.$t('10221'/*'划转数量不能为0'*/), type: 'danger'})
+            return $message({ title: gDI18n.$t('10037'/*"提示"*/), content: gDI18n.$t('10221'/*'划转数量不能为0'*/), type: 'danger'})
         }else if(!this.form.num){
-            return $message({title: gDI18n.$t('10222'/*'划转数量不能为空'*/), content: gDI18n.$t('10222'/*'划转数量不能为空'*/), type: 'danger'})
+            return $message({ title: gDI18n.$t('10037'/*"提示"*/), content: gDI18n.$t('10222'/*'划转数量不能为空'*/), type: 'danger'})
         }else if(Number(this.form.num) == 0){
-            return $message({title: gDI18n.$t('10221'/*'划转数量不能为0'*/), content: gDI18n.$t('10221'/*'划转数量不能为0'*/), type: 'danger'})
+            return $message({ title: gDI18n.$t('10037'/*"提示"*/), content: gDI18n.$t('10221'/*'划转数量不能为0'*/), type: 'danger'})
         }else if(Number(this.form.num) > Number(this.form.maxTransfer)){
-            return $message({title: gDI18n.$t('10223'/*'划转数量不能大于最大可划'*/), content: gDI18n.$t('10223'/*'划转数量不能大于最大可划'*/), type: 'danger'})
+            return $message({ title: gDI18n.$t('10037'/*"提示"*/), content: gDI18n.$t('10223'/*'划转数量不能大于最大可划'*/), type: 'danger'})
         }
         this.loading = true
         window.gWebAPI.ReqTransfer({
@@ -224,7 +224,7 @@ let obj = {
                     that.getWallet()
                 }, 2500)
             }else{
-                window.$message({title: utils.getWebApiErrorCode(arg.result.code), content: utils.getWebApiErrorCode(arg.result.code), type: 'danger'})
+                window.$message({ title: gDI18n.$t('10037'/*"提示"*/), content: utils.getWebApiErrorCode(arg.result.code), type: 'danger'})
             }
         }, function(error){
             $message({content: gDI18n.$t('10225'/*'操作超时，请稍后重试！'*/), type: 'danger'})

@@ -89,56 +89,56 @@ export default {
         
         return m("div",{class:"pub-spot-info box "},[
             m('div', {class:"pub-spot-info-content"}, [
-                m('div', {class: 'level pos-info'}, [
-                    m('div', {class: 'level-left text--secondary has-text-1'}, [
+                m('div', {class: 'level pos-info  has-text-1'}, [
+                    m('div', {class: 'level-left text--secondary'}, [
                         gDI18n.$t('10110')//'合约名称'
                     ]),
                     m('div', {class: 'level-right-m'}, [
                         obj.spotInfo.disSym || '--'
                     ])
                 ]),
-                m('div', {class: 'level pos-info'}, [
-                    m('div', {class: 'level-left text--secondary has-text-1'}, [
+                m('div', {class: 'level pos-info has-text-1'}, [
+                    m('div', {class: 'level-left text--secondary'}, [
                         gDI18n.$t('10111')//'到期日'
                     ]),
                     m('div', {class: ''}, [
                         obj.spotInfo.ExpireStr || '--'
                     ])
                 ]),
-                m('div', {class: 'level pos-info'}, [
-                    m('div', {class: 'level-left text--secondary has-text-1'}, [
+                m('div', {class: 'level pos-info has-text-1'}, [
+                    m('div', {class: 'level-left text--secondary'}, [
                         gDI18n.$t('10112')//'计价货币'
                     ]),
                     m('div', {class: ''}, [
                         obj.spotInfo.QuoteCoin || '--'
                     ])
                 ]),
-                m('div', {class: 'level pos-info'}, [
-                    m('div', {class: 'level-left text--secondary has-text-1'}, [
+                m('div', {class: 'level pos-info has-text-1'}, [
+                    m('div', {class: 'level-left text--secondary'}, [
                         gDI18n.$t('10113')//'结算货币'
                     ]),
                     m('div', {class: ''}, [
                         obj.spotInfo.SettleCoin || '--'
                     ])
                 ]),
-                m('div', {class: 'level pos-info'}, [
-                    m('div', {class: 'level-left text--secondary has-text-1'}, [
+                m('div', {class: 'level pos-info has-text-1'}, [
+                    m('div', {class: 'level-left text--secondary'}, [
                         gDI18n.$t('10114')//'合约大小'
                     ]),
                     m('div', {class: ''}, [
                         obj.spotInfo.LotSz || '--'
                     ])
                 ]),
-                m('div', {class: 'level pos-info'}, [
-                    m('div', {class: 'level-left text--secondary has-text-1'}, [
+                m('div', {class: 'level pos-info has-text-1'}, [
+                    m('div', {class: 'level-left text--secondary'}, [
                         gDI18n.$t('10115')//'最小价格变动'
                     ]),
                     m('div', {class: ''}, [
                         obj.spotInfo.PrzMinInc || '--'
                     ])
                 ]),
-                m('div', {class: 'level pos-info'}, [
-                    m('div', {class: 'level-left text--secondary has-text-1'}, [
+                m('div', {class: 'level pos-info has-text-1'}, [
+                    m('div', {class: 'level-left text--secondary'}, [
                         gDI18n.$t('10116')//'最小数量变动'
                     ]),
                     m('div', {class: ''}, [

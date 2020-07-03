@@ -283,6 +283,7 @@ let obj = {
             that.klineTargetListOpen = false
         })
 
+        //监听多元
         if(this.EV_CHANGELOCALE_UPD_unbinder){
             this.EV_CHANGELOCALE_UPD_unbinder()
         }
@@ -296,7 +297,7 @@ let obj = {
             this.EV_THEME_UP_unbinder()
         }
         this.EV_THEME_UP_unbinder = window.gEVBUS.on(gEVBUS.EV_THEME_UP,arg=> {
-            obj.setKlineOptions()
+            that.setKlineOptions()
         })
         
 
@@ -473,7 +474,7 @@ let obj = {
         if(window.isMobile){
             return timeList.map((key, i) =>{
                 let item = that.timeList[key]
-                return m('button', {key: "klineTimeListItem"+i,class: "button is-white"+(obj.Typ == item.name?' has-text-primary':''), onclick: function(){
+                return m('button', {key: "klineTimeListItem"+i,class: "button is-background-2 has-text-2"+(obj.Typ == item.name?' has-text-primary':''), onclick: function(){
                     obj.setKCrossTime(item.name)
                 }}, [
                     item.title
@@ -491,7 +492,7 @@ let obj = {
         }else{
             return timeList.map((key, i) =>{
                 let item = that.timeList[key]
-                return m('button', {key: "klineTimeListItemForPC"+i,class: "button is-white is-flex-fullhd"+(obj.Typ == item.name?' has-text-primary':''), onclick: function(){
+                return m('button', {key: "klineTimeListItemForPC"+i,class: "button is-background-2 has-text-2 is-flex-fullhd"+(obj.Typ == item.name?' has-text-primary':''), onclick: function(){
                     obj.setKCrossTime(item.name)
                 }}, [
                     item.title
@@ -507,7 +508,7 @@ let obj = {
     //     if(window.isMobile){
     //         return timeList.map((key, i) =>{
     //             let item = that.targetList[key]
-    //             return m('button', {key: "klineTimeListItem"+i,class: "button"+(obj.targetActive.name == item.name?' has-text-primary':''), onclick: function(){
+    //             return m('button', {key: "klineTimeListItem"+i,class: "button is-background-2 has-text-2"+(obj.targetActive.name == item.name?' has-text-primary':''), onclick: function(){
     //                 obj.createTarget(item)
                     
     //             }}, [
@@ -531,15 +532,15 @@ let obj = {
         let timeList_second = Object.keys(this.targetList_second)
 
         if (window.isMobile) {
-            return m('div',[
-                m('div',{class:""},[
-                    m("p", { class: "dropdown-item k-line-button2" }, [
+            return m('div', [
+                m('div', { class: "" }, [
+                    m("p", { class: "dropdown-item k-line-button2 has-text-2 is-background-3" }, [
                         gDI18n.$t('10510')//"主图"
                     ]),
                     timeList_main.map((key, i) => {
                         let item = that.targetList_main[key]
                         return m('button', {
-                            key: "klineTimeListItemMain" + i, class: "button" + (obj.targetActive.name == item.name ? ' has-text-primary' : ''), onclick: function () {
+                            key: "klineTimeListItemMain" + i, class: "button has-text-2 is-background-3" + (obj.targetActive.name == item.name ? ' has-text-primary' : ''), onclick: function () {
                                 obj.createTarget(item)
 
                             }
@@ -548,14 +549,14 @@ let obj = {
                         ])
                     })
                 ]),
-                m('div',{class:""},[
-                    m("p", { class: "dropdown-item k-line-button2" }, [
+                m('div', { class: "" }, [
+                    m("p", { class: "dropdown-item k-line-button2 has-text-2 is-background-3" }, [
                         gDI18n.$t('10511')//"副图"
                     ]),
                     timeList_second.map((key, i) => {
                         let item = that.targetList_second[key]
                         return m('button', {
-                            key: "klineTimeListItemSecond" + i, class: "button" + (obj.targetActive_second.name == item.name ? ' has-text-primary' : ''), onclick: function () {
+                            key: "klineTimeListItemSecond" + i, class: "button has-text-2 is-background-3" + (obj.targetActive_second.name == item.name ? ' has-text-primary' : ''), onclick: function () {
                                 obj.createTarget(item)
 
                             }
@@ -568,7 +569,7 @@ let obj = {
         } else {
             return m('div', [
                 m('div', { class: "" }, [
-                    m("p", { class: "dropdown-item k-line-button2" }, [
+                    m("p", { class: "dropdown-item k-line-button2 has-text-2 is-background-3" }, [
                         gDI18n.$t('10510')//"主图"
                     ]),
                     timeList_main.map((key, i) => {
@@ -583,7 +584,7 @@ let obj = {
                     })
                 ]),
                 m('div', { class: "" }, [
-                    m("p", { class: "dropdown-item k-line-button2" }, [
+                    m("p", { class: "dropdown-item k-line-button2 has-text-2 is-background-3" }, [
                         gDI18n.$t('10511')//"副图"
                     ]),
                     timeList_second.map((key, i) => {
@@ -597,10 +598,10 @@ let obj = {
                         ])
                     })
                 ]),
-
             ])
         }
     },
+
     setKcross: function() {
         console.log(window._chart, this.Sym)
 
@@ -654,7 +655,7 @@ let obj = {
     },
     setKlineOptions: function(){
         let $color = window.themeColors
-        console.log(obj.theme,"主题类型")
+        console.log(window.$theme,"主题类型")
         // let lineColor = "#f4f4f4"
         // let fontPrimary = "#111"
         // let fontSecondary = "#8e8e8e"
@@ -908,7 +909,15 @@ let obj = {
                         // 'standard' | 'rect'
                         showType: window.isMobile?"rect":"standard",
                         //   ["时间", "开", "收", "高", "低", "成交量"],
-                        labels: ["时间", "开", "收", "高", "低", "成交量"],
+                        // labels: ["时间", "开", "收", "高", "低", "成交量"],
+                        labels: [
+                            gDI18n.$t('10103'),//"时间"
+                            gDI18n.$t('10501'),//"开",
+                            gDI18n.$t('10502'),//"收",
+                            gDI18n.$t('10503'),//"高",
+                            gDI18n.$t('10504'),//"低",
+                            gDI18n.$t('10505'),//"成交量"
+                        ],
                         values: null,
                         rect: {
                             paddingLeft: 6,
@@ -1379,7 +1388,7 @@ export default {
                         obj.klineTimeListOpen = !obj.klineTimeListOpen
                         window.stopBubble(e)
                     }}, [
-                        m('button', {class:"button kline-index-pad is-selected"+(obj.klineTimeListOpen?' has-text-primary':'')}, [
+                        m('button', {class:"button kline-index-pad is-selected is-background-3 has-text-2"+(obj.klineTimeListOpen?' has-text-primary':'')}, [
                             gDI18n.$t('10023'),//'分时'
                             m('.spacer'),
                             m('span', {class:"icon"}, [
@@ -1393,19 +1402,19 @@ export default {
                         ]),
                     ]),
                 ]),
-                m('button', {class:"button kline-index-pad is-selected"+(obj.Typ == '1m'?' has-text-primary':''), onclick: function(){
+                m('button', {class:"button kline-index-pad is-selected is-background-3 has-text-2"+(obj.Typ == '1m'?' has-text-primary':''), onclick: function(){
                     obj.setKCrossTime('1m')
                     // obj.klineTimeListOpen = false
                 }}, [
                     gDI18n.$t('10442')//'1分'
                 ]),
-                m('button', {class:"button kline-index-pad is-selected"+(obj.Typ == '30m'?' has-text-primary':''), onclick: function(){
+                m('button', {class:"button kline-index-pad is-selected is-background-3 has-text-2"+(obj.Typ == '30m'?' has-text-primary':''), onclick: function(){
                     obj.setKCrossTime('30m')
                     // obj.klineTimeListOpen = false
                 }}, [
                     gDI18n.$t('10443')//'30分'
                 ]),
-                m('button', {class:"button kline-index-pad is-selected"+(obj.Typ == '1h'?' has-text-primary':''), onclick: function(){
+                m('button', {class:"button kline-index-pad is-selected is-background-3 has-text-2"+(obj.Typ == '1h'?' has-text-primary':''), onclick: function(){
                     obj.setKCrossTime('1h')
                     // obj.klineTimeListOpen = false
                 }}, [
@@ -1417,9 +1426,8 @@ export default {
                         obj.klineTargetListOpen = !obj.klineTargetListOpen
                         window.stopBubble(e)
                     }}, [
-                        m('button', {class:"button kline-index-pad is-selected"}, [
-                            gDI18n.$t('10435'), //'指标'
-                            //obj.targetActive.name || gDI18n.$t('10435'), //'指标'
+                        m('button', {class:"button kline-index-pad is-selected is-background-3 has-text-2"}, [
+                            obj.targetActive.name || gDI18n.$t('10435'), //'指标'
                             m('.spacer'),
                             m('span', {class:"icon"}, [
                                 m('i', {class:"iconfont iconxiala has-text-primary is-size-7"})
@@ -1442,7 +1450,7 @@ export default {
                         obj.klineTimeListOpen = !obj.klineTimeListOpen
                         window.stopBubble(e)
                     }}, [
-                        m('button', {class:"button is-white"}, [
+                        m('button', {class:"button is-background-2 has-text-2"}, [
                             obj.timeList[obj.Typ] && obj.timeList[obj.Typ].title || '时间',
                             m('.spacer'),
                             m('span', {class:"icon"}, [
@@ -1462,9 +1470,8 @@ export default {
                         obj.klineTargetListOpen = !obj.klineTargetListOpen
                         window.stopBubble(e)
                     }}, [
-                        m('button', {class:"button is-white"}, [
-                            gDI18n.$t('10435'), //'指标'
-                            //obj.targetActive.name || gDI18n.$t('10435'), //'指标'
+                        m('button', {class:"button is-background-2 has-text-2"}, [
+                            obj.targetActive.name || gDI18n.$t('10435'), //'指标'
                             m('.spacer'),
                             m('span', {class:"icon"}, [
                                 m('i', {class:"iconfont iconxiala has-text-primary is-size-7"})
@@ -1478,7 +1485,7 @@ export default {
                     ]),
                 ]),
                 m('span',{class:"has-text-2"}, ['|']),
-                m('button', {class:"button is-white", onclick: function(){
+                m('button', {class:"button is-background-2 has-text-2", onclick: function(){
                     obj.setFullscreen();
                 }}, [
                     m('span', {class:"icon"}, [

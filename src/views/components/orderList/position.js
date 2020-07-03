@@ -22,7 +22,7 @@ let obj = {
       title: gDI18n.$t('10088'),//'风险度',
       class: "position-rate pub-table-6"
     }, {
-      title: gDI18n.$t('10418',{value : "USDT"}),//'保证金',
+      title: gDI18n.$t('10500'),//'保证金',
       class: "position-mm pub-table-7"
     }, {
       title: gDI18n.$t('10419'),//'未实现盈亏(回报率)',
@@ -81,7 +81,30 @@ let obj = {
     this.EV_POSABDWLTCALCOVER_UPD_unbinder = window.gEVBUS.on(window.gTrd.EV_POSABDWLTCALCOVER_UPD,arg=> {
         that.initObj()
     })
-    
+
+    //仓位选择筛选
+    if (this.EV_DROPDOWN_UP_unbinder) {
+      this.EV_DROPDOWN_UP_unbinder()
+    }
+    this.EV_DROPDOWN_UP_unbinder = window.gEVBUS.on(gEVBUS.EV_DROPDOWN_UP, arg => {
+      // obj.dropdownType = arg.data.item.xx
+      obj.initObj()
+    })
+
+    //当前选中合约变化全局广播
+    if (this.EV_CHANGESYM_UPD_unbinder) {
+      this.EV_CHANGESYM_UPD_unbinder()
+    }
+    this.EV_CHANGESYM_UPD_unbinder = window.gEVBUS.on(gMkt.EV_CHANGESYM_UPD, arg => {
+      obj.initObj()
+    }) 
+    // 退出登录
+    if (this.EV_WEB_LOGOUT_unbinder) {
+        this.EV_WEB_LOGOUT_unbinder()
+    }
+    this.EV_WEB_LOGOUT_unbinder = window.gEVBUS.on(gWebAPI.EV_WEB_LOGOUT, arg => {
+        this.posList = []
+    })
   },
   initLanguage: function(){
     this.theadList = [
@@ -104,7 +127,7 @@ let obj = {
         title: gDI18n.$t('10088'),//'风险度',
         class: "position-rate pub-table-6"
       }, {
-        title: gDI18n.$t('10418',{value : "USDT"}),//'保证金',
+        title: gDI18n.$t('10500'),//'保证金',
         class: "position-mm pub-table-7"
       }, {
         title: gDI18n.$t('10419'),//'未实现盈亏(回报率)',
@@ -135,6 +158,15 @@ let obj = {
       if(this.EV_POSABDWLTCALCOVER_UPD_unbinder){
         this.EV_POSABDWLTCALCOVER_UPD_unbinder()
       }
+      if (this.EV_DROPDOWN_UP_unbinder) {
+        this.EV_DROPDOWN_UP_unbinder()
+      }
+      if (this.EV_CHANGESYM_UPD_unbinder) {
+        this.EV_CHANGESYM_UPD_unbinder()
+      }
+      if (this.EV_WEB_LOGOUT_unbinder) {
+        this.EV_WEB_LOGOUT_unbinder()
+    }
   },
   initObj(){
     let Poss =window.gTrd.Poss
@@ -145,7 +177,15 @@ let obj = {
       let ass = window.gMkt.AssetD[pos.Sym]
       let obj = utils.getPosInfo(pos, ass,UPNLPrzActive)
       if(obj && obj.Sz != 0){
-        posList.push(obj)
+        if (window.$dropdownType == 1){
+          posList.push(obj)
+        }else{
+          let Sym = window.gMkt.CtxPlaying.Sym
+          if (obj.Sym == Sym){
+            posList.push(obj)
+          }
+        }
+        
       }
     }
     this.posList = posList
@@ -158,6 +198,12 @@ let obj = {
       ])
     })
   },
+  //设置合约
+  setSym(Sym) {
+    window.gMkt.CtxPlaying.Sym = Sym // window 保存选中
+    utils.setItem('futureActiveSymbol', Sym)
+    gEVBUS.emit(gMkt.EV_CHANGESYM_UPD, { Ev: gMkt.EV_CHANGESYM_UPD, Sym: Sym })
+  },
   getPosList: function(){
     let btnsOpen = window.$config.positionBtns.desktop
     return this.posList.map(function(item, i){
@@ -165,7 +211,9 @@ let obj = {
         m("td",{class:"table-tr-td-vertical"},[
           item.PId.substr(-4)
         ]),
-        m("td",{class:"table-tr-td-vertical"},[
+        m("td", { class:"table-tr-td-vertical cursor-pointer",onclick:function(){
+          obj.setSym(item.Sym)
+        }},[
           m("p",{class:""},[
             utils.getSymDisplayName(window.gMkt.AssetD, item.Sym)
           ]),
@@ -245,9 +293,9 @@ let obj = {
   getPosListForM: function(){
     let btnsOpen = window.$config.positionBtns.mobile
     return this.posList.map(function(item, i){
-      return m('.card', {key: "posTableListItemForM"+i}, [
+      return m('.card.is-background-2', {key: "posTableListItemForM"+i}, [
         m('header', { class: 'card-header' }, [
-          m('p', { class: 'card-header-title' }, [
+          m('p', { class: 'card-header-title has-text-1' }, [
             gDI18n.$t('10067'/*'仓位ID: '*/) + ":" +item.PId.substr(-4)
           ]),
         ]),
@@ -324,7 +372,7 @@ let obj = {
             ]),
           ]),
         ]),
-        m('footer', { class: 'card-footer' }, [
+        m('footer', { class: 'card-footer pub-pos-m-footer' }, [
           m("a",{class:"button button-sty-pad is-primary is-outlined card-footer-item"+(item.loading?' is-loading': '')+(btnsOpen.stopPL.positionList?'':' is-hidden'), onclick: function(){
             obj.setStopPL(item)
           }},[
@@ -476,7 +524,7 @@ let obj = {
     window.gTrd.ReqTrdOrderNew(p, function(gTrd, arg){
       pos.loading = false
       if (arg.code != 0 || arg.data.ErrCode) {
-          window.$message({title: utils.getTradeErrorCode(msg.code || arg.data.ErrCode),content: utils.getTradeErrorCode(msg.code || arg.data.ErrCode), type: 'danger'})
+        window.$message({ title: gDI18n.$t('10037'/*"提示"*/),content: utils.getTradeErrorCode(msg.code || arg.data.ErrCode), type: 'danger'})
       }
     })
     

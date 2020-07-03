@@ -1,4 +1,7 @@
 var m = require("mithril")
+// Header
+import Header from "../common/Header_m"
+
 let obj = {
     list: [],
     theadList: [
@@ -60,6 +63,31 @@ let obj = {
         this.EV_LOGIN_TRADE_unbinder = window.gEVBUS.on(gTrd.EV_LOGIN_TRADE, arg => {
             that.getHistoryList()
         })
+        //assetD合约详情全局广播
+        if (this.EV_ASSETD_UPD_unbinder) {
+            this.EV_ASSETD_UPD_unbinder()
+        }
+        this.EV_ASSETD_UPD_unbinder = window.gEVBUS.on(gMkt.EV_ASSETD_UPD, arg => {
+            that.initObj()
+        })
+
+        //仓位选择筛选
+        if (this.EV_DROPDOWN_UP_unbinder) {
+            this.EV_DROPDOWN_UP_unbinder()
+        }
+        this.EV_DROPDOWN_UP_unbinder = window.gEVBUS.on(gEVBUS.EV_DROPDOWN_UP, arg => {
+            // obj.dropdownType = arg.data.item.xx
+            obj.initObj()
+            // console.log(obj.dropdownType, "筛选类型")
+        })
+
+        //当前选中合约变化全局广播
+        if (this.EV_CHANGESYM_UPD_unbinder) {
+            this.EV_CHANGESYM_UPD_unbinder()
+        }
+        this.EV_CHANGESYM_UPD_unbinder = window.gEVBUS.on(gMkt.EV_CHANGESYM_UPD, arg => {
+            obj.initObj()
+        })
     },
     initLanguage: function(){
         this.theadList = [
@@ -104,6 +132,15 @@ let obj = {
         if (this.EV_LOGIN_TRADE_unbinder) {
             this.EV_LOGIN_TRADE_unbinder()
         }   
+        if (this.EV_ASSETD_UPD_unbinder) {
+            this.EV_ASSETD_UPD_unbinder()
+        }
+        if (this.EV_DROPDOWN_UP_unbinder) {
+            this.EV_DROPDOWN_UP_unbinder()
+        }
+        if (this.EV_CHANGESYM_UPD_unbinder) {
+            this.EV_CHANGESYM_UPD_unbinder()
+        }
     },
     getHistoryList: function(){
         let that = this
@@ -149,15 +186,23 @@ let obj = {
                 item.Dir = item.Sz > 0?1:-1
                 item.DirStr = utils.getDirByStr(item.Dir)
 
-                item.AtStr = new Date(item.At).format('MM/dd hh:mm:ss'),
+                item.AtStr = new Date(item.At).format('MM/dd hh:mm:ss')
 
-                list.push(item)
+                if (window.$dropdownType == 1) {
+                    list.push(item)
+                } else {
+                    let Sym = window.gMkt.CtxPlaying.Sym
+                    if (item.Sym == Sym) {
+                        list.push(item)
+                    }
+                }
             }
         }
         list.sort(function(a,b){
             return b.At - a.At
         })
         this.list = list
+        m.redraw()
     },
     getTheadItem: function () {
         return this.theadList.map(function (item, i) {
@@ -166,11 +211,21 @@ let obj = {
             ])
         })
     },
+    //设置合约
+    setSym(Sym) {
+        window.gMkt.CtxPlaying.Sym = Sym // window 保存选中
+        // this.symListOpen = false
+        // this.unSubSym()
+        utils.setItem('futureActiveSymbol', Sym)
+        gEVBUS.emit(gMkt.EV_CHANGESYM_UPD, { Ev: gMkt.EV_CHANGESYM_UPD, Sym: Sym })
+    },
     getListItem: function () {
         return this.list.map(function (item, i) {
             return m("tr", { key: "historyTrdTableListItem" + i, class: "" }, [
                 
-                m("td", { class: "" }, [
+                m("td", { class: "cursor-pointer" ,onclick:function(){
+                    obj.setSym(item.Sym)
+                }}, [
                     m("p", { class: " " }, [
                         item.displaySym
                     ])
@@ -207,32 +262,20 @@ let obj = {
     //
     getMobileHistoryList: function (){
         return m("div",{class: "details-header"},[
-            m("nav",{class:"pub-layout-m-header is-fixed-top navbar is-transparent", role:"navigation", "aria-label":"main navigation"},[
-                m('div', {class:"navbar-brand is-flex"}, [
-                m('a', {class:"navbar-item"}, [
-                    m('a', {class:"",onclick: function(){
-                        router.back()
-                    }}, [
-                        m('span', {class:"icon icon-right-i"}, [
-                            m('i', {class:"iconfont has-text-black iconarrow-left"}),
-                        ]),
-                    ]),
-                ]),
-                m('.spacer'),
-                m("p",{class : "delegation-list-phistory navbar-item has-text-black"},[
-                    gDI18n.$t('10237')//"历史成交"
-                    ]),
-                m('.spacer'),
-                m('.spacer'),
-                ]),
-            ]),
+            // 头部
+            m(Header, {
+                slot: {
+                    center: gDI18n.$t('10237')//"历史成交"
+                }
+            }),
+            // 列表
             m("div",{class : "pub-trade-list  pub-layout-m"},[
-            this.list.length !=0?
+            this.list.length != 0 ? 
             this.list.map(function (item, i) {
-                return m("div",{ key: "historyOrdtHeadItem" + i, class: "card "},[
+                return m("div",{ key: "historyOrdtHeadItem" + i, class: "card"},[
                     //顶部排列
                     m("div",{class : "card-content mobile-list"},[
-                        m("div",{class : "theadList-transaction"},[
+                        m("div",{class : "theadList-transaction has-text-1"},[
                             m("p",{class : "theadList-transaction-p1  header-flex"},[
                                 utils.getSymDisplayName(window.gMkt.AssetD, item.displaySym),
                                 m("p",{class : "padd-left " + utils.getColorStr(item.Dir, 'font') },[
@@ -250,50 +293,50 @@ let obj = {
                                 item.AtStr
                             ])
                         ]),
-                        m("hr",{class : ""}),
+                        m("hr",{class : "is-primary"}),
                         //中间排列
-                        m("div",{class :  ""},[
+                        m("div",{class :  "has-text-2"},[
                             m("div",{class : "theadList-profit-loss" ,},[
-                                m("div",{class  : "theadList-profit-loss-p1 has-text-grey"},[
+                                m("div",{class  : "theadList-profit-loss-p1 has-text-2"},[
                                     gDI18n.$t('10060'),//"成交均价" ,
-                                    m("p",{class : "has-text-dark"},[
+                                    m("p",{class : "has-text-2"},[
                                         item.Prz
                                     ])
                                 ]),
-                                m("div",{class  : "theadList-profit-loss-p1 has-text-grey"},[
+                                m("div",{class  : "theadList-profit-loss-p1 has-text-2"},[
                                     gDI18n.$t('10061'),//"成交数量" ,
-                                    m("p",{class : "has-text-dark"},[
+                                    m("p",{class : "has-text-2"},[
                                         item.Sz
                                     ])
                                 ]),
-                                m("div",{class  : "theadList-profit-loss-p1 has-text-grey font-right"},[
+                                m("div",{class  : "theadList-profit-loss-p1 has-text-2 font-right"},[
                                     gDI18n.$t('10062'),//"平仓盈亏" ,
-                                    m("p",{class : "has-text-dark"},[
+                                    m("p",{class : "has-text-2"},[
                                         item.PnlCls
                                     ])
                                 ]),
                             ]),
                             //底部排列
                             m("div",{class : "theadList-profit-loss" ,},[
-                                m("div",{class  : "theadList-profit-loss-p1 has-text-grey theadList-profit2"},[
+                                m("div",{class  : "theadList-profit-loss-p1 has-text-2 theadList-profit2"},[
                                     m("p",{class: ""},[
                                         gDI18n.$t('10063') + ":",//"手续费：" 
                                     ]),
                                     
                                 ]),
                                 m("div",{class  : "theadList-profit-loss-p2"},[
-                                    m("p",{class : "has-text-dark" + item.Fee>0?"has-text-danger" :"has-text-primary"},[
+                                    m("p",{class : "has-text-2" + item.Fee>0?"has-text-danger" :"has-text-primary"},[
                                         item.Fee
                                     ])
                                 ]),
-                                m("div",{class:"cursor-pointer theadList-profit-loss-p2 theadList-profit3 has-text-grey fomt-blacl text-right"+(" historyOrdTableListItemCopy"+i), "data-clipboard-text": item.PId, onclick: function(e){
+                                m("div",{class:"cursor-pointer theadList-profit-loss-p2 theadList-profit3 has-text-2 fomt-blacl text-right"+(" historyOrdTableListItemCopy"+i), "data-clipboard-text": item.PId, onclick: function(e){
                                     window.$copy(".historyOrdTableListItemCopy"+i)
                                 }},[
                                     m('div',[
                                         gDI18n.$t('10067') + "：",//"仓位ID：",
                                     ]),
                                     
-                                    m("div",{class : "has-text-dark"},[
+                                    m("div",{class : "has-text-2"},[
                                         item.PId.substr(-4),
                                         m("i",{class : ""},[ " "]),
                                         m("i",{class:"iconfont iconcopy"}),
@@ -303,10 +346,8 @@ let obj = {
                         ])
                     ])
                 ])
-            }):m("div",{class : "text-none has-text-grey"},[
-                m("i",{class : "iconfont iconbox" ,style:"font-size: 60px",},[
-                    
-                ]),
+            }) : m("div",{class : "text-none has-text-2"},[
+                m("i",{class : "iconfont iconbox" ,style:"font-size: 60px",},[]),
                 gDI18n.$t('10468'),//"暂无历史成交记录"
             ])
         ])

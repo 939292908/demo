@@ -32,32 +32,97 @@ let obj = {
       this.EV_OPENSTOPPLMODE_UPD_unbinder()
     }
   },
+  // 校验   
+  submitVerify () {
+    // console.log(this.param, '99999999');
+    let tradeType = window.$config.future.tradeType
+    let dir = this.param.Sz // 全仓/空仓类型
+    let Prz = this.param.PrzIni // 价格
+    let StopP = obj.param.StopP // 止盈价
+    let StopL = obj.param.StopL // 止损价
+    let StopPCheckBox = obj.openStopP // 勾选状态
+    let StopLCheckBox = obj.openStopL // 勾选状态
+    // 校验逻辑
+    switch (tradeType) {
+        case 3:
+            // 全仓
+            if (dir > 0) {
+                if (StopPCheckBox && StopLCheckBox && StopP != "" && StopL != "") {
+                    if (Number(StopP) <= Number(Prz)) {
+                        return $message({ title: gDI18n.$t('10037'/*"提示"*/), content: gDI18n.$t('10512'/*"止盈触发价不能小于委托价格！"*/), type: 'danger' })
+                    }
+                    if (Number(StopL) >= Number(Prz)) {
+                        return $message({ title: gDI18n.$t('10037'/*"提示"*/), content: gDI18n.$t('10513'/*"止损触发价不能大于委托价格！"*/), type: 'danger' })
+                    }
+                    if (Number(StopP) <= Number(StopL)) {
+                        return $message({ title: gDI18n.$t('10037'/*"提示"*/), content: gDI18n.$t('10193'/*'该仓位为多仓，止盈价需大于止损价'*/), type: 'danger' })
+                    }
+                } else if ( StopPCheckBox && StopP != "") {
+                    if (Number(StopP) <= Number(Prz)) {
+                        return $message({ title: gDI18n.$t('10037'/*"提示"*/), content: gDI18n.$t('10512'/*"止盈触发价不能小于委托价格！"*/), type: 'danger' })
+                    }
+                } else if (StopLCheckBox && StopL != "") {
+                    if (Number(StopL) >= Number(Prz)) {
+                        return $message({ title: gDI18n.$t('10037'/*"提示"*/), content: gDI18n.$t('10513'/*"止损触发价不能大于委托价格！"*/), type: 'danger' })
+                    }
+                }
+                // 空仓
+            } else if (dir < 0) {
+                if (StopPCheckBox && StopLCheckBox && StopP != "" && StopL != "") {
+                    if (Number(StopP) >= Number(Prz)) {
+                        return $message({ title: gDI18n.$t('10037'/*"提示"*/), content: gDI18n.$t('10514'/*"止盈触发价不能大于委托价格！"*/), type: 'danger' })
+                    }
+                    if (Number(StopL) <= Number(Prz)) {
+                        return $message({
+                            title: gDI18n.$t('10037'/*"提示"*/), content: gDI18n.$t('10515'/*"止损触发价不能小于委托价格！"*/), type: 'danger'
+                        })
+                    }
+                    if (Number(StopP) >= Number(StopL)) {
+                      return $message({ title: gDI18n.$t('10037'/*"提示"*/), content: gDI18n.$t('10194'/*'该仓位为空仓，止盈价需小于止损价'*/), type: 'danger' })
+                    }
+                } else if (StopPCheckBox && StopP != "") {
+                    if (Number(StopP) >= Number(Prz)) {
+                        return $message({ title: gDI18n.$t('10037'/*"提示"*/), content: gDI18n.$t('10514'/*"止盈触发价不能大于委托价格！"*/), type: 'danger' })
+                    }
+                } else if (StopLCheckBox && StopL != "") {
+                    if (Number(StopL) <= Number(Prz)) {
+                        return $message({ title: gDI18n.$t('10037'/*"提示"*/), content: gDI18n.$t('10515'/*"止损触发价不能小于委托价格！"*/), type: 'danger' })
+                    }
+                }
+            }
+    }
+    // 通过校验
+    return true
+  },
   submit: function () {
+
+    if ( !this.submitVerify() ) return; // 校验 
+
     let that = this
 
     if(this.openStopP){
       if(this.param.StopP === '0'){
-        return window.$message({title: gDI18n.$t('10189'/*'止盈价不能为0'*/), content: gDI18n.$t('10189'/*'止盈价不能为0'*/), type: 'danger'})
+        return window.$message({ title: gDI18n.$t('10037'/*"提示"*/), content: gDI18n.$t('10189'/*'止盈价不能为0'*/), type: 'danger'})
       }else if(!this.param.StopP){
-        return window.$message({title: gDI18n.$t('10190'/*'请输入止盈价'*/), content: gDI18n.$t('10190'/*'请输入止盈价'*/), type: 'danger'})
+        return window.$message({ title: gDI18n.$t('10037'/*"提示"*/), content: gDI18n.$t('10190'/*'请输入止盈价'*/), type: 'danger'})
       }
     }
     if(this.openStopL){
       if(this.param.StopL === '0'){
-        return window.$message({title: gDI18n.$t('10191'/*'止损价不能为0'*/), content: gDI18n.$t('10191'/*'止损价不能为0'*/), type: 'danger'})
+        return window.$message({ title: gDI18n.$t('10037'/*"提示"*/), content: gDI18n.$t('10191'/*'止损价不能为0'*/), type: 'danger'})
       }else if(!this.param.StopL){
-        return window.$message({title: gDI18n.$t('10192'/*'请输入止损价'*/), content: gDI18n.$t('10192'/*'请输入止损价'*/), type: 'danger'})
+        return window.$message({ title: gDI18n.$t('10037'/*"提示"*/), content: gDI18n.$t('10192'/*'请输入止损价'*/), type: 'danger'})
       }
     }
 
     if(this.openStopP && this.openStopL && this.param.StopP && this.param.StopL) {
       if(this.param.Sz > 0) {
         if(Number(this.param.StopP) < Number(this.param.StopL)) {
-          return window.$message({title: gDI18n.$t('10193'/*'该仓位为多仓，止盈价需大于止损价'*/), content: gDI18n.$t('10193'/*'该仓位为多仓，止盈价需大于止损价'*/), type: 'danger'})
+          return window.$message({ title: gDI18n.$t('10037'/*"提示"*/), content: gDI18n.$t('10193'/*'该仓位为多仓，止盈价需大于止损价'*/), type: 'danger'})
         }
       }else if(this.param.Sz < 0){
         if(Number(this.param.StopP) > Number(this.param.StopL)) {
-          return window.$message({title: gDI18n.$t('10194'/*'该仓位为空仓，止盈价需小于止损价'*/), content: gDI18n.$t('10194'/*'该仓位为空仓，止盈价需小于止损价'*/), type: 'danger'})
+          return window.$message({ title: gDI18n.$t('10037'/*"提示"*/), content: gDI18n.$t('10194'/*'该仓位为空仓，止盈价需小于止损价'*/), type: 'danger'})
         }
       }
     }
@@ -80,11 +145,11 @@ let obj = {
           let oldParamStopP = Number(obj.oldParam.StopP ? obj.oldParam.StopP :-1)
           let oldParamStopL = Number(obj.oldParam.StopL ? obj.oldParam.StopL :-1)
           if(param.P2 !=oldParamStopP || param.Param !=oldParamStopL){
-            window.$message({title: gDI18n.$t('10195'/*'止盈止损设置成功！'*/), content: gDI18n.$t('10195'/*'止盈止损设置成功！'*/), type: 'success'})
+            window.$message({ title: gDI18n.$t('10037'/*"提示"*/), content: gDI18n.$t('10195'/*'止盈止损设置成功！'*/), type: 'success'})
           }
           
         }else{
-          window.$message({title: utils.getTradeErrorCode(arg.code || arg.data.ErrCode), content: utils.getTradeErrorCode(arg.code || arg.data.ErrCode), type: 'danger'})
+          window.$message({ title: gDI18n.$t('10037'/*"提示"*/), content: utils.getTradeErrorCode(arg.code || arg.data.ErrCode), type: 'danger'})
         }
       })
     // }
@@ -182,6 +247,8 @@ let obj = {
     }else{
       if(Number(e.target.value) > maxPrz){
         obj.param.StopP = maxPrz
+      } else if (Number(e.target.value) < 0){
+        obj.param.StopP = 0
       }else{
         obj.param.StopP = e.target.value
       }
@@ -233,6 +300,8 @@ let obj = {
     }else{
       if(Number(e.target.value) > maxPrz){
         obj.param.StopL = maxPrz
+      } else if (Number(e.target.value) < 0){
+        obj.param.StopL = 0
       }else{
         obj.param.StopL = e.target.value
       }
@@ -273,7 +342,7 @@ export default {
 
     return m('div', {class: 'pub-stoppl'}, [
       m("div", { class: "modal" + (obj.open ? " is-active" : ''), }, [
-        m("div", { class: "modal-background" }),
+        m("div", { class: "modal-background", onclick: () => { obj.open = false}}),
         m("div", { class: "modal-card" }, [
           m("header", { class: "pub-stoppl-head modal-card-head" }, [
             m("p", { class: "modal-card-title" }, [
@@ -293,13 +362,19 @@ export default {
             ]),
             m("div", { class: "pub-stoppl-content-pos-info level" }, [
               m("div", { class: "level-left" }, [
-                (obj.param.displayDir || '') + ' ' + (obj.param.displaySym || '')
+                m('span', { class: "stop-PLM-2" + (obj.param.displayDir == gDI18n.$t('10170'/*"多仓"*/) ? " has-text-success" : " has-text-danger") }, [
+                  obj.param.displayDir || ''
+                ]),
+                m('span', { class: "stop-PLM-1" }, [
+                  (obj.param.displaySym || '')
+                ]),
+                // (obj.param.displayDir || '') + ' ' + (obj.param.displaySym || '')
               ]),
-              m("div", { class: "level-right" }, [
+              m("div", { class: "level-right stop-PLM-1" }, [
                 (obj.param.Sz || '0') + '/' + (obj.param.PrzIni || '0.0')
               ]),
             ]),
-            m('label', { class: "pub-stoppl-content-stopp-label checkbox" }, [
+            m('label', { class: "cursor-pointer" }, [
               m('input', { type: "checkbox", checked: obj.openStopP, oninput: function(e){
                 obj.openStopP = e.target.checked
               } }),
@@ -317,7 +392,7 @@ export default {
                 }})
               ])
             ]),
-            m('label', { class: "pub-stoppl-content-stopl-label checkbox" }, [
+            m('label', { class: "cursor-pointer" }, [
               m('input', { type: "checkbox", checked: obj.openStopL, oninput: function(e){
                 obj.openStopL = e.target.checked
               } }),
