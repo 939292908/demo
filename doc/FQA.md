@@ -46,6 +46,115 @@
         "Bids":[[9479.5,5939],[9479,13998],[9478.5,10587],[9478,13281],[9477.5,5189],[9477,8132],[9476.5,5975],[9476,13555],[9475.5,13417],[9475,7111],[9474.5,13190],[9474,5719],[9473.5,11870],[9473,14980],[9472.5,9170],[9472,12755],[9471.5,11320],[9471,14141],[9470.5,9064],[9470,17492]]
     }
 }
+```  
+
+4. 全档深度怎么处理？
+
+    示例如下：  
+
+```js
+const sArray = function (keyname) {
+    this._KeyName = keyname;
+    this._Ary = new Array()
+    this.GetMaxCount = function (size) {
+        var n = new Array();
+        if (this._Ary.length > size) {
+            var j = 0;
+            for (var i = this._Ary.length - size; i < this._Ary.length; i++) {
+                n[j] = this._Ary[i]
+                j++
+            }
+        }
+        else {
+            for (var i = 0; i < this._Ary.length; i++) {
+                n[i] = this._Ary[i]
+            }
+        }
+        return n;
+    }
+    this.GetMinCount = function (size) {
+        var n = new Array();
+        if (this._Ary.length > size) {
+            for (var i = 0; i < size; i++) {
+                n[i] = this._Ary[i]
+            }
+        }
+        else {
+            for (var i = 0; i < this._Ary.length; i++) {
+                n[i] = this._Ary[i]
+            }
+        }
+        return n;
+    }
+    ///增加一个数据，如果存在就替换原有的
+    this.AddValue = function (obj) {
+        var _o = this.getKey(obj[this._KeyName])
+        if (_o.cur == -1) {
+            this._Ary.splice(_o.ne, 0, obj)
+        }
+        else {
+            this._Ary[_o.cur] = obj
+        }
+
+    }
+    ///删除关键为val的数据
+    this.ReMoveKey = function (val) {
+        var _o = this.getKey(val)
+        if (_o.cur != -1) {
+            this._Ary.splice(_o.cur, 1)
+        }
+    }
+    ///删除一个对象
+    this.ReMove = function (obj) {
+        var _o = this.getKey(obj[this._KeyName])
+        if (_o.cur != -1) {
+            this._Ary.splice(_o.cur, 1)
+        }
+    }
+    ///查找关键值为val的位置{cur:找到的位置,ne:最接近的位置}
+    this.getKey = function (val) {
+        if (this._Ary.length == 0) return {cur: -1, ne: 0}
+        return this._getKey(val, 0, this._Ary.length - 1)
+    }
+    ///二分法查找，使递归
+    this._getKey = function (val, beIndex, endIndex) {
+        if (beIndex >= endIndex) {
+            var _o = this._Ary[beIndex];
+            var _kv = _o[this._KeyName]
+            if (_kv == val) {
+                return {cur: beIndex, ne: beIndex}
+            }
+            if (_kv > val) {
+                if (beIndex == 0) {
+                    return {cur: -1, ne: 0}
+                }
+                return {cur: -1, ne: beIndex}
+            }
+            else {
+                return {cur: -1, ne: beIndex + 1}
+            }
+
+        }
+        var _i = parseInt((beIndex + endIndex) / 2)
+        var _o = this._Ary[_i];
+        var _kv = _o[this._KeyName]
+        if (_kv == val) {
+            return {cur: _i, ne: _i}
+        }
+        if (_kv > val) {
+            return this._getKey(val, beIndex, _i - 1)
+
+        }
+        return this._getKey(val, _i + 1, endIndex)
+    }
+}
+
+
+
+// 收到回复即可收到回复
+function orderl2(){
+
+}
 ```
 
 
