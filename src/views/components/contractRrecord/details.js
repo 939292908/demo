@@ -27,7 +27,7 @@ export default {
                 
                 m("hr",{class : "is-primary"}),
                 m("div",{class : "details-body-list has-text-1",},[
-                   m("p",{class : "details-body-title title-header"},[
+                   m("p",{class : "details-body-title2 title-header"},[
                         utils.getSymDisplayName(window.gMkt.AssetD, item.Sym)
                     ]), 
                    m("p",{class : "details-body-title2 has-text-primary title-header padd-left"},[
