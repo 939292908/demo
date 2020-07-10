@@ -49,7 +49,7 @@ let obj = {
         if (this.form.num === '0') {
             return $message({ title: gDI18n.$t('10037'/*"提示"*/), content: gDI18n.$t('10182'/*'平仓数量不能为0'*/), type: 'danger' })
         } else if (!this.form.num) {
-            return $message({ title: gDI18n.$t('10037'/*"提示"*/), content: gDI18n.$t('10181'/*'平仓数量不能为空'*/), type: 'danger' })
+            return $message({ title: gDI18n.$t('10037'/*"提示"*/), content: gDI18n.$t('10183'/*'平仓数量不能为空'*/), type: 'danger' })
         }
 
         let Sym = this.param.pos.Sym
@@ -99,9 +99,9 @@ let obj = {
             }
         })
     },
-    setTabsActive: function (param) {
-        this.tabsActive = param
-    },
+    // setTabsActive: function (param) {
+    //     this.tabsActive = param
+    // },
     initInfo: function (param) {
         this.form = {
             prz: '',
