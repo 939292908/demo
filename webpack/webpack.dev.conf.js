@@ -10,15 +10,13 @@ const config = {
     devtool: 'inline-source-map',
     devServer: {
         contentBase: '../dist',
-        proxy: {
-            '/admin': 'http://localhost:50688'
-            //            '/admin': 'http://192.168.2.91:50688'
-        }
     },
-    entry: './src/index.js',
+    entry: {
+        app: './src/index.js',
+    },
     output: {
-        path: path.resolve(__dirname, '../dist'),
-        filename: 'main.js'
+        filename: 'static/js/[name].[hash].js',
+        path: path.resolve(__dirname, '../dist')
     },
     module: {
         rules: [
@@ -86,7 +84,9 @@ const config = {
         ]),
         new webpack.DefinePlugin({
             'process.env.BUILD_ENV': JSON.stringify(process.env.BUILD_ENV)
-        })
+        }),
+        new webpack.NamedModulesPlugin(),
+        new webpack.HotModuleReplacementPlugin(),
     ]
 };
 

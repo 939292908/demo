@@ -1,26 +1,20 @@
 const webpack = require('webpack');
 const path = require('path');
 
-var HtmlWebpackPlugin = require('html-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const CopyPlugin = require('copy-webpack-plugin');
 const UglifyjsPlugin = require('uglifyjs-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 
 const config = {
-    mode: 'development',
-    devtool: 'inline-source-map',
-    devServer: {
-        contentBase: '../dist',
-        proxy: {
-            '/admin': 'http://localhost:50688'
-            //            '/admin': 'http://192.168.2.91:50688'
-        }
+    entry: {
+        app: './src/index.js',
     },
-    entry: './src/index.js',
     output: {
-        path: path.resolve(__dirname, '../dist'),
-        filename: 'main.js'
+        filename: 'static/js/[name].[chunkhash].js',
+        path: path.resolve(__dirname, '../dist')
     },
     module: {
         rules: [
@@ -52,14 +46,13 @@ const config = {
                 ]
             },
             {
-                test:/\.(png|jpg|gif|jpeg|svg)$/,
-                use:[
+                test: /\.(png|svg|jpg|gif)$/,
+                use: [
                     {
-                        loader: "url-loader",
+                        loader: 'file-loader',
                         options: {
-                            name: "[name].[hash:5].[ext]",
-                            limit: 1024, // size <= 1kib
-                            outputPath: "img"
+                            name: '[name].[hash:5].[ext]',
+                            outputPath: "static/img/"
                         }
                     }
                 ]
@@ -73,6 +66,7 @@ const config = {
         ]
     }, 
     plugins: [
+        new CleanWebpackPlugin(),
         new HtmlWebpackPlugin({
             template: "./src/ejs/index.ejs"
             , filename: "index.html"
@@ -89,13 +83,13 @@ const config = {
             parallel: true
         }),
         new MiniCssExtractPlugin({
-            filename: 'css/mystyles.css'
+            filename: 'static/css/[name].[chunkhash].css'
         }), 
         new CopyPlugin([
-            { from: './tplibs/iconfont', to: 'libs/iconfont' },
+            { from: './tplibs/iconfont', to: 'static/libs/iconfont' },
         ]),
         new CopyPlugin([
-            { from: './tplibs/kline', to: 'libs/kline' },
+            { from: './tplibs/kline', to: 'static/libs/kline' },
         ]),
         new webpack.DefinePlugin({
             'process.env.BUILD_ENV': JSON.stringify(process.env.BUILD_ENV)

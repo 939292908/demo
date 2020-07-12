@@ -8,8 +8,8 @@
     "start": "webpack --config webpack/webpack.conf.js -d --watch",
     "build": "cross-env BUILD_ENV=prod webpack --config webpack/webpack.prod.conf.js -p",
     "build_dev": "cross-env BUILD_ENV=dev webpack --config webpack/webpack.dev.conf.js -p",
-    "dev": "cross-env BUILD_ENV=dev webpack-dev-server --config webpack/webpack.dev.conf.js --hot --open",
-    "prod": "cross-env BUILD_ENV=prod webpack-dev-server --config webpack/webpack.dev.conf.js --hot --open"
+    "dev": "cross-env BUILD_ENV=dev webpack-dev-server --config webpack/webpack.dev.conf.js --open",
+    "prod": "cross-env BUILD_ENV=prod webpack-dev-server --config webpack/webpack.dev.conf.js --open"
   },
   "keywords": [],
   "author": "",
@@ -39,6 +39,7 @@
     "babel-preset-env": "^1.7.0",
     "babel-preset-es2015-ie": "^6.7.0",
     "bulma": "^0.8.0",
+    "clean-webpack-plugin": "^3.0.0",
     "copy-webpack-plugin": "^5.0.5",
     "cross-env": "^7.0.2",
     "css-loader": "^3.2.0",
