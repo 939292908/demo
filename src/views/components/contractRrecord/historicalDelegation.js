@@ -2,12 +2,12 @@
 
 let m = require("mithril")
 
-import historyOrd from '../orderList/historyOrd'
-import message from '../message'
+let historyOrd = require('../orderList/historyOrd').default
+let message = require('../message').default
 
 
 
-export default {
+module.exports = {
     oninit: function(vnode){
         
     },

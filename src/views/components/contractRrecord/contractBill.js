@@ -2,11 +2,11 @@
 
 let m = require("mithril")
 
-import wltRec from "../orderList/wltRec"
-import publicHeader from "../publicHeader_m"
-import message from '../message'
+let wltRec = require("../orderList/wltRec").default
+let publicHeader = require("../publicHeader_m").default
+let message = require('../message').default
 
-export default {
+module.exports = {
     oninit: function(vnode){
 
     },

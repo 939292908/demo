@@ -1,54 +1,54 @@
 import m from "mithril";
 
+// m.mount(document.body,require('../views/main'))
 
 
+// import main from '../views/main'
 
-import main from '../views/main'
-
-//引入合约记录三个组件
-import delegation from '../views/components/contractRrecord/historicalDelegation'
-import deal from '../views/components/contractRrecord/historicalDeal'
-import contractbill from '../views/components/contractRrecord/contractBill'
-import details from '../views/components/contractRrecord/details'
-import languages from '../views/components/contractRrecord/languages'
-import switchLines from '../views/components/contractRrecord/switchLines'
+// //引入合约记录三个组件
+// import delegation from '../views/components/contractRrecord/historicalDelegation'
+// import deal from '../views/components/contractRrecord/historicalDeal'
+// import contractbill from '../views/components/contractRrecord/contractBill'
+// import details from '../views/components/contractRrecord/details'
+// import languages from '../views/components/contractRrecord/languages'
+// import switchLines from '../views/components/contractRrecord/switchLines'
 
 const defaultRoutePath = "/future"
 
-m.route(document.body, defaultRoutePath,{
+m.route(document.body, "/future",{
     "/future": {
-        render: function (vnode) {
-            return m(main,vnode.attrs)
-        }
-    },
+        onmatch: function (vnode){
+            return import('../views/main')
+        },
+    }, //require('../views/main'),
     "/delegation": {
-        render: function (vnode){
-            return m(delegation,vnode.attrs)
+        onmatch: function (vnode){
+            return import('../views/components/contractRrecord/historicalDelegation')
         },
     },
     "/details":{
-        render:function(vnode){
-            return m(details,vnode.attrs)
+        onmatch:function(vnode){
+            return import('../views/components/contractRrecord/details')//m(details,vnode.attrs)
         }
     },
     "/deal": {
-        render:function (vnode){
-            return m(deal,vnode.attrs)
+        onmatch:function (vnode){
+            return import('../views/components/contractRrecord/historicalDeal')//m(deal,vnode.attrs)
         }
     },
     "/contractbill": {
-        render:function (vnode){
-            return m(contractbill,vnode.attrs)
+        onmatch:function (vnode){
+            return import('../views/components/contractRrecord/contractBill')//m(contractbill,vnode.attrs)
         }
     },
     "/setlanguages": {
-        render:function (vnode){
-            return m(languages,vnode.attrs)
+        onmatch:function (vnode){
+            return import('../views/components/contractRrecord/languages')//m(languages,vnode.attrs)
         },
     },
     "/switchLines": {
-        render:function (vnode){
-            return m(switchLines,vnode.attrs)
+        onmatch:function (vnode){
+            return import('../views/components/contractRrecord/switchLines')//m(switchLines,vnode.attrs)
         },
     },
 })

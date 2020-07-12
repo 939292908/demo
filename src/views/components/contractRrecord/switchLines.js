@@ -2,8 +2,8 @@
 
 let m = require("mithril")
 
-import Header from "../common/Header_m"
-import netLines from '../network/netLines'
+let Header = require("../common/Header_m").default
+let netLines = require('../network/netLines').default
 
 let obj = {
     count: 10,
@@ -42,7 +42,7 @@ let obj = {
     }
 }
 
-export default {
+module.exports = {
     oninit: function (vnode) {
     },
     oncreate: function (vnode) {

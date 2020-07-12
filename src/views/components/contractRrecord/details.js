@@ -1,11 +1,11 @@
 //详情信息
 let m = require("mithril")
 let qs = require('qs');
-import message from '../message'
-import Header from "../common/Header_m"
+let message = require('../message').default
+let Header = require("../common/Header_m").default
 
 
-export default {
+module.exports = {
     oninit: function(vnode){
         
     },

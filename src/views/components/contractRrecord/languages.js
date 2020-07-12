@@ -2,7 +2,7 @@
 
 let m = require("mithril")
 
-import Header from "../common/Header_m"
+let Header = require("../common/Header_m").default
 
 let languages = {
 
@@ -75,7 +75,7 @@ let languages = {
   }
 }
 
-export default {
+module.exports = {
     oninit: function(vnode){
 
     },

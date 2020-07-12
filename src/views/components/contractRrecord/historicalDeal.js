@@ -1,11 +1,11 @@
 //历史成交
 let m = require("mithril")
 
-import historicalDeal from "../orderList/historyTrade"
-import publicHeader from "../publicHeader_m"
-import message from '../message'
+let historicalDeal = require("../orderList/historyTrade").default
+let publicHeader = require("../publicHeader_m").default
+let message = require('../message').default
 
-export default {
+module.exports = {
     oninit: function(vnode){
 
     },

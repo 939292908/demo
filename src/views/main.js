@@ -1,13 +1,17 @@
 var m = require("mithril")
 
-import footer from './components/footer'
-import header from './components/header'
-import layout from './components/layout'
-import layout_m from './components/layout_m'
-import message from './components/message'
+let footer = require('./components/footer').default
+let header = require('./components/header').default
+let layout = require('./components/layout').default
+let layout_m = require('./components/layout_m').default
+let message = require('./components/message').default
 
 
-import * as futureCalc from '../futureCalc/calcFuture'
+let futureCalc = require('../futureCalc/calcFuture')
+
+
+
+
 
 let main = {
     TICKCLACTNTERVAL: 1000,
@@ -378,9 +382,9 @@ let main = {
         }
     }
 }
-export default {
+module.exports = {
     oninit: function (vnode) {
-
+        console.log('oninit main')
     },
     oncreate: function (vnode) {
         main.initEVBUS()
