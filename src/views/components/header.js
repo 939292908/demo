@@ -125,23 +125,36 @@ let header = {
     customSignOut: function ({ onSuc }) {
         // 在此处定义退出登录请求处理，退出登录成功后调用onSuc
     },
+    getSetRouter: function (num) {
+        switch (num) {
+            case 1:
+                router.push('/future');
+                break;
+            case 2:
+                router.push('/currency')
+                break;
+
+        }
+    },
     getLeftCon: function () {
         let type = window.$config.views.header.left.type
         if (type == 0) {
             return m("div", { class: "navbar-menu" }, [
                 m("div", { class: "navbar-start" }, [
                     m('a', {
-                        class: "navbar-item" + (window.gMkt.CtxPlaying.pageTradeStatus == 1 ? ' has-text-1' : ''), onclick: function () {
+                        class: "navbar-item" + (window.gMkt.CtxPlaying.pageTradeStatus == 1 ? ' has-text-primary' : ''), onclick: function () {
                             header.setTradeStatus(1)
+                            header.getSetRouter(1)
                         }
                     }, [
                         gDI18n.$t('10001'/*合约交易*/),
                     ]),
-                    // m('a', {class:"navbar-item"+(window.gMkt.CtxPlaying.pageTradeStatus == 2 ?' has-text-primary':''), onclick:function(){
-                    //   header.setTradeStatus(2)
-                    // }}, [
-                    //   '现货交易',
-                    // ]),
+                    m('a', {class:"navbar-item"+(window.gMkt.CtxPlaying.pageTradeStatus == 2 ?' has-text-primary':''), onclick:function(){
+                        header.setTradeStatus(2)
+                        header.getSetRouter(2)
+                    }}, [
+                      '币币交易',
+                    ]),
                 ])
             ])
         } else {
@@ -272,6 +285,18 @@ let header = {
                 m(netLines)
             ])
         ])
+    },
+    //离开页面
+    leavePage: function () {
+        let path = m.route.get()
+        console.log("去往路由地址====>>", path)
+        switch (path) {
+            case "/currency":
+                window.gMkt.CtxPlaying.pageTradeStatus = 2//防止手动刷新失去选中状态
+                break;
+            case "/future":
+                window.gMkt.CtxPlaying.pageTradeStatus = 1
+        }
     }
 }
 import headerLogo from '../../../tplibs/img/header-logo.png'
@@ -280,7 +305,7 @@ import netLines from './network/netLines'
 import utils from '../../utils/utils'
 export default {
     oninit: function (vnode) {
-
+        header.leavePage()
     },
     oncreate: function (vnode) {
         header.initEVBUS()
