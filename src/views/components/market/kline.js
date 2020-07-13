@@ -796,7 +796,7 @@ let obj = {
             xAxis: {
                 display: true,
                 maxHeight: 50,
-                minHeight: 10,
+                minHeight: 25,
                 axisLine: {
                     display: true,
                     color: lineColor ,

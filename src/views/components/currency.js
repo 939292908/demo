@@ -18,7 +18,6 @@ module.exports = {
     view: function (vnode) {
         return m('section',[
             m(header),
-            '币币交易',
             m(message),
         ])
     },
