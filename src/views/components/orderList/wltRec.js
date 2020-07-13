@@ -228,9 +228,11 @@ let obj = {
 
                 item.ViaStr = utils.WltViaStr(item.Via)
 
-                item.AtStr = new Date(item.At).format('MM/dd hh:mm:ss'),
+                item.AtStr = new Date(item.At).format('MM/dd hh:mm:ss')
 
-                list.push(item)
+                if (item.ViaStr != "") {
+                    list.push(item)
+                }
             }
         }
         list.sort(function (a, b) {
