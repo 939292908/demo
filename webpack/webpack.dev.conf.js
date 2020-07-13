@@ -74,13 +74,13 @@ const config = {
             , filename: "index.html"
         }),
         new MiniCssExtractPlugin({
-            filename: 'css/mystyles.css'
+            filename: 'static/css/mystyles.css'
         }), 
         new CopyPlugin([
-            { from: './tplibs/iconfont', to: 'libs/iconfont' },
+            { from: './tplibs/iconfont', to: 'static/libs/iconfont' },
         ]),
         new CopyPlugin([
-            { from: './tplibs/kline', to: 'libs/kline' },
+            { from: './tplibs/kline', to: 'static/libs/kline' },
         ]),
         new webpack.DefinePlugin({
             'process.env.BUILD_ENV': JSON.stringify(process.env.BUILD_ENV)
