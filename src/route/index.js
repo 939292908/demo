@@ -51,11 +51,6 @@ m.route(document.body, "/future",{
             return import('../views/components/contractRrecord/switchLines')//m(switchLines,vnode.attrs)
         },
     },
-    "/currency": {
-        onmatch:function (vnode){
-            return import('../views/components/currency')//币币交易页面
-        },
-    },
 })
 class router {
     path = defaultRoutePath
