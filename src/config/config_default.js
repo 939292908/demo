@@ -30,6 +30,20 @@ const config = {
             historyTrd: 1,
             wlt: 1,
         }, 
+        //现货交易面板类型开关，0：关闭，1：开启
+        goodsInStockList:{
+            limitOrd : 1,
+            marketOrd : 1,
+            stopPL : 1,
+        },
+        //现货交易相关列表开关,0:关闭，1:开启
+        goodsOrderList: {
+            ord: 1,
+            plan: 1,
+            historyOrd: 1,
+            historyTrd: 1,
+            wlt: 1,
+        },
     },
     views: {
         // type 0:默认， 1: 自定义

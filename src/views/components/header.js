@@ -144,8 +144,7 @@ let header = {
         if (type == 0) {
             return m("div", { class: "navbar-menu" }, [
                 m("div", { class: "navbar-start" }, [
-                    m('a', {
-                        class: "navbar-item" + (window.gMkt.CtxPlaying.pageTradeStatus == 1 ? ' has-text-primary' : ''), onclick: function () {
+                    m('a', {class: "navbar-item" + (window.gMkt.CtxPlaying.pageTradeStatus == 1 ? ' has-text-primary' : ''), onclick: function () {
                             header.setTradeStatus(1)
                         }
                     }, [

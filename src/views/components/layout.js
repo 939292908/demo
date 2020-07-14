@@ -6,6 +6,8 @@ import kline from './market/kline'
 import headerTick from './market/headerTick'
 import orderList from './orderList/index'
 import placeOrder from './trade'
+import currenyOrder from './goodsInStock'
+import goodsList from './goodsList'
 import wallet from './wallet/index'
 import spotInfo from './spotInfo/spotInfo'
 //杠杆调整
@@ -55,9 +57,15 @@ let obj = {
   },
   getBottomList: function(){
     let type = window.$config.views.bottomList.type
+    let pageTradeStatus = window.gMkt.CtxPlaying.pageTradeStatus
     switch(type){
       case 0:
-        return m(orderList)
+        if (pageTradeStatus == 1){
+          return m(orderList)
+        } else if (pageTradeStatus == 2){
+          return m(goodsList)
+        }
+        // return m(orderList)
       case 1:
         return this.customBottomList()
       default:
@@ -97,9 +105,15 @@ let obj = {
   },
   getPlaceOrd: function(){
     let type = window.$config.views.placeOrd.type
+    let pageTradeStatus = window.gMkt.CtxPlaying.pageTradeStatus
     switch(type){
       case 0:
-        return m(placeOrder)
+        if (pageTradeStatus == 1){
+          return m(placeOrder)
+        } else if (pageTradeStatus == 2){
+          return m(currenyOrder)
+        }
+        // return m(placeOrder)
       case 1:
         return this.customPlaceOrd()
       default:
