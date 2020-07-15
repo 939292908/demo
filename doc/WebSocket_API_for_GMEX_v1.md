@@ -225,7 +225,7 @@ type V2AssetCfg struct {
 {
     "rid":"1",
     "code":0,
-    "data":["GMEX_CI_ETH","GMEX_CI_BTC"]
+    "data":["CI_ETH","CI_BTC"]
 }
 ```
 
@@ -378,7 +378,7 @@ type V2AssetCfg struct {
 |20档深度|比如: order20_BTC.BTC 盘口20档深度行情每200毫秒推送一次.|
 |全档深度|比如: orderl2_BTC.BTC 全深度盘口行情订阅后会先推送全档口,后继推送变更档,推送频率100毫秒.|
 |K线|比如: kline_1m_BTC1812，kline_1h_BTC.BTC 默认订阅的K线数据推送频率1500毫秒.|
-|指数|比如: index_GMEX_CI_BTC，index_GMEX_CI_ETH 订阅的综合指数推送频率为1000毫秒.|
+|指数|比如: index_CI_BTC，index_CI_ETH 订阅的综合指数推送频率为1000毫秒.|
 
 **NOTE**: UnSub 时可以用 * 一次清空, Sub 时必须提供合法的名字.
 
@@ -1738,6 +1738,22 @@ const (
     WltOp_GIFT_SETTLE_ALL_BY_COIN_VP WltOp = 20
     // 数据Reset
     WltOp_WLT_RESET WltOp = 99
+)
+
+/* 仓位标志 */
+type PosFlag int32
+const (
+    PF_NO_USE = 0;
+    //缺省仓位
+    IS_MASTER = 1;
+    //启用止盈价
+    ENABLE_STOPP = 2;
+    //启用止损价
+    ENABLE_STOPL = 4;
+    //禁止做空
+    DISABLE_SHORT = 8;
+    //禁止做多
+    DISABLE_LONG  = 16;
 )
 ```
 
