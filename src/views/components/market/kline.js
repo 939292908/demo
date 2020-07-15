@@ -1050,7 +1050,7 @@ let obj = {
         let PrzMinIncSize = utils.getFloatSize( utils.getFullNum(ass.PrzMinInc || 0) );
         let VolMinValSize = utils.getFloatSize(ass.Mult || 0);
 
-        if(Sym.includes('GMEX_CI')){
+        if(Sym.includes('CI')){
             // 处理指数小数位
             let lastPrz = (this.lastTick[Sym] && this.lastTick[Sym].Prz || 0).toPrecision2(6,8)
             lastPrz = lastPrz.toString().split('.')[1]
