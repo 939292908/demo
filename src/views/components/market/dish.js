@@ -124,7 +124,7 @@ let dish = {
         let Sym = window.gMkt.CtxPlaying.Sym
         let ass = window.gMkt.AssetD[Sym]
         let PrzMinIncSize = ass?utils.getFloatSize(utils.getFullNum(ass.PrzMinInc)):6;
-        let VolMinValSize = ass?utils.getFloatSize(ass.Mult):6;
+        let VolMinValSize = ass ? utils.getFloatSize(utils.getFullNum(ass.Mult)): 6;
         let order20 = this.order20_raw[Sym]?this.order20_raw[Sym]:null
         
         let askNum = 0,bidNum = 0;

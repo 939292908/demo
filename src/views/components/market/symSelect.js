@@ -1,3 +1,5 @@
+import utils from "../../../utils/utils"
+
 var m = require("mithril")
 
 let symSelect = {
@@ -114,7 +116,8 @@ let symSelect = {
             }
         }else if(window.gMkt.CtxPlaying.pageTradeStatus == 2){
             if(spotSymList.length > 0 && !spotSymList.includes(window.gMkt.CtxPlaying.Sym)){
-                let Sym = utils.getSpotName('BTC', 'USDT', assetD)
+                let goodsActiveSymbol = utils.getItem('goodsActiveSymbol')
+                let Sym = goodsActiveSymbol || utils.getSpotName('BTC', 'USDT', assetD)
                 if(!assetD[Sym]){
                     Sym = futureSymList[0]
                 }
@@ -252,7 +255,15 @@ let symSelect = {
         window.gMkt.CtxPlaying.Sym = Sym
         this.symListOpen = false
         this.unSubSym()
-        utils.setItem('futureActiveSymbol', Sym)
+        switch (window.gMkt.CtxPlaying.pageTradeStatus){
+            case 1:
+                utils.setItem('futureActiveSymbol', Sym)
+            break;
+
+            case 2:
+                utils.setItem('goodsActiveSymbol', Sym)
+            break;
+        }
         gEVBUS.emit(gMkt.EV_CHANGESYM_UPD, {Ev: gMkt.EV_CHANGESYM_UPD, Sym:Sym})
     }, 
     getSymSelect: function(){
