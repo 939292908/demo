@@ -548,20 +548,20 @@ class Mkt {
                                             },function (aTrd,aRaw) {
                                                 aObj.WltsReplace(aTrd,aRaw,"01")
                                             })
-                                        if (false) {
+                                        if (true) {
                                             aObj.ReqTrdGetWallets({
                                                 "AId": aObj.RT["UserId"] + "02"
                                             }, function (aTrd, aRaw) {
                                                 aObj.WltsReplace(aTrd,aRaw,"02")
     
                                             })
-                                            aObj.ReqTrdGetWallets({
-                                                "AId": aObj.RT["UserId"] + "03"
-                                            }, function (aTrd, aRaw) {
-                                                aObj.WltsReplace(aTrd,aRaw,"03")
-                                                console.log("ReqTrdGetWallets 03", aRaw)
+                                            // aObj.ReqTrdGetWallets({
+                                            //     "AId": aObj.RT["UserId"] + "03"
+                                            // }, function (aTrd, aRaw) {
+                                            //     aObj.WltsReplace(aTrd,aRaw,"03")
+                                            //     console.log("ReqTrdGetWallets 03", aRaw)
 
-                                            })
+                                            // })
                                         }
                                         aObj.ReqTrdGetOrders({
                                             "AId":aObj.RT["UserId"]+"01"
@@ -569,7 +569,7 @@ class Mkt {
                                             aObj.OrdersReplace(aTrd,aRaw,"01")
                                         })
 
-                                        if(false){
+                                        if(true){
                                             aObj.ReqTrdGetOrders({
                                                 "AId":aObj.RT["UserId"]+"02"
                                             },function (aTrd, aRaw) {

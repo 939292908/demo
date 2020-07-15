@@ -1,11 +1,10 @@
 var m = require("mithril")
 
-import position from '../orderList/position'
-import order from '../orderList/order'
-import planList from '../orderList/planList'
-import historyOrd from '../orderList/historyOrd'
-import historyTrade from '../orderList/historyTrade'
-import wltRec from '../orderList//wltRec'
+import order from './goodsOrder'
+import planList from './goodsPlanList'
+import historyOrd from './goodsHistoryOrd'
+import historyTrade from './goodsHistoryTrade'
+import wltRec from './goodsWltRec'
 
 let obj = {
     tabsActive: 0,
