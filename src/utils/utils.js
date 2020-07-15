@@ -127,7 +127,7 @@ utils.getSymDisplayName = function(assetD, Sym){
 utils.setSubArrType = function (type, params) { // 将数组内容转换为可订阅内容，ps： tick_BTC1812
     let arr = [];
     params.forEach(item => {
-        if (item && type == 'tick' && item.indexOf('GMEX_CI_') > -1) {
+        if (item && type == 'tick' && item.indexOf('CI_') > -1) {
             arr.push('index_' + item)
         } else {
             arr.push(type + '_' + item)
@@ -146,9 +146,9 @@ utils.getGmexCi = function (assetD, Sym) {//获取合约对应的指数
     if (!ass) return false;
     let gmexci = '';
     if (ass.TrdCls == 3) {
-        gmexci = 'GMEX_CI_' + ass.ToC
+        gmexci = 'CI_' + ass.ToC
     } else {
-        gmexci = 'GMEX_CI_' + ass.SettleCoin
+        gmexci = 'CI_' + ass.SettleCoin
     }
     return gmexci
 
@@ -179,7 +179,7 @@ utils.getTickObj = function(assetD, AssetEx, tick, oldTick, indexTick){
     let PrzMinIncSize = 0;
     let VolMinValSize = 0;
     let rateValueSize = 2;
-    if (Sym && Sym.indexOf('GMEX_CI_') > -1) {
+    if (Sym && Sym.indexOf('CI_') > -1) {
         obj.disSym = (Sym).split('_')[2] + gDI18n.$t('10413')//指数
     } else {
         obj.disSym = utils.getSymDisplayName(Sym)
@@ -197,7 +197,7 @@ utils.getTickObj = function(assetD, AssetEx, tick, oldTick, indexTick){
                 obj.color = 0;
             }
         }
-        if (Sym.indexOf('GMEX_CI_') > -1) {
+        if (Sym.indexOf('CI_') > -1) {
             PrzMinIncSize = 8//indexPrzSize[Sym]
             obj.LastPrz = Number(tick.Prz).toFixed(PrzMinIncSize);
             let rfpre = tick.Prz24 == 0 ? 0 : (tick.Prz - tick.Prz24) / tick.Prz24 * 100
@@ -343,7 +343,7 @@ utils.getFullNum = function (num) {
 utils.KLine_pow = function (assetD, Sym) {
     if (!Sym) return
     let n = 2
-    if (Sym.indexOf('GMEX_CI_') != -1) {
+    if (Sym.indexOf('CI_') != -1) {
         let symb = (Sym).split('_')[2]
         switch (symb) {
             case 'BTC':
