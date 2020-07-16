@@ -2294,6 +2294,10 @@ class Mkt {
             AId: AId,
         }, function(aTrd, aArg){
             if(aArg.code == 0){
+                // 获取历史数据之后先清空现有数据
+                s.MyTrades_Obj[aType] = {}
+                s.MyTrades[aType] = []
+                //下边对数据进行储存
                 s.trdInfoStatus.trade[aType] = 1
                 s.MyTrades[aType] = aArg.data
                 for(let item of aArg.data){
