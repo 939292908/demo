@@ -77,6 +77,10 @@ let obj = {
             }
         ]
     },
+    myclickType(item) {
+        window.$StopDropdownType = item.id
+        gEVBUS.emit(gEVBUS.EV_STOPDROPDOWN_UP, { Ev: gEVBUS.EV_STOPDROPDOWN_UP, data: { item: window.$StopDropdownType } })
+    },
     getTabsList: function () {
         let tabsList = this.tabsList.filter(item => {
             return window.$config.future.goodsOrderList[item.key]
@@ -115,6 +119,7 @@ export default {
     oninit: function (vnode) {
         obj.initEVBUS()
         obj.initLanguage()
+        window.$StopDropdownType = 1
     },
     oncreate: function (vnode) {
 
@@ -136,8 +141,7 @@ export default {
                     menuWidth: 110,
                     onClick (itme) {
                         console.log(itme);
-                        // window.$dropdownType = item.id
-                        // gEVBUS.emit(gEVBUS.EV_DROPDOWN_UP, { Ev: gEVBUS.EV_DROPDOWN_UP, data: { item: window.$dropdownType } })
+                        obj.myclickType(itme)
                     },
                     getList () {
                         return [
@@ -147,7 +151,7 @@ export default {
                             },
                             {
                                 id: 2,
-                                label: gDI18n.$t('10518')//显示当前合约
+                                label: '显示当前交易'
                             }
                         ]
                     }

@@ -67,11 +67,12 @@ let obj = {
             that.initObj()
         })
 
-        //仓位选择筛选
-        if (this.EV_DROPDOWN_UP_unbinder) {
-            this.EV_DROPDOWN_UP_unbinder()
+        //交易筛选
+        if (this.EV_STOPDROPDOWN_UP_unbinder) {
+            this.EV_STOPDROPDOWN_UP_unbinder()
         }
-        this.EV_DROPDOWN_UP_unbinder = window.gEVBUS.on(gEVBUS.EV_DROPDOWN_UP, arg => {
+        this.EV_STOPDROPDOWN_UP_unbinder = window.gEVBUS.on(gEVBUS.EV_STOPDROPDOWN_UP, arg => {
+            // obj.dropdownType = arg.data.item.xx
             obj.initObj()
         })
 
@@ -125,8 +126,8 @@ let obj = {
         if (this.EV_WEB_LOGOUT_unbinder) {
             this.EV_WEB_LOGOUT_unbinder()
         }
-        if (this.EV_DROPDOWN_UP_unbinder) {
-            this.EV_DROPDOWN_UP_unbinder()
+        if (this.EV_STOPDROPDOWN_UP_unbinder) {
+            this.EV_STOPDROPDOWN_UP_unbinder()
         }
         if (this.EV_CHANGESYM_UPD_unbinder) {
             this.EV_CHANGESYM_UPD_unbinder()
@@ -164,7 +165,16 @@ let obj = {
                 //生成时间
                 obj.AtStr = new Date(obj.At).format('MM/dd hh:mm:ss')
 
-                posList.push(obj)
+                // posList.push(obj)
+                //根据按钮筛选数据
+                if (window.$StopDropdownType == 1) {
+                    posList.push(obj)
+                } else {
+                    let Sym = window.gMkt.CtxPlaying.Sym
+                    if (obj.Sym == Sym) {
+                        posList.push(obj)
+                    }
+                }
             }
         }
         this.posList = posList
