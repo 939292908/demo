@@ -4,11 +4,12 @@ import order from './goodsOrder'
 import planList from './goodsPlanList'
 import historyOrd from './goodsHistoryOrd'
 import historyTrade from './goodsHistoryTrade'
+import Dropdown from '../common/Dropdown'
 // import wltRec from './goodsWltRec'
 
 let obj = {
     tabsActive: 0,
-    tabsList: [ 
+    tabsList: [
         {
             id: 0,
             key: 'ord',
@@ -51,7 +52,7 @@ let obj = {
             this.EV_CHANGELOCALE_UPD_unbinder()
         }
     },
-    initLanguage:function(){
+    initLanguage: function () {
         this.tabsList = [
             {
                 id: 0,
@@ -84,7 +85,8 @@ let obj = {
             return m("li", {
                 class: "" + (obj.tabsActive == item.id ? ' is-active' : '')
             }, [
-                m("a", {key: "orderListTabsItem" + i,class: "" + item.class,href: "javascript:void(0);",onclick: function () {
+                m("a", {
+                    key: "orderListTabsItem" + i, class: "" + item.class, href: "javascript:void(0);", onclick: function () {
                         obj.setTabsActive(item.id)
                     }
                 }, [
@@ -119,13 +121,37 @@ export default {
     },
     view: function (vonde) {
 
-        return m("div", {class: "pub-trade-list " + (window.isMobile ? '' : ' box')
+        return m("div", {
+            class: "pub-trade-list " + (window.isMobile ? '' : ' box')
         }, [
-            m("div", {class: "pub-trade-list-tabs tabs "
+            m("div", {
+                class: "pub-trade-list-tabs tabs "
             }, [
                 m("ul", [
                     obj.getTabsList()
                 ]),
+                m(Dropdown, {
+                    class: 'pub-trade-list-tabs-dropdown is-hidden-mobile' + (obj.tabsActive == 5 ? " is-hidden" : ""),
+                    activeId: 1,
+                    menuWidth: 110,
+                    onClick (itme) {
+                        console.log(itme);
+                        // window.$dropdownType = item.id
+                        // gEVBUS.emit(gEVBUS.EV_DROPDOWN_UP, { Ev: gEVBUS.EV_DROPDOWN_UP, data: { item: window.$dropdownType } })
+                    },
+                    getList () {
+                        return [
+                            {
+                                id: 1,
+                                label: gDI18n.$t('10517')//"显示全部"
+                            },
+                            {
+                                id: 2,
+                                label: gDI18n.$t('10518')//显示当前合约
+                            }
+                        ]
+                    }
+                })
             ]),
             obj.getTabsActiveContent()
         ])
