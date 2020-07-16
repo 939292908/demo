@@ -4,7 +4,7 @@ import order from './goodsOrder'
 import planList from './goodsPlanList'
 import historyOrd from './goodsHistoryOrd'
 import historyTrade from './goodsHistoryTrade'
-import wltRec from './goodsWltRec'
+// import wltRec from './goodsWltRec'
 
 let obj = {
     tabsActive: 0,
@@ -29,12 +29,7 @@ let obj = {
             key: 'historyTrd',
             name: gDI18n.$t('10078'), //'成交记录',
             class: ' is-hidden-touch',
-        }, {
-            id: 4,
-            key: 'wlt',
-            name: gDI18n.$t('10079'), //'合约账单',
-            class: ' is-hidden-touch',
-        }
+        },
     ],
     setTabsActive: function (param) {
         this.tabsActive = param
@@ -78,11 +73,6 @@ let obj = {
                 key: 'historyTrd',
                 name: gDI18n.$t('10078'), //'成交记录',
                 class: ' is-hidden-touch',
-            }, {
-                id: 4,
-                key: 'wlt',
-                name: gDI18n.$t('10079'), //'合约账单',
-                class: ' is-hidden-touch',
             }
         ]
     },
@@ -113,8 +103,8 @@ let obj = {
                 return m(historyOrd)
             case 3:
                 return m(historyTrade)
-            case 4:
-                return m(wltRec)
+            // case 4:
+            //     return m(wltRec)
         }
     }
 }

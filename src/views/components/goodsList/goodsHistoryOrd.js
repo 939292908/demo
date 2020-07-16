@@ -178,7 +178,6 @@ let obj = {
     },
     initObj () {
         let Orders = window.gTrd.HistoryOrders['02']
-        console.log(Orders,11111111111111)
         let posList = []
         for (let key in Orders) {
             let order = Orders[key]
