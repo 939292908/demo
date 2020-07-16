@@ -1,20 +1,20 @@
 
 export class CConf  {
     Active = {
-        Name:"www.gmex.io",
+        Name:"生产环境",
         WebAPI:"https://ss.abkjl.com/www",
         WSMKT:"wss://ss.abkjl.com/v1/market",
         WSTRD:"wss://ss.abkjl.com/v1/trade"
     }
     M = {
         "dev": {
-            Name:"开发89环境",
-            WebAPI:"http://192.168.2.89:8888", 
-            WSMKT:"ws://192.168.2.85:20080/v1/market", 
-            WSTRD:"ws://192.168.2.85:50301/v1/trade", 
+            Name:"开发测试环境",
+            WebAPI:"http://gs.eeeecloud.com:8888", 
+            WSMKT:"ws://gs.eeeecloud.com:20080/v1/market", 
+            WSTRD:"ws://gs.eeeecloud.com:50301/v1/trade", 
         }
         ,"prod": {
-            Name:"www.gmex.io",
+            Name:"生产环境",
             WebAPI:"https://ss.abkjl.com/www",
             WSMKT:"wss://ss.abkjl.com/v1/market",
             WSTRD:"wss://ss.abkjl.com/v1/trade"
