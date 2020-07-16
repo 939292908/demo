@@ -79,6 +79,15 @@ let obj = {
         this.EV_WEB_LOGOUT_unbinder = window.gEVBUS.on(gWebAPI.EV_WEB_LOGOUT, arg => {
             that.initObj()
         })
+
+        //仓位选择筛选
+        if (this.EV_DROPDOWN_UP_unbinder) {
+            this.EV_DROPDOWN_UP_unbinder()
+        }
+        this.EV_DROPDOWN_UP_unbinder = window.gEVBUS.on(gEVBUS.EV_DROPDOWN_UP, arg => {
+            // obj.dropdownType = arg.data.item.xx
+            obj.initObj()
+        })
     },
 
     //删除全局广播

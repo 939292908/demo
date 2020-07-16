@@ -825,4 +825,27 @@ utils.switchTheme = function ( theme ) {
     return Promise.resolve( window.$theme )
 }
 
+
+// 格式钱包数据
+utils.formateWallet = function (element) {
+    let obj = {}
+    this.copyTab(obj,element)
+    obj.TOTAL = Number(obj.Depo || 0) + Number(obj.Spot || 0) - Number(obj.WDrw || 0) + Number(obj.PNL || 0) + Number(obj.Frz || 0)
+    obj.NL = obj.TOTAL - (obj.Frz || 0)
+    let _fixL
+    if (obj.Coin == "GAEA") {
+        _fixL = 3
+    } else {
+        _fixL = 9
+    }
+
+    obj.TOTAL = Number(obj.TOTAL || 0).toFixed(_fixL).replace("-", "")
+    obj.NL = Number(obj.NL || 0).toFixed(_fixL).replace("-", "")
+    obj.Frz = Number(obj.Frz || 0).toFixed(_fixL).replace("-", "")
+
+    obj.TOTAL = obj.TOTAL.substring(0, obj.TOTAL.lastIndexOf('.') + _fixL)
+    obj.NL = obj.NL.substring(0, obj.NL.lastIndexOf('.') + _fixL)
+    obj.Frz = obj.Frz.substring(0, obj.Frz.lastIndexOf('.') + _fixL)
+    return obj
+}
 export default utils

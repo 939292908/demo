@@ -91,9 +91,15 @@ let obj = {
   },
   getSpotInfo: function(){
     let type = window.$config.views.spotInfo.type
+    let pageTradeStatus = window.gMkt.CtxPlaying.pageTradeStatus
     switch(type){
       case 0:
-        return m(spotInfo)
+        if(pageTradeStatus == 1){
+          return m(spotInfo)
+        }else if(pageTradeStatus == 2){
+          return null
+        }
+        // return m(spotInfo)
       case 1:
         return this.customSpotInfo()
       default:
