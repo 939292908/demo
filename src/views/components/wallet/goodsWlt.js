@@ -4,10 +4,18 @@ let obj = {
     wlt: {},
     //需要显示的行情数据
     lastTick: {},
+    //行情数据接收
+    tickObj: {},
     //初始化全局广播
     initEVBUS: function(){
         let that = this
-
+        //tick行情全局广播
+        if(this.EV_TICK_UPD_unbinder){
+            this.EV_TICK_UPD_unbinder()
+        }
+        this.EV_TICK_UPD_unbinder = window.gEVBUS.on(gMkt.EV_TICK_UPD,arg=> {
+            that.onTick(arg)
+        })
         //当前选中合约变化全局广播
         if(this.EV_CHANGESYM_UPD_unbinder){
             this.EV_CHANGESYM_UPD_unbinder()
@@ -62,6 +70,20 @@ let obj = {
         if(this.EV_WEB_LOGOUT_unbinder){
             this.EV_WEB_LOGOUT_unbinder()
         }
+        if(this.EV_TICK_UPD_unbinder){
+            this.EV_TICK_UPD_unbinder()
+        }
+    },
+    onTick: function(param){
+        this.tickObj[param.Sym] = param.data
+        for(let key in this.tickObj){
+            let item = this.tickObj[key];
+            let gmexCI = utils.getGmexCi(window.gMkt.AssetD, item.Sym)
+            let indexTick = this.lastTick[gmexCI]
+            
+            let obj = utils.getTickObj(window.gMkt.AssetD, window.gMkt.AssetEx, item, this.lastTick[key], indexTick)
+            obj?this.lastTick[key] = obj:''
+        }
     },
     //获取当前合约最新行情
     getLastTick: function(){
@@ -72,6 +94,7 @@ let obj = {
     initWlt: function(arg){
         let Sym = window.gMkt.CtxPlaying.Sym
         let assetD = window.gMkt.AssetD[Sym] || {}
+        let LastPrz = obj.getLastTick().LastPrz || " "
         let wallets = []
         if(assetD.TrdCls == 1){
             wallets = window.gTrd.Wlts['02']
@@ -82,14 +105,13 @@ let obj = {
             if(item.AId && item.Coin == assetD.SettleCoin){
                 isUpdate = true
 
-                this.wlt = utils.formateWallet(item)//item
+                this.wlt = utils.formateWallet(item,LastPrz)//item
             }
         }
         if(!isUpdate){
             this.wlt = {}
         }
         m.redraw()
-        console.log(this.wlt,22222222222)
     }
 }
 
@@ -104,6 +126,9 @@ export default {
         
         return m("div",{class:"pub-wallet"},[
             m('div', {class:"pub-wallet-content"}, [
+                m('div',{class:"pub-wallet-font has-text-1"},[
+                    (obj.wlt.Coin || "") + '资产'
+                ]),
                 m('div', {class: 'level-item'}, [
                     m('div', {class: 'text--secondary has-text-2'}, [
                         '总额'
@@ -133,7 +158,44 @@ export default {
                         'USDT估值'
                     ]),
                     m('div', {class: 'has-text-1'}, [
-                        obj.wlt.aMI?Number(obj.wlt.aMI).toFixed2(8): (0).toFixed2(8)
+                        obj.wlt.Valuation?Number(obj.wlt.Valuation).toFixed2(8): (0).toFixed2(8)
+                    ])
+                ])
+            ]),
+            m('div', {class:"pub-wallet-content pub-top-border"}, [
+                m('div',{class:"pub-wallet-font has-text-1"},[
+                    "USDT" + '资产'
+                ]),
+                m('div', {class: 'level-item'}, [
+                    m('div', {class: 'text--secondary has-text-2'}, [
+                        '总额'
+                    ]),
+                    m('div', {class: 'has-text-1'}, [
+                        obj.wlt.TOTAL?Number(obj.wlt.TOTAL).toFixed2(8): (0).toFixed2(8)
+                    ])
+                ]),
+                m('div', {class: 'level-item'}, [
+                    m('div', {class: 'text--secondary has-text-2'}, [
+                        '冻结'
+                    ]),
+                    m('div', {class: 'has-text-1 '}, [
+                        obj.wlt.Frz?Number(obj.wlt.Frz).toFixed2(8): (0).toFixed2(8)
+                    ])
+                ]),
+                m('div', {class: 'level-item'}, [
+                    m('div', {class: 'text--secondary has-text-2'}, [
+                        '可用'
+                    ]),
+                    m('div', {class: 'has-text-1'}, [
+                        obj.wlt.NL?Number(obj.wlt.NL).toFixed2(8): (0).toFixed2(8)
+                    ])
+                ]),
+                m('div', {class: 'level-item'}, [
+                    m('div', {class: 'text--secondary has-text-2'}, [
+                        'USDT估值'
+                    ]),
+                    m('div', {class: 'has-text-1'}, [
+                        obj.wlt.Valuation?Number(obj.wlt.Valuation).toFixed2(8): (0).toFixed2(8)
                     ])
                 ])
             ])

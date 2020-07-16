@@ -1349,8 +1349,15 @@ hr {
     }
 }
 .pub-wallet {
+    
     .pub-wallet-content {
         @extend %font-2;
+
+        .pub-wallet-font{
+            @extend %font-3;
+            text-align: left;
+            @extend %side-py;
+        }
 
         .level:not(:last-child) {
             @extend %mb-3;
@@ -2045,7 +2052,10 @@ input[type="checkbox"] {
             }
         }
     }
-
+    //资金模块
+    .pub-top-border{
+        border-top: 1px solid $white-line1;
+    }
     //盘口交易
     //按钮
     .is-primary-font{
@@ -2381,7 +2391,10 @@ input[type="checkbox"] {
             }
         }
     }
-
+    //资金模块
+    .pub-top-border{
+        border-top: 1px solid $black-line1;
+    }
     //盘口交易
     //按钮
     .is-primary-font{
