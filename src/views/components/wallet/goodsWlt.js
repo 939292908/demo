@@ -2,6 +2,7 @@ var m = require("mithril")
 
 let obj = {
     wlt: {},
+    USDTWlt:{},
     //需要显示的行情数据
     lastTick: {},
     //行情数据接收
@@ -100,6 +101,7 @@ let obj = {
             wallets = window.gTrd.Wlts['02']
         }
         let isUpdate = false
+        let isUSDTP = false
         for(let i = 0;i < wallets.length; i++){
             let item = wallets[i]
             if(item.AId && item.Coin == assetD.SettleCoin){
@@ -107,9 +109,17 @@ let obj = {
 
                 this.wlt = utils.formateWallet(item,LastPrz)//item
             }
+            if(item.AId && item.Coin == 'USDT'){
+                isUSDTP = true
+
+                this.USDTWlt = utils.formateWallet(item)//item
+            }
         }
         if(!isUpdate){
             this.wlt = {}
+        }
+        if(!isUSDTP){
+            this.USDTWlt = {}
         }
         m.redraw()
     }
@@ -127,7 +137,8 @@ export default {
         return m("div",{class:"pub-wallet"},[
             m('div', {class:"pub-wallet-content"}, [
                 m('div',{class:"pub-wallet-font has-text-1"},[
-                    (obj.wlt.Coin || "") + '资产'
+                    obj.getLastTick().ToC + '资产'
+                    // (obj.wlt.Coin || "") + '资产'
                 ]),
                 m('div', {class: 'level-item'}, [
                     m('div', {class: 'text--secondary has-text-2'}, [
@@ -155,7 +166,7 @@ export default {
                 ]),
                 m('div', {class: 'level-item'}, [
                     m('div', {class: 'text--secondary has-text-2'}, [
-                        'USDT估值'
+                        'USDT' + '估值'
                     ]),
                     m('div', {class: 'has-text-1'}, [
                         obj.wlt.Valuation?Number(obj.wlt.Valuation).toFixed2(8): (0).toFixed2(8)
@@ -164,14 +175,14 @@ export default {
             ]),
             m('div', {class:"pub-wallet-content pub-top-border"}, [
                 m('div',{class:"pub-wallet-font has-text-1"},[
-                    "USDT" + '资产'
+                    obj.USDTWlt.Coin + '资产'
                 ]),
                 m('div', {class: 'level-item'}, [
                     m('div', {class: 'text--secondary has-text-2'}, [
                         '总额'
                     ]),
                     m('div', {class: 'has-text-1'}, [
-                        obj.wlt.TOTAL?Number(obj.wlt.TOTAL).toFixed2(8): (0).toFixed2(8)
+                        obj.USDTWlt.TOTAL?Number(obj.USDTWlt.TOTAL).toFixed2(8): (0).toFixed2(8)
                     ])
                 ]),
                 m('div', {class: 'level-item'}, [
@@ -179,7 +190,7 @@ export default {
                         '冻结'
                     ]),
                     m('div', {class: 'has-text-1 '}, [
-                        obj.wlt.Frz?Number(obj.wlt.Frz).toFixed2(8): (0).toFixed2(8)
+                        obj.USDTWlt.Frz?Number(obj.USDTWlt.Frz).toFixed2(8): (0).toFixed2(8)
                     ])
                 ]),
                 m('div', {class: 'level-item'}, [
@@ -187,15 +198,15 @@ export default {
                         '可用'
                     ]),
                     m('div', {class: 'has-text-1'}, [
-                        obj.wlt.NL?Number(obj.wlt.NL).toFixed2(8): (0).toFixed2(8)
+                        obj.USDTWlt.NL?Number(obj.USDTWlt.NL).toFixed2(8): (0).toFixed2(8)
                     ])
                 ]),
                 m('div', {class: 'level-item'}, [
                     m('div', {class: 'text--secondary has-text-2'}, [
-                        'USDT估值'
+                        'USDT' + '估值'
                     ]),
                     m('div', {class: 'has-text-1'}, [
-                        obj.wlt.Valuation?Number(obj.wlt.Valuation).toFixed2(8): (0).toFixed2(8)
+                        obj.USDTWlt.Wdrawable?Number(obj.USDTWlt.Wdrawable).toFixed2(8): (0).toFixed2(8)
                     ])
                 ])
             ])

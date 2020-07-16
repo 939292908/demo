@@ -846,7 +846,10 @@ utils.formateWallet = function (element,LastPrz) {
     obj.TOTAL = obj.TOTAL.substring(0, obj.TOTAL.lastIndexOf('.') + _fixL)
     obj.NL = obj.NL.substring(0, obj.NL.lastIndexOf('.') + _fixL)
     obj.Frz = obj.Frz.substring(0, obj.Frz.lastIndexOf('.') + _fixL)
-    obj.Valuation = Number(obj.TOTAL || 0) * Number(LastPrz || 0)
+    if(LastPrz){
+        obj.Valuation = Number(obj.TOTAL || 0) * Number(LastPrz || 0) 
+    }
+    
     return obj
 }
 export default utils
