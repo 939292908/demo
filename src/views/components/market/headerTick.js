@@ -262,8 +262,8 @@ let spotTick = {
                                     //gDI18n.$t('10021',{value : (spotTick.getLastTick().Volume24 || '--')})//"24H成交量："+(spotTick.getLastTick().Volume24 || '--')
                                 ]),
                                 m('p', {class:"has-text-1-important"}, [
-                                    '≈ ' + (utils.toThousands(Volume24ForUSDT) || '--') + " " + (spotTick.getLastTick().FromC || "--")//' USDT'
-                                    // '≈ '+(spotTick.getLastTick().Volume24ForUSDT || '--')+'USDT'
+                                    '≈ ' + (utils.toThousands(Turnover24) || '--') + " " + (spotTick.getLastTick().FromC || "--")//' USDT'
+                                    // '≈ '+(spotTick.getLastTick().Turnover24 || '--')+'USDT'
                                 ]),
                             ]),
                             m('td', {}, [
@@ -272,14 +272,11 @@ let spotTick = {
                                         gDI18n.$t('10480')//"持仓量："
                                     ]),
                                     m('span.has-text-1',[
-                                        utils.toThousands(spotTick.getLastTick().Turnover24) || '--'
-                                        // spotTick.getLastTick().Turnover24 || '--'
+                                        utils.toThousands(spotTick.getLastTick().OpenInterest) || '--'
                                     ])
-                                    //gDI18n.$t('10022',{value : (spotTick.getLastTick().OpenInterest || '--')})//"持仓量："+(spotTick.getLastTick().OpenInterest || '--')
                                 ]),
                                 m('p', {class:"has-text-1-important"}, [
-                                    '≈ ' + (utils.toThousands(Turnover24ForUSDT) || '--') + " " + (spotTick.getLastTick().FromC || "--")//' USDT'
-                                    // '≈ '+(spotTick.getLastTick().Turnover24ForUSDT || '--')+'USDT'
+                                    '≈ ' + (utils.toThousands(OpenInterestForUSDT) || '--') + " " + (spotTick.getLastTick().FromC || "--")//' USDT'
                                 ]),
                             ]),
                         ])
