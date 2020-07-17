@@ -1743,6 +1743,128 @@ input[type="checkbox"] {
     height: 20px;
 }
 
+//币币交易下单模块 start
+.pub-bibi-order{
+    display: flex;
+    justify-content: space-between;
+    height: 40px;
+    line-height: 40px;
+    @extend %side-my;
+
+    .pub-bibi-order-type{
+        width: 15%;
+        text-align: center;
+    }
+
+    .pub-bibi-order-BS{
+        width: 80%;
+        text-align: center;
+        border: 1px solid;
+        position: relative;
+        border-radius: 2px;
+
+        .icon-position{
+            position: absolute;
+            right: 10px;
+        }
+    }
+    .pub-bibi-order-BS-color1{
+        border-color: $white-standard-green;
+    }
+    .pub-bibi-order-BS-color2{
+        border-color: $white-standard-red;
+    }
+    .iconfont-switch1{
+        color: $white-standard-green;
+    }
+    .iconfont-switch2{
+        color: $white-standard-red;
+    }
+}
+
+.pub-bibi-price{
+    display: flex;
+    justify-content: space-between;
+    @extend %mb-3;
+
+    .pub-bibi-price-til{
+        width: 15%;
+        text-align: center;
+        height: 40px;
+        line-height: 40px;
+    }
+
+    .pub-bibi-price-inp{
+        width: 80%;
+
+        .pub-bibi-price-US{
+            display: flex;
+            justify-content: start;
+            height: 40px;
+            line-height: 40px;
+
+            .pub-bibi-price-text{
+                width: 20%;
+                text-align: center;
+                border-top-left-radius: 2px;
+                border-bottom-left-radius: 2px;
+            }
+
+            .pub-bibi-price-US-input{
+                width: 80%;
+                border-radius: 2px;
+                border-top-left-radius: 0;
+                border-bottom-left-radius: 0;
+            }
+        }
+
+        .text-size{
+            @extend %font-2;
+            @extend %mt-2;
+        }
+
+        .pub-button-div{
+            display: flex;
+            justify-content: space-between;
+
+            .pub-div-sty{
+                width: 20%;
+                height: 30px;
+                text-align: center;
+                line-height: 30px;
+                border-radius: 2px;
+            }
+        }
+
+        //余额
+        .pub-balance{
+            height: 30px;
+            text-align: right;
+            @extend %font-2;
+            line-height: 30px;
+        }
+
+        .pub-balance-button{
+            height: 40px;
+            line-height: 40px;
+            border:1px solid;
+            text-align: center;
+            border-radius: 2px;
+        }
+
+        .pub-buy-sell-1{
+            border-color: $white-standard-green;
+            background-color: $white-standard-green;
+        }
+        .pub-buy-sell-2{
+            border-color: $white-standard-red;
+            background-color: $white-standard-red;
+        }
+    }
+}
+
+//币币交易下单模块 end
+
 // -------------- 白天模式 --------------
 #light {
     background-color: $white-background-color-once-level;
@@ -2078,6 +2200,12 @@ input[type="checkbox"] {
             background: $white-background-color-three-level;
         }
     }
+
+    //币币交易
+        //限价委托
+        .text-background{
+            background-color: $white-background-color-three-level;
+        }
 }
 
 // -------------- 黑夜模式 --------------
@@ -2417,4 +2545,10 @@ input[type="checkbox"] {
             background: $black-background-color-three-level;
         }
     }
+
+    //币币交易
+        //限价委托
+        .text-background{
+            background-color: $black-background-color-three-level;
+        }
 }

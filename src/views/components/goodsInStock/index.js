@@ -1,7 +1,7 @@
 var m = require("mithril")
-import limitOrd from '../trade/limitOrd'
-import marketOrd from '../trade/marketOrd'
-import stopPL from '../trade/marketPlan'
+import goodsLimitOrd from './goodsLimitOrd'
+import goodsMarketOrd from './goodsMarketOrd'
+import goodsStopPL from './goodsStopPL'
 
 let obj = {
     tabsActive: 0,
@@ -90,11 +90,11 @@ let obj = {
     getTabsActiveContent: function () {
         switch (this.tabsActive) {
             case 0:
-                return m(limitOrd)
+                return m(goodsLimitOrd)
             case 1:
-                return m(marketOrd)
+                return m(goodsMarketOrd)
             case 2:
-                return m(stopPL)
+                return m(goodsStopPL)
         }
     },
 }
