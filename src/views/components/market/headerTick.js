@@ -208,15 +208,15 @@ let spotTick = {
                                     "24H成交量："+(spotTick.getLastTick().Volume24 || '--')
                                 ]),
                                 m('p', {class:""}, [
-                                    '≈ '+(spotTick.getLastTick().Volume24ForUSDT || '--')+'USDT'
+                                    '≈ '+(spotTick.getLastTick().Turnover24 || '--') + " " + (spotTick.getLastTick().FromC || "--")
                                 ]),
                             ]),
                             m('td', {}, [
                                 m('p', {class:""}, [
-                                    "持仓量："+(spotTick.getLastTick().Turnover24 || '--')
+                                    "持仓量："+(spotTick.getLastTick().OpenInterest || '--')
                                 ]),
                                 m('p', {class:""}, [
-                                    '≈ '+(spotTick.getLastTick().Turnover24ForUSDT || '--')+'USDT'
+                                    '≈ '+(spotTick.getLastTick().OpenInterestForUSDT || '--') + " " + (spotTick.getLastTick().FromC || "--")
                                 ]),
                             ]),
                         ])
