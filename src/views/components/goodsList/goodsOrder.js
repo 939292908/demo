@@ -269,7 +269,75 @@ let obj = {
             ])
         })
     },
-
+    // m端列表
+    getOrdListForM: function () {
+        return this.posList.map(function (item, i) {
+            return m('.card', { key: "orderTableListItemForM" + i }, [
+                m('div', { class: 'card-content card-content-bb' }, [
+                    // 1
+                    m('div', { class: "columns is-mobile" }, [
+                        // 左
+                        m('div', { class: "column card-content-title" }, [
+                            m("span", {class: "" + utils.getColorStr(item.Dir, 'font')}, [
+                                item.OTypeStr,
+                                item.DirStr
+                            ]),
+                            utils.getSymDisplayName(window.gMkt.AssetD, item.Sym)
+                        ]),
+                        // 右
+                        m('div', { class: `column has-text-right` }, [
+                            item.AtStr
+                        ])
+                    ]),
+                    // 2
+                    m('div', { class: "columns is-mobile" }, [
+                        // 左
+                        m('div', { class: "column" }, [
+                            gDI18n.$t('10083')//'成交/委托数量'
+                        ]),
+                        // 右
+                        m('div', { class: `column has-text-right` }, [
+                            gDI18n.$t('10084')//'成交/委托价格'
+                        ])
+                    ]),
+                    // 3
+                    m('div', { class: "columns is-mobile" }, [
+                        // 左
+                        m('div', { class: "column" }, [
+                            item.QtyF + '/' + item.Qty //'成交/委托数量'
+                        ]),
+                        // 右
+                        m('div', { class: `column has-text-right` }, [
+                            item.PrzF + '/' + item.Prz //'成交/委托价格'
+                        ])
+                    ]),
+                    // 4
+                    m('div', { class: "columns is-mobile" }, [
+                        // 左
+                        m('div', { class: "column" }, [
+                            m('p', {}, [
+                                gDI18n.$t('10064')//'触发条件'
+                            ]),
+                            m('p', { class: "" + utils.getColorStr(item.UPNLColor, 'font') }, [
+                                item.cond
+                            ]),
+                        ]),
+                        // 右
+                        m('div', { class: `column has-text-right` }, [
+                            m("button", {
+                                class: "button is-primary is-small" + (item.loading ? ' is-loading' : ''),
+                                onclick: function () {
+                                    obj.delOrder(item)
+                                }
+                            }, [
+                                gDI18n.$t('10082')//'撤单'
+                            ])
+                        ])
+                    ])
+                ])
+            ])
+        })
+    },
     getTheadList: function () {
         return this.theadList.map(function (item, i) {
             return m("th", { key: "ordertHeadItem" + i, class: "" + item.class }, [
@@ -280,7 +348,7 @@ let obj = {
     //渲染主体
     getContent: function () {
         if (window.isMobile) {
-            return null
+            return obj.getOrdListForM()
         } else {
             let colgroup = m('colgroup', {}, [
                 m('col', { name: "pub-table-1", width: 160 }),
