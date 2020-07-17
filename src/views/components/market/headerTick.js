@@ -253,7 +253,7 @@ let spotTick = {
                                     ])
                                 ]),
                                 m('p', {class:"has-text-1-important"}, [
-                                    '≈ ' + (utils.toThousands(Turnover24) || '--') + " " + (spotTick.getLastTick().FromC || "--")//' USDT'
+                                    '≈ ' + (utils.toThousands(spotTick.getLastTick().Turnover24) || '--') + " " + (spotTick.getLastTick().FromC || "--")//' USDT'
                                 ]),
                             ]),
                             m('td', {class :"" + (pageTradeStatus == 1? "" : " is-hidden")}, [
@@ -266,7 +266,7 @@ let spotTick = {
                                     ])
                                 ]),
                                 m('p', {class:"has-text-1-important"}, [
-                                    '≈ ' + (utils.toThousands(OpenInterestForUSDT) || '--') + " " + (spotTick.getLastTick().FromC || "--")//' USDT'
+                                    '≈ ' + (utils.toThousands(spotTick.getLastTick().OpenInterestForUSDT) || '--') + " " + (spotTick.getLastTick().FromC || "--")//' USDT'
                                 ]),
                             ]),
                         ])
