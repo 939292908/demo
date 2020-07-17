@@ -253,7 +253,7 @@ let spotTick = {
                                     ])
                                 ]),
                                 m('p', {class:"has-text-1-important"}, [
-                                    '≈ ' + (utils.toThousands(Volume24ForUSDT) || '--') + " " + (spotTick.getLastTick().FromC || "--")//' USDT'
+                                    '≈ ' + (utils.toThousands(Turnover24) || '--') + " " + (spotTick.getLastTick().FromC || "--")//' USDT'
                                 ]),
                             ]),
                             m('td', {class :"" + (pageTradeStatus == 1? "" : " is-hidden")}, [
@@ -262,11 +262,11 @@ let spotTick = {
                                         gDI18n.$t('10480')//"持仓量："
                                     ]),
                                     m('span.has-text-1',[
-                                        utils.toThousands(spotTick.getLastTick().Turnover24) || '--'
+                                        utils.toThousands(spotTick.getLastTick().OpenInterest) || '--'
                                     ])
                                 ]),
                                 m('p', {class:"has-text-1-important"}, [
-                                    '≈ ' + (utils.toThousands(Turnover24ForUSDT) || '--') + " " + (spotTick.getLastTick().FromC || "--")//' USDT'
+                                    '≈ ' + (utils.toThousands(OpenInterestForUSDT) || '--') + " " + (spotTick.getLastTick().FromC || "--")//' USDT'
                                 ]),
                             ]),
                         ])
