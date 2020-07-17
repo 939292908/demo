@@ -252,7 +252,7 @@ utils.getTickObj = function(assetD, AssetEx, tick, oldTick, indexTick){
             //24H成交量
             obj.Volume24 = Number(tick.Volume24).toFixed(VolMinValSize);
             obj.Volume24ForUSDT = (Number(tick.Volume24) * tick.LastPrz).toFixed(4);
-            //24H持仓量
+            //24H成交额
             obj.Turnover24 = Number(tick.Turnover24).toFixed(VolMinValSize);
             obj.Turnover24ForUSDT = (Number(tick.Turnover24) * tick.LastPrz).toFixed(4);
             //标记价格
@@ -267,6 +267,10 @@ utils.getTickObj = function(assetD, AssetEx, tick, oldTick, indexTick){
             obj.FundingLongR = (Number(tick.FundingLongR || 0)*100).toFixed(4)+'%';
             //下个周期预测的资金费率
             obj.FundingPredictedR = (Number(tick.FundingPredictedR || 0)*100).toFixed(4)+'%';
+
+            //持仓量
+            obj.OpenInterest = Number(tick.OpenInterest || 0).toFixed(VolMinValSize);
+            obj.OpenInterestForUSDT = (Number(tick.OpenInterest || 0) * tick.LastPrz * (ass.LotSz || 0)).toFixed(4);
 
             obj.TrdCls = ass.TrdCls
             obj.FromC = ass.FromC

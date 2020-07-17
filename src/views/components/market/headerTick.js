@@ -210,15 +210,15 @@ let spotTick = {
                                     gDI18n.$t('10021',{value : (spotTick.getLastTick().Volume24 || '--')})//"24H成交量："+(spotTick.getLastTick().Volume24 || '--')
                                 ]),
                                 m('p', {class:""}, [
-                                    '≈ '+(spotTick.getLastTick().Volume24ForUSDT || '--')+'USDT'
+                                    '≈ '+(spotTick.getLastTick().Turnover24 || '--') + " " + (spotTick.getLastTick().FromC || "--")
                                 ]),
                             ]),
                             m('td', {}, [
                                 m('p', {class:""}, [
-                                    gDI18n.$t('10022',{value : (spotTick.getLastTick().Turnover24 || '--')})//"持仓量："+(spotTick.getLastTick().Turnover24 || '--')
+                                    gDI18n.$t('10022',{value : (spotTick.getLastTick().OpenInterest || '--')})//"持仓量："+(spotTick.getLastTick().Turnover24 || '--')
                                 ]),
                                 m('p', {class:""}, [
-                                    '≈ '+(spotTick.getLastTick().Turnover24ForUSDT || '--')+'USDT'
+                                    '≈ '+(spotTick.getLastTick().OpenInterestForUSDT || '--') + " " + (spotTick.getLastTick().FromC || "--")
                                 ]),
                             ]),
                         ])
