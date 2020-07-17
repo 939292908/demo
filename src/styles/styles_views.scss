@@ -218,7 +218,7 @@ hr {
 //移动端主体结构样式 end
 
 //头部行情模块样式 start
-.pub-button-font{
+.pub-button-font {
     @extend %font-3;
 }
 
@@ -385,7 +385,7 @@ hr {
 
 //盘口相关样式 start
 
-.dropdown-pad-right{
+.dropdown-pad-right {
     padding-right: 21px;
 }
 
@@ -411,7 +411,7 @@ hr {
         @extend %font-2;
     }
     //移动端
-    .pub-dish-top-m{
+    .pub-dish-top-m {
         display: flex;
         .pub-dish-top-pic {
             text-align: left;
@@ -1247,6 +1247,21 @@ hr {
 // .pub-order {
 
 // }
+// 手机端 '币币交易' card样式
+.pub-layout-m {
+    .card-content {
+        &.card-content-bb {
+            @extend %font-2;
+            .columns {
+                @extend %pt-2;
+                align-items: center;
+            }
+            .card-content-title {
+                @extend %font-3;
+            }
+        }
+    }
+}
 .pub-layout-m {
     .pub-trade-list {
         .pub-order {
@@ -1349,11 +1364,10 @@ hr {
     }
 }
 .pub-wallet {
-    
     .pub-wallet-content {
         @extend %font-2;
 
-        .pub-wallet-font{
+        .pub-wallet-font {
             @extend %font-3;
             text-align: left;
             @extend %side-py;
@@ -1555,13 +1569,12 @@ hr {
         // background-color: rgb(19, 206, 102);
         // border-color: rgb(19, 206, 102);
         background-color: $white-standard-green !important;
-        border-color: $white-standard-green !important;;
+        border-color: $white-standard-green !important;
         &::after {
             left: 100%;
-            transform: translateX(calc( -100% - 1px));
+            transform: translateX(calc(-100% - 1px));
         }
     }
-    
 }
 // 侧边框 fixed 定位
 .my-drawer {
@@ -1589,7 +1602,7 @@ hr {
         transform: translateY(100%);
     }
     &.open {
-        transform: translate(0,0);
+        transform: translate(0, 0);
     }
 }
 // 侧边框 absolute 定位
@@ -1600,7 +1613,7 @@ hr {
     transform: translateX(-100%);
     transition: all 0.2s;
     &.open {
-        transform: translate(0,0) !important;
+        transform: translate(0, 0) !important;
     }
     &.left {
         transform: translateX(-100%);
@@ -1619,7 +1632,6 @@ hr {
     // &.bottom {
     //     transform: translateY(100%);
     // }
-    
 }
 // 下拉组件
 .my-dropdown {
@@ -1638,7 +1650,7 @@ hr {
                     @extend %ml-2;
                 }
             }
-            .button-span-icon{
+            .button-span-icon {
                 @extend %pr-2;
             }
         }
@@ -1660,7 +1672,7 @@ hr {
         }
     }
 
-    .dropdown-width{
+    .dropdown-width {
         min-width: 103px;
     }
 }
@@ -1684,27 +1696,30 @@ hr {
 .cursor-pointer {
     cursor: pointer;
 }
-.is-center { // 水平垂直居中
+.is-center {
+    // 水平垂直居中
     display: flex;
     justify-content: center;
     align-items: center;
 }
-.is-between { // 两端对齐
+.is-between {
+    // 两端对齐
     display: flex;
-    justify-content: space-between!important;
+    justify-content: space-between !important;
 }
-.input:focus, .button:focus {
-    box-shadow: none!important;
+.input:focus,
+.button:focus {
+    box-shadow: none !important;
 }
 .mb-0-important {
     margin-bottom: 0 !important;
 }
 //文字14px
-.stop-PLM-1{
+.stop-PLM-1 {
     @extend %font-3;
 }
 //文字18px
-.stop-PLM-2{
+.stop-PLM-2 {
     @extend %font-5;
 }
 
@@ -1738,10 +1753,132 @@ input[type="checkbox"] {
 }
 
 //新增仓位弹窗
-.midel-pos-close{
+.midel-pos-close {
     width: 29px;
     height: 20px;
 }
+
+//币币交易下单模块 start
+.pub-bibi-order{
+    display: flex;
+    justify-content: space-between;
+    height: 40px;
+    line-height: 40px;
+    @extend %side-my;
+
+    .pub-bibi-order-type{
+        width: 15%;
+        text-align: center;
+    }
+
+    .pub-bibi-order-BS{
+        width: 80%;
+        text-align: center;
+        border: 1px solid;
+        position: relative;
+        border-radius: 2px;
+
+        .icon-position{
+            position: absolute;
+            right: 10px;
+        }
+    }
+    .pub-bibi-order-BS-color1{
+        border-color: $white-standard-green;
+    }
+    .pub-bibi-order-BS-color2{
+        border-color: $white-standard-red;
+    }
+    .iconfont-switch1{
+        color: $white-standard-green;
+    }
+    .iconfont-switch2{
+        color: $white-standard-red;
+    }
+}
+
+.pub-bibi-price{
+    display: flex;
+    justify-content: space-between;
+    @extend %mb-3;
+
+    .pub-bibi-price-til{
+        width: 15%;
+        text-align: center;
+        height: 40px;
+        line-height: 40px;
+    }
+
+    .pub-bibi-price-inp{
+        width: 80%;
+
+        .pub-bibi-price-US{
+            display: flex;
+            justify-content: start;
+            height: 40px;
+            line-height: 40px;
+
+            .pub-bibi-price-text{
+                width: 20%;
+                text-align: center;
+                border-top-left-radius: 2px;
+                border-bottom-left-radius: 2px;
+            }
+
+            .pub-bibi-price-US-input{
+                width: 80%;
+                border-radius: 2px;
+                border-top-left-radius: 0;
+                border-bottom-left-radius: 0;
+            }
+        }
+
+        .text-size{
+            @extend %font-2;
+            @extend %mt-2;
+        }
+
+        .pub-button-div{
+            display: flex;
+            justify-content: space-between;
+
+            .pub-div-sty{
+                width: 20%;
+                height: 30px;
+                text-align: center;
+                line-height: 30px;
+                border-radius: 2px;
+            }
+        }
+
+        //余额
+        .pub-balance{
+            height: 30px;
+            text-align: right;
+            @extend %font-2;
+            line-height: 30px;
+        }
+
+        .pub-balance-button{
+            height: 40px;
+            line-height: 40px;
+            border:1px solid;
+            text-align: center;
+            border-radius: 2px;
+        }
+
+        .pub-buy-sell-1{
+            border-color: $white-standard-green;
+            background-color: $white-standard-green;
+        }
+        .pub-buy-sell-2{
+            border-color: $white-standard-red;
+            background-color: $white-standard-red;
+        }
+    }
+}
+
+//币币交易下单模块 end
 
 // -------------- 白天模式 --------------
 #light {
@@ -1771,17 +1908,18 @@ input[type="checkbox"] {
             }
         }
     }
-    @mixin scrollBar ($bgColor: $white-background-color-second-level, $barColor: $white-background-color-three-level) { // 滚动条
+    @mixin scrollBar($bgColor: $white-background-color-second-level, $barColor: $white-background-color-three-level) {
+        // 滚动条
         &::-webkit-scrollbar-track-piece {
-          background: $bgColor;
+            background: $bgColor;
         }
         &::-webkit-scrollbar {
-          width: 6px;
-          height: 10px;
+            width: 6px;
+            height: 10px;
         }
         &::-webkit-scrollbar-thumb {
-          background: $barColor;
-          border-radius: 20px;
+            background: $barColor;
+            border-radius: 20px;
         }
     }
     * {
@@ -2021,7 +2159,7 @@ input[type="checkbox"] {
             color: $white-font-color-conent;
         }
     }
-    // 手机 card 
+    // 手机 card
     .pub-layout-m {
         .card {
             @extend .is-background-2;
@@ -2030,7 +2168,7 @@ input[type="checkbox"] {
     }
     // tick 头部的下拉行情
     .pub-header-tick-left-market {
-        @include scrollBar( $white-background-color-three-level, $white-background-color-second-level);
+        @include scrollBar($white-background-color-three-level, $white-background-color-second-level);
     }
     // trade 的下拉
     .pub-trade-list-tabs-dropdown {
@@ -2053,15 +2191,15 @@ input[type="checkbox"] {
         }
     }
     //资金模块
-    .pub-top-border{
+    .pub-top-border {
         border-top: 1px solid $white-line1;
     }
     //盘口交易
     //按钮
-    .is-primary-font{
+    .is-primary-font {
         color: $white-background-color-once-level !important;
     }
-    .trade-button-bg{
+    .trade-button-bg {
         background-color: $white-background-color-three-level;
         color: $white-font-color-title;
     }
@@ -2078,6 +2216,12 @@ input[type="checkbox"] {
             background: $white-background-color-three-level;
         }
     }
+
+    //币币交易
+        //限价委托
+        .text-background{
+            background-color: $white-background-color-three-level;
+        }
 }
 
 // -------------- 黑夜模式 --------------
@@ -2110,17 +2254,18 @@ input[type="checkbox"] {
             }
         }
     }
-    @mixin scrollBar ($bgColor: $black-background-color-second-level, $barColor: $black-background-color-three-level) { // 滚动条
+    @mixin scrollBar($bgColor: $black-background-color-second-level, $barColor: $black-background-color-three-level) {
+        // 滚动条
         &::-webkit-scrollbar-track-piece {
-          background: $bgColor;
+            background: $bgColor;
         }
         &::-webkit-scrollbar {
-          width: 6px;
-          height: 10px;
+            width: 6px;
+            height: 10px;
         }
         &::-webkit-scrollbar-thumb {
-          background: $barColor;
-          border-radius: 20px;
+            background: $barColor;
+            border-radius: 20px;
         }
     }
     * {
@@ -2360,7 +2505,7 @@ input[type="checkbox"] {
             color: $black-font-color-conent;
         }
     }
-    // 手机 card 
+    // 手机 card
     .pub-layout-m {
         .card {
             @extend .is-background-2;
@@ -2369,7 +2514,7 @@ input[type="checkbox"] {
     }
     // tick 头部的下拉行情
     .pub-header-tick-left-market {
-        @include scrollBar( $black-background-color-three-level, $black-background-color-second-level);
+        @include scrollBar($black-background-color-three-level, $black-background-color-second-level);
     }
     // trade 的下拉
     .pub-trade-list-tabs-dropdown {
@@ -2392,15 +2537,15 @@ input[type="checkbox"] {
         }
     }
     //资金模块
-    .pub-top-border{
+    .pub-top-border {
         border-top: 1px solid $black-line1;
     }
     //盘口交易
     //按钮
-    .is-primary-font{
+    .is-primary-font {
         color: $black-font-color-title !important;
     }
-    .trade-button-bg{
+    .trade-button-bg {
         background-color: $black-background-color-three-level;
         color: $black-font-color-title;
     }
@@ -2417,4 +2562,10 @@ input[type="checkbox"] {
             background: $black-background-color-three-level;
         }
     }
+
+    //币币交易
+        //限价委托
+        .text-background{
+            background-color: $black-background-color-three-level;
+        }
 }

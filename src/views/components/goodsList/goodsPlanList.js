@@ -235,6 +235,76 @@ let obj = {
             ])
         })
     },
+    // m端列表
+    getOrdListForM: function () {
+        return this.posList.map(function (item, i) {
+            return m('.card', { key: "planTableListItemForM" + i }, [
+                m('div', { class: 'card-content card-content-bb' }, [
+                    // 1
+                    m('div', { class: "columns is-mobile" }, [
+                        // 左
+                        m('div', { class: "column card-content-title" }, [
+                            m('span', { class: "" }, [
+                                m("span", {class: "" + utils.getColorStr(item.Dir, 'font')}, [
+                                    item.DirStr
+                                ]),
+                                utils.getSymDisplayName(window.gMkt.AssetD, item.Sym)
+                            ])
+                        ]),
+                        // 右
+                        m('div', { class: `column has-text-right` }, [
+                            item.AtStr
+                        ])
+                    ]),
+                    // 2
+                    m('div', { class: "columns is-mobile" }, [
+                        // 左
+                        m('div', { class: "column" }, [
+                            gDI18n.$t('10059')//'委托数量'
+                        ]),
+                        // 右
+                        m('div', { class: `column has-text-right` }, [
+                            gDI18n.$t('10058')//'委托价格'
+                        ])
+                    ]),
+                    // 3
+                    m('div', { class: "columns is-mobile" }, [
+                        // 左
+                        m('div', { class: "column" }, [
+                            item.Qty //'委托数量'
+                        ]),
+                        // 右
+                        m('div', { class: `column has-text-right` }, [
+                            item.Prz //'委托价格'
+                        ])
+                    ]),
+                    // 4
+                    m('div', { class: "columns is-mobile" }, [
+                        // 左
+                        m('div', { class: "column" }, [
+                            m('p', {}, [
+                                gDI18n.$t('10064')//'触发条件'
+                            ]),
+                            m('p', { class: "" + utils.getColorStr(item.UPNLColor, 'font') }, [
+                                item.cond
+                            ])
+                        ]),
+                        // 右
+                        m('div', { class: `column has-text-right` }, [
+                            m("button", {
+                                class: "button is-primary is-small" + (item.loading ? ' is-loading' : ''),
+                                onclick: function () {
+                                    obj.delOrder(item)
+                                }
+                            }, [
+                                gDI18n.$t('10085')//'删除'
+                            ])
+                        ])
+                    ])
+                ])
+            ])
+        })
+    },
     delOrder: function (param) {
         param.loading = true
         gTrd.ReqTrdOrderDel({
@@ -257,7 +327,7 @@ let obj = {
     },
     getContent: function () {
         if (window.isMobile) {
-            return null
+            return obj.getOrdListForM()
         } else {
             let colgroup = m('colgroup', {}, [
                 m('col', {name: "pub-table-1",width: 160}),

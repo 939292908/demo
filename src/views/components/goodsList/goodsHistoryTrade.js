@@ -237,11 +237,104 @@ let obj = {
             ])
         })
     },
-
+    // m端列表
+    getMobileHistoryList: function (){
+        return m("div",{class: "details-header"},[
+            // 头部
+            m(Header, {
+                slot: {
+                    center: gDI18n.$t('10237')//"历史成交"
+                }
+            }),
+            // 列表
+            m("div",{class : "pub-trade-list  pub-layout-m"},[
+            this.list.length != 0 ? 
+            this.list.map(function (item, i) {
+                return m("div",{ key: "historyOrdtHeadItem" + i, class: "card"},[
+                    //顶部排列
+                    m("div",{class : "card-content mobile-list"},[
+                        m("div",{class : "theadList-transaction has-text-1"},[
+                            m("p",{class : "theadList-transaction-p1  header-flex"},[
+                                utils.getSymDisplayName(window.gMkt.AssetD, item.displaySym),
+                                m("p",{class : "padd-left " + utils.getColorStr(item.Dir, 'font') },[
+                                    item.DirStr
+                                ]),
+                            ]),
+                            
+                            m("div",{class  : ""},[
+                                " ",
+                                m("p",{class : " "},[
+                                    " "
+                                ])
+                            ]),
+                            m("p",{class : " "},[
+                                item.AtStr
+                            ])
+                        ]),
+                        m("hr",{class : "is-primary"}),
+                        //中间排列
+                        m("div",{class :  "has-text-2"},[
+                            m("div",{class : "theadList-profit-loss" ,},[
+                                m("div",{class  : "theadList-profit-loss-p1 has-text-2"},[
+                                    gDI18n.$t('10060'),//"成交均价" ,
+                                    m("p",{class : "has-text-2"},[
+                                        item.Prz
+                                    ])
+                                ]),
+                                m("div",{class  : "theadList-profit-loss-p1 has-text-2"},[
+                                    gDI18n.$t('10061'),//"成交数量" ,
+                                    m("p",{class : "has-text-2"},[
+                                        item.Sz
+                                    ])
+                                ]),
+                                m("div",{class  : "theadList-profit-loss-p1 has-text-2 font-right"},[
+                                    gDI18n.$t('10062'),//"平仓盈亏" ,
+                                    m("p",{class : "has-text-2"},[
+                                        item.PnlCls
+                                    ])
+                                ]),
+                            ]),
+                            //底部排列
+                            m("div",{class : "theadList-profit-loss" ,},[
+                                m("div",{class  : "theadList-profit-loss-p1 has-text-2 theadList-profit2"},[
+                                    m("p",{class: ""},[
+                                        gDI18n.$t('10063') + ":",//"手续费：" 
+                                    ]),
+                                    
+                                ]),
+                                m("div",{class  : "theadList-profit-loss-p2"},[
+                                    m("p",{class : "has-text-2" + item.Fee>0?"has-text-danger" :"has-text-primary"},[
+                                        item.Fee
+                                    ])
+                                ]),
+                                m("div",{class:"cursor-pointer theadList-profit-loss-p2 theadList-profit3 has-text-2 fomt-blacl text-right"+(" historyOrdTableListItemCopy"+i), "data-clipboard-text": item.PId, onclick: function(e){
+                                    window.$copy(".historyOrdTableListItemCopy"+i)
+                                }},[
+                                    m('div',[
+                                        gDI18n.$t('10067') + "：",//"仓位ID：",
+                                    ]),
+                                    
+                                    m("div",{class : "has-text-2"},[
+                                        // item.PId.substr(-4),
+                                        m("i",{class : ""},[ " "]),
+                                        m("i",{class:"iconfont iconcopy"}),
+                                    ])  
+                                ]),
+                            ]),
+                        ])
+                    ])
+                ])
+            }) : m("div",{class : "text-none has-text-2"},[
+                m("i",{class : "iconfont iconbox" ,style:"font-size: 60px",},[]),
+                gDI18n.$t('10468'),//"暂无历史成交记录"
+            ])
+        ])
+    ])
+    },
     getContent: function () {
         if (window.isMobile) {
             //移动端列表
-            return null
+            return obj.getMobileHistoryList()
         } else {
             let colgroup = m('colgroup', {}, [
                 m('col', { name: "pub-table-1", width: 150 }),
