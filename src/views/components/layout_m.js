@@ -363,6 +363,7 @@ let obj = {
     // 头部下拉菜单
     getMenu () {
         // m("div", { class: "pub-layout-m-header-menu navbar-menu is-hidden-desktop is-background-2" + (obj.leftMenu ? ' is-active' : ' is-hidden')
+        let pageTradeStatus = window.gMkt.CtxPlaying.pageTradeStatus
         return m("div", { class: "pub-layout-m-header-menu navbar-menu is-hidden-desktop is-background-2 is-active my-drawer-2" + (obj.leftMenu ? ' open' : '') }, [
             m("div", { class: "navbar-end" }, [
                 m("aside", { class: "menu" + (window.$config.loginType == 0 ? "" : " is-hidden") }, [
@@ -375,7 +376,8 @@ let obj = {
                             return false;
                         }
                     }, [
-                        gDI18n.$t('10236')//'合约记录'
+                        pageTradeStatus == 1 ?gDI18n.$t('10236') : '交易记录'
+                        // gDI18n.$t('10236')//'合约记录'
                     ]),
                     m("div", { class: "navbar-dropdown" }, [
                         m("a", {
@@ -393,7 +395,7 @@ let obj = {
                             gDI18n.$t('10237')//'历史成交'
                         ]),
                         m("a", {
-                            class: "navbar-item", onclick: function () {
+                            class: "navbar-item" + (pageTradeStatus == 1 ? "" :" is-hidden"), onclick: function () {
                                 router.push('/contractbill')
                             }
                         }, [
