@@ -269,8 +269,8 @@ utils.getTickObj = function(assetD, AssetEx, tick, oldTick, indexTick){
             obj.FundingPredictedR = (Number(tick.FundingPredictedR || 0)*100).toFixed(4)+'%';
 
             //持仓量
-            obj.OpenInterest = Number(tick.OpenInterest).toFixed(VolMinValSize);
-            obj.OpenInterestForUSDT = (Number(tick.OpenInterest) * tick.LastPrz).toFixed(4);
+            obj.OpenInterest = Number(tick.OpenInterest || 0).toFixed(VolMinValSize);
+            obj.OpenInterestForUSDT = (Number(tick.OpenInterest || 0) * tick.LastPrz * (ass.LotSz || 0)).toFixed(4);
 
             obj.TrdCls = ass.TrdCls
             obj.FromC = ass.FromC
