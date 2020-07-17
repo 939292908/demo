@@ -126,8 +126,10 @@ const supported_resolutions = ["1", '3', "5", "15", "30", "60", '120', '240', '3
 
 function FixObjWithSample(aWlt,aSample) {
     for(let k in aSample) {
-        if (!(k in aWlt)) {
-            aWlt[k] = aSample[k]
+        if(typeof aWlt === 'object'){
+            if (!(k in aWlt)) {
+                aWlt[k] = aSample[k]
+            }
         }
     }
 }
