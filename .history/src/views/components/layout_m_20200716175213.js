@@ -3,7 +3,6 @@ var m = require("mithril")
 
 import headerTick from './market/headerTick'
 import orderList from './orderList/index'
-import goodsList from './goodsList'
 import placeOrder from './trade/index_m'
 //杠杆调整
 import leverageMode from './trade/leverageMode'
@@ -123,15 +122,9 @@ let obj = {
     },
     getBottomList: function () {
         let type = window.$config.views.bottomList.type
-        let pageTradeStatus = window.gMkt.CtxPlaying.pageTradeStatus
         switch (type) {
             case 0:
-                if (pageTradeStatus == 1){
-                    return m(orderList)
-                  } else if (pageTradeStatus == 2){
-                    return m(goodsList)
-                  }
-                // return m(orderList)
+                return m(orderList)
             case 1:
                 return this.customBottomList()
             default:
