@@ -171,6 +171,7 @@ let spotTick = {
         }
         switch(type){
             case 0: 
+                let pageTradeStatus = window.gMkt.CtxPlaying.pageTradeStatus
                 return m("div",{class:"pub-header-tick-left"},[
                     m(symSelect),
                     m('span', {class:"pub-header-tick-left-pre-prz is-hidden-touch"+utils.getColorStr(spotTick.getLastTick().color, 'font')},[
@@ -181,8 +182,8 @@ let spotTick = {
                     ]),
                     m('table', {class:"is-hidden-touch"}, [
                         m('tr', {}, [
-                            m('td', {class:""}, [
-                                m('p', {class:""}, [
+                            m('td', {class:"" + (pageTradeStatus == 1? "" : " table-tr-td-vertical")}, [
+                                m('p', {class:"" + (pageTradeStatus == 1? "" : " is-hidden")}, [
                                     m('span',[
                                         gDI18n.$t('10475')//"指数价格："
                                     ]),
@@ -217,7 +218,7 @@ let spotTick = {
                                     ])
                                 ]),
                             ]),
-                            m('td', {class:""}, [
+                            m('td', {class:"" + (pageTradeStatus == 1? "" : " is-hidden")}, [
                                 m('div', {class:"dropdown is-hoverable"}, [
                                     m('div', {class:"dropdown-trigger"}, [
                                         m('p', {class:""}, [
@@ -255,7 +256,7 @@ let spotTick = {
                                     '≈ ' + (utils.toThousands(Volume24ForUSDT) || '--') + " " + (spotTick.getLastTick().FromC || "--")//' USDT'
                                 ]),
                             ]),
-                            m('td', {}, [
+                            m('td', {class :"" + (pageTradeStatus == 1? "" : " is-hidden")}, [
                                 m('p', {class:""}, [
                                     m('span',[
                                         gDI18n.$t('10480')//"持仓量："

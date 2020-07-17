@@ -137,7 +137,7 @@ export default {
         return m("div",{class:"pub-wallet"},[
             m('div', {class:"pub-wallet-content"}, [
                 m('div',{class:"pub-wallet-font has-text-1"},[
-                    obj.getLastTick().ToC + '资产'
+                    (obj.getLastTick().ToC || "")+ '资产'
                     // (obj.wlt.Coin || "") + '资产'
                 ]),
                 m('div', {class: 'level-item'}, [
@@ -175,7 +175,7 @@ export default {
             ]),
             m('div', {class:"pub-wallet-content pub-top-border"}, [
                 m('div',{class:"pub-wallet-font has-text-1"},[
-                    obj.USDTWlt.Coin + '资产'
+                    (obj.USDTWlt.Coin || "") + '资产'
                 ]),
                 m('div', {class: 'level-item'}, [
                     m('div', {class: 'text--secondary has-text-2'}, [
