@@ -1833,23 +1833,7 @@ input[type="checkbox"] {
             }
         }
 
-        .text-size{
-            @extend %font-2;
-            @extend %mt-2;
-        }
-
-        .pub-button-div{
-            display: flex;
-            justify-content: space-between;
-
-            .pub-div-sty{
-                width: 20%;
-                height: 30px;
-                text-align: center;
-                line-height: 30px;
-                border-radius: 2px;
-            }
-        }
+        
 
         //余额
         .pub-balance{
@@ -1877,7 +1861,23 @@ input[type="checkbox"] {
         }
     }
 }
+.text-size{
+    @extend %font-2;
+    @extend %mt-2;
+}
 
+.pub-button-div{
+    display: flex;
+    justify-content: space-between;
+
+    .pub-div-sty{
+        width: 20%;
+        height: 30px;
+        text-align: center;
+        line-height: 30px;
+        border-radius: 2px;
+    }
+}
 //币币交易下单模块 end
 
 // -------------- 白天模式 --------------

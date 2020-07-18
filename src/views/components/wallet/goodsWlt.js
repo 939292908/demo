@@ -109,7 +109,7 @@ let obj = {
 
                 this.wlt = utils.formateWallet(item,LastPrz)//item
             }
-            if(item.AId && item.Coin == 'USDT'){
+            if(item.AId && item.Coin == assetD.QuoteCoin){
                 isUSDTP = true
 
                 this.USDTWlt = utils.formateWallet(item)//item
@@ -175,7 +175,7 @@ export default {
             ]),
             m('div', {class:"pub-wallet-content pub-top-border"}, [
                 m('div',{class:"pub-wallet-font has-text-1"},[
-                    (obj.USDTWlt.Coin || "") + '资产'
+                    (obj.getLastTick().FromC || "")+ '资产'
                 ]),
                 m('div', {class: 'level-item'}, [
                     m('div', {class: 'text--secondary has-text-2'}, [
