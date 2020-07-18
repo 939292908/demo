@@ -357,6 +357,8 @@ let obj = {
             // 列表
             m("div", { class: "pub-trade-list  pub-layout-m" }, [
                 this.posList.length != 0 ? this.posList.map(function (item, i) {
+                    console.log(item,9999999999999);
+                    
                     return m("div", { key: "historyOrdtHeadItem" + i, class: "card" }, [
                         m("div", { class: "card-content mobile-list" }, [
                             //顶部排列
@@ -364,8 +366,9 @@ let obj = {
                                 item.StatusStr == gDI18n.$t('10398'/*"全部成交"*/) ?
                                     m('a', {
                                         class: "theadList-transaction has-text-2", onclick: function () {
+                                            let path = window.gMkt.CtxPlaying.pageTradeStatus == 1 ? "/details" : "/detailsGoods"
                                             router.push({
-                                                path: "/details",
+                                                path: path,
                                                 data: item
                                             })
                                         }
