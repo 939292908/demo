@@ -895,6 +895,17 @@ hr {
             }
         }
 
+        .details-body-title {
+            display: flex;
+            .title-btn {
+                line-height: 24px;
+                width: 50px;
+                text-align: center;
+                border-radius: 12px;
+                @extend %font-3;
+            }
+        }
+
         .details-body-conent {
             @extend %side-py;
             display: flex;
@@ -1951,6 +1962,14 @@ input[type="checkbox"] {
         // 文字-绿
         color: $white-standard-green !important;
     }
+    .has-border-success {
+        // 边框-红
+        border: 1px solid $white-standard-red !important;
+    }
+    .has-border-success {
+        // 边框-绿
+        border: 1px solid $white-standard-green !important;
+    }
     .has-text-1-important {
         // 特殊情况 加权重
         color: $white-font-color-title !important;
@@ -2296,6 +2315,14 @@ input[type="checkbox"] {
     .has-text-success {
         // 文字-绿
         color: $black-standard-green !important;
+    }
+    .has-border-danger {
+        // 边框-红
+        border: 1px solid $black-standard-red !important;
+    }
+    .has-border-success {
+        // 边框-绿
+        border: 1px solid $black-standard-green !important;
     }
     .has-text-1-important {
         // 特殊情况 加权重

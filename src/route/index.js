@@ -31,6 +31,11 @@ m.route(document.body, "/future",{
             return import('../views/components/contractRrecord/details')//m(details,vnode.attrs)
         }
     },
+    "/detailsGoods":{
+        onmatch:function(vnode){
+            return import('../views/components/contractRrecord/detailsGoods')//m(detailsGoods,vnode.attrs)
+        }
+    },
     "/deal": {
         onmatch:function (vnode){
             return import('../views/components/contractRrecord/historicalDeal')//m(deal,vnode.attrs)

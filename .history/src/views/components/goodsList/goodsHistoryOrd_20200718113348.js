@@ -357,8 +357,6 @@ let obj = {
             // 列表
             m("div", { class: "pub-trade-list  pub-layout-m" }, [
                 this.posList.length != 0 ? this.posList.map(function (item, i) {
-                    console.log(item,9999999999999);
-                    
                     return m("div", { key: "historyOrdtHeadItem" + i, class: "card" }, [
                         m("div", { class: "card-content mobile-list" }, [
                             //顶部排列
@@ -366,9 +364,8 @@ let obj = {
                                 item.StatusStr == gDI18n.$t('10398'/*"全部成交"*/) ?
                                     m('a', {
                                         class: "theadList-transaction has-text-2", onclick: function () {
-                                            let path = window.gMkt.CtxPlaying.pageTradeStatus == 1 ? "/details" : "/detailsGoods"
                                             router.push({
-                                                path: path,
+                                                path: "/details",
                                                 data: item
                                             })
                                         }
@@ -410,16 +407,16 @@ let obj = {
                             m("div", { class: "" }, [
                                 m("div", { class: "theadList-profit-loss" }, [
                                     m("div", { class: "theadList-profit-loss-p1 has-text-2" }, [
-                                        gDI18n.$t('10065'),//"委托时间",
-                                        m("p", { class: "has-text-2" }, [
-                                            item.AtStr
-                                        ])                                      
-                                    ]),
-                                    m("div", { class: "theadList-profit-loss-p1  has-text-2 has-text-centered"}, [
                                         gDI18n.$t('10058'),//"委托价格"
                                         m("p", { class: "has-text-2" }, [
                                             item.Prz
-                                        ])                                      
+                                        ])
+                                    ]),
+                                    m("div", { class: "theadList-profit-loss-p1  has-text-2" }, [
+                                        gDI18n.$t('10060'),//"成交均价",
+                                        m("p", { class: "has-text-2" }, [
+                                            item.PrzF
+                                        ])
                                     ]),
                                     m("div", { class: "theadList-profit-loss-p2 font-right has-text-2" }, [
                                         gDI18n.$t('10059'),//"委托数量",
@@ -431,25 +428,26 @@ let obj = {
                                 //平仓手续
                                 m("div", { class: "theadList-profit-loss" }, [
                                     m("div", { class: "theadList-profit-loss-p2 has-text-2" }, [
-                                        gDI18n.$t('10056'),//"委托类型" ,
-                                        m("p", { class: "has-text-2" }, [
-                                            item.OTypeStr
-                                        ])                                      
-                                    ]),
-                                    m("div", { class: "theadList-profit-loss-p2 has-text-2 has-text-centered" }, [
-                                        gDI18n.$t('10060'),//"成交均价",
-                                        m("p", { class: "has-text-2" }, [
-                                            item.PrzF
-                                        ])                                      
-                                    ]),
-                                    m("div", { class: "theadList-profit-loss-p2 font-right has-text-2" }, [  
                                         gDI18n.$t('10061'),//"成交数量" ,
                                         m("p", { class: "has-text-2" }, [
                                             item.QtyF
-                                        ])                                      
-                                    ]),                            
+                                        ])
+                                    ]),
+                                    m("div", { class: "theadList-profit-loss-p2 has-text-2" }, [
+                                        gDI18n.$t('10056'),//"委托类型" ,
+                                        m("p", { class: "has-text-2" }, [
+                                            item.OTypeStr
+                                        ])
+                                    ]),
+                                    m("div", { class: "theadList-profit-loss-p2 has-text-2 text-align:right"}, [
+                                        gDI18n.$t('10065'),//"委托时间" ,
+                                        m("p", { class: "has-text-2" }, [
+                                            item.AtStr
+                                        ])
+                                    ]),                                    
+                                    
                                 ]),                        
-                                // m("hr", { class: "is-primary" })
+                                m("hr", { class: "is-primary" })
                             ]),
                             m("footer", { class: "theadList-profit-loss", }, [
                                 m("div", { class: "theadList-profit-loss-p2 has-text-2 theadList-profit2" }, [
