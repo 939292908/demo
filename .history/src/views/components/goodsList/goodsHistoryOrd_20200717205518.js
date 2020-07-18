@@ -357,8 +357,6 @@ let obj = {
             // 列表
             m("div", { class: "pub-trade-list  pub-layout-m" }, [
                 this.posList.length != 0 ? this.posList.map(function (item, i) {
-                    console.log(item,9999999999999);
-                    
                     return m("div", { key: "historyOrdtHeadItem" + i, class: "card" }, [
                         m("div", { class: "card-content mobile-list" }, [
                             //顶部排列
@@ -366,9 +364,8 @@ let obj = {
                                 item.StatusStr == gDI18n.$t('10398'/*"全部成交"*/) ?
                                     m('a', {
                                         class: "theadList-transaction has-text-2", onclick: function () {
-                                            let path = window.gMkt.CtxPlaying.pageTradeStatus == 1 ? "/details" : "/detailsGoods"
                                             router.push({
-                                                path: path,
+                                                path: "/details",
                                                 data: item
                                             })
                                         }
@@ -415,7 +412,7 @@ let obj = {
                                             item.Prz
                                         ])
                                     ]),
-                                    m("div", { class: "theadList-profit-loss-p1  has-text-2 has-text-centered"}, [
+                                    m("div", { class: "theadList-profit-loss-p1  has-text-2" }, [
                                         gDI18n.$t('10060'),//"成交均价",
                                         m("p", { class: "has-text-2" }, [
                                             item.PrzF
@@ -436,10 +433,31 @@ let obj = {
                                             item.QtyF
                                         ])
                                     ]),
-                                    m("div", { class: "theadList-profit-loss-p2 has-text-2 has-text-centered" }, [
-                                        gDI18n.$t('10056'),//"委托类型" ,
+                                    m("div", { class: "theadList-profit-loss-p2 has-text-2" }, [
+                                        gDI18n.$t('10062'),//"平仓盈亏",
+                                        m("p", { class: "has-text-2" }, [
+                                            item.PnlCls
+                                        ])
+                                    ]),
+                                    m("div", { class: "theadList-profit-loss-p2 font-right has-text-2" }, [
+                                        gDI18n.$t('10063'/*手续费*/) + item.FeeCoin,
+                                        m("p", { class: "has-text-2" }, [
+                                            item.Fee
+                                        ])
+                                    ]),
+                                ]),
+
+                                m("div", { class: "theadList-profit-loss" }, [
+                                    m("div", { class: "theadList-profit-loss-p2 has-text-2" }, [
+                                        gDI18n.$t('10056'),//"委托类型",
                                         m("p", { class: "has-text-2" }, [
                                             item.OTypeStr
+                                        ])
+                                    ]),
+                                    m("div", { class: "theadList-profit-loss-p2 has-text-2" }, [
+                                        gDI18n.$t('10064'),//"触发条件",
+                                        m("p", { class: "has-text-2" }, [
+                                            item.cond
                                         ])
                                     ]),
                                     m("div", { class: "theadList-profit-loss-p2 font-right has-text-2" }, [
@@ -447,12 +465,16 @@ let obj = {
                                         m("p", { class: "has-text-2" }, [
                                             item.AtStr
                                         ])
-                                    ]),                            
-                                ]),                        
-                                // m("hr", { class: "is-primary" })
+                                    ]),
+                                ]),
+                                m("hr", { class: "is-primary" })
                             ]),
                             m("footer", { class: "theadList-profit-loss", }, [
                                 m("div", { class: "theadList-profit-loss-p2 has-text-2 theadList-profit2" }, [
+                                    m("p", { class: "" }, [
+                                        gDI18n.$t('10066') + "：",//"委托来源：" 
+                                    ]),
+
                                 ]),
                                 m("div", { class: "theadList-profit-loss-p2 has-text-2" }, [
                                     " ",
@@ -466,6 +488,15 @@ let obj = {
                                         // obj.copyPid(item.PId)
                                     }
                                 }, [
+                                    // m("p", { class: "" }, [
+                                    //     gDI18n.$t('10067') + "：",//"仓位ID：" 
+                                    // ]),
+
+                                    // m("p", { class: "has-text-2" }, [
+                                    //     // item.PId.substr(-4),
+                                    //     m("i", { class: "" }, [" "]),
+                                    //     m("i", { class: "iconfont iconcopy" }),
+                                    // ])
                                 ]),
                             ]),
                         ])
