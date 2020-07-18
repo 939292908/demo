@@ -407,12 +407,16 @@ let obj = {
                             m("div", { class: "" }, [
                                 m("div", { class: "theadList-profit-loss" }, [
                                     m("div", { class: "theadList-profit-loss-p1 has-text-2" }, [
-                                        gDI18n.$t('10058'),//"委托价格"
+                                        gDI18n.$t('10065'),//"委托时间",
                                         m("p", { class: "has-text-2" }, [
-                                            item.Prz
-                                        ])
+                                            item.AtStr
+                                        ])                                        
+                                        // gDI18n.$t('10058'),//"委托价格"
+                                        // m("p", { class: "has-text-2" }, [
+                                        //     item.Prz
+                                        // ])
                                     ]),
-                                    m("div", { class: "theadList-profit-loss-p1  has-text-2 has-text-centered"}, [
+                                    m("div", { class: "theadList-profit-loss-p1  has-text-2" }, [
                                         gDI18n.$t('10060'),//"成交均价",
                                         m("p", { class: "has-text-2" }, [
                                             item.PrzF
@@ -433,24 +437,45 @@ let obj = {
                                             item.QtyF
                                         ])
                                     ]),
-                                    m("div", { class: "theadList-profit-loss-p2 has-text-2 has-text-centered" }, [
-                                        gDI18n.$t('10056'),//"委托类型" ,
+                                    m("div", { class: "theadList-profit-loss-p2 has-text-2" }, [
+                                        gDI18n.$t('10062'),//"平仓盈亏",
+                                        m("p", { class: "has-text-2" }, [
+                                            item.PnlCls
+                                        ])
+                                    ]),
+                                    m("div", { class: "theadList-profit-loss-p2 font-right has-text-2" }, [
+                                        gDI18n.$t('10063'/*手续费*/) + item.FeeCoin,
+                                        m("p", { class: "has-text-2" }, [
+                                            item.Fee
+                                        ])
+                                    ]),
+                                ]),
+
+                                m("div", { class: "theadList-profit-loss" }, [
+                                    m("div", { class: "theadList-profit-loss-p2 has-text-2" }, [
+                                        gDI18n.$t('10056'),//"委托类型",
                                         m("p", { class: "has-text-2" }, [
                                             item.OTypeStr
                                         ])
                                     ]),
-                                    m("div", { class: "theadList-profit-loss-p2 font-right has-text-2" }, [
-                                        gDI18n.$t('10065'),//"委托时间",
+                                    m("div", { class: "theadList-profit-loss-p2 has-text-2" }, [
+                                        gDI18n.$t('10064'),//"触发条件",
                                         m("p", { class: "has-text-2" }, [
-                                            item.AtStr
+                                            item.cond
                                         ])
-                                    ]),                            
-                                ]),                        
-                                // m("hr", { class: "is-primary" })
+                                    ]),
+                                    m("div", { class: "theadList-profit-loss-p2 font-right has-text-2" }, [
+                                        // gDI18n.$t('10065'),//"委托时间",
+                                        // m("p", { class: "has-text-2" }, [
+                                        //     item.AtStr
+                                        // ])
+                                    ]),
+                                ]),
+                                m("hr", { class: "is-primary" })
                             ]),
                             m("footer", { class: "theadList-profit-loss", }, [
-                                m("div", { class: "theadList-profit-loss-p2 has-text-2 theadList-profit2" }, [
-                                ]),
+                                m("div", { class: "theadList-profit-loss-p2 has-text-2 theadList-profit2" }, 
+                                ),
                                 m("div", { class: "theadList-profit-loss-p2 has-text-2" }, [
                                     " ",
                                     m("p", { class: "has-text-2" }, [

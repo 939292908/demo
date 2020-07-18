@@ -412,7 +412,7 @@ let obj = {
                                             item.Prz
                                         ])
                                     ]),
-                                    m("div", { class: "theadList-profit-loss-p1  has-text-2 has-text-centered"}, [
+                                    m("div", { class: "theadList-profit-loss-p1  has-text-2" }, [
                                         gDI18n.$t('10060'),//"成交均价",
                                         m("p", { class: "has-text-2" }, [
                                             item.PrzF
@@ -433,20 +433,29 @@ let obj = {
                                             item.QtyF
                                         ])
                                     ]),
-                                    m("div", { class: "theadList-profit-loss-p2 has-text-2 has-text-centered" }, [
-                                        gDI18n.$t('10056'),//"委托类型" ,
+                                    m("div", { class: "theadList-profit-loss-p2 font-right has-text-2" }, [
+                                        gDI18n.$t('10063'/*手续费*/) + item.FeeCoin,
+                                        m("p", { class: "has-text-2" }, [
+                                            item.Fee
+                                        ])
+                                    ]),
+                                ]),
+
+                                m("div", { class: "theadList-profit-loss" }, [
+                                    m("div", { class: "theadList-profit-loss-p2 has-text-2" }, [
+                                        gDI18n.$t('10056'),//"委托类型",
                                         m("p", { class: "has-text-2" }, [
                                             item.OTypeStr
                                         ])
-                                    ]),
+                                    ]),),
                                     m("div", { class: "theadList-profit-loss-p2 font-right has-text-2" }, [
                                         gDI18n.$t('10065'),//"委托时间",
                                         m("p", { class: "has-text-2" }, [
                                             item.AtStr
                                         ])
-                                    ]),                            
-                                ]),                        
-                                // m("hr", { class: "is-primary" })
+                                    ]),
+                                ]),
+                                m("hr", { class: "is-primary" })
                             ]),
                             m("footer", { class: "theadList-profit-loss", }, [
                                 m("div", { class: "theadList-profit-loss-p2 has-text-2 theadList-profit2" }, [
@@ -464,8 +473,7 @@ let obj = {
                                     }
                                 }, [
                                 ]),
-                            ]),
-                        ])
+                            ]),                        
                     ])
                 }) : m("div", { class: "text-none has-text-2" }, [
                     m("i", { class: "iconfont iconbox", style: "font-size: 60px", }, [
@@ -475,7 +483,6 @@ let obj = {
                 ])
             ])
         ])
-
     },
     getContent: function () {
         if (window.isMobile) {
