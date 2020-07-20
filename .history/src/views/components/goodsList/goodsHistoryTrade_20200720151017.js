@@ -263,9 +263,9 @@ let obj = {
                             
                             m("div",{class  : ""},[
                                 " ",
-                            ]),
-                            m("p",{class : " "},[
-                                " ",
+                                m("p",{class : " "},[
+                                    " "
+                                ])
                             ]),
                             m("p",{class : " "},[
                                 item.AtStr
@@ -289,7 +289,7 @@ let obj = {
                                     ])                                    
                                 ]),
                                 m("div",{class  : "theadList-profit-loss-p1 has-text-2 font-right"},[
-                                    m("p",{class: "has-text-left"},[
+                                    m("p",{class: ""},[
                                         gDI18n.$t('10063') + ":",//"手续费：" 
                                         m("div",{class  : "theadList-profit-loss-p2"},[
                                             m("p",{class : "has-text-2" + item.Fee>0? "has-text-danger" :"has-text-primary"},[

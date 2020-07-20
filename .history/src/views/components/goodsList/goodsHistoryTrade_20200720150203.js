@@ -263,9 +263,9 @@ let obj = {
                             
                             m("div",{class  : ""},[
                                 " ",
-                            ]),
-                            m("p",{class : " "},[
-                                " ",
+                                m("p",{class : " "},[
+                                    " "
+                                ])
                             ]),
                             m("p",{class : " "},[
                                 item.AtStr
@@ -289,28 +289,32 @@ let obj = {
                                     ])                                    
                                 ]),
                                 m("div",{class  : "theadList-profit-loss-p1 has-text-2 font-right"},[
-                                    m("p",{class: "has-text-left"},[
-                                        gDI18n.$t('10063') + ":",//"手续费：" 
-                                        m("div",{class  : "theadList-profit-loss-p2"},[
-                                            m("p",{class : "has-text-2" + item.Fee>0? "has-text-danger" :"has-text-primary"},[
-                                                item.Fee
-                                            ])
-                                        ]),
-                                    ]),
                                 ]),
+                            ]),
+                            m("p",{class: ""},[
+                                gDI18n.$t('10063') + ":",//"手续费：" 
                             ]),
                             //底部排列
                             m("div",{class : "theadList-profit-loss" ,},[
                                 m("div",{class  : "theadList-profit-loss-p1 has-text-2 theadList-profit2"},[
                                     
                                 ]),
+                                m("div",{class  : "theadList-profit-loss-p2"},[
+                                    m("p",{class : "has-text-2" + item.Fee>0?"has-text-danger" :"has-text-primary"},[
+                                        item.Fee
+                                    ])
+                                ]),
                                 m("div",{class:"cursor-pointer theadList-profit-loss-p2 theadList-profit3 has-text-2 fomt-blacl text-right"+(" historyOrdTableListItemCopy"+i), "data-clipboard-text": item.PId, onclick: function(e){
                                     window.$copy(".historyOrdTableListItemCopy"+i)
-                                }},[                                         
+                                }},[
+                                    m('div',[
+                                        gDI18n.$t('10067') + "：",//"仓位ID：",
+                                    ]),
+                                    
                                     m("div",{class : "has-text-2"},[
                                         // item.PId.substr(-4),
                                         m("i",{class : ""},[ " "]),
-                                        // m("i",{class:"iconfont iconcopy"}),
+                                        m("i",{class:"iconfont iconcopy"}),
                                     ])  
                                 ]),
                             ]),

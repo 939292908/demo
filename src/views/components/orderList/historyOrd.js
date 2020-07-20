@@ -611,38 +611,6 @@ let obj = {
             ])
         })
     },
-    getTabsList: function () {
-        return this.posItem.map((item, i) => {
-            return m('dev', { key: 'dropdown-item' + item + i, class: "" }, [
-                // m('hr', {class: "dropdown-divider "}),
-                m('a', {
-                    href: "javascript:void(0);", class: "dropdown-item" + (obj.tabsActive == i ? ' has-text-primary' : ''), onclick: function () {
-                        obj.setTabsActive(i)
-                        obj.tabsListOpen = !obj.tabsListOpen
-                        obj.getOptions(obj.arrPosItem[obj.tabsActive])
-                    }
-                }, [
-                    item
-                ])
-            ])
-
-        })
-    },
-    getTabsList2: function () {
-        return this.dirStrList.map(function (item, i) {
-            return m("p", { class: "a-text-left" + (obj.tabsActive2 == i ? ' is-active' : '') }, [
-                m("a", {
-                    key: "orderListTabsItem" + i, class: "", href: "javascript:void(0);", onclick: function () {
-                        obj.setTabsActive2(i)
-                        obj.tabsListOpen2 = !obj.tabsListOpen2
-                        obj.getOptions2(obj.dirStrList[obj.tabsActive2])
-                    }
-                }, [
-                    item
-                ])
-            ])
-        })
-    },
     getTabsList2: function () {
         return this.dirStrList.map((item, i) => {
             return m('dev', { key: 'dropdown-item' + item + i, class: "" }, [
