@@ -256,7 +256,7 @@ let obj = {
 
     getTheadList: function () {
         return this.theadList.map(function (item, i) {
-            return m("th", { key: "historyOrdtHeadItem1" + i, class: " " + item.class }, [
+            return m("th", { key: "goodsHistoryOrdtHeadItem1" + i, class: " " + item.class }, [
                 item.title
             ])
         })
