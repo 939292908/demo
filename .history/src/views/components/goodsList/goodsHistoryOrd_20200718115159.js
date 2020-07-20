@@ -1,10 +1,8 @@
 var m = require("mithril")
 import Header from "../common/Header_m"
-import FilterModal from "./components/FilterModal"
 
 let obj = {
     posList: [],
-    isShowModal: false, // 筛选模态框
     theadList: [
         {
             title: '交易对',//'',
@@ -219,7 +217,7 @@ let obj = {
                 //成交数量
                 obj.QtyF = Number(obj.QtyF || 0).toFixed2(VolMinValSize)
                 //成交金额
-                obj.PrzM = Number(obj.QtyF * obj.PrzF).toFixed2(PrzMinIncSize)
+                obj.PrzM = Number(obj.QtyF*obj.PrzF).toFixed2(PrzMinIncSize)
                 //触发条件
                 if (obj.StopPrz) {
                     obj.cond = obj.StopBy == 2 ? gDI18n.$t('10070') : obj.StopBy == 1 ? gDI18n.$t('10046') : gDI18n.$t('10048')
@@ -260,7 +258,7 @@ let obj = {
         })
     },
     //设置合约
-    setSym (Sym) {
+    setSym(Sym) {
         window.gMkt.CtxPlaying.Sym = Sym // window 保存选中
         utils.setItem('goodsActiveSymbol', Sym)
         gEVBUS.emit(gMkt.EV_CHANGESYM_UPD, { Ev: gMkt.EV_CHANGESYM_UPD, Sym: Sym })
@@ -268,11 +266,9 @@ let obj = {
     getPosList: function () {
         return this.posList.map(function (item, i) {
             return m("tr", { key: "historyOrdTableListItem" + i, class: " " }, [
-                m("td", {
-                    class: "cursor-pointer", onclick: function () {
-                        obj.setSym(item.Sym)
-                    }
-                }, [
+                m("td", { class: "cursor-pointer" ,onclick:function(){
+                    obj.setSym(item.Sym)
+                }}, [
                     m("p", { class: " " }, [
                         utils.getSymDisplayName(window.gMkt.AssetD, item.Sym)
                     ])
@@ -339,15 +335,8 @@ let obj = {
     //     obj.tabsActive2 = 0;
     //     obj.tabsActive = 0;
     // },
-
-    // 筛选模态框
-    getFilterModal() {
-        
-    },
     //移动端历史成交列表
     getMobileList: function () {
-        
-        // m端page页面
         return m("div", { class: "" }, [
             // 头部
             m(Header, {
@@ -355,7 +344,7 @@ let obj = {
                     // obj.resetNavDrawerInfo()
                 },
                 onRightClick () {
-                    obj.isShowModal = true
+                    // obj.setType = true
                     // obj.getContractList()
                 },
                 slot: {
@@ -363,14 +352,11 @@ let obj = {
                     right: m('i', { class: "iconfont icondaohang" })
                 }
             }),
-            
             //搜索框
             // obj.getSelectOptions(),
-
             // 列表
             m("div", { class: "pub-trade-list  pub-layout-m" }, [
                 this.posList.length != 0 ? this.posList.map(function (item, i) {
-                    // console.log(item, 9999999999999);
                     return m("div", { key: "historyOrdtHeadItem" + i, class: "card" }, [
                         m("div", { class: "card-content mobile-list" }, [
                             //顶部排列
@@ -378,9 +364,8 @@ let obj = {
                                 item.StatusStr == gDI18n.$t('10398'/*"全部成交"*/) ?
                                     m('a', {
                                         class: "theadList-transaction has-text-2", onclick: function () {
-                                            let path = window.gMkt.CtxPlaying.pageTradeStatus == 1 ? "/details" : "/detailsGoods"
                                             router.push({
-                                                path: path,
+                                                path: "/details",
                                                 data: item
                                             })
                                         }
@@ -488,14 +473,7 @@ let obj = {
                     ]),
                     gDI18n.$t('10463')//"暂无委托记录"
                 ])
-            ]),
-
-            // 筛选模态框
-            m(FilterModal, { 
-                isShow: obj.isShowModal,
-                allData: obj.posList,
-                onClose: () => obj.isShowModal = false, // 关闭事件
-             })
+            ])
         ])
 
     },
