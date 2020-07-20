@@ -3,7 +3,8 @@ import Header from "../common/Header_m"
 import FilterModal from "./components/FilterModal"
 
 let obj = {
-    posList: [],
+    posList: [], // 列表
+    posListAll: [], // 不被修改的列表
     isShowModal: false, // 筛选模态框
     theadList: [
         {
@@ -248,6 +249,7 @@ let obj = {
             return b.At - a.At
         })
         this.posList = posList
+        this.posListAll = JSON.parse(JSON.stringify(posList))
         // console.log(obj.posList,999999)
         m.redraw()
     },
@@ -330,20 +332,7 @@ let obj = {
             AId: uid + aType,
         })
     },
-    // //重置按钮
-    // resetNavDrawerInfo () {
-    //     obj.navDrawerInfo.Sym = gDI18n.$t('10394'),//'全部';
-    //         obj.navDrawerInfo.dir = gDI18n.$t('10394'),//'全部';
-    //         obj.navDrawerInfo.status = gDI18n.$t('10394'),//'全部';
-    //         obj.initObj()
-    //     obj.tabsActive2 = 0;
-    //     obj.tabsActive = 0;
-    // },
 
-    // 筛选模态框
-    getFilterModal() {
-        
-    },
     //移动端历史成交列表
     getMobileList: function () {
         
@@ -492,10 +481,11 @@ let obj = {
 
             // 筛选模态框
             m(FilterModal, { 
-                isShow: obj.isShowModal,
-                allData: obj.posList,
-                onClose: () => obj.isShowModal = false, // 关闭事件
-             })
+                isShow: obj.isShowModal, // modal 开关
+                allData: obj.posListAll, // 所有数据
+                getNewData: newData => obj.posList = newData, // 过滤后的数据
+                onClose: () => obj.isShowModal = false // 关闭事件
+            })
         ])
 
     },
