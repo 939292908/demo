@@ -256,16 +256,16 @@ let obj = {
                         m("div",{class : "theadList-transaction has-text-1"},[
                             m("p",{class : "theadList-transaction-p1  header-flex"},[
                                 utils.getSymDisplayName(window.gMkt.AssetD, item.displaySym),
-                                m("p",{class : "padd-left " + utils.getColorStr(item.Dir, 'font') },[
-                                    item.DirStr
-                                ]),
+                                // m("p",{class : "padd-left " + utils.getColorStr(item.Dir, 'font') },[
+                                //     item.DirStr
+                                // ]),
                             ]),
                             
                             m("div",{class  : ""},[
                                 " ",
-                            ]),
-                            m("p",{class : " "},[
-                                " ",
+                                m("p",{class : " "},[
+                                    " "
+                                ])
                             ]),
                             m("p",{class : " "},[
                                 item.AtStr

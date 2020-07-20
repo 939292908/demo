@@ -265,7 +265,7 @@ let obj = {
                                 " ",
                             ]),
                             m("p",{class : " "},[
-                                " ",
+                                // item.
                             ]),
                             m("p",{class : " "},[
                                 item.AtStr

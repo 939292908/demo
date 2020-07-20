@@ -263,9 +263,9 @@ let obj = {
                             
                             m("div",{class  : ""},[
                                 " ",
-                            ]),
-                            m("p",{class : " "},[
-                                " ",
+                                m("p",{class : " "},[
+                                    item.DirStr
+                                ])
                             ]),
                             m("p",{class : " "},[
                                 item.AtStr

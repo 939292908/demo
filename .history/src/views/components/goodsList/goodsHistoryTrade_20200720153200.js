@@ -263,13 +263,13 @@ let obj = {
                             
                             m("div",{class  : ""},[
                                 " ",
+                                m("p",{class : " "},[
+                                    " "
+                                ])
                             ]),
-                            m("p",{class : " "},[
-                                " ",
-                            ]),
-                            m("p",{class : " "},[
-                                item.AtStr
-                            ])
+                            // m("p",{class : " "},[
+                            //     item.AtStr
+                            // ])
                         ]),
                         m("hr",{class : "is-primary"}),
                         //中间排列
