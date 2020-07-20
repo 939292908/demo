@@ -261,16 +261,16 @@ let obj = {
                                 ]),
                             ]),
                             
-                            m("div",{class  : ""},[
-                                " ",
-                            ]),
-                            m("p",{class : " "},[
-                                " ",
-                            ]),
-                            m("p",{class : " "},[
-                                item.AtStr
-                            ])
-                        ]),
+                        //     m("div",{class  : ""},[
+                        //         " ",
+                        //         m("p",{class : " "},[
+                        //             " "
+                        //         ])
+                        //     ]),
+                        //     m("p",{class : " "},[
+                        //         item.AtStr
+                        //     ])
+                        // ]),
                         m("hr",{class : "is-primary"}),
                         //中间排列
                         m("div",{class :  "has-text-2"},[

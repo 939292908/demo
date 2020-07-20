@@ -265,7 +265,7 @@ let obj = {
                                 " ",
                             ]),
                             m("p",{class : " "},[
-                                " ",
+                                item.Dir
                             ]),
                             m("p",{class : " "},[
                                 item.AtStr

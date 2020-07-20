@@ -261,11 +261,11 @@ let obj = {
                                 ]),
                             ]),
                             
-                            m("div",{class  : ""},[
-                                " ",
-                            ]),
+                            // m("div",{class  : ""},[
+                            //     " ",
+                            // ]),
                             m("p",{class : " "},[
-                                " ",
+                                myDate.toLocaleString( )  
                             ]),
                             m("p",{class : " "},[
                                 item.AtStr
