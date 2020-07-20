@@ -29,6 +29,7 @@ const config = {
             historyOrd: 1,
             historyTrd: 1,
             wlt: 1,
+            myInsurance: 0, // 我的保险
         }, 
         //现货交易面板类型开关，0：关闭，1：开启
         goodsInStockList:{
