@@ -136,6 +136,7 @@ let obj = {
         this.form = {
             Prz: '',      //委托价格
             Num: '',      //委托数量
+            Total:''      //价值
         }
         this.isAutoPrz = false
         let Sym = window.gMkt.CtxPlaying.Sym
@@ -386,7 +387,7 @@ export default {
                 m("div",{class:"pub-bibi-order-BS cursor-pointer" + (obj.buttonType?" pub-bibi-order-BS-color1" :" pub-bibi-order-BS-color2"),onclick:function(){
                     obj.buttonType = !obj.buttonType
                 }},[
-                    (obj.buttonType?" 买入" :" 卖出") + (obj.getLastTick().ToC || "币种"),
+                    (obj.buttonType?" 买入" :" 卖出") + " " + (obj.getLastTick().ToC || "币种"),
                     m('i',{class:"iconfont iconswitch icon-position" + (obj.buttonType?" iconfont-switch1" :" iconfont-switch2")})
                 ]),
             ]),
@@ -455,7 +456,7 @@ export default {
                     m("div",{class:"pub-balance-button cursor-pointer is-primary-font" + (obj.buttonType?" pub-buy-sell-1" :" pub-buy-sell-2"),onclick:function(){
                         obj.submit()
                     }},[
-                        (obj.buttonType?" 买入" :" 卖出") + (obj.getLastTick().ToC || "币种"),
+                        (obj.buttonType?" 买入" :" 卖出") + " " + (obj.getLastTick().ToC || "币种"),
                     ]),
                 ]),
             ]),

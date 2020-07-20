@@ -183,7 +183,7 @@ let obj = {
     getTheadList: function () {
         return this.theadList.map(function (item, i) {
             return m("th", {
-                key: "planListTHeadItem" + i,
+                key: "goodsPlanListTHeadItem" + i,
                 class: "" + item.class
             }, [
                 item.title
@@ -201,7 +201,7 @@ let obj = {
     },
     getOrdList: function () {
         return this.posList.map(function (item, i) {
-            return m("tr", {key: "planListTableListItem" + i,class: ""}, [
+            return m("tr", {key: "goodsPlanListTableListItem1" + i,class: ""}, [
                 m("td", {class: " table-tr-td-vertical cursor-pointer",onclick:function(){
                     obj.setSym(item.Sym)
                 }}, [
@@ -238,7 +238,7 @@ let obj = {
     // m端列表
     getOrdListForM: function () {
         return this.posList.map(function (item, i) {
-            return m('.card', { key: "planTableListItemForM" + i }, [
+            return m('.card', { key: "goodsPlanTableListItemForM2" + i }, [
                 m('div', { class: 'card-content card-content-bb' }, [
                     // 1
                     m('div', { class: "columns is-mobile" }, [
