@@ -1890,7 +1890,9 @@ input[type="checkbox"] {
 }
 
 //币币交易下单模块 end
-
+.bdn {
+    border: none !important;
+}
 // -------------- 白天模式 --------------
 #light {
     background-color: $white-background-color-once-level;
