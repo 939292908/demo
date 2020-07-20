@@ -120,16 +120,19 @@ export default {
         this.typeActiveId = "all" // 类型 active
         this.stateActiveId = "all" // 状态 active
     },
-    
+
     // --------------- 生命周期 ---------------
     oninit (vnode) {
         this.initFilterList()
     },
+
     oncreate (vnode) {
     },
+
     onupdate (vnode) {
         vnode.state.initDealNameList(vnode)
     },
+
     view (vnode) {
         // 弹框 body
         let modalBody = [
@@ -249,6 +252,7 @@ export default {
             }
         })
     },
+    
     onremove () {
     }
 }
