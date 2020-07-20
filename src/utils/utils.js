@@ -852,4 +852,162 @@ utils.formateWallet = function (element,LastPrz) {
     
     return obj
 }
+
+//对输入价格随合约进行小数取值
+utils.getPrzDecimal = function(e,maxPrz,minPrz,numb){
+    //获取合约允许的小数点长度
+    let Prz = null
+    let numb2 = numb.split(".")[1]
+    let numb2Length = numb2.length
+    //获取合约允许的小数最后一位数字
+    let lastNumbMin =  numb2.substr(numb2.length-1,1)
+    //根据输入的是否含有“.”判断是否为小数
+    if(e.includes(".")){
+        let beforValue = e.split(".")[0]?e.split(".")[0] :"0"
+        let eValue = e.split(".")[1] ? e.split(".")[1] : ""
+        //获取输入数字小数点后长度
+        let eValueLength = eValue.length
+        let lastValue = eValue.substr(eValue.length-1,1)
+        //判断小数长度是否与合约要求长度相等
+        if(numb2Length == eValueLength){
+            //判断输入小数最后一位是否与合约要求的最后一位相等
+            if(lastValue == "0" || lastValue == lastNumbMin){
+                if(Number(e) > maxPrz){
+                    Prz = maxPrz
+                }else if(Number(e) < 0){
+                    Prz = minPrz
+                }else {
+                    Prz = beforValue + "." + eValue
+                }
+            }else if(Number(lastValue) % Number(lastNumbMin) == 0){
+                //不相等的情况下判断输入的最后一位能否将合约要求的最后一位数字取余为0
+                if(Number(e) > maxPrz){
+                    Prz = maxPrz
+                }else if(Number(e) < 0){
+                    Prz = minPrz
+                }else {
+                    Prz = beforValue + "." + eValue
+                }
+            }  
+        }else{
+            Prz = beforValue + "." + eValue.substring(0,numb2Length)
+        }
+    }else{
+        if(Number(e) > maxPrz){
+            Prz = maxPrz
+        }else if(Number(e) < 0){
+            Prz = minPrz
+        }else {
+            Prz = e
+        }
+    }
+
+    return Prz
+}
+
+//对输入数量随合约进行小数取值
+utils.getNumDecimal = function(e,maxNum,minNum,numb){
+    let Num = null
+    if(numb.includes(".")){
+        //获取合约允许的小数点长度
+        let numb2 = numb.split(".")[1]
+        let numb2Length = numb2.length
+        //获取合约允许的小数最后一位数字
+        let lastNumbMin =  numb2.substr(numb2.length-1,1)
+        //根据输入的是否含有“.”判断是否为小数
+        if(e.includes(".")){
+            let beforValue = e.split(".")[0]?e.split(".")[0] :"0"
+            let eValue = e.split(".")[1] ? e.split(".")[1] : ""
+            //获取输入数字小数点后长度
+            let eValueLength = eValue.length
+            let lastValue = eValue.substr(eValue.length-1,1)
+            //判断小数长度是否与合约要求长度相等
+            if(numb2Length == eValueLength){
+                //判断输入小数最后一位是否与合约要求的最后一位相等
+                if(lastValue == "0" || lastValue == lastNumbMin){
+                    if(Number(e) > maxNum){
+                        Num = maxNum
+                    }else if(Number(e) < 0){
+                        Num = minNum
+                    }else {
+                        Num = beforValue + "." + eValue
+                    }
+                }else if(Number(lastValue) % Number(lastNumbMin) == 0){
+                    //不相等的情况下判断输入的最后一位能否将合约要求的最后一位数字取余为0
+                    if(Number(e) > maxNum){
+                        Num = maxNum
+                    }else if(Number(e) < 0){
+                        Num = minNum
+                    }else {
+                        Num = beforValue + "." + eValue
+                    }
+                }  
+            }else{
+                Num = beforValue + "." + eValue.substring(0,numb2Length)
+            }
+        }else{
+            if(Number(e) > maxNum){
+                Num = maxNum
+            }else if(Number(e) < 0){
+                Num = minNum
+            }else {
+                Num = e
+            }
+        }
+    }else{
+        if(Number(e) > maxNum){
+            Num = maxNum
+        }else if(Number(e) < 0){
+            Num = minNum
+        }else{
+            if(e.includes(".")){
+                Num = e.split('.')[0]
+            }else{
+                Num = e
+            }
+        }
+    }
+    
+
+    return Num
+}
+
+//根据合约对价值小数进行取值
+utils.getTotalDecimal = function(total,numb){
+    let Num = null
+    //获取合约允许的小数点长度
+    let numb2 = numb.split(".")[1]
+    let numb2Length = numb2.length
+    //获取合约允许的小数最后一位数字
+    let lastNumbMin =  numb2.substr(numb2.length-1,1)
+    if(Number(total) == 0){
+        Num = ""
+    }else if(Number(total) != 0){
+        if(total.includes(".")){
+            let beforValue = total.split(".")[0]?total.split(".")[0] :"0"
+            let eValue = total.split(".")[1] ? total.split(".")[1] : ""
+            //获取输入数字小数点后长度
+            let eValueLength = eValue.length
+            let lastValue = eValue.substr(eValue.length-1,1)
+            //判断小数长度是否与合约要求长度相等
+            if(numb2Length == eValueLength){
+                //判断输入小数最后一位是否与合约要求的最后一位相等
+                if(lastValue == "0" || lastValue == lastNumbMin){
+                    Num = beforValue + "." + eValue
+                }else if(Number(lastValue) % Number(lastNumbMin) == 0){
+                    //不相等的情况下判断输入的最后一位能否将合约要求的最后一位数字取余为0
+                    Num = beforValue + "." + eValue
+                }  
+            }else{
+                Num = beforValue + "." + eValue.substring(0,numb2Length)
+            }
+        }else{
+            Num = total
+        }
+    }
+    return Num
+
+}
+
+
 export default utils

@@ -1,3 +1,5 @@
+import utils from "../../../utils/utils"
+
 var m = require("mithril")
 
 let obj = {
@@ -97,6 +99,7 @@ let obj = {
                 default:
 
             }
+            obj.getTotalValue()
         })
 
     },
@@ -210,92 +213,159 @@ let obj = {
     setPercentageType:function(pram){
         this.percentageType = pram
     },
+    setNumTotalValue:function(val){
+        let Percentage = null
+        switch(val){
+            case 0:
+                Percentage = 0.25;
+                break;
+            case 1:
+                Percentage = 0.5;
+                break;
+            case 2:
+                Percentage = 0.75;
+                break;
+            case 3:
+                Percentage = 1;
+                break;
+        }
+        if(this.buttonType){
+            this.form.Total = Percentage * (obj.USDTWlt.NL || 0)
+            
+            let formNum = (this.form.Total / this.form.Prz).toString()
+            let Sym = window.gMkt.CtxPlaying.Sym
+            let ass = window.gMkt.AssetD[Sym]
+            let maxPrz = utils.getFullNum(Number(ass?ass.PrzMax:0))//Number(ass?ass.PrzMax:0)
+            let minPrz = utils.getFullNum(Number(ass?ass.PrzMinInc:0))//Number(ass?ass.PrzMinInc:0)
+            //使用getFullNum转换科学计数法为小数
+            let numb = utils.getFullNum(ass.PrzMinInc).toString()
+            this.form.Num = utils.getNumDecimal(formNum,maxPrz,minPrz,numb)
+
+        }else{
+            let Num = (Percentage * (obj.wlt.NL || 0)).toString()
+
+            let Sym = window.gMkt.CtxPlaying.Sym
+            let ass = window.gMkt.AssetD[Sym]
+            let maxNum = Number(ass?ass.OrderMaxQty:0)
+            let minNum = Number(ass?ass.OrderMinQty:0)
+            //使用getFullNum转换科学计数法为小数
+            let numb = utils.getFullNum(ass.OrderMinQty).toString()
+            
+            this.form.Num = utils.getNumDecimal(Num,maxNum,minNum,numb)
+            obj.getTotalValue()
+        }
+    },
     getPercentage:function(){
         return obj.percentage.map(function(item,i){
-            return m('div',{class:"pub-div-sty text-background cursor-pointer" + (obj.percentageType == i?" is-primary is-primary-font":""),key: "percentageListItem" + i,onclick:function(){
+            return m('div',{class:"pub-div-sty text-background cursor-pointer"/* + (obj.percentageType == i?" is-primary is-primary-font":"")*/,key: "percentageListItem" + i,onclick:function(){
                     obj.setPercentageType(i)
+                    obj.setNumTotalValue(i)
                 }},[
                     item
             ])
         })
     },
+    //价格
     getInputPrz:function(e){
+        let _e = e.target.value
         let Sym = window.gMkt.CtxPlaying.Sym
         let ass = window.gMkt.AssetD[Sym]
-        console.log(ass,1111111111)
         let maxPrz = utils.getFullNum(Number(ass?ass.PrzMax:0))//Number(ass?ass.PrzMax:0)
         let minPrz = utils.getFullNum(Number(ass?ass.PrzMinInc:0))//Number(ass?ass.PrzMinInc:0)
-        console.log(maxPrz,minPrz,222222)
-        //获取合约允许变动的最小区间
         //使用getFullNum转换科学计数法为小数
         let numb = utils.getFullNum(ass.PrzMinInc).toString()
-        //获取合约允许的小数点长度
-        let numb2 = numb.split(".")[1]
-        let numb2Length = numb2.length
-        //获取合约允许的小数最后一位数字
-        let lastNumbMin =  numb2.substr(numb2.length-1,1)
-        //根据输入的是否含有“.”判断是否为小数
-        if(e.target.value.includes(".")){
-            let beforValue = e.target.value.split(".")[0]?e.target.value.split(".")[0] :"0"
-            let eValue = e.target.value.split(".")[1] ? e.target.value.split(".")[1] : ""
-            //获取输入数字小数点后长度
-            let eValueLength = eValue.length
-            let lastValue = eValue.substr(eValue.length-1,1)
-            //判断小数长度是否与合约要求长度相等
-            if(numb2Length == eValueLength){
-                //判断输入小数最后一位是否与合约要求的最后一位相等
-                if(lastValue == "0" || lastValue == lastNumbMin){
-                    if(Number(e.target.value) > maxPrz){
-                        this.form.Prz = maxPrz
-                    }else if(Number(e.target.value) < 0){
-                        this.form.Prz = minPrz
-                    }else {
-                        this.form.Prz = beforValue + "." + eValue
-                    }
-                }else if(Number(lastValue) % Number(lastNumbMin) == 0){
-                    //不相等的情况下判断输入的最后一位能否将合约要求的最后一位数字取余为0
-                    if(Number(e.target.value) > maxPrz){
-                        this.form.Prz = maxPrz
-                    }else if(Number(e.target.value) < 0){
-                        this.form.Prz = minPrz
-                    }else {
-                        this.form.Prz = beforValue + "." + eValue
-                    }
-                }  
-            }else{
-                this.form.Prz = beforValue + "." + eValue.substring(0,numb2Length)
-            }
-        }else{
-            if(Number(e.target.value) > maxPrz){
-                this.form.Prz = maxPrz
-            }else if(Number(e.target.value) < 0){
-                this.form.Prz = minPrz
-            }else {
-                this.form.Prz = e.target.value
-            }
-        }
-
+        
+        this.form.Prz = utils.getPrzDecimal(_e,maxPrz,minPrz,numb)
         obj.getTotalValue()
     },
+    //数量
     getInputNum:function(e){
-        let val = e.target.value
+        let _e = e.target.value
         let Sym = window.gMkt.CtxPlaying.Sym
         let ass = window.gMkt.AssetD[Sym]
         let maxNum = Number(ass?ass.OrderMaxQty:0)
         let minNum = Number(ass?ass.OrderMinQty:0)
-        if(Number(val) > maxNum){
-            this.form.Num = maxNum
-        }else if(Number(val) < 0){
-            this.form.Num = minNum
-        }else {
-            this.form.Num = val
-        }
-
+        //使用getFullNum转换科学计数法为小数
+        let numb = utils.getFullNum(ass.OrderMinQty).toString()
+        
+        this.form.Num = utils.getNumDecimal(_e,maxNum,minNum,numb)
         obj.getTotalValue()
     },
+    //价值
     getTotalValue:function(){
-        this.form.Total = (this.form.Num || 0) * (this.form.Prz || 0)
+        let Sym = window.gMkt.CtxPlaying.Sym
+        let ass = window.gMkt.AssetD[Sym]
+        //使用getFullNum转换科学计数法为小数
+        let numb = utils.getFullNum(ass.PrzMinInc).toString()
+        let total = ((this.form.Num || 0) * (this.form.Prz || 0)).toString()
+        this.form.Total = utils.getTotalDecimal(total,numb)
+        
     },
+    //价值变化改变数量
+    getValueChange:function(e){
+        this.form.Total = e.target.value
+        let formNum = (e.target.value / this.form.Prz).toString()
+        let Sym = window.gMkt.CtxPlaying.Sym
+        let ass = window.gMkt.AssetD[Sym]
+        let maxPrz = utils.getFullNum(Number(ass?ass.PrzMax:0))//Number(ass?ass.PrzMax:0)
+        let minPrz = utils.getFullNum(Number(ass?ass.PrzMinInc:0))//Number(ass?ass.PrzMinInc:0)
+        //使用getFullNum转换科学计数法为小数
+        let numb = utils.getFullNum(ass.PrzMinInc).toString()
+        this.form.Num = utils.getNumDecimal(formNum,maxPrz,minPrz,numb)
+    },
+
+    // 校验
+    submitVerify () {
+        if(Number(this.form.Prz) <= 0){
+            return $message({ title: gDI18n.$t('10037'/*"提示"*/), content: "价格需大于0！", type: 'danger'})
+        }
+        if(Number(this.form.Num) <= 0){
+            return $message({ title: gDI18n.$t('10037'/*"提示"*/), content: "数量需大于0！", type: 'danger'})
+        }
+        if(this.buttonType){
+            if(Number(this.form.Total) > Number((obj.USDTWlt.NL || 0))){
+                return $message({ title: gDI18n.$t('10037'/*"提示"*/), content: "资金不足！", type: 'danger'})
+            }
+        }else{
+            if(Number(this.form.Num) > Number((obj.wlt.NL || 0))){
+                return $message({ title: gDI18n.$t('10037'/*"提示"*/), content: "资金不足！", type: 'danger'})
+            }
+        }
+        
+        return true
+    },
+
+    //提交数据
+    submit:function(){
+        if(!window.gWebAPI.isLogin()){
+            return window.gWebAPI.needLogin()
+        }
+        if ( !this.submitVerify() ) return; // 校验
+
+        let Sym = window.gMkt.CtxPlaying.Sym
+        let AId = window.gTrd.RT["UserId"]+'02'
+        let dir = this.buttonType? 1 : -1;
+
+        let p = {
+            Sym: Sym,
+            AId: AId,
+            COrdId: new Date().getTime() + '',
+            Dir: dir,
+            OType: 1,
+            Prz: Number(this.form.Prz),
+            Qty: Number(this.form.Num),
+            QtyDsp: 0,
+            Tif: 0,
+            OrdFlag: 0,
+            PrzChg: 0
+        }
+        console.log(p)
+        window.gTrd.ReqTrdOrderNew(p, function(aTrd, arg){
+            if (arg.code != 0 || arg.data.ErrCode) {
+                window.$message({ title: gDI18n.$t('10037'/*"提示"*/), content: utils.getTradeErrorCode(arg.code || arg.data.ErrCode), type: 'danger'})
+            }
+        })
+    }
     
 }
 export default {
@@ -329,7 +399,7 @@ export default {
                         m("div",{class:"pub-bibi-price-text text-background"},[
                             (obj.getLastTick().FromC || "币种")
                         ]),
-                        m("input",{class:"input pub-bibi-price-US-input",step: obj.PrzStep,pattern:"\d*",value:obj.form.Prz,type:"number",placeholder:"请输入价格",oninput:function(e){
+                        m("input",{class:"input pub-bibi-price-US-input",step: obj.PrzStep,pattern:"\d*",value:obj.form.Prz,type:"number",placeholder: gDI18n.$t('10152'/*"请输入价格"*/),oninput:function(e){
                             obj.getInputPrz(e)
                         }}),
                     ]),
@@ -347,7 +417,7 @@ export default {
                         m("div",{class:"pub-bibi-price-text text-background"},[
                             (obj.getLastTick().ToC || "币种")
                         ]),
-                        m("input",{class:"input pub-bibi-price-US-input",step: obj.NumStep,pattern:"\d*",value:obj.form.Num,type:"number",placeholder:"请输入数量",oninput:function(e){
+                        m("input",{class:"input pub-bibi-price-US-input",step: obj.NumStep,pattern:"\d*",value:obj.form.Num,type:"number",placeholder:gDI18n.$t('10153'/*"请输入数量"*/),oninput:function(e){
                             obj.getInputNum(e)
                         }}),
                     ]),
@@ -365,7 +435,9 @@ export default {
                         m("div",{class:"pub-bibi-price-text text-background"},[
                             (obj.getLastTick().FromC || "币种")
                         ]),
-                        m("input",{class:"input pub-bibi-price-US-input",type:"number",value:obj.form.Total}),
+                        m("input",{class:"input pub-bibi-price-US-input",step: obj.PrzStep,pattern:"\d*",type:"number",value:obj.form.Total,oninput:function(e){
+                            obj.getValueChange(e)
+                        }}),
                     ]),
                 ]),
             ]),
@@ -380,7 +452,9 @@ export default {
                         obj.wlt.NL?Number(obj.wlt.NL).toFixed2(8) + " " + obj.getLastTick().ToC: (0).toFixed2(8) + " " + (obj.getLastTick().ToC || "")
                         
                     ]),
-                    m("div",{class:"pub-balance-button cursor-pointer is-primary-font" + (obj.buttonType?" pub-buy-sell-1" :" pub-buy-sell-2")},[
+                    m("div",{class:"pub-balance-button cursor-pointer is-primary-font" + (obj.buttonType?" pub-buy-sell-1" :" pub-buy-sell-2"),onclick:function(){
+                        obj.submit()
+                    }},[
                         (obj.buttonType?" 买入" :" 卖出") + (obj.getLastTick().ToC || "币种"),
                     ]),
                 ]),
