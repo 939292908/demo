@@ -6,6 +6,7 @@ import planList from './planList'
 import historyOrd from './historyOrd'
 import historyTrade from './historyTrade'
 import wltRec from './wltRec'
+import myInsurance from './myInsurance' // 我的保险
 import Dropdown from '../common/Dropdown'
 
 let obj = {
@@ -98,6 +99,12 @@ let obj = {
                 key: 'wlt',
                 name: gDI18n.$t('10079'),//'合约账单',
                 class: ' is-hidden-touch',
+            },
+            {
+                id: 6,
+                key: 'myInsurance',
+                name: '我的保险', //'我的保险',
+                class: ' is-hidden-touch',
             }
         ]
     },
@@ -135,6 +142,8 @@ let obj = {
                 return m(historyTrade)
             case 5: 
                 return m(wltRec)
+            case 6: 
+                return m(myInsurance) // 我的保险
         }
     }
 }
