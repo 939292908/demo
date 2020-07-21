@@ -449,7 +449,7 @@ export default {
                         m("div",{class:"pub-bibi-price-text text-background"},[
                             (obj.getLastTick().FromC || "币种")
                         ]),
-                        m("input",{class:"input pub-bibi-price-US-input",step: obj.NumStep,pattern:"\d*",value:obj.form.stopPL,type:"number",placeholder:"输入触发价",oninput:function(e){
+                        m("input",{class:"input pub-bibi-price-US-input",step: obj.PrzStep,pattern:"\d*",value:obj.form.stopPL,type:"number",placeholder:gDI18n.$t('10164'/*"请输入触发价格"*/),oninput:function(e){
                             obj.getInputStopPL(e)
                         }}),
                     ]),
