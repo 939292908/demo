@@ -1,5 +1,6 @@
 // 我的保险
 var m = require("mithril")
+import Table from '../common/Table'
 
 let obj = {
     tableList: [],
@@ -71,72 +72,72 @@ let obj = {
             {
                 title: '保险状态',
                 key: 'state',
-                class: ''
+                width: 100
             },
             {
                 title: '合约',
                 key: 'sym',
-                class: ''
+                width: 100
             },
             {
                 title: '方向',
                 key: 'direction',
-                class: ''
+                width: 100
             },
             {
                 title: '杠杆',
                 key: 'lever',
-                class: ''
+                width: 100
             },
             {
                 title: '数量',
                 key: 'num',
-                class: ''
+                width: 100
             },
             {
                 title: '开仓价格',
                 key: 'openPic',
-                class: ''
+                width: 100
             },
             {
                 title: '平仓价格',
                 key: 'closePic',
-                class: ''
+                width: 100
             },
             {
                 title: '平仓盈亏',
                 key: 'closeProfitAndLoss',
-                class: ''
+                width: 100
             },
             {
                 title: '手续费',
                 key: 'commissionCharge',
-                class: ''
+                width: 100
             },
             {
                 title: '保险金额（USDT）',
                 key: 'insuranceAmount',
-                class: ''
+                width: 100
             },
             {
                 title: '赔付金额（USDT）',
                 key: 'compensationAmount',
-                class: ''
+                width: 100
             },
             {
                 title: '开仓时间',
                 key: 'openTime',
-                class: ''
+                width: 100
             },
             {
                 title: '平仓时间',
                 key: 'closeTime',
-                class: ''
+                width: 100
             },
             {
                 title: '订单编号',
                 key: 'orderNum',
-                class: ''
+                width: 100
             },
         ]
     },
@@ -308,7 +309,11 @@ export default {
     },
     view (vnode) {
         return m("div", { class: "pub-order" }, [
-            obj.getContent()
+            // obj.getContent()
+            m(Table, {
+                columns: obj.theadList,
+                data: obj.tableList
+            })
         ])
     },
     onremove () {
