@@ -62,6 +62,14 @@ let obj = {
         this.EV_CHANGELOCALE_UPD_unbinder = window.gEVBUS.on(gDI18n.EV_CHANGELOCALE_UPD, arg => {
             that.initLanguage()
         })
+
+        //页面交易类型全局广播
+        if (this.EV_PAGETRADESTATUS_UPD_unbinder) {
+            this.EV_PAGETRADESTATUS_UPD_unbinder()
+        }
+        this.EV_PAGETRADESTATUS_UPD_unbinder = window.gEVBUS.on(gMkt.EV_PAGETRADESTATUS_UPD, arg => {
+            that.setTransferInfo()
+        })
         
     },
     initLanguage: function(){
@@ -91,6 +99,9 @@ let obj = {
         }
         if(this.EV_WEB_LOGIN_unbinder){
             this.EV_WEB_LOGIN_unbinder()
+        }
+        if (this.EV_PAGETRADESTATUS_UPD_unbinder) {
+            this.EV_PAGETRADESTATUS_UPD_unbinder()
         }
     },
 
@@ -136,8 +147,23 @@ let obj = {
             })
         }
     },
+    setTransferInfo:function(){
+        let pageTradeStatus = window.gMkt.CtxPlaying.pageTradeStatus
+        console.log(111111111)
+        switch(pageTradeStatus){
+            case 1:
+                this.form.transferTo = "01";
+                this.form.transferFrom = "03"
+                break;
+            case 2:
+                this.form.transferTo = "02";
+                this.form.transferFrom = "03"
+                break;
+        }
+    },
     initTransferInfo: function(){
         let wallets = window.gWebAPI.CTX.wallets
+        obj.setTransferInfo()
 
         let canTransferFor01 = []
         for(let item of wallets['01']){
@@ -186,6 +212,16 @@ let obj = {
                     }
                 }
                 break;
+            
+            case '02':
+                let wallet02 = window.gTrd.Wlts['02']
+                for(let item of wallet02){
+                    if(item.Coin == coin){
+                        this.form.maxTransfer = Number(item.Wdrawable || 0).toFixed2(8)
+                    }
+                }
+                break;
+
             case '03':
                 let wallet03 = window.gWebAPI.CTX.wallets_obj['03']
                 this.form.maxTransfer = Number(wallet03[coin] && wallet03[coin].mainBal || 0).toFixed2(8)
@@ -222,12 +258,15 @@ let obj = {
                     that.form.num = ''
                     that.loading = false
                     that.getWallet()
+                    obj.setTransferInfo()
                 }, 2500)
             }else{
                 window.$message({ title: gDI18n.$t('10037'/*"提示"*/), content: utils.getWebApiErrorCode(arg.result.code), type: 'danger'})
+                that.loading = false
             }
         }, function(error){
             $message({content: gDI18n.$t('10225'/*'操作超时，请稍后重试！'*/), type: 'danger'})
+            that.loading = false
         })
     }
 }

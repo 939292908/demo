@@ -63,12 +63,12 @@ let obj = {
               }
                 // return m(wlt)
             case 1:
-              if(pageTradeStatus == 1){
+              // if(pageTradeStatus == 1){
+              //   return m(transfer)
+              // }else if(pageTradeStatus == 2){
+              //   return m(goodsTransfer)
+              // }
                 return m(transfer)
-              }else if(pageTradeStatus == 2){
-                return m(goodsTransfer)
-              }
-                // return m(transfer)
         }
     }
 }

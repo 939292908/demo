@@ -97,10 +97,12 @@ let obj = {
     initWlt: function(arg){
         let Sym = window.gMkt.CtxPlaying.Sym
         let assetD = window.gMkt.AssetD[Sym] || {}
+        console.log(assetD,77777777777)
         let wallets = []
-        if(assetD.TrdCls == 2 || assetD.TrdCls == 3){
-            wallets = window.gTrd.Wlts['01']
+        if(assetD.TrdCls == 1){
+            wallets = window.gTrd.Wlts['02']
         }
+        console.log(wallets,6666666666)
         let isUpdate = false
         for(let i = 0;i < wallets.length; i++){
             let item = wallets[i]
@@ -178,11 +180,11 @@ let obj = {
     setMaxTransfer: function(){
         let coin = this.form.coin
         switch(this.form.transferFrom){
-            case '01':
-                let wallet01 = window.gTrd.Wlts['01']
-                for(let item of wallet01){
+            case '02':
+                let wallet02 = window.gTrd.Wlts['02']
+                for(let item of wallet02){
                     if(item.Coin == coin){
-                        this.form.maxTransfer = Number(item.maxTransfer || 0).toFixed2(8)
+                        this.form.maxTransfer = Number(item.Wdrawable || 0).toFixed2(8)
                     }
                 }
                 break;
