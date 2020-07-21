@@ -385,9 +385,8 @@ let obj = {
 
                 obj.AtStr = new Date(obj.At).format('MM/dd hh:mm:ss'),
 
-
-                    //止盈价
-                    obj.StopP = obj.StopP ? Number(obj.StopP || 0).toFixed2(PrzMinIncSize) : '--'
+                //止盈价
+                obj.StopP = obj.StopP ? Number(obj.StopP || 0).toFixed2(PrzMinIncSize) : '--'
                 //止损价
                 obj.StopL = obj.StopL ? Number(obj.StopL || 0).toFixed2(PrzMinIncSize) : '--'
 

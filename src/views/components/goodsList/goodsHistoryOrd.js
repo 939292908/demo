@@ -32,6 +32,9 @@ let obj = {
             title: '成交数量',//'',
             class: ""
         }, {
+            title: '手续费',//'',
+            class: ""
+        },{
             title: '成交金额',//'',
             class: ""
         }, {
@@ -136,6 +139,9 @@ let obj = {
                 title: '成交数量',//'',
                 class: ""
             }, {
+                title: '手续费',//'',
+                class: ""
+            },{
                 title: '成交金额',//'',
                 class: ""
             }, {
@@ -230,6 +236,16 @@ let obj = {
                 } else {
                     obj.cond = '--'
                 }
+                // 手续费
+                obj.Fee = 0
+                obj.FeeCoin = ''
+                // 从成交记录里边累计委托对应的盈亏以及手续费 start
+                let trades = window.gTrd.MyTrades_Obj['02'][obj.OrdId] || []
+                for (let item of trades) {
+                    obj.Fee += Number(item.Fee || 0)
+                    obj.FeeCoin = item.FeeCoin
+                }
+                obj.Fee = obj.Fee.toFixed2(8)
                 //委托时间
                 obj.AtStr = new Date(obj.At).format('MM/dd hh:mm:ss')
 
@@ -280,11 +296,11 @@ let obj = {
                     ])
                 ]),
                 m("td", { class: "" }, [
-                    m("p", { class: " " }, [
+                    m("p", { class: " " + utils.getColorStr(item.Dir, 'font')}, [
                         item.DirStr
                     ]),
                 ]),
-                m("td", { class: " " + utils.getColorStr(item.Dir, 'font') }, [
+                m("td", { class: " " }, [
                     item.OTypeStr
                 ]),
                 m("td", { class: " " }, [
@@ -301,6 +317,11 @@ let obj = {
                 ]),
                 m("td", { class: " " }, [
                     item.QtyF
+                ]),
+                m("td", { class: " " }, [
+                    item.Fee,
+                    ' ',
+                    item.FeeCoin
                 ]),
                 m("td", { class: " " }, [
                     item.PrzM
@@ -502,21 +523,22 @@ let obj = {
                 m('col', { name: "pub-table-6", width: 100 }),
                 m('col', { name: "pub-table-7", width: 100 }),
                 m('col', { name: "pub-table-8", width: 100 }),
-                m('col', { name: "pub-table-9", width: 100 }),
-                m('col', { name: "pub-table-10", width: 150 }),
-                m('col', { name: "pub-table-11", width: 150 })
+                m('col', { name: "pub-table-9", width: 180 }),
+                m('col', { name: "pub-table-10", width: 100 }),
+                m('col', { name: "pub-table-11", width: 150 }),
+                m('col', { name: "pub-table-12", width: 150 })
             ])
             return m('div', { class: " table-container" }, [
-                m('div', { class: "pub-table-head-box", style: "width: 1250px" }, [
-                    m("table", { class: "table is-hoverable ", width: '1250px', cellpadding: 0, cellspacing: 0 }, [
+                m('div', { class: "pub-table-head-box", style: "width: 1430px" }, [
+                    m("table", { class: "table is-hoverable ", width: '1430px', cellpadding: 0, cellspacing: 0 }, [
                         colgroup,
                         m("tr", { class: "" }, [
                             obj.getTheadList()
                         ])
                     ]),
                 ]),
-                m('div', { class: "pub-table-body-box", style: "width: 1250px" }, [
-                    m("table", { class: "table is-hoverable ", width: '1250px', cellpadding: 0, cellspacing: 0 }, [
+                m('div', { class: "pub-table-body-box", style: "width: 1430px" }, [
+                    m("table", { class: "table is-hoverable ", width: '1430px', cellpadding: 0, cellspacing: 0 }, [
                         colgroup,
                         obj.getPosList()
                     ])
