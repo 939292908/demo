@@ -4,7 +4,7 @@ let obj = {
     form: {
         coin: 'USDT',
         transferFrom: '03',
-        transferTo: '01',
+        transferTo: '02',
         num: '',
         maxTransfer: 0,
     },
