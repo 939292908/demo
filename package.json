@@ -1,0 +1,52 @@
+{
+  "name": "website-projects",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "watch": "cross-env BUILD_ENV=dev webpack --watch",
+    "build_dev": "cross-env BUILD_ENV=dev  webpack --config webpack/webpack.prod.conf.js -p",
+    "build": "cross-env BUILD_ENV=prod  webpack --config webpack/webpack.prod.conf.js -p",
+    "start": "cross-env BUILD_ENV=dev webpack-dev-server --open --config webpack/webpack.dev.conf.js",
+    "prod": "cross-env BUILD_ENV=prod webpack-dev-server --open --config webpack/webpack.dev.conf.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "babel-eslint": "^10.1.0",
+    "clean-webpack-plugin": "^3.0.0",
+    "cross-env": "^7.0.2",
+    "css-loader": "^3.6.0",
+    "eslint": "^7.4.0",
+    "eslint-config-standard": "^14.1.1",
+    "eslint-friendly-formatter": "^4.0.1",
+    "eslint-loader": "^4.0.2",
+    "eslint-plugin-flowtype": "^5.2.0",
+    "eslint-plugin-html": "^6.0.2",
+    "eslint-plugin-import": "^2.22.0",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-standard": "^4.0.1",
+    "extract-text-webpack-plugin": "^3.0.2",
+    "file-loader": "^6.0.0",
+    "html-loader": "^1.1.0",
+    "html-webpack-plugin": "^4.3.0",
+    "mini-css-extract-plugin": "^0.9.0",
+    "node-sass": "^4.14.1",
+    "sass-loader": "^9.0.2",
+    "style-loader": "^1.2.1",
+    "webpack": "^4.15.1",
+    "webpack-cli": "^3.3.12",
+    "webpack-dev-server": "^3.11.0"
+  },
+  "dependencies": {
+    "axios": "^0.19.2",
+    "bulma": "^0.9.0",
+    "di18n-translate": "0.0.9",
+    "mithril": "^2.0.4",
+    "md5": "^2.2.1",
+    "qs": "^6.9.1"
+  }
+}
