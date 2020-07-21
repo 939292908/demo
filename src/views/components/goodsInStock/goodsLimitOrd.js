@@ -317,11 +317,24 @@ let obj = {
 
     // 校验
     submitVerify () {
-        if(Number(this.form.Prz) <= 0){
-            return $message({ title: gDI18n.$t('10037'/*"提示"*/), content: "价格需大于0！", type: 'danger'})
+        if(this.form.Prz === '0'){
+            return $message({ title: gDI18n.$t('10037'/*"提示"*/), content: gDI18n.$t('10141'/*'下单价格不能为0'*/), type: 'danger'})
+        }else if(!this.form.Prz){
+            return $message({ title: gDI18n.$t('10037'/*"提示"*/), content: gDI18n.$t('10142'/*'下单价格不能为空'*/), type: 'danger'})
+        }else if(Number(this.form.Prz) == 0){
+            return $message({ title: gDI18n.$t('10037'/*"提示"*/), content: gDI18n.$t('10141'/*'下单价格不能为0'*/), type: 'danger'})
+        }else if(isNaN(Number(this.form.Prz))){
+            return $message({ title: gDI18n.$t('10037'/*"提示"*/), content: gDI18n.$t('10143'/*'请输入正确的价格'*/), type: 'danger'})
         }
-        if(Number(this.form.Num) <= 0){
-            return $message({ title: gDI18n.$t('10037'/*"提示"*/), content: "数量需大于0！", type: 'danger'})
+
+        if(this.form.Num === '0'){
+            return $message({ title: gDI18n.$t('10037'/*"提示"*/), content: gDI18n.$t('10144'/*'下单数量不能为0'*/), type: 'danger'})
+        }else if(!this.form.Num){
+            return $message({ title: gDI18n.$t('10037'/*"提示"*/), content: gDI18n.$t('10145'/*'下单数量不能为空'*/), type: 'danger'})
+        }else if(Number(this.form.Num) == 0){
+            return $message({ title: gDI18n.$t('10037'/*"提示"*/), content: gDI18n.$t('10144'/*'下单数量不能为0'*/), type: 'danger'})
+        }else if(isNaN(Number(this.form.Num))){
+            return $message({ title: gDI18n.$t('10037'/*"提示"*/), content: gDI18n.$t('10146'/*'请输入正确的数量'*/), type: 'danger'})
         }
         if(this.buttonType){
             if(Number(this.form.Total) > Number((obj.USDTWlt.NL || 0))){

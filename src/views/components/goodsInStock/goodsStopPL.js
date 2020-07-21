@@ -180,7 +180,6 @@ let obj = {
     initWlt: function(arg){
         let Sym = window.gMkt.CtxPlaying.Sym
         let assetD = window.gMkt.AssetD[Sym] || {}
-        // console.log(assetD,44444444444)
         let LastPrz = obj.getLastTick().LastPrz || " "
         let wallets = []
         if(assetD.TrdCls == 1){
@@ -207,10 +206,6 @@ let obj = {
         if(!isUSDTP){
             this.USDTWlt = {}
         }
-
-        // console.log(this.wlt,11111111111)
-        // console.log(this.USDTWlt,2222222222)
-        // console.log(this.getLastTick(),333333333333)
         m.redraw()
     },
     setPercentageType:function(pram){
@@ -328,24 +323,48 @@ let obj = {
         let numb = utils.getFullNum(ass.PrzMinInc).toString()
         
         this.form.stopPL = utils.getPrzDecimal(stop,maxPrz,minPrz,numb)
-        console.log(stop,11111111)
     },
 
     // 校验
     submitVerify () {
-        if(Number(this.form.Prz) <= 0){
-            return $message({ title: gDI18n.$t('10037'/*"提示"*/), content: "价格需大于0！", type: 'danger'})
+
+        if(this.form.Prz === '0'){
+            return $message({ title: gDI18n.$t('10037'/*"提示"*/), content: gDI18n.$t('10141'/*'下单价格不能为0'*/), type: 'danger'})
+        }else if(!this.form.Prz){
+            return $message({ title: gDI18n.$t('10037'/*"提示"*/), content: gDI18n.$t('10142'/*'下单价格不能为空'*/), type: 'danger'})
+        }else if(Number(this.form.Prz) == 0){
+            return $message({ title: gDI18n.$t('10037'/*"提示"*/), content: gDI18n.$t('10141'/*'下单价格不能为0'*/), type: 'danger'})
+        }else if(isNaN(Number(this.form.Prz))){
+            return $message({ title: gDI18n.$t('10037'/*"提示"*/), content: gDI18n.$t('10143'/*'请输入正确的价格'*/), type: 'danger'})
         }
-        if(Number(this.form.Num) <= 0){
-            return $message({ title: gDI18n.$t('10037'/*"提示"*/), content: "数量需大于0！", type: 'danger'})
+
+        if(this.form.Num === '0'){
+            return $message({ title: gDI18n.$t('10037'/*"提示"*/), content: gDI18n.$t('10144'/*'下单数量不能为0'*/), type: 'danger'})
+        }else if(!this.form.Num){
+            return $message({ title: gDI18n.$t('10037'/*"提示"*/), content: gDI18n.$t('10145'/*'下单数量不能为空'*/), type: 'danger'})
+        }else if(Number(this.form.Num) == 0){
+            return $message({ title: gDI18n.$t('10037'/*"提示"*/), content: gDI18n.$t('10144'/*'下单数量不能为0'*/), type: 'danger'})
+        }else if(isNaN(Number(this.form.Num))){
+            return $message({ title: gDI18n.$t('10037'/*"提示"*/), content: gDI18n.$t('10146'/*'请输入正确的数量'*/), type: 'danger'})
         }
+
+        if(this.form.stopPL === '0'){
+            return $message({ title: gDI18n.$t('10037'/*"提示"*/), content: gDI18n.$t('10158'/*'触发价格不能为0'*/), type: 'danger'})
+        }else if(!this.form.stopPL){
+            return $message({ title: gDI18n.$t('10037'/*"提示"*/), content: gDI18n.$t('10159'/*'触发价格不能为空'*/), type: 'danger'})
+        }else if(Number(this.form.stopPL) == 0){
+            return $message({ title: gDI18n.$t('10037'/*"提示"*/), content: gDI18n.$t('10158'/*'触发价格不能为0'*/), type: 'danger'})
+        }else if(isNaN(Number(this.form.stopPL))){
+            return $message({ title: gDI18n.$t('10037'/*"提示"*/), content: gDI18n.$t('10160'/*'请输入正确的触发价格'*/), type: 'danger'})
+        }
+
         if(this.buttonType){
             if(Number(this.form.Total) > Number((obj.USDTWlt.NL || 0))){
-                return $message({ title: gDI18n.$t('10037'/*"提示"*/), content: "资金不足！", type: 'danger'})
+                return $message({ title: gDI18n.$t('10037'/*"提示"*/), content: gDI18n.$t('10038'/*'可用资金不足！'*/), type: 'danger'})
             }
         }else{
             if(Number(this.form.Num) > Number((obj.wlt.NL || 0))){
-                return $message({ title: gDI18n.$t('10037'/*"提示"*/), content: "资金不足！", type: 'danger'})
+                return $message({ title: gDI18n.$t('10037'/*"提示"*/), content: gDI18n.$t('10038'/*'可用资金不足！'*/), type: 'danger'})
             }
         }
         
@@ -368,13 +387,15 @@ let obj = {
             AId: AId,
             COrdId: new Date().getTime() + '',
             Dir: dir,
-            OType: 1,
+            OType: 3,
             Prz: Number(this.form.Prz),
             Qty: Number(this.form.Num),
             QtyDsp: 0,
             Tif: 0,
             OrdFlag: 0,
-            PrzChg: 0
+            PrzChg: 0,
+            StopPrz: Number(this.form.stopPL),
+            StopBy: 1
         }
         console.log(p)
         window.gTrd.ReqTrdOrderNew(p, function(aTrd, arg){
