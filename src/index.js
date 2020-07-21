@@ -14,9 +14,11 @@ window._console = new _console()
 import broadcast from '@/libs/broadcast'
 window.gBroadcast = new broadcast()
 
+//多语言
 import i18n from '@/languages/dI18n'
 window.gI18n = new i18n()
 
+//工具库
 import utils from '@/util/utils'
 window.utils = utils
 
