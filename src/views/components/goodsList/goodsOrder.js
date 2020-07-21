@@ -224,7 +224,7 @@ let obj = {
     getOrdList: function () {
         return this.posList.map(function (item, i) {
             return m("tr", {
-                key: "orderTableListItem" + i,
+                key: "goodsOrderTableListItem2" + i,
                 class: ""
             }, [
                 m("td", {class: "table-tr-td-vertical cursor-pointer",onclick:function(){
@@ -272,7 +272,7 @@ let obj = {
     // m端列表
     getOrdListForM: function () {
         return this.posList.map(function (item, i) {
-            return m('.card', { key: "orderTableListItemForM" + i }, [
+            return m('.card', { key: "goodsOrderTableListItemForM1" + i }, [
                 m('div', { class: 'card-content card-content-bb' }, [
                     // 1
                     m('div', { class: "columns is-mobile" }, [
@@ -340,7 +340,7 @@ let obj = {
     },
     getTheadList: function () {
         return this.theadList.map(function (item, i) {
-            return m("th", { key: "ordertHeadItem" + i, class: "" + item.class }, [
+            return m("th", { key: "goodsOrdertHeadItem" + i, class: "" + item.class }, [
                 item.title
             ])
         })

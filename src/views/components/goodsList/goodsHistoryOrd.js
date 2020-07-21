@@ -256,7 +256,7 @@ let obj = {
 
     getTheadList: function () {
         return this.theadList.map(function (item, i) {
-            return m("th", { key: "historyOrdtHeadItem" + i, class: " " + item.class }, [
+            return m("th", { key: "goodsHistoryOrdtHeadItem1" + i, class: " " + item.class }, [
                 item.title
             ])
         })
@@ -269,7 +269,7 @@ let obj = {
     },
     getPosList: function () {
         return this.posList.map(function (item, i) {
-            return m("tr", { key: "historyOrdTableListItem" + i, class: " " }, [
+            return m("tr", { key: "goodsHistoryOrdTableListItem1" + i, class: " " }, [
                 m("td", {
                     class: "cursor-pointer", onclick: function () {
                         obj.setSym(item.Sym)
@@ -360,7 +360,7 @@ let obj = {
             m("div", { class: "pub-trade-list  pub-layout-m" }, [
                 this.posList.length != 0 ? this.posList.map(function (item, i) {
                     // console.log(item, 9999999999999);
-                    return m("div", { key: "historyOrdtHeadItem" + i, class: "card" }, [
+                    return m("div", { key: "goodsHistoryOrdtHeadItem3" + i, class: "card" }, [
                         m("div", { class: "card-content mobile-list" }, [
                             //顶部排列
                             m("header", { class: "" }, [
