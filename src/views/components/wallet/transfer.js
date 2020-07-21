@@ -149,7 +149,6 @@ let obj = {
     },
     setTransferInfo:function(){
         let pageTradeStatus = window.gMkt.CtxPlaying.pageTradeStatus
-        console.log(111111111)
         switch(pageTradeStatus){
             case 1:
                 this.form.transferTo = "01";
