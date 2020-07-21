@@ -3,7 +3,6 @@ var m = require("mithril")
 import wlt from './wlt'
 import transfer from './transfer'
 import goodsWlt from './goodsWlt'
-import goodsTransfer from './goodsTransfer'
 
 let obj = {
     tabsActive: 0,
@@ -63,11 +62,6 @@ let obj = {
               }
                 // return m(wlt)
             case 1:
-              // if(pageTradeStatus == 1){
-              //   return m(transfer)
-              // }else if(pageTradeStatus == 2){
-              //   return m(goodsTransfer)
-              // }
                 return m(transfer)
         }
     }
