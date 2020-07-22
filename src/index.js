@@ -34,12 +34,18 @@ instConf.updateNetLines()
 let webApi = require('@/api/webApi')
 window.gWebApi = new webApi({baseUrl: api.WebAPI})
 
+window.onresize = function(arg){
+    // 判断是否是移动端
+    window.isMobile = utils.isMobile()
+    gBroadcast.emit(gBroadcast.ONRESIZE_UPD, {Ev: gBroadcast.ONRESIZE_UPD})
+}
+// 判断是否是移动端
+window.isMobile = utils.isMobile()
 
-let root = document.body
 
-let index = require('@/views/index')
+import('@/views/index').then(arg=>{
+    let root = document.body
+    m.mount(root,arg.default)
+    import('@/route/index')
+})
 
-m.mount(root,index)
-
-
-import('@/route/index')
