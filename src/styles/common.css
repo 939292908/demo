@@ -1,13 +1,36 @@
 
 /* 公共样式 start */
-.header{
-  font-size: large;
-  background-attachment: fixed;
+
+html, body {
+  height: 100%;
+  overflow: auto;
 }
 
-.name {
-  float: right;
+.application {
+  height: 100%;
+  overflow: auto;
+  padding: var(--c-padding-level3)
 }
+
+/* 动画相关 start */
+@keyframes sliding-out-from-right {
+    from {
+        transform: translateX(100%);
+    }
+    to {
+        transform: translateX(0%);
+    }
+}
+@keyframes sliding-out-from-top {
+    from {
+        transform: translateY(-100%);
+    }
+    to {
+        transform: translateY(0%);
+    }
+}
+
+/* 动画相关 end */
 
 
 /* 公共样式 end */
