@@ -1,0 +1,48 @@
+/* 消息弹框样式 start */
+.window-message-box {
+    position: fixed;
+    z-index: 999;
+
+    
+}
+
+.window-message-box article {
+    transition: all 0.2s;
+    animation: sliding-out-from-right 0.2s;
+}
+
+@media screen and (min-width: 1025px) {
+    .window-message-box {
+        position: fixed;
+        bottom: 0;
+        right: 0;
+        width: 300px;
+        z-index: 999;
+    }
+
+}
+@media screen and (max-width: 1024px) {
+    .window-message-box {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        z-index: 999;
+    }
+
+    .window-message-box article {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: calc(100% - 24px);
+        transition: all 0.2s;
+        animation: sliding-out-from-top 0.2s;
+    }
+
+    .window-message-box article .message-header {
+        border-radius: 4px;
+    }
+
+}
+
+/* 消息弹框样式 end */
