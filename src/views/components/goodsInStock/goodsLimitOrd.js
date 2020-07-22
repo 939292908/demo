@@ -391,13 +391,13 @@ export default {
         obj.updateSpotInfo()
     },
     view: function (vnode) {
-
+        let pageTradeStatus = window.gMkt.CtxPlaying.pageTradeStatus
         return m("div", { class: "pub-place-order-form has-text-2" }, [
             m('div',{class:"pub-bibi-order"},[
-                m("div",{class:"pub-bibi-order-type"},[
+                m("div",{class:"pub-bibi-order-type is-hidden-touch"},[
                     '类型'
                 ]),
-                m("div",{class:"pub-bibi-order-BS cursor-pointer" + (obj.buttonType?" pub-bibi-order-BS-color1" :" pub-bibi-order-BS-color2"),onclick:function(){
+                m("div",{class:"pub-bibi-order-BS cursor-pointer" + (obj.buttonType?" pub-bibi-order-BS-color1" :" pub-bibi-order-BS-color2")  + (pageTradeStatus == 1?" pub-bibi-type1" : " pub-bibi-type2"),onclick:function(){
                     obj.buttonType = !obj.buttonType
                 }},[
                     (obj.buttonType?" 买入" :" 卖出") + " " + (obj.getLastTick().ToC || "币种"),
@@ -405,10 +405,10 @@ export default {
                 ]),
             ]),
             m("div",{class:"pub-bibi-price"},[
-                m('div',{class:"pub-bibi-price-til"},[
+                m('div',{class:"pub-bibi-price-til is-hidden-touch"},[
                     "价格"
                 ]),
-                m('div',{class:"pub-bibi-price-inp"},[
+                m('div',{class:"pub-bibi-price-inp" + (pageTradeStatus == 1?" pub-bibi-price-inp1" : " pub-bibi-price-inp2")},[
                     m("div",{class:"pub-bibi-price-US"},[
                         m("div",{class:"pub-bibi-price-text text-background"},[
                             (obj.getLastTick().FromC || "币种")
@@ -423,10 +423,10 @@ export default {
                 ]),
             ]),
             m("div",{class:"pub-bibi-price"},[
-                m('div',{class:"pub-bibi-price-til"},[
+                m('div',{class:"pub-bibi-price-til is-hidden-touch"},[
                     "数量"
                 ]),
-                m('div',{class:"pub-bibi-price-inp"},[
+                m('div',{class:"pub-bibi-price-inp" + (pageTradeStatus == 1?" pub-bibi-price-inp1" : " pub-bibi-price-inp2")},[
                     m("div",{class:"pub-bibi-price-US"},[
                         m("div",{class:"pub-bibi-price-text text-background"},[
                             (obj.getLastTick().ToC || "币种")
@@ -441,10 +441,10 @@ export default {
                 ]),
             ]),
             m("div",{class:"pub-bibi-price"},[
-                m('div',{class:"pub-bibi-price-til"},[
+                m('div',{class:"pub-bibi-price-til is-hidden-touch"},[
                     "价值"
                 ]),
-                m('div',{class:"pub-bibi-price-inp"},[
+                m('div',{class:"pub-bibi-price-inp" + (pageTradeStatus == 1?" pub-bibi-price-inp1" : " pub-bibi-price-inp2")},[
                     m("div",{class:"pub-bibi-price-US"},[
                         m("div",{class:"pub-bibi-price-text text-background"},[
                             (obj.getLastTick().FromC || "币种")
@@ -455,11 +455,12 @@ export default {
                     ]),
                 ]),
             ]),
+            m('.spacer'),
             m("div",{class:"pub-bibi-price"},[
-                m('div',{class:"pub-bibi-price-til"},[
+                m('div',{class:"pub-bibi-price-til is-hidden-touch"},[
                     "余额"
                 ]),
-                m('div',{class:"pub-bibi-price-inp"},[
+                m('div',{class:"pub-bibi-price-inp" + (pageTradeStatus == 1?" pub-bibi-price-inp1" : " pub-bibi-price-inp2")},[
                     m("div",{class:"pub-balance"},[
                         obj.buttonType?
                         obj.USDTWlt.NL?Number(obj.USDTWlt.NL).toFixed2(8)+ " " + obj.getLastTick().FromC: (0).toFixed2(8)+ " " + (obj.getLastTick().FromC || "") :
