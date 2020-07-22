@@ -61,7 +61,9 @@ let obj = {
     for(let key in Poss){
       let pos = Poss[key]
       let ass = window.gMkt.AssetD[pos.Sym]
-      let _obj = utils.getPosInfo(pos, ass,UPNLPrzActive)
+      let lastTick = window.gMkt.lastTick[pos.Sym]
+      // let _obj = utils.getPosInfo(pos, ass,UPNLPrzActive)
+      let _obj = utils.getPosInfo(pos.PId, Poss, ass,UPNLPrzActive, lastTick)
       if(_obj && _obj.Sym == window.gMkt.CtxPlaying.Sym){
         posList.push(_obj)
         this.posList_obj[_obj.PId] = _obj

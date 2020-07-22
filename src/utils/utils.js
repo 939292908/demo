@@ -574,7 +574,7 @@ utils.getStopPLByStr = function(dir){
  * @pos 仓位数据信息
  * @assetD 仓位对应合约的合约详情
  */
-utils.getPosInfo = function(PId, posObj,assetD,UPNLPrzActive, lastTick){
+utils.getPosInfo = function(PId,posObj,assetD,UPNLPrzActive, lastTick){
     let pos = posObj[PId]
     if(pos && assetD){
         //处理全仓强平价显示距标记价最近的 start

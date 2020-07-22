@@ -172,20 +172,28 @@ let obj = {
     let Poss =window.gTrd.Poss
     let posList = []
     let UPNLPrzActive = window.$config.future.UPNLPrzActive
-    for(let key in Poss){
-      let pos = Poss[key]
-      let ass = window.gMkt.AssetD[pos.Sym]
-      let obj = utils.getPosInfo(pos, ass,UPNLPrzActive)
-      if(obj && obj.Sz != 0){
-        if (window.$dropdownType == 1){
+    if (window.$dropdownType ==1){
+      for(let key in Poss){
+        let pos = Poss[key]
+        let ass = window.gMkt.AssetD[pos.Sym]
+        let lastTick = window.gMkt.lastTick[pos.Sym]
+        let obj = utils.getPosInfo(pos.PId, Poss, ass,UPNLPrzActive, lastTick)
+        if(obj && obj.Sz != 0){
           posList.push(obj)
-        }else{
-          let Sym = window.gMkt.CtxPlaying.Sym
-          if (obj.Sym == Sym){
+        }
+      }
+    } else {
+      let Sym= window.gMkt.CtxPlaying.Sym
+      for (let key in Poss) {
+        let pos = Poss[key]
+        let ass = window.gMkt.AssetD[pos.Sym]
+        let lastTick = window.gMkt.lastTick[pos.Sym]
+        let obj = utils.getPosInfo(pos.PId, Poss, ass, UPNLPrzActive, lastTick)
+        if(obj.Sym == Sym){
+          if (obj && obj.Sz != 0) {
             posList.push(obj)
           }
-        }
-        
+        }  
       }
     }
     this.posList = posList

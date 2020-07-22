@@ -276,6 +276,7 @@ export default {
         spotTick.subTick()
     },
     view:function(vnode){
+        let pageTradeStatus = window.gMkt.CtxPlaying.pageTradeStatus
         return m("div",[
             spotTick.getTopTick(),
             spotTick.getKlineM(),
@@ -289,13 +290,14 @@ export default {
                             gDI18n.$t('10012')//'最新成交'
                         ])
                       ]),
+                      pageTradeStatus == 1?
                       m("li",{class:""+(spotTick.tabsActive == 1?' is-active':'')},[
                         m("a",{class:"", onclick: function(){
                             spotTick.setTabsActive(1)
                         }},[
                             gDI18n.$t('10441')//'合约简介'
                         ])
-                      ])
+                      ]):""
                     ]),
                 ]),
                 spotTick.getContent()
