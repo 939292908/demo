@@ -69,6 +69,7 @@ let obj = {
         }
         this.EV_PAGETRADESTATUS_UPD_unbinder = window.gEVBUS.on(gMkt.EV_PAGETRADESTATUS_UPD, arg => {
             that.setTransferInfo()
+            that.initTransferInfo()
         })
         
     },
@@ -165,12 +166,23 @@ let obj = {
         obj.setTransferInfo()
 
         let canTransferFor01 = []
-        for(let item of wallets['01']){
-            if(item.Setting.canTransfer){
-                canTransferFor01.push(item.wType)
-            }
+        let pageTradeStatus = window.gMkt.CtxPlaying.pageTradeStatus
+        switch(pageTradeStatus){
+            case 1:
+                for(let item of wallets['01']){
+                    if(item.Setting.canTransfer){
+                        canTransferFor01.push(item.wType)
+                    }
+                }
+                break;
+            case 2:
+                for(let item of wallets['02']){
+                    if(item.Setting.canTransfer){
+                        canTransferFor01.push(item.wType)
+                    }
+                }
+                break;
         }
-
         let canTransferFor03 = []
         for(let item of wallets['03']){
             if(item.Setting.canTransfer){
