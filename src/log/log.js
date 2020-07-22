@@ -1,5 +1,7 @@
 class _console {
     constructor(){
+        this.log_MSG = true
+        this.log_API = true
         this.log_ht = true
     }
 

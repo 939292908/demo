@@ -22,7 +22,7 @@ class webApi {
             data: aData, 
             options: {}
         }).then(function (result){
-            if (DBG_REQUEST) {window._console.log('ht',DBG_TAG,"ReqUserInfo Rsp",result)}
+            if (DBG_REQUEST) {window._console.log(DBG_TAG,"ReqUserInfo Rsp",result)}
             /*
             {
                 result: {
@@ -75,7 +75,7 @@ class webApi {
                 aOnSuccess(arg)
             }
         }).catch(function(e) {
-            if (DBG_REQUEST) {window._console.log('ht',DBG_TAG,"ReqUserInfo err",e)}
+            if (DBG_REQUEST) {window._console.log(DBG_TAG,"ReqUserInfo err",e)}
             if (aOnError) {
                 aOnError(e)
             }

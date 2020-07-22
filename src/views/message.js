@@ -10,14 +10,14 @@ let msg = {
         //全局message事件
         let that = this
         window.$message = function({title = '提示', content = '', type = 'dark'}){
-            if(that.DBG_MESSAGE){console.log(__filename,"MESSAGE",{title, content})}
+            if(that.DBG_MESSAGE){_console.log('MSG',__filename,"MESSAGE",{title, content})}
             that.addMessageDom({title,content,type})
         }
     },
     addMessageDom: function (arg) {
         let that = this;
         let msg = this.createMsg(arg)
-        _console.log('ht', msg)
+        _console.log('MSG', msg)
         msg.delTimer = setTimeout(function () {
             that.delMsg(msg.key)
         }, that.DEL_INTERVAL)
