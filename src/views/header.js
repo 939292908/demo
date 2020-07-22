@@ -28,6 +28,46 @@ module.exports = {
                     }}, [
                         'Home'
                     ]),
+                    m('a.navbar-item', {}, [
+                        gI18n.$t('10001')
+                    ]),
+                    m('div.navbar-item.has-dropdown.is-hoverable', {}, [
+                        m('div.navbar-link', {}, [
+                            '切换语言'
+                        ]),
+                        m('div.navbar-dropdown', {}, [
+                            m('a.navbar-item', {
+                                class: ""+(gI18n.locale == 'zh'?' is-active':''),
+                                onclick:function(){
+                                    gI18n.setLocale('zh', res=>{
+                                        _console.log('header setLocale',res)
+                                    })
+                                }
+                            }, [
+                                '简体中文'
+                            ]),
+                            m('a.navbar-item', {
+                                class: ""+(gI18n.locale == 'en'?' is-active':''),
+                                onclick:function(){
+                                    gI18n.setLocale('en', res=>{
+                                        _console.log('header setLocale',res)
+                                    })
+                                }
+                            }, [
+                                'English'
+                            ]),
+                            m('a.navbar-item', {
+                                class: ""+(gI18n.locale == 'tw'?' is-active':''),
+                                onclick:function(){
+                                    gI18n.setLocale('tw', res=>{
+                                        _console.log('header setLocale',res)
+                                    })
+                                }
+                            }, [
+                                '繁体中文'
+                            ]),
+                        ])
+                    ]),
                     m('div.navbar-item.has-dropdown.is-hoverable', {}, [
                         m('div.navbar-link', {}, [
                             'More'
