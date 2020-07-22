@@ -121,7 +121,7 @@ class _console {
      */
     trace(key, label){
         if(this[`log_${key}`]){
-            console.trace(label)
+            console.trace(label || 'console.trace')
         } 
     }
 
