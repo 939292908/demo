@@ -238,6 +238,7 @@ let obj = {
         list.sort(function (a, b) {
             return b.At - a.At
         })
+        obj.splitList(list)
         // this.list = list
         //根据 obj.navCoinInfo 筛选this.list数据
         if(this.navCoinInfo.Coin == this.oldNavCoinInfo.Coin && this.navCoinInfo.Stat == this.oldNavCoinInfo.Stat){
@@ -273,6 +274,26 @@ let obj = {
         }
         m.redraw()
     },
+
+    //分割数据，实现本地数据滚动加载
+    splitList:function(list){
+        let newList = []
+        let listLength = list.length
+        let num = 20
+        let ind =  0
+        for(let i = 0;i<=listLength;i++){
+            if(i%num == 0 && i != 0){
+                newList.push(list.slice(ind,i))
+                ind = i
+            }
+            
+            if((i + 1) == listLength){
+                newList.push(list.slice(ind,(i + 1)))
+            }
+        }
+        console.log(newList,111111111111)
+    },
+
     getTheadItem: function () {
         return this.theadList.map(function (item, i) {
             return m("th", { key: "historyOrdtHeadItem" + i, class: "" + item.class }, [
