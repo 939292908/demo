@@ -131,7 +131,6 @@ class _DI18n {
             let msg = {}
             msg[locale] = arg.default
             s.di18n.setMessages(msg)
-            m.redraw()
         })
         
         
