@@ -5,7 +5,7 @@ require('@/styles/pages/home.css')
 
 module.exports = {
     oncreate: function () {
-        _console.trace('ht')
+        
     },
     view: function () {
         return m('div.application', [
