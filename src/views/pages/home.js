@@ -1,12 +1,11 @@
 let m = require('mithril')
-const { default: _console } = require('../../log/log')
 
 require('@/styles/pages/home.css')
 
 
 module.exports = {
     oncreate: function () {
-        window._console.trace('ht')
+        _console.trace('ht')
     },
     view: function () {
         return m('div.application', [
