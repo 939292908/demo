@@ -1,3 +1,4 @@
+let m = require('mithril')
 const DI18n = require('di18n-translate')
 
 class _DI18n {
@@ -120,56 +121,58 @@ class _DI18n {
                 "open": 0
             }
         }
-        
+
         s.di18n = new DI18n({
             locale: locale,       // 语言环境
             isReplace: false,   // 是否开启运行时功能(适用于没有使用任何构建工具开发流程)
-            messages: s.initOpenLang()
+            messages: {}
         })
-
-    }
-
-
-    initOpenLang(){
-        let s = this
-        let langList = {
-            // en: require('./resource/en.json'),
-            // zh: require('./resource/zh.json'),
-        }
+        import(`./resource/${locale}.json`).then(arg =>{
+            let msg = {}
+            msg[locale] = arg.default
+            s.di18n.setMessages(msg)
+            m.redraw()
+        })
         
-        for(let key in s.langList){
-            if(s.langList[key].open){
-                langList[key] = require(`./resource/${key}.json`)
-            }
-        }   
+        
 
-        return langList
     }
 
     setLocaleMessages(lang, cb){
         let s = this
-        require.ensure([], function (require) {
-            let obj = require(`./resource/${lang}.json`);
-            s.setMessages(lang, obj)
-            cb(obj)
-        }, `lang_${lang}`);
+        import(`./resource/${lang}.json`).then(arg =>{
+            let msg = {}
+            msg[lang] = arg.default
+            s.di18n.setMessages(msg)
+            cb && cb(arg)
+        })
     }
 
     setLocale(lang, cb){
         let s = this
-        s.di18n.setLocale(lang, arg =>{
-            s.locale = lang
-            localStorage.setItem('language', lang)
-            cb && cb(lang)
-        })
-        // s.setLocaleMessages(lang, arg => {
-        //     s.di18n.setLocale(lang, cb)
+        // s.di18n.setLocale(lang, arg =>{
+        //     s.locale = lang
+        //     localStorage.setItem('language', lang)
+        //     cb && cb(lang)
         // })
+        s.setLocaleMessages(lang, arg => {
+            s.di18n.setLocale(lang, res=>{
+                s.locale = lang
+                localStorage.setItem('language', lang)
+                m.redraw()
+                cb && cb(lang)
+            })
+        })
     }
 
     $t(str, options){
         let s = this
-        return s.di18n.$t(str, options)
+        if(Object.keys(s.di18n.messages).length > 0){
+            return s.di18n.$t(str, options)
+        }else{
+            return str
+        }
+        
     }
 
 }
