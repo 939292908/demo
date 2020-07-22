@@ -4,7 +4,6 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
-
 module.exports = {
     mode: "production",
     entry: {
@@ -13,6 +12,9 @@ module.exports = {
     output: {
         filename: 'static/js/[name].[chunkhash].js',
         path: path.resolve(__dirname, '../dist')
+    },
+    optimization: {
+        minimize: true, //是否开启压缩
     },
     plugins: [
         new CleanWebpackPlugin({ template: '../dist' }),
@@ -88,6 +90,12 @@ module.exports = {
                 ]
             },
             {
+                test: /\.(js|jsx)$/,
+                use: [{
+                    loader:'babel-loader',
+                }],
+            },
+            {
                 test: /\.js$/,
                 use:[{loader:'eslint-loader',
                     options: { // 这里的配置项参数将会被传递到 eslint 的 CLIEngine 
@@ -97,17 +105,6 @@ module.exports = {
                 enforce: "pre", // 编译前检查
                 exclude: /node_modules/, // 不检测的文件
                 include: [path.resolve(__dirname, 'src')], // 指定检查的目录
-            },
-            {
-                test: /\.(js|jsx)$/,
-                use: [{
-                    loader:'babel-loader',
-                    options:{//options、query不能和loader数组一起使用
-                        cacheDirectory:true//利用缓存，提高性能，babel is slow
-                    },
-                }],
-                include: path.resolve(__dirname, 'src'),
-                
             },
         ]
     }
