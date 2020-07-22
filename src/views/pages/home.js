@@ -8,7 +8,7 @@ module.exports = {
         
     },
     view: function () {
-        return m('div.application', [
+        return m('div', [
             m('h1.title.is-1', ['home']),
             m('a', {
                 class: "home-link",
@@ -17,6 +17,14 @@ module.exports = {
                 }
             }, [
                 'to userCenter'
+            ]),
+            m('br'),
+            m('button.button', {
+                onclick: function () {
+                    window.$message({content: "这是一条消息！", type: "success"})
+                }
+            }, [
+                'message'
             ])
         ])
     }
