@@ -63,7 +63,7 @@ const chart = Object.freeze({
     darken: '#22B992',
     darken1: '#22B992'
 });
-
+// 主题颜色合集
 const theme = {
     primary,
     success,
@@ -75,20 +75,42 @@ const theme = {
     chart
 }
 
-let styleStr = ':root{'
-// 设置html的css变量
-for(let key in theme){
-    let item = theme[key]
-    for(let k in item){
-        let it = item[k]
-        styleStr+=`--c-${key}-${k}: ${it};`
-    }
+// 样式类
+
+const padding = {
+    level1: '4px',
+    level2: '8px',
+    level3: '12px',
+    level4: '16px',
+    level5: '20px',
 }
-styleStr+='}'
-var style = document.createElement('style'); 
-style.type = 'text/css'; 
-style.innerHTML=styleStr; 
-document.getElementsByTagName('head').item(0).appendChild(style); 
+
+const margin = {
+    level1: '4px',
+    level2: '8px',
+    level3: '12px',
+    level4: '16px',
+    level5: '20px',
+}
+
+const radius = {
+    level1: '5px',
+    level2: '10px',
+    level3: '15px',
+}
+
+const fontweight = {
+    level1: 400,
+    level2: 500,
+    level3: 600
+}
+
+const styles = {
+    padding,
+    margin,
+    radius,
+    fontweight
+}
 
 
-export default theme
+export default {styles, theme}
