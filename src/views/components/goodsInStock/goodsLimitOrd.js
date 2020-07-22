@@ -413,7 +413,7 @@ export default {
                         m("div",{class:"pub-bibi-price-text text-background"},[
                             (obj.getLastTick().FromC || "币种")
                         ]),
-                        m("input",{class:"input pub-bibi-price-US-input",step: obj.PrzStep,pattern:"\d*",value:obj.form.Prz,type:"number",placeholder: gDI18n.$t('10152'/*"请输入价格"*/),oninput:function(e){
+                        m("input",{class:"input pub-bibi-price-US-input",step: obj.PrzStep,pattern:"\d*",value:obj.form.Prz,type:"number",placeholder: "价格",oninput:function(e){
                             obj.getInputPrz(e)
                         }}),
                     ]),
@@ -431,7 +431,7 @@ export default {
                         m("div",{class:"pub-bibi-price-text text-background"},[
                             (obj.getLastTick().ToC || "币种")
                         ]),
-                        m("input",{class:"input pub-bibi-price-US-input",step: obj.NumStep,pattern:"\d*",value:obj.form.Num,type:"number",placeholder:gDI18n.$t('10153'/*"请输入数量"*/),oninput:function(e){
+                        m("input",{class:"input pub-bibi-price-US-input",step: obj.NumStep,pattern:"\d*",value:obj.form.Num,type:"number",placeholder:"数量",oninput:function(e){
                             obj.getInputNum(e)
                         }}),
                     ]),

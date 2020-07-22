@@ -404,7 +404,7 @@ export default {
                         m("div",{class:"pub-bibi-price-text text-background"},[
                             (obj.getLastTick().ToC || "币种")
                         ]),
-                        m("input",{class:"input pub-bibi-price-US-input",step: obj.NumStep,pattern:"\d*",value:obj.form.Num,type:"number",placeholder:gDI18n.$t('10153'/*"请输入数量"*/),oninput:function(e){
+                        m("input",{class:"input pub-bibi-price-US-input",step: obj.NumStep,pattern:"\d*",value:obj.form.Num,type:"number",placeholder:"数量",oninput:function(e){
                             obj.getInputNum(e)
                         }}),
                     ]),
