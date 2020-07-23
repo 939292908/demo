@@ -2,7 +2,7 @@ let m = require('mithril')
 
 const defaultRoutePath = "/home"
 
-m.route(document.querySelector('.application>.content'), defaultRoutePath, {
+m.route(document.querySelector('body .route-box'), defaultRoutePath, {
     '/home': {
         onmatch: function () {
             return import('@/views/pages/home')
