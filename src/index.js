@@ -23,6 +23,10 @@ window.gI18n = new i18n()
 import utils from '@/util/utils'
 window.utils = utils
 
+//工具库
+import errCode from '@/util/errCode'
+window.errCode = errCode
+
 // 请求接口配置
 import Conf from "@/api/apiConf"
 let instConf = new Conf(process.env.BUILD_ENV)
