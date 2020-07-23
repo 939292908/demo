@@ -36,6 +36,13 @@ module.exports = {
                     m('a.navbar-item', {}, [
                         gI18n.$t('10001')
                     ]),
+                    m('a.navbar-item', {
+                        onclick: function(){
+                            window.themeDark = !window.themeDark
+                        }
+                    }, [
+                        window.themeDark?'light':'dark'
+                    ]),
                     m('div.navbar-item.has-dropdown.is-hoverable', {}, [
                         m('div.navbar-link', {}, [
                             '切换语言'
