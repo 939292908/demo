@@ -86,7 +86,7 @@ module.exports = {
 }
 ```  
 
-* 各模块内不能直接写`color`、`background-color`、`border-color`、`margin`、`padding`、`border-radius`、`font-size`、`font-weight`、`box-shadow`，统一使用规范内相应的类名；
+* ；
 
 
 
