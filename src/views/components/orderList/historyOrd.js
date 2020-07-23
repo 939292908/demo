@@ -13,6 +13,16 @@ let obj = {
     contract: [],
     purchase: [],
     stateType: [],
+
+    newList:[],
+    newLenget: 0,
+    scrollList:[],
+    //行情限制数据处理时间间隔
+    TRADECLACTNTERVAL: 100,
+    //成交最后更新时间
+    lastTmForTrade: 0,
+    updateTradeTimer: null,
+
     //
     tabsActive: 0,
     tabsListOpen: false,
@@ -176,6 +186,13 @@ let obj = {
         this.EV_CHANGESYM_UPD_unbinder = window.gEVBUS.on(gMkt.EV_CHANGESYM_UPD, arg => {
             obj.initObj()
         })
+        //单条数据推送
+        if (this.EV_WLTLOG_UPD_unbinder) {
+            this.EV_WLTLOG_UPD_unbinder()
+        }
+        this.EV_WLTLOG_UPD_unbinder = window.gEVBUS.on(gMkt.EV_WLTLOG_UPD, arg => {
+            that.onTrade(arg)
+        })
     },
     initLanguage: function () {
         this.theadList = [
@@ -299,6 +316,31 @@ let obj = {
         if (this.EV_CHANGESYM_UPD_unbinder) {
             this.EV_CHANGESYM_UPD_unbinder()
         }
+        //单条数据推送
+        if (this.EV_WLTLOG_UPD_unbinder) {
+            this.EV_WLTLOG_UPD_unbinder()
+        }
+    },
+
+    //单条数据推送
+    onTrade: function (param) {
+        let that = this
+        let tm = Date.now()
+        if (!this.updateTradeTimer) {
+            this.updateTradeTimer = setTimeout(() => {
+                that.initObj()
+                that.lastTmForTrade = tm
+                this.updateTradeTimer = null
+            }, this.TRADECLACTNTERVAL + 50)
+        }
+        if (tm - this.lastTmForTrade > this.TRADECLACTNTERVAL) {
+            that.initObj()
+            this.lastTmForTrade = tm
+            if (this.updateTradeTimer) {
+                clearTimeout(this.updateTradeTimer)
+                this.updateTradeTimer = null
+            }
+        }
     },
     initObj () {
         let Orders = window.gTrd.HistoryOrders['01']
@@ -403,6 +445,9 @@ let obj = {
         posList.sort(function (a, b) {
             return b.At - a.At
         })
+        this.newList = (utils.splitList(posList,20)[0] || [])
+        this.scrollList = (utils.splitList(posList,20) || [])
+
         this.posListTwo = posList
         console.log(this.posListTwo, "原始数据")
         // this.posList = posList
@@ -476,7 +521,18 @@ let obj = {
         }
         m.redraw()
     },
-
+    getScroll:function(e){
+        let contentH = e.target.clientHeight; //获取可见区域高度
+        let scrollHight = e.target.scrollHeight; //获取全文高度
+        let scrollTop = e.target.scrollTop //获取被卷去的高度
+        let NL = this.scrollList.length-1
+        let _H = contentH + scrollTop
+        // let Num = this.newLenget + 1
+        if(_H >=(scrollHight) && this.newLenget < NL){
+            this.newLenget++
+            this.newList =this.newList.concat(this.scrollList[this.newLenget])
+        }
+    },
     getTheadList: function () {
         return this.theadList.map(function (item, i) {
             return m("th", { key: "historyOrdtHeadItem" + i, class: " " + item.class }, [
@@ -491,7 +547,7 @@ let obj = {
         gEVBUS.emit(gMkt.EV_CHANGESYM_UPD, { Ev: gMkt.EV_CHANGESYM_UPD, Sym: Sym })
     },
     getPosList: function () {
-        return this.posList.map(function (item, i) {
+        return this.newList.map(function (item, i) {
             return m("tr", { key: "historyOrdTableListItem" + i, class: " " }, [
                 m("td", { class: "cursor-pointer" ,onclick:function(){
                     obj.setSym(item.Sym)
@@ -997,11 +1053,14 @@ let obj = {
                         ])
                     ]),
                 ]),
-                m('div', { class: "pub-table-body-box", style: "width: 1730px" }, [
+                m('div', { class: "pub-table-body-box", style: "width: 1730px" ,onscroll:function(e){
+                    obj.getScroll(e)
+                }}, [
                     m("table", { class: "table is-hoverable ", width: '1730px', cellpadding: 0, cellspacing: 0 }, [
                         colgroup,
                         obj.getPosList()
-                    ])
+                    ]),
+                    
                 ]),
             ])
         }
@@ -1025,5 +1084,6 @@ export default {
     },
     onremove: function () {
         obj.rmEVBUS()
+        obj.newLenget = 0
     }
 }
