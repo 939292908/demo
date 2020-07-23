@@ -78,6 +78,7 @@ const theme = {
 // 样式类
 
 const padding = {
+    level0: '0px',
     level1: '4px',
     level2: '8px',
     level3: '12px',
@@ -86,6 +87,7 @@ const padding = {
 }
 
 const margin = {
+    level0: '0px',
     level1: '4px',
     level2: '8px',
     level3: '12px',
@@ -94,6 +96,7 @@ const margin = {
 }
 
 const radius = {
+    level0: '0px',
     level1: '5px',
     level2: '10px',
     level3: '15px',
