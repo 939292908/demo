@@ -1,7 +1,7 @@
 
 /* 公共样式 start */
 
-html, body {
+html, body, .section {
   height: 100%;
   overflow: auto;
 }
@@ -30,11 +30,103 @@ html, body {
 /* 公共样式 end */
 
 /* 主题样式 start */
+/* 白天 */
+#theme--light {
+  background-color: var(--c-background-lighten);
+  color: var(--c-font-lighten); 
+}
+
+/* light UI库样式覆盖 start */
+/* 背景 */
+#theme--light .navbar,
+#theme--light .footer,
+#theme--light .navbar-dropdown  {
+  background-color: var(--c-background-lighten1);
+}
+
+#theme--light a.navbar-item:focus, 
+#theme--light a.navbar-item:focus-within, 
+#theme--light a.navbar-item:hover, 
+#theme--light a.navbar-item.is-active, 
+#theme--light .navbar-link:focus, 
+#theme--light .navbar-link:focus-within, 
+#theme--light .navbar-link:hover, 
+#theme--light .navbar-link.is-active,
+#theme--light .navbar-item.has-dropdown:focus .navbar-link, 
+#theme--light .navbar-item.has-dropdown:hover .navbar-link, 
+#theme--light .navbar-item.has-dropdown.is-active .navbar-link  {
+  background-color: var(--c-background-lighten2);
+}
+/* 文字 */
+#theme--light .has-text-title{
+  color: var(--c-font-lighten); 
+}
+
+#theme--light .navbar-item, 
+#theme--light .navbar-link, 
+#theme--light strong   {
+  color: var(--c-font-lighten); 
+}
+
+/* 线 */
+#theme--light .navbar-divider {
+  background-color: var(--c-line-lighten1); 
+}
+
+#theme--light .navbar-dropdown {
+  border-color: var(--c-line-lighten1);
+}
+
+/* light UI库样式覆盖 end */
+
+/* 黑夜 */
+#theme--dark {
+  background-color: var(--c-background-darken);
+  color: var(--c-font-darken); 
+}
+
+/* dark UI库样式覆盖 start */
+/* 背景 */
+#theme--dark .navbar,
+#theme--dark .footer,
+#theme--dark .navbar-dropdown {
+  background-color: var(--c-background-darken1);
+}
+
+#theme--dark a.navbar-item:focus, 
+#theme--dark a.navbar-item:focus-within, 
+#theme--dark a.navbar-item:hover, 
+#theme--dark a.navbar-item.is-active, 
+#theme--dark .navbar-link:focus, 
+#theme--dark .navbar-link:focus-within, 
+#theme--dark .navbar-link:hover, 
+#theme--dark .navbar-link.is-active,
+#theme--dark .navbar-item.has-dropdown:focus .navbar-link, 
+#theme--dark .navbar-item.has-dropdown:hover .navbar-link, 
+#theme--dark .navbar-item.has-dropdown.is-active .navbar-link{
+  background-color: var(--c-background-darken2);
+}
+
+/* 文字 */
+#theme--dark .has-text-title{
+  color: var(--c-font-darken); 
+}
+
+#theme--dark .navbar-item, 
+#theme--dark .navbar-link, 
+#theme--dark strong  {
+  color: var(--c-font-darken);
+}
+
+/* 线 */
+#theme--dark .navbar-divider {
+  background-color: var(--c-line-darken1);
+}
+
+#theme--dark .navbar-dropdown {
+  border-color: var(--c-line-darken1);
+}
+/* dark UI库样式覆盖 start */
 
 
 /* 主题样式 end */
-
-
-/* 自适应布局样式 start */
-
-/* 自适应布局样式 end */
