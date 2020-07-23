@@ -1,8 +1,19 @@
 class _console {
     constructor(){
+        // 系统
         this.log_MSG = true
         this.log_API = true
+        this.log_UTILS = true
+        // 人员
         this.log_ht = true
+        this.log_lz = true
+        this.log_oyjw = true
+        this.log_cqq = true
+        this.log_nzm = true
+        this.log_lm = true
+        this.log_zx = true
+        this.log_gj = true
+        this.log_wmm = true
     }
 
     /**
