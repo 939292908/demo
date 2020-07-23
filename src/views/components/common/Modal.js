@@ -7,7 +7,8 @@ var m = require("mithril")
 //         header,
 //         body,
 //         footer
-//     }
+//     },
+//     width: '50%' // px 或 %
 // }
 export default {
     oninit (vnode) {
@@ -19,7 +20,7 @@ export default {
     view (vnode) {
         return m("div", { class: "modal" + (vnode.attrs.isShow ? " is-active" : '') }, [
             m("div", { class: "modal-background"}),
-            m("div", { class: "modal-card" }, [
+            m("div", { class: "modal-card", style: `width: ${vnode.attrs.width ? vnode.attrs.width : ''}` }, [
                 // 头部
                 m("header", { class: "pub-set-lever-head modal-card-head" }, [
                     // 标题

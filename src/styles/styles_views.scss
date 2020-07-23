@@ -1669,11 +1669,20 @@ hr {
     .dropdown-menu {
         .dropdown-content {
             .dropdown-item {
+                display: flex;
                 justify-content: space-between;
                 border: none;
                 @extend %px-3;
                 @extend %py-4;
                 @extend %font-2;
+                &.has-active {
+                    @extend .is-background-2;
+                    @extend .has-text-1;
+                }
+                &.has-hover:hover {
+                    @extend .is-background-2;
+                    @extend .has-text-1;
+                }
                 .my-menu-label {
                     @extend %py-1;
                 }
@@ -1733,7 +1742,7 @@ hr {
 .stop-PLM-2 {
     @extend %font-5;
 }
-
+// checkbox 样式
 input[type="checkbox"] {
     // checkbox 样式
     width: 14px;
@@ -1890,6 +1899,18 @@ input[type="checkbox"] {
     }
 }
 //币币交易下单模块 end
+// 我的保险
+.my-insurance {
+    .my-insurance-top {
+        @extend %font-3;
+        @extend %font-weight-bold;
+        @extend %py-4;
+        .my-insurance-top-item {
+            padding: 0 16px;
+        }
+    }
+}
+// 公共
 .bdn {
     border: none !important;
 }

@@ -1,127 +1,113 @@
 // table 组件
+// 参数1：columns 表头
+// columns: [
+//     {
+//         title: '', // 表头文字
+//         key: 'state', // data中对应的键
+//         width: 100, // 列宽 px 或 %
+//         className: '', // 列类名
+//         align: 'left', // 列对齐
+//         render (params) { // 自定义 列内容
+//             return m('div', {
+//                 class: `hehe`, onclick () {
+//                     console.log("row数据", params);
+//                 }
+//             }, params.state)
+//         }
+//     },
+// ]
+
+// 参数2：data 表格
+// data : [
+//     {
+//         state: 'xxxx',
+//     },
+// ]
+
+// 参数3：table宽,默认值columns中width总和
+// width : 500 
+
+// 参数4：设置默认列宽，默认值150
+// defaultColumnWidth: 150
+
+// 参数5：tableBox 加类名
+// class: ''
+
 var m = require("mithril")
-// {
-//     columns: [], // 表头
-//     data : [] // 表格
-// }
+
 export default {
     tableWidth: 0,
+    defaultColumnWidth: 150, // 默认列宽 (调用组件可参数设置)
     // 设置table宽
     setTableWidth (vnode, w) {
-        w = w * 1
-        if (vnode.attrs.width) {
-            this.tableWidth = vnode.attrs.width
-        } else {
-            this.tableWidth += w
+        if (vnode.attrs.width) { // 使用参数 width
+            let attrW = vnode.attrs.width
+            this.tableWidth = attrW.toString().replace("px", "")
+        } else { // 累加表头 width
+            if (!w) w = this.defaultColumnWidth
+            w = w.toString().replace("px", "")
+            if (w > 0) this.tableWidth += w * 1
         }
     },
     // 生成colgroup元素
     getColgroup (vnode) {
-        this.tableWidth = 0
-        return m('colgroup', vnode.attrs.columns.map(item => {
-            // 设置table宽
-            let w = item.width + ''.replace("px", "")
-            if (w > 0) this.setTableWidth(vnode, w)
-
-            // 生成colgroup元素
-            return m('col', { width: item.width || '1*' }) // 元素
+        return m('colgroup', vnode.attrs.columns.map((item, index) => {
+            // 宽：最后一个col为'1*'（用于弹性调节一些多余的空间）, 其他col使用column里面width 或者 默认defaultColumnWidth
+            return m('col', { width: index==vnode.attrs.columns.length-1 ? '1*' : item.width || (vnode.attrs.defaultColumnWidth || this.defaultColumnWidth) 
+            })
         }))
-        // console.log(this.tableWidth);
     },
-    // 数据排序 与头部一致
-    getSortData (vnode) {
-        let columns = vnode.attrs.columns
-        let data = vnode.attrs.data
-        return data.map(item => {
-            let newItem = {}
-            columns.forEach(ele => newItem[ele.key] = item[ele.key])
-            return newItem
-        })
+    // tableBox 样式
+    getTableBoxStyle () {
+        return (this.tableWidth ? `width: ${this.tableWidth}px;` : ``) +
+            `min-width: 100%; overflow-y: visible;`
+    },
+    // tr,td 样式
+    getTrTdStyle (headerItem) {
+        return headerItem.align ? `text-align: ${headerItem.align};` : ``
     },
     oninit (vnode) {
+        this.tableWidth = 0
+        vnode.attrs.columns.map(item => {
+            this.setTableWidth(vnode, item.width) // 设置table宽
+        })
     },
     oncreate (vnode) {
-        console.log(vnode.attrs.data, 7777777777);
-        console.log(this.getSortData(vnode), 88888888888888);
     },
     view (vnode) {
-
         // table
-        return m('div', { class: " table-container" }, [
-            // tHeader
-            m('div', { class: "pub-table-head-box", style: (this.tableWidth ? `width: ${this.tableWidth}px;` : ``) + `min-width: 100%; overflow-y: visible;` }, [
+        return m('div', { class: `table-container ${vnode.attrs.class ? vnode.attrs.class : ''}` }, [
+            // tHead
+            m('div', { class: "pub-table-head-box", style: this.getTableBoxStyle() }, [
                 m("table", { class: "table is-hoverable ", cellpadding: 0, cellspacing: 0 }, [
                     this.getColgroup(vnode),
+                    // 表头
                     m("tr", { class: "" }, [
-                        vnode.attrs.columns.map((item, i) => {
-                            return m("th", { class: `${item.class}`, key: `headItem${i}` }, [
-                                item.title
+                        vnode.attrs.columns.map((headerItem, i) => {
+                            return m("th", { class: `${headerItem.className ? headerItem.className : ''}`, style: this.getTrTdStyle(headerItem), key: `headItem${i}` }, [
+                                headerItem.title
                             ])
                         })
                     ])
                 ]),
             ]),
             // tBody
-            m('div', { class: "pub-table-body-box" }, [
+            m('div', { class: "pub-table-body-box", style: this.getTableBoxStyle() }, [
                 m("table", { class: "table is-hoverable ", cellpadding: 0, cellspacing: 0 }, [
                     this.getColgroup(vnode),
+                    // 表格
                     vnode.attrs.data.map((item, index) => {
-                        return m("tr", { class: "", key: `tableTr${index}` }, 
-                        vnode.attrs.columns.map((ele, index1) => {
-                            return m("td", { class: "table-tr-td-vertical", key: `tableTd${index}-${index1}` }, item[ele.key])
-                        }))
+                        return m("tr", { class: "", key: `tableTr${index}` },
+                            // 每行 td 顺序, 根据表头 key 的顺序渲染
+                            vnode.attrs.columns.map((headerItem, index1) => {
+                                return m("td", { class: `${headerItem.className ? headerItem.className : ''}`, style: this.getTrTdStyle(headerItem), key: `tableTd${index}-${index1}` }, [
+                                    // 默认显示对应表头 key 的数据，如果 columns 有 render() 优先使用
+                                    headerItem.render ? headerItem.render(item) : item[headerItem.key]
+                                ])
+                            }))
                     })
-                    // vnode.attrs.data.map((item, i) => {
-                    //     return m("tr", { class: "" , key: `tableItem${i}` }, [
-                    //         m("td", { class: " table-tr-td-vertical" }, [
-                    //             item.state
-                    //         ]),
-                    //         m("td", { class: "table-tr-td-vertical cursor-pointer" }, [
-                    //             item.sym
-                    //         ]),
-                    //         m("td", { class: "table-tr-td-vertical" }, [
-                    //             item.direction
-                    //         ]),
-                    //         m("td", { class: " table-tr-td-vertical" }, [
-                    //             item.lever
-                    //         ]),
-                    //         m("td", { class: " table-tr-td-vertical" }, [
-                    //             item.num
-                    //         ]),
-                    //         m("td", { class: " table-tr-td-vertical" }, [
-                    //             item.openPic
-                    //         ]),
-                    //         m("td", { class: " table-tr-td-vertical" }, [
-                    //             item.closePic
-                    //         ]),
-                    //         m("td", { class: " table-tr-td-vertical" }, [
-                    //             item.closeProfitAndLoss
-                    //         ]),
-                    //         m("td", { class: " table-tr-td-vertical" }, [
-                    //             item.commissionCharge
-                    //         ]),
-                    //         m("td", { class: "table-tr-td-vertical" }, [
-                    //             item.insuranceAmount
-                    //         ]),
-                    //         m("td", { class: "table-tr-td-vertical" }, [
-                    //             item.compensationAmount
-                    //         ]),
-                    //         m("td", { class: "table-tr-td-vertical" }, [
-                    //             item.openTime
-                    //         ]),
-                    //         m("td", { class: "table-tr-td-vertical" }, [
-                    //             item.closeTime
-                    //         ]),
-                    //         m("td", { class: "table-tr-td-vertical" }, [
-                    //             item.orderNum
-                    //         ])
-                    //     ])
-                    // })
                 ])
             ]),
         ])
-    },
-    onbeforeremove (vnode) {
-
     }
 }
