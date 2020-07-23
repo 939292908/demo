@@ -28,6 +28,11 @@ module.exports = {
                     }}, [
                         'Home'
                     ]),
+                    m('a.navbar-item', {onclick:function(){
+                        window.router.push('/userCenter')
+                    }}, [
+                        'userCenter'
+                    ]),
                     m('a.navbar-item', {}, [
                         gI18n.$t('10001')
                     ]),
