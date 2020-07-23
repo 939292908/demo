@@ -29,6 +29,10 @@ npm run watch
 
 ## 代码规范
 
+### 编辑器相关
+
++ 统一代码缩进为 4
+
 ### CSS相关
 * 各模块内class类名命名规则按照目录进行命名，不能出现重复命名；
 * 各模块内不能直接写`color`、`background-color`、`border-color`、`margin`、`padding`、`border-radius`、`font-size`、`font-weight`、`box-shadow`，统一使用规范内相应的类名；
@@ -48,6 +52,18 @@ const methods = {
 }
 
 module.exports = {
+    oninit: function(vnode) {
+        _console.log("ht","initialized")
+    },
+    oncreate: function(vnode) {
+        _console.log("ht","DOM created")
+    },
+    onupdate: function(vnode) {
+        _console.log("ht","DOM updated")
+    },
+    onremove: function(vnode) {
+
+    },
     view:  function(){
         return m('nav.navbar.is-fixed-top', {role:"navigation", "aria-label":"main navigation"}, [
             m('.navbar-brand', {}, [
@@ -86,7 +102,13 @@ module.exports = {
 }
 ```  
 
-* ；
+* 日志输入使用统一方法，详情查看[log.js](./src/log/log.js)；
+* 路由的文件引用方式以及路由跳转使用使用统一方法，详情查看[route.js](./src/route/index.js)；
+* 全局广播使用统一方法，详情查看[broadcast.js](./src/broadcast/broadcast.js)；
+* 多语言使用统一方法，详情查看[dI18n.js](./src/languages/dI18n.js)；
+* API接口调用使用统一模版，详情查看[webApi.js](./src/api/webApi.js)；
+* [utils.js](./src/util/utils.js)内禁止添加全局变量，统一通过函数传参的形式引用；
+* 错误码统一写在[errCode.js](./src/util/errCode.js)内；
 
 
 
