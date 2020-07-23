@@ -1,6 +1,7 @@
 let m = require('mithril')
 
 let header = require('@/views/header')
+let footer = require('@/views/footer')
 let message = require('@/views/message')
 
 module.exports = {
@@ -17,9 +18,10 @@ module.exports = {
 
     },
     view: function(){
-        return m('div.application.has-navbar-fixed-top', [
+        return m('section.section.has-navbar-fixed-top', [
             m(header),
-            m('div.content'),
+            m('div.route-box'),
+            m(footer),
             m(message)
         ])
     }
