@@ -11,7 +11,7 @@ import _console from '@/log/log'
 window._console = new _console()
 
 // 全局广播
-import broadcast from '@/libs/broadcast'
+import broadcast from '@/broadcast/broadcast'
 window.gBroadcast = new broadcast()
 
 //多语言
