@@ -13,6 +13,7 @@ const config = {
         MMType: 0, // 仓位保证金率公式选择，0: 默认，1: 开仓价值/杠杆 
         PrzLiqType: 0, // 仓位强平价计算公式选择，0: 默认，1: 默认公式中的MMR风险修改为MAX(MIRMy/2，MMR风险)
         maxPosNum: 10, // 同合约最大仓位数量
+        ForcedPrice: false,//强平价取值，false：取当前价，true：取里标记价最近的价格
         setMIRMy: 1, // 全仓杠杠调节，0:关闭，1:开启
         //下单面板类型开关,0:关闭，1:开启
         placeOrder: {

@@ -15,6 +15,7 @@ module.exports = {
     view:function(vnode){
         // let item =qs.parse(vnode.attrs.item)
         let item = m.route.param()
+        console.log(item,111111)
         return m("div",{class: "details-header"},[
             // 头部
             m( Header, {
@@ -57,10 +58,10 @@ module.exports = {
                         ])
                     ]),
                     m("div",{class : "font-div font-right has-text-2"},[
-                        // "手续费",
-                        // m("p",{class : "font-p p-only has-text-1"},[
-                        //     item.Fee
-                        // ])
+                        gDI18n.$t('10063'),// "手续费",
+                        m("p",{class : "font-p p-only has-text-1"},[
+                            item.Fee,
+                        ])
                     ]),
                 ]), 
                 m("div",{class : "details-body-conent",},[

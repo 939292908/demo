@@ -4,6 +4,15 @@ import FilterModal from "./components/FilterModal"
 
 let obj = {
     posList: [], // 列表
+    newList:[],
+    newLenget: 0,
+    scrollList:[],
+    //行情限制数据处理时间间隔
+    TRADECLACTNTERVAL: 100,
+    //成交最后更新时间
+    lastTmForTrade: 0,
+    updateTradeTimer: null,
+
     posListAll: [], // 不被修改的列表
     isShowModal: false, // 筛选模态框
     theadList: [
@@ -32,6 +41,9 @@ let obj = {
             title: '成交数量',//'',
             class: ""
         }, {
+            title: '手续费',//'',
+            class: ""
+        },{
             title: '成交金额',//'',
             class: ""
         }, {
@@ -108,6 +120,13 @@ let obj = {
         this.EV_CHANGESYM_UPD_unbinder = window.gEVBUS.on(gMkt.EV_CHANGESYM_UPD, arg => {
             obj.initObj()
         })
+        //单条数据推送
+        if (this.EV_WLTLOG_UPD_unbinder) {
+            this.EV_WLTLOG_UPD_unbinder()
+        }
+        this.EV_WLTLOG_UPD_unbinder = window.gEVBUS.on(gMkt.EV_WLTLOG_UPD, arg => {
+            that.onTrade(arg)
+        })
     },
     initLanguage: function () {
         this.theadList = [
@@ -136,6 +155,9 @@ let obj = {
                 title: '成交数量',//'',
                 class: ""
             }, {
+                title: '手续费',//'',
+                class: ""
+            },{
                 title: '成交金额',//'',
                 class: ""
             }, {
@@ -177,6 +199,30 @@ let obj = {
         }
         if (this.EV_CHANGESYM_UPD_unbinder) {
             this.EV_CHANGESYM_UPD_unbinder()
+        }
+        //单条数据推送
+        if (this.EV_WLTLOG_UPD_unbinder) {
+            this.EV_WLTLOG_UPD_unbinder()
+        }
+    },
+    //单条数据推送
+    onTrade: function (param) {
+        let that = this
+        let tm = Date.now()
+        if (!this.updateTradeTimer) {
+            this.updateTradeTimer = setTimeout(() => {
+                that.initObj()
+                that.lastTmForTrade = tm
+                this.updateTradeTimer = null
+            }, this.TRADECLACTNTERVAL + 50)
+        }
+        if (tm - this.lastTmForTrade > this.TRADECLACTNTERVAL) {
+            that.initObj()
+            this.lastTmForTrade = tm
+            if (this.updateTradeTimer) {
+                clearTimeout(this.updateTradeTimer)
+                this.updateTradeTimer = null
+            }
         }
     },
     initObj () {
@@ -230,6 +276,16 @@ let obj = {
                 } else {
                     obj.cond = '--'
                 }
+                // 手续费
+                obj.Fee = 0
+                obj.FeeCoin = ''
+                // 从成交记录里边累计委托对应的盈亏以及手续费 start
+                let trades = window.gTrd.MyTrades_Obj['02'][obj.OrdId] || []
+                for (let item of trades) {
+                    obj.Fee += Number(item.Fee || 0)
+                    obj.FeeCoin = item.FeeCoin
+                }
+                obj.Fee = obj.Fee.toFixed2(8)
                 //委托时间
                 obj.AtStr = new Date(obj.At).format('MM/dd hh:mm:ss')
 
@@ -248,10 +304,24 @@ let obj = {
         posList.sort(function (a, b) {
             return b.At - a.At
         })
+        this.newList = (utils.splitList(posList,20)[0] || [])
+        this.scrollList = (utils.splitList(posList,20) || [])
         this.posList = posList
         this.posListAll = JSON.parse(JSON.stringify(posList))
         // console.log(obj.posList,999999)
         m.redraw()
+    },
+    getScroll:function(e){
+        let contentH = e.target.clientHeight; //获取可见区域高度
+        let scrollHight = e.target.scrollHeight; //获取全文高度
+        let scrollTop = e.target.scrollTop //获取被卷去的高度
+        let NL = this.scrollList.length-1
+        let _H = contentH + scrollTop
+        // let Num = this.newLenget + 1
+        if(_H >=(scrollHight) && this.newLenget < NL){
+            this.newLenget++
+            this.newList =this.newList.concat(this.scrollList[this.newLenget])
+        }
     },
 
     getTheadList: function () {
@@ -268,7 +338,7 @@ let obj = {
         gEVBUS.emit(gMkt.EV_CHANGESYM_UPD, { Ev: gMkt.EV_CHANGESYM_UPD, Sym: Sym })
     },
     getPosList: function () {
-        return this.posList.map(function (item, i) {
+        return this.newList.map(function (item, i) {
             return m("tr", { key: "goodsHistoryOrdTableListItem1" + i, class: " " }, [
                 m("td", {
                     class: "cursor-pointer", onclick: function () {
@@ -280,11 +350,11 @@ let obj = {
                     ])
                 ]),
                 m("td", { class: "" }, [
-                    m("p", { class: " " }, [
+                    m("p", { class: " " + utils.getColorStr(item.Dir, 'font')}, [
                         item.DirStr
                     ]),
                 ]),
-                m("td", { class: " " + utils.getColorStr(item.Dir, 'font') }, [
+                m("td", { class: " " }, [
                     item.OTypeStr
                 ]),
                 m("td", { class: " " }, [
@@ -301,6 +371,11 @@ let obj = {
                 ]),
                 m("td", { class: " " }, [
                     item.QtyF
+                ]),
+                m("td", { class: " " }, [
+                    item.Fee,
+                    ' ',
+                    item.FeeCoin
                 ]),
                 m("td", { class: " " }, [
                     item.PrzM
@@ -502,21 +577,24 @@ let obj = {
                 m('col', { name: "pub-table-6", width: 100 }),
                 m('col', { name: "pub-table-7", width: 100 }),
                 m('col', { name: "pub-table-8", width: 100 }),
-                m('col', { name: "pub-table-9", width: 100 }),
-                m('col', { name: "pub-table-10", width: 150 }),
-                m('col', { name: "pub-table-11", width: 150 })
+                m('col', { name: "pub-table-9", width: 180 }),
+                m('col', { name: "pub-table-10", width: 100 }),
+                m('col', { name: "pub-table-11", width: 150 }),
+                m('col', { name: "pub-table-12", width: 150 })
             ])
             return m('div', { class: " table-container" }, [
-                m('div', { class: "pub-table-head-box", style: "width: 1250px" }, [
-                    m("table", { class: "table is-hoverable ", width: '1250px', cellpadding: 0, cellspacing: 0 }, [
+                m('div', { class: "pub-table-head-box", style: "width: 1430px" }, [
+                    m("table", { class: "table is-hoverable ", width: '1430px', cellpadding: 0, cellspacing: 0 }, [
                         colgroup,
                         m("tr", { class: "" }, [
                             obj.getTheadList()
                         ])
                     ]),
                 ]),
-                m('div', { class: "pub-table-body-box", style: "width: 1250px" }, [
-                    m("table", { class: "table is-hoverable ", width: '1250px', cellpadding: 0, cellspacing: 0 }, [
+                m('div', { class: "pub-table-body-box", style: "width: 1430px" ,onscroll:function(e){
+                    obj.getScroll(e)
+                }}, [
+                    m("table", { class: "table is-hoverable ", width: '1430px', cellpadding: 0, cellspacing: 0 }, [
                         colgroup,
                         obj.getPosList()
                     ])
@@ -543,5 +621,6 @@ export default {
     },
     onremove: function () {
         obj.rmEVBUS()
+        obj.newLenget = 0
     }
 }

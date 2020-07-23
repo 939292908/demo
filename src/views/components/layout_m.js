@@ -256,6 +256,7 @@ let obj = {
     getSelectPos: function () {
         // 根据配置判断仓位选择是否显示
         let tradeType = window.$config.future.tradeType
+        let pageTradeStatus = window.gMkt.CtxPlaying.pageTradeStatus
         let show = false
         switch (tradeType) {
             case 0:
@@ -269,11 +270,13 @@ let obj = {
             default:
                 show = false
         }
-        if (show) {
-            return m(selectPos)
-        } else {
-            return null
-        }
+        if(pageTradeStatus == 1){
+            if (show) {
+                return m(selectPos)
+            } else {
+                return null
+            }
+        } 
     },
     //订阅所需行情,pc界面行情订阅除了k线以外，其他所需订阅内容都在这里，各个组件内只是接收数据并渲染
     subTick: function () {

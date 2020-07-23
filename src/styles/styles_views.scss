@@ -1791,8 +1791,15 @@ input[type="checkbox"] {
         text-align: center;
     }
 
+    .pub-bibi-type1{
+        width: 80% !important;
+    }
+    .pub-bibi-type2{
+        width: 100% !important;
+    }
+
     .pub-bibi-order-BS{
-        width: 80%;
+        // width: 80%;
         text-align: center;
         border: 1px solid;
         position: relative;
@@ -1829,8 +1836,15 @@ input[type="checkbox"] {
         line-height: 40px;
     }
 
+    .pub-bibi-price-inp1{
+        width: 80% !important;
+    }
+    .pub-bibi-price-inp2{
+        width: 100% !important;
+    }
+
     .pub-bibi-price-inp{
-        width: 80%;
+        // width: 80%;
 
         .pub-bibi-price-US{
             display: flex;
@@ -1839,14 +1853,14 @@ input[type="checkbox"] {
             line-height: 40px;
 
             .pub-bibi-price-text{
-                width: 20%;
+                width: 25%;
                 text-align: center;
                 border-top-left-radius: 2px;
                 border-bottom-left-radius: 2px;
             }
 
             .pub-bibi-price-US-input{
-                width: 80%;
+                width: 75%;
                 border-radius: 2px;
                 border-top-left-radius: 0;
                 border-bottom-left-radius: 0;

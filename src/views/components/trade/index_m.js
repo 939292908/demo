@@ -5,6 +5,10 @@ import marketOrd from './marketOrd'
 import limitPlan from './limitPlan'
 import marketPlan from './marketPlan'
 
+import goodsLimitOrd from '../goodsInStock/goodsLimitOrd'
+import goodsMarkeOrd from '../goodsInStock/goodsMarketOrd'
+import goodsStopPL from '../goodsInStock/goodsStopPL'
+
 import selectPos from './selectPos'
 
 let obj = {
@@ -37,6 +41,26 @@ let obj = {
             id: 3,
             key: 'marketPlan',
             name: gDI18n.$t('10120'), //'市价计划'
+            open: true
+        },
+    },
+    goodsTabsList: {
+        limitOrd: {
+            id: 0,
+            key: 'limitOrd',
+            name: gDI18n.$t('10117'), //'限价委托'
+            open: true
+        },
+        marketOrd: {
+            id: 1,
+            key: 'marketOrd',
+            name: gDI18n.$t('10118'), //'市价委托' 
+            open: true
+        },
+        stopPL: {
+            id: 2,
+            key: 'stopPL',
+            name: '止盈止损',
             open: true
         },
     },
@@ -89,6 +113,26 @@ let obj = {
                 open: true
             },
         }
+        this.goodsTabsList = {
+            limitOrd: {
+                id: 0,
+                key: 'limitOrd',
+                name: gDI18n.$t('10117'), //'限价委托'
+                open: true
+            },
+            marketOrd: {
+                id: 1,
+                key: 'marketOrd',
+                name: gDI18n.$t('10118'), //'市价委托' 
+                open: true
+            },
+            stopPL: {
+                id: 2,
+                key: 'stopPL',
+                name: '止盈止损',
+                open: true
+            },
+        }
     },
     rmEVBUS: function(){
         if(this.EV_ClICKBODY_unbinder){
@@ -101,34 +145,68 @@ let obj = {
     },
     getTabsList: function(){
         let that = this
-        let tabsList = Object.keys(this.tabsList)
-        // 根据配置筛选出需要现实的tab
-        tabsList = tabsList.filter(key =>{
-            return window.$config.future.placeOrder[key]
-        })
-        return tabsList.map(function(key,i){
-            let item = that.tabsList[key]
-            return m('dev', {key: 'dropdown-item'+key+i, class: ""}, [
-                // m('hr', {class: "dropdown-divider "}),
-                m('a', { href: "javascript:void(0);", class: "dropdown-item"+(obj.tabsActive == item.id?' has-text-primary':''), onclick: function(){
-                    obj.setTabsActive(item)
-                }},[
-                    item.name
+
+        let pageTradeStatus = window.gMkt.CtxPlaying.pageTradeStatus
+        if(pageTradeStatus == 1){
+            let tabsList = Object.keys(this.tabsList)
+            // 根据配置筛选出需要现实的tab
+            tabsList = tabsList.filter(key =>{
+                return window.$config.future.placeOrder[key]
+            })
+            return tabsList.map(function(key,i){
+                let item = that.tabsList[key]
+                return m('dev', {key: 'dropdown-item'+key+i, class: ""}, [
+                    // m('hr', {class: "dropdown-divider "}),
+                    m('a', { href: "javascript:void(0);", class: "dropdown-item"+(obj.tabsActive == item.id?' has-text-primary':''), onclick: function(){
+                        obj.setTabsActive(item)
+                    }},[
+                        item.name
+                    ])
                 ])
-            ])
-        })
+            })
+        }else if(pageTradeStatus == 2){
+            let goodsTabsList = Object.keys(this.goodsTabsList)
+            // 根据配置筛选出需要现实的tab
+            goodsTabsList = goodsTabsList.filter(key =>{
+                return window.$config.future.goodsInStockList[key]
+            })
+            return goodsTabsList.map(function(key,i){
+                let item = that.goodsTabsList[key]
+                return m('dev', {key: 'goods-dropdown-item'+key+i, class: ""}, [
+                    // m('hr', {class: "dropdown-divider "}),
+                    m('a', { href: "javascript:void(0);", class: "dropdown-item"+(obj.tabsActive == item.id?' has-text-primary':''), onclick: function(){
+                        obj.setTabsActive(item)
+                    }},[
+                        item.name
+                    ])
+                ])
+            })
+        }  
     },
     getTabsActiveContent: function(){
-        switch(this.tabsActive.id){
-            case 0: 
-                return m(limitOrd)
-            case 1: 
-                return m(marketOrd)
-            case 2: 
-                return m(limitPlan)
-            case 3: 
-                return m(marketPlan)
+        let pageTradeStatus = window.gMkt.CtxPlaying.pageTradeStatus
+        if(pageTradeStatus == 1){
+            switch(this.tabsActive.id){
+                case 0: 
+                    return m(limitOrd)
+                case 1: 
+                    return m(marketOrd)
+                case 2: 
+                    return m(limitPlan)
+                case 3: 
+                    return m(marketPlan)
+            }
+        }else if(pageTradeStatus == 2){
+            switch(this.tabsActive.id){
+                case 0: 
+                    return m(goodsLimitOrd)
+                case 1: 
+                    return m(goodsMarkeOrd)
+                case 2: 
+                    return m(goodsStopPL)
+            }
         }
+        
     },
     getSelectPos: function(){
         // 根据配置判断仓位选择是否显示
@@ -161,7 +239,7 @@ export default {
         obj.initEVBUS()
     },
     view: function(vnode) {
-        
+        let pageTradeStatus = window.gMkt.CtxPlaying.pageTradeStatus
         return m("div",{class:"pub-place-order-m"},[
             m('div', {class: "dropdown pub-place-order-select" + (obj.tabsListOpen?' is-active':'')}, [
                 m('.dropdown-trigger', {}, [
@@ -170,7 +248,10 @@ export default {
                         window.stopBubble(e)
                     }}, [
                         m('div.is-between', {}, [
-                            m('span',{ class: ""}, obj.tabsList[obj.tabsActive.key].name),
+                            m('span',{ class: ""}, [
+                                pageTradeStatus == 1?obj.tabsList[obj.tabsActive.key].name:obj.goodsTabsList[obj.tabsActive.key].name
+                                
+                            ]),
                             m('i', {class: "iconfont iconxiala has-text-primary", "aria-hidden": true })
                         ])
                     ]),

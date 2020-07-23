@@ -574,8 +574,32 @@ utils.getStopPLByStr = function(dir){
  * @pos 仓位数据信息
  * @assetD 仓位对应合约的合约详情
  */
-utils.getPosInfo = function(pos,assetD,UPNLPrzActive){
-    if(assetD){
+utils.getPosInfo = function(PId,posObj,assetD,UPNLPrzActive, lastTick){
+    let pos = posObj[PId]
+    if(pos && assetD){
+        //处理全仓强平价显示距标记价最近的 start
+        let PrzLiq = 0
+        let ForcedPrice = window.$config.future.ForcedPrice
+        if(ForcedPrice && pos.Lever == 0){
+            let SettPrz = lastTick && lastTick.SettPrz || 0
+            if(SettPrz > 0){
+                let diff = null
+                for(let key in posObj){
+                    let item = posObj[key]
+                    if(item.Sym == pos.Sym && item.Lever == 0 && item.Sz != 0){
+                        let aPrzLiq = Number(item.aPrzLiq || 0)
+                        let _diff = Math.abs(aPrzLiq - Number(SettPrz))
+                        if(diff == null || _diff < diff){
+                            diff = _diff
+                            PrzLiq = aPrzLiq
+                        }
+                    }
+                }
+            }
+        }
+        //处理全仓强平价显示距标记价最近的 end
+
+
         let obj = {}
         this.copyTab(obj, pos)
 
@@ -1006,7 +1030,26 @@ utils.getTotalDecimal = function(total,numb){
         }
     }
     return Num
+}
 
+//按一定的数量分割数据
+//分割数据，实现本地数据滚动加载
+utils.splitList=function(list,num){
+    let newList = []
+    let listLength = list.length
+    // let num = 20
+    let ind =  0
+    for(let i = 0;i<=listLength;i++){
+        if(i%num == 0 && i != 0){
+            newList.push(list.slice(ind,i))
+            ind = i
+        }
+        
+        if((i + 1) == listLength){
+            newList.push(list.slice(ind,(i + 1)))
+        }
+    }
+    return newList
 }
 
 

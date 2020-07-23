@@ -209,7 +209,7 @@ let obj = {
                         utils.getSymDisplayName(window.gMkt.AssetD, item.Sym)
                     ])
                 ]),
-                m("td", {class: "table-tr-td-vertical"}, [
+                m("td", {class: "table-tr-td-vertical" + utils.getColorStr(item.Dir, 'font')}, [
                     item.DirStr
                 ]),
                 m("td", {class: "table-tr-td-vertical"}, [
