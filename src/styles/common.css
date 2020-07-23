@@ -6,12 +6,6 @@ html, body {
   overflow: auto;
 }
 
-.application {
-  height: 100%;
-  overflow: auto;
-  padding: var(--c-padding-level3)
-}
-
 /* 动画相关 start */
 @keyframes sliding-out-from-right {
     from {
