@@ -76,6 +76,36 @@ const theme = {
 }
 
 // 样式类
+const fontsz = {
+    level0: '8px',
+    level1: '10px',
+    level2: '12px',
+    level3: '14px',
+    level4: '16px',
+    level5: '18px',
+    level6: '20px',
+    level7: '22px',
+    level8: '24px',
+    level9: '26px',
+    level10: '28px',
+    level11: '30px',
+    level12: '32px',
+}
+const iconsz = {
+    level0: '8px',
+    level1: '10px',
+    level2: '12px',
+    level3: '14px',
+    level4: '16px',
+    level5: '18px',
+    level6: '20px',
+    level7: '22px',
+    level8: '24px',
+    level9: '26px',
+    level10: '28px',
+    level11: '30px',
+    level12: '32px',
+}
 
 const padding = {
     level0: '0px',
@@ -109,6 +139,8 @@ const fontweight = {
 }
 
 const styles = {
+    fontsz,
+    iconsz,
     padding,
     margin,
     radius,
