@@ -1,10 +1,11 @@
 const utils = {}
+const DBG_TAG = "UTILS"
 
 utils.setItem = function (key, val) {
     try {
         window.localStorage.setItem(key, JSON.stringify(val));
     } catch(e) {
-        window._console.log('ht',JSON.stringify(e));
+        window._console.log(DBG_TAG,JSON.stringify(e));
     }
 };
 
@@ -19,7 +20,7 @@ utils.removeItem = function (key) {
     try {
         window.localStorage.removeItem(key);
     } catch(e) {
-        window._console.log('ht',JSON.stringify(e));
+        window._console.log(DBG_TAG,JSON.stringify(e));
     }
 };
 
