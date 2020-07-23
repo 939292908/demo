@@ -27,5 +27,15 @@ npm run watch
 
 ```
 
+## 代码规范
+
+### CSS相关
+
+#### 一、class类名命名
+* 各模块内class类名命名规则按照目录进行命名，不能出现重复命名；
+* 各模块内不能直接写`color`、`background-color`、`margin`、`padding`、`border-radius`、`font-size`、`font-weight`，统一使用规范内相应的类名；
+
+
+
 
 
