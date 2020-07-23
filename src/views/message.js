@@ -35,7 +35,7 @@ let msg = {
         let that = this
         let tm = Date.now()
         if(window.isMobile){
-            return m('article', { class: "message box " + (' is-' + type), key: tm }, [
+            return m('article', { class: "message " + (' is-' + type), key: tm }, [
                 m('div', { class: "message-header" }, [
                     m('p', { class: "" }, [
                         content
@@ -48,7 +48,7 @@ let msg = {
                 ])
             ])
         }else{
-            return m('article', { class: "message box " + (' is-' + type), key: tm }, [
+            return m('article', { class: "message " + (' is-' + type), key: tm }, [
                 m('div', { class: "message-header" }, [
                     m('p', { class: "" }, [
                         title
@@ -86,7 +86,7 @@ module.exports = {
         msg.initMsg()
     },
     view: function (vnode) {
-        return m('div', { class: "window-message-box " }, msg.messageContent)
+        return m('div', { class: "window-message-box" }, msg.messageContent)
     },
     onremove: function () {
         
