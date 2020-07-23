@@ -24,6 +24,9 @@ class webApi {
         }).then(function (result){
             if (DBG_REQUEST) {window._console.log(DBG_TAG,"ReqUserInfo Rsp",result)}
             /*
+            请求参数
+            {}
+            返回参数
             {
                 result: {
                     code: 0,
