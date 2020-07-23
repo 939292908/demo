@@ -18,7 +18,7 @@ module.exports = {
 
     },
     view: function(){
-        return m('section.section.has-navbar-fixed-top', [
+        return m('section.section'+(window.themeDark?" #theme--dark":" #theme--light"), [
             m(header),
             m('div.route-box'),
             m(footer),
