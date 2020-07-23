@@ -23,7 +23,7 @@ window.gI18n = new i18n()
 import utils from '@/util/utils'
 window.utils = utils
 
-//工具库
+//错误码库
 import errCode from '@/util/errCode'
 window.errCode = errCode
 
