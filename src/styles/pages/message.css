@@ -39,10 +39,6 @@
         animation: sliding-out-from-top 0.2s;
     }
 
-    .window-message-box article .message-header {
-        border-radius: var(--c-radius-level0);
-    }
-
 }
 
 /* 消息弹框样式 end */
