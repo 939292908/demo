@@ -340,7 +340,7 @@ let obj = {
             AId: AId,
             COrdId: new Date().getTime() + '',
             Dir: dir,
-            OType: 1,
+            OType: 2,
             Prz: Number(this.form.Prz),
             Qty: Number(this.form.Num),
             QtyDsp: 0,
