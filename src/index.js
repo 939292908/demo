@@ -6,6 +6,10 @@ import('@/styles/bluma.sass')
 // 公用样式
 import('@/styles/common.css')
 
+// iconfont
+import('@/assets/iconfont/iconfont.js')
+import('@/assets/iconfont/iconfont.css')
+
 // log日志管理
 import _console from '@/log/log'
 window._console = new _console()

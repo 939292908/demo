@@ -41,7 +41,7 @@ module.exports = {
                             window.themeDark = !window.themeDark
                         }
                     }, [
-                        window.themeDark?'light':'dark'
+                        m('i.iconfont'+(window.themeDark?'.icon-baitian':'.icon-night'))
                     ]),
                     m('div.navbar-item.has-dropdown.is-hoverable', {}, [
                         m('div.navbar-link', {}, [

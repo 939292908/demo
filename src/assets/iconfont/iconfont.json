@@ -1,0 +1,23 @@
+{
+  "id": "1964083",
+  "name": "website-v1",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "14397009",
+      "name": "夜间",
+      "font_class": "night",
+      "unicode": "e62c",
+      "unicode_decimal": 58924
+    },
+    {
+      "icon_id": "15101569",
+      "name": "白天",
+      "font_class": "baitian",
+      "unicode": "e600",
+      "unicode_decimal": 58880
+    }
+  ]
+}
