@@ -10,7 +10,7 @@ m.route(document.querySelector('body .route-box'), defaultRoutePath, {
     },
     '/userCenter': {
         onmatch: function () {
-            return import('@/views/pages/userCenter/index')
+            return import('@/views/pages/user/index')
         }
     }
 })
