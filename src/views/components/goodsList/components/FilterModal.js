@@ -1,12 +1,12 @@
-var m = require("mithril")
-import Modal from "../../common/Modal"
-
 // {
 //     isShow : true, // 显示隐藏
 //     allData : [], // 需要过滤的数据
 //     getNewData (newData) {}, // 获取过滤后的数据
 //     onClose () {}, // 关闭事件
 // }
+var m = require("mithril")
+import Modal from "../../common/Modal"
+
 export default {
     // --------------- state ---------------
     isShowTabs: false, // 下拉状态
