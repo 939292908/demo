@@ -27,8 +27,7 @@ class router {
 
     /**
      * 路由跳转
-     * @param {String || Object} param 路由跳转参数
-     * 如果是String直接写路由；
+     * @param {Object} param 路由跳转参数
      * 如果是Object： {
         path: "/future",
         data: {},
