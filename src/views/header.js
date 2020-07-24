@@ -34,7 +34,7 @@ module.exports = {
                         'userCenter'
                     ]),
                     m('a.navbar-item', {}, [
-                        gI18n.$t('10001')
+                        gI18n.$t('10002', {value: "BTC"})
                     ]),
                     m('a.navbar-item', {
                         onclick: function(){
@@ -101,10 +101,10 @@ module.exports = {
                 m('div.navbar-end', {}, [
                     m('div.navbar-item', {}, [
                         m('div.buttons', {}, [
-                            m('div.button.is-primary', {}, [
+                            m('div.button.has-bg-primary', {}, [
                                 "Sign up"
                             ]),
-                            m('div.button.is-light', {}, [
+                            m('div.button', {}, [
                                 "Log in"
                             ]),
                         ]),
