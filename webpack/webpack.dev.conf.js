@@ -36,7 +36,7 @@ module.exports = {
         },
     },
     resolve: {
-        extensions: ['.js', '.json', '.css', '.sass'],
+        extensions: ['.js', '.json', '.css', '.scss'],
         alias: {
             '@': path.resolve('./src'),
         }
@@ -51,7 +51,7 @@ module.exports = {
                 }]
             },
             {
-                test: /\.(css|sass)$/,
+                test: /\.(css|sass|scss)$/,
                 use: [
                     {
                         loader: 'style-loader',
