@@ -1,0 +1,688 @@
+/* 公共样式 start */
+
+html, body, .section {
+    height: 100%;
+    overflow: auto;
+    font-size: var(--c-fontsz-level4);
+}
+
+/* 动画相关 start */
+@keyframes sliding-out-from-right {
+    from {
+        transform: translateX(100%);
+    }
+    to {
+        transform: translateX(0%);
+    }
+}
+@keyframes sliding-out-from-top {
+    from {
+        transform: translateY(-100%);
+    }
+    to {
+        transform: translateY(0%);
+    }
+}
+
+/* 动画相关 end */
+
+/* 文字大小 */
+
+@for $i from 1 through 5
+{
+    .title-#{$i} {
+        font-size: var(--c-fontsz-level#{$i + 5});
+        font-weight: var(--c-fontweight-level3);
+    }
+}
+// .title-1 {
+//     font-size: var(--c-fontsz-level6);
+//     font-weight: var(--c-fontweight-level3);
+// }
+
+// .title-2 {
+//     font-size: var(--c-fontsz-level7);
+//     font-weight: var(--c-fontweight-level3);
+// }
+
+// .title-3 {
+//     font-size: var(--c-fontsz-level8);
+//     font-weight: var(--c-fontweight-level3);
+// }
+
+// .title-4 {
+//     font-size: var(--c-fontsz-level9);
+//     font-weight: var(--c-fontweight-level3);
+// }
+
+// .title-5 {
+//     font-size: var(--c-fontsz-level10);
+//     font-weight: var(--c-fontweight-level3);
+// }
+
+@for $i from 0 through 5
+{
+    .body-#{$i + 1} {
+        font-size: var(--c-fontsz-level#{$i});
+    }
+}
+
+// .body-1 {
+//     font-size: var(--c-fontsz-level0);
+// }
+// .body-2 {
+//     font-size: var(--c-fontsz-level1);
+// }
+// .body-3 {
+//     font-size: var(--c-fontsz-level2);
+// }
+// .body-4 {
+//     font-size: var(--c-fontsz-level3);
+// }
+// .body-5 {
+//     font-size: var(--c-fontsz-level4);
+// }
+// .body-6 {
+//     font-size: var(--c-fontsz-level5);
+// }
+
+
+/* iconfont尺寸 */
+.iconfont-min {
+    font-size: var(--c-iconsz-level0);
+}
+
+.iconfont-small {
+    font-size: var(--c-iconsz-level1)
+}
+
+.iconfont-medium {
+    font-size: var(--c-iconsz-level2)
+}
+
+.iconfont-large {
+    font-size: var(--c-iconsz-level3)
+}
+
+.iconfont-x-large-1 {
+    font-size: var(--c-iconsz-level4)
+}
+
+.iconfont-x-large-2 {
+    font-size: var(--c-iconsz-level5)
+}
+
+.iconfont-x-large-3 {
+    font-size: var(--c-iconsz-level6)
+}
+
+.iconfont-x-large-4 {
+    font-size: var(--c-iconsz-level7)
+}
+
+/* 字体粗细 */
+.font-weight-regular {
+    font-weight: var(--c-fontweight-level1);
+}
+
+.font-weight-medium {
+    font-weight: var(--c-fontweight-level2);
+}
+
+.font-weight-bold {
+    font-weight: var(--c-fontweight-level3);
+}
+
+/* 元素圆角 */
+.border-radius-small {
+    border-radius: var(--c-radius-level1) !important;
+}
+
+.border-radius-small-top {
+    border-radius: var(--c-radius-level1) var(--c-radius-level1) 0 0 !important;
+}
+
+.border-radius-small-bottom {
+    border-radius: 0 0 var(--c-radius-level1) var(--c-radius-level1) !important;
+}
+
+.border-radius-small-left {
+    border-radius: var(--c-radius-level1) 0 0 var(--c-radius-level1) !important;
+}
+
+.border-radius-small-right {
+    border-radius: 0 var(--c-radius-level1) var(--c-radius-level1) 0 !important;
+}
+
+.border-radius-medium {
+    border-radius: var(--c-radius-level2) !important;
+}
+
+.border-radius-medium-top {
+    border-radius: var(--c-radius-level2) var(--c-radius-level2) 0 0 !important;
+}
+
+.border-radius-medium-bottom {
+    border-radius: 0 0 var(--c-radius-level2) var(--c-radius-level2) !important;
+}
+
+.border-radius-medium-left {
+    border-radius: var(--c-radius-level2) 0 0 var(--c-radius-level2) !important;
+}
+
+.border-radius-medium-right {
+    border-radius: 0 var(--c-radius-level2) var(--c-radius-level2) 0 !important;
+}
+
+.border-radius-large {
+    border-radius: var(--c-radius-level3) !important;
+}
+
+.border-radius-large-top {
+    border-radius: var(--c-radius-level3) var(--c-radius-level3) 0 0 !important;
+}
+
+.border-radius-large-bottom {
+    border-radius: 0 0 var(--c-radius-level3) var(--c-radius-level3) !important;
+}
+
+.border-radius-large-left {
+    border-radius: var(--c-radius-level3) 0 0 var(--c-radius-level3) !important;
+}
+
+.border-radius-large-right {
+    border-radius: 0 var(--c-radius-level3) var(--c-radius-level3) 0 !important;
+}
+
+.border-radius-none {
+    border-radius: 0 !important;
+}
+
+.border-radius-none-top {
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+}
+
+.border-radius-none-bottom {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+.border-radius-none-left {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+}
+
+.border-radius-none-right {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+
+/* 旋转 */
+.rotate-x-90 {
+    transform: rotateX(90deg);
+    display: inline-block
+}
+
+.rotate-x-180 {
+    transform: rotateX(180deg);
+    display: inline-block
+}
+
+.rotate-x-270 {
+    transform: rotateX(270deg);
+    display: inline-block
+}
+
+/* 阴影 */
+.box-shadow {
+    box-shadow: 0 0.5em 1em -0.125em rgba(10, 10, 10, 0.1), 0 0px 0 1px rgba(10, 10, 10, 0.02);
+}
+
+/* 滚动 */
+.scroll {
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+}
+.scroll-y {
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+.scroll-x {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+/* 页边距 */
+
+.side-pa {
+    padding: var(--c-padding-level4);
+}
+
+.side-px {
+    padding: 0 var(--c-padding-level4);
+}
+
+.side-py {
+    padding: var(--c-padding-level4) 0;
+}
+
+.side-pt {
+    padding-top: var(--c-padding-level4);
+}
+
+.side-pl {
+    padding-left: var(--c-padding-level4);
+}
+
+.side-pb {
+    padding-bottom: var(--c-padding-level4);
+}
+
+.side-pr {
+    padding-right: var(--c-padding-level4);
+}
+
+.side-ma {
+    padding: var(--c-padding-level4);
+}
+
+.side-mx {
+    padding: 0 var(--c-padding-level4);
+}
+
+.side-my {
+    padding: var(--c-padding-level4) 0;
+}
+
+.side-mt {
+    padding-top: var(--c-padding-level4);
+}
+
+.side-ml {
+    padding-left: var(--c-padding-level4);
+}
+
+.side-mb {
+    padding-bottom: var(--c-padding-level4);
+}
+
+.side-mr {
+    padding-right: var(--c-padding-level4);
+}
+
+@for $i from 0 through 8
+{
+    .pa-#{$i} 
+    {
+        padding: var(--c-padding-level#{$i})!important;
+    }
+
+    .px-#{$i} {
+        padding-left: var(--c-padding-level#{$i})!important;
+        padding-right: var(--c-padding-level#{$i})!important;
+    }
+
+    .py-#{$i} {
+        padding-top: var(--c-padding-level#{$i})!important;
+        padding-bottom: var(--c-padding-level#{$i})!important;
+    }
+
+    .pt-#{$i} {
+        padding-top: var(--c-padding-level#{$i})!important;
+    }
+
+    .pl-#{$i} {
+        padding-left: var(--c-padding-level#{$i})!important;
+    }
+
+    .pb-#{$i} {
+        padding-bottom: var(--c-padding-level#{$i})!important;
+    }
+
+    .pr-#{$i} {
+        padding-right: var(--c-padding-level#{$i})!important;
+    }
+
+    .ma-#{$i} {
+        margin: var(--c-margin-level#{$i})!important;
+    }
+
+    .mx-#{$i} {
+        margin-left: var(--c-margin-level#{$i})!important;
+        margin-right: var(--c-margin-level#{$i})!important;
+    }
+
+    .my-#{$i} {
+        margin-top: var(--c-margin-level#{$i})!important;
+        margin-bottom: var(--c-margin-level#{$i})!important;
+    }
+
+    .mt-#{$i} {
+        margin-top: var(--c-margin-level#{$i})!important;
+    }
+
+    .ml-#{$i} {
+        margin-left: var(--c-margin-level#{$i})!important;
+    }
+
+    .mb-#{$i} {
+        margin-bottom: var(--c-margin-level#{$i})!important;
+    }
+
+    .mr-#{$i} {
+        margin-right: var(--c-margin-level#{$i})!important;
+    }
+}
+
+
+/* 公共样式 end */
+
+/* 主题样式 start */
+/* 白天 */
+#theme--light {
+    background-color: var(--c-background-lighten);
+    color: var(--c-font-lighten); 
+}
+
+/* light UI库样式覆盖 start */
+/* 背景颜色 start */
+#theme--light .navbar,
+#theme--light .footer,
+#theme--light .navbar-dropdown  {
+    background-color: var(--c-background-lighten1);
+}
+
+#theme--light a.navbar-item:focus, 
+#theme--light a.navbar-item:focus-within, 
+#theme--light a.navbar-item:hover, 
+#theme--light a.navbar-item.is-active, 
+#theme--light .navbar-link:focus, 
+#theme--light .navbar-link:focus-within, 
+#theme--light .navbar-link:hover, 
+#theme--light .navbar-link.is-active,
+#theme--light .navbar-item.has-dropdown:focus .navbar-link, 
+#theme--light .navbar-item.has-dropdown:hover .navbar-link, 
+#theme--light .navbar-item.has-dropdown.is-active .navbar-link  {
+    background-color: var(--c-background-lighten2);
+}
+
+/* 背景颜色六级 */
+
+#theme--light .has-bg-level-1{
+    background-color: var(--c-background-lighten); 
+}
+
+@for $i from 2 through 6
+{
+    #theme--light .has-bg-level-#{$i} {
+        background-color: var(--c-background-lighten#{$i - 1}); 
+    }
+}
+
+// #theme--light .has-bg-level-2{
+//     background-color: var(--c-background-lighten1); 
+// }
+
+// #theme--light .has-bg-level-3{
+//     background-color: var(--c-background-lighten2); 
+// }
+
+// #theme--light .has-bg-level-4{
+//     background-color: var(--c-background-lighten3); 
+// }
+
+// #theme--light .has-bg-level-5{
+//     background-color: var(--c-background-lighten4); 
+// }
+
+// #theme--light .has-bg-level-6{
+//     background-color: var(--c-background-lighten5); 
+// }
+
+/* 主色调 */
+#theme--light .has-bg-primary {
+    background-color: var(--c-primary-lighten); 
+    border-color: var(--c-primary-lighten); 
+    color: var(--c-font-darken); 
+}
+
+/* 红 */
+#theme--light .has-bg-error {
+    background-color: var(--c-error-lighten); 
+    border-color: var(--c-error-lighten); 
+    color: var(--c-font-darken); 
+}
+
+/* 绿 */
+#theme--light .has-bg-success {
+    background-color: var(--c-success-lighten); 
+    border-color: var(--c-success-lighten); 
+    color: var(--c-font-darken); 
+}
+
+/* 背景颜色 end */
+
+/* 文字颜色 start */
+
+#theme--light .navbar-item, 
+#theme--light .navbar-link, 
+#theme--light strong {
+    color: var(--c-font-lighten); 
+}
+
+#theme--light .has-text-title{
+    color: var(--c-font-lighten); 
+}
+/* 内容文字三级 */
+#theme--light .has-text-level-1{
+    color: var(--c-font-lighten); 
+}
+
+#theme--light .has-text-level-2{
+    color: var(--c-font-lighten1); 
+}
+
+#theme--light .has-text-level-3{
+    color: var(--c-font-lighten2); 
+}
+
+/* 主色调 */
+#theme--light .has-text-primary {
+    color: var(--c-primary-lighten); 
+}
+
+/* 红 */
+#theme--light .has-text-error {
+    color: var(--c-error-lighten); 
+}
+
+/* 绿 */
+#theme--light .has-text-success {
+    color: var(--c-success-lighten); 
+}
+
+/* 文字颜色 end */
+
+/* 线颜色 start */
+#theme--light .navbar-divider {
+    background-color: var(--c-line-lighten1); 
+}
+
+#theme--light .navbar-dropdown {
+    border-color: var(--c-line-lighten1);
+}
+
+#theme--light .has-line-level-1 {
+    border-color: var(--c-line-lighten);
+}
+
+#theme--light .has-line-level-2 {
+    border-color: var(--c-line-lighten1);
+}
+
+#theme--light .has-line-level-3 {
+    border-color: var(--c-line-lighten2);
+}
+
+/* 线颜色 end */
+
+/* light UI库样式覆盖 end */
+
+/* 黑夜 */
+#theme--dark {
+    background-color: var(--c-background-darken);
+    color: var(--c-font-darken); 
+}
+
+/* dark UI库样式覆盖 start */
+/* 背景颜色 start */
+#theme--dark .navbar,
+#theme--dark .footer,
+#theme--dark .navbar-dropdown {
+    background-color: var(--c-background-darken1);
+}
+
+#theme--dark a.navbar-item:focus, 
+#theme--dark a.navbar-item:focus-within, 
+#theme--dark a.navbar-item:hover, 
+#theme--dark a.navbar-item.is-active, 
+#theme--dark .navbar-link:focus, 
+#theme--dark .navbar-link:focus-within, 
+#theme--dark .navbar-link:hover, 
+#theme--dark .navbar-link.is-active,
+#theme--dark .navbar-item.has-dropdown:focus .navbar-link, 
+#theme--dark .navbar-item.has-dropdown:hover .navbar-link, 
+#theme--dark .navbar-item.has-dropdown.is-active .navbar-link{
+    background-color: var(--c-background-darken2);
+}
+
+
+/* 背景颜色三级 */
+#theme--dark .has-bg-level-1{
+    background-color: var(--c-background-darken); 
+}
+
+@for $i from 2 through 6
+{
+    #theme--dark .has-bg-level-#{$i} {
+        background-color: var(--c-background-darken#{$i - 1}); 
+    }
+}
+
+// #theme--dark .has-bg-level-2{
+//     background-color: var(--c-background-darken1); 
+// }
+
+// #theme--dark .has-bg-level-3{
+//     background-color: var(--c-background-darken2); 
+// }
+
+// #theme--dark .has-bg-level-4{
+//     background-color: var(--c-background-darken3); 
+// }
+
+// #theme--dark .has-bg-level-5{
+//     background-color: var(--c-background-darken4); 
+// }
+
+// #theme--dark .has-bg-level-6{
+//     background-color: var(--c-background-darken5); 
+// }
+
+/* 主色调 */
+#theme--dark .has-bg-primary {
+    background-color: var(--c-primary-darken); 
+    border-color: var(--c-primary-darken); 
+    color: var(--c-font-darken);
+}
+
+/* 红 */
+#theme--dark .has-bg-error {
+    background-color: var(--c-error-darken); 
+    border-color: var(--c-error-darken); 
+    color: var(--c-font-darken);
+}
+
+/* 绿 */
+#theme--dark .has-bg-success {
+    background-color: var(--c-success-darken); 
+    border-color: var(--c-success-darken); 
+    color: var(--c-font-darken);
+}
+
+/* 背景颜色 end */
+
+/* 文字 */
+
+#theme--dark .navbar-item, 
+#theme--dark .navbar-link, 
+#theme--dark strong  {
+    color: var(--c-font-darken);
+}
+
+#theme--dark .has-text-title{
+    color: var(--c-font-darken); 
+}
+/* 内容文字三级 */
+#theme--dark .has-text-level-1{
+    color: var(--c-font-darken); 
+}
+
+#theme--dark .has-text-level-2{
+    color: var(--c-font-darken1); 
+}
+
+#theme--dark .has-text-level-3{
+    color: var(--c-font-darken2); 
+}
+
+/* 主色调 */
+#theme--dark .has-text-primary {
+    color: var(--c-primary-darken); 
+}
+
+/* 红 */
+#theme--dark .has-text-error {
+    color: var(--c-error-darken); 
+}
+
+/* 绿 */
+#theme--dark .has-text-success {
+    color: var(--c-success-darken); 
+}
+
+/* 文字颜色 end */
+
+/* 线颜色 start */
+#theme--dark .navbar-divider {
+    background-color: var(--c-line-darken1); 
+}
+
+#theme--dark .navbar-dropdown {
+    border-color: var(--c-line-darken1);
+}
+
+#theme--dark .has-line-level-1 {
+    border-color: var(--c-line-darken);
+}
+
+#theme--dark .has-line-level-2 {
+    border-color: var(--c-line-darken1);
+}
+
+#theme--dark .has-line-level-3 {
+    border-color: var(--c-line-darken2);
+}
+
+/* 线颜色 end */
+/* dark UI库样式覆盖 start */
+
+
+/* 主题样式 end */
+  
+
+
+
