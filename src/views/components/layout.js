@@ -23,6 +23,11 @@ import validateMode from './userCenter/validateMode'
 //调整保证金
 import changeMgnMode from './orderList/changeMgnMode'
 
+//委托确认
+import commission from './market/Commission'
+//合约设置
+import implemented from './market/NotImplemented'
+
 
 let obj = {
 
@@ -213,6 +218,14 @@ let obj = {
   customChangeMgnMode: function(){
 
   },
+
+  getSetTipsMode:function(){
+    return m(commission)
+  },
+
+  getImplemented:function(){
+    return m(implemented)
+  }
   
 }
 
@@ -260,7 +273,9 @@ export default {
           obj.getValidateMode(),
           obj.marketAddMode(),
           obj.someCloseMode(),
-          obj.changeMgnMode()
+          obj.changeMgnMode(),
+          obj.getSetTipsMode(),
+          obj.getImplemented()
         ])
     }
 }

@@ -17,6 +17,8 @@ let spotTick = {
     lastTick: {},
     FundingNextTmStr: '',
     FundingLongRStr: '',
+    //设置窗口
+    isSetting:false,
     //初始化全局广播
     initEVBUS: function(){
         let that = this
@@ -281,16 +283,63 @@ let spotTick = {
     customLeftTick: function(){
 
     }, 
+    settingAny:function(){
+        this.isSetting = !this.isSetting
+        console.log(this.isSetting,'按钮状态')
+        
+    },
+    getEntrustSet:function(){
+        this.isSetting = false
+
+        gEVBUS.emit(gTrd.EV_OPENORDADJUST_UPD, {Ev: gTrd.EV_OPENORDADJUST_UPD,})
+    },
+    getProfitLoss:function(){
+        this.isSetting = false
+
+        gEVBUS.emit(gTrd.EV_OPENIMPLEMENTED_UPD, {Ev: gTrd.EV_OPENIMPLEMENTED_UPD,})
+    },
+    getSettingView:function(){
+        return m('div',{class:'setTing-right set-back has-text-1 setTing-right-font' + (this.isSetting?" ":" is-hidden"),onclick:function(e){
+            window.stopBubble(e)
+        }},[
+            m('div',{class:"setTing-right-ord is-flex",onclick:function(e){
+                spotTick.getEntrustSet()
+            }},[
+                m('div',{class:""},[
+                    '委托确认',
+                ]),
+                m('div',{class:""},[
+                    m('i',{class:"iconfont iconarrow-right icon-font-right"})
+                ]),
+
+            ]),
+            m('hr',{class:"hr-back"}),
+            m('div',{class:"setTing-right-ord is-flex",onclick:function(e){
+                spotTick.getProfitLoss()
+            }},[
+                m('div',{class:""},[
+                    '未实现盈亏计算',
+                ]),
+                m('div',{class:""},[
+                    m('i',{class:"iconfont iconarrow-right icon-font-right"})
+                ]),
+
+            ]),
+        ])
+    },
     getRightTick: function(){
         let type = window.$config.views.headerTick.right.type
         switch(type){
             case 0: 
                 return m("div",{class:"pub-header-tick-right"},[
-                    // m('button', {class: "button is-white is-rounded",}, [
-                    //     m('span', {class: "icon is-medium"},[
-                    //         m('i', {class: "iconfont iconshezhi1 fas fa-2x", "aria-hidden": true })
-                    //     ]),
-                    // ]),
+                    m('button', {class: "button is-rounded pub-header-tick-right-setting",onclick:function(){
+                        spotTick.settingAny()
+                    }}, [
+                        m('span', {class: "icon is-medium"},[
+                            m('i', {class: "iconfont iconshezhi1 fas fa-2x has-text-1 icon-fixed", "aria-hidden": true })
+                        ]),
+                        spotTick.getSettingView()
+                    ]),
                 ])
             case 1:
                 return this.customRightTick()
