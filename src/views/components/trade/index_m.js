@@ -60,7 +60,7 @@ let obj = {
         stopPL: {
             id: 2,
             key: 'stopPL',
-            name: '止盈止损',
+            name: gDI18n.$t('10325'), //'止盈止损',
             open: true
         },
     },
@@ -129,7 +129,7 @@ let obj = {
             stopPL: {
                 id: 2,
                 key: 'stopPL',
-                name: '止盈止损',
+                name: gDI18n.$t('10325'), //'止盈止损',
                 open: true
             },
         }
