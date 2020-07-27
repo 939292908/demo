@@ -1955,6 +1955,23 @@ input[type="checkbox"] {
     }
 }
 
+//设置弹窗
+.modal-card-width{
+    width: 561px !important;
+}
+
+.modal-card-font-title{
+    @extend %font-12;
+}
+
+.modal-card-font-subtitle{
+    @extend %font-4;
+}
+
+.switch-pd{
+    @extend %side-mb;
+}
+
 
 // -------------- 白天模式 --------------
 #light {
