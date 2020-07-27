@@ -10,7 +10,7 @@ let obj = {
     tableData: [], // 表格
     isShowDetailModal: false, // 详情 弹框
     isShowCompensateModal: false, // 申请赔付 弹框
-    isShowBuyModal: false, // 申请赔付 弹框
+    isShowBuyModal: true, // 买保险 弹框
     currentCompensateData: {}, // 申请赔付 点击的data
     // 申请赔付 click
     onCompensateClick(params) { 
@@ -414,7 +414,7 @@ let obj = {
                     m('div', { class: `my-insurance-top-item`,onclick(){obj.isShowDetailModal = true} }, [
                         "保险金额：1000 USDT"
                     ]),
-                    m('div', { class: `my-insurance-top-item`,onclick(){obj.BuyModal = true} }, [
+                    m('div', { class: `my-insurance-top-item`,onclick(){obj.isShowBuyModal = true} }, [
                         "赔付金额：1000 USDT"
                     ]),
                     m('.spacer'),
@@ -476,12 +476,14 @@ let obj = {
                         
                     }
                 }),
+                // 详情 弹框
                 m(DetailModal, {
                     isShow: obj.isShowDetailModal,
                     onClose () {
                         obj.isShowDetailModal = false
                     }
                 }),
+                // 买保险 弹框
                 m(BuyModal, {
                     isShow: obj.isShowBuyModal,
                     onClose () {
