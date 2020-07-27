@@ -47,11 +47,11 @@ export default {
                 id: "all"
             },
             {
-                name: "买入",//"买入",
+                name: gDI18n.$t('10326'/*"买入"*/),//"买入",
                 id: 1
             },
             {
-                name: "卖出",//"卖出",
+                name: gDI18n.$t('10327'/*"卖出"*/),//"卖出",
                 id: -1
             }
         ]
@@ -61,11 +61,11 @@ export default {
                 id: "all"
             },
             {
-                name: "限价",//"限价",
+                name: gDI18n.$t('10185'/*"限价"*/),//"限价",
                 id: 1
             },
             {
-                name: "市价",//"市价",
+                name: gDI18n.$t('10081'/*"市价"*/),//"市价",
                 id: 2
             }
         ]
@@ -197,7 +197,7 @@ export default {
             // 类型
             m("div", { class: "search-bi-name" }, [
                 m("p", { class: "search-bi-name-p has-text-2" }, [
-                    "类型",//"类型"
+                    gDI18n.$t('10102'),//"类型"
                 ]),
                 m("div", { class: "search-k-d" }, [
                     this.typeList.map((item, index) => {
