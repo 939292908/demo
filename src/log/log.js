@@ -14,6 +14,7 @@ class _console {
         this.log_zx = true
         this.log_gj = true
         this.log_wmm = true
+        this.log_tlh = true
     }
 
     /**
