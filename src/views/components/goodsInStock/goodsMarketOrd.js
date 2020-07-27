@@ -313,11 +313,11 @@ let obj = {
         }
         if(this.buttonType){
             if(Number(this.form.Total) > Number((obj.USDTWlt.NL || 0))){
-                return $message({ title: gDI18n.$t('10037'/*"提示"*/), content: "资金不足！", type: 'danger'})
+                return $message({ title: gDI18n.$t('10037'/*"提示"*/), content: gDI18n.$t('10038'/*"可用资金不足"*/), type: 'danger'})
             }
         }else{
             if(Number(this.form.Num) > Number((obj.wlt.NL || 0))){
-                return $message({ title: gDI18n.$t('10037'/*"提示"*/), content: "资金不足！", type: 'danger'})
+                return $message({ title: gDI18n.$t('10037'/*"提示"*/), content: gDI18n.$t('10038'/*"可用资金不足"*/), type: 'danger'})
             }
         }
         
@@ -370,25 +370,25 @@ export default {
         return m("div", { class: "pub-place-order-form has-text-2" }, [
             m('div',{class:"pub-bibi-order"},[
                 m("div",{class:"pub-bibi-order-type is-hidden-touch"},[
-                    '类型'
+                    gDI18n.$t('10102'/*"类型"*/)
                 ]),
                 m("div",{class:"pub-bibi-order-BS cursor-pointer" + (obj.buttonType?" pub-bibi-order-BS-color1" :" pub-bibi-order-BS-color2")  + (pageTradeStatus == 1?" pub-bibi-type1" : " pub-bibi-type2"),onclick:function(){
                     obj.buttonType = !obj.buttonType
                 }},[
-                    (obj.buttonType?" 买入" :" 卖出") + " " + (obj.getLastTick().ToC || "币种"),
+                    (obj.buttonType?gDI18n.$t('10326'/*"买入"*/) :gDI18n.$t('10327'/*"卖出"*/)) + " " + (obj.getLastTick().ToC || gDI18n.$t('10420'/*"币种"*/)),
                     m('i',{class:"iconfont iconswitch icon-position" + (obj.buttonType?" iconfont-switch1" :" iconfont-switch2")})
                 ]),
             ]),
             m("div",{class:"pub-bibi-price"},[
                 m('div',{class:"pub-bibi-price-til is-hidden-touch"},[
-                    "价格"
+                    gDI18n.$t('10186'/*"价格"*/)
                 ]),
                 m('div',{class:"pub-bibi-price-inp" + (pageTradeStatus == 1?" pub-bibi-price-inp1" : " pub-bibi-price-inp2")},[
                     m("div",{class:"pub-bibi-price-US"},[
                         m("div",{class:"pub-bibi-price-text text-background"},[
-                            (obj.getLastTick().FromC || "币种")
+                            (obj.getLastTick().FromC || gDI18n.$t('10420'/*"币种"*/))
                         ]),
-                        m("input",{class:"input pub-bibi-price-US-input",step: obj.PrzStep,pattern:"\d*",type:"number",placeholder:"市价",readonly:"readonly"}),
+                        m("input",{class:"input pub-bibi-price-US-input",step: obj.PrzStep,pattern:"\d*",type:"number",placeholder:gDI18n.$t('10081'/*"市价"*/),readonly:"readonly"}),
                     ]),
                     // m("div",{class:"text-size"},[
                     //     "估值 ￥ 63398.6645"
@@ -397,14 +397,14 @@ export default {
             ]),
             m("div",{class:"pub-bibi-price"},[
                 m('div',{class:"pub-bibi-price-til is-hidden-touch"},[
-                    "数量"
+                    gDI18n.$t('10087'/*"数量"*/)
                 ]),
                 m('div',{class:"pub-bibi-price-inp" + (pageTradeStatus == 1?" pub-bibi-price-inp1" : " pub-bibi-price-inp2")},[
                     m("div",{class:"pub-bibi-price-US"},[
                         m("div",{class:"pub-bibi-price-text text-background"},[
-                            (obj.getLastTick().ToC || "币种")
+                            (obj.getLastTick().ToC || gDI18n.$t('10420'/*"币种"*/))
                         ]),
-                        m("input",{class:"input pub-bibi-price-US-input",step: obj.NumStep,pattern:"\d*",value:obj.form.Num,type:"number",placeholder:"数量",oninput:function(e){
+                        m("input",{class:"input pub-bibi-price-US-input",step: obj.NumStep,pattern:"\d*",value:obj.form.Num,type:"number",placeholder:gDI18n.$t('10087'/*"数量"*/),oninput:function(e){
                             obj.getInputNum(e)
                         }}),
                     ]),
@@ -428,7 +428,7 @@ export default {
                     m("div",{class:"pub-balance-button cursor-pointer is-primary-font" + (obj.buttonType?" pub-buy-sell-1" :" pub-buy-sell-2"),onclick:function(){
                         obj.submit()
                     }},[
-                        (obj.buttonType?" 买入" :" 卖出") + " " + (obj.getLastTick().ToC || "币种"),
+                        (obj.buttonType?gDI18n.$t('10326'/*"买入"*/) :gDI18n.$t('10327'/*"卖出"*/)) + " " + (obj.getLastTick().ToC || gDI18n.$t('10420'/*"币种"*/)),
                     ]),
                 ]),
             ]),
