@@ -19,6 +19,9 @@ let spotTick = {
     FundingLongRStr: '',
     //设置窗口
     isSetting:false,
+
+    //为实现盈亏计算设置
+    // ForcedPrice:window.$config.future.ForcedPrice,
     //初始化全局广播
     initEVBUS: function(){
         let that = this
@@ -285,7 +288,6 @@ let spotTick = {
     }, 
     settingAny:function(){
         this.isSetting = !this.isSetting
-        console.log(this.isSetting,'按钮状态')
         
     },
     getEntrustSet:function(){
@@ -298,6 +300,13 @@ let spotTick = {
 
         gEVBUS.emit(gTrd.EV_OPENIMPLEMENTED_UPD, {Ev: gTrd.EV_OPENIMPLEMENTED_UPD,})
     },
+
+    //获取本地合约设置
+    // getForcedPriceSeted:function(){
+    //     spotTick.ForcedPrice = window.$config.future.ForcedPrice
+    //     console.log(spotTick.ForcedPrice,222222222222)
+    // },
+
     getSettingView:function(){
         return m('div',{class:'setTing-right set-back has-text-1 setTing-right-font' + (this.isSetting?" ":" is-hidden"),onclick:function(e){
             window.stopBubble(e)
@@ -309,7 +318,7 @@ let spotTick = {
                     '委托确认',
                 ]),
                 m('div',{class:""},[
-                    m('i',{class:"iconfont iconarrow-right icon-font-right"})
+                    m('i',{class:"iconfont iconarrow-right icon-font-right has-text-success"})
                 ]),
 
             ]),
@@ -321,7 +330,10 @@ let spotTick = {
                     '未实现盈亏计算',
                 ]),
                 m('div',{class:""},[
-                    m('i',{class:"iconfont iconarrow-right icon-font-right"})
+                    m('span',{class:"has-text-success"},[
+                        window.$config.future.UPNLPrzActive == "1"?"最新":"标记"
+                    ]),
+                    m('i',{class:"iconfont iconarrow-right icon-font-right has-text-success"})
                 ]),
 
             ]),
@@ -354,11 +366,13 @@ let spotTick = {
 }
 
 import symSelect from './symSelect'
+import utils from '../../../utils/utils'
 export default {
     oninit: function(vnode){
         
     },
     oncreate: function(vnode){
+        // spotTick.getForcedPriceSeted()
         spotTick.initEVBUS()
         spotTick.subTick()
     },

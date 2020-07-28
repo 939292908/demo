@@ -13,6 +13,11 @@ export default {
             if (vnode.attrs.defaultId == 'defaulFirst') cur = vnode.attrs.list[0] // 默认选中第一个
             vnode.state.current = cur ? cur : {} 
     },
+    // onupdate (vnode) {
+    //         let cur = vnode.attrs.list.find(item => item.id == vnode.attrs.defaultId) // 默认选中指定的id
+    //         if (vnode.attrs.defaultId == 'defaulFirst') cur = vnode.attrs.list[0] // 默认选中第一个
+    //         vnode.state.current = cur ? cur : {} 
+    // },
     oncreate (vnode) {
     },
     view (vnode) {

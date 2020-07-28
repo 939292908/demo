@@ -11,6 +11,7 @@ window.utils = utils
 
 import config from './config'
 window.$config = config
+window.$config.future.UPNLPrzActive = utils.getItem("UPNLPrzActiveSeted")?utils.getItem("UPNLPrzActiveSeted"):window.$config.future.UPNLPrzActive
 window.$theme = utils.getItem("theme") ? utils.getItem("theme") : config.theme
 //////////////////////////////////////////////////////////////////////
 

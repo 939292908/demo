@@ -37,6 +37,7 @@ hr {
     @extend %my-3;
 }
 
+
 //html标签样式覆盖 end
 
 //动画相关 start
@@ -1970,6 +1971,10 @@ input[type="checkbox"] {
 
 .switch-pd{
     @extend %side-mb;
+}
+//为实现盈亏设置
+.ord-set{
+    width: 80%;
 }
 
 
