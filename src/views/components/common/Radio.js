@@ -1,9 +1,9 @@
 var m = require("mithril")
 // {
 //     class: "", // 添加类名
-//     defaultId : id, // 默认选中 参数：id 或 'defaulFirst'选中第一个
+//     defaultId : id, // 默认选中 id 或 'defaulFirst'第一个
 //     onclick (data) {}, // 点击
-//     list: [{id, label, value}], // 列表 id , label（显示文字）
+//     list: [{id, label}], // 列表 id , label（显示文字）
 // }
 export default {
     current : {}, // 当前选中
@@ -11,7 +11,7 @@ export default {
     oninit (vnode) {
             let cur = vnode.attrs.list.find(item => item.id == vnode.attrs.defaultId) // 默认选中指定的id
             if (vnode.attrs.defaultId == 'defaulFirst') cur = vnode.attrs.list[0] // 默认选中第一个
-            vnode.state.current = cur ? cur : {} 
+            vnode.state.current = cur ? cur : {} // 兼容没有该找到的情况
     },
     oncreate (vnode) {
     },
