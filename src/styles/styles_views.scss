@@ -1928,10 +1928,67 @@ input[type="checkbox"] {
 .bdn {
     border: none !important;
 }
+//右边设置
+.icon-fixed{
+    position: relative;
+}
+
+.setTing-right-font{
+    @extend %font-3;
+}
+
+.setTing-right{
+    width: 224px;
+    @extend %side-pa;
+    position: absolute;
+    right: 50px;
+    top: 35px;
+    z-index: 50;
+
+    .setTing-right-ord{
+        justify-content: space-between;
+
+        .icon-font-right{
+            @extend %iconfont-small;
+        }
+
+    }
+}
+
+//设置弹窗
+.modal-card-width{
+    width: 561px !important;
+}
+
+.modal-card-font-title{
+    @extend %font-12;
+}
+
+.modal-card-font-subtitle{
+    @extend %font-4;
+}
+
+.switch-pd{
+    @extend %side-mb;
+}
+
+
 // -------------- 白天模式 --------------
 #light {
     background-color: $white-background-color-once-level;
     .pub-kline hr {
+        background-color: $white-line2;
+    }
+
+    //右边设置
+    .pub-header-tick-right-setting{
+        background-color: $white-background-color-second-level;
+    }
+
+    .set-back{
+        background-color:$white-background-color-three-level;
+    }
+    .hr-back{
         background-color: $white-line2;
     }
     @mixin tableStyle {
@@ -2285,6 +2342,17 @@ input[type="checkbox"] {
     background-color: $black-background-color-once-level;
     //k线样式
     .pub-kline hr {
+        background-color: $black-line2;
+    }
+    //右边设置
+    .pub-header-tick-right-setting{
+        background-color: $black-background-color-second-level;
+    }
+
+    .set-back{
+        background-color:$black-background-color-three-level;
+    }
+    .hr-back{
         background-color: $black-line2;
     }
 
