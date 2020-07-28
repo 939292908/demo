@@ -53,7 +53,25 @@ export default {
               }),
             ]),
             m("section", { class: "pub-stoppl-content modal-card-body has-text-2" }, [
-              
+              m('div',{class:"control"},[
+                "未实现盈亏计算",
+                m('label',{class:"radio"},[
+                  m('input',{type:"radio",name:"answer",},[
+                    
+                  ]),
+                  m('span',[
+                    "标记价格"
+                  ])
+                ]),
+                m('label',{class:"radio"},[
+                  m('input',{type:"radio",name:"answer",},[
+
+                  ]),
+                  m('span',[
+                    "最新价格"
+                  ])
+                ]),
+              ])
             ]),
             m("footer", { class: "pub-stoppl-foot modal-card-foot" }, [
               m("button", {
