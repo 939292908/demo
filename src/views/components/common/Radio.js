@@ -7,7 +7,7 @@ var m = require("mithril")
 // }
 export default {
     current : {}, // 当前选中
-    name: 'radio' + Math.ceil(Math.random()*10000000000),
+    name: 'radio' + Math.ceil(Math.random()*100000000),
     oninit (vnode) {
             let cur = vnode.attrs.list.find(item => item.id == vnode.attrs.defaultId) // 默认选中指定的id
             if (vnode.attrs.defaultId == 'defaulFirst') cur = vnode.attrs.list[0] // 默认选中第一个

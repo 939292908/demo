@@ -9,9 +9,9 @@ export default {
     oninit (vnode) {
         vnode.state.type = vnode.attrs.type
     },
-    onupdate (vnode) {
-        vnode.state.type = vnode.attrs.type
-    },
+    // onupdate (vnode) {
+    //     vnode.state.type = vnode.attrs.type
+    // },
     oncreate (vnode) {
     },
     view (vnode) {
