@@ -1,6 +1,7 @@
 var m = require("mithril")
 
 import * as clacMgnNeed from '../../../futureCalc/calcMgnNeed.js'
+import Radio from "../common/Radio"
 
 let obj = {
     form: {
@@ -23,6 +24,9 @@ let obj = {
         maxLeverForBuy: 0,
         maxLeverForSell: 0,
         // 交易模式2相关内容 end
+        
+        Tif: 0, // 高级设置：GTC / FOK / FAK 
+        OrdFlag: 0 // 高级设置：被动委托
     },
     faceValue: '= 0.0000 USDT',
     LeverInputValue: gDI18n.$t('10135'),//'杠杆',
@@ -285,6 +289,9 @@ let obj = {
             MIRMyForBuy: 0,
             MIRMyForSell: 0,
             // 交易模式2相关内容 end
+            
+            Tif: 0, // 高级设置：GTC / FOK / FAK 
+            OrdFlag: 0 // 高级设置：被动委托
         }
         this.MgnNeedForBuy = this.MgnNeedForSell = 0
         this.isAutoPrz = false
@@ -397,6 +404,8 @@ let obj = {
         let AId = window.gTrd.RT["UserId"]+'01'
         let PId = window.gTrd.CtxPlaying.activePId
 
+        let Tif = obj.form.Tif
+        let OrdFlag = obj.form.OrdFlag
 
         let p = {
             Sym: Sym,
@@ -408,8 +417,8 @@ let obj = {
             Prz: 1,
             Qty: Number(this.form.Num),
             QtyDsp: 0,
-            Tif: 0,
-            OrdFlag: 0,
+            Tif: Tif,
+            OrdFlag: OrdFlag,
             PrzChg: 0
         }
 
@@ -496,6 +505,7 @@ let obj = {
         }
 
         window.gTrd.ReqTrdOrderNew(p, function(aTrd, arg){
+            console.log(p,'pppppParames');
             if (arg.code != 0 || arg.data.ErrCode) {
                 window.$message({title: utils.getTradeErrorCode(arg.code || arg.data.ErrCode), content: utils.getTradeErrorCode(arg.code || arg.data.ErrCode), type: 'danger'})
             }
@@ -1128,7 +1138,46 @@ export default {
                     window.isMobile?(obj.wlt.aWdrawable?Number(obj.wlt.aWdrawable).toFixed2(2): (0).toFixed2(2)):
                     (obj.wlt.aWdrawable?Number(obj.wlt.aWdrawable).toFixed2(8): (0).toFixed2(8))
                 ])
-            ])
+            ]),
+            m('div', { class: `is-size-7 field` }, ["高级设置"]),
+
+            // 单选 Radio 高级设置
+            m(Radio, {
+                class: "is-between is-size-7",
+                defaultId: 'Tif_0', // 默认选中
+                list: [ // 列表
+                    {
+                        type: 'Tif',
+                        id: 'Tif_0',
+                        value: 0,
+                        label: 'GTC'
+                    },
+                    {
+                        type: 'Tif',
+                        id: 'Tif_1',
+                        value: 1,
+                        label: 'FAK'
+                    },
+                    {
+                        type: 'Tif',
+                        id: 'Tif_2',
+                        value: 2,
+                        label: 'FOK'
+                    },
+                    {
+                        type: 'OrdFlag',
+                        id: 'OrdFlag_0',
+                        value: 1,
+                        label: '被动委托'
+                    },
+                ],
+                onclick (item) { // 点击设置 form 的参数
+                    obj.form.Tif = 0
+                    obj.form.OrdFlag = 0
+                    if (item.type == 'Tif') obj.form.Tif = item.value
+                    if (item.type == 'OrdFlag') obj.form.OrdFlag = item.value
+                }
+            }),
         ])
     },
     onremove: function () {
