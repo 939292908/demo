@@ -42,6 +42,13 @@ let obj = {
         this.EV_OPENORDADJUST_UPD_unbinder = window.gEVBUS.on(gTrd.EV_OPENORDADJUST_UPD, arg => {
             that.open = true
         })
+        if (this.EV_SWITCHALL_UPD_unbinder) {
+            this.EV_SWITCHALL_UPD_unbinder()
+        }
+        this.EV_SWITCHALL_UPD_unbinder = window.gEVBUS.on(gTrd.EV_SWITCHALL_UPD, arg => {
+            that.getSwitchChange()
+            console.log(1111111111)
+        })
     },
 
     initLanguage:function(){
@@ -78,6 +85,9 @@ let obj = {
         if (this.EV_OPENORDADJUST_UPD_unbinder) {
             this.EV_OPENORDADJUST_UPD_unbinder()
         }
+        if (this.EV_SWITCHALL_UPD_unbinder) {
+            this.EV_SWITCHALL_UPD_unbinder()
+        }
     },
 
     closeMode: function(){
@@ -85,7 +95,6 @@ let obj = {
     },
 
     getSetType:function(item,type){
-        console.log(item, type)
         switch(item.id){
             case "all":
                 if(!type){
@@ -111,8 +120,9 @@ let obj = {
                     type: item.option,
                     onclick (type) {
                         obj.getSetType(item,type)
+                        gEVBUS.emit(gTrd.EV_SWITCHALL_UPD, {Ev: gTrd.EV_SWITCHALL_UPD,})
                     },
-                })
+                }),
             ])
         })
     },
