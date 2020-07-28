@@ -32,6 +32,7 @@ let obj = {
             option:true
         },
     ],
+    switchList:[true,true,true,true,true],
 
     initEVBUS: function(){
         let that = this
@@ -94,35 +95,40 @@ let obj = {
         this.open = false
     },
 
-    getSetType:function(item,type){
-        switch(item.id){
-            case "all":
-                if(!type){
-                    for(let i in this.ordList){
-                        this.ordList[i].option = false
-                    }
-                }else if(type){
-                    for(let i in this.ordList){
-                        this.ordList[i].option = true
-                    }
+    getSwitchType:function(item){
+        item.option = !item.option
+        if(item.id == "all"){
+            if(item.option){
+                for(let i in this.ordList){
+                    this.ordList[i].option = true
                 }
-                break;
+            }else {
+                for(let i in this.ordList){
+                    this.ordList[i].option = false
+                }
+            }
+        }else {
+            this.ordList[0].option = false
+            let num = 0
+            for(let i=1;i<this.ordList.length;i++){
+                if(this.ordList[i].option == true){
+                    num +=1
+                } 
+            }
+            if(num == 4){
+                this.ordList[0].option = true
+            }
         }
-        console.log(this.ordList)
     },
 
     getSwitchChange:function(){
         return this.ordList.map((item,i)=>{
             return m('div',{class:"switch-pd",key:"getswitchchange" + i + item.id},[
                 item.name,
-                m(Switch, {
-                    class: 'is-pulled-right',
-                    type: item.option,
-                    onclick (type) {
-                        obj.getSetType(item,type)
-                        gEVBUS.emit(gTrd.EV_SWITCHALL_UPD, {Ev: gTrd.EV_SWITCHALL_UPD,})
-                    },
-                }),
+                m('span',{class:"is-pulled-right my-switch" + (item.option?" is-checked" : ""),onclick:function(e){
+                    window.stopBubble(e)
+                    obj.getSwitchType(item)
+                }},)
             ])
         })
     },
