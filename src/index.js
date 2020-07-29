@@ -11,6 +11,9 @@ import('@/styles/common.scss')
 import('@/assets/iconfont/iconfont.js')
 import('@/assets/iconfont/iconfont.css')
 
+// 极验
+import('@/libs/gt')
+
 // log日志管理
 import _console from '@/log/log'
 window._console = new _console()

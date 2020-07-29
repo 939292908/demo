@@ -1,4 +1,5 @@
 let _axios = require('@/api/request').default
+let qs = require('qs')
 
 const DBG_REQUEST = true
 const DBG_TAG = "API"
@@ -13,7 +14,48 @@ class webApi {
         this.userInfo = {}
     }
 
-    getUserInfo(aData, aOnSuccess, aOnError){
+    geetestRegister(aData, aOnSuccess, aOnError) {
+        let s = this
+
+        s.axios.request({
+            method: "get",
+            url: s.axios.baseUrl + API.GEETEST_REGISTER + `?t=${aData.t}`,
+            options: {}
+        }).then(function (result) {
+            let arg = result.data
+            if (aOnSuccess) {
+                aOnSuccess(arg)
+            }
+        }).catch(function (e) {
+            if (aOnError) {
+                aOnError(e)
+            }
+        })
+    }
+
+    geetestValidate(aData, aOnSuccess, aOnError) {
+        let s = this
+
+        s.axios.request({
+            method: "post",
+            url: s.axios.baseUrl + API.GEETEST_VALIDATE,
+            data: qs.stringify(aData),
+            options: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            }
+        }).then(function (result) {
+            let arg = result.data
+            if (aOnSuccess) {
+                aOnSuccess(arg)
+            }
+        }).catch(function (e) {
+            if (aOnError) {
+                aOnError(e)
+            }
+        })
+    }
+
+    getUserInfo(aData, aOnSuccess, aOnError) {
         let s = this
 
         s.axios.request({
