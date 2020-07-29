@@ -15,21 +15,22 @@ module.exports = {
                     m('span','0.00000000 BTC ≈ ￥0.00000000')
                 ]),
                 m('div.left.bottom', [
-                    m('div.left.bottom.left',{style:{width:'45%'}}, [
+                    m('div.left.bottom.left',{style:{width:'45%',float:'left'}}, [
                         m('span','保证金余额'),
                         m('br'),
                         m('span','0.00000000 BTC'),
                         m('br'),
                         m('span','≈ ￥0.00000000'),
                     ]),
-                    m('div.left.bottom.right',{style:{width:'45%'}}, [
+                    m('div.left.bottom.right',{style:{width:'45%',float:'left'}}, [
                         m('span','未实现盈亏'),
                         m('br'),
                         m('span','0.00000000 BTC'),
                         m('br'),
                         m('span','≈ ￥0.00000000'),
 
-                    ])
+                    ]),
+                    m('div', { style: { clear: 'both' } }),
                 ])
             ]),
             m('div.right',{style:{width:'25%'}}, [

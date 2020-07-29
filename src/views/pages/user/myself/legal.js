@@ -7,7 +7,7 @@ module.exports = {
     },
     view:function(){
         return m('div', [
-            m('div', { style: 'width：30%;float:left' }, [
+            m('div', { style: 'float:left' }, [
                 m('span', '资产总额'),
                 m('br'),
                 m('span', '0.00000000 BTC'),
@@ -16,20 +16,14 @@ module.exports = {
                 m('br'),
                 m('span', '0.00000000')
             ]),
-            m('div', { style: 'width：30%;float:left' }, [
+            m('div', { style: 'float:left' }, [
                 m('button.button', '买'),
                 m('button.button', '卖'),
                 m('button.button', '划转')
             ]),
-            m('div', { style: 'width：30%;float:left' }, [
-                m('span', '我的钱包'),
-                m('br'),
-                m('span', '￥100.0000'),
-                m('br'),
-                m('span', '币币账户'),
-                m('br'),
-                m('span', '￥80.0000')
-            ])
+            m('div', { style: 'float:left' }, [
+            ]),
+            m('div', { style: { clear: 'both' } }),
         ])
     }
 }
