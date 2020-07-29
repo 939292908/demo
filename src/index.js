@@ -14,6 +14,9 @@ import('@/assets/iconfont/iconfont.css')
 // 极验
 import('@/libs/gt')
 
+import config from '@/config'
+window.exchId = config.exchId
+
 // log日志管理
 import _console from '@/log/log'
 window._console = new _console()
