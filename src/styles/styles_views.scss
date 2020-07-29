@@ -1698,8 +1698,13 @@ hr {
     }
 }
 // 单选框
-.radio:hover {
-    color: inherit;
+.radio {
+    &:hover {
+        color: inherit;
+    }
+    input {
+        @extend %mr-2;
+    }
 }
 // -------------- 所有模式 --------------
 .has-text-white {
