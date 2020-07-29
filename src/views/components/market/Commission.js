@@ -13,22 +13,22 @@ let obj = {
         },
         {
             id: '1',
-            name: gDI18n.$t('10117'),//"限价委托",
+            name:"限价委托",
             option:true
         },
         {
             id: '2',
-            name: gDI18n.$t('10118'),//"市价委托",
+            name:"市价委托",
             option:true
         },
         {
             id: '3',
-            name: gDI18n.$t('10119'),//"限价计划",
+            name:"限价计划",
             option:true
         },
         {
             id: '4',
-            name: gDI18n.$t('10120'),//"市价计划",
+            name:"市价计划",
             option:true
         },
     ],
@@ -60,22 +60,22 @@ let obj = {
             },
             {
                 id: '1',
-                name: gDI18n.$t('10117'),//"限价委托",
+                name:"限价委托",
                 option:true
             },
             {
                 id: '2',
-                name: gDI18n.$t('10118'),//"市价委托",
+                name:"市价委托",
                 option:true
             },
             {
                 id: '3',
-                name: gDI18n.$t('10119'),//"限价计划",
+                name:"限价计划",
                 option:true
             },
             {
                 id: '4',
-                name: gDI18n.$t('10120'),//"市价计划",
+                name:"市价计划",
                 option:true
             },
         ]
