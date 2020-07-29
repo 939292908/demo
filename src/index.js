@@ -2,9 +2,10 @@ let m = require('mithril')
 // 主题颜色
 import("@/styles/index")
 // UI库
-import('@/styles/bluma.sass')
+import('@/styles/bluma.scss')
 // 公用样式
-import('@/styles/common.css')
+// import('@/styles/common.css')
+import('@/styles/common.scss')
 
 // iconfont
 import('@/assets/iconfont/iconfont.js')

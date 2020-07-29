@@ -101,6 +101,7 @@ const iconsz = {
 }
 
 const padding = {
+    level0: '0px',
     level1: '4px',
     level2: '8px',
     level3: '12px',
@@ -112,6 +113,7 @@ const padding = {
 }
 
 const margin = {
+    level0: '0px',
     level1: '4px',
     level2: '8px',
     level3: '12px',
