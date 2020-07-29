@@ -1,4 +1,97 @@
-
 .views-pages-home-index {
-    
+    text-align: center;
+}
+.p1{
+    margin-top: 200px;
+    margin-left: -150px;
+    margin-right: 20px;
+}
+.p2{
+    margin-left: -240px;
+    margin-right: 20px;
+}
+.p3{
+    height: 32px;;
+    margin-left: 340px;
+    text-align: center;
+}
+.btn{
+    height: 33px;
+    margin-left: 15px;
+}
+.select{
+    width: 300px;
+}
+.Notice{
+    margin-top: 30px;
+    width: 100%;
+}
+.Notice-content {
+    display: flex;
+    justify-content: space-around;
+}
+.listing{
+    width: 100%;
+    height: 100px;
+    display: flex;
+    justify-content: space-around;
+}
+.frame{
+    width: 100%;
+    height: 200px;
+    border: 1px solid rgba(19, 18, 18, 0.333);
+    margin-top: 20px;
+    padding: 10px 20px;
+
+}
+.frame-1{
+    width: 100%;
+    border: 1px solid rgba(19, 18, 18, 0.333);
+    margin-top: 20px;
+    padding: 20px 100px;
+    line-height: 30px;
+}
+.frame-2{
+    width: 100%;
+    height: 200px;
+    border: 1px solid rgba(19, 18, 18, 0.333);
+    margin-top: 20px;
+}
+.title-1{
+    margin-top: 40px;
+}
+.register{
+    height: 27px;
+    margin-top: 20px;
+}
+.transaction{
+    height: 27px;
+    margin-left: 30px;
+}
+.frame-3{
+    /* width: 100%; */
+    height: 270px;
+    border: 1px solid rgba(19, 18, 18, 0.333);
+    margin-top: 20px;
+    width: 90%; 
+    margin: 0 auto;
+}
+.frame-image-1{
+    /* margin-left: 100px; */
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    margin-top: 30px;
+}
+.frame-image-2{
+    margin-left: 100px;
+}
+.QR code-1{
+    margin-left: 300px;
+}
+.index-info-box{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: -34px;
 }
