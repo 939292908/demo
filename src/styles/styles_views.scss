@@ -1980,7 +1980,22 @@ input[type="checkbox"] {
 .ord-set{
     width: 80%;
 }
+//委托确认弹窗
+.ticks-stop{
+    @extend %mb-2;  
+}
+.ord-tips-num{
+    justify-content: space-between;
+    @extend %mb-2;
+    
+    .ord-tips-num-left{
+        text-align: left;
+    }
 
+    .ord-tips-num-right{
+        text-align: right;
+    }
+}
 
 
 // -------------- 白天模式 --------------

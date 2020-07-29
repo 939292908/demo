@@ -27,7 +27,8 @@ import changeMgnMode from './orderList/changeMgnMode'
 import commission from './market/Commission'
 //合约设置
 import implemented from './market/NotImplemented'
-
+//委托确认弹窗
+import ordTips from './trade/ordTips'
 
 let obj = {
 
@@ -225,7 +226,11 @@ let obj = {
 
   getImplemented:function(){
     return m(implemented)
-  }
+  },
+
+  getOrdTips:function(){
+    return m(ordTips)
+  },
   
 }
 
@@ -275,7 +280,8 @@ export default {
           obj.someCloseMode(),
           obj.changeMgnMode(),
           obj.getSetTipsMode(),
-          obj.getImplemented()
+          obj.getImplemented(),
+          obj.getOrdTips()
         ])
     }
 }
