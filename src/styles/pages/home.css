@@ -36,23 +36,20 @@
     display: flex;
     justify-content: space-around;
 }
-.frame{
-    width: 100%;
+.frame.w{
     height: 200px;
     border: 1px solid rgba(19, 18, 18, 0.333);
     margin-top: 20px;
     padding: 10px 20px;
 
 }
-.frame-1{
-    width: 100%;
+.frame-1.w{
     border: 1px solid rgba(19, 18, 18, 0.333);
     margin-top: 20px;
     padding: 20px 100px;
     line-height: 30px;
 }
-.frame-2{
-    width: 100%;
+.frame-2.w{
     height: 200px;
     border: 1px solid rgba(19, 18, 18, 0.333);
     margin-top: 20px;
@@ -68,16 +65,16 @@
     height: 27px;
     margin-left: 30px;
 }
-.frame-3{
-    /* width: 100%; */
+.frame-3.w{
     height: 270px;
     border: 1px solid rgba(19, 18, 18, 0.333);
     margin-top: 20px;
+}
+.w{
     width: 90%; 
-    margin: 0 auto;
+    margin:0 auto;
 }
 .frame-image-1{
-    /* margin-left: 100px; */
     width: 100%;
     display: flex;
     justify-content: space-around;
@@ -85,6 +82,10 @@
 }
 .frame-image-2{
     margin-left: 100px;
+}
+.frame-image-3{
+    margin-left: 100px;
+    margin-top: 80px;
 }
 .QR code-1{
     margin-left: 300px;
@@ -94,4 +95,20 @@
     justify-content: center;
     align-items: center;
     margin-top: -34px;
+}
+.frame-4{
+    width: 100%;
+    height: 300px;
+    border: 1px solid rgba(19, 18, 18, 0.333);
+}
+.navigation{
+    width: 300px;
+    height: 200px;
+
+}
+.navigation bar{
+    display: flex;
+    justify-content: space-around;
+    /* content:'';
+    width:280px; */
 }
