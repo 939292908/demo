@@ -8,6 +8,8 @@ let obj = {
     MgnNeedForBuy:0,
     MgnNeedForSell:0,
     isShow:false,
+    //需要显示的行情数据
+    lastTick: {},
 
     initEVBUS: function(){
         let that = this
@@ -34,9 +36,8 @@ let obj = {
     },
 
     initLanguage:function(){
-        obj.getOType()
+        
     },
-
     initObj:function(){
         let Sym = window.gMkt.CtxPlaying.Sym
         let assetD = window.gMkt.AssetD[Sym] || {}
@@ -68,6 +69,13 @@ let obj = {
         this.open = false
     },
     submit:function(){
+        window.gTrd.ReqTrdOrderNew(this.tipsData, function (aTrd, arg) {
+            console.log(this.tipsData,'pppppParames');
+            if (arg.code != 0 || arg.data.ErrCode) {
+                window.$message({ title: gDI18n.$t('10037'/*"提示"*/), content: utils.getTradeErrorCode(arg.code || arg.data.ErrCode), type: 'danger' })
+            }
+        })
+
         this.open = false
     },
     
@@ -89,15 +97,16 @@ let obj = {
         return m('div',{class:""},[
             m('div',{class:"ord-tips-num is-flex"},[
                 m('div',{class:"ord-tips-num-left"},[
-                    "委托价格"
+                    gDI18n.$t('10058')//"委托价格"
                 ]),
                 m('div',{class:"ord-tips-num-right"},[
-                    obj.tipsData.Prz + " " + obj.tipsData.FromC
+                    obj.tipsData.OType == 1?(obj.tipsData.Prz + " " + obj.tipsData.FromC):gDI18n.$t('10081')//"市价"
+                    
                 ]),
             ]),
             m('div',{class:"ord-tips-num is-flex"},[
                 m('div',{class:"ord-tips-num-left"},[
-                    "委托数量"
+                    gDI18n.$t('10059')//"委托数量"
                 ]),
                 m('div',{class:"ord-tips-num-right"},[
                     obj.tipsData.Qty + " " + "张"
@@ -105,7 +114,7 @@ let obj = {
             ]),
             m('div',{class:"ord-tips-num is-flex"},[
                 m('div',{class:"ord-tips-num-left"},[
-                    "委托保证金"
+                    gDI18n.$t('10167')//"委托保证金"
                 ]),
                 m('div',{class:"ord-tips-num-right"},[
                     Number(obj.tipsData.MgnNeed).toPrecision2(6, 8) + " " + obj.tipsData.FromC
@@ -134,7 +143,7 @@ let obj = {
             return m('div',{class:""},[
                 m('div',{class:"ord-tips-num is-flex"},[
                     m('div',{class:"ord-tips-num-left"},[
-                        "止盈触发价"
+                        gDI18n.$t('10485')//"止盈触发价"
                     ]),
                     m('div',{class:"ord-tips-num-right"},[
                         (obj.tipsData.StopP || "--") + obj.tipsData.FromC
@@ -142,7 +151,7 @@ let obj = {
                 ]),
                 m('div',{class:"ord-tips-num is-flex"},[
                     m('div',{class:"ord-tips-num-left"},[
-                        "止损触发价"
+                        gDI18n.$t('10486')//"止损触发价"
                     ]),
                     m('div',{class:"ord-tips-num-right"},[
                         (obj.tipsData.StopL || "--") + obj.tipsData.FromC
