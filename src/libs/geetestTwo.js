@@ -1,120 +1,134 @@
 let geeObj = {
     captchaObj: null,
-    isloading:false
+    isloading: false
 }
-geeObj.initGee = function(readyCallBack){
+
+geeObj.initGee = function (readyCallBack) {
     geeObj.isloading = true
-    let lang = vm.$i18n.locale ?
-    vm.$i18n.locale == "zh" ?
-    "zh-cn" :
-    vm.$i18n.locale == "tw" ?
-    "zh-tw" :
-    "en" :
-    "en";
-    vm.rajax.get(`${API.GEETEST_REGISTER}?t=${new Date().getTime()}`).then(data => {
+
+    let lang = gI18n.locale ?
+        gI18n.locale == "zh" ?
+            "zh-cn" :
+            gI18n.locale == "tw" ?
+                "zh-tw" :
+                "en" :
+        "en";
+
+    let onReady = function (captchaObj) {
+        //验证码ready之后才能调用verify方法显示验证码
+        geeObj.isloading = false;
+        geeObj.captchaObj = captchaObj;
+        gBroadcast.emit('geetestMsg', 'ready');
+        readyCallBack && readyCallBack();
+    }
+
+    let onSuccess = function (captchaObj) {
+
+        let result = captchaObj.getValidate();
+        geeObj.isloading = false
+        gWebApi.geetestValidate({
+                geetest_challenge: result.geetest_challenge,
+                geetest_validate: result.geetest_validate,
+                geetest_seccode: result.geetest_seccode
+            }, data => {
+                if (data.status === "success") {
+                    gBroadcast.emit('geetestMsg', 'success');
+                    // captchaObj.destroy()
+                } else if (data.status === "fail") {
+                    //提示验证码失败
+                    gBroadcast.emit('geetestMsg', 'fail');
+                    $message({content: `fail，极验验证失败，请稍后重试 (${data.code})`});
+                    captchaObj.reset();
+                } else {
+                    //提示验证码失败
+                    gBroadcast.emit('geetestMsg', 'fail');
+                    $message({content: `${data.status || 'Other fail'} 极验验证失败，请稍后重试 (${data.code})`});
+                    captchaObj.reset();
+                }
+            }, err => {
+                //提示验证码失败
+                gBroadcast.emit('geetestMsg', 'fail');
+                $message({content: '网络异常，请稍后重试'});
+                captchaObj.reset();
+            }
+        );
+    }
+
+    let onError = function () {
+        geeObj.isloading = false;
+        geeObj.captchaObj = null;
+        $message({content: '初始化极验失败，请稍后重试'});
+    }
+
+    let onClose = function () {
+        geeObj.isloading = false;
+        gBroadcast.emit('geetestMsg', 'close');
+    }
+
+    gWebApi.geetestRegister({t: new Date().getTime()}, data => {
         initGeetest({
-                gt: data.data.gt,
-                challenge: data.data.challenge,
-                offline: !data.data.success,
-                new_captcha: data.data.new_captcha,
+                gt: data.gt,
+                challenge: data.challenge,
+                offline: !data.success,
+                new_captcha: data.new_captcha,
                 product: "bind",
                 lang: lang
             },
-            function(captchaObj) {
-                // vm.prototype.GeetestCaptchaObj = captchaObj
+            function (captchaObj) {
+                _console.log('tlh', captchaObj);
                 captchaObj
-                    .onReady(function() {
-                        //验证码ready之后才能调用verify方法显示验证码
-                        geeObj.isloading = false
-                        geeObj.captchaObj = captchaObj
-                        broadcastIns.$emit('geetestMsg', 'ready')
-                        readyCallBack && readyCallBack()
+                    .onReady(() => {
+                        onReady(captchaObj);
                     })
-                    .onSuccess(function() {
-                        let result = captchaObj.getValidate();
-                        geeObj.isloading = false
-                        vm.urajax.post(
-                                API.GEETEST_VALIDATE,
-                                vm.qs.stringify({
-                                    geetest_challenge: result.geetest_challenge,
-                                    geetest_validate: result.geetest_validate,
-                                    geetest_seccode: result.geetest_seccode
-                                })
-                            )
-                            .then(
-                                data => {
-                                    if (data.data.status === "success") {
-                                        broadcastIns.$emit('geetestMsg', 'success')
-                                        // captchaObj.destroy()
-                                    } else if (data.data.status === "fail") {
-                                        //TODO:提示验证码失败
-                                        broadcastIns.$emit('geetestMsg', 'fail')
-                                        vm.$message(`fail，极验验证失败，请稍后重试 (${data.data.code})`, 'error')
-                                        captchaObj.reset();
-                                    }else {
-                                        //TODO:提示验证码失败
-                                        broadcastIns.$emit('geetestMsg', 'fail')
-                                        vm.$message(`${data.data.status || 'Other fail'} 极验验证失败，请稍后重试 (${data.data.code})`, 'error')
-                                        captchaObj.reset();
-                                    }
-                                },
-                                err => {
-                                    //TODO:提示验证码失败
-                                    broadcastIns.$emit('geetestMsg', 'fail')
-                                    vm.$message(`网络异常，请稍后重试`, 'error')
-                                    captchaObj.reset();
-                                }
-                            );
+                    .onSuccess(() => {
+                        onSuccess(captchaObj);
                     })
-                    .onError(function() {
-                        geeObj.isloading = false
-                        geeObj.captchaObj = null
-                        // vm.$message(`error 初始化极验失败，请稍后重试`, 'error')
+                    .onError(() => {
+                        onError();
                     })
-                    .onClose(function () {
-                        geeObj.isloading = false
-                        broadcastIns.$emit('geetestMsg', 'close')
+                    .onClose(() => {
+                        onClose();
                     });
             }
         );
-    }).catch(err=>{
-        geeObj.isloading = false
-        console.log(API.GEETEST_REGISTER, err);
+    }, err => {
+        geeObj.isloading = false;
+        // console.log(API.GEETEST_REGISTER, err);
     });
 
 }
 
-geeObj.init = function(readyCallBack){
+geeObj.init = function (readyCallBack) {
     // console.log('this.captchaObj',this.captchaObj,geeObj)
-    if(this.captchaObj || geeObj.isloading){
-        return
+    if (this.captchaObj || geeObj.isloading) {
+        return;
     }
     this.initGee(readyCallBack);
 }
 
-geeObj.verify = function(errCallBack){
-    console.log('geeObj',geeObj)
+geeObj.verify = function (errCallBack) {
+    // console.log('geeObj', geeObj)
     let self = this;
-    if(self.captchaObj){
+    if (self.captchaObj) {
         self.captchaObj.verify();
-    }else{
-        if(geeObj.isloading) {
-            errCallBack && errCallBack()
-            return vm.$message('极验验证加载未完成，请稍后再试','error')
-        }else {
-            self.initGee(()=>{
+    } else {
+        if (geeObj.isloading) {
+            errCallBack && errCallBack();
+            return $message({content: '极验验证加载未完成，请稍后再试'});
+        } else {
+            self.initGee(() => {
                 self.captchaObj.verify();
             });
         }
-        
+
     }
 }
 
-geeObj.destroy = function() {
-    if(this.captchaObj) {
+geeObj.destroy = function () {
+    if (this.captchaObj) {
         this.captchaObj.destroy();
-        this.captchaObj = null
+        this.captchaObj = null;
     }
 }
 
-export default geeObj;
+module.exports = geeObj;

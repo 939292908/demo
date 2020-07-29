@@ -104,7 +104,11 @@ module.exports = {
                             m('div.button.has-bg-primary', {}, [
                                 "Sign up"
                             ]),
-                            m('div.button', {}, [
+                            m('div.button', {
+                                onclick:function(){
+                                    window.router.push('/login')
+                                }
+                            }, [
                                 "Log in"
                             ]),
                         ]),
