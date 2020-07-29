@@ -1198,31 +1198,31 @@ export default {
             // 单选 Radio 高级设置
             m(Radio, {
                 class: "is-between is-size-7",
-                defaultId: 'Tif_0', // 默认选中
+                defaultId: 'item1', // 默认选中
                 list: [ // 列表
                     {
+                        id: 'item1',
+                        label: 'GTC',
                         type: 'Tif',
-                        id: 'Tif_0',
-                        value: 0,
-                        label: 'GTC'
+                        value: 0
                     },
                     {
+                        id: 'item2',
+                        label: 'FOK',
                         type: 'Tif',
-                        id: 'Tif_1',
-                        value: 1,
-                        label: 'FAK'
+                        value: 2
                     },
                     {
+                        id: 'item3',
+                        label: 'FAK',
                         type: 'Tif',
-                        id: 'Tif_2',
-                        value: 2,
-                        label: 'FOK'
+                        value: 1
                     },
                     {
+                        id: 'item4',
+                        label: '被动委托',
                         type: 'OrdFlag',
-                        id: 'OrdFlag_0',
-                        value: 1,
-                        label: '被动委托'
+                        value: 1
                     },
                 ],
                 onclick (item) { // 点击设置 form 的参数

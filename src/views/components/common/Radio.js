@@ -3,7 +3,8 @@ var m = require("mithril")
 //     class: "", // 添加类名
 //     defaultId : id, // 默认选中 id 或 'defaulFirst'第一个
 //     onclick (data) {}, // 点击
-//     list: [{id, label}], // 列表 id , label（显示文字）
+//     list: [{id, label, disabled}], // 列表 id , label（显示文字）,disabled:true禁用
+//     disabled: true, // 禁用
 // }
 export default {
     current : {}, // 当前选中
@@ -32,7 +33,12 @@ export default {
                     }
                 },
                     [
-                        m('input', { type: 'radio', name: vnode.state.name, checked: item.id == vnode.state.current.id }),
+                        m('input', { 
+                            type: 'radio', 
+                            name: vnode.state.name, 
+                            checked: item.id == vnode.state.current.id,
+                            disabled: vnode.attrs.disabled || item.disabled
+                         }),
                         item.label
                     ])
             })
