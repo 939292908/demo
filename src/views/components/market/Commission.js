@@ -1,38 +1,35 @@
 
 var m = require("mithril")
 
-import Switch from '../common/Switch'
-
 let obj = {
     open: false,
-    ordList:[
-        {
+    ordList:{
+        all:{
             id: 'all',
             name:"全选",
             option:true
         },
-        {
+        limitOrd:{
             id: '1',
             name:"限价委托",
             option:true
         },
-        {
+        marketOrd:{
             id: '2',
             name:"市价委托",
             option:true
         },
-        {
+        limitPlan:{
             id: '3',
             name:"限价计划",
             option:true
         },
-        {
+        marketPlan:{
             id: '4',
             name:"市价计划",
             option:true
         },
-    ],
-    switchList:[true,true,true,true,true],
+    },
 
     initEVBUS: function(){
         let that = this
@@ -48,38 +45,44 @@ let obj = {
         }
         this.EV_SWITCHALL_UPD_unbinder = window.gEVBUS.on(gTrd.EV_SWITCHALL_UPD, arg => {
             that.getSwitchChange()
-            console.log(1111111111)
+        })
+        //监听多元
+        if (this.EV_CHANGELOCALE_UPD_unbinder) {
+            this.EV_CHANGELOCALE_UPD_unbinder()
+        }
+        this.EV_CHANGELOCALE_UPD_unbinder = window.gEVBUS.on(gDI18n.EV_CHANGELOCALE_UPD, arg => {
+            that.initLanguage()
         })
     },
 
     initLanguage:function(){
-        this.ordList = [
-            {
+        this.ordList = {
+            all:{
                 id: 'all',
                 name:"全选",
                 option:true
             },
-            {
+            limitOrd:{
                 id: '1',
                 name:"限价委托",
                 option:true
             },
-            {
+            marketOrd:{
                 id: '2',
                 name:"市价委托",
                 option:true
             },
-            {
+            limitPlan:{
                 id: '3',
                 name:"限价计划",
                 option:true
             },
-            {
+            marketPlan:{
                 id: '4',
                 name:"市价计划",
                 option:true
             },
-        ]
+        }
     },
     //删除全局广播
     rmEVBUS: function () {
@@ -88,6 +91,9 @@ let obj = {
         }
         if (this.EV_SWITCHALL_UPD_unbinder) {
             this.EV_SWITCHALL_UPD_unbinder()
+        }
+        if (this.EV_CHANGELOCALE_UPD_unbinder) {
+            this.EV_CHANGELOCALE_UPD_unbinder()
         }
     },
 
@@ -99,30 +105,39 @@ let obj = {
         item.option = !item.option
         if(item.id == "all"){
             if(item.option){
-                for(let i in this.ordList){
-                    this.ordList[i].option = true
+                for(let key in this.ordList){
+                    this.ordList[key].option = true
                 }
             }else {
-                for(let i in this.ordList){
-                    this.ordList[i].option = false
+                for(let key in this.ordList){
+                    this.ordList[key].option = false
                 }
             }
         }else {
-            this.ordList[0].option = false
+            this.ordList.all.option = false
             let num = 0
-            for(let i=1;i<this.ordList.length;i++){
-                if(this.ordList[i].option == true){
+            for(let key in this.ordList){
+                if(this.ordList[key].option == true){
                     num +=1
-                } 
+                }
             }
             if(num == 4){
-                this.ordList[0].option = true
+                this.ordList.all.option = true
             }
         }
     },
 
     getSwitchChange:function(){
-        return this.ordList.map((item,i)=>{
+        let that = this
+        let ordList = Object.keys(this.ordList).slice(-4)
+        // 根据配置筛选出需要现实的tab
+        ordList = ordList.filter(key =>{
+            return window.$config.future.placeOrder[key]
+        })
+        //筛选出来的数组中没有'all'，需要向头部添加
+        ordList.unshift("all")
+        return ordList.map((key,i)=>{
+            let item = that.ordList[key]
             return m('div',{class:"switch-pd",key:"getswitchchange" + i + item.id},[
                 item.name,
                 m('span',{class:"is-pulled-right my-switch" + (item.option?" is-checked" : ""),onclick:function(e){
