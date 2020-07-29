@@ -24,7 +24,7 @@ document.getElementsByTagName('head').item(0).appendChild(style); 
 
 // 设置全局变量
 
-let themeDark = true
+let themeDark = false
 let _themeDark = utils.getItem('themeDark')
 if(_themeDark === true || _themeDark === false){
     themeDark = _themeDark
