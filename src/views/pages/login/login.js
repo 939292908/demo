@@ -2,15 +2,20 @@ let m = require('mithril')
 let Login = require('@/models/login/login')
 
 module.exports = {
-    oninit: function () {
-        Login.initGeetest();
+    oninit: () => {
+        Login.oninit();
+    },
+    onremove: () => {
+        Login.onremove();
     },
     view: function () {
-        return m('div.box.has-bg-level-3', {}, [
+        return m('div.box.has-bg-level-3.views-pages-login-index-box', {}, [
             m('div.mb-5.title-2.has-text-level-1', {}, ['登录']),
             m('div.body-3.mb-2.has-text-level-1', {}, ['手机/邮箱']),
             m('input.input[type=text].mb-6', {
-                oninput: function (e) {Login.account = e.target.value},
+                oninput: e => {
+                    Login.account = e.target.value
+                },
                 value: Login.account
             }, []),
             m('div.columns.body-3.has-text-level-1.mb-2', {}, [
@@ -18,11 +23,13 @@ module.exports = {
                 m('div.column.has-text-primary.has-text-right.py-0', {}, ['忘记密码？']),
             ]),
             m('input.input[type=password].mb-7', {
-                oninput: function (e) {Login.password = e.target.value},
+                oninput: e => {
+                    Login.password = e.target.value
+                },
                 value: Login.password
             }, []),
             m('button.button.my-3.is-primary.is-fullwidth.mb-2', {
-                onclick: function () {
+                onclick: () => {
                     Login.login();
                 }
             }, ['登录']),

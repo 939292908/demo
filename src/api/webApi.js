@@ -12,8 +12,15 @@ class webApi {
         this.axios = new _axios()
         this.axios.baseUrl = arg.baseUrl
         this.userInfo = {}
+        this.loginSms = true // 登录短信验证
     }
 
+    /**
+     * 极验初始化
+     * @param aData
+     * @param aOnSuccess
+     * @param aOnError
+     */
     geetestRegister(aData, aOnSuccess, aOnError) {
         let s = this
 
@@ -33,6 +40,12 @@ class webApi {
         })
     }
 
+    /**
+     * 极验验证
+     * @param aData
+     * @param aOnSuccess
+     * @param aOnError
+     */
     geetestValidate(aData, aOnSuccess, aOnError) {
         let s = this
 
@@ -40,8 +53,56 @@ class webApi {
             method: "post",
             url: s.axios.baseUrl + API.GEETEST_VALIDATE,
             data: qs.stringify(aData),
+            options: {}
+        }).then(function (result) {
+            let arg = result.data
+            if (aOnSuccess) {
+                aOnSuccess(arg)
+            }
+        }).catch(function (e) {
+            _console.log('tlh',e);
+            if (aOnError) {
+                aOnError(e)
+            }
+        })
+    }
+
+    /**
+     * 登录
+     * @param aData
+     * {
+     *      loginType: loginType,   //  登录方式
+     *      loginName: loginName,   //  账号
+     *      pass: md5,              //  密码 md5
+     *      exChannel: 26           //  渠道号
+     * }
+     * @param aOnSuccess (result)
+     * {
+     *     "result": {
+     *         "code": 0,
+     *         "msg": "",
+     *         "tfa": 0,
+     *         "phone": "",
+     *         "googleId": "",
+     *         "loginSms": 0
+     *     },
+     *     "token": "OgAAMXa4uyuTkSCLXBc27bV2E8QmM26aTkY7Rhk7LsrgzE7JZ8gJ+A==",
+     *     "uid": "11137592",
+     *     "validSms": "",
+     *     "validGoogle": "",
+     *     "flag": 0
+     * }
+     * @param aOnError (e)
+     */
+    loginCheck(aData, aOnSuccess, aOnError) {
+        let s = this
+
+        s.axios.request({
+            method: "post",
+            url: s.axios.baseUrl + API.LOGIN_CHECK_V1,
+            data: qs.stringify(aData),
             options: {
-                'Content-Type': 'application/x-www-form-urlencoded'
+                withCredentials: true
             }
         }).then(function (result) {
             let arg = result.data
@@ -59,9 +120,9 @@ class webApi {
         let s = this
 
         s.axios.request({
-            method: "post", 
-            url: s.axios.baseUrl + API.REQ_USER_INFO, 
-            data: aData, 
+            method: "post",
+            url: s.axios.baseUrl + API.REQ_USER_INFO,
+            data: aData,
             options: {}
         }).then(function (result){
             if (DBG_REQUEST) {window._console.log(DBG_TAG,"ReqUserInfo Rsp",result)}

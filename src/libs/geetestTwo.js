@@ -18,7 +18,7 @@ geeObj.initGee = function (readyCallBack) {
         //验证码ready之后才能调用verify方法显示验证码
         geeObj.isloading = false;
         geeObj.captchaObj = captchaObj;
-        gBroadcast.emit('geetestMsg', 'ready');
+        gBroadcast.emit({cmd: 'geetestMsg', data: 'ready'});
         readyCallBack && readyCallBack();
     }
 
@@ -32,16 +32,16 @@ geeObj.initGee = function (readyCallBack) {
                 geetest_seccode: result.geetest_seccode
             }, data => {
                 if (data.status === "success") {
-                    gBroadcast.emit('geetestMsg', 'success');
+                    gBroadcast.emit({cmd: 'geetestMsg', data: 'success'});
                     // captchaObj.destroy()
                 } else if (data.status === "fail") {
                     //提示验证码失败
-                    gBroadcast.emit('geetestMsg', 'fail');
+                    gBroadcast.emit({cmd: 'geetestMsg', data: 'fail'});
                     $message({content: `fail，极验验证失败，请稍后重试 (${data.code})`});
                     captchaObj.reset();
                 } else {
                     //提示验证码失败
-                    gBroadcast.emit('geetestMsg', 'fail');
+                    gBroadcast.emit({cmd: 'geetestMsg', data: 'fail'});
                     $message({content: `${data.status || 'Other fail'} 极验验证失败，请稍后重试 (${data.code})`});
                     captchaObj.reset();
                 }
@@ -62,7 +62,7 @@ geeObj.initGee = function (readyCallBack) {
 
     let onClose = function () {
         geeObj.isloading = false;
-        gBroadcast.emit('geetestMsg', 'close');
+        gBroadcast.emit({cmd: 'geetestMsg', data: 'close'});
     }
 
     gWebApi.geetestRegister({t: new Date().getTime()}, data => {

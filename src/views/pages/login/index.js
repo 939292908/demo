@@ -9,6 +9,7 @@ module.exports = {
             m('div.box.has-bg-level-2', {}, [
                 m('div.columns', {}, [
                     m('div.column', {}, []),
+                    m('div.column', {}, []),
                     m('div.column', {}, [m(login)]),
                 ])
             ])
