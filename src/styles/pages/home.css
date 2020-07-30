@@ -1,6 +1,15 @@
 .views-pages-home-index {
     text-align: center;
 }
+.home-introduce .introduce-item {
+    width: 20%;
+}
+.pub-footer {
+    border-top: 1px solid rgba(19, 18, 18, 0.333);
+}
+.border-1 {
+    border: 1px solid rgba(19, 18, 18, 0.333);
+}
 .p1{
     margin-top: 200px;
     margin-left: -150px;
