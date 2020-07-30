@@ -13,9 +13,9 @@ m.route(document.querySelector('body .route-box'), defaultRoutePath, {
             return import('@/views/pages/user/index')
         }
     },
-    '/myWallet': {
+    '/myWalletIndex': {
         onmatch: function () {
-            return import('@/views/pages/Myassets/myWallet')
+            return import('@/views/pages/Myassets/myWalletIndex')
         }
     },
     '/login': {
