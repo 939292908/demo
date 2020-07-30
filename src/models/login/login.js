@@ -53,12 +53,12 @@ module.exports = {
                 if (res.result.tfa === 0) {
                     // 登录成功
                     gWebApi.getUserInfo({}, data => {
-                        utils.setItem('userAccount', res.account.accountName);
-                        utils.setItem('userInfo', res.data.account);
+                        utils.setItem('userAccount', data.account.accountName);
+                        utils.setItem('userInfo', data.account);
                         // gBroadcast.emit({cmd: 'setShowPhone', data: !!res.account.phone});
                         // gBroadcast.emit({cmd: 'setShowGoogle', data: !!res.account.googleId});
                     }, err => {
-                        $message({content: `网络异常，请稍后重试 ${error}`});
+                        $message({content: `网络异常，请稍后重试 ${err}`});
                         this.loading = false;
                     });
                 } else if (res.data.result.tfa === 1) {
