@@ -16,15 +16,15 @@ module.exports = {
             m('div', { class: `index-info-box` }, [
                 m('div', { class: `index-info-box-right` }, [
                     m('select', { class: `p3` }, [
-                    m('option', { class: `` }, ['USDT']),
-                    m('option', { class: `` }, ['U']),
-                    m('option', { class: `` }, ['S']),
+                        m('option', { class: `` }, ['USDT']),
+                        m('option', { class: `` }, ['U']),
+                        m('option', { class: `` }, ['S']),
                     ]),
-                    m('input', { class: `text` }, [placeholder="Primary input"]),
                     m('select', { class: `select` }, [
+                    // m('option', { class: ``, disabled: true, selected: true, hidden: true }, ['购买金额']),
                     m('option', { class: `` }, ['CNY']),
-                    m('option', { class: `` }, ['C']),
-                    m('option', { class: `` }, ['N']),
+                    m('option', { class: `` }, ['100']),
+                    m('option', { class: `` }, ['200']),
                     ]),
                     m('button', { class: `btn` }, ['购买USDT'])
                     ]),
@@ -95,7 +95,7 @@ module.exports = {
                                         m('div', { class: `` }, ['平台服务']),
                                         m('div', { class: `` }, ['平台条款']),
                                         m('div', { class: `` }, ['服务支持']),
-                                        m('div', { class: `` }, ['联系我们'])
+                                        m('div', { class: `` }, ['联系我们']),                                    
                                     ])
                         ]),
                     ])
