@@ -155,11 +155,38 @@ module.exports = {
             ]),
             // 底部 模块
             m('div', { class: `pub-footer is-around pt-7 pb-6` }, [
-                m('div', { class: `` }, ["logo"]),
-                m('div', { class: `` }, ["菜单"]),
-                m('div', { class: `` }, ["icons"])
-            ]),
-
+                m('div', { class: `` }, [
+                    m('img', { class: '', src: "https://forum.vuejs.org/uploads/default/original/2X/5/555257b8c5e7ecf34ce4f9b952eeaf006adfa339.png", style: "width: 200px;height:200px;" })
+                ]),         
+                m('div', { class: `` }, [
+                    m('div', { class: `` }, ["平台服务"]),
+                    m('div', { class: `` }, ["平台条款"]),
+                    m('div', { class: `` }, ["服务支持"]),
+                    m('div', { class: `` }, ["联系我们"]),
+                ]),        
+                m('div', { class: `` }, [
+                    m('div', { class: `` }, ["永续合约"]),
+                    m('div', { class: `` }, ["服务协议"]),
+                    m('div', { class: `` }, ["新手帮助"]),
+                    m('div', { class: `` }, ["服务邮箱"]),
+                ]),
+                m('div', { class: `` }, [
+                    m('div', { class: `` }, ["杠杆ETF"]),
+                    m('div', { class: `` }, ["法律声明"]),
+                    m('div', { class: `` }, ["常见问题"]),
+                    m('div', { class: `` }, ["加入社群"]),
+                ]),
+                m('div', { class: `` }, [
+                    m('div', { class: `` }, ["全币种合约"]),
+                    m('div', { class: `` }, ["隐私条款"]),
+                    m('div', { class: `` }, ["公告中心"]),
+                    m('div', { class: `` }, ["联系客服"]),
+                ]),
+                m('div', { class: `` }, [
+                    m('div', { class: `` }, ["相关费率"]),
+                    m('div', { class: `` }, ["合规牌照"])
+                ])
+            ])
         ])
     }
 }
