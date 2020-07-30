@@ -101,7 +101,11 @@ module.exports = {
                 m('div.navbar-end', {}, [
                     m('div.navbar-item', {}, [
                         m('div.buttons', {}, [
-                            m('div.button.has-bg-primary', {}, [
+                            m('div.button.has-bg-primary', {
+                                onclick:function(){
+                                    window.router.push('/register')
+                                }
+                            }, [
                                 "Sign up"
                             ]),
                             m('div.button', {

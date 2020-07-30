@@ -58,7 +58,7 @@ module.exports = {
                         // gBroadcast.emit({cmd: 'setShowPhone', data: !!res.account.phone});
                         // gBroadcast.emit({cmd: 'setShowGoogle', data: !!res.account.googleId});
                     }, err => {
-                        $message({content: `网络异常，请稍后重试 ${err}`});
+                        $message({content: `网络异常，请稍后重试 ${err}`, type: 'danger'});
                         this.loading = false;
                     });
                 } else if (res.data.result.tfa === 1) {
@@ -80,7 +80,7 @@ module.exports = {
                 }
             }
         }, err => {
-            $message({content: this.$t("10683") + '(请求异常)'});
+            $message({content: this.$t("10683") + '(请求异常)', type: 'danger'});
             this.loading = false;
         })
     },

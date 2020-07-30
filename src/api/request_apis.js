@@ -18,6 +18,8 @@ api_list.SMS_VERIFY_V1 = '/v1/sms/verify';
 api_list.GOOGLE_VERIFY_V1 = '/g_auth/verify';
 //登陆验证
 api_list.LOGIN_CHECK_V1 = '/v1/users/loginCheck';
+//邮箱验证
+api_list.EMAIL_VERIFY_V1 = '/v1/emails/emailCheck';
 
 // 获取用户资产
 api_list.ASSETS_V1 = '/v1/users/GetAssets';
