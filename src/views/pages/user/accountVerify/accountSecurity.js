@@ -6,7 +6,7 @@ module.exports = {
 
     },
     view: function () {
-        return m('div.container.left',{style:{border:'1px solid blue',float:'left'}},[
+        return m('div.container.left',{style:{float:'left'}},[
             m('div','安全推荐（1/4）'),
             m('div',[
                 m('span',{style:{marginRight:'20px'}},'开启2FA'),
@@ -23,7 +23,7 @@ module.exports = {
                             m('br'),
                             m('span','用于提现和修改安全设置')
                         ]),
-                        m('button.button',{style:{float:'left',width:'15%',marginTop:'20px'}},'显示'),
+                        m('button.button',{style:{float:'left',width:'15%',marginTop:'20px'},click:function(){}},'显示'),
                         m('div',{style:{clear:'both'}}),
                     ]),
                     m('div',{style:{height:'90px'}},[
@@ -47,8 +47,8 @@ module.exports = {
                         m('div',{style:{clear:'both'}}),
                     ]),
                 ]),
-                m('div',{style:{float:'right',border:'1px solid #ccc'}},[
-                    m('div',{style:{height:'80px',width:'450px'}},[
+                m('div',{style:{float:'right'}},[
+                    m('div',{style:{height:'80px',width:'450px',border:'1px solid #ccc'}},[
                         m('img',{src:'zhanwei',style:{float:'left',width:'20%'}}),
                         m('div',{style:{float:'left',width:'50%'}},[
                             m('span','身份认证'),
@@ -58,7 +58,7 @@ module.exports = {
                         m('button.button',{style:{float:'left',width:'15%',marginTop:'20px'}},'设置'),
                         m('div',{style:{clear:'both'}}),
                     ]),
-                    m('div',{style:{margin:'10px 0',height:'80px',width:'450px'}},[
+                    m('div',{style:{margin:'10px 0',height:'80px',width:'450px',border:'1px solid #ccc'}},[
                         m('img',{src:'zhanwei',style:{float:'left',width:'20%'}}),
                         m('div',{style:{float:'left',width:'50%'}},[
                             m('span','资金密码'),
@@ -68,7 +68,7 @@ module.exports = {
                         m('button.button',{style:{float:'left',width:'15%',marginTop:'20px'}},'设置'),
                         m('div',{style:{clear:'both'}}),
                     ]),
-                    m('div',{style:{height:'80px',width:'450px'}},[
+                    m('div',{style:{height:'80px',width:'450px',border:'1px solid #ccc'}},[
                         m('img',{src:'zhanwei',style:{float:'left',width:'20%'}}),
                         m('div',{style:{float:'left',width:'50%'}},[
                             m('span','防钓鱼码'),
@@ -81,7 +81,7 @@ module.exports = {
                 ]),
             ]),
             m('div',{style:{clear:'both'}}),
-            m('div',{style:{margin:'15px 0',height:'70px'}},[
+            m('div',{style:{margin:'15px 0',height:'70px',paddingTop:'10px',border:'1px solid #ccc'}},[
                 m('img',{src:'zhanwei',style:{float:'left',width:'10%'}}),
                 m('div',{style:{float:'left',width:'75%'}},[
                     m('span','登录密码'),
@@ -91,7 +91,7 @@ module.exports = {
                 m('button.button',{style:{float:'left',width:'8%'}},'修改'),
                 m('div',{style:{clear:'both'}}),
             ]),
-            m('div',{style:{margin:'15px 0',border:'1px solid red',height:'170px',paddingTop:'10px'}},[
+            m('div',{style:{margin:'15px 0',height:'170px',paddingTop:'10px',border:'1px solid #ccc'}},[
                 m('img',{src:'zhanwei',style:{float:'left',width:'10%'}}),
                 m('div',{style:{float:'left',width:'75%'}},[
                     m('span','地址管理'),
@@ -100,7 +100,7 @@ module.exports = {
                 ]),
                 m('button.button',{style:{float:'left',width:'8%'}},'管理'),
                 m('div',{style:{clear:'both'}}),
-                m('input[type=checkbox]','开启提现白名单'),
+                m('span','开启提现白名单'),m("input[type=checkbox]"),
             ])
         ])
     }

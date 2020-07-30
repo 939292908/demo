@@ -17,7 +17,7 @@ let obj = {
         this.menuVal = param;
     },
     switchPageWithLeft:function(){
-        // val == 0 :'个人总览' val == 1 :'账户安全' val == 2 :'身份认证' val == 3 :'API管理' val == 4 :'邀请返佣'
+        // menuVal == 0 :'个人总览' menuVal == 1 :'账户安全' menuVal == 2 :'身份认证' menuVal == 3 :'API管理' menuVal == 4 :'邀请返佣'
         switch(this.menuVal){
             case 0:
                 return m(personal)
@@ -39,7 +39,7 @@ module.exports = {
     },
     view:function(){
         return m('div.container', [
-            m('aside.container.left.menu',{style:{width:'30%',float:'left',border:'1px solid red'}},[
+            m('aside.container.left.menu',{style:{width:'15%',textAlign:'center',float:'left'}},[
                 m('ul.menu-list',[
                     m('li',{onclick:function(){obj.setMenuVal(0)}},[
                         m('a',{class:""+(obj.menuVal == 0?"is-active":'')},'个人总览')
