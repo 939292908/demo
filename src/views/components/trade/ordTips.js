@@ -10,6 +10,12 @@ let obj = {
     isShow:false,
     //需要显示的行情数据
     lastTick: {},
+    //行情数据接收
+    tickObj: {},
+    //行情最后更新时间
+    lastTmForTick: 0,
+    //行情限制数据处理时间间隔
+    TICKCLACTNTERVAL: 100,
 
     initEVBUS: function(){
         let that = this
@@ -33,6 +39,22 @@ let obj = {
         this.EV_CHANGELOCALE_UPD_unbinder = window.gEVBUS.on(gDI18n.EV_CHANGELOCALE_UPD, arg => {
             that.initLanguage()
         })
+
+        //tick行情全局广播
+        if(this.EV_TICK_UPD_unbinder){
+            this.EV_TICK_UPD_unbinder()
+        }
+        this.EV_TICK_UPD_unbinder = window.gEVBUS.on(gMkt.EV_TICK_UPD,arg=> {
+            that.onTick(arg)
+        })
+        
+        //指数行情全局广播
+        if(this.EV_INDEX_UPD_unbinder){
+            this.EV_INDEX_UPD_unbinder()
+        }
+        this.EV_INDEX_UPD_unbinder = window.gEVBUS.on(gMkt.EV_INDEX_UPD,arg=> {
+            that.onTick(arg)
+        })
     },
 
     initLanguage:function(){
@@ -54,6 +76,31 @@ let obj = {
             }
         }
 
+    },
+    onTick: function(param){
+        let tm = Date.now()
+        this.tickObj[param.Sym] = param.data
+        if(tm - this.lastTmForTick > this.TICKCLACTNTERVAL){
+            this.updateTick(this.tickObj)
+            this.tickObj = {}
+        }
+    },
+    //更新最新行情
+    updateTick: function(ticks){
+        for(let key in ticks){
+            let item = ticks[key];
+            let gmexCI = utils.getGmexCi(window.gMkt.AssetD, item.Sym)
+            let indexTick = this.lastTick[gmexCI]
+            
+            let obj = utils.getTickObj(window.gMkt.AssetD, window.gMkt.AssetEx, item, this.lastTick[key], indexTick)
+            obj?this.lastTick[key] = obj:''
+        }
+        m.redraw();
+    },
+    //获取当前合约最新行情
+    getLastTick: function(){
+        let Sym = window.gMkt.CtxPlaying.Sym
+        return this.lastTick[Sym] || {}
     },
     //删除全局广播
     rmEVBUS: function () {
@@ -100,7 +147,7 @@ let obj = {
                     gDI18n.$t('10058')//"委托价格"
                 ]),
                 m('div',{class:"ord-tips-num-right"},[
-                    obj.tipsData.OType == 1?(obj.tipsData.Prz + " " + obj.tipsData.FromC):gDI18n.$t('10081')//"市价"
+                    obj.tipsData.OType == 1?(obj.tipsData.Prz + " " + obj.tipsData.FromC):(gDI18n.$t('10081'/*"市价"*/) + "(" + (obj.getLastTick().LastPrz || '--') + ")")
                     
                 ]),
             ]),

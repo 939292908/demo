@@ -3,6 +3,7 @@ var m = require("mithril")
 
 let obj = {
     open: false,
+    optionFlag:[],
     ordList:{
         all:{
             id: 'all',
@@ -10,22 +11,22 @@ let obj = {
             option:true
         },
         limitOrd:{
-            id: '1',
+            id: 1,
             name:"限价委托",
             option:true
         },
         marketOrd:{
-            id: '2',
+            id: 2,
             name:"市价委托",
             option:true
         },
         limitPlan:{
-            id: '3',
+            id: 3,
             name:"限价计划",
             option:true
         },
         marketPlan:{
-            id: '4',
+            id: 4,
             name:"市价计划",
             option:true
         },
@@ -39,6 +40,7 @@ let obj = {
         }
         this.EV_OPENORDADJUST_UPD_unbinder = window.gEVBUS.on(gTrd.EV_OPENORDADJUST_UPD, arg => {
             that.open = true
+            that.initUserInfo()
         })
         if (this.EV_SWITCHALL_UPD_unbinder) {
             this.EV_SWITCHALL_UPD_unbinder()
@@ -53,36 +55,26 @@ let obj = {
         this.EV_CHANGELOCALE_UPD_unbinder = window.gEVBUS.on(gDI18n.EV_CHANGELOCALE_UPD, arg => {
             that.initLanguage()
         })
+        // if (this.EV_WEB_LOGIN_unbinder) {
+        //     this.EV_WEB_LOGIN_unbinder()
+        // }
+        // this.EV_WEB_LOGIN_unbinder = window.gEVBUS.on(gWebAPI.EV_WEB_LOGIN, arg => {
+        //     that.initUserInfo()
+        // })
+        // if (this.EV_WEB_LOGOUT_unbinder) {
+        //     this.EV_WEB_LOGOUT_unbinder()
+        // }
+        // this.EV_WEB_LOGOUT_unbinder = window.gEVBUS.on(gWebAPI.EV_WEB_LOGOUT, arg => {
+        //     that.initUserInfo()
+        // })
     },
 
     initLanguage:function(){
-        this.ordList = {
-            all:{
-                id: 'all',
-                name:"全选",
-                option:true
-            },
-            limitOrd:{
-                id: '1',
-                name:"限价委托",
-                option:true
-            },
-            marketOrd:{
-                id: '2',
-                name:"市价委托",
-                option:true
-            },
-            limitPlan:{
-                id: '3',
-                name:"限价计划",
-                option:true
-            },
-            marketPlan:{
-                id: '4',
-                name:"市价计划",
-                option:true
-            },
-        }
+        this.ordList.all.name = "全选"
+        this.ordList.limitOrd.name = "限价委托"
+        this.ordList.marketOrd.name = "市价委托"
+        this.ordList.limitPlan.name = "限价计划"
+        this.ordList.marketPlan.name = "市价计划"
     },
     //删除全局广播
     rmEVBUS: function () {
@@ -94,6 +86,34 @@ let obj = {
         }
         if (this.EV_CHANGELOCALE_UPD_unbinder) {
             this.EV_CHANGELOCALE_UPD_unbinder()
+        }
+        // if (this.EV_WEB_LOGIN_unbinder) {
+        //     this.EV_WEB_LOGIN_unbinder()
+        // }
+        // if (this.EV_WEB_LOGOUT_unbinder) {
+        //     this.EV_WEB_LOGOUT_unbinder()
+        // }
+    },
+
+    initUserInfo:function(){
+        this.optionFlag = window.gWebAPI.CTX.UserSetting.trade
+        for(let key in this.ordList){
+            if(key != "all"){
+                let i = this.ordList[key].id - 1
+                this.ordList[key].option = this.optionFlag[i]
+            }
+        }
+
+        let num = 0
+        for(let i=0;i<this.optionFlag.length-1;i++){
+            if(this.optionFlag[i] == true){
+                num+=1
+            }
+        }
+        if(num == 4){
+            this.ordList.all.option = true
+        }else{
+            this.ordList.all.option = false
         }
     },
 
@@ -148,6 +168,18 @@ let obj = {
         })
     },
     submit:function(){
+        let ordList = {}
+        for(let key in this.ordList){
+            let i = this.ordList[key].id
+            if(key != "all"){
+                ordList["trade_" + i.toString()] = this.ordList[key].option
+            }
+        }
+        let key = 'trade_5'
+        let val = true
+        ordList[key] = val
+        console.log(ordList,11111111111)
+        window.gWebAPI.ReqSaveUserSetting("trade",ordList)
         this.open = false
     },
 }

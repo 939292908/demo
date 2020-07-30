@@ -10,6 +10,7 @@ const EV_OPENLOGINMODE = "EV_OPENLOGINMODE"
 
 var m = require("mithril")
 let Stately = require('stately.js');
+let qs = require('qs');
 
 import Conf from "../reqConf/Conf"
 import { RequestWarp } from "../libs/webcall"
@@ -89,6 +90,47 @@ class CAPI {
             '03': {},
             '04': {},
         }
+    }
+    setting = { // true是每次都提示 false不提示
+        email: {
+            'email_1': true,
+            'email_2': true,
+            'email_3': true,
+            'email_4': true,
+            'email_5': true,
+        },
+        system: {
+            'system_1': true, // 1委托已提交提示  1 2
+            'system_2': true, // 2委托已取消提示 5 6 7 11
+            'system_3': true, // 3委托完成提示 4 10
+            'system_4': true, // 4计划委托已提交提示
+            'system_5': true, // 5计划委托已触发提示
+            'system_6': true, // 6计划委托已取消提示
+        },
+        trade: { // 交易 = 1限价 2市价 3限价计划 4市价计划 5市价平仓
+            'trade_1': true,
+            'trade_2': true,
+            'trade_3': true,
+            'trade_4': true,
+            'trade_5': true,
+        },
+        ord_system: {
+            'ord_system_1': true, // 1委托已提交提示  1 2
+            'ord_system_2': true, // 2委托已取消提示 5 6 7 11
+            'ord_system_3': true, // 3委托完成提示 4 10
+            'ord_system_4': true, // 4计划委托已提交提示
+            'ord_system_5': true, // 5计划委托已触发提示
+            'ord_system_6': true, // 6计划委托已取消提示
+        },
+        ord_trade: { // 交易 = 1限价 2市价 3止盈止损
+            'ord_trade_1': true,
+            'ord_trade_2': true,
+            'ord_trade_3': true,
+        },
+        _trade: { // 交易 = 1反向开仓 2追单
+            '_trade_1': true,
+            '_trade_2': true,
+        },
     }
 
     Url_GT_REGISTER(){
@@ -341,6 +383,11 @@ class CAPI {
                 if (DBG_REQUEST) {console.debug(DBG_TAG,"ReqUserInfo Rsp",aData)}
                 if (result.result.code ==0) {
                     s.CTX.account = result.account
+
+                    //获取用户设置
+                    let optionFlag = result.account.optionFlag
+                    s.ReqUserOrdSetting(s.setting,optionFlag)
+
                     gEVBUS.emit(s.EV_WEB_LOGIN,{d:s.CTX})
                 }
                 if(aOnSuccess) {
@@ -487,6 +534,106 @@ class CAPI {
     setWebApiUrl(param){
         let s = this
         s.CTX.Conf.WebAPI = param
+
+    }
+
+    //获取用户设置
+    ReqUserOrdSetting(setting,optionFlag){
+        /**
+         * 获取用户设置
+         * optionFlag: "268435427"
+        */
+       let s = this
+
+       // 设置初始化
+       let all_flag = [5, 6, 5, 6, 3, 2] //邮件5个标记 系统6个标记 交易5个标记
+       let _result = Number(optionFlag).toString(2)
+       if (parseInt(_result.substring(0, 1)) == 1) { // 第一个位置作为标记 0没设置 1设置
+           _result = _result.substring(1, _result.length)
+
+           let l = _result.length
+           let s1 = "0000000000000000000000000"
+           if (l < 25) {
+               let s2 = s1.slice(0, 25 - l)
+               _result = s2 + _result
+           }
+           l = _result.length
+           if (l < 27) {
+               let s1 = "111111111111111111111111111"
+               let s2 = s1.slice(0, 27 - l)
+               _result = _result + s2
+           }
+
+       }else{
+           let s1 = "1111111111111111111111111111111111"
+           _result = s1.slice(0, 27)
+       }
+       let _data = {
+           email: null,
+           system: null,
+           trade: null,
+           ord_system: null,
+           ord_trade: null,
+       }
+       _data.email = _result.substring(0, all_flag[0]).split("")
+       _data.system = _result.substring(all_flag[0], all_flag[0] + all_flag[1]).split("")
+       _data.trade = _result.substring(all_flag[0] + all_flag[1], all_flag[0] + all_flag[1] + all_flag[2]).split("")
+       _data.ord_system = _result.substring(all_flag[0] + all_flag[1] + all_flag[2], all_flag[0] + all_flag[1] + all_flag[2] + + all_flag[3]).split("")
+       _data.ord_trade = _result.substring(all_flag[0] + all_flag[1] + all_flag[2] + all_flag[3], all_flag[0] + all_flag[1] + all_flag[2] + all_flag[3] + all_flag[4]).split("")
+       _data._trade = _result.substring(all_flag[0] + all_flag[1] + all_flag[2] + all_flag[3] + all_flag[4], all_flag[0] + all_flag[1] + all_flag[2] + all_flag[3] + all_flag[4] + all_flag[5]).split("")
+       for (let key in setting) {
+           for (let i = 0; i < _data[key].length; i++) {
+               setting[key][key + "_" + (i + 1)] = (parseInt(_data[key][i]) == true)
+           }
+       }
+       // }
+        for(let key  in _data){
+            _data[key].map((item,index) => {
+                _data[key][index] = item=='1'
+            })
+        }
+        s.CTX.UserSetting = _data
+       console.log(parseInt(_result.substring(0, 1)) == 1)
+    }
+
+    //保存用户设置
+    ReqSaveUserSetting(type,val,aOnSuccess,aOnError) {
+        let s = this
+        let _result = "1"
+        let key = type
+        s.setting[key] = val
+        let setting = s.setting
+        for (let key in setting) {
+            let _obj = setting[key]
+            for (let k in _obj) {
+                _result = _result + (_obj[k] ? 1 : 0)
+            }
+        }
+
+        let url = '/users/tradeSetting';
+        let params = {
+            settingCode: parseInt(_result, 2)
+        }
+        
+        if (DBG_REQUEST) {console.log(DBG_TAG,"ReqTransfer ReqSaveUserSetting",params)}
+        RequestWarp({
+                method:"POST",
+                withCredentials:true,
+                url:s.CTX.Conf.WebAPI + url,
+                body:params,
+            }
+            ,function (result){
+                if (DBG_REQUEST) {console.log(DBG_TAG,"ReqTransfer ReqSaveUserSetting",params)}
+                if(aOnSuccess) {
+                    aOnSuccess(result)
+                }
+            }
+            ,function(e) {
+                if (aOnError) {
+                    aOnError(e)
+                }
+            })
+
 
     }
 }

@@ -287,6 +287,9 @@ let spotTick = {
 
     }, 
     settingAny:function(){
+        if (!window.gWebAPI.isLogin()) {
+            return window.gWebAPI.needLogin()
+        }
         this.isSetting = !this.isSetting
         
     },
