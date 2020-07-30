@@ -8,12 +8,11 @@ let coins = require('./coins');//币币账户
 let legal = require('./legal');//法币账户
 
 let obj = {
-    assetFlag:4,//右侧资产总览导航
+    assetFlag:0,//右侧资产总览导航
     setAssetFlag:function(param){
         this.assetFlag = param;
     },
     switchPageWithAsset:function(){
-        _console.log('nzm',this.assetFlag)
         // assetFlag == 0 :'资产总览' assetFlag == 1 :'币币账户' assetFlag == 2 :'法币账户' assetFlag == 3 :'我的钱包' assetFlag == 4 :'合约账户'
         switch(this.assetFlag){
             case 0:
@@ -35,15 +34,15 @@ module.exports = {
 
     },
     view:function(){
-        return m('div.container.right.money',{style:{border:'1px solid red'}},[
+        return m('div.container.right.money',{style:{border:'1px solid #ccc',height:'140px'}},[
             m('span.container.right.money.tit','资产总览'),
             m('div.container.right.money.nav',[
                 m('ul',[
-                    m('li',{style:'float:left;margin-left:15px;',onclick:function(){obj.setAssetFlag(0)}},'资产总览'),
-                    m('li',{style:'float:left;margin-left:15px;',onclick:function(){obj.setAssetFlag(1)}},'我的钱包'),
-                    m('li',{style:'float:left;margin-left:15px;',onclick:function(){obj.setAssetFlag(2)}},'合约账户'),
-                    m('li',{style:'float:left;margin-left:15px;',onclick:function(){obj.setAssetFlag(3)}},'币币账户'),
-                    m('li',{style:'float:left;margin-left:15px;',onclick:function(){obj.setAssetFlag(4)}},'法币账户'),
+                    m('li',{style:'float:left;margin-left:15px;cursor: pointer;',onclick:function(){obj.setAssetFlag(0)}},'资产总览'),
+                    m('li',{style:'float:left;margin-left:15px;cursor: pointer;',onclick:function(){obj.setAssetFlag(1)}},'我的钱包'),
+                    m('li',{style:'float:left;margin-left:15px;cursor: pointer;',onclick:function(){obj.setAssetFlag(2)}},'合约账户'),
+                    m('li',{style:'float:left;margin-left:15px;cursor: pointer;',onclick:function(){obj.setAssetFlag(3)}},'币币账户'),
+                    m('li',{style:'float:left;margin-left:15px;cursor: pointer;',onclick:function(){obj.setAssetFlag(4)}},'法币账户'),
                     m('div',{style:{clear:'both'}}),
                 ])
             ]),

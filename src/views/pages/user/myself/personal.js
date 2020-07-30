@@ -7,7 +7,7 @@ module.exports = {
 
     },
     view:function(){
-        return m('div.container.right',{style:{border:'1px solid red',float:'left'}},[
+        return m('div.container.right',{style:{float:'left'}},[
             m('div.container.right.info',{style:{border:'1px solid red'}},[
                 m('div.container.right.info.left',{style:{float:'left'}},[
                     m('img.pic',{src:'zhanwei'})
@@ -30,9 +30,9 @@ module.exports = {
             ]),
             m(assetMenu),
             m('div.container.right.invitation',[
-                m('div.container.right.invitation.left',{style:{border:'1px solid orange',float:'left'}},[
+                m('div.container.right.invitation.left',{style:{float:'left'}},[
                     m('span','邀请返佣'),
-                    m('div',{style:{border:'1px solid blue'}},[
+                    m('div',{style:{border:'1px solid #ccc',height:'100px'}},[
                         m('div','我的专属邀请链接'),
                         m('div','https://w.xx.cc/topi/invited/?invite_ code=ck8m3'),
                         m('div',[
@@ -49,9 +49,9 @@ module.exports = {
                         ])
                     ])
                 ]),
-                m('div.container.right.invitation.right',{style:{border:'1px solid orange',float:'right'}},[
+                m('div.container.right.invitation.right',{style:{float:'right',marginLeft:'10px'}},[
                     m('span','账户活动'),
-                    m('div',{style:{border:'1px solid blue'}},[
+                    m('div',{style:{border:'1px solid #ccc',height:'100px'}},[
                         m('div',[
                             m('span',{style:{marginRight:'80px'}},'web'),
                             m('span','12.6.12.6')

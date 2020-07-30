@@ -31,6 +31,3 @@ if(_themeDark === true || _themeDark === false){
 }
 window.themeDark = themeDark
 window._styles = styles
-
-
-
