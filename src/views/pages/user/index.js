@@ -2,6 +2,7 @@ let m = require('mithril')
 
 let personal = require('./myself/personal');
 let accountSecurity = require('./accountVerify/accountSecurity');
+let authentication = require('./identity/authentication');
 
 // let closeGoogleVerify = require('./accountVerify/closeGoogleVerify');
 // let modifyLoginPwd = require('./accountVerify/modifyLoginPwd');
@@ -24,7 +25,7 @@ let obj = {
             case 1:
                 return m(accountSecurity)
             case 2:
-                // return m(personal)
+                return m(authentication)
             case 3:
                 // return m(personal)
             case 4:

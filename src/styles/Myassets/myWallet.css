@@ -1,0 +1,14 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+.myWallet{
+    width: 90%;
+    margin: auto;
+}
+.column{
+    margin-right: 20px;
+}
+.has-bg-error{
+    text-align: center;
+}
