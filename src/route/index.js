@@ -13,6 +13,11 @@ m.route(document.querySelector('body .route-box'), defaultRoutePath, {
             return import('@/views/pages/user/index')
         }
     },
+    '/myWallet': {
+        onmatch: function () {
+            return import('@/views/pages/Myassets/myWallet')
+        }
+    },
     '/login': {
         onmatch: function () {
             return import('@/views/pages/login/index')

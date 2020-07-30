@@ -98,6 +98,11 @@ module.exports = {
                         ])
                     ])
                 ]),
+                m('a.navbar-item', {onclick:function(){
+                    window.router.push('/myWallet')
+                }}, [
+                    '资产'
+                ]),
                 m('div.navbar-end', {}, [
                     m('div.navbar-item', {}, [
                         m('div.buttons', {}, [

@@ -2,6 +2,7 @@ let m = require('mithril')
 
 let personal = require('./myself/personal');
 let accountSecurity = require('./accountVerify/accountSecurity');
+let authentication = require('./identity/authentication');
 
 // let closeGoogleVerify = require('./accountVerify/closeGoogleVerify');
 // let modifyLoginPwd = require('./accountVerify/modifyLoginPwd');
@@ -24,7 +25,7 @@ let obj = {
             case 1:
                 return m(accountSecurity)
             case 2:
-                // return m(personal)
+                return m(authentication)
             case 3:
                 // return m(personal)
             case 4:
@@ -38,8 +39,8 @@ module.exports = {
 
     },
     view:function(){
-        return m('div.container', [
-            m('aside.container.left.menu',{style:{width:'30%',float:'left',border:'1px solid red'}},[
+        return m('div.container',{style:{display:'flex',flexDirection:'row'}},[
+            m('aside.container.left.menu',{style:{width:'30%',border:'1px solid red'}},[
                 m('ul.menu-list',[
                     m('li',{onclick:function(){obj.setMenuVal(0)}},[
                         m('a',{class:""+(obj.menuVal == 0?"is-active":'')},'个人总览')
