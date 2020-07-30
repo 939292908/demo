@@ -99,7 +99,7 @@ module.exports = {
                     ])
                 ]),
                 m('a.navbar-item', {onclick:function(){
-                    window.router.push('/myWallet')
+                    window.router.push('/myWalletIndex')
                 }}, [
                     '资产'
                 ]),
