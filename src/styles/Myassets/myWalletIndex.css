@@ -1,0 +1,42 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+.myWalletIndex{
+    width: 90%;
+    margin: auto;
+}
+.columns-flex{
+    display: flex;
+    flex-wrap: wrap;
+}
+.column{
+    margin-right: 20px;
+}
+.has-bg-error{
+    text-align: center;
+}
+
+.myWalletIndex-nav{
+    height: 28px;
+    padding-left: 10px;
+}
+.myWalletIndex-nav-my,.myWalletIndex-nav-record{
+    margin-right: 20px;
+}
+.myWalletIndex-nav-my{
+    color: #FF8B00;
+    border-bottom: 2px solid #FF8B00;
+}
+.myAccount,.otherAccount{
+    display: flex;
+    flex-direction: row;
+}
+.myAccount div.desc{
+    margin-left: 60%;
+    font-size: 20px;
+}
+.otherAccount div.desc{
+    margin-left: 60%;
+    font-size: 20px;
+}
