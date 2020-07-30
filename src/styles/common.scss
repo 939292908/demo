@@ -5,7 +5,20 @@ html, body, .section {
     overflow: auto;
     font-size: var(--c-fontsz-level4);
 }
-
+.is-between {
+    display: flex;
+    justify-content: space-between;
+    // align-items: center;
+}
+.is-around {
+    display: flex;
+    justify-content: space-around;
+    // align-items: center;
+}
+.is-align-items-center {
+    display: flex;
+    align-items: center;
+}
 /* 动画相关 start */
 @keyframes sliding-out-from-right {
     from {
