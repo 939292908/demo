@@ -16,6 +16,7 @@ class webApi {
         this.userInfo = {}
         this.loginSms = true // 登录短信验证
         this.functions = null
+        this.loginState = false
         this.wallet = {
             '01': [],
             '02': [],
@@ -250,6 +251,34 @@ class webApi {
         s.axios.request({
             method: "post",
             url: s.axios.baseUrl + API.LOGIN_CHECK_V1,
+            data: qs.stringify(aData),
+            options: {
+                withCredentials: true
+            }
+        }).then(function (result) {
+            let arg = result.data
+            if (aOnSuccess) {
+                aOnSuccess(arg)
+            }
+        }).catch(function (e) {
+            if (aOnError) {
+                aOnError(e)
+            }
+        })
+    }
+
+    /**
+     * 登录
+     * @param aData
+     * @param aOnSuccess
+     * @param aOnError
+     */
+    loginWeb(aData, aOnSuccess, aOnError) {
+        let s = this
+
+        s.axios.request({
+            method: "post",
+            url: s.axios.baseUrl + API.LOGIN_WEB_V1,
             data: qs.stringify(aData),
             options: {
                 withCredentials: true

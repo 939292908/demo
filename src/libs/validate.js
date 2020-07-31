@@ -1,6 +1,6 @@
 import geetest from "@/libs/geetestTwo"
 
-export class Validate {
+class Validate {
     constructor() {
         this.sms = 1;
         this.google = 2;
@@ -38,10 +38,10 @@ export class Validate {
                 };
             }
             this.smsConfig = params;
-            gBroadcast.emit({
-                cmd: 'setValidateSheet',
-                data: config,
-            });
+            // gBroadcast.emit({
+            //     cmd: 'setValidateSheet',
+            //     data: config,
+            // });
             gBroadcast.offMsg({
                 key: 'ValidateModule',
                 cmd: 'setValidateSheet',
@@ -69,10 +69,10 @@ export class Validate {
             type: this.google,
             loading: false,
         };
-        gBroadcast.emit({
-            cmd: 'setValidateSheet',
-            data: config,
-        });
+        // gBroadcast.emit({
+        //     cmd: 'setValidateSheet',
+        //     data: config,
+        // });
         this.initGeetest();
         if (callback) {
             this.callbackHandler = callback;
@@ -93,10 +93,10 @@ export class Validate {
             loading: false,
         };
         this.emailConfig = params;
-        gBroadcast.emit({
-            cmd: 'setValidateSheet',
-            data: config,
-        });
+        // gBroadcast.emit({
+        //     cmd: 'setValidateSheet',
+        //     data: config,
+        // });
         if (callback) {
             this.callbackHandler = callback;
         }
@@ -113,10 +113,10 @@ export class Validate {
             type: this.tradepwd,
             loading: false,
         };
-        gBroadcast.emit({
-            cmd: 'setValidateSheet',
-            data: config,
-        });
+        // gBroadcast.emit({
+        //     cmd: 'setValidateSheet',
+        //     data: config,
+        // });
         if (callback) {
             this.callbackHandler = callback;
         }
@@ -184,7 +184,7 @@ export class Validate {
      */
     checkSmsCode(code) {
         if (!code) {
-            $message({content: gI18n.$t('10015'), type: 'danger'});
+            $message({content: '该字段不能为空', type: 'danger'});
             return;
         }
         this.validateSheet.loading = true
@@ -212,8 +212,9 @@ export class Validate {
      * @param code
      */
     checkGoogleCode(code) {
+
         if (!code) {
-            $message({content: gI18n.$t('10015'), type: 'danger'});
+            $message({content: '该字段不能为空', type: 'danger'});
             return;
         }
         this.validateSheet.loading = true
@@ -237,7 +238,7 @@ export class Validate {
      */
     checkEmailCode(code) {
         if (!code) {
-            $message({content: gI18n.$t('10015'), type: 'danger'});
+            $message({content: '该字段不能为空', type: 'danger'});
             return
         }
         this.validateSheet.loading = true
@@ -262,10 +263,10 @@ export class Validate {
         if (this.callbackHandler) {
             this.callbackHandler();
         }
-        gBroadcast.emit({
-            cmd: 'smsAndEmailSuc',
-            data: 'ready'
-        });
+        // gBroadcast.emit({
+        //     cmd: 'smsAndEmailSuc',
+        //     data: 'ready'
+        // });
     };
 
     close() {
@@ -274,10 +275,10 @@ export class Validate {
         config.inputValue = '';
         config.type = 0;
         config.loading = false;
-        gBroadcast.emit({
-            cmd: 'setValidateSheet',
-            data: config
-        });
+        // gBroadcast.emit({
+        //     cmd: 'setValidateSheet',
+        //     data: config
+        // });
         gBroadcast.offMsg({
             key: 'ValidateModule',
             cmd: 'geetestMsg',
@@ -305,3 +306,5 @@ export class Validate {
         });
     }
 }
+
+export default Validate;

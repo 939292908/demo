@@ -18,22 +18,22 @@ module.exports = {
                             m('div.tabs', {}, [
                                 m('ul', {}, [
                                     m('li', {
-                                        class: Register.type === 'mail' ? 'is-active' : ''
-                                    }, [
-                                        m('a',{
-                                            onclick:()=>{
-                                                Register.type = 'mail';
-                                            }
-                                        },['邮箱'])
-                                    ]),
-                                    m('li', {
                                         class: Register.type === 'phone' ? 'is-active' : ''
                                     }, [
-                                        m('a',{
-                                            onclick:()=>{
+                                        m('a', {
+                                            onclick: () => {
                                                 Register.type = 'phone';
                                             }
-                                        },['手机'])
+                                        }, ['手机'])
+                                    ]),
+                                    m('li', {
+                                        class: Register.type === 'mail' ? 'is-active' : ''
+                                    }, [
+                                        m('a', {
+                                            onclick: () => {
+                                                Register.type = 'mail';
+                                            }
+                                        }, ['邮箱'])
                                     ])
                                 ]),
                             ]),

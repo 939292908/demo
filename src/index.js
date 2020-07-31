@@ -38,8 +38,8 @@ window.utils = utils
 import errCode from '@/util/errCode'
 window.errCode = errCode
 
-import validate from '@/libs/validate'
-window.validate = validate
+import Validate from '@/libs/validate'
+window.validate = new Validate()
 
 // 请求接口配置
 import Conf from "@/api/apiConf"
