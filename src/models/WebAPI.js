@@ -597,12 +597,10 @@ class CAPI {
     }
 
     //保存用户设置
-    ReqSaveUserSetting(type,val,aOnSuccess,aOnError) {
+    ReqSaveUserSetting(aOnSuccess,aOnError) {
         let s = this
         let _result = "1"
-        let key = type
-        s.setting[key] = val
-        let setting = s.setting
+        let setting = window.gWebAPI.CTX.UserSetting
         for (let key in setting) {
             let _obj = setting[key]
             for (let k in _obj) {

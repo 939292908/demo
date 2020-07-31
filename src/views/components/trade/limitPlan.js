@@ -534,11 +534,19 @@ let obj = {
             return window.$message({ title: gDI18n.$t('10037'/*"提示"*/), content: gDI18n.$t('10038'/*'可用资金不足！'*/), type: 'danger'})
         }
 
-        window.gTrd.ReqTrdOrderNew(p, function(aTrd, arg){
-            if (arg.code != 0 || arg.data.ErrCode) {
-                window.$message({title: utils.getTradeErrorCode(arg.code || arg.data.ErrCode), content: utils.getTradeErrorCode(arg.code || arg.data.ErrCode), type: 'danger'})
-            }
-        })
+        let tradType = window.gWebAPI.CTX.UserSetting.trade[2]
+        if(tradType){
+            gEVBUS.emit(gTrd.EV_PLANTIPS_UPD, {Ev: gTrd.EV_PLANTIPS_UPD,data:{p,MgnNeedForBuy:this.MgnNeedForBuy,MgnNeedForSell:this.MgnNeedForSell}})
+        }else{
+            window.gTrd.ReqTrdOrderNew(p, function(aTrd, arg){
+                if (arg.code != 0 || arg.data.ErrCode) {
+                    window.$message({title: utils.getTradeErrorCode(arg.code || arg.data.ErrCode), content: utils.getTradeErrorCode(arg.code || arg.data.ErrCode), type: 'danger'})
+                }
+            })
+        }
+        
+
+        
     },
     setLeverage: function(dir){
         let that = this

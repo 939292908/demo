@@ -498,13 +498,19 @@ let obj = {
             // return window.$message({title: '可用资金不足！', content: '可用资金不足！', type: 'danger'})
         }
 
-        gEVBUS.emit(gTrd.EV_ORDTIPS_UPD, {Ev: gTrd.EV_ORDTIPS_UPD,data:{p,MgnNeedForBuy:this.MgnNeedForBuy,MgnNeedForSell:this.MgnNeedForSell}})
-        // window.gTrd.ReqTrdOrderNew(p, function (aTrd, arg) {
-        //     console.log(p,'pppppParames');
-        //     if (arg.code != 0 || arg.data.ErrCode) {
-        //         window.$message({ title: gDI18n.$t('10037'/*"提示"*/), content: utils.getTradeErrorCode(arg.code || arg.data.ErrCode), type: 'danger' })
-        //     }
-        // })
+        let tradType = window.gWebAPI.CTX.UserSetting.trade[0]
+        if(tradType){
+            gEVBUS.emit(gTrd.EV_ORDTIPS_UPD, {Ev: gTrd.EV_ORDTIPS_UPD,data:{p,MgnNeedForBuy:this.MgnNeedForBuy,MgnNeedForSell:this.MgnNeedForSell}})
+        }else{
+            window.gTrd.ReqTrdOrderNew(p, function (aTrd, arg) {
+                console.log(p,'pppppParames');
+                if (arg.code != 0 || arg.data.ErrCode) {
+                    window.$message({ title: gDI18n.$t('10037'/*"提示"*/), content: utils.getTradeErrorCode(arg.code || arg.data.ErrCode), type: 'danger' })
+                }
+            })
+        }
+        
+        
 
     },
     setLeverage: function (dir) {

@@ -168,18 +168,20 @@ let obj = {
         })
     },
     submit:function(){
+        let tradeType = window.gWebAPI.CTX.UserSetting.trade
         let ordList = {}
         for(let key in this.ordList){
             let i = this.ordList[key].id
             if(key != "all"){
                 ordList["trade_" + i.toString()] = this.ordList[key].option
+                window.gWebAPI.CTX.UserSetting.trade[i-1] = this.ordList[key].option
             }
         }
         let key = 'trade_5'
         let val = true
         ordList[key] = val
-        console.log(ordList,11111111111)
-        window.gWebAPI.ReqSaveUserSetting("trade",ordList)
+        // window.gWebAPI.ReqSaveUserSetting("trade",ordList)
+        window.gWebAPI.ReqSaveUserSetting()
         this.open = false
     },
 }
