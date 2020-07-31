@@ -2056,6 +2056,19 @@ input[type="checkbox"] {
     }
 }
 
+//合约信息
+.dropdown-width-styl{
+    min-width: 170px;
+}
+.contract-information{
+    @extend %side-px;
+    @extend %py-4;
+
+    &:hover{
+        @extend .is-background-2;
+    }
+}
+
 // -------------- 白天模式 --------------
 #light {
     background-color: $white-background-color-once-level;

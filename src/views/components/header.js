@@ -6,6 +6,23 @@ let header = {
     headerMenu: false,
     // 线路切换弹框
     netLineOpen: false,
+    informationOpen: false,
+    informationList:[
+        {
+            id:0,
+            name:"合约详解"
+        },
+        {
+            id:1,
+            name:"指数"
+        },
+        {
+            id:2,
+            name:"资金费率历史"
+        }
+    ],
+    inForType:null,
+
     initEVBUS: function () {
         let that = this
 
@@ -139,6 +156,44 @@ let header = {
                 return null
         }
     },
+    setChangeModle:function(item){
+        this.inForType = item.id
+    },
+    getImationList:function(){
+        return this.informationList.map(function(item,i){
+            return m('div',{class:"contract-information cursor-pointer" + (header.inForType == i?" has-text-primary is-background-2" :""),key:"contractinformation" + i,onclick:function(){
+                header.setChangeModle(item)
+            }},[
+                item.name
+            ])
+        })
+    },
+    //合约信息
+    getContractInformation:function(){
+        let ciformation = window.$config.ConInformation
+        if(ciformation){
+            return m("div", { 
+                class: "navbar-item has-dropdown"+(header.informationOpen? ' is-active':'') , 
+                onmouseover: function(){
+                    header.informationOpen = true
+                },onmouseout: function(){
+                    header.informationOpen = false
+                }
+            }, [
+                m("a", {class: "navbar-item"}, [
+                    '合约信息',
+                    m('span', {class: "icon "},[
+                        m('i', {class: "my-trigger-icon iconfont iconxiala1 has-text-primary", "aria-hidden": true })
+                    ]),
+                ]),
+                m("div", { class: "navbar-dropdown dropdown-width-styl" }, [
+                    header.getImationList()
+                ])
+            ])
+        }else{
+            return null
+        }
+    },
     getLeftCon: function () {
         let type = window.$config.views.header.left.type
         if (type == 0) {
@@ -151,6 +206,7 @@ let header = {
                         gDI18n.$t('10001'/*合约交易*/),
                     ]),
                     header.getGoodsInStock(),
+                    header.getContractInformation(),
                     
                 ])
             ])
