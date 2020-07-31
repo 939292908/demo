@@ -29,6 +29,8 @@ import commission from './market/Commission'
 import implemented from './market/NotImplemented'
 //委托确认弹窗
 import ordTips from './trade/ordTips'
+//计划确认弹窗
+import planTips from './trade/planTips'
 
 let obj = {
 
@@ -231,6 +233,10 @@ let obj = {
   getOrdTips:function(){
     return m(ordTips)
   },
+
+  getPlanTips:function(){
+    return m(planTips)
+  }
   
 }
 
@@ -281,7 +287,8 @@ export default {
           obj.changeMgnMode(),
           obj.getSetTipsMode(),
           obj.getImplemented(),
-          obj.getOrdTips()
+          obj.getOrdTips(),
+          obj.getPlanTips()
         ])
     }
 }

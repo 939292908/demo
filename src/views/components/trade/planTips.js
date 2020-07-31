@@ -23,10 +23,10 @@ let obj = {
         let that = this
 
         //打开弹窗
-        if (this.EV_ORDTIPS_UPD_unbinder) {
-            this.EV_ORDTIPS_UPD_unbinder()
+        if (this.EV_PLANTIPS_UPD_unbinder) {
+            this.EV_PLANTIPS_UPD_unbinder()
         }
-        this.EV_ORDTIPS_UPD_unbinder = window.gEVBUS.on(gTrd.EV_ORDTIPS_UPD, arg => {
+        this.EV_PLANTIPS_UPD_unbinder = window.gEVBUS.on(gTrd.EV_PLANTIPS_UPD, arg => {
             utils.copyTab(that.tipsData,arg.data.p)
             that.MgnNeedForBuy = arg.data.MgnNeedForBuy
             that.MgnNeedForSell = arg.data.MgnNeedForSell
@@ -78,6 +78,15 @@ let obj = {
             }
         }
 
+        if (this.tipsData.StopPrz) {
+            this.tipsData.cond = this.tipsData.StopBy == 2 ? gDI18n.$t('10070') : this.tipsData.StopBy == 1 ? gDI18n.$t('10046') : gDI18n.$t('10048')
+            // obj.cond = obj.StopBy == 2 ? '指数价' : obj.StopBy == 1 ? '最新价' : '标记价'
+            this.tipsData.cond += (this.tipsData.OrdFlag & 8) ? '≥' : '≤'
+            this.tipsData.cond += this.tipsData.StopPrz
+        } else {
+            this.tipsData.cond = '--'
+        }
+
         switch(this.tipsData.OType){
             case 1:
                 this.ORD_Type = window.gWebAPI.CTX.UserSetting.trade[0]
@@ -121,11 +130,19 @@ let obj = {
     },
     //删除全局广播
     rmEVBUS: function () {
-        if (this.EV_ORDTIPS_UPD_unbinder) {
-            this.EV_ORDTIPS_UPD_unbinder()
+        if (this.EV_PLANTIPS_UPD_unbinder) {
+            this.EV_PLANTIPS_UPD_unbinder()
         }
         if (this.EV_CHANGELOCALE_UPD_unbinder) {
             this.EV_CHANGELOCALE_UPD_unbinder()
+        }
+        //tick行情全局广播
+        if(this.EV_TICK_UPD_unbinder){
+            this.EV_TICK_UPD_unbinder()
+        }
+        //指数行情全局广播
+        if(this.EV_INDEX_UPD_unbinder){
+            this.EV_INDEX_UPD_unbinder()
         }
     },
 
@@ -147,11 +164,12 @@ let obj = {
                 window.gWebAPI.CTX.UserSetting.trade[3] = this.ORD_Type
                 break;
         }
+
         //提交设置
         window.gWebAPI.ReqSaveUserSetting()
 
         window.gTrd.ReqTrdOrderNew(this.tipsData, function (aTrd, arg) {
-            console.log(obj.tipsData,'pppppParames');
+            console.log(this.tipsData,'pppppParames');
             if (arg.code != 0 || arg.data.ErrCode) {
                 window.$message({ title: gDI18n.$t('10037'/*"提示"*/), content: utils.getTradeErrorCode(arg.code || arg.data.ErrCode), type: 'danger' })
             }
@@ -181,7 +199,7 @@ let obj = {
                     gDI18n.$t('10058')//"委托价格"
                 ]),
                 m('div',{class:"ord-tips-num-right"},[
-                    obj.tipsData.OType == 1?(obj.tipsData.Prz + " " + obj.tipsData.FromC):(gDI18n.$t('10081'/*"市价"*/) + "(" + (obj.getLastTick().LastPrz || '--') + obj.tipsData.FromC + ")")
+                    obj.tipsData.OType == 3?(obj.tipsData.Prz + " " + obj.tipsData.FromC):(gDI18n.$t('10081'/*"市价"*/) + "(" + (obj.getLastTick().LastPrz || '--') + obj.tipsData.FromC + ")")
                     
                 ]),
             ]),
@@ -195,6 +213,14 @@ let obj = {
             ]),
             m('div',{class:"ord-tips-num is-flex"},[
                 m('div',{class:"ord-tips-num-left"},[
+                    gDI18n.$t('10064')//"触发条件"
+                ]),
+                m('div',{class:"ord-tips-num-right"},[
+                    obj.tipsData.cond + obj.tipsData.FromC
+                ]),
+            ]),
+            m('div',{class:"ord-tips-num is-flex"},[
+                m('div',{class:"ord-tips-num-left"},[
                     gDI18n.$t('10167')//"委托保证金"
                 ]),
                 m('div',{class:"ord-tips-num-right"},[
@@ -202,45 +228,6 @@ let obj = {
                 ]),
             ]),
         ])
-    },
-    //止盈止损视图
-    getStopPLView:function(){
-        // 根据配置判断下单止盈止损是否显示
-        let tradeType = window.$config.future.tradeType
-        // let show = false
-        switch(tradeType){
-            case 0:
-            case 1:
-            case 2:
-                this.isShow = false;
-                break;
-            case 3:
-                this.isShow = true
-                break;
-            default:
-                this.isShow = false
-        }
-        if(this.isShow){
-            return m('div',{class:""},[
-                m('div',{class:"ord-tips-num is-flex"},[
-                    m('div',{class:"ord-tips-num-left"},[
-                        gDI18n.$t('10485')//"止盈触发价"
-                    ]),
-                    m('div',{class:"ord-tips-num-right"},[
-                        (obj.tipsData.StopP || "--") + obj.tipsData.FromC
-                    ]),
-                ]),
-                m('div',{class:"ord-tips-num is-flex"},[
-                    m('div',{class:"ord-tips-num-left"},[
-                        gDI18n.$t('10486')//"止损触发价"
-                    ]),
-                    m('div',{class:"ord-tips-num-right"},[
-                        (obj.tipsData.StopL || "--") + obj.tipsData.FromC
-                    ]),
-                ]),
-            ])
-        }
-        
     },
 
     changeCheck:function(){
@@ -283,10 +270,9 @@ export default {
                     utils.getSymDisplayName(window.gMkt.AssetD, obj.tipsData.Sym),
                 ]),
                 obj.getOrdView(),
-                m('div',{class:"has-text-primary ticks-stop" + (obj.isShow?" ":" is-hidden")},[
-                    "止盈止损设置"
+                m('div',{class:"has-text-danger"},[
+                    "当委托被触发时，如果无可用资金，该委托可能不被执行。"
                 ]),
-                obj.getStopPLView(),
                 m('div',{class:""},[
                     m('input',{type:"checkbox",checked:obj.ORD_Type,onclick:function(){
                         obj.changeCheck()

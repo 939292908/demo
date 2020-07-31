@@ -288,20 +288,18 @@ let spotTick = {
 
     }, 
     settingAny:function(){
-        if (!window.gWebAPI.isLogin()) {
-            return window.gWebAPI.needLogin()
-        }
         this.isSetting = !this.isSetting
         
     },
     getEntrustSet:function(){
         this.isSetting = false
-
+        if (!window.gWebAPI.isLogin()) {
+            return window.gWebAPI.needLogin()
+        }
         gEVBUS.emit(gTrd.EV_OPENORDADJUST_UPD, {Ev: gTrd.EV_OPENORDADJUST_UPD,})
     },
     getProfitLoss:function(){
         this.isSetting = false
-
         gEVBUS.emit(gTrd.EV_OPENIMPLEMENTED_UPD, {Ev: gTrd.EV_OPENIMPLEMENTED_UPD,})
     },
 
