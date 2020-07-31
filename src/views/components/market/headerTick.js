@@ -1,4 +1,6 @@
 var m = require("mithril")
+import Tooltip from "../common/Tooltip"
+
 
 let spotTick = {
     //行情限制数据处理时间间隔
@@ -115,7 +117,8 @@ let spotTick = {
         let FundingNext = ass && ass.FundingNext || 0
         let FundingLongR = (this.getLastTick().FundingLongR || 0).toString().split('%')[0]
         // let str = `下次资金费率交换时间：${new Date(FundingNext).format('yyyy-MM-dd hh:mm:ss')}<br/>${Number(this.FundingLongR.split('%')[0])>0?this.$t('11634'):this.$t('11635')/*多头需要向空头补偿持仓价值的':'空头需要向多头补偿持仓价值的'*/}${Math.abs(Number(this.FundingLongR.split('%')[0]))}%`
-        this.FundingNextTmStr =gDI18n.$t('10414',{value : (FundingNext?new Date(FundingNext).format('yyyy-MM-dd hh:mm:ss'):'--')})
+        // this.FundingNextTmStr =gDI18n.$t('10414',{value : (FundingNext?new Date(FundingNext).format('yyyy-MM-dd hh:mm:ss'):'--')})
+        this.FundingNextTmStr =gDI18n.$t('10414',{value : ( FundingNext ? utils.getTimeDifference(new Date(FundingNext), new Date()) : '--')}) // 时间差
         //this.FundingNextTmStr = `下次资金费率交换时间：${FundingNext?new Date(FundingNext).format('yyyy-MM-dd hh:mm:ss'):'--'}`
         this.FundingLongRStr = `${Number(FundingLongR)>0? gDI18n.$t('10014'/*'多头需要向空头补偿持仓价值的'*/): gDI18n.$t('10015'/*'空头需要向多头补偿持仓价值的'*/)}${Math.abs(Number(FundingLongR))}%`
         
@@ -190,16 +193,26 @@ let spotTick = {
                             m('td', {class:"" + (pageTradeStatus == 1? "" : " table-tr-td-vertical")}, [
                                 m('p', {class:"" + (pageTradeStatus == 1? "" : " is-hidden")}, [
                                     m('span',[
-                                        gDI18n.$t('10475')//"指数价格："
+                                        m(Tooltip, {
+                                            dashed: true,
+                                            label: gDI18n.$t('10475'),//"指数价格："
+                                            content: [
+                                                m('p', "标的资产的价格，这里是BTC/USDT的指数价格。点此了解更多...")
+                                            ]
+                                        }),
                                     ]),
                                     m('span.has-text-1',[
                                         spotTick.getLastTick().indexPrz || '--'
                                     ])
                                 ]),
-                                m('p', {class:""}, [
-                                    m('span',[
-                                        gDI18n.$t('10476')//"标记价格："
-                                    ]),
+                                m('div', {class:""}, [
+                                    m(Tooltip, {
+                                        dashed: true,
+                                        label: gDI18n.$t('10476'),//"标记价格："
+                                        content: [
+                                            m('p', "这是现在的标记价格。点此了解更多...")
+                                        ]
+                                    }),
                                     m('span.has-text-1',[
                                         spotTick.getLastTick().SettPrz || '--'
                                     ])
@@ -224,26 +237,14 @@ let spotTick = {
                                 ]),
                             ]),
                             m('td', {class:"" + (pageTradeStatus == 1? "" : " is-hidden")}, [
-                                m('div', {class:"dropdown is-hoverable"}, [
-                                    m('div', {class:"dropdown-trigger"}, [
-                                        m('p', {class:""}, [
-                                            gDI18n.$t('10020'),//"资金费率 ",
-                                            m('i', {class:"iconfont iconinfo is-size-7"})
-                                        ]),
-                                    ]),
-                                    m('div', {class:"dropdown-menu"}, [
-                                        m('div', {class:"dropdown-content"}, [
-                                            m('div', {class:"dropdown-item"}, [
-                                                m('p', {class:""}, [
-                                                    spotTick.FundingNextTmStr,
-                                                ]),
-                                                m('p', {class:""}, [
-                                                    spotTick.FundingLongRStr,
-                                                ]),
-                                            ]),
-                                        ]),
-                                    ]),
-                                ]),
+                                m(Tooltip, {
+                                    dashed: true,
+                                    label: gDI18n.$t('10020'),// 资金费率
+                                    content: [
+                                        m('p', spotTick.FundingNextTmStr),
+                                        m('p', spotTick.FundingLongRStr)
+                                    ]
+                                }),
                                 m('p', {class:"has-text-1-important"}, [
                                     spotTick.getLastTick().FundingLongR || '--'
                                 ]),

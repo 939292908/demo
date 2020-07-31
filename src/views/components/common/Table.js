@@ -3,7 +3,7 @@
 // columns: [
 //     {
 //         title: '', // 表头文字
-//         key: 'state', // data中对应的键
+//         key: 'state', // data中对应的字段
 //         width: 100, // 列宽 px 或 %
 //         className: '', // 列类名
 //         align: 'left', // 列对齐
@@ -24,20 +24,20 @@
 //     },
 // ]
 
-// 参数3：table宽,默认值columns中width总和
+// 参数3：table宽 默认columns中width总和
 // width : 500 
 
-// 参数4：设置默认列宽，默认值150
+// 参数4：默认每列宽
 // defaultColumnWidth: 150
 
-// 参数5：tableBox 加类名
+// 参数5：table加类名
 // class: ''
 
 var m = require("mithril")
 
 export default {
     tableWidth: 0,
-    defaultColumnWidth: 150, // 默认列宽 (调用组件可参数设置)
+    defaultColumnWidth: 150, // 默认每列宽
     // 设置table宽
     setTableWidth (vnode, w) {
         if (vnode.attrs.width) { // 使用参数 width
@@ -98,10 +98,10 @@ export default {
                     // 表格
                     vnode.attrs.data.map((item, index) => {
                         return m("tr", { class: "", key: `tableTr${index}` },
-                            // 每行 td 顺序, 根据表头 key 的顺序渲染
+                            // td 顺序, 根据表头 key 的顺序渲染
                             vnode.attrs.columns.map((headerItem, index1) => {
                                 return m("td", { class: `${headerItem.className ? headerItem.className : ''}`, style: this.getTrTdStyle(headerItem), key: `tableTd${index}-${index1}` }, [
-                                    // 默认显示对应表头 key 的数据，如果 columns 有 render() 优先使用
+                                    // 默认显示对应 key 字段; 如果 columns 有 render() 优先使用（插槽功能）
                                     headerItem.render ? headerItem.render(item) : item[headerItem.key]
                                 ])
                             }))

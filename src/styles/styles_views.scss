@@ -37,7 +37,6 @@ hr {
     @extend %my-3;
 }
 
-
 //html标签样式覆盖 end
 
 //动画相关 start
@@ -1135,8 +1134,9 @@ hr {
         height: 391px;
         .pub-table-head-box {
             min-width: 100%;
-            overflow-x: hidden;
-            overflow-y: scroll;
+            // overflow-x: hidden;
+            // overflow-y: scroll;
+            overflow: visible;
             table {
                 min-width: 100%;
                 @extend %ma-0;
@@ -1697,6 +1697,62 @@ hr {
         min-width: 103px;
     }
 }
+// hover 提示消息
+.my-tooltip {
+    .bdb-dashed {
+        // 下边框-虚线
+        border-bottom: 1px dashed;
+    }
+    .dropdown-menu {
+        padding-top: 6px;
+        // 三角形
+        &::before {
+            content: "";
+            width: 0;
+            height: 0;
+            position: absolute;
+            z-index: 9;
+            top: 0;
+            transform: translateY(-50%);
+            border-top: solid 6px transparent !important;
+            border-left: solid 6px transparent !important;
+            border-right: solid 6px transparent !important;
+            border-bottom: solid 6px;
+        }
+        // 提示 居中
+        &.my-tooltip-center {
+            left: 50%;
+            right: auto;
+            transform: translateX(-50%);
+            // 三角形
+            &::before {
+                left: 50%;
+                right: auto;
+                transform: translate(-50%, -50%);
+            }
+        }
+        // 提示 居左
+        &.my-tooltip-left {
+            left: 0;
+            right: auto;
+            // 三角形
+            &::before {
+                left: 5%;
+                right: auto;
+            }
+        }
+        // 提示 居右
+        &.my-tooltip-right {
+            right: 0;
+            left: auto;
+            // 三角形
+            &::before {
+                right: 5%;
+                left: auto;
+            }
+        }
+    }
+}
 // 单选框
 .radio {
     &:hover {
@@ -1789,87 +1845,87 @@ input[type="checkbox"] {
 }
 
 //币币交易下单模块 start
-.pub-bibi-order{
+.pub-bibi-order {
     display: flex;
     justify-content: space-between;
     height: 40px;
     line-height: 40px;
     @extend %side-my;
 
-    .pub-bibi-order-type{
+    .pub-bibi-order-type {
         width: 15%;
         text-align: center;
     }
 
-    .pub-bibi-type1{
+    .pub-bibi-type1 {
         width: 80% !important;
     }
-    .pub-bibi-type2{
+    .pub-bibi-type2 {
         width: 100% !important;
     }
 
-    .pub-bibi-order-BS{
+    .pub-bibi-order-BS {
         // width: 80%;
         text-align: center;
         border: 1px solid;
         position: relative;
         border-radius: 2px;
 
-        .icon-position{
+        .icon-position {
             position: absolute;
             right: 10px;
         }
     }
-    .pub-bibi-order-BS-color1{
+    .pub-bibi-order-BS-color1 {
         border-color: $white-standard-green;
     }
-    .pub-bibi-order-BS-color2{
+    .pub-bibi-order-BS-color2 {
         border-color: $white-standard-red;
     }
-    .iconfont-switch1{
+    .iconfont-switch1 {
         color: $white-standard-green;
     }
-    .iconfont-switch2{
+    .iconfont-switch2 {
         color: $white-standard-red;
     }
 }
 
-.pub-bibi-price{
+.pub-bibi-price {
     display: flex;
     justify-content: space-between;
     @extend %mb-3;
 
-    .pub-bibi-price-til{
+    .pub-bibi-price-til {
         width: 15%;
         text-align: center;
         height: 40px;
         line-height: 40px;
     }
 
-    .pub-bibi-price-inp1{
+    .pub-bibi-price-inp1 {
         width: 80% !important;
     }
-    .pub-bibi-price-inp2{
+    .pub-bibi-price-inp2 {
         width: 100% !important;
     }
 
-    .pub-bibi-price-inp{
+    .pub-bibi-price-inp {
         // width: 80%;
 
-        .pub-bibi-price-US{
+        .pub-bibi-price-US {
             display: flex;
             justify-content: start;
             height: 40px;
             line-height: 40px;
 
-            .pub-bibi-price-text{
+            .pub-bibi-price-text {
                 width: 25%;
                 text-align: center;
                 border-top-left-radius: 2px;
                 border-bottom-left-radius: 2px;
             }
 
-            .pub-bibi-price-US-input{
+            .pub-bibi-price-US-input {
                 width: 75%;
                 border-radius: 2px;
                 border-top-left-radius: 0;
@@ -1877,44 +1933,42 @@ input[type="checkbox"] {
             }
         }
 
-        
-
         //余额
-        .pub-balance{
+        .pub-balance {
             height: 30px;
             text-align: right;
             @extend %font-2;
             line-height: 30px;
         }
 
-        .pub-balance-button{
+        .pub-balance-button {
             height: 40px;
             line-height: 40px;
-            border:1px solid;
+            border: 1px solid;
             text-align: center;
             border-radius: 2px;
         }
 
-        .pub-buy-sell-1{
+        .pub-buy-sell-1 {
             border-color: $white-standard-green;
             background-color: $white-standard-green;
         }
-        .pub-buy-sell-2{
+        .pub-buy-sell-2 {
             border-color: $white-standard-red;
             background-color: $white-standard-red;
         }
     }
 }
-.text-size{
+.text-size {
     @extend %font-2;
     @extend %mt-2;
 }
 
-.pub-button-div{
+.pub-button-div {
     display: flex;
     justify-content: space-between;
 
-    .pub-div-sty{
+    .pub-div-sty {
         width: 20%;
         height: 30px;
         text-align: center;
@@ -1936,18 +1990,19 @@ input[type="checkbox"] {
 }
 // 公共
 .bdn {
+    // 无边框
     border: none !important;
 }
 //右边设置
-.icon-fixed{
+.icon-fixed {
     position: relative;
 }
 
-.setTing-right-font{
+.setTing-right-font {
     @extend %font-3;
 }
 
-.setTing-right{
+.setTing-right {
     width: 224px;
     @extend %side-pa;
     position: absolute;
@@ -1955,53 +2010,51 @@ input[type="checkbox"] {
     top: 35px;
     z-index: 50;
 
-    .setTing-right-ord{
+    .setTing-right-ord {
         justify-content: space-between;
 
-        .icon-font-right{
+        .icon-font-right {
             @extend %iconfont-small;
         }
-
     }
 }
 
 //设置弹窗
-.modal-card-width{
+.modal-card-width {
     width: 561px !important;
 }
 
-.modal-card-font-title{
+.modal-card-font-title {
     @extend %font-12;
 }
 
-.modal-card-font-subtitle{
+.modal-card-font-subtitle {
     @extend %font-4;
 }
 
-.switch-pd{
+.switch-pd {
     @extend %side-mb;
 }
 //未实现盈亏设置
-.ord-set{
+.ord-set {
     width: 80%;
 }
 //委托确认弹窗
-.ticks-stop{
-    @extend %mb-2;  
+.ticks-stop {
+    @extend %mb-2;
 }
-.ord-tips-num{
+.ord-tips-num {
     justify-content: space-between;
     @extend %mb-2;
-    
-    .ord-tips-num-left{
+
+    .ord-tips-num-left {
         text-align: left;
     }
 
-    .ord-tips-num-right{
+    .ord-tips-num-right {
         text-align: right;
     }
 }
-
 
 // -------------- 白天模式 --------------
 #light {
@@ -2011,14 +2064,14 @@ input[type="checkbox"] {
     }
 
     //右边设置
-    .pub-header-tick-right-setting{
+    .pub-header-tick-right-setting {
         background-color: $white-background-color-second-level;
     }
 
-    .set-back{
-        background-color:$white-background-color-three-level;
+    .set-back {
+        background-color: $white-background-color-three-level;
     }
-    .hr-back{
+    .hr-back {
         background-color: $white-line2;
     }
     @mixin tableStyle {
@@ -2086,7 +2139,7 @@ input[type="checkbox"] {
         // 文字-绿
         color: $white-standard-green !important;
     }
-    .has-border-success {
+    .has-border-danger {
         // 边框-红
         border: 1px solid $white-standard-red !important;
     }
@@ -2223,6 +2276,9 @@ input[type="checkbox"] {
                     background-color: $white-list-color;
                 }
             }
+        }
+        &::before {
+            border-color: $white-list-color; // 三角形背景色
         }
     }
     .dropdown {
@@ -2361,10 +2417,10 @@ input[type="checkbox"] {
     }
 
     //币币交易
-        //限价委托
-        .text-background{
-            background-color: $white-background-color-three-level;
-        }
+    //限价委托
+    .text-background {
+        background-color: $white-background-color-three-level;
+    }
 }
 
 // -------------- 黑夜模式 --------------
@@ -2375,14 +2431,14 @@ input[type="checkbox"] {
         background-color: $black-line2;
     }
     //右边设置
-    .pub-header-tick-right-setting{
+    .pub-header-tick-right-setting {
         background-color: $black-background-color-second-level;
     }
 
-    .set-back{
-        background-color:$black-background-color-three-level;
+    .set-back {
+        background-color: $black-background-color-three-level;
     }
-    .hr-back{
+    .hr-back {
         background-color: $black-line2;
     }
 
@@ -2589,6 +2645,9 @@ input[type="checkbox"] {
                 }
             }
         }
+        &::before {
+            border-color: $black-list-color; // 三角形背景色
+        }
     }
     .dropdown {
         // 下拉
@@ -2726,8 +2785,8 @@ input[type="checkbox"] {
     }
 
     //币币交易
-        //限价委托
-        .text-background{
-            background-color: $black-background-color-three-level;
-        }
+    //限价委托
+    .text-background {
+        background-color: $black-background-color-three-level;
+    }
 }

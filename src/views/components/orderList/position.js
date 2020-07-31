@@ -1,4 +1,5 @@
 var m = require("mithril")
+import Tooltip from "../common/Tooltip"
 
 let obj = {
   posList: [],
@@ -14,27 +15,35 @@ let obj = {
       class: "position-sz pub-table-3"
     }, {
       title: gDI18n.$t('10416'),//'开仓均价',
+      tooltipContent: '目前仓位的平均成交价格',
       class: "position-prz pub-table-4"
     }, {
       title: gDI18n.$t('10417'),//'强平价格',
+      tooltipContent: '合约标记价格穿过该价格时触发强制平仓',
       class: "position-przLiq pub-table-5"
     }, {
       title: gDI18n.$t('10088'),//'风险度',
+      tooltipContent: '当前风险度/风险度参考值，当前风险度到达风险度参考值时触发强制平仓',
       class: "position-rate pub-table-6"
     }, {
       title: gDI18n.$t('10500'),//'保证金',
+      tooltipContent: '被仓位占用的保证金',
       class: "position-mm pub-table-7"
     }, {
       title: gDI18n.$t('10419'),//'未实现盈亏(回报率)',
+      tooltipContent: '所持仓位的当前盈亏(回报率=未实现盈亏/保证金)',
       class: "position-upnl pub-table-8"
     }, {
       title: gDI18n.$t('10091'),//'已实现盈亏',
+      tooltipContent: '仓位自开仓以来的已实现盈亏，包括手续费，资金费用',
       class: "position-pnl pub-table-9"
     }, {
       title: gDI18n.$t('10080') + "/" +gDI18n.$t('10101'),//'止盈/止损',
+      tooltipContent: '止盈/止损',
       class: "position-stoppl pub-table-10"
     }, {
       title: gDI18n.$t('10092'),//'策略',
+      tooltipContent: '',
       class: "position-buttons pub-table-11"
     } 
   ],
@@ -108,41 +117,49 @@ let obj = {
   },
   initLanguage: function(){
     this.theadList = [
-      {
-        title: gDI18n.$t('10067'),//'仓位ID',
-        class: "position-pid pub-table-1"
-      }, {
-        title: gDI18n.$t('10053'),//'合约',
-        class: "position-sym pub-table-2"
-      }, {
-        title: gDI18n.$t('10087'),//'数量',
-        class: "position-sz pub-table-3"
-      }, {
-        title: gDI18n.$t('10416'),//'开仓均价',
-        class: "position-prz pub-table-4"
-      }, {
-        title: gDI18n.$t('10417'),//'强平价格',
-        class: "position-przLiq pub-table-5"
-      }, {
-        title: gDI18n.$t('10088'),//'风险度',
-        class: "position-rate pub-table-6"
-      }, {
-        title: gDI18n.$t('10500'),//'保证金',
-        class: "position-mm pub-table-7"
-      }, {
-        title: gDI18n.$t('10419'),//'未实现盈亏(回报率)',
-        class: "position-upnl pub-table-8"
-      }, {
-        title: gDI18n.$t('10091'),//'已实现盈亏',
-        class: "position-pnl pub-table-9"
-      }, {
-        title: gDI18n.$t('10080') + "/" +gDI18n.$t('10101'),//'止盈/止损',
-        class: "position-stoppl pub-table-10"
-      }, {
-        title: gDI18n.$t('10092'),//'策略',
-        class: "position-buttons pub-table-11"
-      } 
-    ]
+        {
+          title: gDI18n.$t('10067'),//'仓位ID',
+          class: "position-pid pub-table-1"
+        }, {
+          title: gDI18n.$t('10053'),//'合约',
+          class: "position-sym pub-table-2"
+        }, {
+          title: gDI18n.$t('10087'),//'数量',
+          class: "position-sz pub-table-3"
+        }, {
+          title: gDI18n.$t('10416'),//'开仓均价',
+          tooltipContent: '目前仓位的平均成交价格',
+          class: "position-prz pub-table-4"
+        }, {
+          title: gDI18n.$t('10417'),//'强平价格',
+          tooltipContent: '合约标记价格穿过该价格时触发强制平仓',
+          class: "position-przLiq pub-table-5"
+        }, {
+          title: gDI18n.$t('10088'),//'风险度',
+          tooltipContent: '当前风险度/风险度参考值，当前风险度到达风险度参考值时触发强制平仓',
+          class: "position-rate pub-table-6"
+        }, {
+          title: gDI18n.$t('10500'),//'保证金',
+          tooltipContent: '被仓位占用的保证金',
+          class: "position-mm pub-table-7"
+        }, {
+          title: gDI18n.$t('10419'),//'未实现盈亏(回报率)',
+          tooltipContent: '所持仓位的当前盈亏(回报率=未实现盈亏/保证金)',
+          class: "position-upnl pub-table-8"
+        }, {
+          title: gDI18n.$t('10091'),//'已实现盈亏',
+          tooltipContent: '仓位自开仓以来的已实现盈亏，包括手续费，资金费用',
+          class: "position-pnl pub-table-9"
+        }, {
+          title: gDI18n.$t('10080') + "/" +gDI18n.$t('10101'),//'止盈/止损',
+          tooltipContent: '止盈/止损',
+          class: "position-stoppl pub-table-10"
+        }, {
+          title: gDI18n.$t('10092'),//'策略',
+          tooltipContent: '',
+          class: "position-buttons pub-table-11"
+        } 
+      ]
   },
   //删除全局广播
   rmEVBUS: function(){
@@ -202,7 +219,11 @@ let obj = {
   getTheadList: function(){
     return this.theadList.map(function(item, i){
       return m("th",{key: "positiontHeadItem"+i, class:" "+item.class},[
-        item.title
+        m(Tooltip, {
+            dashed: !!item.tooltipContent,
+            label: item.title,
+            content: item.tooltipContent
+        })
       ])
     })
   },

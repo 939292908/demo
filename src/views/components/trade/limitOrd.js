@@ -1205,24 +1205,29 @@ export default {
                     {
                         id: 'item1',
                         label: 'GTC',
+                        tooltipContent: 'GTC（GoodTillCancel）普通限价委托，一直有效直至全部成交或取消。',
                         type: 'Tif',
                         value: 0
                     },
                     {
                         id: 'item2',
                         label: 'FOK',
+                        tooltipContent: 'FOK（Fill or Kill）订单若不能全部成交则立即取消。',
                         type: 'Tif',
                         value: 2
                     },
                     {
                         id: 'item3',
                         label: 'FAK',
+                        tooltipContent: 'FAK（Fill and Kill）订单若不能立即成交则未成交部分立即取消。',
                         type: 'Tif',
                         value: 1
                     },
                     {
                         id: 'item4',
                         label: '被动委托',
+                        tooltipContent: '被动委托（Post Only）订单不会立刻在市场上成交，保证用户始终为Maker，如果委托会立即成交，那么该委托会被取消。',
+                        tooltipDirection: 'right',
                         type: 'OrdFlag',
                         value: 1
                     },

@@ -1051,6 +1051,27 @@ utils.splitList=function(list,num){
     }
     return newList
 }
+// 获取两个时间差 转换为时分秒
+utils.getTimeDifference = function(end, start) {
+    let sdate = new Date(end);//结束时间
+    let now = new Date(start);//开始时间
+    let endTime=sdate.getTime();//结束时间
+    let startTime=now.getTime();//开始时间
+    let timeDiff =endTime  - startTime;
+    let hours = parseInt((timeDiff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    let minutes = parseInt((timeDiff % (1000 * 60 * 60)) / (1000 * 60));
+    let seconds = parseInt((timeDiff % (1000 * 60)) / 1000);
+    hours < 10 ? hours='0'+hours : hours; //小时格式化
+    minutes < 10 ? minutes='0'+minutes : minutes; //分钟格式化
+    seconds < 10 ? seconds='0'+seconds : seconds; //秒钟格式化
 
+    let k=hours+':'+minutes+':'+seconds;
+    // return k;
+    if("0" > seconds){
+        return "--"
+    }else{
+        return k;
+    }
+}
 
 export default utils

@@ -1,4 +1,5 @@
 var m = require("mithril")
+import Tooltip from "../common/Tooltip"
 
 let obj = {
     wlt: {},
@@ -98,7 +99,11 @@ export default {
             m('div', {class:"pub-wallet-content"}, [
                 m('div', {class: 'level-item'}, [
                     m('div', {class: 'text--secondary has-text-2'}, [
-                        gDI18n.$t('10231')//'账户权益'
+                        m(Tooltip, {
+                            dashed: true,
+                            label: gDI18n.$t('10231'),//'账户权益'
+                            content: '存入-取出+已实现盈亏+未实现盈亏'
+                        }),
                     ]),
                     m('div', {class: 'has-text-1'}, [
                         obj.wlt.WltBal?Number(obj.wlt.WltBal).toFixed2(8): (0).toFixed2(8)
@@ -106,7 +111,11 @@ export default {
                 ]),
                 m('div', {class: 'level-item'}, [
                     m('div', {class: 'text--secondary has-text-2'}, [
-                        gDI18n.$t('10427')//'未实现盈亏'
+                        m(Tooltip, {
+                            dashed: true,
+                            label: gDI18n.$t('10427'),//'未实现盈亏'
+                            content: '所有未平仓合约的当前盈亏'
+                        }),
                     ]),
                     m('div', {class: 'has-text-1 '}, [
                         Number(obj.wlt.aUPNL)>=0?m('div',{class:"has-text-success"},[
@@ -119,7 +128,11 @@ export default {
                 ]),
                 m('div', {class: 'level-item'}, [
                     m('div', {class: 'text--secondary has-text-2'}, [
-                        gDI18n.$t('10232')//'仓位保证金'
+                        m(Tooltip, {
+                            dashed: true,
+                            label: gDI18n.$t('10232'),//'仓位保证金'
+                            content: '保留所持仓位所需要的保证金'
+                        }),
                     ]),
                     m('div', {class: 'has-text-1'}, [
                         obj.wlt.aMM?Number(obj.wlt.aMM).toFixed2(8): (0).toFixed2(8)
@@ -127,7 +140,11 @@ export default {
                 ]),
                 m('div', {class: 'level-item'}, [
                     m('div', {class: 'text--secondary has-text-2'}, [
-                        gDI18n.$t('10167')//'委托保证金'
+                        m(Tooltip, {
+                            dashed: true,
+                            label: gDI18n.$t('10167'),//'委托保证金'
+                            content: '委托所需要的保证金'
+                        }),
                     ]),
                     m('div', {class: 'has-text-1'}, [
                         obj.wlt.aMI?Number(obj.wlt.aMI).toFixed2(8): (0).toFixed2(8)
@@ -135,7 +152,11 @@ export default {
                 ]),
                 m('div', {class: 'level-item'}, [
                     m('div', {class: 'text--secondary has-text-2'}, [
-                        gDI18n.$t('10157')//'可用保证金'
+                        m(Tooltip, {
+                            dashed: true,
+                            label: gDI18n.$t('10157'),//'可用保证金'
+                            content: '当前可用于开仓的保证金'
+                        }),
                     ]),
                     m('div', {class: 'has-text-1'}, [
                         obj.wlt.aWdrawable?Number(obj.wlt.aWdrawable).toFixed2(8): (0).toFixed2(8)
@@ -143,7 +164,11 @@ export default {
                 ]),
                 m('div', {class: 'level-item'}, [
                     m('div', {class: 'text--secondary has-text-2'}, [
-                        gDI18n.$t('10233')//'可用赠金'
+                        m(Tooltip, {
+                            dashed: true,
+                            label: gDI18n.$t('10233'),//'可用赠金'
+                            content: '当前可用于开仓的赠金'
+                        }),
                     ]),
                     m('div', {class: 'has-text-1'}, [
                         obj.wlt.aGift?Number(obj.wlt.aGift).toFixed2(8): (0).toFixed2(8)
