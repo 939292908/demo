@@ -341,7 +341,7 @@ class Mkt {
 
     //当前正在操作的合约,相关的数据，各输入UI会 读写 这里的数据
     CtxPlaying = {
-        pageTradeStatus: 1, //页面交易类型，1:合约，2:币币
+        pageTradeStatus: 1, //页面交易类型，1:合约，2:币币，3合约信息
         Sym:"",
         Typ:"1m",
         UId:"",

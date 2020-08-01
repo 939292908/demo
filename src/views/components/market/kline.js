@@ -985,7 +985,8 @@ let obj = {
                 }
             }
         }
-        window._chart.setStyleOptions(options)
+
+        window._chart && window._chart.setStyleOptions(options)
     },
     setKlineData: function(){
         if(!window._chart || !this.Sym || !this.Typ) return

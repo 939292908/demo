@@ -21,7 +21,6 @@ let header = {
             name:"资金费率历史"
         }
     ],
-    inForType:null,
 
     initEVBUS: function () {
         let that = this
@@ -157,11 +156,12 @@ let header = {
         }
     },
     setChangeModle:function(item){
-        this.inForType = item.id
+        window.$inType = item.id
     },
     getImationList:function(){
         return this.informationList.map(function(item,i){
-            return m('div',{class:"contract-information cursor-pointer" + (header.inForType == i?" has-text-primary is-background-2" :""),key:"contractinformation" + i,onclick:function(){
+            return m('div',{class:"contract-information cursor-pointer" + (window.$inType == i?" has-text-primary is-background-2" :""),key:"contractinformation" + i,onclick:function(){
+                header.setTradeStatus(3)
                 header.setChangeModle(item)
             }},[
                 item.name
@@ -354,7 +354,7 @@ export default {
     },
     view: function (vnode) {
 
-        return m("nav", { class: "pub-header navbar is-fixed-top is-transparent", role: "navigation", "aria-label": "main navigation" }, [
+        return m("nav", { class: "navbar is-fixed-top is-transparent"/*pub-header*/, role: "navigation", "aria-label": "main navigation" }, [
             header.getLogoCon(),
             header.getLeftCon(),
             header.getRightCon(),
