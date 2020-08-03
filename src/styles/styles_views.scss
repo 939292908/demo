@@ -16,10 +16,11 @@ html {
 }
 
 body {
-    min-height: 100%;
+    height: 100%;
     overflow-x: auto;
     width: 100%;
 }
+
 
 .box {
     .level-item {
@@ -1475,6 +1476,15 @@ hr {
     body {
         > section {
             min-width: 1280px;
+            height: 100%;
+        }
+    }
+}
+@media screen and (max-width: 768px) {
+    body {
+        > section {
+            min-width: 1280px;
+            height: 100%;
         }
     }
 }
@@ -1486,7 +1496,7 @@ hr {
 @media screen and (min-width: 1025px) {
     body > section {
         min-width: 1280px;
-        min-height: 100%;
+        height: 100%;
         padding-top: 3.25rem;
     }
 
@@ -1548,6 +1558,11 @@ hr {
         .dropdown-menu {
             max-width: 100%;
         }
+    }
+
+    //合约信息
+    .inf_body{
+        margin-top: 52px;
     }
 }
 // 屏幕适配相关 end
@@ -2057,6 +2072,53 @@ input[type="checkbox"] {
         text-align: right;
     }
 }
+
+//合约信息 start
+.dropdown-width-styl{
+    min-width: 170px;
+}
+.contract-information{
+    @extend %side-px;
+    @extend %py-4;
+
+    &:hover{
+        @extend .is-background-2;
+    }
+}
+
+//layout_inf
+.inf_body{
+    height: 100%;
+    width: 100%;
+    @extend .is-background-2;
+    
+    .inf_body_information{
+        width: 80%;
+        margin: auto;
+
+        .inf_body_title{
+            @extend %font-12;
+            padding: 44px 0 32px 0;
+        }
+
+        .inf_body_switch{
+            @extend .has-text-2;
+            border-bottom-width: 2px;
+            
+
+            &:not(:last-child){
+                margin-right: 44px;
+            }
+
+            a{
+                @extend %side-py;
+                @extend %px-0;
+            }
+        }
+    }
+}
+
+//合约信息 end
 
 // -------------- 白天模式 --------------
 #light {

@@ -4,6 +4,7 @@ let footer = require('./components/footer').default
 let header = require('./components/header').default
 let layout = require('./components/layout').default
 let layout_m = require('./components/layout_m').default
+let layout_inf = require('./components/layout_inf').default
 let message = require('./components/message').default
 
 
@@ -132,12 +133,17 @@ let main = {
     getLayout: function () {
         let type = window.$config.views.layout.type
         let mobile = window.$config.mobile
+        let pageTradeStatus = window.gMkt.CtxPlaying.pageTradeStatus
         switch (type) {
             case 0:
                 if(window.isMobile && mobile){
                     return m(layout_m)
                 }else{
-                    return m(layout)
+                    if(pageTradeStatus == 3){
+                        return m(layout_inf)
+                    }else {
+                        return m(layout)
+                    }
                 }
                 
             case 1:

@@ -4,6 +4,7 @@ const config = {
     loginType: 0, // 登录类型，0:默认,账号密码登录，1: token登录
     mobile: 1, // 是否适配移动端界面，0: 不适配，1: 开始适配
     goodsInStock: 1,//是否打开现货交易，0 ：关闭， 1 ：打开
+    ConInformation: 1,//是否打开合约信息，0 ：关闭， 1 ：打开
     theme:"dark",//白天主题：light  黑夜主题：dark
     langList: ['zh', 'en','tw'], //多语言显示列表
     symSort: {'BTC':1, 'ETH':2, 'BCH':3, 'XRP':4, 'EOS':5, 'ETC':6}, //合约列表排序
