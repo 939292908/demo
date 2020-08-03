@@ -1,23 +1,26 @@
 var m = require("mithril")
+import Dropdown from "../common/Dropdown"
 
 let obj = {
     form: {
-        coin: 'USDT',
-        transferFrom: '03',
-        transferTo: '01',
+        coin: 'USDT', // 合约
+        transferFrom: '03', // 从xx账户
+        transferTo: '01', // 到xx账户
         num: '',
         maxTransfer: 0,
     },
     canTransferListOpen: false,
     canTransferCoin: [],
+    // 钱包 下拉列表
     wltList: {
         '01': gDI18n.$t('10217'),//'合约账户',
         '02': gDI18n.$t('10218'),//'币币账户',
         '03': gDI18n.$t('10219'),//'我的钱包',
         '04': gDI18n.$t('10220'),//'法币账户',
     },
+    newWltList: [],
     wlt: {},
-    //初始化全局广播
+    //初始化全局广播 
     initEVBUS: function(){
         let that = this
         
@@ -80,6 +83,24 @@ let obj = {
             '03': gDI18n.$t('10219'),//'我的钱包',
             '04': gDI18n.$t('10220'),//'法币账户',
         }
+        this.newWltList = [
+            {
+                id: '01',
+                label: gDI18n.$t('10217'),//'合约账户',
+            },
+            {
+                id: '02',
+                label: gDI18n.$t('10218'),//'币币账户',
+            },
+            {
+                id: '03',
+                label: gDI18n.$t('10219'),//'我的钱包',
+            },
+            {
+                id: '04',
+                label: gDI18n.$t('10220'),//'法币账户',
+            },
+        ]
     },
     //删除全局广播
     rmEVBUS: function(){
@@ -134,6 +155,7 @@ let obj = {
         }
     },
     switchTransfer: function(){
+        console.log(obj.form.transferTo);
         [this.form.transferFrom, this.form.transferTo] = [this.form.transferTo, this.form.transferFrom]
         this.form.num = ''
         this.setMaxTransfer()
@@ -149,7 +171,7 @@ let obj = {
         }
     },
     setTransferInfo:function(){
-        let pageTradeStatus = window.gMkt.CtxPlaying.pageTradeStatus
+        let pageTradeStatus = window.gMkt.CtxPlaying.pageTradeStatus // 1:合约/2:币币 模式
         switch(pageTradeStatus){
             case 1:
                 this.form.transferTo = "01";
@@ -197,6 +219,7 @@ let obj = {
         this.form.coin = canTransfer[0]
         this.setMaxTransfer()
     },
+    // 合约 下拉列表
     getCoinList: function(){
         return this.canTransferCoin.map(function(item, i){
             return m('a', {key: "canTransferCoinItem"+i, class:"dropdown-item cursor-pointer"+(obj.form.coin == item?' has-text-primary':''), onclick: function(){
@@ -316,55 +339,56 @@ export default {
                     ]),
                 ]),
             ]),
+            // 选择账户
             m('div', {class:"pub-transfer-transfer-select field  has-addons"}, [
-                m("div", { class: "pub-transfer-transfer-select-left control is-expanded" }, [
-                    m('div', {class:"dropdown is-hoverable"}, [
-                        m('div', {class:"dropdown-trigger"}, [
-                            m('button', {class:"button button-default-padding is-outline is-fullwidth"}, [
-                                // m('div', {class:"button-content is-flex"}, [
-                                //     "我的钱包",
-                                //     m('.spacer'),
-                                //     m('span', {class:"icon"}, [
-                                //         m('i', {class:"iconfont iconxiala has-text-primary is-size-7"})
-                                //     ]),
-                                // ]),
-                                obj.wltList[obj.form.transferFrom],
-                            ]),
-                        ]),
-                        // m('div', {class:"dropdown-menu"}, [
-                        //     m('div', {class:"dropdown-content"}, [
-                        //         m('div', {class:"dropdown-item"}, [
-                        //             '我的钱包'
-                        //         ]),
-                        //     ]),
-                        // ]),
-                    ]),
+                // m("div", { class: "pub-transfer-transfer-select-left control is-expanded" }, [
+                //     m('div', {class:"dropdown is-hoverable"}, [
+                //         m('div', {class:"dropdown-trigger"}, [
+                //             m('button', {class:"button button-default-padding is-outline is-fullwidth"}, [
+                //                 obj.wltList[obj.form.transferFrom],
+                //             ]),
+                //         ]),
+                //     ]),
+                // ]),
+                m('div', { class: `pub-transfer-transfer-select field has-addons` }, [
+                    m(Dropdown, {
+                        // activeId: obj.form.transferFrom,
+                        btnHeight: 40,
+                        activeId: cb => cb(obj.form, 'transferFrom'),
+                        onClick (item) {
+                            obj.form.transferFrom = item.id
+                            console.log(item);
+                        },
+                        getList () {
+                            return obj.newWltList
+                        }
+                    })
                 ]),
                 m("div", { class: "pub-transfer-transfer-select-center control is-expanded cursor-pointer"}, [
                     gDI18n.$t('10227')//'划至'
                 ]),
-                m("div", { class: "pub-transfer-transfer-select-right control is-expanded" }, [
-                    m('div', {class:"dropdown is-hoverable"}, [
-                        m('div', {class:"dropdown-trigger"}, [
-                            m('button', {class:"button button-default-padding is-outline is-fullwidth"}, [
-                                // m('div', {class:"button-content is-flex"}, [
-                                //     "合约账户",
-                                //     m('.spacer'),
-                                //     m('span', {class:"icon"}, [
-                                //         m('i', {class:"iconfont iconxiala has-text-primary is-size-7"})
-                                //     ]),
-                                // ]),
-                                obj.wltList[obj.form.transferTo],
-                            ]),
-                        ]),
-                        // m('div', {class:"dropdown-menu"}, [
-                        //     m('div', {class:"dropdown-content"}, [
-                        //         m('div', {class:"dropdown-item"}, [
-                        //             '合约账户'
-                        //         ]),
-                        //     ]),
-                        // ]),
-                    ]),
+                // m("div", { class: "pub-transfer-transfer-select-right control is-expanded" }, [
+                //     m('div', {class:"dropdown is-hoverable"}, [
+                //         m('div', {class:"dropdown-trigger"}, [
+                //             m('button', {class:"button button-default-padding is-outline is-fullwidth"}, [
+                //                 obj.wltList[obj.form.transferTo],
+                //             ]),
+                //         ]),
+                //     ]),
+                // ]),
+                m('div', { class: `pub-transfer-transfer-select-right control is-expanded` }, [
+                    m(Dropdown, {
+                        // activeId: obj.form.transferTo,
+                        btnHeight: 40,
+                        activeId: cb => cb(obj.form, 'transferTo'),
+                        onClick (item) {
+                            obj.form.transferTo = item.id
+                            console.log(item);
+                        },
+                        getList () {
+                            return obj.newWltList
+                        }
+                    })
                 ]),
                 m("div", { class: "pub-transfer-transfer-select-center control is-expanded cursor-pointer", onclick: function(){
                     obj.switchTransfer()
@@ -374,6 +398,7 @@ export default {
                     ]),
                 ]),
             ]),
+
             m("div", { class: "pub-transfer-num-input field" }, [
                 m("div", { class: "control" }, [
                     m("input", { class: "input", type: 'number', placeholder: gDI18n.$t('10228'/*"请输划转入数量"*/), value: obj.form.num, oninput: function(e) {
