@@ -295,6 +295,304 @@ class webApi {
         })
     }
 
+    /**
+     * 查询用户简介
+     * @param aData
+     * {
+     *      "loginType": "email",       //  登录类型
+     *      "loginName": "loginName",   //  登录账号
+     *      "nationNo": "0086"            //  区号
+     *      "exChannel": 30             //  渠道号
+     * }
+     * @param aOnSuccess (result)
+     * {
+     *   "result": {
+     *       "code": 0,
+     *       "msg": ""
+     *   },
+     *   "exists": 1,
+     *   "uid": "11137737",
+     *   "aType": "Normal",
+     *   "phone": "0086-00000000",
+     *   "email": "",
+     *   "ga": ""
+     * }
+     * @param aOnError (e)
+     */
+    queryUserInfo(aData, aOnSuccess, aOnError) {
+        let s = this
+
+        s.axios.request({
+            method: "post",
+            url: s.axios.baseUrl + API.QUERY_USER_INFO_V1,
+            data: qs.stringify(aData),
+            options: {
+                withCredentials: true
+            }
+        }).then(function (result) {
+            let arg = result.data
+            if (aOnSuccess) {
+                aOnSuccess(arg)
+            }
+        }).catch(function (e) {
+            if (aOnError) {
+                aOnError(e)
+            }
+        })
+    }
+
+    /**
+     * 重置密码
+     * @param aData
+     * {
+     *   "Passwd1": md5(password1), //  密码 md5
+     *   "Passwd2": md5(password2), //  确认密码 md5
+     *   "exChannel": 30            //  vp
+     * }
+     * @param aOnSuccess (result)
+     * {"result":{"code":0,"msg":""}}
+     * @param aOnError (e)
+     */
+    resetPassword(aData, aOnSuccess, aOnError) {
+        let s = this
+
+        s.axios.request({
+            method: "post",
+            url: s.axios.baseUrl + API.RESET_PASSWD_V1,
+            data: qs.stringify(aData),
+            options: {
+                withCredentials: true
+            }
+        }).then(function (result) {
+            let arg = result.data
+            if (aOnSuccess) {
+                aOnSuccess(arg)
+            }
+        }).catch(function (e) {
+            if (aOnError) {
+                aOnError(e)
+            }
+        })
+    }
+
+    /**
+     * 钱包子账户资产
+     * @param aData
+     * {
+     *     "exChannel": 30  //  vp
+     *     "aType": 018     //  子钱包
+     * }
+     * @param aOnSuccess (result)
+     * {
+     *    "result": {
+     *        "code": 0,
+     *        "msg": ""
+     *    },
+     *    "assetLists03": [
+     *        {
+     *            "wType": "USDT",
+     *            "coin": "USDT",
+     *            "mainBal": "",
+     *            "mainLock": "",
+     *            "financeBal": "",
+     *            "pawnBal": "",
+     *            "creditNum": "",
+     *            "wdLimit": "",
+     *            "depositLock": "541.82728125",
+     *            "fullName": "USDT",
+     *            "icon": "/imgs/cat/coins/6741d2f11f5e09e769e84f9a9e37631b.png?ver=1594976497642",
+     *            "networkNum": "2",
+     *            "initValue": "1",
+     *            "promptConvertActive": 0,
+     *            "promptConvertMine": 0,
+     *            "promptRecharge": 0,
+     *            "convertMinePer": "",
+     *            "depoLockRate": "",
+     *            "activeType": true,
+     *            "depoLockCoin": 0,
+     *            "allActive": false,
+     *            "unitAlias": {
+     *                "total": {
+     *                    "zh": "总额",
+     *                    "en": "Total",
+     *                    "status": 1
+     *                },
+     *                "depositLock": {
+     *                    "zh": "锁定",
+     *                    "en": "Lock-up",
+     *                    "status": 1
+     *                },
+     *                "pawnBal": {
+     *                    "zh": "质押",
+     *                    "en": "Pledge",
+     *                    "status": 1
+     *                },
+     *                "financeBal": {
+     *                    "zh": "理财",
+     *                    "en": "Fund Assets",
+     *                    "status": 1
+     *                },
+     *                "mainBal": {
+     *                    "zh": "可用",
+     *                    "en": "Available",
+     *                    "status": 1
+     *                },
+     *                "mainLock": {
+     *                    "zh": "矿池",
+     *                    "en": "Mining Pool",
+     *                    "status": 0
+     *                },
+     *                "actMainBal": {
+     *                    "zh": "活动资金",
+     *                    "en": "Activity fund",
+     *                    "status": 0
+     *                }
+     *            },
+     *            "Setting": {
+     *                "memo": false,
+     *                "canRecharge": true,
+     *                "canWithdraw": true,
+     *                "canLockedWithdraw": false,
+     *                "idcardVerifyWithdraw": false,
+     *                "canTransfer": true,
+     *                "convertMine": false,
+     *                "convertActive": false,
+     *                "fConvertMine": false,
+     *                "fConvertActive": false,
+     *                "openChains": true,
+     *                "canRechargeUSDT-Omni": true,
+     *                "canWithdrawUSDT-Omni": true,
+     *                "canRechargeUSDT-ERC20": true,
+     *                "canWithdrawUSDT-ERC20": true
+     *            },
+     *            "convertMineMin": 0,
+     *            "convertMineInc": 0,
+     *            "hiddenFields": {
+     *                "total": false,
+     *                "depositLock": false,
+     *                "pawnBal": false,
+     *                "financeBal": false,
+     *                "mainLock": true,
+     *                "mainBal": false,
+     *                "actMainBal": true
+     *            },
+     *            "wid": "11137412018USDT",
+     *            "uid": "11137412018",
+     *            "otcBal": "",
+     *            "otcLock": "",
+     *            "cTime": "0",
+     *            "updTime": "0",
+     *            "flag": "0",
+     *            "memo": "",
+     *            "email": ""
+     *        },
+     *        ...
+     *    ],
+     *    "transferSettlementTime": 86400,
+     *    "paySettlementTime": 86400
+     *  }
+     * @param aOnError (e)
+     */
+    subAssets(aData, aOnSuccess, aOnError) {
+        let s = this
+
+        s.axios.request({
+            method: "post",
+            url: s.axios.baseUrl + API.SUB_ASSETS_V1,
+            data: qs.stringify(aData),
+            options: {
+                withCredentials: true
+            }
+        }).then(function (result) {
+            let arg = result.data
+            if (aOnSuccess) {
+                aOnSuccess(arg)
+            }
+        }).catch(function (e) {
+            if (aOnError) {
+                aOnError(e)
+            }
+        })
+    }
+
+    /**
+     * 账号注册
+     * @param aData
+     * {
+     *     "loginType": "phone"                         // 账号类型 phone:手机 email:邮箱
+     *     "loginName": "123456789"                     // 账号
+     *     "pass": "dc483e80a7a0bd9ef71d8cf973673924"   // 密码 md5
+     *     "refereeType": 0                             // 0:普通注册邀请 | 1:broker注册邀请
+     *     "prom": ""                                   // 渠道信息
+     *     "os": "iOS"                                  // 设备信息
+     *     "nationNo": 0086                             // 区号
+     *     "exChannel": 30                              //  vp
+     * }
+     * @param aOnSuccess (result)
+     * {"result":{"code":0,"msg":""},"uid":"11138004","token":"DQAAI7PEMsxomsbmwTnsMYkmZuCBYBo7mBqziysaaybtszIH6A=="}
+     * @param aOnError (e)
+     */
+    usersRegister(aData, aOnSuccess, aOnError) {
+        let s = this
+
+        s.axios.request({
+            method: "post",
+            url: s.axios.baseUrl + API.REGISTER_V1,
+            data: qs.stringify(aData),
+            options: {
+                withCredentials: true
+            }
+        }).then(function (result) {
+            let arg = result.data
+            if (aOnSuccess) {
+                aOnSuccess(arg)
+            }
+        }).catch(function (e) {
+            if (aOnError) {
+                aOnError(e)
+            }
+        })
+    }
+
+    /**
+     * 设备信息获取
+     * @param aData
+     * {
+     *     "uid": 11138004                                      // uid
+     *     "cTime": 1596457285176                               // 时间戳
+     *     "op": "register"                                     // 信息操作来源
+     *     "deviceId": "67555124-58e9-485f-85fd-136e56c0856b"   // 设备唯一id
+     *     "softId": "67555124-58e9-485f-85fd-136e56c0856b"     // 网页自生成唯一id
+     *     "plat": "web"                                        // 平台
+     *     "model": "iPhone"                                    // 设备型号
+     *     "source": ""                                         // 广告来源
+     *     "lang": "zh"                                         // 语言
+     * }
+     * @param aOnSuccess
+     * @param aOnError
+     */
+    reportUdc(aData, aOnSuccess, aOnError) {
+        let s = this
+
+        s.axios.request({
+            method: "post",
+            url: s.axios.baseUrl + API.SUB_ASSETS_V1,
+            data: qs.stringify(aData),
+            options: {
+                withCredentials: true
+            }
+        }).then(function (result) {
+            let arg = result.data
+            if (aOnSuccess) {
+                aOnSuccess(arg)
+            }
+        }).catch(function (e) {
+            if (aOnError) {
+                aOnError(e)
+            }
+        })
+    }
+
     getUserInfo(aData, aOnSuccess, aOnError) {
         let s = this
 
