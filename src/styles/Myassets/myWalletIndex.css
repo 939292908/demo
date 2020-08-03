@@ -23,6 +23,7 @@
 }
 .myWalletIndex-nav-my,.myWalletIndex-nav-record{
     margin-right: 20px;
+    cursor: pointer;
 }
 .myWalletIndex-nav-my{
     color: #FF8B00;
@@ -33,10 +34,10 @@
     flex-direction: row;
 }
 .myAccount div.desc{
-    margin-left: 60%;
+    margin-left: 55%;
     font-size: 20px;
 }
 .otherAccount div.desc{
-    margin-left: 60%;
+    margin-left: 55%;
     font-size: 20px;
 }

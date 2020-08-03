@@ -3,8 +3,7 @@
     padding: 0;
 }
 .myWallet{
-    width: 90%;
-    margin: auto;
+    width: 96%;
 }
 .myWallet-nav{
     display: flex;
@@ -20,11 +19,18 @@
 table{
     width: 100%;
 }
+table thead{
+    color: rgba(83, 83, 83, 0.555);
+}
 td{
     width: 5%;
-    padding:5px 0;
+    padding:8px 0;
 }
 a{
     color: #FF8B00;
     margin-right: 15px;
+}
+/* tr悬浮 */
+table tbody tr:hover {
+    background-color: #f7fbfb;
 }

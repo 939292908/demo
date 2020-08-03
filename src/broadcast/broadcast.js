@@ -8,6 +8,7 @@ class broadcast {
     initCmd(){
         this.IS_LOGON_SUC_UPD = 'is_login_suc_upd'
         this.ONRESIZE_UPD = 'ONRESIZE_UPD'
+        this.CHANGE_SW_CURRENCY = 'CHANGE_SW_CURRENCY'
     }
     // 发送广播
     emit({ cmd, data }) {

@@ -4,7 +4,7 @@ let md5 = require('md5')
 module.exports = {
     account: 'qwer2@qq.com',
     password: '123456ly',
-    loginType: "email",
+    loginType: "phone",
     loading: false,
     rulesEmail: {
         required: value => !!value || gI18n.$t("10015"), //该字段不能为空

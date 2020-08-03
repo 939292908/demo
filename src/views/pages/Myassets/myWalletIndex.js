@@ -3,14 +3,23 @@ let m = require('mithril')
 require('@/styles/Myassets/myWalletIndex.css')
 
 let tradingAccount = require('@/views/pages/Myassets/tradingAccount')
+let myWallet = require('@/views/pages/Myassets/myWallet')
 
 let myWalletIndex = {
     currency:'BTC',
+    currencyChange:function(val){
+        this.setCurrency(val);
+        gBroadcast.emit({cmd:gBroadcast.CHANGE_SW_CURRENCY, data:val})
+    },
+    setCurrency:function(param){
+        this.currency = param;
+    },
     swValue:0,//0:我的钱包 1:交易账户 2:其他账户
     switchChange: function(val) {
         this.swValue = val
     },
     switchContent: function (){
+        gBroadcast.emit({cmd:gBroadcast.CHANGE_SW_CURRENCY, data:this.currency})
         switch(this.swValue){
             case 0:
                 return m(myWallet)
@@ -29,19 +38,9 @@ let myWalletIndex = {
                     m('div',{class:'myWalletIndex-head-left-total columns'},[
                         m('span',{class:'',style:'padding:10px'},['总资产估值']),
                         m('span.navbar-item.has-dropdown.is-hoverable', {}, [
-                            m('div.navbar-link', {}, [
-                                this.currency
-                            ]),
-                            m('div.navbar-dropdown', {}, [
-                                m('a.navbar-item', {}, [
-                                    'About'
-                                ]),
-                                m('a.navbar-item', {}, [
-                                    'Content'
-                                ]),
-                                m('a.navbar-item', {}, [
-                                    'Report an issue'
-                                ]),
+                            m('select.select',{onchange:function(){myWalletIndex.currencyChange(this.value)}},[
+                                m('option',{},['BTC']),
+                                m('option',{},['USDT']),
                             ])
                         ])
                     ]),
@@ -58,7 +57,7 @@ let myWalletIndex = {
                 m('div',{class:'myWalletIndex-head-right column',style:'border:1px solid red; padding:20px;'},[
                     m('div',{class:'columns'},[
                         m('div',{class:'column'}),
-                        m('button',{class:'has-bg-error column'},['充币']),
+                        m('button',{class:'has-bg-error column',onclick:function(){window.open(require('@/views/pages/Myassets/myWalletIndex'))}},['充币']),
                         m('button',{class:'has-bg-error column'},['提币']),
                         m('button',{class:'has-bg-error column'},['资金划转'])
                     ])
@@ -77,26 +76,25 @@ let myWalletIndex = {
                 	myWalletIndex.switchChange(1)
                	},style:'border:1px solid red;'},[
 					m('div',{},[
-							m('span',{},['交易账户']),
-							m('br'),
-							m('span',{},['0.00000000']),
-							m('span',{},[' '+this.currency])
+                        m('span',{},['交易账户']),
+                        m('br'),
+                        m('span',{},['0.00000000']),
+                        m('span',{},[' '+this.currency])
 					]),
                    	m('div',{class:'desc'},['...'])
                	]),
                	m('div',{class:'otherAccount column',onclick:function(){
-					myWalletIndex.switchChange(2)
+					// myWalletIndex.switchChange(2)
 				},style:'border:1px solid red;'},[
 					m('div',{},[
-							m('span',{},['其他账户']),
-							m('br'),
-							m('span',{},['0.00000000']),
-							m('span',{},' '+this.currency)
+                        m('span',{},['其他账户']),
+                        m('br'),
+                        m('span',{},['0.00000000']),
+                        m('span',{},' '+this.currency)
 					]),
                    	m('div',{class:'desc'},['...'])
 				])
             ]),
-            // m('div',{class:'hide'},[1]),
             myWalletIndex.switchContent(),
         ])
     }
@@ -104,8 +102,7 @@ let myWalletIndex = {
 module.exports = {
     view: function () {
         return m('div',{class:'myWalletIndex'},[
-            myWallet.myWalletPage()
+            myWalletIndex.assetValuation()
         ])
-        
     }
 }
