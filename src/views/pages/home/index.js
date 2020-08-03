@@ -1,8 +1,39 @@
 let m = require('mithril')
+// let m = require('swiper')
 
 require('@/styles/pages/home.css')
 // let demo = require('@/views/pages/demo')
-
+ var prev=document.getElementById("prev");
+ var next=document.getElementById("next");
+ var img=document.getElementsByTagName("img")[0];
+ var imgArr=["/user/cat.jpeg",];
+ var index=0;
+  
+ //点击左箭头，切换上一张
+ function p(){
+ if(index==0)
+ {
+ index=imgArr.length;
+ }
+ index--;
+ img.src=imgArr[index];
+ }
+ //点击右箭头，切换下一张
+ function n(){
+ if(index==imgArr.length)
+ {
+ index=0;
+ }
+ img.src=imgArr[index];
+ index++;
+ }
+ //设置自动播放
+ time=setInterval("p()",2000);
+  
+ //鼠标移入箭头内，停止自动播放
+ function cal(){
+ clearInterval(time);
+ }
 module.exports = {
     oncreate: function () {
 
@@ -10,6 +41,7 @@ module.exports = {
     view: function () {
         return m('div.views-pages-home-index', [
             // 轮播 + 下拉
+            
             m('div', { class: `home-banner` }, [
                 m('div', { class: `index-info-box-right` }, [
                     m('div', { class: `p1` }, ['我要买']),
@@ -29,52 +61,17 @@ module.exports = {
                             m('option', { class: `` }, ['200']),
                         ]),
                         m('button', { class: `btn` }, ['购买USDT'])
-                    ]),
-                ]),
+                    ])
+                ])
             ]),
             // 公告
             m('div', { class: `Notice my-4 w` }, [
                 m('div', { class: `Notice-content` }, [
-                    m('div', { class: `Notice-1` }, ['我是公告公告']),
-                    m('div', { class: `Notice-2` }, ['我是公告公告']),
-                    m('div', { class: `Notice-3` }, ['我是公告公告']),
-                    m('div', { class: `Notice-4` }, ['我是公告公告']),
-                ]),
-                
-                // m('div', { class: `frame-3 w` }, [
-                //     m('.navbar-brand', {}, [
-                //         m('a.navbar-item', { class: 'frame-image-2' }, [
-                //             m('img', { class: '', "src": "https://cdn.jsdelivr.net/gh/vmlite/s/bulma/images/bulma-logo.png", width: "112", height: "28", },
-                //             )
-                //         ]),
-                //         m('div', { class: `title-1` }, ["随时随地交易"],
-                //             m('div', { class: `title-1` }, ["下载Vbit移动应用端"])),
-
-                //         m('a.navbar-item', { class: 'QR code-1' }, [
-                //             m('img', { class: '', "src": "https://cdn.jsdelivr.net/gh/vmlite/s/bulma/images/bulma-logo.png", width: "112", height: "28", },
-                //             )
-                //         ]),
-                //         m('a.navbar-item', { class: 'QR code-2' }, [
-                //             m('img', { class: '', "src": "https://cdn.jsdelivr.net/gh/vmlite/s/bulma/images/bulma-logo.png", width: "112", height: "28", },
-                //             ),
-                //             m('div', { class: `download-ios` }, ["iOS 下载"]),
-                //         ]),
-                //         m('div', { class: `download-Android` }, ["Android下载"])
-                //     ])
-                // ]),
-                // m('div', { class: `frame-4` }, [
-                //     m('a.navbar-item', { class: 'frame-image-3' }, [
-                //         m('img', { class: '', "src": "https://cdn.jsdelivr.net/gh/vmlite/s/bulma/images/bulma-logo.png", width: "112", height: "28", })
-                //     ]),
-                //     m('div', { class: `navigation` }, [
-                //         m('div', { class: `navigation bar` }, [
-                //             m('div', { class: `` }, ['平台服务']),
-                //             m('div', { class: `` }, ['平台条款']),
-                //             m('div', { class: `` }, ['服务支持']),
-                //             m('div', { class: `` }, ['联系我们']),
-                //         ])
-                //     ]),
-                // ])
+                    m('div', { class: `Notice-1` }, ['我是公告我是公告']),
+                    m('div', { class: `Notice-2` }, ['我是公告我是公告']),
+                    m('div', { class: `Notice-3` }, ['我是公告我是公告']),
+                    m('div', { class: `Notice-4` }, ['我是公告我是公告']),
+                ])
             ]),
             // 行情表格
             m('div', { class: `frame w` }, [
@@ -110,20 +107,7 @@ module.exports = {
                 m('div', { class: `introduce-item` }, [
                     m('img', { class: '', "src": "https://cdn.jsdelivr.net/gh/vmlite/s/bulma/images/bulma-logo.png", width: "112", height: "28"}),
                     m('p', { class: `` }, ["尊享服务：7*24全天候专业客服团队守候，快速反馈！"])
-                ]),
-                // m('.navbar-brand', {}, [
-                //     m('a.navbar-item', { class: 'frame-image-1' }, [
-                //         m('img', { class: '', "src": "https://cdn.jsdelivr.net/gh/vmlite/s/bulma/images/bulma-logo.png", width: "112", height: "28", },
-                //             m('div', { class: `details-1` }, ["安全保障：世界顶级安全团队打造、主动安全的防御系统、银行级加密、冷热钱包分层体系，保障用户资金安全！"])
-                //         ),
-                //         m('img', { class: '', "src": "https://cdn.jsdelivr.net/gh/vmlite/s/bulma/images/bulma-logo.png", width: "112", height: "28", },
-                //         ),
-                //         m('img', { class: '', "src": "https://cdn.jsdelivr.net/gh/vmlite/s/bulma/images/bulma-logo.png", width: "112", height: "28", },
-                //         ),
-                //         m('img', { class: '', "src": "https://cdn.jsdelivr.net/gh/vmlite/s/bulma/images/bulma-logo.png", width: "112", height: "28", },
-                //         )
-                //     ])
-                // ])
+                ])
             ]),
             // 交易之旅
             m('div', { class: `my-7` }, [
@@ -156,37 +140,68 @@ module.exports = {
             // 底部 模块
             m('div', { class: `pub-footer is-around pt-7 pb-6` }, [
                 m('div', { class: `` }, [
+                    //logo
                     m('img', { class: '', src: "https://forum.vuejs.org/uploads/default/original/2X/5/555257b8c5e7ecf34ce4f9b952eeaf006adfa339.png", style: "width: 200px;height:200px;" })
-                ]),         
-                m('div', { class: `` }, [
-                    m('div', { class: `` }, ["平台服务"]),
-                    m('div', { class: `` }, ["平台条款"]),
-                    m('div', { class: `` }, ["服务支持"]),
-                    m('div', { class: `` }, ["联系我们"]),
+                ]),      
+                //导航栏  
+                m('div', { class: `bottom-navigation-tab-1` }, [
+                    m('p', { class: `body-6` }, ['平台服务']),
+                    m('a', { class: ``, href:"index.html", }, ["平台条款"]),
+                    m('p', { class: `` }, ["币币交易"]),
+                    m('p', { class: `` }, ["法币交易"]),
+                    m('p', { class: `` }, ["永续合约"]),
+                    m('p', { class: `` }, ["杠杆ETF"]),
+                    m('p', { class: `` }, ["全币种合约"]),
+                    m('p', { class: `` }, ["相关费率"])
                 ]),        
-                m('div', { class: `` }, [
-                    m('div', { class: `` }, ["永续合约"]),
-                    m('div', { class: `` }, ["服务协议"]),
-                    m('div', { class: `` }, ["新手帮助"]),
-                    m('div', { class: `` }, ["服务邮箱"]),
+                m('div', { class: `bottom-navigation-tab-2` }, [
+                    m('p', { class: `body-6` }, ["平台条款"]),
+                    m('p', { class: `` }, ["服务协议"]),
+                    m('p', { class: `` }, ["法律声明"]),
+                    m('p', { class: `` }, ["隐私条款"]),
+                    m('p', { class: `` }, ["合约牌照"])
                 ]),
-                m('div', { class: `` }, [
-                    m('div', { class: `` }, ["杠杆ETF"]),
-                    m('div', { class: `` }, ["法律声明"]),
-                    m('div', { class: `` }, ["常见问题"]),
-                    m('div', { class: `` }, ["加入社群"]),
+                m('div', { class: `bottom-navigation-tab-2` }, [
+                    m('p', { class: `body-6` }, ["服务支持"]),
+                    m('p', { class: `` }, ["新手帮助"]),
+                    m('p', { class: `` }, ["常见问题"]),
+                    m('p', { class: `` }, ["公告中心"])
                 ]),
-                m('div', { class: `` }, [
-                    m('div', { class: `` }, ["全币种合约"]),
-                    m('div', { class: `` }, ["隐私条款"]),
-                    m('div', { class: `` }, ["公告中心"]),
-                    m('div', { class: `` }, ["联系客服"]),
+                m('div', { class: `bottom-navigation-tab-2` }, [
+                    m('p', { class: `body-6` }, ["联系我们"]),
+                    m('p', { class: `` }, ["服务邮箱"]),
+                    m('p', { class: `` }, ["加入社群"])
                 ]),
-                m('div', { class: `` }, [
-                    m('div', { class: `` }, ["相关费率"]),
-                    m('div', { class: `` }, ["合规牌照"])
+                //社区
+                m('a', { class: `is-between`, href:"index.html",}, [
+                    m('div', { class: `` }, [
+                        m('img', { class: 'community', src: "https://forum.vuejs.org/uploads/default/original/2X/5/555257b8c5e7ecf34ce4f9b952eeaf006adfa339.png", style: "width: 20px;height:20px;" })
+                    ]),
+                    m('div', { class: `` }, [
+                        m('img', { class: 'community',src: "https://forum.vuejs.org/uploads/default/original/2X/5/555257b8c5e7ecf34ce4f9b952eeaf006adfa339.png", style: "width: 20px;height:20px;" })
+                    ]),
+                    m('div', { class: `` }, [
+                        m('img', { class: 'community',src: "https://forum.vuejs.org/uploads/default/original/2X/5/555257b8c5e7ecf34ce4f9b952eeaf006adfa339.png", style: "width: 20px;height:20px;" })
+                    ]),
+                    m('div', { class: `` }, [
+                        m('img', { class: 'community',src: "https://forum.vuejs.org/uploads/default/original/2X/5/555257b8c5e7ecf34ce4f9b952eeaf006adfa339.png", style: "width: 20px;height:20px;" })
+                    ]),
+                    m('div', { class: `` }, [
+                        m('img', { class: 'community',src: "https://forum.vuejs.org/uploads/default/original/2X/5/555257b8c5e7ecf34ce4f9b952eeaf006adfa339.png", style: "width: 20px;height:20px;" })
+                    ]),
+                    m('div', { class: `` }, [
+                        m('img', { class: 'community',src: "https://forum.vuejs.org/uploads/default/original/2X/5/555257b8c5e7ecf34ce4f9b952eeaf006adfa339.png", style: "width: 20px;height:20px;" })
+                    ]),
+                    m('div', { class: `` }, [
+                        m('img', { class: 'community',src: "https://forum.vuejs.org/uploads/default/original/2X/5/555257b8c5e7ecf34ce4f9b952eeaf006adfa339.png", style: "width: 20px;height:20px;" })
+                    ])
                 ])
-            ])
+            ]),
+            //客服
+            m('div', { class: `online-customer-service` }, [
+                m('img', { class: '', src: "https://forum.vuejs.org/uploads/default/original/2X/5/555257b8c5e7ecf34ce4f9b952eeaf006adfa339.png", style: "width: 30px;height:30px;href=index.html" })
+            ]),   
+            m('p', { class: `` }, ["© 2019-2020 Vbit 版权所有"]),
         ])
     }
 }

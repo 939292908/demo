@@ -12,12 +12,10 @@
 }
 .p1{
     margin-top: 200px;
-    margin-left: -150px;
-    margin-right: 20px;
+    margin-right: 165px;
 }
 .p2{
-    margin-left: -240px;
-    margin-right: 20px;
+    margin-right: 260px;
 }
 .p3{
     height: 32px;;
@@ -114,11 +112,25 @@
 .navigation{
     width: 300px;
     height: 200px;
-
 }
 .navigation bar{
     display: flex;
     justify-content: space-around;
-    /* content:'';
-    width:280px; */
+}
+.bottom-navigation-tab-1{
+    text-align-last: left;   
+    line-height:27px;
+}
+.bottom-navigation-tab-2{
+    line-height:27px;
+}
+.online-customer-service{
+    margin-top: -70px;
+    margin-left: 1100px;
+}
+.is-between{
+    margin-top: 40px;
+}
+.community{
+    margin-left: 10px;
 }
