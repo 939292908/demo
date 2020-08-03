@@ -1417,6 +1417,7 @@ hr {
     }
 
     .pub-transfer-transfer-select {
+        height: 40px;
         .pub-transfer-transfer-select-center {
             display: flex;
             align-items: center;
@@ -1668,6 +1669,7 @@ hr {
         }
     }
     .dropdown-menu {
+        min-width: 8rem;
         .dropdown-content {
             .dropdown-item {
                 display: flex;

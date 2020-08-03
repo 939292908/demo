@@ -11,6 +11,7 @@ import Dropdown from '../common/Dropdown'
 
 let obj = {
     tabsActive: 0,
+    dropdownActive: 1,
     tabsList: [
         {
             id: 0,
@@ -166,7 +167,7 @@ export default {
                 ]),
                 m( Dropdown, {
                     class: 'pub-trade-list-tabs-dropdown is-hidden-mobile' + (obj.tabsActive == 5 ? " is-hidden" : ""),
-                    activeId: 1,
+                    activeId: cb => cb(obj, 'dropdownActive'),
                     menuWidth:110,
                     onClick (itme) {
                         console.log(itme);
