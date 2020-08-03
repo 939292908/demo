@@ -1,7 +1,8 @@
 // 传递参数说明
 // getList() {return [{ id:xxx, label:xxx,... }, { id:xxx, label:xxx,... }]} 菜单数据 (id, label必须项) (必填)
+
 // onClick(item) {} 点击事件 可获取item (选填)
-// class 自定义类名 (选填)
+// class 类名 (选填)
 // activeId 默认选中id (选填)
 
 // btnClass 按钮 类名 (选填)
@@ -16,15 +17,15 @@ export default {
     // ============= 状态 =============
     showMenu: false,
     btnText: "click me",
-    activeId: "",
+    activeId: "", // 内部临时保存id
     openClickBody: true, // body事件 节流
 
     // ============= 方法 =============
-    // 组件内保存id
+    // 内部临时保存id
     initId (vnode) {
         vnode.attrs.activeId && vnode.attrs.activeId((p, k) => vnode.state.activeId = p[k])
     },
-    // 选中文字
+    // 初始化 选中文字
     initTriggerText (vnode) {
         this.initId(vnode) // id
         let curItem = vnode.attrs.getList().find(item => item.id == vnode.state.activeId) // 当前选中元素
@@ -56,7 +57,6 @@ export default {
         this.initEVBUS(vnode)
     },
     oncreate (vnode) {
-        // document.querySelector('body').addEventListener('click', () => vnode.state.showMenu = false, true) // 点击body关闭下拉
     },
     onupdate (vnode) {
         this.initTriggerText(vnode)
@@ -87,11 +87,11 @@ export default {
                     vnode.attrs.getList().map((item, index) => {
                         return m('a', {
                             class: `dropdown-item has-hover ${vnode.state.activeId == item.id ? 'has-active' : ''}`, key: item.label + index, onclick () {
-                                vnode.state.btnText = item.label
+                                vnode.state.btnText = item.label // 同步显示文字
                                 // vnode.state.activeId = item.id
                                 vnode.attrs.activeId((p, k) => p[k] = item.id) // 修改选中id
-                                vnode.attrs.onClick && vnode.attrs.onClick(item)
-                                vnode.state.showMenu = false
+                                vnode.attrs.onClick && vnode.attrs.onClick(item) // 传递数据
+                                vnode.state.showMenu = false // 关闭菜单
                             }
                         }, [
                             m('span', { class: `my-menu-label` }, item.label),
