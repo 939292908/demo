@@ -119,7 +119,13 @@ window.themeColors = theme
 
 
 //路由
-require('./route');
+// require('./route');
+import('./views/index').then(arg=>{
+    let root = document.body
+    m.mount(root,arg.default)
+    import('./route/index')
+})
+
 
 document.querySelector('body').setAttribute('id', window.$theme) // 设置主题
 

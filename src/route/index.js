@@ -1,21 +1,8 @@
 import m from "mithril";
 
-// m.mount(document.body,require('../views/main'))
-
-
-// import main from '../views/main'
-
-// //引入合约记录三个组件
-// import delegation from '../views/components/contractRrecord/historicalDelegation'
-// import deal from '../views/components/contractRrecord/historicalDeal'
-// import contractbill from '../views/components/contractRrecord/contractBill'
-// import details from '../views/components/contractRrecord/details'
-// import languages from '../views/components/contractRrecord/languages'
-// import switchLines from '../views/components/contractRrecord/switchLines'
-
 const defaultRoutePath = "/future"
 
-m.route(document.body, "/future",{
+m.route(document.querySelector('body .route-box'), defaultRoutePath,{
     "/future": {
         onmatch: function (vnode){
             return import('../views/main')
