@@ -8,13 +8,15 @@ let API = require('@/api/request_apis')
 
 class webApi {
 
-    constructor(arg){
+    constructor(arg) {
         this.axios = new _axios()
         this.axios.baseUrl = arg.baseUrl
 
         // 变量命名
         this.userInfo = {}
         this.loginSms = true // 登录短信验证
+        this.functions = null
+        this.loginState = false
         this.wallet = {
             '01': [],
             '02': [],
@@ -74,7 +76,142 @@ class webApi {
                 aOnSuccess(arg)
             }
         }).catch(function (e) {
-            _console.log('tlh',e);
+            _console.log('tlh', e);
+            if (aOnError) {
+                aOnError(e)
+            }
+        })
+    }
+
+    /**
+     * 发送短信验证码
+     * @param aData
+     * @param aOnSuccess
+     * @param aOnError
+     */
+    getSMSCode(aData, aOnSuccess, aOnError) {
+        let s = this
+
+        s.axios.request({
+            method: "post",
+            url: s.axios.baseUrl + API.SEND_SMS_CODE_V1,
+            data: qs.stringify(aData),
+            options: {}
+        }).then(function (result) {
+            let arg = result.data
+            if (aOnSuccess) {
+                aOnSuccess(arg)
+            }
+        }).catch(function (e) {
+            _console.log('tlh', e);
+            if (aOnError) {
+                aOnError(e)
+            }
+        })
+    }
+
+    /**
+     * 发送邮箱验证码
+     * @param aData
+     * @param aOnSuccess
+     * @param aOnError
+     */
+    sendEmail(aData, aOnSuccess, aOnError) {
+        let s = this
+
+        s.axios.request({
+            method: "post",
+            url: s.axios.baseUrl + API.SEND_EMAIL_V1,
+            data: qs.stringify(aData),
+            options: {}
+        }).then(function (result) {
+            let arg = result.data
+            if (aOnSuccess) {
+                aOnSuccess(arg)
+            }
+        }).catch(function (e) {
+            _console.log('tlh', e);
+            if (aOnError) {
+                aOnError(e)
+            }
+        })
+    }
+
+    /**
+     * 校验短信验证码
+     * @param aData
+     * @param aOnSuccess
+     * @param aOnError
+     */
+    smsVerify(aData, aOnSuccess, aOnError) {
+        let s = this
+
+        s.axios.request({
+            method: "post",
+            url: s.axios.baseUrl + API.SMS_VERIFY_V1,
+            data: qs.stringify(aData),
+            options: {}
+        }).then(function (result) {
+            let arg = result.data
+            if (aOnSuccess) {
+                aOnSuccess(arg)
+            }
+        }).catch(function (e) {
+            _console.log('tlh', e);
+            if (aOnError) {
+                aOnError(e)
+            }
+        })
+    }
+
+    /**
+     * 校验google验证码
+     * @param aData
+     * @param aOnSuccess
+     * @param aOnError
+     */
+    googleCheck(aData, aOnSuccess, aOnError) {
+        let s = this
+
+        s.axios.request({
+            method: "post",
+            url: s.axios.baseUrl + API.GOOGLE_VERIFY_V1,
+            data: qs.stringify(aData),
+            options: {}
+        }).then(function (result) {
+            let arg = result.data
+            if (aOnSuccess) {
+                aOnSuccess(arg)
+            }
+        }).catch(function (e) {
+            _console.log('tlh', e);
+            if (aOnError) {
+                aOnError(e)
+            }
+        })
+    }
+
+    /**
+     * 校验邮箱验证码
+     * @param aData
+     * @param aOnSuccess
+     * @param aOnError
+     */
+    emailCheck(aData, aOnSuccess, aOnError) {
+        let s = this
+
+        s.axios.request({
+            method: "post",
+            url: s.axios.baseUrl + API.EMAIL_VERIFY_V1,
+            data: qs.stringify(aData),
+            options: {}
+        }).then(function (result) {
+            let arg = result.data
+            if (aOnSuccess) {
+                aOnSuccess(arg)
+            }
+        }).catch(function (e) {
+            _console.log('tlh', e);
             if (aOnError) {
                 aOnError(e)
             }
@@ -130,6 +267,34 @@ class webApi {
         })
     }
 
+    /**
+     * 登录
+     * @param aData
+     * @param aOnSuccess
+     * @param aOnError
+     */
+    loginWeb(aData, aOnSuccess, aOnError) {
+        let s = this
+
+        s.axios.request({
+            method: "post",
+            url: s.axios.baseUrl + API.LOGIN_WEB_V1,
+            data: qs.stringify(aData),
+            options: {
+                withCredentials: true
+            }
+        }).then(function (result) {
+            let arg = result.data
+            if (aOnSuccess) {
+                aOnSuccess(arg)
+            }
+        }).catch(function (e) {
+            if (aOnError) {
+                aOnError(e)
+            }
+        })
+    }
+
     getUserInfo(aData, aOnSuccess, aOnError) {
         let s = this
 
@@ -138,8 +303,10 @@ class webApi {
             url: s.axios.baseUrl + API.REQ_USER_INFO,
             data: aData,
             options: {}
-        }).then(function (result){
-            if (DBG_REQUEST) {window._console.log(DBG_TAG,"ReqUserInfo Rsp",result)}
+        }).then(function (result) {
+            if (DBG_REQUEST) {
+                window._console.log(DBG_TAG, "ReqUserInfo Rsp", result)
+            }
             /*
             请求参数
             {}
@@ -191,11 +358,13 @@ class webApi {
             if (arg.result.code == 0) {
                 s.userInfo = arg.result
             }
-            if(aOnSuccess) {
+            if (aOnSuccess) {
                 aOnSuccess(arg)
             }
-        }).catch(function(e) {
-            if (DBG_REQUEST) {window._console.log(DBG_TAG,"ReqUserInfo err",e)}
+        }).catch(function (e) {
+            if (DBG_REQUEST) {
+                window._console.log(DBG_TAG, "ReqUserInfo err", e)
+            }
             if (aOnError) {
                 aOnError(e)
             }

@@ -38,6 +38,9 @@ window.utils = utils
 import errCode from '@/util/errCode'
 window.errCode = errCode
 
+import Validate from '@/libs/validate'
+window.validate = new Validate()
+
 // 请求接口配置
 import Conf from "@/api/apiConf"
 let instConf = new Conf(process.env.BUILD_ENV)

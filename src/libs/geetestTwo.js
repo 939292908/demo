@@ -37,18 +37,18 @@ geeObj.initGee = function (readyCallBack) {
                 } else if (data.status === "fail") {
                     //提示验证码失败
                     gBroadcast.emit({cmd: 'geetestMsg', data: 'fail'});
-                    $message({content: `fail，极验验证失败，请稍后重试 (${data.code})`});
+                    $message({content: `fail，极验验证失败，请稍后重试 (${data.code})`, type: 'danger'});
                     captchaObj.reset();
                 } else {
                     //提示验证码失败
                     gBroadcast.emit({cmd: 'geetestMsg', data: 'fail'});
-                    $message({content: `${data.status || 'Other fail'} 极验验证失败，请稍后重试 (${data.code})`});
+                    $message({content: `${data.status || 'Other fail'} 极验验证失败，请稍后重试 (${data.code})`, type: 'danger'});
                     captchaObj.reset();
                 }
             }, err => {
                 //提示验证码失败
                 gBroadcast.emit('geetestMsg', 'fail');
-                $message({content: '网络异常，请稍后重试'});
+                $message({content: '网络异常，请稍后重试', type: 'danger'});
                 captchaObj.reset();
             }
         );
@@ -57,7 +57,7 @@ geeObj.initGee = function (readyCallBack) {
     let onError = function () {
         geeObj.isloading = false;
         geeObj.captchaObj = null;
-        $message({content: '初始化极验失败，请稍后重试'});
+        $message({content: '初始化极验失败，请稍后重试', type: 'danger'});
     }
 
     let onClose = function () {
@@ -114,7 +114,7 @@ geeObj.verify = function (errCallBack) {
     } else {
         if (geeObj.isloading) {
             errCallBack && errCallBack();
-            return $message({content: '极验验证加载未完成，请稍后再试'});
+            return $message({content: '极验验证加载未完成，请稍后再试', type: 'danger'});
         } else {
             self.initGee(() => {
                 self.captchaObj.verify();

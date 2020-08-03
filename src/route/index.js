@@ -20,7 +20,12 @@ m.route(document.querySelector('body .route-box'), defaultRoutePath, {
     },
     '/login': {
         onmatch: function () {
-            return import('@/views/pages/login/index')
+            return import('@/views/pages/login/login')
+        }
+    },
+    '/register': {
+        onmatch: function () {
+            return import('@/views/pages/login/register')
         }
     }
 })
