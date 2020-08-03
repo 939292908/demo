@@ -54,6 +54,7 @@ let header = {
     setTradeStatus: function (status) {
         window.gMkt.CtxPlaying.pageTradeStatus = status
         gEVBUS.EmitDeDuplicate(window.gMkt.EV_PAGETRADESTATUS_UPD, 50, window.gMkt.EV_PAGETRADESTATUS_UPD, { Ev: window.gMkt.EV_PAGETRADESTATUS_UPD })
+        router.push({path: "/future"})
     },
     initUserInfo () {
         let account = window.gWebAPI.CTX.account
@@ -157,11 +158,15 @@ let header = {
     },
     setChangeModle:function(item){
         window.$inType = item.id
+        router.push({
+            path: "/information",
+            data: item
+        })
     },
     getImationList:function(){
         return this.informationList.map(function(item,i){
             return m('div',{class:"contract-information cursor-pointer" + (window.$inType == i?" has-text-primary is-background-2" :""),key:"contractinformation" + i,onclick:function(){
-                header.setTradeStatus(3)
+                // header.setTradeStatus(3)
                 header.setChangeModle(item)
             }},[
                 item.name

@@ -98,18 +98,21 @@ export default {
         obj.initEVBUS()
     },
     view: function(vnode) {
+        let item = m.route.param()
+        console.log(item,11111111111)
         return m("div",{class: " inf_body has-text-1"}, [
-            m('div',{class:" inf_body_information"},[
-                m('div',{class:"inf_body_title"},[
-                    '合约信息'
-                ]),
-                m('div',{class:"tabs"},[
-                    m('ul',{class:"is-flex"},[
-                        obj.getTableList()
-                    ]),
-                ]),
-                obj.getSwitchConent()
-            ]),
+            '合约信息'
+            // m('div',{class:" inf_body_information"},[
+            //     m('div',{class:"inf_body_title"},[
+            //         '合约信息'
+            //     ]),
+            //     m('div',{class:"tabs"},[
+            //         m('ul',{class:"is-flex"},[
+            //             obj.getTableList()
+            //         ]),
+            //     ]),
+            //     obj.getSwitchConent()
+            // ]),
         ])
     },
     onremove: function (vnode) {
