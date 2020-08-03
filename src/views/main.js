@@ -391,10 +391,11 @@ let main = {
 module.exports = {
     oninit: function (vnode) {
         console.log('oninit main')
+        
     },
     oncreate: function (vnode) {
         main.initEVBUS()
-
+        utils.setBodyHeight()
         let body = document.querySelector('body')
         body.addEventListener('click', function(){
             gEVBUS.emit(gEVBUS.EV_ClICKBODY, { ev: gEVBUS.EV_ClICKBODY})

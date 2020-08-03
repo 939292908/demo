@@ -56,6 +56,11 @@ m.route(document.body, "/future",{
             return import('../views/components/contractRrecord/switchLines')//m(switchLines,vnode.attrs)
         },
     },
+    "/information":{
+        onmatch:function (vnode){
+            return import('../views/components/layout_inf')
+        }
+    },
 })
 class router {
     path = defaultRoutePath

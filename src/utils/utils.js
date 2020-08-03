@@ -1035,9 +1035,12 @@ utils.getTotalDecimal = function(total,numb){
 //按一定的数量分割数据
 //分割数据，实现本地数据滚动加载
 utils.splitList=function(list,num){
+    /**
+     * list : 数据
+     * num : 每个数据的条数
+    */
     let newList = []
     let listLength = list.length
-    // let num = 20
     let ind =  0
     for(let i = 0;i<=listLength;i++){
         if(i%num == 0 && i != 0){
@@ -1072,6 +1075,12 @@ utils.getTimeDifference = function(end, start) {
     }else{
         return k;
     }
+}
+
+//设置body高度
+utils.setBodyHeight = function(){
+    let body = document.querySelector('section')
+    body.style.minHeight = (window.innerHeight) +"px";
 }
 
 export default utils
