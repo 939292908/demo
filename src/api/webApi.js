@@ -576,7 +576,7 @@ class webApi {
 
         s.axios.request({
             method: "post",
-            url: s.axios.baseUrl + API.SUB_ASSETS_V1,
+            url: s.axios.baseUrl + API.STAT_REPORT_UDC,
             data: qs.stringify(aData),
             options: {
                 withCredentials: true
