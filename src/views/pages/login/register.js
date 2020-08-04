@@ -1,5 +1,6 @@
 let m = require('mithril')
 let Register = require('@/models/login/register')
+let InputWithSelect = require('@/components/inputWithSelect')
 
 module.exports = {
     oninit() {
@@ -34,10 +35,17 @@ module.exports = {
                                                 Register.type = 'mail';
                                             }
                                         }, ['邮箱'])
-                                    ])
+                                    ]),
                                 ]),
                             ]),
-                            m('input.input[type=text].mb-6', {}, []),
+                            InputWithSelect({
+                                selectList: ['+86', '+0', '+1'],
+                                selectedOptions: {},
+                                componentOptions: {class: 'mb-5'},
+                                inputOptions: {
+                                    type: 'text'
+                                }
+                            }),
                             m('div.columns.body-3.has-text-level-1.mb-2', {}, [
                                 m('div.column.py-0', {}, ['密码']),
                                 m('div.column.has-text-primary.has-text-right.py-0', {}, ['忘记密码？']),
@@ -52,10 +60,10 @@ module.exports = {
                                     }
                                 }, ['登录'])
                             ]),
-                        ])
+                        ]),
                     ]),
-                ])
-            ])
+                ]),
+            ]),
         ]);
     }
 }
