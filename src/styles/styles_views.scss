@@ -2080,10 +2080,14 @@ input[type="checkbox"] {
         @extend .is-background-2;
     }
 }
-
+.route-box,.pub-layout,.pub-layout-header-tick{
+    height: 100%;
+    width: 100%;
+    overflow: auto;
+}
 //layout_inf
 .inf_body{
-    min-height: 100%;
+    height: 100%;
     width: 100%;
     @extend .is-background-2;
     

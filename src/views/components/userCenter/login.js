@@ -124,6 +124,7 @@ let obj = {
             }
             
             console.log('ReqUserInfo success ==>',param)
+            m.redraw()
         }, function(error){
             that.loginLoading = false
                 window.$message({ title: gDI18n.$t('10037'/*"提示"*/), content: gDI18n.$t('10205'/*'操作超时！'*/), type: 'danger'})
