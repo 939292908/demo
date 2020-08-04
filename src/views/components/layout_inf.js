@@ -98,7 +98,7 @@ module.exports = {
         return m('div',{class:"pub-layout"},[
             m('div',{class:"pub-layout-header-tick"},[
                 m("div",{class: " inf_body has-text-1 "}, [
-                    m('div',{class:" inf_body_information"},[
+                    m('div',{class:" inf_body_information container"},[
                         m('div',{class:"inf_body_title"},[
                             '合约信息'
                         ]),

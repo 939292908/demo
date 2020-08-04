@@ -2092,8 +2092,8 @@ input[type="checkbox"] {
     @extend .is-background-2;
     
     .inf_body_information{
-        width: 80%;
-        margin: auto;
+        // width: 80%;
+        // margin: auto;
 
         .inf_body_title{
             @extend %font-12;
