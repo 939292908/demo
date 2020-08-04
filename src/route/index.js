@@ -1,21 +1,8 @@
 import m from "mithril";
 
-// m.mount(document.body,require('../views/main'))
-
-
-// import main from '../views/main'
-
-// //引入合约记录三个组件
-// import delegation from '../views/components/contractRrecord/historicalDelegation'
-// import deal from '../views/components/contractRrecord/historicalDeal'
-// import contractbill from '../views/components/contractRrecord/contractBill'
-// import details from '../views/components/contractRrecord/details'
-// import languages from '../views/components/contractRrecord/languages'
-// import switchLines from '../views/components/contractRrecord/switchLines'
-
 const defaultRoutePath = "/future"
 
-m.route(document.body, "/future",{
+m.route(document.querySelector('body .route-box'), defaultRoutePath,{
     "/future": {
         onmatch: function (vnode){
             return import('../views/main')
@@ -89,17 +76,17 @@ class router {
     }
      * 详细： http://www.mithriljs.net/route.html#mrouteset
      */
-    push(param, replace = true){
+    push(param, replace = false){
         console.log(param)
         if(typeof param == 'string'){
-            if(replace && this.path && this.path != param){
+            if(!replace && this.path && this.path != param){
                 this.historyRouteList.unshift({path: this.path, data: this.params})
             }
             console.log('router.push', param)
             this.path = param
             this.route.set(param)
         }else{
-            if(replace && this.path && this.path != param.path){
+            if(!replace && this.path && this.path != param.path){
                 this.historyRouteList.unshift({path: this.path, data: this.params})
             }
             console.log('router.push', param)

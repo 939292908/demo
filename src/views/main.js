@@ -1,18 +1,10 @@
 var m = require("mithril")
 
-let footer = require('./components/footer').default
-let header = require('./components/header').default
 let layout = require('./components/layout').default
 let layout_m = require('./components/layout_m').default
 let layout_inf = require('./components/layout_inf').default
-let message = require('./components/message').default
-
 
 let futureCalc = require('../futureCalc/calcFuture')
-
-
-
-
 
 let main = {
     TICKCLACTNTERVAL: 1000,
@@ -116,20 +108,6 @@ let main = {
             this.EV_WLT_UPD_unbinder()
         }
     },
-    getHeader: function () {
-        let type = window.$config.views.header.type
-        switch (type) {
-            case 0:
-                return (!window.isMobile?m(header):'')
-            case 1:
-                return this.customHeader()
-            default:
-                return null
-        }
-    },
-    customHeader: function () {
-
-    },
     getLayout: function () {
         let type = window.$config.views.layout.type
         let mobile = window.$config.mobile
@@ -139,11 +117,11 @@ let main = {
                 if(window.isMobile && mobile){
                     return m(layout_m)
                 }else{
-                    if(pageTradeStatus == 3){
-                        return m(layout_inf)
-                    }else {
+                    // if(pageTradeStatus == 3){
+                    //     return m(layout_inf)
+                    // }else {
                         return m(layout)
-                    }
+                    // }
                 }
                 
             case 1:
@@ -153,20 +131,6 @@ let main = {
         }
     },
     customLayout: function () {
-
-    },
-    getFooter: function () {
-        let type = window.$config.views.footer.type
-        switch (type) {
-            case 0:
-                return m(footer)
-            case 1:
-                return this.customFooter()
-            default:
-                return null
-        }
-    },
-    customFooter: function () {
 
     },
 
@@ -395,24 +359,13 @@ module.exports = {
     },
     oncreate: function (vnode) {
         main.initEVBUS()
-        // utils.setBodyHeight()
-        let body = document.querySelector('body')
-        body.addEventListener('click', function(){
-            gEVBUS.emit(gEVBUS.EV_ClICKBODY, { ev: gEVBUS.EV_ClICKBODY})
-        }, false)
         main.delNullPosPlan()
 
     },
     view: function (vnode) {
 
-        return m("section", { class: "" }, [
-            main.getHeader(),
-
+        return m("div", { class: "" }, [
             main.getLayout(),
-
-            main.getFooter(),
-
-            m(message)
         ])
     },
     onremove: function () {

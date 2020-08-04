@@ -295,7 +295,7 @@ let obj = {
     //价值
     getTotalValue:function(){
         let Sym = window.gMkt.CtxPlaying.Sym
-        let ass = window.gMkt.AssetD[Sym]
+        let ass = window.gMkt.AssetD[Sym] || {}
         //使用getFullNum转换科学计数法为小数
         let numb = utils.getFullNum(ass.PrzMinInc).toString()
         let total = ((this.form.Num || 0) * (this.form.Prz || 0)).toString()

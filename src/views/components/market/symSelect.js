@@ -8,7 +8,7 @@ let symSelect = {
     //已订阅的行情列表
     oldSubArr: [],
     //合约名称列表
-    futureSymList: {},
+    futureSymList: [],
     futureSymObj: {},
     // 合约对应的ToC列表
     futureCoin: [],
@@ -105,6 +105,8 @@ let symSelect = {
         this.setFutureSymList(futureSymList)
         this.futureSymList = futureSymList
         this.spotSymList = spotSymList
+
+
         if (window.gMkt.CtxPlaying.pageTradeStatus == 1) {
             if (futureSymList.length > 0 && !futureSymList.includes(window.gMkt.CtxPlaying.Sym)) {
                 let futureActiveSymbol = utils.getItem('futureActiveSymbol')
@@ -113,6 +115,8 @@ let symSelect = {
                     Sym = futureSymList[0]
                 }
                 this.setSym(Sym)
+            }else{
+                this.setSym(window.gMkt.CtxPlaying.Sym, false)
             }
         } else if (window.gMkt.CtxPlaying.pageTradeStatus == 2) {
             if (spotSymList.length > 0 && !spotSymList.includes(window.gMkt.CtxPlaying.Sym)) {
@@ -122,6 +126,8 @@ let symSelect = {
                     Sym = futureSymList[0]
                 }
                 this.setSym(Sym)
+            }else{
+                this.setSym(window.gMkt.CtxPlaying.Sym, false)
             }
         }
         m.redraw();
@@ -174,7 +180,6 @@ let symSelect = {
             let idx2 = window.$config.symSort[b] || 999;
             return idx1 - idx2
         })
-        console.log(CoinList, PTSymList, NTSymList, symList, futureList)
         this.futureCoin = CoinList
         this.futureSymObj = futureList
     },
@@ -255,7 +260,7 @@ let symSelect = {
     //     }
     // },
     //设置合约
-    setSym: function (Sym) {
+    setSym: function (Sym, toUrl = true) {
         window.gMkt.CtxPlaying.Sym = Sym
         this.symListOpen = false
         this.unSubSym()
@@ -269,6 +274,18 @@ let symSelect = {
                 break;
         }
         gEVBUS.emit(gMkt.EV_CHANGESYM_UPD, { Ev: gMkt.EV_CHANGESYM_UPD, Sym: Sym })
+
+
+        if(toUrl){
+            window.router.push({
+                path: '/future',
+                data: {
+                    Sym: Sym,
+                    Page: window.gMkt.CtxPlaying.pageTradeStatus
+                }
+            }, true)
+        }
+        
     },
     getSymSelect: function () {
         let type = window.$config.views.headerTick.left.symSelect.type
@@ -361,7 +378,6 @@ let symSelect = {
         }
     },
     updateTick: function (ticks) {
-        // console.log(ticks)
         for (let key in ticks) {
             let item = ticks[key];
             let gmexCI = utils.getGmexCi(window.gMkt.AssetD, item.Sym)
@@ -419,11 +435,18 @@ let symSelect = {
 
 export default {
     oninit: function (vnode) {
-
+        
     },
     oncreate: function (vnode) {
+        // 读取地址栏参数并赋值
+        let Sym = utils.queryParams('Sym')
+        if(Sym){
+            symSelect.setSym(Sym, false)
+        }
+
         symSelect.initEVBUS()
         symSelect.initSymList()
+        
     },
     view: function (vnode) {
 

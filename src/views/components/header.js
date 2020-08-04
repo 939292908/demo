@@ -31,6 +31,7 @@ let header = {
         this.EV_WEB_LOGIN_unbinder = window.gEVBUS.on(gWebAPI.EV_WEB_LOGIN, arg => {
             that.islogin = true
             that.initUserInfo()
+            m.redraw()
         })
 
         if (this.EV_WEB_LOGOUT_unbinder) {
@@ -39,6 +40,7 @@ let header = {
         this.EV_WEB_LOGOUT_unbinder = window.gEVBUS.on(gWebAPI.EV_WEB_LOGOUT, arg => {
             that.islogin = false
             that.userName = ''
+            m.redraw()
         })
 
 
@@ -49,6 +51,12 @@ let header = {
         }
         if (this.EV_WEB_LOGOUT_unbinder) {
             this.EV_WEB_LOGOUT_unbinder()
+        }
+    },
+    initTradeStatus: function(){
+        let Page = utils.queryParams('Page')
+        if(Page){
+            this.setTradeStatus(Number(Page))
         }
     },
     setTradeStatus: function (status) {
@@ -147,6 +155,8 @@ let header = {
             case 1:
                 return m('a', {class: "navbar-item" + (window.gMkt.CtxPlaying.pageTradeStatus == 2 ? ' has-text-primary' : ''), onclick: function () {
                             header.setTradeStatus(2)
+                            router.push({path: "/future"})
+                            header.clearInType()
                         }
                     }, [
                         '币币交易',
@@ -157,16 +167,24 @@ let header = {
     },
     setChangeModle:function(item){
         window.$inType = item.id
+        utils.setItem("InfromationType",item.id)
+        router.push({path: "/information"})
     },
     getImationList:function(){
+        let infromationType = utils.getItem("InfromationType")?utils.getItem("InfromationType") :window.$inType
         return this.informationList.map(function(item,i){
-            return m('div',{class:"contract-information cursor-pointer" + (window.$inType == i?" has-text-primary is-background-2" :""),key:"contractinformation" + i,onclick:function(){
+            return m('div',{class:"contract-information cursor-pointer" + (infromationType == i?" has-text-primary is-background-2" :""),key:"contractinformation" + i,onclick:function(){
                 header.setTradeStatus(3)
                 header.setChangeModle(item)
             }},[
                 item.name
             ])
         })
+    },
+    //清除保存的状态
+    clearInType:function(){
+        utils.setItem("InfromationType",null)
+        window.$inType = null
     },
     //合约信息
     getContractInformation:function(){
@@ -201,6 +219,8 @@ let header = {
                 m("div", { class: "navbar-start" }, [
                     m('a', {class: "navbar-item" + (window.gMkt.CtxPlaying.pageTradeStatus == 1 ? ' has-text-primary' : ''), onclick: function () {
                             header.setTradeStatus(1)
+                            router.push({path: "/future"})
+                            header.clearInType()
                         }
                     }, [
                         gDI18n.$t('10001'/*合约交易*/),
@@ -349,6 +369,7 @@ export default {
 
     },
     oncreate: function (vnode) {
+        header.initTradeStatus()
         header.initEVBUS()
         header.theme = window.$theme?window.$theme : header.theme
     },

@@ -1,5 +1,5 @@
 const utils = {}
-
+var m = require("mithril")
 
 Date.prototype.format = function (format) {
   var o = {
@@ -1081,6 +1081,35 @@ utils.getTimeDifference = function(end, start) {
 utils.setBodyHeight = function(){
     let body = document.querySelector('section')
     body.style.minHeight = (window.innerHeight) +"px";
+}
+
+/**
+ * 获取浏览器地址栏参数
+ * @param key
+ * @returns {string}
+ */
+utils.queryParams = function (key) {
+    let pos = window.location.href.indexOf('?');
+    let queryString = window.location.href.substr(pos + 1);
+    let reg = new RegExp('(^|&)' + key + '=([^&]*)(&|$)', 'i');
+    let r = queryString.match(reg);
+    if (r != null) {
+        return unescape(r[2]);
+    }
+    return null;
+};
+//离开页面  
+utils.leavePage = function(){
+    let path = m.route.get()
+    console.log("去往路由地址====>>",path)
+    switch (path){
+        case "/information":
+            window.gMkt.CtxPlaying.pageTradeStatus = 3//防止手动刷新失去选中状态
+            window.$inType = utils.getItem("InfromationType")
+            break;
+        case "/future":
+            window.gMkt.CtxPlaying.pageTradeStatus = 1
+    }
 }
 
 export default utils

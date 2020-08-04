@@ -1,8 +1,9 @@
 var m = require("mithril")
+const { default: utils } = require("../../utils/utils")
 
-import explanation from './futureInfromation/explanation'
-import fundRateHistory from './futureInfromation/fundRateHistory'
-import futureIndex from './futureInfromation/futureIndex'
+let explanation = require('./futureInfromation/explanation').default
+let fundRateHistory = require('./futureInfromation/fundRateHistory').default
+let futureIndex = require('./futureInfromation/futureIndex').default
 
 let obj = {
 
@@ -81,39 +82,38 @@ let obj = {
             case 2:
                 return m(fundRateHistory);
         }
-    },
-
-
-
-  
+    },  
 }
 
 
-export default {
+module.exports = {
     oninit: function(vnode){
-        
+        utils.leavePage()
     },
     oncreate: function(vnode){
         obj.initLanguage()
         obj.initEVBUS()
     },
     view: function(vnode) {
-        return m("div",{class: " inf_body has-text-1"}, [
-            m('div',{class:" inf_body_information"},[
-                m('div',{class:"inf_body_title"},[
-                    '合约信息'
-                ]),
-                m('div',{class:"tabs"},[
-                    m('ul',{class:"is-flex"},[
-                        obj.getTableList()
+        return m('div',{class:"pub-layout"},[
+            m('div',{class:"pub-layout-header-tick"},[
+                m("div",{class: " inf_body has-text-1 "}, [
+                    m('div',{class:" inf_body_information container"},[
+                        m('div',{class:"inf_body_title"},[
+                            '合约信息'
+                        ]),
+                        m('div',{class:"tabs"},[
+                            m('ul',{class:"is-flex"},[
+                                obj.getTableList()
+                            ]),
+                        ]),
+                        obj.getSwitchConent()
                     ]),
-                ]),
-                obj.getSwitchConent()
-            ]),
-        ])
+                ])
+            ])
+        ])  
     },
     onremove: function (vnode) {
         obj.rmEVBUS()
-        window.$inType = null
     },
 }
