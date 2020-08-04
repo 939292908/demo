@@ -2083,7 +2083,6 @@ input[type="checkbox"] {
 .route-box,.pub-layout,.pub-layout-header-tick{
     height: 100%;
     width: 100%;
-    overflow: auto;
 }
 //layout_inf
 .inf_body{
@@ -2114,6 +2113,30 @@ input[type="checkbox"] {
                 @extend %px-0;
             }
         }
+    }
+
+    .inf_body_span{
+        @extend %side-mr;
+    }
+
+    .inf_body_TD{
+        @extend %pt-2;
+    }
+
+    //合约信息字体大小
+    .inf_body_font{
+        @extend %font-3;
+    }
+
+    .inf_body_title_font{
+        @extend %font-5;
+    }
+    .inf_body_conent{
+        @extend %font-4;
+    }
+
+    .inf_dropdown{
+        @extend %side-py;
     }
 }
 
