@@ -117,11 +117,11 @@ let main = {
                 if(window.isMobile && mobile){
                     return m(layout_m)
                 }else{
-                    if(pageTradeStatus == 3){
-                        return m(layout_inf)
-                    }else {
+                    // if(pageTradeStatus == 3){
+                    //     return m(layout_inf)
+                    // }else {
                         return m(layout)
-                    }
+                    // }
                 }
                 
             case 1:
