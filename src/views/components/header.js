@@ -51,6 +51,12 @@ let header = {
             this.EV_WEB_LOGOUT_unbinder()
         }
     },
+    initTradeStatus: function(){
+        let Page = utils.queryParams('Page')
+        if(Page){
+            this.setTradeStatus(Page)
+        }
+    },
     setTradeStatus: function (status) {
         window.gMkt.CtxPlaying.pageTradeStatus = status
         gEVBUS.EmitDeDuplicate(window.gMkt.EV_PAGETRADESTATUS_UPD, 50, window.gMkt.EV_PAGETRADESTATUS_UPD, { Ev: window.gMkt.EV_PAGETRADESTATUS_UPD })
@@ -349,6 +355,7 @@ export default {
 
     },
     oncreate: function (vnode) {
+        header.initTradeStatus()
         header.initEVBUS()
         header.theme = window.$theme?window.$theme : header.theme
     },
