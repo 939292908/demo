@@ -56,7 +56,7 @@ let header = {
     initTradeStatus: function(){
         let Page = utils.queryParams('Page')
         if(Page){
-            this.setTradeStatus(Page)
+            this.setTradeStatus(Number(Page))
         }
     },
     setTradeStatus: function (status) {
