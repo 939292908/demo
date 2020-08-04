@@ -1,11 +1,19 @@
+let m = require('mithril')
 let geetest = require('@/libs/geetestTwo')
 let cryptoChar = require('@/util/cryptoChar')
+let md5 = require('md5')
 
 module.exports = {
     type: 'mail',
-    refereeId: "",
-    loginName: "",
-    password: "",
+    refereeId: '',
+    loginName: '416530718@qq.com',
+    password: 'a123456',
+    code: '',
+    areaCode: '86',
+    refereeType: '',
+    prom: '',
+    os: '',
+    isValidate: false,
     exchInfo: {},//渠道信息
     mustInvited() {
         return Boolean(parseInt(this.exchInfo.mustInvited));
@@ -53,9 +61,9 @@ module.exports = {
         let that = this
         if (this.valid) {
             this.loading = true;
-            geetest.verify(function () {
+            geetest.verify(() => {
                 that.loading = false
-            })
+            });
         }
     },
     // 手机注册处理
@@ -63,41 +71,95 @@ module.exports = {
         let that = this
         if (this.valid1) {
             this.loading = true;
-            geetest.verify(function () {
+            geetest.verify(() => {
                 that.loading = false
-            })
+            });
         }
     },
     // 邮箱注册
-    registerEmailFn(self) {
-        // this.validate.activeEmail({
-        //     email: this.loginName,
-        //     host: this.config.href,
-        //     fn: 'aa',
-        //     lang: this.$i18n.locale,
-        //     mustCheckFn: 'register'
-        // }, this.register);
+    registerEmailFn() {
+        validate.activeEmail({
+            email: this.loginName,
+            host: this.config.href,
+            fn: 'aa',
+            lang: gI18n.locale,
+            mustCheckFn: 'register'
+        }, this.register);
     },
     // 手机注册
-    registerPhoneFn(self) {
-        // this.validate.activeSms({
-        //     phoneNum: this.areaCode + this.loginName,
-        //     mustCheckFn: 'register'
-        // }, this.register);
+    registerPhoneFn() {
+        validate.activeSms({
+            phoneNum: this.areaCode + this.loginName,
+            mustCheckFn: 'register'
+        }, this.register);
     },
     // 查询是否注册顾过
     queryUserInfo() {
-
+        gWebApi.queryUserInfo({
+            loginType: this.type,
+            loginName: this.loginName,
+            nationNo: '00' + this.areaCode,
+            exChannel: exchId
+        }, res => {
+            this.loading = false;
+            console.log(res);
+            this.loading = false;
+            console.log(res);
+            if (res.result.code == 0) {
+                if (res.exists == 1) {
+                    $message({content: gI18n.$t('10228'), type: 'danger'}); // 用户已存在
+                } else {
+                    this.isValidate = true;
+                    m.redraw();
+                    if (this.loginType === "phone") {
+                        this.registerPhoneFn(this)
+                    } else if (this.loginType === "email") {
+                        this.registerEmailFn(this);
+                    }
+                }
+            } else {
+                $message({content: errCode.getWebApiErrorCode(res.result.code), type: 'danger'});
+            }
+        }, err => {
+            $message({content: '网络异常，请稍后重试' + err, type: 'danger'});
+            this.loading = false;
+        });
     },
     register() {
+        gWebApi.usersRegister({
+            loginType: this.type,
+            loginName: this.loginName,
+            pass: md5(this.password),
+            refereeId: this.refereeId,
+            refereeType: this.refereeType,
+            prom: this.prom,
+            os: this.os,
+            nationNo: '00' + this.areaCode,
+            exChannel: exchId,
+        }, res => {
+            console.log("注册信息", res.data);
+            if (res.data.result.code === 0) {
+                // 注册成功
+                // 记录邮箱和密码
+                validate.close();
+                $message({content: gI18n.$t('10630')/*'注册成功'*/, type: 'danger'});
 
+            } else {
+                // 输入信息有误
+                validate.close();
+                $message({content: errCode.getWebApiErrorCode(res.result.code), type: 'danger'});
+            }
+        }, err => {
+            this.validate.close();
+            $message({content: '网络异常，请稍后重试' + err, type: 'danger'});
+        });
     },
     initGeetest() {
         let self = this;
         geetest.init(() => {
         });
         gBroadcast.onMsg({
-            key: 'login',
+            key: 'register',
             cmd: 'geetestMsg',
             cb: res => {
                 if (res == 'success') {
@@ -111,5 +173,11 @@ module.exports = {
     oninit() {
         this.initGeetest();
     },
-
+    onremove() {
+        gBroadcast.offMsg({
+            key: 'register',
+            cmd: 'geetestMsg',
+            isall: true
+        })
+    },
 }
