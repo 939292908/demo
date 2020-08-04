@@ -76,17 +76,17 @@ class router {
     }
      * 详细： http://www.mithriljs.net/route.html#mrouteset
      */
-    push(param, replace = true){
+    push(param, replace = false){
         console.log(param)
         if(typeof param == 'string'){
-            if(replace && this.path && this.path != param){
+            if(!replace && this.path && this.path != param){
                 this.historyRouteList.unshift({path: this.path, data: this.params})
             }
             console.log('router.push', param)
             this.path = param
             this.route.set(param)
         }else{
-            if(replace && this.path && this.path != param.path){
+            if(!replace && this.path && this.path != param.path){
                 this.historyRouteList.unshift({path: this.path, data: this.params})
             }
             console.log('router.push', param)

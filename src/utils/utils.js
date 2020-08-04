@@ -1083,6 +1083,21 @@ utils.setBodyHeight = function(){
     body.style.minHeight = (window.innerHeight) +"px";
 }
 
+/**
+ * 获取浏览器地址栏参数
+ * @param key
+ * @returns {string}
+ */
+utils.queryParams = function (key) {
+    let pos = window.location.href.indexOf('?');
+    let queryString = window.location.href.substr(pos + 1);
+    let reg = new RegExp('(^|&)' + key + '=([^&]*)(&|$)', 'i');
+    let r = queryString.match(reg);
+    if (r != null) {
+        return unescape(r[2]);
+    }
+    return null;
+};
 //离开页面  
 utils.leavePage = function(){
     let path = m.route.get()
