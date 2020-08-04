@@ -3,15 +3,72 @@ import Dropdown from '../common/Dropdown'
 
 let obj = {
   spotInfo:{},
-  dropdownActive : 0,
-  tabelList:[
-    {
-      id: 0,
-      label: 'BTC/USDT 永续',
-      name: ''
-    },
-  ],
+  //合约名称列表
+  futureSymList: [],
+  futureSymObj: {},
 
+  dropdownActive : 0,
+  tabelList:[],
+
+  //初始化全局广播
+  initEVBUS:function(){
+    let that = this
+
+    //assetD合约详情全局广播
+    if (this.EV_ASSETD_UPD_unbinder) {
+      this.EV_ASSETD_UPD_unbinder()
+    }
+    this.EV_ASSETD_UPD_unbinder = window.gEVBUS.on(gMkt.EV_ASSETD_UPD, arg => {
+        that.initSymList()
+    })
+
+    //页面交易类型全局广播
+    if (this.EV_PAGETRADESTATUS_UPD_unbinder) {
+        this.EV_PAGETRADESTATUS_UPD_unbinder()
+    }
+    this.EV_PAGETRADESTATUS_UPD_unbinder = window.gEVBUS.on(gMkt.EV_PAGETRADESTATUS_UPD, arg => {
+        that.initSymList()
+    })
+
+  },
+
+  rmEVBUS:function(){
+    //assetD合约详情全局广播
+    if (this.EV_ASSETD_UPD_unbinder) {
+      this.EV_ASSETD_UPD_unbinder()
+    }
+    //页面交易类型全局广播
+    if (this.EV_PAGETRADESTATUS_UPD_unbinder) {
+      this.EV_PAGETRADESTATUS_UPD_unbinder()
+    }
+  },
+  //初始化合约以及现货列表
+  initSymList: function () {
+    let displaySym = window.gMkt.displaySym
+    let assetD = window.gMkt.AssetD
+    let futureSymList = []
+    displaySym.map(function (Sym) {
+        let ass = assetD[Sym]
+        if (ass.TrdCls == 3) {
+            futureSymList.push(Sym)
+        } else if (ass.TrdCls == 2) {
+            futureSymList.push(Sym)
+        }
+    })
+    this.futureSymList = futureSymList
+    futureSymList.map((key,i)=>{
+      let obj = {
+        id:i,
+        label:key
+      }
+      this.tabelList.push(obj)
+    })
+
+    console.log(this.tabelList,2222222222)
+
+    console.log(this.futureSymList,1111111111)
+    m.redraw();
+},
   //初始化合约数据
   updateSpotInfo: function(){
     let Sym = window.gMkt.CtxPlaying.Sym
@@ -89,7 +146,8 @@ export default {
       
     },
     oncreate: function(vnode){
-        
+        obj.initEVBUS()
+        obj.initSymList()
     },
     view: function(vnode) {
       let dropdownActive = obj.dropdownActive
@@ -104,13 +162,13 @@ export default {
           //文案说明
           m('div',{class:"inf_dropdown inf_body_conent"},[
             m('div',{class:"inf_body_title_font"},[
-              obj.tabelList[dropdownActive].label + '合约明细'
+              // obj.tabelList[dropdownActive].label + '合约明细'
             ]),
             m('div',{class:"inf_body_TD"},[
-              obj.tabelList[dropdownActive].label + '合约没有到期日。每张合约大小0.01个BTC。每8小时交换资金费用。下一个交换将发生在UTC+8 2020/7/15 16:00。'
+              // obj.tabelList[dropdownActive].label + '合约没有到期日。每张合约大小0.01个BTC。每8小时交换资金费用。下一个交换将发生在UTC+8 2020/7/15 16:00。'
             ]),
             m('div',{class:" inf_body_TD"},[
-              'Gmex交易平台利用利率与每分钟溢价指数的加权平均值计算出资金费率。',
+              window.$config.exchName + '交易平台利用利率与每分钟溢价指数的加权平均值计算出资金费率。',
               m('span',{class:""},[
                 m('a',{class:""},[
                   '阅读更多...'
@@ -119,5 +177,8 @@ export default {
             ]),
           ]),
         ])
-    }
+    },
+    onremove: function (vnode) {
+      obj.rmEVBUS()
+  },
 }
