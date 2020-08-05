@@ -1,4 +1,4 @@
-//账户交易>法币账户
+// 账户交易>法币账户
 let m = require('mithril')
 
 require('@/styles/Myassets/tradingAccount_legal.css')
@@ -25,7 +25,7 @@ let legal = {
         });
     },
     legalIndex:function(){
-        return m('div',[
+        return m('div', [
             m('div',{class:'tradingAccount_legal-nav'},[
                 m('div',{},[m('input[type=checkbox]'),m('span',{},'隐藏0资产')]),
                 m('div',{},[m('img',{src:'zijinjilu'}),m('span',{},'资金记录')]),

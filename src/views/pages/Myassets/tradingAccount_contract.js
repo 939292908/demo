@@ -1,4 +1,4 @@
-//账户交易>合约账户
+// 账户交易>合约账户
 let m = require('mithril')
 
 require('@/styles/Myassets/tradingAccount_contract.css')
