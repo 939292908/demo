@@ -258,11 +258,26 @@ let obj = {
         })
     },
     //设置合约
-    setSym(Sym) {
+    setSym(Sym, toUrl = true) {
         window.gMkt.CtxPlaying.Sym = Sym // window 保存选中
         utils.setItem('futureActiveSymbol', Sym)
         gEVBUS.emit(gMkt.EV_CHANGESYM_UPD, { Ev: gMkt.EV_CHANGESYM_UPD, Sym: Sym })
-    },
+    
+        if(toUrl){
+          let p = {
+              Sym: Sym,
+              Page: window.gMkt.CtxPlaying.pageTradeStatus
+          }
+          p = JSON.stringify(p)
+          p = utils.compileStr(p)
+          window.router.push({
+              path: '/future',
+              data: {
+                  p: p
+              }
+          }, true)
+        }
+      },
     getOrdList: function () {
         return this.posList.map(function (item, i) {
             return m("tr", { key: "orderTableListItem" + i, class: "" }, [
