@@ -277,11 +277,16 @@ let symSelect = {
 
 
         if(toUrl){
+            let p = {
+                Sym: Sym,
+                Page: window.gMkt.CtxPlaying.pageTradeStatus
+            }
+            p = JSON.stringify(p)
+            p = utils.compileStr(p)
             window.router.push({
                 path: '/future',
                 data: {
-                    Sym: Sym,
-                    Page: window.gMkt.CtxPlaying.pageTradeStatus
+                    p: p
                 }
             }, true)
         }
@@ -438,10 +443,13 @@ export default {
         
     },
     oncreate: function (vnode) {
-        // 读取地址栏参数并赋值
-        let Sym = utils.queryParams('Sym')
-        if(Sym){
-            symSelect.setSym(Sym, false)
+        // 读取地址栏参数并赋值,地址参数为加密参数
+        
+        let p = utils.queryParams('p')
+        if(p){
+            p = JSON.parse(utils.uncompileStr(p))
+            let Sym = p.Sym
+            Sym?symSelect.setSym(Sym, false):''
         }
 
         symSelect.initEVBUS()
