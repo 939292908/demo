@@ -8,8 +8,9 @@ import('@/styles/components/inputWithComponents.scss')
  * @param options 输入框属性
  * @param leftComponents 左组件
  * @param rightComponents 右组件
+ * @param addClass 添加的样式class
  */
-module.exports = ({options, leftComponents, rightComponents}) => {
+module.exports = ({options, leftComponents, rightComponents, addClass = ''}) => {
     let inside = [];
     if (leftComponents) {
         inside.push(leftComponents);
@@ -21,7 +22,9 @@ module.exports = ({options, leftComponents, rightComponents}) => {
         inside.push(rightComponents);
     }
 
-    return m('div.input-with-components', {}, [
+    return m('div.input-with-components', {
+        class: addClass,
+    }, [
         m('div.input.px-0', {}, inside)
     ]);
 }

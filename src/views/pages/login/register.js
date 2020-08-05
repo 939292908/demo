@@ -73,6 +73,7 @@ module.exports = {
                                 m('div.py-0.mb-2', {}, [Register.type === 'phone' ? '手机号' : '邮箱']),
                                 Register.type === 'phone' ?
                                     InputWithComponent({
+                                        addClass: 'mb-5',
                                         leftComponents: m('span.select.px-1', {}, [
                                             m('select.without-border.register-national-select', {}, [
                                                 m('option', {}, ['+86']),
