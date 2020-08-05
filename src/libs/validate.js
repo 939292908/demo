@@ -22,38 +22,32 @@ class Validate {
      * @param callback
      */
     activeSms(params, callback) {
-        if (gWebApi.functions.sms) {
-            this.validateType = 'sms';
-            let config = {
-                display: true,
-                inputValue: '',
-                type: this.sms,
-                loading: false,
-            };
-            if (params) {
-                params.lang = gI18n.lang;
-            } else {
-                params = {
-                    lang: gI18n.lang,
-                };
-            }
-            this.smsConfig = params;
-            // gBroadcast.emit({
-            //     cmd: 'setValidateSheet',
-            //     data: config,
-            // });
-            gBroadcast.offMsg({
-                key: 'ValidateModule',
-                cmd: 'setValidateSheet',
-                isall: true,
-            });
-            if (callback) {
-                this.callbackHandler = callback;
-            }
+        this.validateType = 'sms';
+        // let config = {
+        //     display: true,
+        //     inputValue: '',
+        //     type: this.sms,
+        //     loading: false,
+        // };
+        if (params) {
+            params.lang = gI18n.lang;
         } else {
-            if (callback) {
-                callback();
-            }
+            params = {
+                lang: gI18n.lang,
+            };
+        }
+        this.smsConfig = params;
+        // gBroadcast.emit({
+        //     cmd: 'setValidateSheet',
+        //     data: config,
+        // });
+        gBroadcast.offMsg({
+            key: 'ValidateModule',
+            cmd: 'setValidateSheet',
+            isall: true,
+        });
+        if (callback) {
+            this.callbackHandler = callback;
         }
     }
 
@@ -86,12 +80,12 @@ class Validate {
      */
     activeEmail(params, callback) {
         this.validateType = 'email';
-        let config = {
-            display: true,
-            inputValue: '',
-            type: this.email,
-            loading: false,
-        };
+        // let config = {
+        //     display: true,
+        //     inputValue: '',
+        //     type: this.email,
+        //     loading: false,
+        // };
         this.emailConfig = params;
         // gBroadcast.emit({
         //     cmd: 'setValidateSheet',
@@ -128,16 +122,16 @@ class Validate {
      * @param callback1
      */
     sendSmsCode(callback, callback1) {
-        if (this.smsconfig.constructor === Object) {
-            this.smsconfig.exChannel = exchId;
-            this.smsconfig.lang = gI18n.locale;
+        if (this.smsConfig.constructor === Object) {
+            this.smsConfig.exChannel = exchId;
+            this.smsConfig.lang = gI18n.locale;
         } else {
-            this.smsconfig = {
+            this.smsConfig = {
                 exChannel: exchId,
                 lang: gI18n.locale,
             }
         }
-        gWebApi.getSMSCode(this.smsconfig, res => {
+        gWebApi.getSMSCode(this.smsConfig, res => {
             if (callback1) {
                 callback1();
             }
@@ -158,13 +152,13 @@ class Validate {
      */
     sendEmailCode(callback, callback1) {
 
-        if (this.emailconfig.constructor === Object) {
-            this.emailconfig.exChannel = exchId;
+        if (this.emailConfig.constructor === Object) {
+            this.emailConfig.exChannel = exchId;
         } else {
-            this.emailconfig = {exChannel: exchId};
+            this.emailConfig = {exChannel: exchId};
         }
 
-        gWebApi.sendEmail(this.emailconfig, res => {
+        gWebApi.sendEmail(this.emailConfig, res => {
             if (callback1) {
                 callback1();
             }
@@ -189,13 +183,13 @@ class Validate {
         }
         this.validateSheet.loading = true
         let params = {};
-        if (this.smsconfig) {
-            params.phoneNum = this.smsconfig.phoneNum;
+        if (this.smsConfig) {
+            params.phoneNum = this.smsConfig.phoneNum;
         }
         params.code = code;
 
         gWebApi.smsVerify(params, res => {
-            if (res.result.code == 0) {
+            if (res.result == 0) {
                 this.finished();
             } else {
                 this.validateSheet.loading = false;
@@ -220,7 +214,7 @@ class Validate {
         this.validateSheet.loading = true
         gWebApi.googleCheck({code: code},
             res => {
-                if (res.result.code == 0) {
+                if (res.result == 0) {
                     this.finished();
                 } else {
                     this.validateSheet.loading = false
@@ -260,6 +254,7 @@ class Validate {
      * 校验结果
      */
     finished() {
+        debugger
         if (this.callbackHandler) {
             this.callbackHandler();
         }
@@ -285,6 +280,7 @@ class Validate {
             isall: true
         });
     }
+
     initGeetest() {
         let self = this;
         geetest.init(() => {

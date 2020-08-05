@@ -1,6 +1,9 @@
 let m = require('mithril')
 let Register = require('@/models/login/register')
 let InputWithSelect = require('@/components/inputWithSelect')
+let InputWithComponent = require('@/components/inputWithComponent')
+
+import('@/styles/pages/register.css')
 
 module.exports = {
     oninit() {
@@ -18,13 +21,23 @@ module.exports = {
                     m('div.column', {}, [
                         Register.isValidate ? m('div.box.has-bg-level-3.views-pages-login-index-box', {}, [
                                 m('div.mb-5.title-2.has-text-level-1', {}, ['验证码']),
-                                m('input.input[type=text].mb-6', {
-                                    oninput: e => {
-                                        Register.code = e.target.value
-                                    },
-                                    value: Register.code
-                                }, []),
-
+                                m('div.control.has-icons-right.mb-6', {}, [
+                                    InputWithComponent({
+                                        options: {
+                                            oninput: e => {
+                                                Register.code = e.target.value
+                                            },
+                                            value: Register.code
+                                        },
+                                        rightComponents: m('a.body-1.register-send-code-width.px-2', {
+                                            onclick: () => {
+                                                Register.type === 'phone' ?
+                                                    Register.sendSmsCode() :
+                                                    Register.sendEmailCode();
+                                            }
+                                        }, ['获取验证码']),
+                                    }),
+                                ]),
                                 m('button.button.my-3.is-primary.is-fullwidth.mb-2', {
                                     onclick: () => {
                                         Register.type === 'phone' ?
@@ -48,11 +61,11 @@ module.exports = {
                                             }, ['手机'])
                                         ]),
                                         m('li', {
-                                            class: Register.type === 'mail' ? 'is-active' : ''
+                                            class: Register.type === 'email' ? 'is-active' : ''
                                         }, [
                                             m('a', {
                                                 onclick: () => {
-                                                    Register.type = 'mail';
+                                                    Register.type = 'email';
                                                 }
                                             }, ['邮箱'])
                                         ]),
