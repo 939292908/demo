@@ -2,8 +2,12 @@ let m = require('mithril')
 
 import('@/styles/components/inputWithComponents.scss')
 
+
 /**
- * 带下拉输入框
+ * 输入框扩展
+ * @param options 输入框属性
+ * @param leftComponents 左组件
+ * @param rightComponents 右组件
  */
 module.exports = ({options, leftComponents, rightComponents}) => {
     let inside = [];
