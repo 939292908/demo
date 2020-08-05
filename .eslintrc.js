@@ -4,12 +4,9 @@ module.exports = {
       'standard',
       "plugin:flowtype/recommended",
       "eslint:recommended", 
-      "plugin:vue/essential"
     ], // 继承标准规则
     plugins: [
-        'html', // 使用eslint-plugin-html
-        'vue',
-        'react',
+        'html', // 使用eslint-plugin-html\
         'flowtype'
     ],
     "settings": {
