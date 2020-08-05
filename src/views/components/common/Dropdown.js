@@ -29,13 +29,10 @@ export default {
     initTriggerText (vnode) {
         this.initId(vnode) // id
         let curItem = null // 当前选中元素
-        // if (vnode.state.activeId == "FIRST") {
-        //     curItem = vnode.attrs.getList()[0] // 选中第一个
-        // } else {
-        //     curItem = vnode.attrs.getList().find(item => item.id == vnode.state.activeId) // 根据 id
-        // }
         curItem = vnode.attrs.getList().find(item => item.id == vnode.state.activeId) // 根据 id
         if (curItem) vnode.state.btnText = curItem.label // 文字
+        // console.log(curItem, vnode.state.btnText, 77777777777);
+        m.redraw()
     },
     //初始化 全局广播
     initEVBUS (vnode) {
