@@ -1,6 +1,5 @@
 let m = require('mithril')
 let Register = require('@/models/login/register')
-let InputWithSelect = require('@/components/inputWithSelect')
 let InputWithComponent = require('@/components/inputWithComponent')
 
 import('@/styles/pages/register.css')
@@ -73,17 +72,20 @@ module.exports = {
                                 ]),
                                 m('div.py-0.mb-2', {}, [Register.type === 'phone' ? '手机号' : '邮箱']),
                                 Register.type === 'phone' ?
-                                    InputWithSelect({
-                                        selectList: ['+86', '+0', '+1'],
-                                        selectedOptions: {},
-                                        componentOptions: {class: 'mb-5'},
-                                        inputOptions: {
-                                            type: 'text',
+                                    InputWithComponent({
+                                        addClass: 'mb-5',
+                                        leftComponents: m('span.select.px-1', {}, [
+                                            m('select.without-border.register-national-select', {}, [
+                                                m('option', {}, ['+86']),
+                                                m('option', {}, ['+0']),
+                                            ]),
+                                        ]),
+                                        options: {
                                             oninput: e => {
-                                                Register.loginName = e.target.value;
+                                                Register.code = e.target.value
                                             },
-                                            value: Register.loginName,
-                                        }
+                                            value: Register.code
+                                        },
                                     }) :
                                     m('input.input[type=text].mb-5', {
                                         oninput: e => {
