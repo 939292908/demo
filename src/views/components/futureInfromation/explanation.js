@@ -67,7 +67,8 @@ let obj = {
     this.updateSpotInfo()
     console.log(this.tabelList,2222222222)
     console.log(this.futureSymList,1111111111)
-    m.redraw();
+    // m.redraw();
+    // setTimeout(() => m.redraw(), 0)
 },
   //初始化合约数据
   updateSpotInfo: function(){
