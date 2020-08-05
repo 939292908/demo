@@ -2138,6 +2138,13 @@ input[type="checkbox"] {
     .inf_dropdown{
         @extend %side-py;
     }
+
+    //合约信息k线
+    .inf_body_kline{
+        @extend %pa-2;
+        width: calc(100% - 350px);
+        height: 636px;
+    }
 }
 
 //合约信息 end
@@ -2507,6 +2514,11 @@ input[type="checkbox"] {
     .text-background {
         background-color: $white-background-color-three-level;
     }
+
+    //合约信息 k线
+    .kline_border{
+        border: 1px solid $white-line1;
+    }
 }
 
 // -------------- 黑夜模式 --------------
@@ -2874,5 +2886,10 @@ input[type="checkbox"] {
     //限价委托
     .text-background {
         background-color: $black-background-color-three-level;
+    }
+
+    //合约信息 k线
+    .kline_border{
+        border: 1px solid $black-line1;
     }
 }

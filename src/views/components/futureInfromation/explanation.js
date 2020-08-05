@@ -1,14 +1,34 @@
 var m = require("mithril")
 import Dropdown from '../common/Dropdown'
+import kline from '../market/kline'
 
 let obj = {
-  spotInfo:{},
+  spotInfo:{
+    disSym: '--',
+    ExpireStr: '--',
+    FundingNext: '--',
+    PrzMinInc: '--',
+    FundingLongR: '--',
+    FundingPredictedR: '--',
+    Mult: '--',
+    FromC: '--',
+    ToC: '--',
+    SettleCoin: '--',
+    QuoteCoin: '--',
+    typeName: '--',
+    LotSz: '--',
+  },
   //合约名称列表
   futureSymList: [],
   futureSymObj: {},
 
   dropdownActive : 0,
-  tabelList:[],
+  tabelList:[
+    {
+      id:0,
+      label:"--"
+    }
+  ],
 
   //初始化全局广播
   initEVBUS:function(){
@@ -47,6 +67,7 @@ let obj = {
     let displaySym = window.gMkt.displaySym
     let assetD = window.gMkt.AssetD
     let futureSymList = []
+    let tabelList = []
     displaySym.map(function (Sym) {
         let ass = assetD[Sym]
         if (ass.TrdCls == 3) {
@@ -61,12 +82,11 @@ let obj = {
         id:i,
         label:utils.getSymDisplayName(window.gMkt.AssetD, key)
       }
-      this.tabelList.push(obj)
+      tabelList.push(obj)
     })
+    this.tabelList = tabelList
 
     this.updateSpotInfo()
-    console.log(this.tabelList,2222222222)
-    console.log(this.futureSymList,1111111111)
     m.redraw();
 },
   //初始化合约数据
@@ -118,8 +138,6 @@ let obj = {
             LotSz: '--',
         }
     }
-
-    console.log(this.spotInfo,333333333333)
   },
   //下拉列表
   getDownloadFuture:function(){
@@ -140,6 +158,57 @@ let obj = {
   clickSelect:function(item){
     this.updateSpotInfo()
   },
+
+  //文案说明
+  getTitleExplain:function(){
+    let dropdownActive = obj.dropdownActive
+    let spotInfo = obj.spotInfo
+    let tabelList = obj.tabelList
+
+    return m('div',{class:"inf_dropdown inf_body_conent"},[
+      m('div',{class:"inf_body_title_font"},[
+        tabelList[dropdownActive].label + ' 合约明细'
+      ]),
+      m('div',{class:"inf_body_TD"},[
+        tabelList[dropdownActive].label + '合约' + spotInfo.ExpireStr + '。每张合约大小' + spotInfo.LotSz +'。每' + '8' +'小时交换资金费用。下一个交换将发生在' + spotInfo.FundingNext +'。'
+      ]),
+      m('div',{class:" inf_body_TD"},[
+        window.$config.exchName + '交易平台利用利率与每分钟溢价指数的加权平均值计算出资金费率。',
+        m('span',{class:""},[
+          m('a',{class:""},[
+            '阅读更多...'
+          ])
+        ])
+      ]),
+    ])
+  },
+
+  //行情价格
+  getFutureqQuotation:function(){
+    let dropdownActive = obj.dropdownActive
+    let spotInfo = obj.spotInfo
+    let tabelList = obj.tabelList
+    return m('div',{class:"inf_dropdown inf_body_conent"},[
+      m('div',{class:"inf_body_title_font inf_dropdown"},[
+        tabelList[dropdownActive].label + ' 行情价格'
+      ]),
+      m('div',{class:" inf_body_kline kline_border"},[
+        m(kline)
+      ]),
+    ])
+  },
+
+  //合约详解
+  getFutureIntroduce:function(){
+    let dropdownActive = obj.dropdownActive
+    let spotInfo = obj.spotInfo
+    let tabelList = obj.tabelList
+    return m('div',{class:"inf_dropdown inf_body_conent"},[
+      m('div',{class:"inf_body_title_font inf_dropdown"},[
+        tabelList[dropdownActive].label + ' 合约详解'
+      ]),
+    ])
+  },
   
 }
 
@@ -154,6 +223,8 @@ export default {
     },
     view: function(vnode) {
       let dropdownActive = obj.dropdownActive
+      let spotInfo = obj.spotInfo
+      let tabelList = obj.tabelList
         return m("div",{class: ""}, [
           m('div',{class:"inf_dropdown"},[
             m('span',{class:"inf_body_span inf_body_font"},[
@@ -162,23 +233,16 @@ export default {
             //下拉列表
             obj.getDownloadFuture(),
           ]),
+
           //文案说明
-          m('div',{class:"inf_dropdown inf_body_conent"},[
-            m('div',{class:"inf_body_title_font"},[
-              // obj.tabelList[dropdownActive].label + '合约明细'
-            ]),
-            m('div',{class:"inf_body_TD"},[
-              // obj.tabelList[dropdownActive].label + '合约没有到期日。每张合约大小0.01个BTC。每8小时交换资金费用。下一个交换将发生在UTC+8 2020/7/15 16:00。'
-            ]),
-            m('div',{class:" inf_body_TD"},[
-              window.$config.exchName + '交易平台利用利率与每分钟溢价指数的加权平均值计算出资金费率。',
-              m('span',{class:""},[
-                m('a',{class:""},[
-                  '阅读更多...'
-                ])
-              ])
-            ]),
-          ]),
+          obj.getTitleExplain(),
+          
+          //行情价格
+          obj.getFutureqQuotation(),
+
+          //合约详解
+          obj.getFutureIntroduce(),
+          
         ])
     },
     onremove: function (vnode) {
