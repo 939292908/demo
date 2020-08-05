@@ -28,7 +28,13 @@ export default {
     // 初始化 选中文字
     initTriggerText (vnode) {
         this.initId(vnode) // id
-        let curItem = vnode.attrs.getList().find(item => item.id == vnode.state.activeId) // 当前选中元素
+        let curItem = null // 当前选中元素
+        // if (vnode.state.activeId == "FIRST") {
+        //     curItem = vnode.attrs.getList()[0] // 选中第一个
+        // } else {
+        //     curItem = vnode.attrs.getList().find(item => item.id == vnode.state.activeId) // 根据 id
+        // }
+        curItem = vnode.attrs.getList().find(item => item.id == vnode.state.activeId) // 根据 id
         if (curItem) vnode.state.btnText = curItem.label // 文字
     },
     //初始化 全局广播
