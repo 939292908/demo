@@ -53,10 +53,6 @@
     padding-left: 2px;
 }
 
-#theme--light .input-with-select .line {
+.input-with-select .line {
     background: var(--c-line-lighten);
-}
-
-#theme--dark .input-with-select .line {
-    background: var(--c-line-darken);
 }
