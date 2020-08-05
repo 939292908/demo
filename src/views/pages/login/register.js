@@ -75,10 +75,12 @@ module.exports = {
                                     InputWithComponent({
                                         addClass: 'mb-5',
                                         leftComponents: m('span.select.px-1', {}, [
-                                            m('select.without-border.register-national-select', {}, [
-                                                m('option', {}, ['+86']),
-                                                m('option', {}, ['+0']),
-                                            ]),
+                                            m('select.without-border.register-national-select', {
+                                                value: Register.areaCode,
+                                                onchange: e => {
+                                                    Register.areaCode = e.target.value
+                                                },
+                                            }, Register.selectList),
                                         ]),
                                         options: {
                                             oninput: e => {

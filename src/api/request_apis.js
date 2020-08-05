@@ -32,5 +32,7 @@ api_list.REGISTER_V1 = '/v1/users/register';
 api_list.STAT_REPORT_UDC = '/v1/stat/report/udc';
 // 获取用户资产
 api_list.ASSETS_V1 = '/v1/users/GetAssets';
+//国家列表
+api_list.COUNTRY_LIST_V1 = '/v1/country/list';
 
 module.exports = api_list

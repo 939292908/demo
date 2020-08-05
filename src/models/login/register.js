@@ -10,7 +10,8 @@ module.exports = {
     loginName: '13482854047',
     password: 'a123456',
     code: '',
-    areaCode: '0086',
+    areaCode: '86',
+    selectList: [m('option', {value: '86'}, [`+86`])],
     refereeType: '',
     prom: '',
     os: '',
@@ -94,7 +95,7 @@ module.exports = {
     // 手机注册
     registerPhoneFn() {
         validate.activeSms({
-            phoneNum: this.areaCode + '-' + this.loginName,
+            phoneNum: '00' + this.areaCode + '-' + this.loginName,
             mustCheckFn: 'register'
         }, () => {
             this.register();
@@ -109,9 +110,6 @@ module.exports = {
             exChannel: exchId
         }, res => {
             this.loading = false;
-            console.log(res);
-            this.loading = false;
-            console.log(res);
             if (res.result.code == 0) {
                 if (res.exists == 1) {
                     $message({content: gI18n.$t('10228'), type: 'danger'}); // 用户已存在
@@ -147,9 +145,8 @@ module.exports = {
             console.log("注册信息", res.data);
             if (res.result.code === 0) {
                 // 注册成功
-                // 记录邮箱和密码
                 $message({content: gI18n.$t('10630')/*'注册成功'*/, type: 'success'});
-
+                router.push('/login');
             } else {
                 // 输入信息有误
                 $message({content: errCode.getWebApiErrorCode(res.result.code), type: 'danger'});
@@ -206,6 +203,20 @@ module.exports = {
             }
         }, 1000);
     },
+
+    getCountryList() {
+        gWebApi.getCountryList({}, res => {
+            if (res.result.code === 0) {
+                this.selectList = [];
+                for (let item of res.result.data) {
+                    if (item.support === '1') this.selectList.push(m('option', {value: item.code}, [`+${item.code}`]),)
+                }
+                m.redraw();
+            }
+        }, err => {
+        });
+    },
+
     initGeetest() {
         let self = this;
         geetest.init(() => {
@@ -224,6 +235,7 @@ module.exports = {
     },
     oninit() {
         this.initGeetest();
+        this.getCountryList();
     },
     onremove() {
         gBroadcast.offMsg({

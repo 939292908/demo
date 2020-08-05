@@ -69,7 +69,7 @@ module.exports = {
 
                     self.loading = false;
 
-                    validate.activeGoogle(()=>{
+                    validate.activeGoogle(() => {
                         // self.isValidate = false;
                         // m.redraw();
                         self.loginEnter();
@@ -81,7 +81,7 @@ module.exports = {
                     self.loading = false;
 
                     validate.activeGoogle(
-                        ()=>{
+                        () => {
                             // self.isValidate = false;
                             // m.redraw();
                             self.loginEnter();
@@ -90,9 +90,11 @@ module.exports = {
                     self.isValidate = true;
                     m.redraw();
                 }
+            } else {
+                $message({content: errCode.getWebApiErrorCode(res.result.code), type: 'danger'});
             }
         }, err => {
-            _console.log('tlh',err);
+            _console.log('tlh', err);
             $message({content: gI18n.$t('10683') + '(请求异常)', type: 'danger'});
             this.loading = false;
         })
@@ -105,13 +107,11 @@ module.exports = {
             } else {
                 $message({content: gI18n.$t('10683') + `(${res.result.code})`, type: 'danger'});
                 this.loading = false;
-                validate.close();
             }
         }, err => {
-            _console.log('tlh',err);
+            _console.log('tlh', err);
             $message({content: gI18n.$t("10683") + '(请求异常)', type: 'danger'});
             this.loading = false;
-            validate.close();
         });
     },
     getUserInfo() {
@@ -133,7 +133,7 @@ module.exports = {
                 //     this.$set(store.state.httpResCheckCfg.state, 10, 0)
                 // }
                 // gBroadcast.emit({cmd: "getDeivceInfo", data: {op: 'login'}});
-                router.push('/home')
+                router.push('/home');
 
             } else if (data.result.code === 1001) {
                 // 获取个人信息不成功
