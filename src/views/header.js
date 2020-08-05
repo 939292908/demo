@@ -120,45 +120,69 @@ module.exports = {
 
                     ])
                 ]
-                // [
-                //     '资产',
-                //     m('nav', { class: `navbar` , role:'navigation' ,"aria-label":'main navigation'}, [
-                //         m('div', { class: `navbar-brand` }, [
-                //         m('a', { class: `navbar-item` , href:''}, [
-                //             m('a', { class: `navbar-burger burger` ,role:'button' , "aria-label":'menu' , "aria-expanded":false ,"data-target":'navbarBasicExample'}, [
-                //                 m('span' , { class: `` ,"aria-hidden":true}, [
-                //                     m('div', { class: `` ,"aria-hidden":true}, []),
-                //                     m('div', { class: `` ,"aria-hidden":true}, []),
-                //                     m('div', {id:"navbarBasicExample" , class: `navbar-menu` }, [
-                //                         m('div', { class: `navbar-start` }, [
-                //                             m('div', { class: `navbar-item has-dropdown is-hoverable` }, [
-                //                                 m('div', { class: `navbar-link` }, ["我的钱包"]),
-                //                                 m('div', { class: `navbar-dropdown` }, [
-                //                                     m('div', { class: `navbar-item` }, ["合约账户"]),
-                //                                     m('div', { class: `navbar-item` }, ["币币账号"]),
-                //                                     m('div', { class: `navbar-item` }, ["法币账户"])
-                //                                 ])
-                //                             ])
-                //                         ])
-                //                     ])
-                //                 ])
-                //             ])
-                //         ])
-                //     ])
-                //     ])
-                // ]
             ),
             m('a.navbar-item', {
+                class: `has-dropdown is-hoverable`,
                 onclick: function () {
                     window.router.push('/')
                 }
-            }, [
-                '订单'
+            }, 
+            [
+                m('a', { class: `navbar-item` }, ["订单"]),
+                m('div', { class: `navbar-dropdown` }, [
+                    m('a', { class: `navbar-item` }, ["合约订单"]),
+                    m('a', { class: `navbar-item` }, ["币币订单"]),
+                    m('a', { class: `navbar-item` }, ["法币订单"]),
+                    m('a', { class: `navbar-item` }, ["跟单订单"]),
             ]),
-            //自己
-            m('div', { class: `` }, [
-                m('img', { class: 'head-download', src: "https://forum.vuejs.org/uploads/default/original/2X/5/555257b8c5e7ecf34ce4f9b952eeaf006adfa339.png", style: "width: 30px;height:30px;" })
-            ]),
+        ]
+        ),
+            //我的
+            m('a.navbar-item', {
+                class: `has-dropdown is-hoverable`,
+                onclick: function () {
+                    window.router.push('/')
+                }
+            },
+                [
+                    m('a', { class: 'navbar-item'}, [
+                        m('img', { class: 'head-download', src: "https://forum.vuejs.org/uploads/default/original/2X/5/555257b8c5e7ecf34ce4f9b952eeaf006adfa339.png", style: "width: 30px;height:30px;" }),
+                    m('div', { class: `navbar-dropdown` }, [
+                        m('a', { class: `navbar-item`}, [
+                            m('img', { class: `` ,src: "https://forum.vuejs.org/uploads/default/original/2X/5/555257b8c5e7ecf34ce4f9b952eeaf006adfa339.png",style:"width:15px;height:15px;"}, 
+                            []),
+                                m('a', { class: `navbar-item` }, ["12"])
+                        ]),
+                        m('a', { class: `navbar-item`}, [
+                            m('img', { class: `` ,src: "https://forum.vuejs.org/uploads/default/original/2X/5/555257b8c5e7ecf34ce4f9b952eeaf006adfa339.png",style:"width:15px;height:15px;"}, 
+                            []),
+                                m('a', { class: `navbar-item` }, ["账户安全"])
+                        ]),               
+                        m('a', { class: `navbar-item`}, [
+                            m('img', { class: `` ,src: "https://forum.vuejs.org/uploads/default/original/2X/5/555257b8c5e7ecf34ce4f9b952eeaf006adfa339.png",style:"width:15px;height:15px;"}, 
+                            []),
+                                m('a', { class: `navbar-item` }, ["身份认证"])
+                        ]),
+                        m('a', { class: `navbar-item`}, [
+                            m('img', { class: `` ,src: "https://forum.vuejs.org/uploads/default/original/2X/5/555257b8c5e7ecf34ce4f9b952eeaf006adfa339.png",style:"width:15px;height:15px;"}, 
+                            []),
+                                m('a', { class: `navbar-item` }, ["API管理"])
+                        ]),
+                        m('a', { class: `navbar-item`}, [
+                            m('img', { class: `` ,src: "https://forum.vuejs.org/uploads/default/original/2X/5/555257b8c5e7ecf34ce4f9b952eeaf006adfa339.png",style:"width:15px;height:15px;"}, 
+                            []),
+                                m('a', { class: `navbar-item` }, ["邀请返佣"])
+                        ]),
+                        m('a', { class: `navbar-item`}, [
+                            m('img', { class: `` ,src: "https://forum.vuejs.org/uploads/default/original/2X/5/555257b8c5e7ecf34ce4f9b952eeaf006adfa339.png",style:"width:15px;height:15px;"}, 
+                            []),
+                                m('a', { class: `navbar-item` }, ["退出登录"])
+                        ]),
+                    ])
+                ]
+            ),
+        ]),
+            
             //下载
             m('div', { class: `` }, [
                 m('img', { class: 'head-download', src: "https://forum.vuejs.org/uploads/default/original/2X/5/555257b8c5e7ecf34ce4f9b952eeaf006adfa339.png", style: "width: 30px;height:30px;" })
@@ -167,8 +191,7 @@ module.exports = {
             m('div', { class: `` }, [
                 m('img', { class: 'head-download', src: "https://forum.vuejs.org/uploads/default/original/2X/5/555257b8c5e7ecf34ce4f9b952eeaf006adfa339.png", style: "width: 30px;height:30px;" })
             ]),
-
-
+            //语言
             m('div.navbar-item.has-dropdown.is-hoverable', {}, [
                 m('div.navbar-link', {}, [
                     '切换语言'
