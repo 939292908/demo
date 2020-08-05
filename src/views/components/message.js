@@ -94,7 +94,7 @@ let msg = {
 
     },
 }
-export default {
+module.exports = {
     oninit: function (vnode) {
 
     },
