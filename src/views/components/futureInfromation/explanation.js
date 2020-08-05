@@ -42,7 +42,7 @@ let obj = {
       this.EV_PAGETRADESTATUS_UPD_unbinder()
     }
   },
-  //初始化合约以及现货列表
+  //初始化合约列表
   initSymList: function () {
     let displaySym = window.gMkt.displaySym
     let assetD = window.gMkt.AssetD
@@ -59,25 +59,26 @@ let obj = {
     futureSymList.map((key,i)=>{
       let obj = {
         id:i,
-        label:key
+        label:utils.getSymDisplayName(window.gMkt.AssetD, key)
       }
       this.tabelList.push(obj)
     })
 
+    this.updateSpotInfo()
     console.log(this.tabelList,2222222222)
-
     console.log(this.futureSymList,1111111111)
     m.redraw();
 },
   //初始化合约数据
   updateSpotInfo: function(){
-    let Sym = window.gMkt.CtxPlaying.Sym
+    let dropdownActive = this.dropdownActive
+    let Sym = this.futureSymList[dropdownActive]
     let ass = window.gMkt.AssetD[Sym] || null
     if (ass && ass.TrdCls != 1) {
         let info = {
             disSym: utils.getSymDisplayName(window.gMkt.AssetD, Sym), // 合约显示名称
-            ExpireStr: ass.TrdCls == 3 ? gDI18n.$t('10422'/*'永续'*/) : new Date(ass.Expire).format('yyyy-MM-dd'), // 到期日
-            FundingNext: new Date(ass.FundingNext).format('yyyy-MM-dd'), 
+            ExpireStr: ass.TrdCls == 2 ?new Date(ass.Expire).format('yyyy-MM-dd hh:mm:ss') : "没有到期日期", // 到期日
+            FundingNext: new Date(ass.FundingNext).format('yyyy-MM-dd hh:mm:ss'), 
             PrzMinInc: utils.getFullNum(ass.PrzMinInc), //最小价格变动
             FundingLongR: (ass.FundingLongR * 100).toSubstrFixed(4) + '%', //资金费率
             FundingPredictedR: (ass.FundingPredictedR * 100).toSubstrFixed(4) + '%',  //预测下一资金费率
@@ -117,8 +118,9 @@ let obj = {
             LotSz: '--',
         }
     }
-  },
 
+    console.log(this.spotInfo,333333333333)
+  },
   //下拉列表
   getDownloadFuture:function(){
     return m( Dropdown, {
@@ -127,15 +129,16 @@ let obj = {
       menuWidth:110,
       onClick (itme) {
           // console.log(itme);
-          // obj.myclickType(itme)
+          obj.clickSelect(itme)
       },
       getList () {
           return obj.tabelList
       }
     })
   },
-  myclickType:function(item){
-    
+  //点击选中合约
+  clickSelect:function(item){
+    this.updateSpotInfo()
   },
   
 }
@@ -147,7 +150,7 @@ export default {
     },
     oncreate: function(vnode){
         obj.initEVBUS()
-        obj.initSymList()
+        // obj.initSymList()
     },
     view: function(vnode) {
       let dropdownActive = obj.dropdownActive

@@ -3,11 +3,11 @@ import Dropdown from "../common/Dropdown"
 
 let obj = {
     form: {
-        coin: 'USDT', // 合约
-        transferFrom: '03', // 从xx账户
-        transferTo: '01', // 到xx账户
+        coin: 'USDT', // 合约下拉列表 value
+        transferFrom: '03', // 从xx钱包 value
+        transferTo: '01', // 到xx钱包 value
         num: '',
-        maxTransfer: 0,
+        maxTransfer: 0, // 最大划转
     },
 
     allWalletList: [], // 所有账户
@@ -16,19 +16,13 @@ let obj = {
     myWalletList: [], // 我的钱包
     legalTenderList: [], // 法币账户
 
-    canTransferListOpen: false,
+    canTransferListOpen: false, // 合约下拉开关
     canTransferCoin: [],
-    // 钱包 下拉列表
-    wltList: {
-        '01': gDI18n.$t('10217'),//'合约账户',
-        '02': gDI18n.$t('10218'),//'币币账户',
-        '03': gDI18n.$t('10219'),//'我的钱包',
-        '04': gDI18n.$t('10220'),//'法币账户',
-    },
-    baseWltList: [], // 所有类型钱包列表
-    authWltList: [], // 当前币种 有权限的钱包列表
-    fromWltList: [], // 从哪 钱包列表 （from 与 to 钱包，不能同一种类型相互划转，所以要去除每次选中）
-    toWltList: [], // 划转去哪 钱包列表 （）
+
+    baseWltList: [], // 钱包列表 所有
+    authWltList: [], // 钱包列表 当前币种有权限
+    fromWltList: [], // 钱包列表 从xx  （from与to钱包 不能同一种类型相互划转）
+    toWltList: [], // 钱包列表 到xx
     wlt: {},
     //初始化全局广播 
     initEVBUS: function () {
@@ -81,18 +75,12 @@ let obj = {
             this.EV_PAGETRADESTATUS_UPD_unbinder()
         }
         this.EV_PAGETRADESTATUS_UPD_unbinder = window.gEVBUS.on(gMkt.EV_PAGETRADESTATUS_UPD, arg => {
-            that.setTransferInfo()
+            that.initFromAndToValueByAuthWalletList() // 2个钱包value 初始化
             that.initTransferInfo()
         })
 
     },
     initLanguage: function () {
-        this.wltList = {
-            '01': gDI18n.$t('10217'),//'合约账户',
-            '02': gDI18n.$t('10218'),//'币币账户',
-            '03': gDI18n.$t('10219'),//'我的钱包',
-            '04': gDI18n.$t('10220'),//'法币账户',
-        }
         this.baseWltList = [
             {
                 id: '01',
@@ -164,11 +152,16 @@ let obj = {
             this.form.num = e.target.value
         }
     },
-    switchTransfer: function () {
-        console.log(obj.form.transferTo);
-        [this.form.transferFrom, this.form.transferTo] = [this.form.transferTo, this.form.transferFrom]
+    // 切换按钮 click
+    switchBtnClick () {
         this.form.num = ''
-        this.setMaxTransfer()
+        this.switchTransfer() // 2个钱包value切换
+        this.initFromAndToWalletListByValue() // 2个钱包列表 初始化
+        this.setMaxTransfer() // 设置 最大划转
+    },
+    // 2个钱包value切换
+    switchTransfer () {
+        [this.form.transferFrom, this.form.transferTo] = [this.form.transferTo, this.form.transferFrom]
     },
     getWallet: function () {
         let that = this
@@ -178,19 +171,6 @@ let obj = {
             }, function (arg) {
                 that.initTransferInfo()
             })
-        }
-    },
-    setTransferInfo: function () {
-        let pageTradeStatus = window.gMkt.CtxPlaying.pageTradeStatus // 1:合约/2:币币 模式
-        switch (pageTradeStatus) {
-            case 1:
-                this.form.transferTo = "01";
-                this.form.transferFrom = "03"
-                break;
-            case 2:
-                this.form.transferTo = "02";
-                this.form.transferFrom = "03"
-                break;
         }
     },
     // 初始化 划转信息
@@ -233,15 +213,11 @@ let obj = {
             })
         })
 
-        // 设置 钱包默认选中
-        obj.setTransferInfo()
-        // console.log("下拉列表 数据", wallets, this.contractList, this.bibiList, this.myWalletList, this.legalTenderList);
+        if (this.canTransferCoin[0]) this.form.coin = this.canTransferCoin[0].wType  // 合约下拉列表 默认选中第一个
 
-        if (this.canTransferCoin[0]) this.form.coin = this.canTransferCoin[0].wType  // 合约下拉默认选第一个
+        this.initWalletListByWTypeAndValue(obj.form.coin) // 初始化钱包 list 和 value
 
-        this.setMaxTransfer()
-
-        this.initWalletList(obj.form.coin) // 初始化 钱包列表
+        this.setMaxTransfer() // 设置 最大划转
     },
     // 合约 下拉列表
     getCoinList () {
@@ -256,18 +232,19 @@ let obj = {
             )
         })
     },
-    // 合约下拉列表 click事件
+    // 合约下拉列表 click
     coinClick (item) {
         this.setTransferCoin(item.wType)// 设置 coin
-        this.setMaxTransfer()// 设置 最大划转
-        this.initWalletList(item.wType)//  初始化 钱包列表
+        this.setMaxTransfer() // 设置 最大划转
+        this.initWalletListByWTypeAndValue(item.wType) // 初始化钱包 list 和 value
     },
-    // 初始化 钱包列表
-    initWalletList (wType) {
-        this.initAuthWalletListByWType(wType)// 权限钱包列表 初始化
-        this.initFromAndToWallet() // 2个钱包列表 初始化
+    // 初始化钱包 list 和 value
+    initWalletListByWTypeAndValue (wType) {
+        this.initAuthWalletListByWType(wType)// 1. 权限钱包list 初始化
+        this.initFromAndToValueByAuthWalletList() // 2. 钱包value  初始化
+        this.initFromAndToWalletListByValue() // 3. 2个钱包list 初始化
     },
-    // 权限钱包列表 初始化（by wType）
+    // 权限钱包列表 初始化（wType: 合约）
     initAuthWalletListByWType (wType) {
         // 遍历不同种类钱包
         this.authWltList = this.allWalletList.map(wallet => {
@@ -280,25 +257,44 @@ let obj = {
         })
         this.authWltList = this.authWltList.filter(item => item) // 钱包列表 去空
     },
-    // 2个钱包列表 初始化
-    initFromAndToWallet () {
+    // 2个钱包value 初始化
+    initFromAndToValueByAuthWalletList () {
+        let pageMap = {
+            1: '01',
+            2: '02',
+            3: '03',
+            4: '04',
+        }
+
+        // 校验钱包value 如果没权限默认选中第一个
+        let verifyWalletValueByValue = (value) => {
+            if (this.authWltList.some(item => item.id == value)) {
+                return value
+            } else {
+                return this.authWltList[0] && this.authWltList[0].id
+            }
+        }
+
+        // 从xx钱包
+        this.form.transferFrom = verifyWalletValueByValue(pageMap[3])
+
+        // 到xx钱包
+        this.form.transferTo = verifyWalletValueByValue(pageMap[window.gMkt.CtxPlaying.pageTradeStatus])
+    },
+    // 2个钱包list 初始化
+    initFromAndToWalletListByValue () {
         this.fromWltList = this.authWltList.filter(item => item.id != obj.form.transferTo)
         this.toWltList = this.authWltList.filter(item => item.id != obj.form.transferFrom)
         console.log("this.fromWltList", this.fromWltList, "this.toWltList", this.toWltList);
     },
-    // 2个钱包选中value 初始化
-    initFromAndToValue() {
-        this.form.transferFrom
-        this.form.transferTo
-    },
-    // 设置 coin
-    setTransferCoin: function (param) {
+    // 设置 选中合约
+    setTransferCoin (param) {
         this.form.coin = param
         this.canTransferListOpen = false
         this.form.num = ''
     },
     // 设置 最大划转
-    setMaxTransfer: function () {
+    setMaxTransfer () {
         let coin = this.form.coin
         switch (this.form.transferFrom) {
             case '01':
@@ -355,7 +351,7 @@ let obj = {
                     that.form.num = ''
                     that.loading = false
                     that.getWallet()
-                    obj.setTransferInfo()
+                    obj.initFromAndToValueByAuthWalletList() // 2个钱包value 初始化
                 }, 2500)
             } else {
                 window.$message({ title: gDI18n.$t('10037'/*"提示"*/), content: utils.getWebApiErrorCode(arg.result.code), type: 'danger' })
@@ -371,6 +367,7 @@ let obj = {
 export default {
     oninit: function (vnode) {
         obj.initLanguage()
+        obj.initFromAndToValueByAuthWalletList() // 2个钱包value 初始化
     },
     oncreate: function (vnode) {
         obj.initEVBUS()
@@ -413,7 +410,7 @@ export default {
                         activeId: cb => cb(obj.form, 'transferFrom'),
                         onClick (item) {
                             console.log(obj.form.transferFrom);
-                            obj.initFromAndToWallet() // 初始化 2个钱包下拉列表
+                            obj.initFromAndToWalletListByValue() // 初始化 2个钱包下拉列表
                         },
                         getList () {
                             return obj.fromWltList
@@ -430,7 +427,7 @@ export default {
                         activeId: cb => cb(obj.form, 'transferTo'),
                         onClick (item) {
                             console.log(obj.form.transferTo);
-                            obj.initFromAndToWallet() // 初始化 2个钱包下拉列表
+                            obj.initFromAndToWalletListByValue() // 初始化 2个钱包下拉列表
                         },
                         getList () {
                             return obj.toWltList
@@ -438,8 +435,8 @@ export default {
                     })
                 ]),
                 m("div", {
-                    class: "pub-transfer-transfer-select-center control is-expanded cursor-pointer", onclick: function () {
-                        obj.switchTransfer()
+                    class: "pub-transfer-transfer-select-center control is-expanded cursor-pointer", onclick () {
+                        obj.switchBtnClick()
                     }
                 }, [
                     m('span', { class: "icon is-medium" }, [
