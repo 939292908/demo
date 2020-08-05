@@ -173,8 +173,8 @@ module.exports = {
                     m('p', { class: `` }, ["加入社群"])
                 ]),
                 //社区
-                m('a', { class: `is-between`, href:"index.html",}, [
-                    m('div', { class: `` }, [
+                m('div', { class: `is-between`}, [
+                    m('a', { class: `` , href:"index.html"}, [
                         m('img', { class: 'community', src: "https://forum.vuejs.org/uploads/default/original/2X/5/555257b8c5e7ecf34ce4f9b952eeaf006adfa339.png", style: "width: 20px;height:20px;" })
                     ]),
                     m('div', { class: `` }, [
