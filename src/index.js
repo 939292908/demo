@@ -52,6 +52,16 @@ instConf.updateNetLines()
 let webApi = require('@/api/webApi')
 window.gWebApi = new webApi({baseUrl: api.WebAPI})
 
+let Interval = 1000
+let wsApi = require('@/api/wsApi')
+window.gWsApi = new wsApi({
+    baseUrl: api.WSMKT,
+    Typ: 'mkt'
+})
+setInterval(function () {
+    window.gWsApi.stately.do(window.gWsApi);
+}, Interval)
+
 window.onresize = function(arg){
     // 判断是否是移动端
     window.isMobile = utils.isMobile()
