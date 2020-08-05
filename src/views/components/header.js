@@ -54,9 +54,14 @@ let header = {
         }
     },
     initTradeStatus: function(){
-        let Page = utils.queryParams('Page')
-        if(Page){
-            this.setTradeStatus(Number(Page))
+        // 读取地址栏参数并赋值,地址参数为加密参数
+        let p = utils.queryParams('p')
+        if(p){
+            p = JSON.parse(utils.uncompileStr(p))
+            let Page = p.Page
+            if(Page){
+                this.setTradeStatus(Number(Page))
+            }
         }
     },
     setTradeStatus: function (status) {

@@ -1,6 +1,7 @@
 // 请复制一份，命名为config.js
 const config = {
     exchId: 0, //渠道ID
+    exchName :"Gmex",//渠道名称
     loginType: 0, // 登录类型，0:默认,账号密码登录，1: token登录
     mobile: 1, // 是否适配移动端界面，0: 不适配，1: 开始适配
     goodsInStock: 1,//是否打开现货交易，0 ：关闭， 1 ：打开

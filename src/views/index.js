@@ -2,7 +2,7 @@ let m = require('mithril')
 
 let header = require('./components/header').default
 let footer = require('./components/footer').default
-let message = require('./components/message').default
+let message = require('./components/message')
 
 let obj = {
     getHeader: function () {
