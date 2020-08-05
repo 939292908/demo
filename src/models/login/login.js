@@ -37,6 +37,11 @@ module.exports = {
     },
     login() {
         let that = this
+        if (/@/.test(this.account)) {
+            this.loginType = "email";
+        } else {
+            this.loginType = "phone";
+        }
         if (this.valid) {
             this.loading = true;
             geetest.verify(() => {
@@ -133,8 +138,8 @@ module.exports = {
                 //     this.$set(store.state.httpResCheckCfg.state, 10, 0)
                 // }
                 // gBroadcast.emit({cmd: "getDeivceInfo", data: {op: 'login'}});
+                gWebApi.loginState = true;
                 router.push('/home');
-
             } else if (data.result.code === 1001) {
                 // 获取个人信息不成功
                 // gBroadcast.emit({cmd: "setIsLogin", data: false});
@@ -164,9 +169,13 @@ module.exports = {
         });
     },
     oninit() {
-        // if (utils.getItem('userAccount')) {
-        //     this.account = utils.getItem('userAccount');
-        // }
+        if (gWebApi.loginState) {
+            router.push('/home');
+            return;
+        }
+        if (utils.getItem('userAccount')) {
+            this.account = utils.getItem('userAccount');
+        }
         this.initGeetest();
     },
     onremove() {
