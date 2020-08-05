@@ -35,28 +35,7 @@ module.exports = {
                             ]) :
                             m('div.box.has-bg-level-3.views-pages-login-index-box', {}, [
                                 m('div.mb-5.title-2.has-text-level-1', {}, ['登录']),
-                                m('div.tabs', {}, [
-                                    m('ul', {}, [
-                                        m('li', {
-                                            class: Login.loginType === 'phone' ? 'is-active' : ''
-                                        }, [
-                                            m('a',{
-                                                onclick:()=>{
-                                                    Login.loginType = 'phone';
-                                                }
-                                            },['手机'])
-                                        ]),
-                                        m('li', {
-                                            class: Login.loginType === 'mail' ? 'is-active' : ''
-                                        }, [
-                                            m('a',{
-                                                onclick:()=>{
-                                                    Login.loginType = 'mail';
-                                                }
-                                            },['邮箱'])
-                                        ])
-                                    ]),
-                                ]),
+                                m('div.py-0.mb-2', {}, ['手机/邮箱']),
                                 m('input.input[type=text].mb-6', {
                                     oninput: e => {
                                         Login.account = e.target.value
