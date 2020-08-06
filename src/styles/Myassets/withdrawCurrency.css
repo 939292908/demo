@@ -1,0 +1,139 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+.withdrawCurrency{
+    width: 90%;
+    margin: auto;
+}
+.withdrawCurrency-nav{
+    margin-bottom: 10px;
+}
+ .withdrawCurrency-nav-first{
+    display: flex;
+    flex-direction: row;
+    height: 28px;
+    padding-left: 10px;
+}
+.withdrawCurrency-nav-first-my,.withdrawCurrency-nav-first-record{
+    margin-right: 20px;
+    cursor: pointer;
+}
+.withdrawCurrency-nav-first-my{
+    color: #FF8B00;
+    border-bottom: 2px solid #FF8B00;
+}
+.withdrawCurrency-nav-second{
+    display: flex;
+}
+.withdrawCurrency-nav-second-one,.withdrawCurrency-nav-second-two{
+    font-size: 20px;
+    font-weight: bold;
+    margin-right: 20px;
+    line-height: 50px;
+}
+.withdrawCurrency-nav-second-one span{
+    display: inline-block;
+    margin-left: 10px;
+    color: #FF8B00;
+    border-bottom: 2px solid #FF8B00;
+}
+.withdrawCurrency-top-left-type{
+    margin-bottom: 10px;
+}
+.withdrawCurrency-top-left-type span{
+    margin-bottom: 10px;
+    display: inline-block;
+}
+.withdrawCurrency-top-left-type select{
+    width: 80%;
+    height: 40px;
+    color: #929292;
+    border-radius: 5px;
+    border: 1px solid #929292;
+}
+.withdrawCurrency-top-left-address{
+    margin-bottom: 10px;
+}
+.withdrawCurrency-top-left-address div{
+    width: 80%;
+    display: flex;
+    margin-bottom: 10px;
+}
+.withdrawCurrency-top-left-address select{
+    width: 80%;
+    height: 40px;
+    border-radius: 5px;
+    padding-left:10px;
+}
+.withdrawCurrency-top-left-number{
+    margin-bottom: 10px;
+}
+.withdrawCurrency-top-left-number div:nth-child(3){
+    width: 80%;
+    height: 40px;
+    border-radius: 5px;
+    background-color: white;
+    border: 1px solid #ccc;
+    margin-top: 10px;
+}
+
+.withdrawCurrency-top-left-number div:nth-child(3) input{
+    width: 85%;
+    height: 36px;
+    border: none;
+}
+
+.withdrawCurrency-top-left-number div:nth-child(3) :nth-child(2){
+    margin-right: 10px;
+}
+
+.withdrawCurrency-top-left-number div:nth-child(3) :nth-child(3){
+    color: #FF8B00;
+}
+.withdrawCurrency-top-left-number div:nth-child(2){
+    margin-top: 10px;
+    width: 80%;
+    display: flex;
+}
+.withdrawCurrency-top-left-btn{
+    width: 80%;
+    height: 35px;
+    line-height: 35px;
+    border-radius: 5px;
+    text-align: center;
+    background-color: #FF8B00;
+    color: white;
+    font-size: 15px;
+    letter-spacing: 1px;
+}
+.withdrawCurrency-top-right{
+    padding-top: 7%;
+}
+.withdrawCurrency-top-right span{
+    margin-top: 5px;
+    display: inline-block;
+}
+.withdrawCurrency-bottom-record{
+    display: flex;
+    margin-bottom: 10px;
+}
+.withdrawCurrency-bottom-record div:nth-child(2) span{
+    color: #FF8B00;
+}
+.withdrawCurrency-bottom-tab{
+    width: 100%;
+    margin-bottom: 20px;
+}
+.withdrawCurrency-bottom-tab table thead{
+    color: rgba(83, 83, 83, 0.555);
+    background-color: #FFEEDA;
+}
+.withdrawCurrency-bottom-tab td{
+    width: 5%;
+    padding:8px 0;
+}
+/* tr悬浮 */
+.withdrawCurrency-bottom-tab table tbody tr:hover {
+    background-color: #f7fbfb;
+}

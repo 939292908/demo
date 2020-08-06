@@ -6,14 +6,14 @@
     width: 90%;
     margin: auto;
 }
-.columns-flex{
+.myWalletIndex .columns-flex{
     display: flex;
     flex-wrap: wrap;
 }
-.column{
+.myWalletIndex .column{
     margin-right: 20px;
 }
-.has-bg-error{
+.myWalletIndex .has-bg-error{
     text-align: center;
 }
 
@@ -37,7 +37,7 @@
     margin-left: 55%;
     font-size: 20px;
 }
-.otherAccount div.desc{
+.myWalletIndex .otherAccount div.desc{
     margin-left: 55%;
     font-size: 20px;
 }
