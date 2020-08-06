@@ -1,34 +1,33 @@
-let _axios = require('@/api/request').default
-let qs = require('qs')
+const _axios = require('@/api/request').default;
+const qs = require('qs');
 
-const DBG_REQUEST = true
-const DBG_TAG = "API"
+const DBG_REQUEST = true;
+const DBG_TAG = "API";
 
-let API = require('@/api/request_apis')
+const API = require('@/api/request_apis');
 
 class webApi {
-
     constructor(arg) {
-        this.axios = new _axios()
-        this.axios.baseUrl = arg.baseUrl
+        this.axios = new _axios();
+        this.axios.baseUrl = arg.baseUrl;
 
         // 变量命名
-        this.userInfo = {}
-        this.loginSms = true // 登录短信验证
-        this.functions = null
-        this.loginState = false
+        this.userInfo = {};
+        this.loginSms = true; // 登录短信验证
+        this.functions = null;
+        this.loginState = false;
         this.wallet = {
             '01': [],
             '02': [],
             '03': [],
             '04': []
-        }
+        };
         this.wallet_obj = {
             '01': {},
             '02': {},
             '03': {},
             '04': {}
-        }
+        };
     }
 
     /**
@@ -38,22 +37,22 @@ class webApi {
      * @param aOnError
      */
     geetestRegister(aData, aOnSuccess, aOnError) {
-        let s = this
+        const s = this;
 
         s.axios.request({
             method: "get",
             url: s.axios.baseUrl + API.GEETEST_REGISTER + `?t=${aData.t}`,
             options: {}
         }).then(function (result) {
-            let arg = result.data
+            const arg = result.data;
             if (aOnSuccess) {
-                aOnSuccess(arg)
+                aOnSuccess(arg);
             }
         }).catch(function (e) {
             if (aOnError) {
-                aOnError(e)
+                aOnError(e);
             }
-        })
+        });
     }
 
     /**
@@ -63,7 +62,7 @@ class webApi {
      * @param aOnError
      */
     geetestValidate(aData, aOnSuccess, aOnError) {
-        let s = this
+        const s = this;
 
         s.axios.request({
             method: "post",
@@ -71,16 +70,16 @@ class webApi {
             data: qs.stringify(aData),
             options: {}
         }).then(function (result) {
-            let arg = result.data
+            const arg = result.data;
             if (aOnSuccess) {
-                aOnSuccess(arg)
+                aOnSuccess(arg);
             }
         }).catch(function (e) {
-            _console.log('tlh', e);
+            window._console.log('tlh', e);
             if (aOnError) {
-                aOnError(e)
+                aOnError(e);
             }
-        })
+        });
     }
 
     /**
@@ -90,7 +89,7 @@ class webApi {
      * @param aOnError
      */
     getSMSCode(aData, aOnSuccess, aOnError) {
-        let s = this
+        const s = this;
 
         s.axios.request({
             method: "post",
@@ -98,16 +97,16 @@ class webApi {
             data: qs.stringify(aData),
             options: {}
         }).then(function (result) {
-            let arg = result.data
+            const arg = result.data;
             if (aOnSuccess) {
-                aOnSuccess(arg)
+                aOnSuccess(arg);
             }
         }).catch(function (e) {
-            _console.log('tlh', e);
+            window._console.log('tlh', e);
             if (aOnError) {
-                aOnError(e)
+                aOnError(e);
             }
-        })
+        });
     }
 
     /**
@@ -117,7 +116,7 @@ class webApi {
      * @param aOnError
      */
     sendEmail(aData, aOnSuccess, aOnError) {
-        let s = this
+        const s = this;
 
         s.axios.request({
             method: "post",
@@ -125,16 +124,16 @@ class webApi {
             data: qs.stringify(aData),
             options: {}
         }).then(function (result) {
-            let arg = result.data
+            const arg = result.data;
             if (aOnSuccess) {
-                aOnSuccess(arg)
+                aOnSuccess(arg);
             }
         }).catch(function (e) {
-            _console.log('tlh', e);
+            window._console.log('tlh', e);
             if (aOnError) {
-                aOnError(e)
+                aOnError(e);
             }
-        })
+        });
     }
 
     /**
@@ -144,7 +143,7 @@ class webApi {
      * @param aOnError
      */
     smsVerify(aData, aOnSuccess, aOnError) {
-        let s = this
+        const s = this;
 
         s.axios.request({
             method: "post",
@@ -152,16 +151,16 @@ class webApi {
             data: qs.stringify(aData),
             options: {}
         }).then(function (result) {
-            let arg = result.data
+            const arg = result.data;
             if (aOnSuccess) {
-                aOnSuccess(arg)
+                aOnSuccess(arg);
             }
         }).catch(function (e) {
-            _console.log('tlh', e);
+            window._console.log('tlh', e);
             if (aOnError) {
-                aOnError(e)
+                aOnError(e);
             }
-        })
+        });
     }
 
     /**
@@ -171,7 +170,7 @@ class webApi {
      * @param aOnError
      */
     googleCheck(aData, aOnSuccess, aOnError) {
-        let s = this
+        const s = this;
 
         s.axios.request({
             method: "post",
@@ -179,16 +178,16 @@ class webApi {
             data: qs.stringify(aData),
             options: {}
         }).then(function (result) {
-            let arg = result.data
+            const arg = result.data;
             if (aOnSuccess) {
-                aOnSuccess(arg)
+                aOnSuccess(arg);
             }
         }).catch(function (e) {
-            _console.log('tlh', e);
+            window._console.log('tlh', e);
             if (aOnError) {
-                aOnError(e)
+                aOnError(e);
             }
-        })
+        });
     }
 
     /**
@@ -198,7 +197,7 @@ class webApi {
      * @param aOnError
      */
     emailCheck(aData, aOnSuccess, aOnError) {
-        let s = this
+        const s = this;
 
         s.axios.request({
             method: "post",
@@ -206,16 +205,16 @@ class webApi {
             data: qs.stringify(aData),
             options: {}
         }).then(function (result) {
-            let arg = result.data
+            const arg = result.data;
             if (aOnSuccess) {
-                aOnSuccess(arg)
+                aOnSuccess(arg);
             }
         }).catch(function (e) {
-            _console.log('tlh', e);
+            window._console.log('tlh', e);
             if (aOnError) {
-                aOnError(e)
+                aOnError(e);
             }
-        })
+        });
     }
 
     /**
@@ -246,7 +245,7 @@ class webApi {
      * @param aOnError (e)
      */
     loginCheck(aData, aOnSuccess, aOnError) {
-        let s = this
+        const s = this;
 
         s.axios.request({
             method: "post",
@@ -256,15 +255,15 @@ class webApi {
                 withCredentials: true
             }
         }).then(function (result) {
-            let arg = result.data
+            const arg = result.data;
             if (aOnSuccess) {
-                aOnSuccess(arg)
+                aOnSuccess(arg);
             }
         }).catch(function (e) {
             if (aOnError) {
-                aOnError(e)
+                aOnError(e);
             }
-        })
+        });
     }
 
     /**
@@ -274,7 +273,7 @@ class webApi {
      * @param aOnError
      */
     loginWeb(aData, aOnSuccess, aOnError) {
-        let s = this
+        const s = this;
 
         s.axios.request({
             method: "post",
@@ -284,15 +283,15 @@ class webApi {
                 withCredentials: true
             }
         }).then(function (result) {
-            let arg = result.data
+            const arg = result.data;
             if (aOnSuccess) {
-                aOnSuccess(arg)
+                aOnSuccess(arg);
             }
         }).catch(function (e) {
             if (aOnError) {
-                aOnError(e)
+                aOnError(e);
             }
-        })
+        });
     }
 
     /**
@@ -320,7 +319,7 @@ class webApi {
      * @param aOnError (e)
      */
     queryUserInfo(aData, aOnSuccess, aOnError) {
-        let s = this
+        const s = this;
 
         s.axios.request({
             method: "post",
@@ -330,15 +329,15 @@ class webApi {
                 withCredentials: true
             }
         }).then(function (result) {
-            let arg = result.data
+            const arg = result.data;
             if (aOnSuccess) {
-                aOnSuccess(arg)
+                aOnSuccess(arg);
             }
         }).catch(function (e) {
             if (aOnError) {
-                aOnError(e)
+                aOnError(e);
             }
-        })
+        });
     }
 
     /**
@@ -354,7 +353,7 @@ class webApi {
      * @param aOnError (e)
      */
     resetPassword(aData, aOnSuccess, aOnError) {
-        let s = this
+        const s = this;
 
         s.axios.request({
             method: "post",
@@ -364,15 +363,15 @@ class webApi {
                 withCredentials: true
             }
         }).then(function (result) {
-            let arg = result.data
+            const arg = result.data;
             if (aOnSuccess) {
-                aOnSuccess(arg)
+                aOnSuccess(arg);
             }
         }).catch(function (e) {
             if (aOnError) {
-                aOnError(e)
+                aOnError(e);
             }
-        })
+        });
     }
 
     /**
@@ -494,7 +493,7 @@ class webApi {
      * @param aOnError (e)
      */
     subAssets(aData, aOnSuccess, aOnError) {
-        let s = this
+        const s = this;
 
         s.axios.request({
             method: "post",
@@ -504,15 +503,15 @@ class webApi {
                 withCredentials: true
             }
         }).then(function (result) {
-            let arg = result.data
+            const arg = result.data;
             if (aOnSuccess) {
-                aOnSuccess(arg)
+                aOnSuccess(arg);
             }
         }).catch(function (e) {
             if (aOnError) {
-                aOnError(e)
+                aOnError(e);
             }
-        })
+        });
     }
 
     /**
@@ -533,7 +532,7 @@ class webApi {
      * @param aOnError (e)
      */
     usersRegister(aData, aOnSuccess, aOnError) {
-        let s = this
+        const s = this;
 
         s.axios.request({
             method: "post",
@@ -543,15 +542,15 @@ class webApi {
                 withCredentials: true
             }
         }).then(function (result) {
-            let arg = result.data
+            const arg = result.data;
             if (aOnSuccess) {
-                aOnSuccess(arg)
+                aOnSuccess(arg);
             }
         }).catch(function (e) {
             if (aOnError) {
-                aOnError(e)
+                aOnError(e);
             }
-        })
+        });
     }
 
     /**
@@ -572,7 +571,7 @@ class webApi {
      * @param aOnError
      */
     reportUdc(aData, aOnSuccess, aOnError) {
-        let s = this
+        const s = this;
 
         s.axios.request({
             method: "post",
@@ -582,15 +581,15 @@ class webApi {
                 withCredentials: true
             }
         }).then(function (result) {
-            let arg = result.data
+            const arg = result.data;
             if (aOnSuccess) {
-                aOnSuccess(arg)
+                aOnSuccess(arg);
             }
         }).catch(function (e) {
             if (aOnError) {
-                aOnError(e)
+                aOnError(e);
             }
-        })
+        });
     }
 
     /**
@@ -613,7 +612,7 @@ class webApi {
      * @param aOnError
      */
     getCountryList(aData, aOnSuccess, aOnError) {
-        let s = this
+        const s = this;
 
         s.axios.request({
             method: "get",
@@ -622,19 +621,19 @@ class webApi {
                 withCredentials: true
             }
         }).then(function (result) {
-            let arg = result.data
+            const arg = result.data;
             if (aOnSuccess) {
-                aOnSuccess(arg)
+                aOnSuccess(arg);
             }
         }).catch(function (e) {
             if (aOnError) {
-                aOnError(e)
+                aOnError(e);
             }
-        })
+        });
     }
 
     getUserInfo(aData, aOnSuccess, aOnError) {
-        let s = this
+        const s = this;
 
         s.axios.request({
             method: "post",
@@ -643,7 +642,7 @@ class webApi {
             options: {}
         }).then(function (result) {
             if (DBG_REQUEST) {
-                window._console.log(DBG_TAG, "ReqUserInfo Rsp", result)
+                window.window._console.log(DBG_TAG, "ReqUserInfo Rsp", result);
             }
             /*
             请求参数
@@ -692,33 +691,34 @@ class webApi {
                 }
             }
             */
-            let arg = result.data
-            if (arg.result.code == 0) {
-                s.userInfo = arg.result
+            const arg = result.data;
+            if (arg.result.code === 0) {
+                s.userInfo = arg.result;
             }
             if (aOnSuccess) {
-                aOnSuccess(arg)
+                aOnSuccess(arg);
             }
         }).catch(function (e) {
             if (DBG_REQUEST) {
-                window._console.log(DBG_TAG, "ReqUserInfo err", e)
+                window.window._console.log(DBG_TAG, "ReqUserInfo err", e);
             }
             if (aOnError) {
-                aOnError(e)
+                aOnError(e);
             }
-        })
+        });
     }
-    //获取用户资产
-    getWallet(aData, aOnSuccess, aOnError){
-        let s = this
+
+    // 获取用户资产
+    getWallet(aData, aOnSuccess, aOnError) {
+        const s = this;
 
         s.axios.request({
             method: "post",
             url: s.axios.baseUrl + API.ASSETS_V1,
             data: qs.stringify(aData),
             options: {}
-        }).then(function (result){
-            if (DBG_REQUEST) {window._console.log(DBG_TAG,"ReqWallet Rsp",result)}
+        }).then(function (result) {
+            if (DBG_REQUEST) { window.window._console.log(DBG_TAG, "ReqWallet Rsp", result); }
             /*
             请求参数
             {
@@ -756,43 +756,42 @@ class webApi {
                 "assetLists04":[
                     {"wType":"USDT","coin":"USDT","otcBal":"","otcLock":"100","fullName":"USDT","icon":"/imgs/cat/coins/b79b2e9f76f0887df600edb0c47c2e28.png?ver=1594976504364","networkNum":"12","initValue":0,"Setting":{"canTransfer":true,"canExchange":false},"wid":"11130410USDT","uid":"11130410","mainBal":"190311.38764131","mainLock":"","financeBal":"","pawnBal":"","creditNum":"","wdLimit":"","depositLock":"526","cTime":"0","updTime":"0","flag":"0","memo":"","email":""}],"transferSettlementTime":86400,"paySettlementTime":86400}
             */
-            let arg = result.data
-            if (arg.result.code == 0) {
-                s.setWallet(arg)
+            const arg = result.data;
+            if (arg.result.code === 0) {
+                s.setWallet(arg);
             }
-            if(aOnSuccess) {
-                aOnSuccess(arg)
+            if (aOnSuccess) {
+                aOnSuccess(arg);
             }
         }).catch(function(e) {
-            if (DBG_REQUEST) {window._console.log(DBG_TAG,"ReqWallet err",e)}
+            if (DBG_REQUEST) { window.window._console.log(DBG_TAG, "ReqWallet err", e); }
             if (aOnError) {
-                aOnError(e)
+                aOnError(e);
             }
-        })
+        });
     }
 
-    setWallet(data){
-        let s = this
+    setWallet(data) {
+        const s = this;
 
-        s.wallet['01'] = data.assetLists01  //合约资产
-        s.wallet['02'] = data.assetLists02  //现货资产
-        s.wallet['03'] = data.assetLists03  //主钱包
-        s.wallet['04'] = data.assetLists04  //法币资产
+        s.wallet['01'] = data.assetLists01; // 合约资产
+        s.wallet['02'] = data.assetLists02; // 现货资产
+        s.wallet['03'] = data.assetLists03; // 主钱包
+        s.wallet['04'] = data.assetLists04; // 法币资产
 
-        for(let item of data.assetLists01){
-            s.wallet_obj['01'][item.wType] = item
+        for (const item of data.assetLists01) {
+            s.wallet_obj['01'][item.wType] = item;
         }
-        for(let item of data.assetLists02){
-            s.wallet_obj['02'][item.wType] = item
+        for (const item of data.assetLists02) {
+            s.wallet_obj['02'][item.wType] = item;
         }
-        for(let item of data.assetLists03){
-            s.wallet_obj['03'][item.wType] = item
+        for (const item of data.assetLists03) {
+            s.wallet_obj['03'][item.wType] = item;
         }
-        for(let item of data.assetLists04){
-            s.wallet_obj['04'][item.wType] = item
+        for (const item of data.assetLists04) {
+            s.wallet_obj['04'][item.wType] = item;
         }
     }
-
 }
 
-module.exports = webApi
+module.exports = webApi;
