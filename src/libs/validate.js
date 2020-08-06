@@ -1,4 +1,4 @@
-import geetest from "@/libs/geetestTwo"
+import geetest from "@/libs/geetestTwo";
 
 class Validate {
     constructor() {
@@ -7,12 +7,12 @@ class Validate {
         this.email = 3;
         this.tradepwd = 4;
         this.emailConfig = null; // 发送邮件配置
-        this.smsConfig = null;  // 发送短信配置
+        this.smsConfig = null; // 发送短信配置
         this.callbackHandler = null; // 验证结果回调
         this.code = ''; // 用于google验证code临时储存
         this.validateType = ''; // sms：手机验证，google：谷歌验证，email：邮箱验证
         this.validateSheet = {
-            loading: false,
+            loading: false
         };
     }
 
@@ -30,21 +30,21 @@ class Validate {
         //     loading: false,
         // };
         if (params) {
-            params.lang = gI18n.lang;
+            params.lang = window.gI18n.lang;
         } else {
             params = {
-                lang: gI18n.lang,
+                lang: window.gI18n.lang
             };
         }
         this.smsConfig = params;
-        // gBroadcast.emit({
+        // window.gBroadcast.emit({
         //     cmd: 'setValidateSheet',
         //     data: config,
         // });
-        gBroadcast.offMsg({
+        window.gBroadcast.offMsg({
             key: 'ValidateModule',
             cmd: 'setValidateSheet',
-            isall: true,
+            isall: true
         });
         if (callback) {
             this.callbackHandler = callback;
@@ -57,13 +57,13 @@ class Validate {
      */
     activeGoogle(callback) {
         this.validateType = 'google';
-        let config = {
-            display: true,
-            inputValue: '',
-            type: this.google,
-            loading: false,
-        };
-        // gBroadcast.emit({
+        // const config = {
+        //     display: true,
+        //     inputValue: '',
+        //     type: this.google,
+        //     loading: false
+        // };
+        // window.gBroadcast.emit({
         //     cmd: 'setValidateSheet',
         //     data: config,
         // });
@@ -87,7 +87,7 @@ class Validate {
         //     loading: false,
         // };
         this.emailConfig = params;
-        // gBroadcast.emit({
+        // window.gBroadcast.emit({
         //     cmd: 'setValidateSheet',
         //     data: config,
         // });
@@ -101,13 +101,13 @@ class Validate {
      * @param callback
      */
     activeTradePwd(callback) {
-        let config = {
-            display: true,
-            inputValue: '',
-            type: this.tradepwd,
-            loading: false,
-        };
-        // gBroadcast.emit({
+        // const config = {
+        //     display: true,
+        //     inputValue: '',
+        //     type: this.tradepwd,
+        //     loading: false
+        // };
+        // window.gBroadcast.emit({
         //     cmd: 'setValidateSheet',
         //     data: config,
         // });
@@ -123,26 +123,26 @@ class Validate {
      */
     sendSmsCode(callback, callback1) {
         if (this.smsConfig.constructor === Object) {
-            this.smsConfig.exChannel = exchId;
-            this.smsConfig.lang = gI18n.locale;
+            this.smsConfig.exChannel = window.exchId;
+            this.smsConfig.lang = window.gI18n.locale;
         } else {
             this.smsConfig = {
-                exChannel: exchId,
-                lang: gI18n.locale,
-            }
+                exChannel: window.exchId,
+                lang: window.gI18n.locale
+            };
         }
-        gWebApi.getSMSCode(this.smsConfig, res => {
+        window.gWebApi.getSMSCode(this.smsConfig, res => {
             if (callback1) {
                 callback1();
             }
             if (callback) {
                 callback(res);
             }
-        }, err => {
+        }, () => {
             if (callback1) {
                 callback1();
             }
-        })
+        });
     }
 
     /**
@@ -151,26 +151,25 @@ class Validate {
      * @param callback1
      */
     sendEmailCode(callback, callback1) {
-
         if (this.emailConfig.constructor === Object) {
-            this.emailConfig.exChannel = exchId;
+            this.emailConfig.exChannel = window.exchId;
         } else {
-            this.emailConfig = {exChannel: exchId};
+            this.emailConfig = { exChannel: window.exchId };
         }
 
-        gWebApi.sendEmail(this.emailConfig, res => {
+        window.gWebApi.sendEmail(this.emailConfig, res => {
             if (callback1) {
                 callback1();
             }
             if (callback) {
                 callback(res);
             }
-        }, err => {
+        }, () => {
             if (callback1) {
                 callback1();
             }
-        })
-    };
+        });
+    }
 
     /**
      * 校验短信验证码
@@ -178,27 +177,26 @@ class Validate {
      */
     checkSmsCode(code) {
         if (!code) {
-            $message({content: '该字段不能为空', type: 'danger'});
+            window.$message({ content: '该字段不能为空', type: 'danger' });
             return;
         }
-        this.validateSheet.loading = true
-        let params = {};
+        this.validateSheet.loading = true;
+        const params = {};
         if (this.smsConfig) {
             params.phoneNum = this.smsConfig.phoneNum;
         }
         params.code = code;
 
-        gWebApi.smsVerify(params, res => {
-            if (res.result == 0) {
+        window.gWebApi.smsVerify(params, res => {
+            if (res.result === 0) {
                 this.finished();
             } else {
                 this.validateSheet.loading = false;
-                $message({content: errCode.getWebApiErrorCode(res.data.result.code), type: 'danger'});
+                window.$message({ content: window.errCode.getWebApiErrorCode(res.data.result.code), type: 'danger' });
             }
-        }, err => {
+        }, () => {
             this.validateSheet.loading = false;
-        })
-
+        });
     }
 
     /**
@@ -206,24 +204,23 @@ class Validate {
      * @param code
      */
     checkGoogleCode(code) {
-
         if (!code) {
-            $message({content: '该字段不能为空', type: 'danger'});
+            window.$message({ content: '该字段不能为空', type: 'danger' });
             return;
         }
-        this.validateSheet.loading = true
-        gWebApi.googleCheck({code: code},
+        this.validateSheet.loading = true;
+        window.gWebApi.googleCheck({ code: code },
             res => {
-                if (res.result == 0) {
+                if (res.result === 0) {
                     this.finished();
                 } else {
-                    this.validateSheet.loading = false
-                    $message({content: errCode.getWebApiErrorCode(res.data.result.code), type: 'danger'})
+                    this.validateSheet.loading = false;
+                    window.$message({ content: window.errCode.getWebApiErrorCode(res.data.result.code), type: 'danger' });
                 }
             },
-            err => {
-                this.validateSheet.loading = false
-            })
+            () => {
+                this.validateSheet.loading = false;
+            });
     }
 
     /**
@@ -232,49 +229,48 @@ class Validate {
      */
     checkEmailCode(code) {
         if (!code) {
-            $message({content: '该字段不能为空', type: 'danger'});
-            return
+            window.$message({ content: '该字段不能为空', type: 'danger' });
+            return;
         }
-        this.validateSheet.loading = true
-        gWebApi.emailCheck({code: code},
+        this.validateSheet.loading = true;
+        window.gWebApi.emailCheck({ code: code },
             res => {
-                if (res.result.code == 0) {
+                if (res.result.code === 0) {
                     this.finished();
                 } else {
-                    this.validateSheet.loading = false
-                    $message({content: errCode.getWebApiErrorCode(res.data.result.code), type: 'danger'})
+                    this.validateSheet.loading = false;
+                    window.$message({ content: window.errCode.getWebApiErrorCode(res.data.result.code), type: 'danger' });
                 }
             },
-            err => {
-                this.validateSheet.loading = false
-            })
+            () => {
+                this.validateSheet.loading = false;
+            });
     }
 
     /**
      * 校验结果
      */
     finished() {
-        debugger
         if (this.callbackHandler) {
             this.callbackHandler();
         }
-        // gBroadcast.emit({
+        // window.gBroadcast.emit({
         //     cmd: 'smsAndEmailSuc',
         //     data: 'ready'
         // });
-    };
+    }
 
     close() {
-        let config = {};
+        const config = {};
         config.display = false;
         config.inputValue = '';
         config.type = 0;
         config.loading = false;
-        // gBroadcast.emit({
+        // window.gBroadcast.emit({
         //     cmd: 'setValidateSheet',
         //     data: config
         // });
-        gBroadcast.offMsg({
+        window.gBroadcast.offMsg({
             key: 'ValidateModule',
             cmd: 'geetestMsg',
             isall: true
@@ -282,21 +278,21 @@ class Validate {
     }
 
     initGeetest() {
-        let self = this;
+        const self = this;
         geetest.init(() => {
         });
-        gBroadcast.onMsg({
+        window.gBroadcast.onMsg({
             key: 'ValidateModule',
             cmd: 'geetestMsg',
             cb: res => {
-                if (this.validateType != 'google') {
+                if (this.validateType !== 'google') {
                     return;
                 }
-                if (res == 'success') {
-                    self.checkGoogleCode(self.code)
-                    self.validateSheet.loading = false
+                if (res === 'success') {
+                    self.checkGoogleCode(self.code);
+                    self.validateSheet.loading = false;
                 } else {
-                    self.validateSheet.loading = false
+                    self.validateSheet.loading = false;
                 }
             }
         });

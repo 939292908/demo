@@ -30,11 +30,12 @@ module.exports = {
                                     },
                                     rightComponents: m('a.body-1.register-send-code-width.px-2', {
                                         onclick: () => {
+                                            if (Register.smsCd > 0) return;
                                             Register.type === 'phone'
                                                 ? Register.sendSmsCode()
                                                 : Register.sendEmailCode();
                                         }
-                                    }, ['获取验证码'])
+                                    }, [Register.smsCd > 0 ? `${Register.smsCd}` : '获取验证码'])
                                 })
                             ]),
                             m('button.button.my-3.is-primary.is-fullwidth.mb-2', {
@@ -82,9 +83,9 @@ module.exports = {
                                     ]),
                                     options: {
                                         oninput: e => {
-                                            Register.code = e.target.value;
+                                            Register.loginName = e.target.value;
                                         },
-                                        value: Register.code
+                                        value: Register.loginName
                                     }
                                 })
                                 : m('input.input[type=text].mb-5', {

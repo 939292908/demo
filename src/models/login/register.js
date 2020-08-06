@@ -191,6 +191,7 @@ module.exports = {
     },
     setSmsCd () {
         this.smsCd = 60;
+        m.redraw();
         this.int = setInterval(() => {
             this.smsCd--;
             m.redraw();
