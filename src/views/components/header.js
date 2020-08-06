@@ -118,7 +118,7 @@ let header = {
                 m("a", { class: "navbar-link" }, [
                     this.userName
                 ]),
-                m("div", { class: "navbar-dropdown" }, [
+                m("div", { class: "navbar-dropdown navbar-dropdown-left" }, [
                     m("a", { class: "navbar-item" }, [
                         this.userName
                     ]),

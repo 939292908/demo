@@ -290,7 +290,7 @@ let obj = {
             ]),
             // list
             m('div', { class: `` }, obj.contractList.map((item, index) => {
-                return m('div', { class: `columns` }, [
+                return m('div', { class: `columns ${index % 2 == 0 ? 'is-active-bg1' : ''}` }, [
                     m('div', { class: `column is-3` }, [item.name]),
                     m('div', { class: `column is-3` }, [item.info])
                 ])
