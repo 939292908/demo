@@ -34,11 +34,25 @@ class Mkt {
     // 限定接收的数据的量
     NumReqCountMax = 100;
 
+    TickType=  "__fast__"; //行情模式，"__fast__":正常模式；"__slow__"：慢速模式；
+
+    booking = {
+        // "sub1": {want:true,done:false},
+    };
+
+    // 合约详情
     AssetD = {}
 
+    // 合约详情补充参数
     AssetEx = {}
 
     displaySym = []
+
+    // 合约最新行情
+    lastTick = {}
+
+    // 成交行情
+    trades = []
 
     constructor(arg){
 
@@ -61,6 +75,12 @@ class Mkt {
             'PRECONNECT': {
                 'do': (aObj)=>{
                     _console.log(API_TAG, 'PRECONNECT', aObj)
+
+                    // 清理订阅状态
+                    for (var propName in aObj.booking) {
+                        aObj.booking[propName].done = false;
+                    }
+
                     if(aObj.ws){
                         aObj.ws.close()
                     }
@@ -138,7 +158,46 @@ class Mkt {
                     if (aObj.CheckAndSendHeartbeat(aObj)) {
                         return 'PRECONNECT';
                     }
-                    // return 'IDLE'
+
+                    let books
+                    let unbooks
+                    let toberemove
+                    for (var propName in aObj.booking) {
+                        let book = aObj.booking[propName];
+                        if (book.want) {
+                            if (!book.done) {
+                                book.done = true;
+                                if (!books) {
+                                    books = []
+                                }
+                                books.push(propName)
+                            }
+                        } else {
+                            if (!book.done) {
+                                book.done = true;
+                                if (!unbooks) {
+                                    unbooks = []
+                                }
+                                unbooks.push(propName)
+                                if (!toberemove) {
+                                    toberemove = []
+                                }
+                                toberemove.push(propName);
+                            }
+                        }
+
+                    }
+                    if (books && (books.length>0)) {
+                        aObj.ReqSub(books)
+                    }
+                    if (unbooks && unbooks.length>0) {
+                        aObj.ReqUnSub(unbooks)
+                    }
+                    if (toberemove) {
+                        for (let i = toberemove.length - 1; i >=0; i--) {
+                            delete aObj.booking[toberemove[i]]
+                        }
+                    }
                 }
             }
         });
@@ -171,23 +230,22 @@ class Mkt {
                 /**
                  {"subj":"tick","data":{"Sym":"BTC.USDT","At":1574523443124,"PrzBid1":7280.5,"SzBid1":134,"SzBid":4118258,"PrzAsk1":7281.5,"SzAsk1":3220,"SzAsk":4343293,"LastPrz":7281,"SettPrz":7279.7003499186,"Prz24":7129,"High24":7376.5,"Low24":7081,"Volume24":38848117,"Turnover24":1402379837.020001,"Volume":3345679193,"Turnover":0,"OpenInterest":870068,"FundingLongR":-0.0003143419,"FundingPredictedR":-0.0003143419,"SEQ":887726}}
                  **/
-                // let sym = d_data.Sym
-                // if (sym) {
-                //     aObj.ticks[sym] = aObj.util_PushToHead(aObj.ticks[sym], d_data, aObj.NumDataLenMax)
-                //     aObj.lastTick[sym] = d_data
-                //     gEVBUS.emit(EV_TICK_UPD, {Ev: EV_TICK_UPD, Sym: sym, data: d_data})
-                // }
+                let sym = d_data.Sym
+                if (sym) {
+                    aObj.lastTick[sym] = d_data
+                    gBroadcast.emit({cmd: gBroadcast.MSG_TICK_UPD, data: {Ev: gBroadcast.MSG_TICK_UPD, Sym: sym, data: d_data}})
+                }
                 break;
             }
             case "index": {
                 /**
                  {"subj":"tick","data":{"Sym":"BTC.USDT","At":1574523443124,"PrzBid1":7280.5,"SzBid1":134,"SzBid":4118258,"PrzAsk1":7281.5,"SzAsk1":3220,"SzAsk":4343293,"LastPrz":7281,"SettPrz":7279.7003499186,"Prz24":7129,"High24":7376.5,"Low24":7081,"Volume24":38848117,"Turnover24":1402379837.020001,"Volume":3345679193,"Turnover":0,"OpenInterest":870068,"FundingLongR":-0.0003143419,"FundingPredictedR":-0.0003143419,"SEQ":887726}}
                  **/
-                // let sym = d_data.Sym
-                // if (sym) {
-                //     aObj.ticks[sym] = aObj.util_PushToHead(aObj.ticks[sym], d_data, aObj.NumDataLenMax)
-                //     gEVBUS.emit(EV_INDEX_UPD, {Ev: EV_INDEX_UPD, Sym: sym, data: d_data})
-                // }
+                let sym = d_data.Sym
+                if (sym) {
+                    aObj.lastTick[sym] = d_data
+                    gBroadcast.emit({cmd: gBroadcast.MSG_INDEX_UPD, data: {Ev: gBroadcast.MSG_INDEX_UPD, Sym: sym, data: d_data}})
+                }
                 break;
             }
             case "kline": {
@@ -195,59 +253,34 @@ class Mkt {
                 {"subj":"kline","data":{"Sym":"BTC.USDT","Typ":"1m","Sec":1574523600,"PrzOpen":7257,"PrzClose":7257.5,"PrzHigh":7257.5,"PrzLow":7255.5,"Volume":2629,"Turnover":95390.5275}}
                 */
 
-                // let sym = d_data.Sym;
-                // let typ = d_data.Typ;
-                // let intervalInSec = aObj.Typ2Sec[typ];
-                // if (sym) {
-                //     let roundedInMS = Math.floor(d_data.Sec / intervalInSec) * intervalInSec * 1000;
-                //     let converted = [{
-                //         Ms: roundedInMS,
-                //         Turnover: d_data.Turnover,
-                //         //下面的数据采用TradingView格式
-                //         time: roundedInMS,
-                //         close: d_data.PrzClose,
-                //         open: d_data.PrzOpen,
-                //         high: d_data.PrzHigh,
-                //         low: d_data.PrzLow,
-                //         volume: d_data.Volume,
-                //     }]
+                let sym = d_data.Sym;
+                let typ = d_data.Typ;
+                if (sym) {
                     
-                //     gEVBUS.emit(EV_KLINE_UPD, {Ev: EV_KLINE_UPD, Sym: d_data.Sym, Typ: d_data.Typ, data: converted[0]})
-
-
-                // }
+                    gBroadcast.emit({cmd: gBroadcast.MSG_KLINE_UPD, data: {Ev: gBroadcast.MSG_KLINE_UPD, Sym: sym, Typ: typ, data: d_data}})
+                }
                 break;
             }
             case "trade": {
                 /*
                 {"subj":"trade","data":{"Sym":"BTC.USDT","At":1574573589537,"Prz":7182.5,"Dir":-1,"Sz":87,"Val":-3124.3875,"MatchID":"01DTDYCFZV3DCMX20744BQF5WW"}}
                 */
-                // let sym = d_data.Sym
-                // if (sym) {
-                //     aObj.trades[sym] = aObj.util_PushToHead(aObj.trades[sym], d_data, aObj.NumDataLenMax)
-                // }
-                // gEVBUS.emit(EV_NEWTRADE_UPD, {Ev: EV_NEWTRADE_UPD, data: d_data})
-                // if (ENABLE_TRADE_UPDATE_KLINE) {
-                //     // 这里要发送事件了
-                //     gEVBUS.emit(EV_REALTIME_UPD, {Ev: EV_REALTIME_UPD, data: d_data})
-                // }
+                let sym = d_data.Sym;
+                if (sym) {
+                    aObj.trades[sym] = aObj.util_PushToHead(aObj.trades[sym], d_data, aObj.NumDataLenMax)
+                    gBroadcast.emit({cmd: gBroadcast.MSG_TRADE_UPD, data: {Ev: gBroadcast.MSG_TRADE_UPD, Sym: sym, data: d_data}})
+                }
                 break;
             }
             case "order20": {
-                let sym = d_data.Sym
                 /*
                 {"subj":"order20","data":{"Sym":"BTC.USDT","At":1574605382624,"Asks":[[7147.5,2385],[7148,76],[7148.5,172],[7149,474],[7149.5,1137],[7150,41],[7150.5,2547],[7151,4032],[7151.5,824],[7152,15],[7152.5,18],[7153,586],[7153.5,4675],[7154,379],[7154.5,1185],[7155,1123],[7155.5,8030],[7156,426],[7156.5,308],[7157,127]],"Bids":[[7146.5,2718],[7146,6953],[7145.5,10616],[7145,1257],[7144.5,841],[7144,582],[7143.5,3989],[7143,1711],[7142.5,1136],[7142,831],[7141.5,1668],[7141,198],[7140.5,541],[7140,813],[7139.5,488],[7139,135],[7138.5,74],[7138,131],[7137.5,1591],[7137,427]],"SEQ":2616505}}
                 */
-                // let order20s = aObj.order20[sym];
-                // if (!order20s) {
-                //     order20s = [d_data, d_data]
-                //     aObj.order20[sym] = order20s;
-                // } else {
-                //     order20s[1] = order20s[0]
-                //     order20s[0] = d_data;
-                // }
-                
-                // gEVBUS.emit(EV_ORDER20_UPD, {Ev: EV_ORDER20_UPD, Sym: sym, data: d_data})
+               let sym = d_data.Sym
+               if (sym) {
+                   aObj.order20[sym] = d_data
+                   gBroadcast.emit({cmd: gBroadcast.MSG_ORDER20_UPD, data: {Ev: gBroadcast.MSG_ORDER20_UPD, Sym: sym, data: d_data}})
+               }
                 break;
             }
 
@@ -280,13 +313,6 @@ class Mkt {
             if (req) {
                 if ((req.cb) && (typeof req.cb == "function")) {
                     req.cb(aObj, msg);
-                }
-                if (msg.subj) {
-
-                    let evbus = window.gEVBUS
-                    if (evbus) {
-                        evbus.emit(msg.subj,msg.data)
-                    }
                 }
             }
             delete aObj.Reqs[rid];
@@ -326,6 +352,7 @@ class Mkt {
         })
     }
 
+    // 获取合约详情
     ReqAssetD(aArg) {
         let s = this
         s.WSCall_Mkt("GetAssetD",aArg,function(aMkt, aRaw) {
@@ -356,6 +383,73 @@ class Mkt {
         })
         
     }
+    // 行情订阅
+    ReqSub(aTpcArray) {
+        let s = this
+        
+        let needSub = []
+        // aTpcArray.map(item => {
+        //     if(!s.subList.includes(item)){
+        //         s.subList.push(item)
+        //         needSub.push(item)
+        //     }
+        // })
+        if(!aTpcArray || aTpcArray.length == 0){
+           return 
+        }
+        aTpcArray.push(s.TickType)
+        s.WSCall_Mkt("Sub",aTpcArray)
+    }
+
+    // 取消订阅
+    ReqUnSub(aTpcArray) {
+        let s = this
+        // aTpcArray.map(item => {
+        //     let i = s.subList.findIndex(it =>{
+        //         return it == item
+        //     })
+        //     if(i > -1){
+        //         s.subList.splice(i, 1)
+        //     }
+        // })
+        if(!aTpcArray || aTpcArray.length == 0){
+            return 
+         }
+        s.WSCall_Mkt("UnSub",aTpcArray)
+    }
+
+    TpcAdd(aTpc) {
+        let s = this;
+        if (s.booking) {
+            if (aTpc in s.booking) {
+                let book = s.booking[aTpc]
+                if (!book.want) {
+                    book.want = true;
+                    book.done = false;
+                }
+            } else {
+                s.booking[aTpc] = {
+                    want: true,
+                    done: false,
+                }
+            }
+        }
+    }
+
+    TpcDel(aTpc) {
+        let s = this;
+        if (s.booking) {
+            if (aTpc in s.booking) {
+                let book = s.booking[aTpc]
+                if (book) {
+                    if (book.want) {
+                        book.want = false;
+                        book.done = false;
+                    }
+                }
+            }
+        }
+    }
 
     CheckAndSendHeartbeat(aObj) {
         let now = Date.now()
@@ -368,6 +462,18 @@ class Mkt {
             }
         }
         return false;
+    }
+
+    util_PushToHead(aArray, aElement, aMaxLen) {
+        if (!aArray) {
+            aArray = [aElement]
+        } else {
+            aArray = [aElement].concat(aArray)
+        }
+        if (aMaxLen) {
+            aArray = aArray.slice(0,aMaxLen);
+        }
+        return aArray
     }
 }
 
