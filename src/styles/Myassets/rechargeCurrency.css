@@ -1,0 +1,55 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+.rechargeCurrency{
+    width: 90%;
+    margin: auto;
+}
+.rechargeCurrency-top{
+    display: flex;
+    flex-direction: row;
+}
+.rechargeCurrency-top-left{
+    margin-right: 100px;
+}
+.rechargeCurrency-top-right{
+    padding: 7% 0;
+}
+
+.rechargeCurrency-nav{
+    display: flex;
+    flex-direction: row;
+    height: 28px;
+    padding-left: 10px;
+    margin-bottom: 20px;
+}
+.rechargeCurrency-nav-my,.rechargeCurrency-nav-record{
+    margin-right: 20px;
+    cursor: pointer;
+}
+.rechargeCurrency-nav-my{
+    color: #FF8B00;
+    border-bottom: 2px solid #FF8B00;
+}
+.rechargeCurrency select{
+    width: 400px;
+    margin: 10px 0;
+    border-radius: 10px;
+}
+.rechargeCurrency table{
+    width: 100%;
+    margin-bottom: 20px;
+}
+.rechargeCurrency table thead{
+    color: rgba(83, 83, 83, 0.555);
+    background-color: #FFEEDA;
+}
+.rechargeCurrency td{
+    width: 5%;
+    padding:8px 0;
+}
+/* tr悬浮 */
+.rechargeCurrency table tbody tr:hover {
+    background-color: #f7fbfb;
+}
