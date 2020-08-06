@@ -570,13 +570,22 @@ let obj = {
     p.isAdd?delete p.isAdd:''
     p.isBack?delete p.isBack:''
     p.isClose?delete p.isClose:''
+
+    let CloseType = window.gWebAPI.CTX.UserSetting.trade[4]
+    let AddType = window.gWebAPI.CTX.UserSetting._trade[1]
+    let BackType = window.gWebAPI.CTX.UserSetting._trade[0]
+    if(status == 'add'&&AddType || status == 'back'&&BackType || status == 'close'&&CloseType){
+      gEVBUS.emit(gTrd.EV_OPENORDERCOMMON_UPD, {Ev: gTrd.EV_OPENORDERCOMMON_UPD,data:{p,status}})
+    }else{
+      window.gTrd.ReqTrdOrderNew(p, function(gTrd, arg){
+        pos.loading = false
+        if (arg.code != 0 || arg.data.ErrCode) {
+          window.$message({ title: gDI18n.$t('10037'/*"提示"*/),content: utils.getTradeErrorCode(msg.code || arg.data.ErrCode), type: 'danger'})
+        }
+      })
+    }
     
-    window.gTrd.ReqTrdOrderNew(p, function(gTrd, arg){
-      pos.loading = false
-      if (arg.code != 0 || arg.data.ErrCode) {
-        window.$message({ title: gDI18n.$t('10037'/*"提示"*/),content: utils.getTradeErrorCode(msg.code || arg.data.ErrCode), type: 'danger'})
-      }
-    })
+    
     
   },
   setStopPL: function(pos){
