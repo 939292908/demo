@@ -25,7 +25,7 @@ let coin = {
         });
     },
     coinIndex: function () {
-        return m('div', [
+        return m('div.tradingAccount_coin', [
             m('div', { class: 'tradingAccount_coin-nav' }, [
                 m('div', {}, [m('input[type=checkbox]'), m('span', {}, '隐藏0资产')]),
                 m('div', {}, [m('img', { src: 'zijinjilu' }), m('span', {}, '资金记录')]),
