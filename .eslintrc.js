@@ -41,11 +41,13 @@ module.exports = {
       "no-console": ["error",{allow:["log","warn"]}],// 允许使用console.log()
       "arrow-parens": 0,
       //"no-undef":0,// 关闭全局变量检测
-      "no-new":0//允许使用 new 关键字
+      "no-new":0,//允许使用 new 关键字
+      "no-extend-native": ["error", { "exceptions": ["Array"] }]
     },
     globals:{// 允许全局变量,将document设置为true，表示允许使用全局变量document
       "document": true,
       "localStorage": true,
       "window": true,
-    }
+    },
+    
 }
