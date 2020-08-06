@@ -16,21 +16,21 @@
     margin-left: 20px;
     margin-right: 5px;
 }
-table{
+.myWallet table{
     width: 100%;
 }
-table thead{
+.myWallet table thead{
     color: rgba(83, 83, 83, 0.555);
 }
-td{
+.myWallet td{
     width: 5%;
     padding:8px 0;
 }
-a{
+.myWallet a{
     color: #FF8B00;
     margin-right: 15px;
 }
 /* tr悬浮 */
-table tbody tr:hover {
+.myWallet table tbody tr:hover {
     background-color: #f7fbfb;
 }
