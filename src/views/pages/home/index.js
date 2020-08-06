@@ -40,27 +40,25 @@ module.exports = {
     },
     view: function () {
         return m('div.views-pages-home-index', [
-            // 轮播 + 下拉
-            
+            // 轮播 + 下拉            
             m('div', { class: `home-banner` }, [
                 m('div', { class: `index-info-box-right` }, [
-                    m('div', { class: `p1` }, ['我要买']),
-                    m('div', { class: `p2` }, ['参考价 6.95CNY/USDT']),
+                    m('div', { class: `index-info-box-right-1` }, ['我要买']),
+                    m('div', { class: `index-info-box-right-2` }, ['参考价 6.95CNY/USDT']),
                 ]),
                 m('div', { class: `index-info-box` }, [
                     m('div', { class: `index-info-box-right` }, [
-                        m('select', { class: `p3` }, [
+                        m('select', { class: `index-info-box-right-select` }, [
                             m('option', { class: `` }, ['USDT']),
                             m('option', { class: `` }, ['U']),
                             m('option', { class: `` }, ['S']),
                         ]),
                         m('select', { class: `select` }, [
-                            // m('option', { class: ``, disabled: true, selected: true, hidden: true }, ['购买金额']),
                             m('option', { class: `` }, ['CNY']),
                             m('option', { class: `` }, ['100']),
                             m('option', { class: `` }, ['200']),
                         ]),
-                        m('button', { class: `btn` }, ['购买USDT'])
+                        m('button', { class: `purchase-btn` }, ['购买USDT'])
                     ])
                 ])
             ]),

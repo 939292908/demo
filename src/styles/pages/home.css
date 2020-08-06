@@ -19,19 +19,19 @@
 .border-1 {
     border: 1px solid rgba(19, 18, 18, 0.333);
 }
-.p1{
+.index-info-box-right-1{
     margin-top: 200px;
     margin-right: 165px;
 }
-.p2{
+.index-info-box-right-2{
     margin-right: 260px;
 }
-.p3{
+.index-info-box-right-select{
     height: 32px;;
     margin-left: 340px;
     text-align: center;
 }
-.btn{
+.purchase-btn{
     height: 33px;
     margin-left: 15px;
 }

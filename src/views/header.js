@@ -82,7 +82,7 @@ module.exports = {
                     // }, [
                     //     m('i.iconfont'+(window.themeDark?'.icon-baitian':'.icon-night'))
                     // ]),
-                ]),
+                ])
             ]),
             // m('div.navbar-end', {}, [
             //     m('div.navbar-item', {}, [
@@ -117,7 +117,6 @@ module.exports = {
                         m('a', { class: `navbar-item` }, ["合约账户"]),
                         m('a', { class: `navbar-item` }, ["币币账号"]),
                         m('a', { class: `navbar-item` }, ["法币账户"]),
-
                     ])
                 ]
             ),
@@ -134,7 +133,7 @@ module.exports = {
                     m('a', { class: `navbar-item` }, ["币币订单"]),
                     m('a', { class: `navbar-item` }, ["法币订单"]),
                     m('a', { class: `navbar-item` }, ["跟单订单"]),
-            ]),
+            ])
         ]
         ),
             //我的
@@ -180,7 +179,7 @@ module.exports = {
                         ]),
                     ])
                 ]
-            ),
+            )
         ]),
             
             //下载
@@ -194,7 +193,7 @@ module.exports = {
             //语言
             m('div.navbar-item.has-dropdown.is-hoverable', {}, [
                 m('div.navbar-link', {}, [
-                    '切换语言'
+                    '简体中文/CNY'
                 ]),
                 m('div.navbar-dropdown', {}, [
                     m('a.navbar-item', {
