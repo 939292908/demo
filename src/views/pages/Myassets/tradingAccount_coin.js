@@ -1,23 +1,23 @@
-//账户交易>币币账户
-let m = require('mithril')
+// 账户交易>币币账户
+const m = require('mithril');
 
-require('@/styles/Myassets/tradingAccount_coin.css')
+require('@/styles/Myassets/tradingAccount_coin.css');
 
-let coin = {
+const coin = {
     currency: 'BTC',
     setCurrency: function (param) {
         this.currency = param;
     },
     coinList: [],
     copyAry: function (ary) {
-        let res = []
+        const res = [];
         for (let i = 0; i < ary.length; i++) {
-            res.push(ary[i])
+            res.push(ary[i]);
         }
         return res;
     },
     initTableData: function () {
-        gWebApi.getWallet({
+        window.gWebApi.getWallet({
             exChange: window.exchId
         }, function (res) {
             coin.coinList = coin.copyAry(res.assetLists02);

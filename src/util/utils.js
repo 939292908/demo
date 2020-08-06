@@ -62,7 +62,7 @@ utils.toThousands = function (num) {
     }
     if (num1) { result = num1 + result; }
     return result + (num.toString().includes('.') ? '.' + str[1] || '' : '');
-}
+};
 
 ///获取小数位数
 utils.getFloatSize = function (val) {
@@ -72,7 +72,7 @@ utils.getFloatSize = function (val) {
     var _v = val.toString().split(".");
     if (_v.length > 1) return _v[1].length
     return 0;
-}
+};
 
 // 科学计数法转正常数
 utils.getFullNum = function (num) { 
@@ -88,7 +88,7 @@ utils.getFullNum = function (num) {
     }
     ;
     return (num).toFixed(18).replace(/\.?0+$/, "");
-}
+};
 
 /**
  * 数字保留有效数字，并保持最大小数位为maxLen位
@@ -104,19 +104,17 @@ Number.prototype.toPrecision2 = function(n, maxLen){
     if (/e/i.test(str)) {
         num = Number(num).toFixed(18).replace(/\.?0+$/, "");
     }
-
     //处理最长小数位为maxLen位
     if(maxLen || maxLen === 0){
-        str = num.toString()
-        if(str.indexOf('.') > -1){
+        str = num.toString();
+        if (str.indexOf('.') > -1) {
             str = num.toString().split('.');
-            if(str[1].length > maxLen){
-                num = str[0]+'.'+str[1].substr(0,maxLen)
+            if (str[1].length > maxLen) {
+                num = str[0] + '.' + str[1].substr(0, maxLen);
             }
         }
     }
-    
-    return num
-}
+    return num;
+};
 
-export default utils
+export default utils;
