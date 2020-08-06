@@ -2186,6 +2186,10 @@ input[type="checkbox"] {
         width: calc(100% - 350px);
         height: 636px;
     }
+
+    .inf_columns{
+        @extend %py-4;
+    }
 }
 
 //合约信息 end

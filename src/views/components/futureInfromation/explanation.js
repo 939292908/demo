@@ -166,18 +166,14 @@ let obj = {
             tabelList.push(obj)
         })
         this.tabelList = tabelList
-
-        this.updateSpotInfo()
-        console.log(this.tabelList, 2222222222)
-        console.log(this.futureSymList, 1111111111)
-        // m.redraw();
-        // setTimeout(() => m.redraw(), 0)
     },
     //初始化合约数据
     updateSpotInfo: function () {
         let dropdownActive = this.dropdownActive
         let Sym = this.futureSymList[dropdownActive]
         let ass = window.gMkt.AssetD[Sym] || null
+
+        console.log(ass,11111111)
         if (ass && ass.TrdCls != 1) {
             let info = {
                 disSym: utils.getSymDisplayName(window.gMkt.AssetD, Sym), // 合约显示名称
@@ -290,9 +286,9 @@ let obj = {
             ]),
             // list
             m('div', { class: `` }, obj.contractList.map((item, index) => {
-                return m('div', { class: `columns ${index % 2 == 0 ? 'is-active-bg1' : ''}` }, [
-                    m('div', { class: `column is-3` }, [item.name]),
-                    m('div', { class: `column is-3` }, [item.info])
+                return m('div', { class: "columns inf_columns" +(index % 2 == 0 ? ' is-active-bg1' : '') }, [
+                    m('div', { class: "column is-3" }, [item.name]),
+                    m('div', { class: "column is-3" }, [item.info])
                 ])
             })
             )
@@ -323,6 +319,7 @@ export default {
     },
     oncreate: function (vnode) {
         obj.initEVBUS()
+        obj.updateSpotInfo()
         // obj.initSymList()
     },
     view: function (vnode) {
