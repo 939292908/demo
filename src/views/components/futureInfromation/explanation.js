@@ -35,6 +35,100 @@ let obj = {
             label: "--"
         }
     ],
+    contractList : [
+        {
+            name: '合约名称',
+            info: 'BTC/USDT永续'
+        },
+        {
+            name: '到期日期',
+            info: '永续'
+        },
+        {
+            name: '计价货币',
+            info: 'USDT'
+        },
+        {
+            name: '结算货币',
+            info: 'USDT'
+        },
+        {
+            name: '合约大小',
+            info: '0.001 BTC/张'
+        },
+        {
+            name: '最小价格变动',
+            info: '0.001 BTC/张'
+        },
+        {
+            name: '最小数量变动',
+            info: '0.001 BTC/张'
+        },
+        {
+            name: '杠杆模式',
+            info: '0.001 BTC/张'
+        },
+        {
+            name: '标记方法',
+            info: '合理价格'
+        },
+        {
+            name: '标记价格',
+            info: '合理价格'
+        },
+        {
+            name: '启用自动减仓',
+            info: '是：通过自动减仓来处理杠杆交易所造成的穿仓损失'
+        },
+        {
+            name: '委托保证金率',
+            info: '0.001 BTC/张'
+        },
+        {
+            name: '仓位保证金率',
+            info: '0.001 BTC/张'
+        },
+        {
+            name: '流动性提供方(Maker)手续费率：',
+            info: '0.001 BTC/张'
+        },
+        {
+            name: '流动性提取方(Taker)手续费率：',
+            info: '0.001 BTC/张'
+        },
+        {
+            name: '委托保证金',
+            info: '0.001 BTC/张'
+        },
+        {
+            name: '资金费率',
+            info: '0.001 BTC/张'
+        },
+        {
+            name: '资金费用收取间隔',
+            info: '0.001 BTC/张'
+        },
+        {
+            name: '下一个资金费率',
+            info: '0.001 BTC/张'
+        },
+        {
+            name: '风险限额',
+            info: '0.001 BTC/张'
+        },
+        {
+            name: '风险限额递增额',
+            info: '0.001 BTC/张'
+        },
+        {
+            name: '委托保证金递增值',
+            info: '0.001 BTC/张'
+        },
+        {
+            name: '仓位保证金递增值',
+            info: '0.001 BTC/张'
+        },
+    ],
 
     // 初始化多语言
     initLanguage () {
@@ -58,6 +152,78 @@ let obj = {
             },
             {
                 name: '合约大小',
+                info: '0.001 BTC/张'
+            },
+            {
+                name: '最小价格变动',
+                info: '0.001 BTC/张'
+            },
+            {
+                name: '最小数量变动',
+                info: '0.001 BTC/张'
+            },
+            {
+                name: '杠杆模式',
+                info: '0.001 BTC/张'
+            },
+            {
+                name: '标记方法',
+                info: '合理价格'
+            },
+            {
+                name: '标记价格',
+                info: '合理价格'
+            },
+            {
+                name: '启用自动减仓',
+                info: '是：通过自动减仓来处理杠杆交易所造成的穿仓损失'
+            },
+            {
+                name: '委托保证金率',
+                info: '0.001 BTC/张'
+            },
+            {
+                name: '仓位保证金率',
+                info: '0.001 BTC/张'
+            },
+            {
+                name: '流动性提供方(Maker)手续费率：',
+                info: '0.001 BTC/张'
+            },
+            {
+                name: '流动性提取方(Taker)手续费率：',
+                info: '0.001 BTC/张'
+            },
+            {
+                name: '委托保证金',
+                info: '0.001 BTC/张'
+            },
+            {
+                name: '资金费率',
+                info: '0.001 BTC/张'
+            },
+            {
+                name: '资金费用收取间隔',
+                info: '0.001 BTC/张'
+            },
+            {
+                name: '下一个资金费率',
+                info: '0.001 BTC/张'
+            },
+            {
+                name: '风险限额',
+                info: '0.001 BTC/张'
+            },
+            {
+                name: '风险限额递增额',
+                info: '0.001 BTC/张'
+            },
+            {
+                name: '委托保证金递增值',
+                info: '0.001 BTC/张'
+            },
+            {
+                name: '仓位保证金递增值',
                 info: '0.001 BTC/张'
             },
         ]
@@ -286,9 +452,10 @@ let obj = {
             ]),
             // list
             m('div', { class: `` }, obj.contractList.map((item, index) => {
+                let info = item.info
                 return m('div', { class: "columns inf_columns" +(index % 2 == 0 ? ' is-active-bg1' : '') }, [
                     m('div', { class: "column is-3" }, [item.name]),
-                    m('div', { class: "column is-3" }, [item.info])
+                    m('div', { class: "column is-6" }, [item.info])
                 ])
             })
             )
