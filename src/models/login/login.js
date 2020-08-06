@@ -1,42 +1,42 @@
-let m = require('mithril')
-let geetest = require('@/libs/geetestTwo')
-let md5 = require('md5')
+const m = require('mithril');
+const geetest = require('@/libs/geetestTwo');
+const md5 = require('md5');
 
 module.exports = {
-    account: 'qwer2@qq.com',
-    password: '123456ly',
-    loginType: "phone",
-    // account: '233233233',
-    // password: 'a123456',
-    // loginType: 'phone',
+    // account: 'qwer2@qq.com',
+    // password: '123456ly',
+    // loginType: "phone",
+    account: '123456789',
+    password: 'a123456',
+    loginType: 'phone',
     loading: false,
     code: '',
-    isValidate: false,
+    isvalidate: false,
     rulesEmail: {
-        required: value => !!value || '该字段不能为空', //该字段不能为空
+        required: value => !!value || '该字段不能为空', // 该字段不能为空
         email: value => {
             const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-            return pattern.test(value) || gI18n.$t('10668'); // 邮箱格式不正确
+            return pattern.test(value) || window.gI18n.$t('10668'); // 邮箱格式不正确
         }
     },
     rulesPhone: {
-        required: value => !!value || '该字段不能为空', //该字段不能为空
+        required: value => !!value || '该字段不能为空', // 该字段不能为空
         phone: value => {
             const pattern = /^[1][0-9]{10}$/;
-            return pattern.test(value) || gI18n.$t("10669"); // 手机号码不正确
+            return pattern.test(value) || window.gI18n.$t("10669"); // 手机号码不正确
         }
     },
     rulesAll: {
-        required: value => !!value || '该字段不能为空' //该字段不能为空
+        required: value => !!value || '该字段不能为空' // 该字段不能为空
     },
     rulesPwd: {
-        required: value => !!value || '该字段不能为空' //该字段不能为空
+        required: value => !!value || '该字段不能为空' // 该字段不能为空
     },
     valid() {
         return !!(this.password && this.account);
     },
     login() {
-        let that = this
+        const that = this;
         if (/@/.test(this.account)) {
             this.loginType = "email";
         } else {
@@ -45,22 +45,22 @@ module.exports = {
         if (this.valid) {
             this.loading = true;
             geetest.verify(() => {
-                that.loading = false
-            })
+                that.loading = false;
+            });
         }
     },
     loginFn() {
-        let self = this;
-        gWebApi.loginCheck({
+        const self = this;
+        window.gWebApi.loginCheck({
             loginType: this.loginType,
             loginName: this.account,
             pass: md5(this.password),
-            exChannel: exchId
+            exChannel: window.exchId
         }, res => {
             if (res.result.code === 0) {
-                // gBroadcast.emit({cmd: 'setShowPhone', data: !!res.result.phone});
-                // gBroadcast.emit({cmd: 'setShowGoogle', data: !!res.result.googleId});
-                gWebApi.loginSms = res.result.loginSms;
+                // window.gBroadcast.emit({cmd: 'setShowPhone', data: !!res.result.phone});
+                // window.gBroadcast.emit({cmd: 'setShowGoogle', data: !!res.result.googleId});
+                window.gWebApi.loginSms = res.result.loginSms;
                 if (res.result.tfa === 0) {
                     // 登录成功
                     self.getUserInfo();
@@ -68,68 +68,68 @@ module.exports = {
                 } else if (res.result.tfa === 1) {
                     // 手机
                     self.loading = false;
-                    validate.activeSms({phoneNum: res.result.phone}, self.loginEnter);
+                    window.validate.activeSms({ phoneNum: res.result.phone }, self.loginEnter);
                 } else if (res.result.tfa === 2) {
                     // 谷歌
 
                     self.loading = false;
 
-                    validate.activeGoogle(() => {
-                        // self.isValidate = false;
+                    window.validate.activeGoogle(() => {
+                        // self.isvalidate = false;
                         // m.redraw();
                         self.loginEnter();
                     });
-                    self.isValidate = true;
+                    self.isvalidate = true;
                     m.redraw();
                 } else if (res.result.tfa === 3) {
                     // 手机和谷歌
                     self.loading = false;
 
-                    validate.activeGoogle(
+                    window.validate.activeGoogle(
                         () => {
-                            // self.isValidate = false;
+                            // self.isvalidate = false;
                             // m.redraw();
                             self.loginEnter();
                         }
                     );
-                    self.isValidate = true;
+                    self.isvalidate = true;
                     m.redraw();
                 }
             } else {
-                $message({content: errCode.getWebApiErrorCode(res.result.code), type: 'danger'});
+                window.$message({ content: window.errCode.getWebApiErrorCode(res.result.code), type: 'danger' });
             }
         }, err => {
-            _console.log('tlh', err);
-            $message({content: gI18n.$t('10683') + '(请求异常)', type: 'danger'});
+            window._console.log('tlh', err);
+            window.$message({ content: window.gI18n.$t('10683') + '(请求异常)', type: 'danger' });
             this.loading = false;
-        })
+        });
     },
     loginEnter() {
-        gWebApi.loginWeb({}, res => {
+        window.gWebApi.loginWeb({}, res => {
             if (res.result.code === 0) {
                 this.checkAccountPwd();
                 this.getUserInfo();
             } else {
-                $message({content: gI18n.$t('10683') + `(${res.result.code})`, type: 'danger'});
+                window.$message({ content: window.gI18n.$t('10683') + `(${res.result.code})`, type: 'danger' });
                 this.loading = false;
             }
         }, err => {
-            _console.log('tlh', err);
-            $message({content: gI18n.$t("10683") + '(请求异常)', type: 'danger'});
+            window._console.log('tlh', err);
+            window.$message({ content: window.gI18n.$t("10683") + '(请求异常)', type: 'danger' });
             this.loading = false;
         });
     },
     getUserInfo() {
-        gWebApi.getUserInfo({}, data => {
-            gWebApi.loginState = true
+        window.gWebApi.getUserInfo({}, data => {
+            window.gWebApi.loginState = true;
             self.loading = false;
             if (data.result.code === 0) {
-                utils.setItem('userAccount', data.account.accountName);
-                utils.setItem('userInfo', data.account);
-                // gBroadcast.emit({cmd: 'setShowPhone', data: !!res.account.phone});
-                // gBroadcast.emit({cmd: 'setShowGoogle', data: !!res.account.googleId});self.$store.dispatch("setIsLogin", true);
+                window.utils.setItem('userAccount', data.account.accountName);
+                window.utils.setItem('userInfo', data.account);
+                // window.gBroadcast.emit({cmd: 'setShowPhone', data: !!res.account.phone});
+                // window.gBroadcast.emit({cmd: 'setShowGoogle', data: !!res.account.googleId});self.$store.dispatch("setIsLogin", true);
                 // 获取个人信息成功
-                // gBroadcast.emit({cmd: "addAccount", data: data.account});
+                // window.gBroadcast.emit({cmd: "addAccount", data: data.account});
 
                 // 发送登录邮件、短信
                 // self.sendloginTip(data.account)
@@ -137,15 +137,15 @@ module.exports = {
                 // if (store.state.httpResCheckCfg.state[10] == 2) {
                 //     this.$set(store.state.httpResCheckCfg.state, 10, 0)
                 // }
-                // gBroadcast.emit({cmd: "getDeivceInfo", data: {op: 'login'}});
-                gWebApi.loginState = true;
-                router.push('/home');
+                // window.gBroadcast.emit({cmd: "getDeivceInfo", data: {op: 'login'}});
+                window.gWebApi.loginState = true;
+                window.router.push('/home');
             } else if (data.result.code === 1001) {
                 // 获取个人信息不成功
-                // gBroadcast.emit({cmd: "setIsLogin", data: false});
+                // window.gBroadcast.emit({cmd: "setIsLogin", data: false});
             }
         }, err => {
-            $message({content: `网络异常，请稍后重试 ${err}`, type: 'danger'});
+            window.$message({ content: `网络异常，请稍后重试 ${err}`, type: 'danger' });
             this.loading = false;
         });
     },
@@ -156,11 +156,11 @@ module.exports = {
     initGeetest() {
         geetest.init(() => {
         });
-        gBroadcast.onMsg({
+        window.gBroadcast.onMsg({
             key: 'login',
             cmd: 'geetestMsg',
             cb: res => {
-                if (res == 'success') {
+                if (res === 'success') {
                     this.loginFn(self);
                 } else {
                     this.loading = false;
@@ -169,20 +169,20 @@ module.exports = {
         });
     },
     oninit() {
-        if (gWebApi.loginState) {
-            router.push('/home');
+        if (window.gWebApi.loginState) {
+            window.router.push('/home');
             return;
         }
-        if (utils.getItem('userAccount')) {
-            this.account = utils.getItem('userAccount');
+        if (window.utils.getItem('userAccount')) {
+            this.account = window.utils.getItem('userAccount');
         }
         this.initGeetest();
     },
     onremove() {
-        gBroadcast.offMsg({
+        window.gBroadcast.offMsg({
             key: 'login',
             cmd: 'geetestMsg',
             isall: true
-        })
-    },
-}
+        });
+    }
+};

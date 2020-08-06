@@ -1,7 +1,6 @@
-let m = require('mithril')
+const m = require('mithril');
 
-import('@/styles/components/inputWithComponents.scss')
-
+import('@/styles/components/inputWithComponents.scss');
 
 /**
  * 输入框扩展
@@ -10,8 +9,8 @@ import('@/styles/components/inputWithComponents.scss')
  * @param rightComponents 右组件
  * @param addClass 添加的样式class
  */
-module.exports = ({options, leftComponents, rightComponents, addClass = ''}) => {
-    let inside = [];
+module.exports = ({ options, leftComponents, rightComponents, addClass = '' }) => {
+    const inside = [];
     if (leftComponents) {
         inside.push(leftComponents);
         inside.push(m('span.line', {}, []));
@@ -23,8 +22,8 @@ module.exports = ({options, leftComponents, rightComponents, addClass = ''}) => 
     }
 
     return m('div.input-with-components', {
-        class: addClass,
+        class: addClass
     }, [
         m('div.input.px-0', {}, inside)
     ]);
-}
+};
