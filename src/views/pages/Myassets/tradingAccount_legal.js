@@ -25,7 +25,7 @@ let legal = {
         });
     },
     legalIndex:function(){
-        return m('div', [
+        return m('div.tradingAccount_legal', [
             m('div',{class:'tradingAccount_legal-nav'},[
                 m('div',{},[m('input[type=checkbox]'),m('span',{},'隐藏0资产')]),
                 m('div',{},[m('img',{src:'zijinjilu'}),m('span',{},'资金记录')]),

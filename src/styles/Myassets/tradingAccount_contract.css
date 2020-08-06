@@ -6,3 +6,21 @@
     display: flex;
     flex-direction: row;
 }
+.tradingAccount_contract table{
+    width: 100%;
+}
+.tradingAccount_contract table thead{
+    color: rgba(83, 83, 83, 0.555);
+}
+.tradingAccount_contract td{
+    width: 5%;
+    padding:8px 0;
+}
+.tradingAccount_contract a{
+    color: #FF8B00;
+    margin-right: 15px;
+}
+/* tr悬浮 */
+.tradingAccount_contract table tbody tr:hover {
+    background-color: #f7fbfb;
+}
