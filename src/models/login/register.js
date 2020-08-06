@@ -110,7 +110,7 @@ module.exports = {
             this.loading = false;
             if (res.result.code === 0) {
                 if (res.exists === 1) {
-                    window.$message({ content: window.gI18n.$t('10228'), type: 'danger' }); // 用户已存在
+                    window.$message({ content: window.gI18n.$t('10281'), type: 'danger' }); // 用户已存在
                 } else {
                     this.isvalidate = true;
                     m.redraw();
@@ -123,8 +123,8 @@ module.exports = {
             } else {
                 window.$message({ content: window.errCode.getWebApiErrorCode(res.result.code), type: 'danger' });
             }
-        }, err => {
-            window.$message({ content: '网络异常，请稍后重试' + err, type: 'danger' });
+        }, () => {
+            window.$message({ content: '网络异常，请稍后重试', type: 'danger' });
             this.loading = false;
         });
     },
@@ -140,17 +140,16 @@ module.exports = {
             nationNo: '00' + this.areaCode,
             exChannel: window.exchId
         }, res => {
-            console.log("注册信息", res.data);
             if (res.result.code === 0) {
                 // 注册成功
-                window.$message({ content: window.gI18n.$t('10630')/* '注册成功' */, type: 'success' });
+                window.$message({ content: '注册成功', type: 'success' });
                 window.router.push('/login');
             } else {
                 // 输入信息有误
                 window.$message({ content: window.errCode.getWebApiErrorCode(res.result.code), type: 'danger' });
             }
-        }, err => {
-            window.$message({ content: '网络异常，请稍后重试' + err, type: 'danger' });
+        }, () => {
+            window.$message({ content: '网络异常，请稍后重试', type: 'danger' });
         });
     },
     sendSmsCode () {

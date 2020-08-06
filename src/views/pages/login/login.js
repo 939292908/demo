@@ -17,7 +17,7 @@ module.exports = {
                     m('div.column', {}, [
                         Login.isvalidate
                             ? m('div.box.has-bg-level-3.views-pages-login-index-box', {}, [
-                                m('div.mb-5.title-2.has-text-level-1', {}, ['谷歌验证']),
+                                m('div.mb-5.title-2.has-text-level-1', {}, [window.gI18n('10210')/* '谷歌验证' */]),
                                 m('input.input[type=text].mb-6', {
                                     oninput: e => {
                                         Login.code = e.target.value;
@@ -29,10 +29,10 @@ module.exports = {
                                     onclick: () => {
                                         window.validate.checkGoogleCode(Login.code);
                                     }
-                                }, ['登录'])
+                                }, [window.gI18n.$t('10136')/* '登录' */])
 
                             ]) : m('div.box.has-bg-level-3.views-pages-login-index-box', {}, [
-                                m('div.mb-5.title-2.has-text-level-1', {}, ['登录']),
+                                m('div.mb-5.title-2.has-text-level-1', {}, [window.gI18n.$t('10136')/* '登录' */]),
                                 m('div.py-0.mb-2', {}, ['手机/邮箱']),
                                 m('input.input[type=text].mb-6', {
                                     oninput: e => {
@@ -54,7 +54,7 @@ module.exports = {
                                     onclick: () => {
                                         Login.login();
                                     }
-                                }, ['登录']),
+                                }, [window.gI18n.$t('10136')/* '登录' */]),
                                 m('div.has-text-centered.body-3.has-text-level-1', {}, [
                                     '还没账号？去',
                                     m('a.has-text-primary', {

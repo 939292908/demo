@@ -35,7 +35,7 @@ module.exports = {
                                                 ? Register.sendSmsCode()
                                                 : Register.sendEmailCode();
                                         }
-                                    }, [Register.smsCd > 0 ? `${Register.smsCd}` : '获取验证码'])
+                                    }, [Register.smsCd > 0 ? `${Register.smsCd}` : window.gI18n.$t('10214')/* '获取验证码' */])
                                 })
                             ]),
                             m('button.button.my-3.is-primary.is-fullwidth.mb-2', {
@@ -119,7 +119,7 @@ module.exports = {
                                     onclick: () => {
                                         window.router.push('/login');
                                     }
-                                }, ['登录'])
+                                }, [window.gI18n.$t('10136')/* '登录' */])
                             ])
                         ])
                     ])
