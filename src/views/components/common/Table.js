@@ -24,8 +24,8 @@
 //     },
 // ]
 
-// 参数3：table宽 默认columns中width总和
-// width : 500 
+// 参数3：table宽 默认100%; 超出则为columns中width总和
+// width : 1000 
 
 // 参数4：默认每列宽
 // defaultColumnWidth: 150
@@ -41,26 +41,30 @@ export default {
     // 设置table宽
     setTableWidth (vnode, w) {
         if (vnode.attrs.width) { // 使用参数 width
-            let attrW = vnode.attrs.width
-            this.tableWidth = attrW.toString().replace("px", "")
+            let attrW = vnode.attrs.width + ''
+            this.tableWidth = attrW.includes('px') ? attrW.toString().replace("px", "") : attrW
         } else { // 累加表头 width
-            if (!w) w = this.defaultColumnWidth
+            if (!w) w = (vnode.attrs.defaultColumnWidth || this.defaultColumnWidth)
             w = w.toString().replace("px", "")
-            if (w > 0) this.tableWidth += w * 1
+            if (w > 0) this.tableWidth = (this.tableWidth + w * 1)
         }
     },
     // 生成colgroup元素
     getColgroup (vnode) {
         return m('colgroup', vnode.attrs.columns.map((item, index) => {
             // 宽：最后一个col为'1*'（用于弹性调节一些多余的空间）, 其他col使用column里面width 或者 默认defaultColumnWidth
-            return m('col', { width: index==vnode.attrs.columns.length-1 ? '1*' : item.width || (vnode.attrs.defaultColumnWidth || this.defaultColumnWidth) 
+            return m('col', {
+                width: index == vnode.attrs.columns.length - 1 ? '1*' : item.width || (vnode.attrs.defaultColumnWidth || this.defaultColumnWidth)
             })
         }))
     },
+    // tableContainer 样式
+    getTableContainerStyle () {
+        // return this.tableWidth ? `width: ${this.tableWidth}px;` : ``
+    },
     // tableBox 样式
     getTableBoxStyle () {
-        return (this.tableWidth ? `width: ${this.tableWidth}px;` : ``) +
-            `min-width: 100%; overflow-y: visible;`
+        return `min-width: 100%; overflow-y: visible;` + (this.tableWidth ? `width: ${this.tableWidth}px` : ``)
     },
     // tr,td 样式
     getTrTdStyle (headerItem) {
@@ -76,10 +80,10 @@ export default {
     },
     view (vnode) {
         // table
-        return m('div', { class: `table-container ${vnode.attrs.class ? vnode.attrs.class : ''}` }, [
+        return m('div', { class: `table-container ${vnode.attrs.class ? vnode.attrs.class : ''}`, style: this.getTableContainerStyle() }, [
             // tHead
             m('div', { class: "pub-table-head-box", style: this.getTableBoxStyle() }, [
-                m("table", { class: "table is-hoverable ", cellpadding: 0, cellspacing: 0 }, [
+                m("table", { class: "table is-hoverable ", style: 'min-width: 100%;', cellpadding: 0, cellspacing: 0 }, [
                     this.getColgroup(vnode),
                     // 表头
                     m("tr", { class: "" }, [

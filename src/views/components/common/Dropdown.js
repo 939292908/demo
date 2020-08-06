@@ -2,8 +2,10 @@
 // getList() {return [{ id:xxx, label:xxx,... }, { id:xxx, label:xxx,... }]} 菜单数据 (id, label必须项) (必填)
 
 // onClick(item) {} 点击事件 可获取item (选填)
-// class 类名 (选填)
 // activeId 默认选中id (选填)
+// type 触发类型：active / hover (选填)默认active
+
+// class 类名 (选填)
 
 // btnClass 按钮 类名 (选填)
 // btnWidth 按钮 宽 (选填)
@@ -65,7 +67,7 @@ export default {
         this.initTriggerText(vnode)
     },
     view (vnode) {
-        return m('div', { class: `${vnode.attrs.class || ''} my-dropdown dropdown ${vnode.state.showMenu ? ' is-active' : ''}` }, [
+        return m('div', { class: `${vnode.attrs.class || ''} my-dropdown dropdown ${vnode.attrs.type == 'hover' ? " is-hoverable" : vnode.state.showMenu ? " is-active" : ''}` }, [
             // btn
             m('div', { class: "dropdown-trigger" }, [
                 m('button', {
