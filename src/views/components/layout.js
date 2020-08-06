@@ -32,6 +32,9 @@ import ordTips from './trade/ordTips'
 //计划确认弹窗
 import planTips from './trade/planTips'
 
+//仓位开仓确认按钮
+import orderCommon from './orderList/orderCommon'
+
 let obj = {
 
 
@@ -236,6 +239,9 @@ let obj = {
 
   getPlanTips:function(){
     return m(planTips)
+  },
+  getOrderCommon:function(){
+    return m(orderCommon)
   }
   
 }
@@ -288,7 +294,8 @@ export default {
           obj.getSetTipsMode(),
           obj.getImplemented(),
           obj.getOrdTips(),
-          obj.getPlanTips()
+          obj.getPlanTips(),
+          obj.getOrderCommon()
         ])
     }
 }
