@@ -53,6 +53,13 @@ let spotTick = {
             that.unSubTick()
             that.subTick()
         })
+        //body点击事件广播
+        if(this.EV_ClICKBODY_unbinder){
+            this.EV_ClICKBODY_unbinder()
+        }
+        this.EV_ClICKBODY_unbinder = window.gEVBUS.on(gEVBUS.EV_ClICKBODY,arg=> {
+            that.isSetting = false
+        })
     },
     rmEVBUS: function(){
         if(this.EV_ASSETD_UPD_unbinder){
@@ -69,6 +76,10 @@ let spotTick = {
         }
         if(this.EV_CHANGESYM_UPD_unbinder){
             this.EV_CHANGESYM_UPD_unbinder()
+        }
+        //body点击事件广播
+        if(this.EV_ClICKBODY_unbinder){
+            this.EV_ClICKBODY_unbinder()
         }
     },
     //订阅所需行情,pc界面行情订阅除了k线以外，其他所需订阅内容都在这里，各个组件内只是接收数据并渲染
@@ -346,8 +357,9 @@ let spotTick = {
         switch(type){
             case 0: 
                 return m("div",{class:"pub-header-tick-right"},[
-                    m('button', {class: "button is-rounded pub-header-tick-right-setting",onclick:function(){
+                    m('button', {class: "button is-rounded pub-header-tick-right-setting",onclick:function(e){
                         spotTick.settingAny()
+                        window.stopBubble(e)
                     }}, [
                         m('span', {class: "icon is-medium"},[
                             m('i', {class: "iconfont iconshezhi1 fas fa-2x has-text-1 icon-fixed", "aria-hidden": true })
