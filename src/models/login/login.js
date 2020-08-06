@@ -37,6 +37,11 @@ module.exports = {
     },
     login() {
         let that = this
+        if (/@/.test(this.account)) {
+            this.loginType = "email";
+        } else {
+            this.loginType = "phone";
+        }
         if (this.valid) {
             this.loading = true;
             geetest.verify(() => {
@@ -69,7 +74,7 @@ module.exports = {
 
                     self.loading = false;
 
-                    validate.activeGoogle(()=>{
+                    validate.activeGoogle(() => {
                         // self.isValidate = false;
                         // m.redraw();
                         self.loginEnter();
@@ -81,7 +86,7 @@ module.exports = {
                     self.loading = false;
 
                     validate.activeGoogle(
-                        ()=>{
+                        () => {
                             // self.isValidate = false;
                             // m.redraw();
                             self.loginEnter();
@@ -90,9 +95,11 @@ module.exports = {
                     self.isValidate = true;
                     m.redraw();
                 }
+            } else {
+                $message({content: errCode.getWebApiErrorCode(res.result.code), type: 'danger'});
             }
         }, err => {
-            _console.log('tlh',err);
+            _console.log('tlh', err);
             $message({content: gI18n.$t('10683') + '(请求异常)', type: 'danger'});
             this.loading = false;
         })
@@ -105,13 +112,11 @@ module.exports = {
             } else {
                 $message({content: gI18n.$t('10683') + `(${res.result.code})`, type: 'danger'});
                 this.loading = false;
-                validate.close();
             }
         }, err => {
-            _console.log('tlh',err);
+            _console.log('tlh', err);
             $message({content: gI18n.$t("10683") + '(请求异常)', type: 'danger'});
             this.loading = false;
-            validate.close();
         });
     },
     getUserInfo() {
@@ -133,8 +138,8 @@ module.exports = {
                 //     this.$set(store.state.httpResCheckCfg.state, 10, 0)
                 // }
                 // gBroadcast.emit({cmd: "getDeivceInfo", data: {op: 'login'}});
-                router.push('/home')
-
+                gWebApi.loginState = true;
+                router.push('/home');
             } else if (data.result.code === 1001) {
                 // 获取个人信息不成功
                 // gBroadcast.emit({cmd: "setIsLogin", data: false});
@@ -164,9 +169,13 @@ module.exports = {
         });
     },
     oninit() {
-        // if (utils.getItem('userAccount')) {
-        //     this.account = utils.getItem('userAccount');
-        // }
+        if (gWebApi.loginState) {
+            router.push('/home');
+            return;
+        }
+        if (utils.getItem('userAccount')) {
+            this.account = utils.getItem('userAccount');
+        }
         this.initGeetest();
     },
     onremove() {

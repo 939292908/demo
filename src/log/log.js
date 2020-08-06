@@ -4,6 +4,7 @@ class _console {
         this.log_MSG = true
         this.log_API = true
         this.log_UTILS = true
+        this.log_WS = true
         // 人员
         this.log_ht = true
         this.log_lz = true

@@ -1,6 +1,8 @@
 let m = require('mithril')
 let Register = require('@/models/login/register')
-let InputWithSelect = require('@/components/inputWithSelect')
+let InputWithComponent = require('@/components/inputWithComponent')
+
+import('@/styles/pages/register.css')
 
 module.exports = {
     oninit() {
@@ -18,13 +20,23 @@ module.exports = {
                     m('div.column', {}, [
                         Register.isValidate ? m('div.box.has-bg-level-3.views-pages-login-index-box', {}, [
                                 m('div.mb-5.title-2.has-text-level-1', {}, ['验证码']),
-                                m('input.input[type=text].mb-6', {
-                                    oninput: e => {
-                                        Register.code = e.target.value
-                                    },
-                                    value: Register.code
-                                }, []),
-
+                                m('div.control.has-icons-right.mb-6', {}, [
+                                    InputWithComponent({
+                                        options: {
+                                            oninput: e => {
+                                                Register.code = e.target.value
+                                            },
+                                            value: Register.code
+                                        },
+                                        rightComponents: m('a.body-1.register-send-code-width.px-2', {
+                                            onclick: () => {
+                                                Register.type === 'phone' ?
+                                                    Register.sendSmsCode() :
+                                                    Register.sendEmailCode();
+                                            }
+                                        }, ['获取验证码']),
+                                    }),
+                                ]),
                                 m('button.button.my-3.is-primary.is-fullwidth.mb-2', {
                                     onclick: () => {
                                         Register.type === 'phone' ?
@@ -48,11 +60,11 @@ module.exports = {
                                             }, ['手机'])
                                         ]),
                                         m('li', {
-                                            class: Register.type === 'mail' ? 'is-active' : ''
+                                            class: Register.type === 'email' ? 'is-active' : ''
                                         }, [
                                             m('a', {
                                                 onclick: () => {
-                                                    Register.type = 'mail';
+                                                    Register.type = 'email';
                                                 }
                                             }, ['邮箱'])
                                         ]),
@@ -60,17 +72,22 @@ module.exports = {
                                 ]),
                                 m('div.py-0.mb-2', {}, [Register.type === 'phone' ? '手机号' : '邮箱']),
                                 Register.type === 'phone' ?
-                                    InputWithSelect({
-                                        selectList: ['+86', '+0', '+1'],
-                                        selectedOptions: {},
-                                        componentOptions: {class: 'mb-5'},
-                                        inputOptions: {
-                                            type: 'text',
+                                    InputWithComponent({
+                                        addClass: 'mb-5',
+                                        leftComponents: m('span.select.px-1', {}, [
+                                            m('select.without-border.register-national-select', {
+                                                value: Register.areaCode,
+                                                onchange: e => {
+                                                    Register.areaCode = e.target.value
+                                                },
+                                            }, Register.selectList),
+                                        ]),
+                                        options: {
                                             oninput: e => {
-                                                Register.loginName = e.target.value;
+                                                Register.code = e.target.value
                                             },
-                                            value: Register.loginName,
-                                        }
+                                            value: Register.code
+                                        },
                                     }) :
                                     m('input.input[type=text].mb-5', {
                                         oninput: e => {

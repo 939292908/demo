@@ -28,7 +28,7 @@ require('@/styles/pages/home.css')
  index++;
  }
  //设置自动播放
- time=setInterval("p()",2000);
+ time=setInterval(p(),2000);
   
  //鼠标移入箭头内，停止自动播放
  function cal(){

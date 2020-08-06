@@ -593,6 +593,46 @@ class webApi {
         })
     }
 
+    /**
+     * 获取国家列表
+     * @param aData
+     * @param aOnSuccess
+     * {
+     *     "code": 0,
+     *     "data": [
+     *         {
+     *             "us_name": "China",
+     *             "cn_name": "中国",
+     *             "support": "1",
+     *             "code": "86"
+     *         },
+     *         ...
+     *     ],
+     *     "msg": "OK"
+     * }
+     * @param aOnError
+     */
+    getCountryList(aData, aOnSuccess, aOnError) {
+        let s = this
+
+        s.axios.request({
+            method: "get",
+            url: s.axios.baseUrl + API.COUNTRY_LIST_V1,
+            options: {
+                withCredentials: true
+            }
+        }).then(function (result) {
+            let arg = result.data
+            if (aOnSuccess) {
+                aOnSuccess(arg)
+            }
+        }).catch(function (e) {
+            if (aOnError) {
+                aOnError(e)
+            }
+        })
+    }
+
     getUserInfo(aData, aOnSuccess, aOnError) {
         let s = this
 

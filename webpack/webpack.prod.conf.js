@@ -30,13 +30,29 @@ module.exports = {
         }),
     ],
     resolve: {
-        extensions: ['.js', '.json'],
+        extensions: ['.js', '.json', '.css', '.scss'],
         alias: {
           '@': path.resolve('./src'),
         }
     },
     module: {
         rules: [
+            {
+                test: /\.(js|jsx)$/,
+                use:[
+                    {
+                        loader:'babel-loader',
+                    },
+                    // {
+                    //     loader:'eslint-loader',
+                    //     options: { // 这里的配置项参数将会被传递到 eslint 的 CLIEngine 
+                    //         formatter: require('eslint-friendly-formatter') // 指定错误报告的格式规范
+                    //     },
+                        
+                    // }
+                ],
+                exclude: /node_modules/, // 不检测的文件
+            },
             {
                 test: /\.html$/,
                 use: [{
@@ -45,7 +61,7 @@ module.exports = {
                 }]
             },
             {
-                test: /\.(css|sass)$/,
+                test: /\.(css|sass|scss)$/,
                 use: [
                     {
                         loader: 'style-loader',
@@ -88,23 +104,6 @@ module.exports = {
                         }
                     }
                 ]
-            },
-            {
-                test: /\.(js|jsx)$/,
-                use: [{
-                    loader:'babel-loader',
-                }],
-            },
-            {
-                test: /\.js$/,
-                use:[{loader:'eslint-loader',
-                    options: { // 这里的配置项参数将会被传递到 eslint 的 CLIEngine 
-                        formatter: require('eslint-friendly-formatter') // 指定错误报告的格式规范
-                    }
-                }],
-                enforce: "pre", // 编译前检查
-                exclude: /node_modules/, // 不检测的文件
-                include: [path.resolve(__dirname, 'src')], // 指定检查的目录
             },
         ]
     }

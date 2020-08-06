@@ -1,19 +1,23 @@
 let m = require('mithril')
 let geetest = require('@/libs/geetestTwo')
 let cryptoChar = require('@/util/cryptoChar')
+let config = require('@/config')
 let md5 = require('md5')
 
 module.exports = {
-    type: 'mail',
+    type: 'phone',
     refereeId: '',
-    loginName: '416530718@qq.com',
+    loginName: '13482854047',
     password: 'a123456',
     code: '',
     areaCode: '86',
+    selectList: [m('option', {value: '86'}, [`+86`])],
     refereeType: '',
     prom: '',
     os: '',
     isValidate: false,
+    waiting: false,
+    smsCd: 0,//激活短信按钮倒计时
     exchInfo: {},//渠道信息
     mustInvited() {
         return Boolean(parseInt(this.exchInfo.mustInvited));
@@ -80,18 +84,22 @@ module.exports = {
     registerEmailFn() {
         validate.activeEmail({
             email: this.loginName,
-            host: this.config.href,
+            host: config.official,
             fn: 'aa',
             lang: gI18n.locale,
             mustCheckFn: 'register'
-        }, this.register);
+        }, () => {
+            this.register();
+        });
     },
     // 手机注册
     registerPhoneFn() {
         validate.activeSms({
-            phoneNum: this.areaCode + this.loginName,
+            phoneNum: '00' + this.areaCode + '-' + this.loginName,
             mustCheckFn: 'register'
-        }, this.register);
+        }, () => {
+            this.register();
+        });
     },
     // 查询是否注册顾过
     queryUserInfo() {
@@ -102,18 +110,15 @@ module.exports = {
             exChannel: exchId
         }, res => {
             this.loading = false;
-            console.log(res);
-            this.loading = false;
-            console.log(res);
             if (res.result.code == 0) {
                 if (res.exists == 1) {
                     $message({content: gI18n.$t('10228'), type: 'danger'}); // 用户已存在
                 } else {
                     this.isValidate = true;
                     m.redraw();
-                    if (this.loginType === "phone") {
+                    if (this.type === "phone") {
                         this.registerPhoneFn(this)
-                    } else if (this.loginType === "email") {
+                    } else if (this.type === "email") {
                         this.registerEmailFn(this);
                     }
                 }
@@ -138,22 +143,80 @@ module.exports = {
             exChannel: exchId,
         }, res => {
             console.log("注册信息", res.data);
-            if (res.data.result.code === 0) {
+            if (res.result.code === 0) {
                 // 注册成功
-                // 记录邮箱和密码
-                validate.close();
-                $message({content: gI18n.$t('10630')/*'注册成功'*/, type: 'danger'});
-
+                $message({content: gI18n.$t('10630')/*'注册成功'*/, type: 'success'});
+                router.push('/login');
             } else {
                 // 输入信息有误
-                validate.close();
                 $message({content: errCode.getWebApiErrorCode(res.result.code), type: 'danger'});
             }
         }, err => {
-            this.validate.close();
             $message({content: '网络异常，请稍后重试' + err, type: 'danger'});
         });
     },
+    sendSmsCode() {
+        this.waiting = true;
+        validate.sendSmsCode(res => {
+            if (res.result.code == 0) {
+                this.waiting = false;
+                if (!this.int) {
+                    this.setSmsCd();
+                }
+            } else if (res.data.result.code == -1) {
+                // this.geetestCallBackType = 'sms'
+                geetest.verify();
+            } else {
+                $message({content: errCode.getWebApiErrorCode(res.result.code), type: 'danger'});
+            }
+        }, () => {
+            this.waiting = false;
+        });
+    },
+    sendEmailCode() {
+        this.waiting = true;
+        validate.sendEmailCode(res => {
+            if (res.result.code == 0) {
+                this.waiting = false;
+                if (!this.int) {
+                    this.setSmsCd();
+                }
+            } else if (res.result.code == -1) {
+                // self.geetestCallBackType = 'email'
+                geetest.verify();
+            } else {
+                $message({content: errCode.getWebApiErrorCode(res.result.code), type: 'danger'});
+            }
+        }, () => {
+            this.waiting = false;
+        });
+    },
+    setSmsCd() {
+        this.smsCd = 60;
+        this.int = setInterval(() => {
+            this.smsCd--;
+            m.redraw();
+            if (this.smsCd === 0) {
+                clearInterval(this.int);
+                this.int = null;
+                m.redraw();
+            }
+        }, 1000);
+    },
+
+    getCountryList() {
+        gWebApi.getCountryList({}, res => {
+            if (res.result.code === 0) {
+                this.selectList = [];
+                for (let item of res.result.data) {
+                    if (item.support === '1') this.selectList.push(m('option', {value: item.code}, [`+${item.code}`]),)
+                }
+                m.redraw();
+            }
+        }, err => {
+        });
+    },
+
     initGeetest() {
         let self = this;
         geetest.init(() => {
@@ -172,6 +235,7 @@ module.exports = {
     },
     oninit() {
         this.initGeetest();
+        this.getCountryList();
     },
     onremove() {
         gBroadcast.offMsg({

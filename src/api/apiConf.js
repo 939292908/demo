@@ -15,16 +15,22 @@ class Conf  {
                         Id: 0,
                         Name:"测试线路1",
                         WebAPI:"http://192.168.2.89:8888", 
+                        WSMKT:"ws://192.168.2.85:20080/v1/market", 
+                        WSTRD: "ws://192.168.2.85:50301/v1/trade", 
                     },
                     {
                         Id: 1,
                         Name:"测试线路2",
                         WebAPI:"http://192.168.2.89:8888", 
+                        WSMKT:"ws://192.168.2.85:20080/v1/market", 
+                        WSTRD: "ws://192.168.2.85:50301/v1/trade", 
                     },
                     {
                         Id: 2,
                         Name:"测试线路3",
                         WebAPI:"http://gs.eeeecloud.com:8888", 
+                        WSMKT:"ws://gs.eeeecloud.com:20080/v1/market", 
+                        WSTRD: "ws://gs.eeeecloud.com:50301/v1/trade", 
                     }
                 ]
             }
@@ -35,21 +41,29 @@ class Conf  {
                         Id: 0,
                         Name:"S00",
                         WebAPI:"https://ss.abkjl.com/www",
+                        WSMKT:"wss://ss.abkjl.com/v1/market",
+                        WSTRD:"wss://ss.abkjl.com/v1/trade"
                     },
                     {
                         Id: 1,
                         Name:"S01",
                         WebAPI:"https://cdn01-np.gmexpro.com/www",
+                        WSMKT:"wss://cdn01-np.gmexpro.com/v1/market",
+                        WSTRD:"wss://cdn01-np.gmexpro.com/v1/trade"
                     },
                     {
                         Id: 2,
                         Name:"S02",
                         WebAPI:"https://cdn01-np.jiyouai.top/www",
+                        WSMKT:"wss://cdn01-np.jiyouai.top/v1/market",
+                        WSTRD:"wss://cdn01-np.jiyouai.top/v1/trade"
                     },
                     {
                         Id: 3,
                         Name:"S03",
                         WebAPI:"https://cdn02-np.yh334.top/www",
+                        WSMKT:"wss://cdn02-np.yh334.top/v1/market",
+                        WSTRD:"wss://cdn02-np.yh334.top/v1/trade"
                     },
                 ]
             }
@@ -96,6 +110,8 @@ class Conf  {
                         Id: item.id,
                         Name: item.name,
                         WebAPI: item.apihost+item.node,
+                        WSMKT: item.market,
+                        WSTRD: item.trade,
                     }
                     lines.push(obj)
                 }
