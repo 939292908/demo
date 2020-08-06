@@ -123,7 +123,8 @@ module.exports = {
         
         let AssetD = gWsApi.AssetD[param.Sym]
         if (param.Sym.indexOf('CI_') > -1) {
-            let tick = Object.assign(this.tickDefault, param)
+            let tick = Object.assign({}, this.tickDefault)
+            tick = Object.assign(tick, param)
             let PrzMinIncSize = 6//indexPrzSize[Sym]
             let VolMinValSize = 0
             tick.LastPrz = Number(tick.Prz || 0).toPrecision2(PrzMinIncSize, 8);
