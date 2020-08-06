@@ -9,6 +9,19 @@ class broadcast {
         this.IS_LOGON_SUC_UPD = 'is_login_suc_upd'
         this.ONRESIZE_UPD = 'ONRESIZE_UPD'
         this.CHANGE_SW_CURRENCY = 'CHANGE_SW_CURRENCY'
+
+        // 最新行情广播
+        this.MSG_TICK_UPD = 'MSG_TICK_UPD'
+        // 指数行情广播
+        this.MSG_INDEX_UPD = 'MSG_INDEX_UPD'
+        // 最新成交行情广播
+        this.MSG_TRADE_UPD = 'MSG_TRADE_UPD'
+        // k线行情广播
+        this.MSG_KLINE_UPD = 'MSG_KLINE_UPD'
+        // 20档盘口行情广播
+        this.MSG_ORDER20_UPD = 'MSG_ORDER20_UPD'
+        // 全档盘口行情广播
+        this.MSG_ORDERL2_UPD = 'MSG_ORDERL2_UPD'
     }
     // 发送广播
     emit({ cmd, data }) {
