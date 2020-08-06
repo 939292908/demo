@@ -10,6 +10,10 @@ class broadcast {
         this.ONRESIZE_UPD = 'ONRESIZE_UPD'
         this.CHANGE_SW_CURRENCY = 'CHANGE_SW_CURRENCY'
 
+        // 合约详情
+        this.MSG_ASSETD_UPD = 'MSG_ASSETD_UPD';
+        // 合约详情补充参数
+        this.MSG_ASSETEX_UPD = 'MSG_ASSETEX_UPD';
         // 最新行情广播
         this.MSG_TICK_UPD = 'MSG_TICK_UPD'
         // 指数行情广播
