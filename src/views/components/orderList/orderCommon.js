@@ -5,7 +5,7 @@ var m = require("mithril")
 
 let obj = {
     open: false,
-    orderName:"市价平仓",
+    orderName:gDI18n.$t('10093'),//"市价平仓",
     orderData:{},
     //需要显示的行情数据
     lastTick: {},
@@ -176,15 +176,15 @@ let obj = {
     setOrderName:function(status){
         switch(status){
             case "close":
-                this.orderName = "市价平仓"
+                this.orderName = gDI18n.$t('10093')//"市价平仓"
                 this.AfterNum = 0
                 break;
             case "add":
-                this.orderName = "加倍开仓"
+                this.orderName = gDI18n.$t('10094')//"加倍开仓"
                 this.AfterNum = this.orderData.Qty*2
                 break;
             case "back":
-                this.orderName = "反向开仓"
+                this.orderName = gDI18n.$t('10095')//"反向开仓"
                 this.AfterNum = -(this.orderData.Qty/2)
                 break;
         }
@@ -253,7 +253,7 @@ let obj = {
                     gDI18n.$t('10059')//"委托数量"
                 ]),
                 m('div',{class:"ord-tips-num-right"},[
-                    obj.orderData.Qty + " " + "张"
+                    obj.orderData.Qty + " " + gDI18n.$t('10423')//"张"
                 ]),
             ]),
             m('div',{class:"ord-tips-num is-flex" + (obj.status == "close"?" is-hidden":"")},[
@@ -269,7 +269,7 @@ let obj = {
                     "成交后仓位"
                 ]),
                 m('div',{class:"ord-tips-num-right"},[
-                    this.AfterNum + " " + "张"
+                    this.AfterNum + " " + gDI18n.$t('10423')//"张"
                 ]),
             ]),
         ])
