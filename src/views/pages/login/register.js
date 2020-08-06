@@ -2,7 +2,7 @@ const m = require('mithril');
 const Register = require('@/models/login/register');
 const InputWithComponent = require('@/components/inputWithComponent');
 
-import('@/styles/pages/register.css');
+import('@/styles/pages/login/register.css');
 
 module.exports = {
     oninit () {
@@ -12,7 +12,7 @@ module.exports = {
         Register.onremove();
     },
     view () {
-        return m('div.pa', { width: '769px' }, [
+        return m('div.pa', { width: '1218px' }, [
             m('div.box.has-bg-level-2', {}, [
                 m('div.columns', {}, [
                     m('div.column', {}, []),

@@ -9,7 +9,7 @@ module.exports = {
         Login.onremove();
     },
     view () {
-        return m('div.pa', { width: '769px' }, [
+        return m('div.pa', { width: '1218px' }, [
             m('div.box.has-bg-level-2', {}, [
                 m('div.columns', {}, [
                     m('div.column', {}, []),

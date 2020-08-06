@@ -1,35 +1,37 @@
 const primary = Object.freeze({
-    lighten: '#00BDBD',
-    darken: '#00BDBD'
+    lighten: '#FF8B00',
+    darken: '#FF8B00'
 });
 
 const success = Object.freeze({
-    lighten: '#2AD7AA',
-    lighten1: '#22B992',
-    darken: '#22B992',
-    darken1: '#22B992'
+    lighten: '#42DC3F',
+    lighten1: '#57BD7D',
+    darken: '#42DC3F',
+    darken1: '#57BD7D'
 });
 
 const error = Object.freeze({
-    lighten: '#F57340',
-    lighten1: '#CB5F35',
-    darken: '#CB5F35',
-    darken1: '#CB5F35'
+    lighten: '#F33309',
+    lighten1: '#E55764',
+    darken: '#F33309',
+    darken1: '#E55764'
 });
 
 const font = Object.freeze({
-    lighten: '#081111',
-    lighten1: '#869595',
-    lighten2: '#A2ADAD',
+    lighten: '#1E2846',
+    lighten1: '#404862',
+    lighten2: '#61687E',
+    lighten3: '#9A9EAC',
     darken: '#E9E9E9',
     darken1: '#555A69',
     darken2: '#414450'
 });
 
 const line = Object.freeze({
-    lighten: '#EFF5F5',
-    lighten1: '#E9ECEC',
-    lighten2: '#E9ECEC',
+    lighten: 'rgba(30, 40, 70, .02)',
+    lighten1: 'rgba(30, 40, 70, .04)',
+    lighten2: 'rgba(30, 40, 70, .06)',
+    lighten3: 'rgba(30, 40, 70, .08)',
 
     darken: '#1D212B',
     darken1: '#2C3240',
@@ -37,23 +39,23 @@ const line = Object.freeze({
 });
 
 const background = Object.freeze({
-    lighten: '#EFF3F3',
+    lighten: '#EBECEF',
     lighten1: '#FFFFFF',
-    lighten2: '#F1F6F6',
-    lighten3: 'rgba(0, 189, 189, .1)',
-    lighten4: '#EFF5F5',
-    lighten5: '#F7FBFB',
+    lighten2: '#F7F7FA',
+    lighten3: '#F2F2F7',
+    lighten4: 'rgba(16, 21, 37, 0.8)',
+    lighten5: '#C4C4C4',
     darken: '#101217',
     darken1: '#171A21',
     darken2: '#1E222B',
     darken3: 'rgba(0, 189, 189, .1)',
     darken4: '#1E222B',
-    darken5: '#20252F',
+    darken5: '#20252F'
 });
 
 const mode = Object.freeze({
     lighten: 'rgba(16, 18, 23, .8)',
-    darken: 'rgba(16, 18, 23, .8)',
+    darken: 'rgba(16, 18, 23, .8)'
 });
 
 // 图标颜色
@@ -73,7 +75,7 @@ const theme = {
     background,
     mode,
     chart
-}
+};
 
 // 样式类
 const fontsz = {
@@ -84,11 +86,12 @@ const fontsz = {
     level4: '14px',
     level5: '16px',
     level6: '18px',
-    level7: '24px',
-    level8: '32px',
-    level9: '64px',
-    level10: '72px',
-}
+    level7: '20px',
+    level8: '24px',
+    level9: '32px',
+    level10: '64px',
+    level11: '72px'
+};
 const iconsz = {
     level0: '6px',
     level1: '10px',
@@ -97,8 +100,8 @@ const iconsz = {
     level4: '26px',
     level5: '32px',
     level6: '46px',
-    level7: '68px',
-}
+    level7: '68px'
+};
 
 const padding = {
     level0: '0px',
@@ -107,10 +110,11 @@ const padding = {
     level3: '12px',
     level4: '16px',
     level5: '20px',
-    level6: '32px',
-    level7: '64px',
-    level8: '128px',
-}
+    level6: '24px',
+    level7: '32px',
+    level8: '64px',
+    level9: '128px'
+};
 
 const margin = {
     level0: '0px',
@@ -119,22 +123,29 @@ const margin = {
     level3: '12px',
     level4: '16px',
     level5: '20px',
-    level6: '32px',
-    level7: '64px',
-    level8: '128px',
-}
+    level6: '24px',
+    level7: '32px',
+    level8: '64px',
+    level9: '128px'
+};
+
+const button = {
+    level0: '28px',
+    level1: '36px',
+    level2: '44px'
+};
 
 const radius = {
     level1: '5px',
     level2: '10px',
-    level3: '15px',
-}
+    level3: '15px'
+};
 
 const fontweight = {
     level1: 400,
     level2: 500,
     level3: 600
-}
+};
 
 const styles = {
     fontsz,
@@ -142,8 +153,8 @@ const styles = {
     padding,
     margin,
     radius,
-    fontweight
-}
+    fontweight,
+    button
+};
 
-
-export default {styles, theme}
+export default { styles, theme };
