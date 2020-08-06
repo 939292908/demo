@@ -367,7 +367,7 @@ class Mkt {
                 s.displaySym.push(d[i].Sym)
                 s.AssetD[d[i].Sym] = d[i]
             }
-
+            gBroadcast.emit({cmd: gBroadcast.MSG_ASSETD_UPD, data: {Ev: gBroadcast.MSG_ASSETD_UPD, data: d}})
         });
         s.WSCall_Mkt("GetAssetEx",aArg,function(aMkt, aRaw) {
             /*
@@ -379,7 +379,7 @@ class Mkt {
             for(let i = 0; i< d.length; i++){
                 s.AssetEx[d[i].Sym] = d[i]
             }
-            // gEVBUS.EmitDeDuplicate(EV_ASSETD_UPD,50,EV_ASSETD_UPD, {Ev: EV_ASSETD_UPD})
+            gBroadcast.emit({cmd: gBroadcast.MSG_ASSETEX_UPD, data: {Ev: gBroadcast.MSG_ASSETEX_UPD, data: d}})
         })
         
     }
@@ -418,6 +418,7 @@ class Mkt {
         s.WSCall_Mkt("UnSub",aTpcArray)
     }
 
+    // 添加需要请阅的内容
     TpcAdd(aTpc) {
         let s = this;
         if (s.booking) {
@@ -436,6 +437,7 @@ class Mkt {
         }
     }
 
+    // 删除已订阅的内容
     TpcDel(aTpc) {
         let s = this;
         if (s.booking) {
