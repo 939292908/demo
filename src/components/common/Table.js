@@ -35,7 +35,7 @@
 
 var m = require("mithril")
 
-module.exports = {
+module.exports =  {
     tableWidth: 0,
     defaultColumnWidth: 150, // 默认每列宽
     // 设置table宽
@@ -97,7 +97,7 @@ module.exports = {
             ]),
             // tBody
             m('div', { class: "pub-table-body-box", style: this.getTableBoxStyle() }, [
-                m("table", { class: "table is-hoverable ", cellpadding: 0, cellspacing: 0 }, [
+                m("table", { class: "table is-hoverable ", style: 'min-width: 100%;', cellpadding: 0, cellspacing: 0 }, [
                     this.getColgroup(vnode),
                     // 表格
                     vnode.attrs.data.map((item, index) => {

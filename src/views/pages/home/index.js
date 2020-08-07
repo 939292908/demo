@@ -9,7 +9,7 @@ let introduce = require('./introduce')
 let advantage = require('./advantage')
 let transaction = require('./transaction')
 let download = require('./download')
-let buttom = require('./buttom')
+// let buttom = require('./buttom')
 let rotation = require('./rotation')
 let notice = require('./notice')
 
@@ -59,15 +59,16 @@ module.exports = {
             m(notice),
             // 行情表格
             m(marketList),
-            // 介绍信息
-            m(introduce),            
+            // 平台介绍
+            m(introduce),   
+             //平台优势         
             m(advantage),            
             // 交易之旅
             m(transaction),    
             // 二维码下载
             m(download),    
             // 底部 模块
-            m(buttom),
+            // m(buttom),
         ])
     }
 }

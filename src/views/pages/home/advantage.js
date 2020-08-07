@@ -9,6 +9,7 @@ module.exports = {
     view:  function(){
         return m('views-pages-home-advantage', {}, [
             m('div', { class: `home-introduce is-around w py-5 mt-5 border-1` }, [
+                //平台优势
                 // 1
                 m('div', { class: `introduce-item` }, [
                     m('img', { class: '', "src": "https://cdn.jsdelivr.net/gh/vmlite/s/bulma/images/bulma-logo.png", width: "112", height: "28"}),
