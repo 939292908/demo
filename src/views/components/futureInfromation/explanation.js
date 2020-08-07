@@ -19,9 +19,6 @@ let obj = {
         typeName: '--',
         LotSz: '--',
     },
-
-    contractList: [], // 合约详解列表
-    tableColumns: [], // 表头
     tableData: [], // 表格
 
     //合约名称列表
@@ -35,98 +32,126 @@ let obj = {
             label: "--"
         }
     ],
+    tableColumns : [
+        {
+            title: '风险限额档位',
+            key: 'fx'
+        },
+        {
+            title: '张数',
+            render (params) { // 自定义 列内容
+                return m('div',`${params.zs[0]}-${params.zs[1]}`)
+            }
+        },
+        {
+            title: '仓位保证金率',
+            key: 'cw'
+        },
+        {
+            title: '委托保证金率',
+            key: 'wt'
+        },
+        {
+            title: '最高可用杠杆',
+            key: 'zg'
+        }
+    ],
     contractList : [
         {
             name: '合约名称',
-            info: 'BTC/USDT永续'
+            info: '--'
         },
         {
             name: '到期日期',
-            info: '永续'
+            info: '--'
         },
         {
             name: '计价货币',
-            info: 'USDT'
+            info: '--'
         },
         {
             name: '结算货币',
-            info: 'USDT'
+            info: '--'
         },
         {
             name: '合约大小',
-            info: '0.001 BTC/张'
+            info: '--'
         },
         {
             name: '最小价格变动',
-            info: '0.001 BTC/张'
+            info: '--'
         },
         {
             name: '最小数量变动',
-            info: '0.001 BTC/张'
+            info: '--'
         },
         {
             name: '杠杆模式',
-            info: '0.001 BTC/张'
+            info: '--'
         },
         {
             name: '标记方法',
-            info: '合理价格'
+            info: '--'
         },
         {
             name: '标记价格',
-            info: '合理价格'
+            info: '--'
         },
         {
             name: '启用自动减仓',
-            info: '是：通过自动减仓来处理杠杆交易所造成的穿仓损失'
+            info: '--'
         },
         {
             name: '委托保证金率',
-            info: '0.001 BTC/张'
+            info: '--'
         },
         {
             name: '仓位保证金率',
-            info: '0.001 BTC/张'
+            info: '--'
         },
         {
             name: '流动性提供方(Maker)手续费率：',
-            info: '0.001 BTC/张'
+            info: '--'
         },
         {
             name: '流动性提取方(Taker)手续费率：',
-            info: '0.001 BTC/张'
+            info: '--'
         },
         {
             name: '委托保证金',
-            info: '0.001 BTC/张'
+            info: '--'
+        },
+        {
+            name: '仓位保证金',
+            info: '--'
         },
         {
             name: '资金费率',
-            info: '0.001 BTC/张'
+            info: '--'
         },
         {
             name: '资金费用收取间隔',
-            info: '0.001 BTC/张'
+            info: '--'
         },
         {
             name: '下一个资金费率',
-            info: '0.001 BTC/张'
+            info: '--'
         },
         {
             name: '风险限额',
-            info: '0.001 BTC/张'
+            info: '--'
         },
         {
             name: '风险限额递增额',
-            info: '0.001 BTC/张'
+            info: '--'
         },
         {
             name: '委托保证金递增值',
-            info: '0.001 BTC/张'
+            info: '--'
         },
         {
             name: '仓位保证金递增值',
-            info: '0.001 BTC/张'
+            info: '--'
         },
     ],
 
@@ -136,95 +161,99 @@ let obj = {
         this.contractList = [
             {
                 name: '合约名称',
-                info: 'BTC/USDT永续'
+                info: '--'
             },
             {
                 name: '到期日期',
-                info: '永续'
+                info: '--'
             },
             {
                 name: '计价货币',
-                info: 'USDT'
+                info: '--'
             },
             {
                 name: '结算货币',
-                info: 'USDT'
+                info: '--'
             },
             {
                 name: '合约大小',
-                info: '0.001 BTC/张'
+                info: '--'
             },
             {
                 name: '最小价格变动',
-                info: '0.001 BTC/张'
+                info: '--'
             },
             {
                 name: '最小数量变动',
-                info: '0.001 BTC/张'
+                info: '--'
             },
             {
                 name: '杠杆模式',
-                info: '0.001 BTC/张'
+                info: '--'
             },
             {
                 name: '标记方法',
-                info: '合理价格'
+                info: '--'
             },
             {
                 name: '标记价格',
-                info: '合理价格'
+                info: '--'
             },
             {
                 name: '启用自动减仓',
-                info: '是：通过自动减仓来处理杠杆交易所造成的穿仓损失'
+                info: '--'
             },
             {
                 name: '委托保证金率',
-                info: '0.001 BTC/张'
+                info: '--'
             },
             {
                 name: '仓位保证金率',
-                info: '0.001 BTC/张'
+                info: '--'
             },
             {
                 name: '流动性提供方(Maker)手续费率：',
-                info: '0.001 BTC/张'
+                info: '--'
             },
             {
                 name: '流动性提取方(Taker)手续费率：',
-                info: '0.001 BTC/张'
+                info: '--'
             },
             {
                 name: '委托保证金',
-                info: '0.001 BTC/张'
+                info: '--'
+            },
+            {
+                name: '仓位保证金',
+                info: '--'
             },
             {
                 name: '资金费率',
-                info: '0.001 BTC/张'
+                info: '--'
             },
             {
                 name: '资金费用收取间隔',
-                info: '0.001 BTC/张'
+                info: '--'
             },
             {
                 name: '下一个资金费率',
-                info: '0.001 BTC/张'
+                info: '--'
             },
             {
                 name: '风险限额',
-                info: '0.001 BTC/张'
+                info: '--'
             },
             {
                 name: '风险限额递增额',
-                info: '0.001 BTC/张'
+                info: '--'
             },
             {
                 name: '委托保证金递增值',
-                info: '0.001 BTC/张'
+                info: '--'
             },
             {
                 name: '仓位保证金递增值',
-                info: '0.001 BTC/张'
+                info: '--'
             },
         ]
         // 表头
@@ -235,7 +264,9 @@ let obj = {
             },
             {
                 title: '张数',
-                key: 'zs'
+                render (params) { // 自定义 列内容
+                    return m('div',`${params.zs[0]}-${params.zs[1]}`)
+                }
             },
             {
                 title: '仓位保证金率',
@@ -251,35 +282,18 @@ let obj = {
             }
         ]
     },
-    // 获取table数据
-    getTableData () {
-        this.tableData = [
-            {
-                fx: '1',
-                zs: '0-999',
-                cw: '0.50%',
-                wt: '1.00%',
-                zg: '100',
-            },
-            {
-                fx: '2',
-                zs: '0-999',
-                cw: '0.50%',
-                wt: '1.00%',
-                zg: '100',
-            },
-            {
-                fx: '3',
-                zs: '0-999',
-                cw: '0.50%',
-                wt: '1.00%',
-                zg: '100',
-            },
-        ]
-    },
     //初始化全局广播
     initEVBUS: function () {
         let that = this
+
+        //风险限额
+        if (this.EV_GETRISKLIMITSOVER_UPD_unbinder) {
+            this.EV_GETRISKLIMITSOVER_UPD_unbinder()
+        }
+        this.EV_GETRISKLIMITSOVER_UPD_unbinder = window.gEVBUS.on(gTrd.EV_GETRISKLIMITSOVER_UPD, arg => {
+            that.initSymList()
+            that.updateSpotInfo()
+        })
 
         //assetD合约详情全局广播
         if (this.EV_ASSETD_UPD_unbinder) {
@@ -307,6 +321,10 @@ let obj = {
         //页面交易类型全局广播
         if (this.EV_PAGETRADESTATUS_UPD_unbinder) {
             this.EV_PAGETRADESTATUS_UPD_unbinder()
+        }
+        //风险限额
+        if (this.EV_GETRISKLIMITSOVER_UPD_unbinder) {
+            this.EV_GETRISKLIMITSOVER_UPD_unbinder()
         }
     },
     //初始化合约列表
@@ -339,22 +357,67 @@ let obj = {
         let Sym = this.futureSymList[dropdownActive]
         let ass = window.gMkt.AssetD[Sym] || null
 
-        console.log(ass,11111111)
+        let RS = window.gTrd.RS[Sym] || null
         if (ass && ass.TrdCls != 1) {
             let info = {
-                disSym: utils.getSymDisplayName(window.gMkt.AssetD, Sym), // 合约显示名称
-                ExpireStr: ass.TrdCls == 2 ? new Date(ass.Expire).format('yyyy-MM-dd hh:mm:ss') : "没有到期日期", // 到期日
+                // 合约显示名称
+                disSym: utils.getSymDisplayName(window.gMkt.AssetD, Sym), 
+                // 到期日
+                ExpireStr: ass.TrdCls == 2 ? new Date(ass.Expire).format('yyyy-MM-dd hh:mm:ss') : 0, 
+                //计价货币
+                SettleCoin: ass.SettleCoin, 
+                //结算货币
+                QuoteCoin: ass.QuoteCoin, 
+                //合约大小
+                LotSz: '', 
+                //最小价格变动
+                PrzMinInc: utils.getFullNum(ass.PrzMinInc), 
+                //最小数量变动 
+                Mult: utils.getFullNum(ass.Mult), 
+                //杠杆模式
+                MIRLve:1/Number(ass.MIR)+"X",
+                //标记方法
+                SIGN:"合理价格",
+                //标记价格
+                PrzM:Number(ass.PrzM).toFixed2(2,8),
+                //启用自动减仓
+                OpenOrd:"是：通过自动减仓来处理杠杆交易所造成的穿仓损失",
+                //委托保证金率
+                MIR:(ass.MIR * 100).toSubstrFixed(4) + '%',
+                //仓位保证金率
+                MMR:(ass.MMR * 100).toSubstrFixed(4) + '%',
+                //流动性提供方(Maker)手续费率：
+                FeeMkrR:(ass.FeeMkrR * 100).toSubstrFixed(4) + '%',
+                //流动性提取方(Taker)手续费率：
+                FeeTkrR:(ass.FeeTkrR * 100).toSubstrFixed(4) + '%',
+                //委托保证金
+                MIRm:(ass.MIR * 100).toSubstrFixed(4) + '%',
+                //仓位保证金
+                MMRg:(ass.MMR * 100).toSubstrFixed(4) + '%',
+                //资金费率
+                FundingLongR: (ass.FundingLongR * 100).toSubstrFixed(4) + '%',
+                //资金费用收取间隔
+                Chargein:8,
+                //预测下一资金费率
+                FundingPredictedR: (ass.FundingPredictedR * 100).toSubstrFixed(4) + '%',  
+                //资金交换时间
                 FundingNext: new Date(ass.FundingNext).format('yyyy-MM-dd hh:mm:ss'),
-                PrzMinInc: utils.getFullNum(ass.PrzMinInc), //最小价格变动
-                FundingLongR: (ass.FundingLongR * 100).toSubstrFixed(4) + '%', //资金费率
-                FundingPredictedR: (ass.FundingPredictedR * 100).toSubstrFixed(4) + '%',  //预测下一资金费率
-                Mult: utils.getFullNum(ass.Mult), //最小数量变动
+                //单位
                 FromC: ass.FromC,
                 ToC: ass.ToC,
-                SettleCoin: ass.SettleCoin, //计价货币
-                QuoteCoin: ass.QuoteCoin,  //计算货币
-                typeName: '', //合约类型名称
-                LotSz: '', //合约大小
+                //合约类型名称
+                typeName: '', 
+                //风险限额
+                Base:RS.Base,
+                //风险限额递增额
+                Step:RS.Step,
+                //委托保证金递增值
+                StepIR:RS.StepIR,
+                //仓位保证金递增值
+                StepMR:RS.StepMR,
+                BaseMIR:RS.BaseMIR,
+                BaseMMR:RS.BaseMMR
+                
             };
             if (ass.TrdCls == 2) {
                 info.typeName = gDI18n.$t('10105')//'交割合约'
@@ -367,6 +430,8 @@ let obj = {
                 info.LotSz = ass.LotSz + ' ' + ass.ToC + ' / ' + gDI18n.$t('10423')//'张'
             }
             this.spotInfo = info;
+            this.getFutureData()
+            this.getBaseData()
         } else {
             this.spotInfo = {
                 disSym: '--',
@@ -385,13 +450,39 @@ let obj = {
             }
         }
     },
+    //合约详解数据
+    getFutureData:function(){
+        this.contractList[0].info = this.spotInfo.disSym
+        this.contractList[1].info = this.spotInfo.ExpireStr == 0?"永续":this.spotInfo.ExpireStr
+        this.contractList[2].info = this.spotInfo.SettleCoin
+        this.contractList[3].info = this.spotInfo.QuoteCoin
+        this.contractList[4].info = this.spotInfo.LotSz
+        this.contractList[5].info = this.spotInfo.PrzMinInc
+        this.contractList[6].info = this.spotInfo.Mult
+        this.contractList[7].info = "全仓、逐仓(1-" + this.spotInfo.MIRLve + ")"
+        this.contractList[8].info = this.spotInfo.SIGN
+        this.contractList[9].info = this.spotInfo.PrzM
+        this.contractList[10].info = this.spotInfo.OpenOrd
+        this.contractList[11].info = this.spotInfo.MIR
+        this.contractList[12].info = this.spotInfo.MMR
+        this.contractList[13].info = this.spotInfo.FeeMkrR
+        this.contractList[14].info = this.spotInfo.FeeTkrR
+        this.contractList[15].info = this.spotInfo.MIRm + ("*委托价值+亏损+手续费")
+        this.contractList[16].info = this.spotInfo.MMRg + ("*仓位价值")
+        this.contractList[17].info = this.spotInfo.FundingLongR
+        this.contractList[18].info = "每" +this.spotInfo.Chargein + "小时"
+        this.contractList[19].info = this.spotInfo.FundingNext
+        this.contractList[20].info = this.spotInfo.Base
+        this.contractList[21].info = this.spotInfo.Step
+        this.contractList[22].info = this.spotInfo.StepIR
+        this.contractList[23].info = this.spotInfo.StepMR
+    },
     //下拉列表
     getDownloadFuture: function () {
         return m(Dropdown, {
             activeId: cb => cb(obj, 'dropdownActive'),
             menuWidth: 110,
             onClick (itme) {
-                // console.log(itme);
                 obj.clickSelect(itme)
             },
             getList () {
@@ -402,6 +493,40 @@ let obj = {
     //点击选中合约
     clickSelect: function (item) {
         this.updateSpotInfo()
+    },
+
+    //获取风险限额数据
+    getBaseData:function(){
+        let Qty1 = 0
+        let arr = []
+        for(let i =1;i <=10;){
+            let Qty2 = (this.spotInfo.Base - 1) + (this.spotInfo.Step * (i - 1))
+            let MMR = (this.spotInfo.BaseMMR) + (this.spotInfo.StepMR * (i - 1))
+            let MIR = (this.spotInfo.BaseMIR) + (this.spotInfo.StepIR * (i - 1))
+            let LeverMax = 1 / MIR
+            let BA = {
+                fx : i,
+                zs : [Qty1,Qty2],
+                cw : (MMR * 100).toFixed(2) + '%',
+                wt : (MIR * 100).toFixed(2) + '%',
+                zg : LeverMax.toFixed(2)
+            }
+            arr.push(BA);
+            i +=1;
+            Qty1 = Qty2 + 1
+        }
+
+        let showData = {
+            fx : "...",
+            zs : ["...","..."],
+            cw : "...",
+            wt : "...",
+            zg : "..."
+        }
+
+        arr.push(showData)
+
+        this.tableData = arr
     },
 
     //文案说明
@@ -415,7 +540,7 @@ let obj = {
                 tabelList[dropdownActive].label + ' 合约明细'
             ]),
             m('div', { class: "inf_body_TD" }, [
-                tabelList[dropdownActive].label + '合约' + spotInfo.ExpireStr + '。每张合约大小' + spotInfo.LotSz + '。每' + '8' + '小时交换资金费用。下一个交换将发生在' + spotInfo.FundingNext + '。'
+                tabelList[dropdownActive].label + '合约' + (spotInfo.ExpireStr == 0?"没有到期日":spotInfo.ExpireStr) + '。每张合约大小' + spotInfo.LotSz + '。每' + '8' + '小时交换资金费用。下一个交换将发生在' + spotInfo.FundingNext + '。'
             ]),
             m('div', { class: " inf_body_TD" }, [
                 window.$config.exchName + '交易平台利用利率与每分钟溢价指数的加权平均值计算出资金费率。',
@@ -482,17 +607,11 @@ let obj = {
 export default {
     oninit: function (vnode) {
         obj.initLanguage()
-        obj.getTableData()
     },
     oncreate: function (vnode) {
         obj.initEVBUS()
-        obj.updateSpotInfo()
-        // obj.initSymList()
     },
     view: function (vnode) {
-        let dropdownActive = obj.dropdownActive
-        let spotInfo = obj.spotInfo
-        let tabelList = obj.tabelList
         return m("div", { class: "" }, [
             m('div', { class: "inf_dropdown" }, [
                 m('span', { class: "inf_body_span inf_body_font" }, [
