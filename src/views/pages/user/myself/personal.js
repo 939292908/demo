@@ -19,14 +19,14 @@ module.exports = {
                         '上次登录时间 2020-07-13 17:14:42   IP：209.79.165.190'
                     )
                 ]),
-                m('div', { style: { clear: 'both' } }),
+                m('div', { style: { clear: 'both' } })
             ]),
             m('div.container.right.verify', { style: { border: '1px solid red' } }, [
                 m('img.pic', { src: 'zhanwei' }),
                 m('img.pic', { src: 'zhanwei' }),
                 m('img.pic', { src: 'zhanwei' }),
                 m('img.pic', { src: 'zhanwei' }),
-                m('img.pic', { src: 'zhanwei' }),
+                m('img.pic', { src: 'zhanwei' })
             ]),
             m(assetMenu),
             m('div.container.right.invitation', [
@@ -39,13 +39,13 @@ module.exports = {
                             m('div', { style: { float: 'left', textAlign: 'center' } }, [
                                 m('span', '我的返佣比例'),
                                 m('br'),
-                                m('span', '30%'),
+                                m('span', '30%')
                             ]),
                             m('div', { style: { float: 'right', textAlign: 'center' } }, [
                                 m('span', '佣金BTC估值'),
                                 m('br'),
-                                m('span', '0.0000 BTC'),
-                            ]),
+                                m('span', '0.0000 BTC')
+                            ])
                         ])
                     ])
                 ]),

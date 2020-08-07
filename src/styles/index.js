@@ -2,7 +2,7 @@ import styles from '@/styles/styles';
 import utils from "@/util/utils";
 let styleStr = ':root{';
 // 设置主题颜色相关html的css变量
-for(const key in styles){
+for (const key in styles) {
     const item = styles[key];
     for (const k in item) {
         const it = item[k];

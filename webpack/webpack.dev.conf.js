@@ -3,10 +3,9 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const webpack = require('webpack');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
-
 module.exports = {
     entry: {
-        app: './src/index.js',
+        app: './src/index.js'
     },
     output: {
         filename: 'static/js/[name].js',
@@ -25,39 +24,39 @@ module.exports = {
         }),
         new webpack.DefinePlugin({
             'process.env.BUILD_ENV': JSON.stringify(process.env.BUILD_ENV)
-        }),
+        })
     ],
     devServer: {
         contentBase: path.join(__dirname, "dist"),
         // port:8080,
-        // host:'localhost', 
-        overlay:{
-            errors:true, //编译过程中如果有任何错误，都会显示到页面上
-        },
+        // host:'localhost',
+        overlay: {
+            errors: true // 编译过程中如果有任何错误，都会显示到页面上
+        }
     },
     resolve: {
         extensions: ['.html', '.js', '.json', '.css', '.scss'],
         alias: {
-            '@': path.resolve('./src'),
+            '@': path.resolve('./src')
         }
     },
     module: {
         rules: [
             {
                 test: /\.(js|jsx)$/,
-                use:[
+                use: [
                     {
-                        loader:'babel-loader',
+                        loader: 'babel-loader'
                     },
-                    // {
-                    //     loader:'eslint-loader',
-                    //     options: { // 这里的配置项参数将会被传递到 eslint 的 CLIEngine 
-                    //         formatter: require('eslint-friendly-formatter') // 指定错误报告的格式规范
-                    //     },
-                        
-                    // }
+                    {
+                        loader: 'eslint-loader',
+                        options: { // 这里的配置项参数将会被传递到 eslint 的 CLIEngine
+                            formatter: require('eslint-friendly-formatter') // 指定错误报告的格式规范
+                        }
+
+                    }
                 ],
-                exclude: /node_modules/, // 不检测的文件
+                exclude: /node_modules/ // 不检测的文件
             },
             {
                 test: /\.html$/,
@@ -111,8 +110,8 @@ module.exports = {
                         }
                     }
                 ]
-            },
-            
+            }
+
         ]
     }
 };

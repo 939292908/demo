@@ -56,7 +56,7 @@ module.exports = {
                             m('span', '完成认证获得更高提币额度')
                         ]),
                         m('button.button', { style: { float: 'left', width: '15%', marginTop: '20px' } }, '设置'),
-                        m('div', { style: { clear: 'both' } }),
+                        m('div', { style: { clear: 'both' } })
                     ]),
                     m('div', { style: { margin: '10px 0', height: '80px', width: '450px', border: '1px solid #ccc' } }, [
                         m('img', { src: 'zhanwei', style: { float: 'left', width: '20%' } }),
@@ -66,7 +66,7 @@ module.exports = {
                             m('span', '用于内部转账和法币交易确认')
                         ]),
                         m('button.button', { style: { float: 'left', width: '15%', marginTop: '20px' } }, '设置'),
-                        m('div', { style: { clear: 'both' } }),
+                        m('div', { style: { clear: 'both' } })
                     ]),
                     m('div', { style: { height: '80px', width: '450px', border: '1px solid #ccc' } }, [
                         m('img', { src: 'zhanwei', style: { float: 'left', width: '20%' } }),
@@ -76,8 +76,8 @@ module.exports = {
                             m('span', 'XXXX给您发送邮件内容将包含您设置的防钓鱼码')
                         ]),
                         m('button.button', { style: { float: 'left', width: '15%', marginTop: '20px' } }, '设置'),
-                        m('div', { style: { clear: 'both' } }),
-                    ]),
+                        m('div', { style: { clear: 'both' } })
+                    ])
                 ])
             ]),
             m('div', { style: { clear: 'both' } }),

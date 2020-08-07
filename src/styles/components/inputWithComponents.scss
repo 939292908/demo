@@ -1,4 +1,4 @@
-@import "../bluma.scss";
+@import "../common.scss";
 
 .input-with-components .without-border {
     border: none;
@@ -16,8 +16,8 @@
 }
 
 .input-with-components input.without-border:focus {
-    box-shadow: initial;
-    border-color: initial;
+    box-shadow: initial !important;
+    border-color: initial  !important;
 }
 
 .input-with-components .input:focus-within {

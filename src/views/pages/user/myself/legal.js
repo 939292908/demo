@@ -1,11 +1,11 @@
 // 个人总览页面内模块>法币账户
 const m = require('mithril');
 
-module.exports = { 
-    oncreate: function(){
+module.exports = {
+    oncreate: function() {
 
     },
-    view:function(){
+    view: function() {
         return m('div', [
             m('div', { style: 'float:left' }, [
                 m('span', '资产总额'),

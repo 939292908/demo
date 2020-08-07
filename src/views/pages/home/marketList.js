@@ -3,7 +3,7 @@ const m = require('mithril');
 const Table = require('@/components/common/Table.js');
 const market = require('@/models/market/market');
 
-let obj = {
+const obj = {
     // 表头
     tableColumns: [
         {
@@ -34,24 +34,24 @@ let obj = {
             zs: '0-999',
             cw: '0.50%',
             wt: '1.00%',
-            zg: '100',
+            zg: '100'
         },
         {
             fx: '2',
             zs: '0-999',
             cw: '0.50%',
             wt: '1.00%',
-            zg: '100',
+            zg: '100'
         },
         {
             fx: '3',
             zs: '0-999',
             cw: '0.50%',
             wt: '1.00%',
-            zg: '100',
-        },
+            zg: '100'
+        }
     ]
-}
+};
 module.exports = {
     oncreate: function () {
         market.init();
@@ -60,7 +60,7 @@ module.exports = {
             key: 'marketList',
             cmd: window.gBroadcast.MSG_ASSETD_UPD,
             cb: function (arg) {
-                market.initHomeNeedSub()
+                market.initHomeNeedSub();
             }
         });
     },
@@ -76,7 +76,7 @@ module.exports = {
                 ]),
                 m('div', { class: `Market-data` }, [
                     JSON.stringify(market.tickData),
-                    // table
+                    // table
                     m(Table, {
                         columns: obj.tableColumns,
                         data: obj.tableData,

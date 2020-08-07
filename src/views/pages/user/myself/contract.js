@@ -29,7 +29,7 @@ module.exports = {
                         m('br'),
                         m('span', '≈ ￥0.00000000')
                     ]),
-                    m('div', { style: { clear: 'both' } }),
+                    m('div', { style: { clear: 'both' } })
                 ])
             ]),
             m('div.right', { style: { width: '25%' } }, [

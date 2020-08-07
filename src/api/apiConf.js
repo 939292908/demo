@@ -1,72 +1,71 @@
 import _axios from '@/api/request';
-let reqest = new _axios();
-class Conf  {
-    
-    constructor(aKey){
-        this.BUILD_ENV = aKey
+const reqest = new _axios();
+class Conf {
+    constructor(aKey) {
+        this.BUILD_ENV = aKey;
 
-        this.Active = {}
+        this.Active = {};
         this.M = {
-            "dev": {
-                "data": [],
-                netLines:[
+            dev: {
+                data: [],
+                netLines: [
                     {
                         Id: 0,
-                        Name:"测试线路1",
-                        WebAPI:"http://192.168.2.89:8888", 
-                        WSMKT:"ws://192.168.2.85:20080/v1/market", 
-                        WSTRD: "ws://192.168.2.85:50301/v1/trade", 
+                        Name: "测试线路1",
+                        WebAPI: "http://192.168.2.89:8888",
+                        WSMKT: "ws://192.168.2.85:20080/v1/market",
+                        WSTRD: "ws://192.168.2.85:50301/v1/trade"
                     },
                     {
                         Id: 1,
-                        Name:"测试线路2",
-                        WebAPI:"http://192.168.2.89:8888", 
-                        WSMKT:"ws://192.168.2.85:20080/v1/market", 
-                        WSTRD: "ws://192.168.2.85:50301/v1/trade", 
+                        Name: "测试线路2",
+                        WebAPI: "http://192.168.2.89:8888",
+                        WSMKT: "ws://192.168.2.85:20080/v1/market",
+                        WSTRD: "ws://192.168.2.85:50301/v1/trade"
                     },
                     {
                         Id: 2,
-                        Name:"测试线路3",
-                        WebAPI:"http://gs.eeeecloud.com:8888", 
-                        WSMKT:"ws://gs.eeeecloud.com:20080/v1/market", 
-                        WSTRD: "ws://gs.eeeecloud.com:50301/v1/trade", 
+                        Name: "测试线路3",
+                        WebAPI: "http://gs.eeeecloud.com:8888",
+                        WSMKT: "ws://gs.eeeecloud.com:20080/v1/market",
+                        WSTRD: "ws://gs.eeeecloud.com:50301/v1/trade"
                     }
                 ]
-            }
-            ,"prod": {
-                "data": [],
-                netLines:[
+            },
+            prod: {
+                data: [],
+                netLines: [
                     {
                         Id: 0,
-                        Name:"S00",
-                        WebAPI:"https://ss.abkjl.com/www",
-                        WSMKT:"wss://ss.abkjl.com/v1/market",
-                        WSTRD:"wss://ss.abkjl.com/v1/trade"
+                        Name: "S00",
+                        WebAPI: "https://ss.abkjl.com/www",
+                        WSMKT: "wss://ss.abkjl.com/v1/market",
+                        WSTRD: "wss://ss.abkjl.com/v1/trade"
                     },
                     {
                         Id: 1,
-                        Name:"S01",
-                        WebAPI:"https://cdn01-np.gmexpro.com/www",
-                        WSMKT:"wss://cdn01-np.gmexpro.com/v1/market",
-                        WSTRD:"wss://cdn01-np.gmexpro.com/v1/trade"
+                        Name: "S01",
+                        WebAPI: "https://cdn01-np.gmexpro.com/www",
+                        WSMKT: "wss://cdn01-np.gmexpro.com/v1/market",
+                        WSTRD: "wss://cdn01-np.gmexpro.com/v1/trade"
                     },
                     {
                         Id: 2,
-                        Name:"S02",
-                        WebAPI:"https://cdn01-np.jiyouai.top/www",
-                        WSMKT:"wss://cdn01-np.jiyouai.top/v1/market",
-                        WSTRD:"wss://cdn01-np.jiyouai.top/v1/trade"
+                        Name: "S02",
+                        WebAPI: "https://cdn01-np.jiyouai.top/www",
+                        WSMKT: "wss://cdn01-np.jiyouai.top/v1/market",
+                        WSTRD: "wss://cdn01-np.jiyouai.top/v1/trade"
                     },
                     {
                         Id: 3,
-                        Name:"S03",
-                        WebAPI:"https://cdn02-np.yh334.top/www",
-                        WSMKT:"wss://cdn02-np.yh334.top/v1/market",
-                        WSTRD:"wss://cdn02-np.yh334.top/v1/trade"
+                        Name: "S03",
+                        WebAPI: "https://cdn02-np.yh334.top/www",
+                        WSMKT: "wss://cdn02-np.yh334.top/v1/market",
+                        WSTRD: "wss://cdn02-np.yh334.top/v1/trade"
                     }
                 ]
             }
-        }
+        };
         // 设置默认线路
         this.Active = this.M[aKey].netLines[0];
         let lines = window.localStorage.getItem('net_lines_config');

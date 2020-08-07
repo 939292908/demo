@@ -3,21 +3,21 @@ const m = require('mithril');
 
 require('@/styles/Myassets/tradingAccount_contract.css');
 
-let contract = {
+const contract = {
     currency: 'BTC',
     setCurrency: function (param) {
         this.currency = param;
     },
     contractList: [],
     copyAry: function (ary) {
-        let res = []
+        const res = [];
         for (let i = 0; i < ary.length; i++) {
             res.push(ary[i]);
         }
         return res;
     },
     initTableData: function () {
-        gWebApi.getWallet({
+        window.gWebApi.getWallet({
             exChange: window.exchId
         }, function (res) {
             contract.contractList = contract.copyAry(res.assetLists01);
@@ -30,7 +30,7 @@ let contract = {
                 m('div', {}, [m('input[type=checkbox]'), m('span', {}, '隐藏0资产')]),
                 m('div', {}, [m('img', { src: 'zijinjilu' }), m('span', {}, '资金记录')]),
                 m('div', {}, [m('img', { src: 'yingkuifenxi' }), m('span', {}, '盈亏分析')]),
-                m('div', { style: { marginLeft: 'auto' } }, [m('span', {}, '合约账户' + contract.currency)]),
+                m('div', { style: { marginLeft: 'auto' } }, [m('span', {}, '合约账户' + contract.currency)])
             ]),
             m('div', {}, [
                 m('table', { style: { border: '1px solid #ccc' } }, [
@@ -41,7 +41,7 @@ let contract = {
                             m('td', {}, '未实现盈亏'),
                             m('td', {}, '可用保证金'),
                             m('td', {}, this.currency + '估值'),
-                            m('td', {}, '操作'),
+                            m('td', {}, '操作')
                         ]),
                         contract.contractList.map(item => {
                             return m('tr', {}, [
@@ -55,7 +55,7 @@ let contract = {
                                     m('a', {}, ['提现']),
                                     m('a', {}, ['划转'])
                                 ])
-                            ])
+                            ]);
                         })
                     ])
                 ])
