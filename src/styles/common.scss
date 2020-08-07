@@ -109,36 +109,42 @@ html, body, .section {
 
 
 /* iconfont尺寸 */
+
+.iconfont {
+    font-family: "iconfont" !important;
+    font-size: var(--c-iconsz-level3) !important;
+    font-style: normal;
+}
 .iconfont-min {
-    font-size: var(--c-iconsz-level0);
+    font-size: var(--c-iconsz-level0) !important;
 }
 
 .iconfont-small {
-    font-size: var(--c-iconsz-level1)
+    font-size: var(--c-iconsz-level1) !important;
 }
 
 .iconfont-medium {
-    font-size: var(--c-iconsz-level2)
+    font-size: var(--c-iconsz-level2) !important;
 }
 
 .iconfont-large {
-    font-size: var(--c-iconsz-level3)
+    font-size: var(--c-iconsz-level3) !important;
 }
 
 .iconfont-x-large-1 {
-    font-size: var(--c-iconsz-level4)
+    font-size: var(--c-iconsz-level4) !important;
 }
 
 .iconfont-x-large-2 {
-    font-size: var(--c-iconsz-level5)
+    font-size: var(--c-iconsz-level5) !important;
 }
 
 .iconfont-x-large-3 {
-    font-size: var(--c-iconsz-level6)
+    font-size: var(--c-iconsz-level6) !important;
 }
 
 .iconfont-x-large-4 {
-    font-size: var(--c-iconsz-level7)
+    font-size: var(--c-iconsz-level7) !important;
 }
 
 /* 字体粗细 */
@@ -275,6 +281,10 @@ html, body, .section {
 .scroll-x {
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
+}
+// 鼠标浮动指针显示
+.cursor-pointer {
+    cursor: pointer;
 }
 
 /* 页边距 */
