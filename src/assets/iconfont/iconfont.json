@@ -6,6 +6,27 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "13717500",
+      "name": "vbit-Homepage",
+      "font_class": "logo",
+      "unicode": "e615",
+      "unicode_decimal": 58901
+    },
+    {
+      "icon_id": "14395573",
+      "name": "信号",
+      "font_class": "signal",
+      "unicode": "e619",
+      "unicode_decimal": 58905
+    },
+    {
+      "icon_id": "15101589",
+      "name": "下载",
+      "font_class": "downLoad",
+      "unicode": "e602",
+      "unicode_decimal": 58882
+    },
+    {
       "icon_id": "14397009",
       "name": "夜间",
       "font_class": "night",

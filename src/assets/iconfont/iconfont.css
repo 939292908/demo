@@ -1,10 +1,10 @@
 @font-face {font-family: "iconfont";
-  src: url('iconfont.eot?t=1595558059100'); /* IE9 */
-  src: url('iconfont.eot?t=1595558059100#iefix') format('embedded-opentype'), /* IE6-IE8 */
-  url('data:application/x-font-woff2;charset=utf-8;base64,d09GMgABAAAAAANoAAsAAAAAB2AAAAMbAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHEIGVgCDBgqCRIJAATYCJAMMCwgABCAFhG0HORuJBsiuMG6xCZRouGCsANAWKDPnR/ng+f8xd598mWnbkmjEmp4OSSzWETk0QlxoNDw0OqX+/7N7/z4oUqWpEj+Vgb2Y3TdveWYnquIq+f+XrowKrKgK7sBOPOTv3vk3m02hCl1JShLYBMmEIiSSUJKiAQJQ4OcA2X8GAmD/z+X07iqQKJz/vTyXuQatAZhgoHtgm6xAEvSGsSsv4jwEVI0Vs02N7f3g5YxpAuQgMgfelJdzlshELFmb5AWXXN32XwCe/O/LD+G8UKEw5l7uDSJUf/Cp2NL/JeMuArzxzADbBAY2AIcspdYbjjC64VBVxE61Eoic0LECj89VxdH8wwMlkJqRXwewQDHFP9jcWFYM+WedbwBij/gj4IUr+31d1T7VaRDbNknXHng270XfM3j6tP/588EXLwYy0iJ2gWgALh6ypd3sj3n+XIOY2Hq6ew1bHC0VNmMHPIWVDKsQE52EzqguFuR9h7q8A3kwtG7srdqfezWzpdt5/tvPM1muyOk88vX6h/I8cDGO7p6wb710dZtrCzcueLZpws1ae/xjfz8KhRsYHMjZedFQPyqDjAm77fbv23bRM2bDqjilx7Lv3GmHIguzoRCnZb4bHBj8Y6snxnpKRrqrz5wd7TKYBkDZMccCoCjF4o/5DbswlzOVWP47xyaAv2pyzHcXSbtcIFO05v0GXssuVwWGzlLm2lw9YY7E3KSWamwoGc6uV/2Vg1s1i5ziMVDJCEw2QZ2wgaBmD6LsGKrWmjbX9FAOkg1YWQcg2k6BanoD03YPdcJLCIY+Q9TOAVVXkbpnzSwSU0cxx7CI+AVEBEOXLAOLCQp7sTyjcjQp8MmDmFokgEL+YDbRhHVMx1hgzcphxiQkUUNDjeAyrKoGMqkRxQLzRxgzSwMBqexNfsHQIMY5CuMwmAjhLUAIgUEnuYOZmNzne2GyGSoOramrMA/CKAsZHgnxC7ZAm6R6q7prucYySxbGMBJEQhk0SCMwY6oZNSBm+agoTMD4RXqETaUCqJ/UVuqfX649XzkPsYFxtEUVJVI4iRxhHp4jjHA6AAA=') format('woff2'),
-  url('iconfont.woff?t=1595558059100') format('woff'),
-  url('iconfont.ttf?t=1595558059100') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+ */
-  url('iconfont.svg?t=1595558059100#iconfont') format('svg'); /* iOS 4.1- */
+  src: url('iconfont.eot?t=1596787457809'); /* IE9 */
+  src: url('iconfont.eot?t=1596787457809#iefix') format('embedded-opentype'), /* IE6-IE8 */
+  url('data:application/x-font-woff2;charset=utf-8;base64,d09GMgABAAAAAAS8AAsAAAAACXAAAARvAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHEIGVgCDSAqFaIUgATYCJAMYCw4ABCAFhG0HVBtSCBFVnEfJfgy4G2+uixSbzMnpip1RM2gGyczMHw//rbG/b2d2UYlkDYUMSTWaZJJlsZIJkUTmdPjSTepPe+/0dx92hGWdUF3yK8YYsvOSpit96TGXcTyPQykkEuR3HOZR02RNtFnZB/sFuDj5R/ePe6f//8o22Hx3eS5jLpuTl3UBJRjQGNuWZYGWWEC6NWIbI7X3dJ8Z6wk0GzAqJlYTaJiQsVsgTnRFEUwUjHIHLTRqqoaxWTyCpMbiCl0HHqLHx09ByFAoE/adl5GlMD+AgQMeFAchN0BAJGeHPYmEUWTirNF5CsNJeFTSvHmGEZMAWjUq5C8G6G3fW923DqJIQUpvaFVOSrEXXiETFV3ZCsJ0pOQLeMJMhaCXoNKEXkClC4UulQPE75G2EmzTjzeAWAcSRymL+9+30NzeJaHcKS/f2trUrS4BXqTIuKH9k52cf0bmki3T27TKM1qWb125UoMuJLt4H5qs2m9dIZ8pqk/2sPDEuWrSZ3lqSOg5w8ETG6JBzgnUEO+kVcvs4Rw16V3Ny5acGXTRIPuN1xlp9XAcw7I0zxNBiPl5HmQZqE/DGRyfUkyv5wM4+oV0DvpEtDRYFpyBlMZlWo5/qwMRWwcpaQ1eJdViwVoQ0QX5Zre8HvKS7G903ps+mhuuDP8H/l3ITtCNz9Z5XeZ7fOZ0FisTlx5cc3fmeH+UInpIzVi+JasYfm4w8Mks3htnu06v0ivAuPFFb6TzPvsFCWEmvb6DobpmQxFRFqN2a6McsWlLkKdO6VxtRFmsjTssLUdHOQdqRFgGX/STHv2hox3HlST+xQAm+yMSHz/mI4oX8P08IyFlATr9giBbYPAhNZLLFj2Kje1spawzWuURTI1bb7WGtXBmU/AWq1MGsSnTZFgJJI6KN5x5HVAqDXNO9uo8NO/4qfmS8+DsUel5GiWXw5DiNbr4BHaDDGGMVx6j/o6/z6l0YDm6+opkyy0+8rKE1Ba0ciWCrMXgQ2okGbwkDPnr6fNyJiqyxusPHhI7HO4A1L/F9RJU2gIg1egxqDm8G9uD+n6E2kSHsIgH/mntPN98t6hAOeDbhPzr6vuc7kDpfBl0yHkJ8HdRGSz6XylGjoKI0q2ExiqvTfXvKM/rIFAZgxRvvRM0Z3n/Jm+3PynxlyUM3DI0MyhIM4REhgWaCQ5QkucBFRnB0Mze2uQW6qxhVG4Chr1rQFHxBYiSU4Cp+EYlCL8gScs/SFGJYZBDQn1OeVahRbilmCnD5Bp1ahrpWljEuYekzqvY5iUR/ZRsp33oO7mUY2vUkJUY0F2ogFmitKbGVW0zqiqDrTUFpezkzG3fdS5vupCTmhqEcBaJMZJBiWtISxkNGVRnonL/Q0Q5V4nZjqIb7lPE6ujakc/hDUDXlM2goufSuHNBCTAmjU6SZdTQKuykUmEDtc2tCiTFHPmEYKvP1cvJoUrn+Or6VVZ7EUvwGlUUkSJHGVU0kDgxyoy1aNXE1USpuWy2TZyN1muV83hxrFnHDQAA') format('woff2'),
+  url('iconfont.woff?t=1596787457809') format('woff'),
+  url('iconfont.ttf?t=1596787457809') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+ */
+  url('iconfont.svg?t=1596787457809#iconfont') format('svg'); /* iOS 4.1- */
 }
 
 .iconfont {
@@ -13,6 +13,18 @@
   font-style: normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-logo:before {
+  content: "\e615";
+}
+
+.icon-signal:before {
+  content: "\e619";
+}
+
+.icon-downLoad:before {
+  content: "\e602";
 }
 
 .icon-night:before {
