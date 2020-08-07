@@ -8,7 +8,7 @@ const API = require('@/api/request_apis');
 
 class webApi {
     constructor(arg) {
-        let s = this
+        const s = this;
         s.axios = new _axios();
         s.axios.baseUrl = arg.baseUrl;
 
@@ -30,11 +30,11 @@ class webApi {
             '04': {}
         };
 
-        s.getUserInfo({}, function(arg){
-            if(arg.result.code == 0){
-                s.loginState = true
+        s.getUserInfo({}, function(arg) {
+            if (arg.result.code === 0) {
+                s.loginState = true;
             }
-        })
+        });
     }
 
     /**
