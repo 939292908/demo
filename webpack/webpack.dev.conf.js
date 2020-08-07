@@ -9,7 +9,7 @@ module.exports = {
         app: './src/index.js',
     },
     output: {
-        filename: 'static/js/[name].[hash].js',
+        filename: 'static/js/[name].js',
         path: path.resolve(__dirname, '../dist')
     },
     devtool: 'inline-source-map',
@@ -21,7 +21,7 @@ module.exports = {
         new webpack.NamedModulesPlugin(),
         new webpack.HotModuleReplacementPlugin(),
         new MiniCssExtractPlugin({
-            filename: 'static/css/[name].[chunkhash].css',
+            filename: '[name].css',
         }),
         new webpack.DefinePlugin({
             'process.env.BUILD_ENV': JSON.stringify(process.env.BUILD_ENV)
@@ -36,7 +36,7 @@ module.exports = {
         },
     },
     resolve: {
-        extensions: ['.js', '.json', '.css', '.scss'],
+        extensions: ['.html', '.js', '.json', '.css', '.scss'],
         alias: {
             '@': path.resolve('./src'),
         }
@@ -91,9 +91,10 @@ module.exports = {
                 test: /\.(png|svg|jpg|gif)$/,
                 use: [
                     {
-                        loader: 'file-loader',
+                        loader: 'url-loader',
                         options: {
-                            name: '[name].[hash:5].[ext]',
+                            name: '[name].[ext]',
+                            limit: 1,
                             outputPath: "static/img/"
                         }
                     }
@@ -105,7 +106,7 @@ module.exports = {
                     {
                         loader: 'file-loader',
                         options: {
-                            name: '[name].[hash:5].[ext]',
+                            name: '[name].[ext]',
                             outputPath: "static/font/"
                         }
                     }
