@@ -27,6 +27,10 @@
 // 参数3：table宽 默认100%; 超出则为columns中width总和
 // width : 1000
 
+// 参数3：table高 设置成超出滚动的table
+// height : 1000
+// maxHeight : 1000
+
 // 参数4：默认每列宽
 // defaultColumnWidth: 150
 
@@ -35,9 +39,20 @@
 
 var m = require("mithril");
 
+// 获取滚动条宽度
+function getScrollBarWidth() {
+    var el = document.createElement("p");
+    el.style.overflowY = "scroll";
+    document.body.appendChild(el);
+    var scrollBarWidth = el.offsetWidth - el.clientWidth;
+    el.remove();
+    return scrollBarWidth;
+}
+
 module.exports = {
     tableWidth: 0,
     defaultColumnWidth: 150, // 默认每列宽
+    scrollBarWidth: 0, // 滚动条宽
     // 设置table宽
     setTableWidth (vnode, w) {
         if (vnode.attrs.width) { // 使用参数 width
@@ -52,37 +67,42 @@ module.exports = {
     // 生成colgroup元素
     getColgroup (vnode) {
         return m('colgroup', vnode.attrs.columns.map((item, index) => {
-            // 宽：最后一个col为'1*'（用于弹性调节一些多余的空间）, 其他col使用column里面width 或者 默认defaultColumnWidth
+            // 使用column中width 或 默认defaultColumnWidth ，最后一个col为'1*'（用于自适应调节多余的空间）
             return m('col', {
                 width: index === vnode.attrs.columns.length - 1 ? '1*' : item.width || (vnode.attrs.defaultColumnWidth || this.defaultColumnWidth)
             });
         }));
     },
-    // tableContainer 样式
-    getTableContainerStyle () {
-        // return this.tableWidth ? `width: ${this.tableWidth}px;` : ``
+    // 表头 + 表格 样式
+    getAllBoxStyle () {
+        return `min-width: 100%; ` + (this.tableWidth ? `width: ${this.tableWidth}px;` : ``);
     },
-    // tableBox 样式
-    getTableBoxStyle () {
-        return `min-width: 100%; overflow-y: visible;` + (this.tableWidth ? `width: ${this.tableWidth}px` : ``);
+    // 表头 样式
+    getTHStyle () {
+        return ` overflow-y: visible; padding-right: ${this.scrollBarWidth}px;`;
     },
-    // tr,td 样式
+    // 表格 样式
+    getTBStyle (vnode) {
+        return `overflow-y: scroll;` +
+        (vnode.attrs.height ? `height: ${vnode.attrs.height}px;` : ``) +
+        (vnode.attrs.maxHeight ? `max-height: ${vnode.attrs.maxHeight}px;` : ``);
+    },
+    // tr + td 样式
     getTrTdStyle (headerItem) {
         return headerItem.align ? `text-align: ${headerItem.align};` : ``;
     },
     oninit (vnode) {
         this.tableWidth = 0;
-        vnode.attrs.columns.map(item => {
-            this.setTableWidth(vnode, item.width); // 设置table宽
-        });
+        vnode.attrs.columns.map(item => this.setTableWidth(vnode, item.width)); // 设置table宽
+        this.scrollBarWidth = getScrollBarWidth(); // 设置滚动条宽
     },
     oncreate (vnode) {
     },
     view (vnode) {
         // table
-        return m('div', { class: `table-container ${vnode.attrs.class ? vnode.attrs.class : ''}`, style: this.getTableContainerStyle() }, [
+        return m('div', { class: `table-container ${vnode.attrs.class ? vnode.attrs.class : ''}` }, [
             // tHead
-            m('div', { class: "pub-table-head-box", style: this.getTableBoxStyle() }, [
+            m('div', { class: "pub-table-head-box", style: this.getAllBoxStyle() + this.getTHStyle() }, [
                 m("table", { class: "table is-hoverable ", style: 'min-width: 100%;', cellpadding: 0, cellspacing: 0 }, [
                     this.getColgroup(vnode),
                     // 表头
@@ -96,7 +116,7 @@ module.exports = {
                 ])
             ]),
             // tBody
-            m('div', { class: "pub-table-body-box", style: this.getTableBoxStyle() }, [
+            m('div', { class: "pub-table-body-box", style: this.getAllBoxStyle() + this.getTBStyle(vnode) }, [
                 m("table", { class: "table is-hoverable ", style: 'min-width: 100%;', cellpadding: 0, cellspacing: 0 }, [
                     this.getColgroup(vnode),
                     // 表格
