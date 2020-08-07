@@ -28,7 +28,7 @@ function p() {
         index = imgArr.length;
     }
     index--;
-    img.src = imgArr[index];
+    // img.src = imgArr[index];
 }
 // 点击右箭头，切换下一张
 function n() {
