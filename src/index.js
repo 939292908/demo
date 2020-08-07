@@ -1,79 +1,81 @@
-const m = require('mithril')
-// 主题颜色
-import("@/styles/index")
-// UI库
-import('@/styles/bluma.scss')
-// 公用样式
-// import('@/styles/common.css')
-import('@/styles/common.scss')
+import config from '@/config';
+import _console from '@/log/log';
+// 全局广播
+import Broadcast from '@/broadcast/broadcast';
+// 多语言
+import I18n from '@/languages/dI18n';
+// 工具库
+import utils from '@/util/utils';
+// 错误码库
+import errCode from '@/util/errCode';
+import Validate from '@/libs/validate';
+// 请求接口配置
+import Conf from "@/api/apiConf";
 
-// iconfont
-import('@/assets/iconfont/iconfont.js')
-import('@/assets/iconfont/iconfont.css')
-
-// 极验
-import('@/libs/gt')
-
-import config from '@/config'
-window.exchId = config.exchId
+window.exchId = config.exchId;
 
 // log日志管理
-import _console from '@/log/log'
-window._console = new _console()
+window._console = new _console();
 
 // 全局广播
-import broadcast from '@/broadcast/broadcast'
-window.gBroadcast = new broadcast()
+window.window.gBroadcast = new Broadcast();
 
-//多语言
-import i18n from '@/languages/dI18n'
-window.gI18n = new i18n()
+// 多语言
+window.gI18n = new I18n();
 
+// 工具库
+window.utils = utils;
 
-//工具库
-import utils from '@/util/utils'
-window.utils = utils
+// 错误码库
+window.errCode = errCode;
 
-//错误码库
-import errCode from '@/util/errCode'
-window.errCode = errCode
-
-import Validate from '@/libs/validate'
-window.validate = new Validate()
+window.validate = new Validate();
 
 // 请求接口配置
-import Conf from "@/api/apiConf"
-let instConf = new Conf(process.env.BUILD_ENV)
-let api = instConf.GetActive()
-instConf.updateNetLines()
+const instConf = new Conf(process.env.BUILD_ENV);
+const api = instConf.GetActive();
+instConf.updateNetLines();
 
+const m = require('mithril');
+// 主题颜色
+import("@/styles/index");
+// UI库
+import('@/styles/bluma.scss');
+// 公用样式
+// import('@/styles/common.css');
+import('@/styles/common.scss');
+
+// iconfont
+import('@/assets/iconfont/iconfont.js');
+import('@/assets/iconfont/iconfont.css');
+
+// 极验
+import('@/libs/gt');
 
 // 全局API请求
-let webApi = require('@/api/webApi')
-window.gWebApi = new webApi({baseUrl: api.WebAPI})
+const WebApi = require('@/api/webApi');
+window.gWebApi = new WebApi({ baseUrl: api.WebAPI });
 
-let Interval = 1000
-let wsApi = require('@/api/wsApi')
-window.gWsApi = new wsApi({
+const Interval = 1000;
+const WSApi = require('@/api/wsApi');
+window.gWsApi = new WSApi({
     baseUrl: api.WSMKT,
     Typ: 'mkt'
-})
+});
 setInterval(function () {
     window.gWsApi.stately.do(window.gWsApi);
-}, Interval)
+}, Interval);
 
-window.onresize = function(arg){
+window.onresize = function (arg) {
     // 判断是否是移动端
-    window.isMobile = utils.isMobile()
-    gBroadcast.emit(gBroadcast.ONRESIZE_UPD, {Ev: gBroadcast.ONRESIZE_UPD})
-}
+    window.isMobile = utils.isMobile();
+    window.gBroadcast.emit(window.gBroadcast.ONRESIZE_UPD, { Ev: window.gBroadcast.ONRESIZE_UPD });
+};
 // 判断是否是移动端
-window.isMobile = utils.isMobile()
+window.isMobile = utils.isMobile();
 
-
-import('@/views/index').then(arg=>{
-    let root = document.body
-    m.mount(root,arg.default)
-    import('@/route/index')
-})
-
+import('@/views/index').then(arg => {
+    const root = document.body;
+    m.mount(root, arg.default);
+    import('@/route/index');
+});
