@@ -571,10 +571,10 @@ let obj = {
 
         return m('div', { class: "inf_dropdown inf_body_conent" }, [
             m('div', { class: "inf_body_title_font" }, [
-                tabelList[dropdownActive].label + ' 合约明细'
+                (tabelList[dropdownActive]?tabelList[dropdownActive].label : "--") + ' 合约明细'
             ]),
             m('div', { class: "inf_body_TD" }, [
-                tabelList[dropdownActive].label + '合约' + (spotInfo.ExpireStr == 0?"没有到期日":spotInfo.ExpireStr) + '。每张合约大小' + spotInfo.LotSz + '。每' + '8' + '小时交换资金费用。下一个交换将发生在' + spotInfo.FundingNext + '。'
+                (tabelList[dropdownActive]?tabelList[dropdownActive].label : "--") + '合约' + (spotInfo.ExpireStr == 0?"没有到期日":spotInfo.ExpireStr) + '。每张合约大小' + spotInfo.LotSz + '。每' + '8' + '小时交换资金费用。下一个交换将发生在' + spotInfo.FundingNext + '。'
             ]),
             m('div', { class: " inf_body_TD" }, [
                 window.$config.exchName + '交易平台利用利率与每分钟溢价指数的加权平均值计算出资金费率。',
@@ -594,7 +594,7 @@ let obj = {
         let tabelList = obj.tabelList
         return m('div', { class: "inf_dropdown inf_body_conent" }, [
             m('div', { class: "inf_body_title_font inf_dropdown" }, [
-                tabelList[dropdownActive].label + ' 行情价格'
+                (tabelList[dropdownActive]?tabelList[dropdownActive].label : "--") + ' 行情价格'
             ]),
             m('div', { class: " inf_body_kline kline_border" }, [
                 m(kline)
@@ -604,10 +604,14 @@ let obj = {
 
     //合约详解
     getFutureIntroduce: function () {
+        let dropdownActive = obj.dropdownActive
+        let spotInfo = obj.spotInfo
+        let tabelList = obj.tabelList
         return m('div', { class: "inf_dropdown inf_body_conent" }, [
             // title
             m('div', { class: "inf_body_title_font inf_dropdown" }, [
-                `${obj.tabelList[obj.dropdownActive].label}合约详解`
+                // `${tabelList[dropdownActive]?tabelList[dropdownActive].label : "--"}合约详解`
+                (tabelList[dropdownActive]?tabelList[dropdownActive].label : "--") + ' 合约详解'
             ]),
             // list
             m('div', { class: `` }, obj.contractList.map((item, index) => {
@@ -622,10 +626,14 @@ let obj = {
     },
     //table
     getTableView () {
+        let dropdownActive = obj.dropdownActive
+        let spotInfo = obj.spotInfo
+        let tabelList = obj.tabelList
         return m('div', { class: "inf_dropdown inf_body_conent" }, [
             // title
             m('div', { class: "inf_body_title_font inf_dropdown" }, [
-                `${obj.tabelList[obj.dropdownActive].label}合约风险限额`
+                // `${tabelList[dropdownActive]?tabelList[dropdownActive].label : "--"}合约风险限额`
+                (tabelList[dropdownActive]?tabelList[dropdownActive].label : "--") + ' 合约风险限额'
             ]),
             // table
             m(Table, {
@@ -644,6 +652,8 @@ export default {
     },
     oncreate: function (vnode) {
         obj.initEVBUS()
+        obj.initSymList()
+        obj.updateSpotInfo()
     },
     view: function (vnode) {
         return m("div", { class: "" }, [
