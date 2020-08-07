@@ -7,26 +7,32 @@ const obj = {
     // 表头
     tableColumns: [
         {
-            title: '风险限额档位',
-            key: 'fx'
+            title: '名称',
+            key: 'distSym',
+            // 自定义 列内容
+            render (params) {
+                return m('div', {}, [
+                    m('img', { class: '', src: "https://forum.vuejs.org/uploads/default/original/2X/5/555257b8c5e7ecf34ce4f9b952eeaf006adfa339.png", width: "28", height: "28" }),
+                    m('span', { class: `` }, [params.distSym])
+                ]);
+            }
         },
         {
-            title: '张数',
-            key: 'zs'
+            title: '最新价',
+            key: 'SettPrz'
         },
         {
-            title: '仓位保证金率',
-            key: 'cw'
+            title: '涨跌幅',
+            key: 'FundingLongR'
         },
         {
-            title: '委托保证金率',
-            key: 'wt'
-        },
-        {
-            title: '最高可用杠杆',
-            key: 'zg'
+            title: '24h交易量',
+            key: 'Low24'
         }
     ],
+    buildTableData(oldData) {
+        return Object.values(oldData);
+    },
     // 表格
     tableData: [
         {
@@ -68,19 +74,18 @@ module.exports = {
         return m('div.view-pages-home-marketlist', {}, [
             // '行情列表',
             m('div', { class: `frame w` }, [
-                m('div', { class: `listing` }, [
-                    m('div', { class: `` }, ['名称']),
-                    m('div', { class: `` }, ['最新价']),
-                    m('div', { class: `` }, ['涨跌桶']),
-                    m('div', { class: `` }, ['24h交易量'])
-                ]),
                 m('div', { class: `Market-data` }, [
-                    JSON.stringify(market.tickData),
+                    // JSON.stringify(market.tickData),
                     // table
+                    // m(Table, {
+                    //     columns: obj.tableColumns,
+                    //     data: obj.tableData,
+                    //     defaultColumnWidth: 200
+                    // }),
                     m(Table, {
                         columns: obj.tableColumns,
-                        data: obj.tableData,
-                        defaultColumnWidth: 200
+                        data: obj.buildTableData(market.tickData),
+                        defaultColumnWidth: "25%"
                     })
                 ])
             ])
