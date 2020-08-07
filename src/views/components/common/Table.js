@@ -58,10 +58,6 @@ export default {
             })
         }))
     },
-    // tableContainer 样式
-    getTableContainerStyle () {
-        // return this.tableWidth ? `width: ${this.tableWidth}px;` : ``
-    },
     // tableBox 样式
     getTableBoxStyle () {
         return `min-width: 100%; overflow-y: visible;` + (this.tableWidth ? `width: ${this.tableWidth}px` : ``)
@@ -80,7 +76,7 @@ export default {
     },
     view (vnode) {
         // table
-        return m('div', { class: `table-container ${vnode.attrs.class ? vnode.attrs.class : ''}`, style: this.getTableContainerStyle() }, [
+        return m('div', { class: `table-container ${vnode.attrs.class ? vnode.attrs.class : ''}` }, [
             // tHead
             m('div', { class: "pub-table-head-box", style: this.getTableBoxStyle() }, [
                 m("table", { class: "table is-hoverable ", style: 'min-width: 100%;', cellpadding: 0, cellspacing: 0 }, [
@@ -97,7 +93,7 @@ export default {
             ]),
             // tBody
             m('div', { class: "pub-table-body-box", style: this.getTableBoxStyle() }, [
-                m("table", { class: "table is-hoverable ", cellpadding: 0, cellspacing: 0 }, [
+                m("table", { class: "table is-hoverable ", style: 'min-width: 100%;', cellpadding: 0, cellspacing: 0 }, [
                     this.getColgroup(vnode),
                     // 表格
                     vnode.attrs.data.map((item, index) => {
