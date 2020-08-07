@@ -1,4 +1,4 @@
-let m = require('mithril')
+const m = require('mithril')
 
 let Table = require('@/components/common/Table.js')
 let market = require('@/models/market/market')

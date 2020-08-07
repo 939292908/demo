@@ -1,19 +1,19 @@
-// 个人总览页面内模块>资产总览菜单导航
-let m = require('mithril')
+//  个人总览页面内模块>资产总览菜单导航
+const m = require('mithril');
 
-let assetOverview = require('./assetOverview');//资产总览
-let myWallet = require('./myWallet');//我的钱包
-let contract = require('./contract');//合约账户
-let coins = require('./coins');//币币账户
-let legal = require('./legal');//法币账户
+let assetOverview = require('./assetOverview');// 资产总览
+let myWallet = require('./myWallet');// 我的钱包
+let contract = require('./contract');// 合约账户
+let coins = require('./coins');// 币币账户
+let legal = require('./legal');// 法币账户
 
 let obj = {
-    assetFlag:0,//右侧资产总览导航
+    assetFlag:0,// 右侧资产总览导航
     setAssetFlag:function(param){
         this.assetFlag = param;
     },
     switchPageWithAsset:function(){
-        // assetFlag == 0 :'资产总览' assetFlag == 1 :'币币账户' assetFlag == 2 :'法币账户' assetFlag == 3 :'我的钱包' assetFlag == 4 :'合约账户'
+        //  assetFlag == 0 :'资产总览' assetFlag == 1 :'币币账户' assetFlag == 2 :'法币账户' assetFlag == 3 :'我的钱包' assetFlag == 4 :'合约账户'
         switch(this.assetFlag){
             case 0:
                 return m(assetOverview)
@@ -47,6 +47,6 @@ module.exports = {
                 ])
             ]),
             obj.switchPageWithAsset()
-        ])
+        ]);
     }
-}
+};

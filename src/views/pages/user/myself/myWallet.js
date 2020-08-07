@@ -1,5 +1,5 @@
 // 个人总览页面内模块>我的钱包
-let m = require('mithril')
+const m = require('mithril');
 
 module.exports = {
     oncreate: function () {
@@ -28,7 +28,7 @@ module.exports = {
                 m('br'),
                 m('span', '￥80.0000')
             ]),
-            m('div', { style: { clear: 'both' } }),
-        ])
+            m('div', { style: { clear: 'both' } })
+        ]);
     }
-}
+};

@@ -1,5 +1,5 @@
 // 账户交易>法币账户
-let m = require('mithril')
+const m = require('mithril')
 
 require('@/styles/Myassets/tradingAccount_legal.css')
 

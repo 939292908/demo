@@ -1,5 +1,5 @@
 // 个人总览页面内模块>合约账户
-let m = require('mithril')
+const m = require('mithril')
 
 module.exports = {
     oncreate: function () {

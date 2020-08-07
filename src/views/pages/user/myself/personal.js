@@ -1,5 +1,5 @@
 // 个人总览
-let m = require('mithril')
+const m = require('mithril')
 let assetMenu = require('./assetMenu');
 
 module.exports = {

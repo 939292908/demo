@@ -1,5 +1,5 @@
 // 开启谷歌验证
-let m = require('mithril')
+const m = require('mithril')
 
 let google_download = require('./google_download')
 

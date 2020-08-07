@@ -1,5 +1,5 @@
-let m = require('mithril')
-// let m = require('swiper')
+const m = require('mithril')
+// const m = require('swiper')
 
 require('@/styles/pages/home.css')
 

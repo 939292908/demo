@@ -1,4 +1,4 @@
-let m = require('mithril')
+const m = require('mithril')
 const DI18n = require('di18n-translate')
 
 class _DI18n {

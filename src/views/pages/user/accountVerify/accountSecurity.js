@@ -1,5 +1,5 @@
 // 账户安全
-let m = require('mithril')
+const m = require('mithril')
 
 module.exports = {
     oncreate: function () {

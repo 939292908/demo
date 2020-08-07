@@ -1,5 +1,5 @@
 //资金划转
-let m = require('mithril')
+const m = require('mithril')
 
 require('@/styles/Myassets/transferOfFunds.css')
 

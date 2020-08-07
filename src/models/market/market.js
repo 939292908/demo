@@ -1,5 +1,4 @@
-const m = require('mithril')
-const { default: _console } = require('../../log/log')
+const m = require('mithril');
 
 module.exports = {
     //  行情数据
@@ -48,74 +47,70 @@ module.exports = {
         ToC: '--'
     },
     init: function () {
-        let that = this
+        const that = this;
         //  添加最新价行情更新监听
-        gBroadcast.onMsg({
+        window.gBroadcast.onMsg({
             key: 'market',
-            cmd: gBroadcast.MSG_TICK_UPD,
+            cmd: window.gBroadcast.MSG_TICK_UPD,
             cb: function (arg) {
-                that.onTick(arg)
+                that.onTick(arg);
             }
-        })
-
-
+        });
     },
     remove: function () {
-
-        gBroadcast.offMsg({
+        window.gBroadcast.offMsg({
             key: 'market',
             isall: true
-        })
+        });
 
-        this.unSubTick([...this.subList])
+        this.unSubTick([...this.subList]);
     },
     //  订阅行情
     subTick: function (subArr) {
         if (!subArr || subArr.length === 0) {
-            return
+            return;
         }
 
-        for (let key of subArr) {
-            this.subList.push(key)
-            window.gWsApi.TpcAdd(key)
+        for (const key of subArr) {
+            this.subList.push(key);
+            window.gWsApi.TpcAdd(key);
         }
     },
     //  取消订阅
     unSubTick: function (subArr) {
         if (!subArr || subArr.length === 0) {
-            return
+            return;
         }
 
-        for (let key of subArr) {
-            window.gWsApi.TpcDel(key)
-            let idx = this.subList.findIndex(t => {
-                return t == key
-            })
-            idx > -1 ? this.subList.splice(idx, 1) : ''
+        for (const key of subArr) {
+            window.gWsApi.TpcDel(key);
+            const idx = this.subList.findIndex(t => {
+                return t === key;
+            });
+            if (idx > -1) {
+                this.subList.splice(idx, 1);
+            }
         }
     },
     //  最新价行情更新
     onTick: function (arg) {
-        let tm = Date.now()
-        this.needUpdTick[arg.Sym] = arg.data
+        const tm = Date.now();
+        this.needUpdTick[arg.Sym] = arg.data;
         if (tm - this.lastTickTm >= this.tickUpdInterval) {
-            this.updTickData(this.needUpdTick)
-            this.needUpdTick = {}
-            this.lastTickTm = tm
+            this.updTickData(this.needUpdTick);
+            this.needUpdTick = {};
+            this.lastTickTm = tm;
         }
     },
     //  更新最新价行情数据
     updTickData: function (param) {
-
-        for (let key in param) {
-
-            this.tickData[key] = this.createTickData(param[key])
+        for (const key in param) {
+            this.tickData[key] = this.createTickData(param[key]);
         }
-        m.redraw()
+        m.redraw();
     },
     createTickData: function (param) {
-
-        let AssetD = window.gWsApi.AssetD[param.Sym];
+        const AssetD = window.gWsApi.AssetD[param.Sym];
         if (param.Sym.indexOf('CI_') > -1) {
             let tick = Object.assign({}, this.tickDefault);
             tick = Object.assign(tick, param);

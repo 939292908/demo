@@ -1,5 +1,5 @@
 // 开启邮箱验证
-let m = require('mithril')
+const m = require('mithril')
 
 module.exports = {
     oncreate: function () {

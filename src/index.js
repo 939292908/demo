@@ -1,4 +1,4 @@
-let m = require('mithril')
+const m = require('mithril')
 // 主题颜色
 import("@/styles/index")
 // UI库
