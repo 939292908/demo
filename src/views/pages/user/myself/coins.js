@@ -1,5 +1,5 @@
 // 个人总览页面内模块>币币账户
-let m = require('mithril')
+const m = require('mithril');
 
 module.exports = {
     oncreate: function () {
@@ -28,6 +28,6 @@ module.exports = {
                 m('br'),
                 m('span', '￥80.0000')
             ])
-        ])
+        ]);
     }
-}
+};

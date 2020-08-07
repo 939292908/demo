@@ -1,4 +1,4 @@
-import axios from 'axios'
+import axios from 'axios';
 
 class _axios {
     constructor() {
@@ -17,9 +17,8 @@ class _axios {
     // axios请求拦截
     interceptorsRequest() {
         this.service.interceptors.request.use(config => {
-
-            if (utils.getItem("gmex-session")) {
-                config.headers['gmex-session'] = utils.getItem("gmex-session");
+            if (window.utils.getItem("ex-session")) {
+                config.headers['ex-session'] = window.utils.getItem("ex-session");
             }
             return config;
         }, function (err) {
@@ -30,8 +29,8 @@ class _axios {
     // axios响应拦截
     interceptorsResponse() {
         this.service.interceptors.response.use(function (response) {
-            if (response.headers['set-gmexsession']) {
-                utils.setItem("gmex-session", response.headers['set-gmexsession']);
+            if (response.headers['set-exsession']) {
+                window.utils.setItem("ex-session", response.headers['set-exsession']);
             }
             return response;
         }, function (error) {
@@ -45,13 +44,11 @@ class _axios {
             url: url,
             method: method
         }, options);
-
         if (method === 'get') {
             config.params = data ? data.params : {};
-
         } else if (method === 'post') {
             // 以表单形式上传数据(如图片)
-            if (Object.prototype.toString.call(data) == '[object FormData]') {
+            if (Object.prototype.toString.call(data) === '[object FormData]') {
                 config.data = data;
             } else {
                 //  try {
@@ -66,7 +63,8 @@ class _axios {
             }
         }
         return this.service(config);
-    };
+    }
+
     /**
      * 竞赛方式请求
      * @param params

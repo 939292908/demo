@@ -1,5 +1,5 @@
 //充币
-let m = require('mithril')
+const m = require('mithril')
 
 require('@/styles/Myassets/rechargeCurrency.css')
 

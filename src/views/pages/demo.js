@@ -1,4 +1,4 @@
-let m = require('mithril')
+const m = require('mithril')
 
 
 

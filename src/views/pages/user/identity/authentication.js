@@ -1,9 +1,9 @@
 // 个人总览页面内模块>合约账户
 
-let m = require('mithril')
-const { call } = require('file-loader')
+const m = require('mithril');
+const { call } = require('file-loader');
 
-require('@/styles/identity/authentication.css')
+require('@/styles/identity/authentication.css');
 
 let authentication = {
     num: 0,
@@ -31,6 +31,6 @@ module.exports = {
     view: function () {
         return m('div.identity-authentication',{style:'width:70%'},[
             authentication.stepOne()
-        ])
+        ]);
     }
-}
+};

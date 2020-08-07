@@ -1,5 +1,5 @@
 //开启谷歌验证-下载app
-let m = require('mithril')
+const m = require('mithril')
 
 module.exports = {
     oncreate: function () {

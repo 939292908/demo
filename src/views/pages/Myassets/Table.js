@@ -33,7 +33,7 @@
 // 参数5：table加类名
 // class: ''
 
-let m = require('mithril')
+const m = require('mithril')
 module.exports = {
     tableWidth: 0,
     defaultColumnWidth: 150, // 默认每列宽

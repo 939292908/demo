@@ -1,5 +1,5 @@
 // 个人总览页面内模块>法币账户
-let m = require('mithril')
+const m = require('mithril');
 
 module.exports = { 
     oncreate: function(){
@@ -23,7 +23,7 @@ module.exports = {
             ]),
             m('div', { style: 'float:left' }, [
             ]),
-            m('div', { style: { clear: 'both' } }),
-        ])
+            m('div', { style: { clear: 'both' } })
+        ]);
     }
-}
+};

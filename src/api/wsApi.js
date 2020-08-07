@@ -1,7 +1,6 @@
-const Stately = require('stately.js')
-const API_TAG = 'WS'
-const DBG_WSCALL = true
-
+const Stately = require('stately.js');
+const API_TAG = 'WS';
+const DBG_WSCALL = true;
 class Mkt {
     Conf = null;
     // websocket 
@@ -28,52 +27,42 @@ class Mkt {
     rid = 0;
     //已发送，等待确认的消息体
     Reqs = {};
-
     // 限定接收到的数据
     NumDataLenMax = 100;
     // 限定接收的数据的量
     NumReqCountMax = 100;
-
-    TickType=  "__fast__"; //行情模式，"__fast__":正常模式；"__slow__"：慢速模式；
-
+    TickType = "__fast__"; //行情模式，"__fast__":正常模式；"__slow__"：慢速模式；
     booking = {
         // "sub1": {want:true,done:false},
     };
-
     // 合约详情
     AssetD = {}
-
     // 合约详情补充参数
     AssetEx = {}
-
     displaySym = []
-
     // 合约最新行情
     lastTick = {}
-
     // 成交行情
     trades = []
-
-    constructor(arg){
+    constructor(arg) {
 
         this.Conf = arg
         this.initStately(arg)
-        
-    }
 
-    initStately(arg){
+    }
+    initStately(arg) {
         this.stately = Stately.machine({
             'IDLE': {
-                'do': (aObj)=>{
+                'do': (aObj) => {
                     _console.log(API_TAG, 'IDLE', aObj, arg)
 
-                    if(aObj.Conf && aObj.Conf.baseUrl){
+                    if (aObj.Conf && aObj.Conf.baseUrl) {
                         return 'PRECONNECT'
                     }
                 }
             },
             'PRECONNECT': {
-                'do': (aObj)=>{
+                'do': (aObj) => {
                     _console.log(API_TAG, 'PRECONNECT', aObj)
 
                     // 清理订阅状态
@@ -81,20 +70,20 @@ class Mkt {
                         aObj.booking[propName].done = false;
                     }
 
-                    if(aObj.ws){
+                    if (aObj.ws) {
                         aObj.ws.close()
                     }
 
                     aObj.openStart = Date.now();
                     aObj.ws = new WebSocket(aObj.Conf.baseUrl)
 
-                    if(!aObj.ws.onopen){
+                    if (!aObj.ws.onopen) {
                         aObj.ws.onopen = (arg) => {
                             aObj.ws_onopen(aObj, arg)
                         }
                     }
 
-                    if(!aObj.ws.onmessage){
+                    if (!aObj.ws.onmessage) {
                         aObj.ws.onmessage = (arg) => {
                             aObj.ws_onmessage(aObj, arg)
                         }
@@ -103,7 +92,7 @@ class Mkt {
                 }
             },
             'CONNECTING': {
-                'do': (aObj)=>{
+                'do': (aObj) => {
                     _console.log(API_TAG, 'CONNECTING', aObj)
                     // return 'AUTHORIZING'
                     switch (aObj.ws.readyState) {
@@ -125,8 +114,8 @@ class Mkt {
                                     // })
                                     return 'AUTHORIZING'
                                     break;
-                                case "trd": 
-                                    
+                                case "trd":
+
                                     break;
                             }
                         case WebSocket.CLOSING:
@@ -137,22 +126,22 @@ class Mkt {
                 }
             },
             'AUTHORIZING': {
-                'do': (aObj)=>{
+                'do': (aObj) => {
                     _console.log(API_TAG, 'AUTHORIZING', aObj)
                     switch (aObj.Conf.Typ) {
                         case "mkt":
                             _console.log(API_TAG, 'mkt ws is open')
-                            aObj.ReqAssetD({vp: window.exchId})
+                            aObj.ReqAssetD({ vp: window.exchId })
                             return 'WORKING'
-                        case "trd": 
-                            
+                        case "trd":
+
                             break;
                     }
                     // return 'WORKING'
                 }
             },
             'WORKING': {
-                'do': (aObj)=>{
+                'do': (aObj) => {
                     _console.log(API_TAG, 'WORKING', aObj)
 
                     if (aObj.CheckAndSendHeartbeat(aObj)) {
@@ -187,14 +176,14 @@ class Mkt {
                         }
 
                     }
-                    if (books && (books.length>0)) {
+                    if (books && (books.length > 0)) {
                         aObj.ReqSub(books)
                     }
-                    if (unbooks && unbooks.length>0) {
+                    if (unbooks && unbooks.length > 0) {
                         aObj.ReqUnSub(unbooks)
                     }
                     if (toberemove) {
-                        for (let i = toberemove.length - 1; i >=0; i--) {
+                        for (let i = toberemove.length - 1; i >= 0; i--) {
                             delete aObj.booking[toberemove[i]]
                         }
                     }
@@ -202,12 +191,10 @@ class Mkt {
             }
         });
     }
-
-    ws_onopen(aObj, evt){
+    ws_onopen(aObj, evt) {
         _console.log(API_TAG, 'ws_onopen', evt)
     }
-
-    ws_onmessage(aObj, evt){
+    ws_onmessage(aObj, evt) {
         _console.log(API_TAG, 'ws_onmessage', evt)
         let s = this
         aObj.lastRecvTm = Date.now();
@@ -233,7 +220,7 @@ class Mkt {
                 let sym = d_data.Sym
                 if (sym) {
                     aObj.lastTick[sym] = d_data
-                    gBroadcast.emit({cmd: gBroadcast.MSG_TICK_UPD, data: {Ev: gBroadcast.MSG_TICK_UPD, Sym: sym, data: d_data}})
+                    gBroadcast.emit({ cmd: gBroadcast.MSG_TICK_UPD, data: { Ev: gBroadcast.MSG_TICK_UPD, Sym: sym, data: d_data } })
                 }
                 break;
             }
@@ -244,7 +231,7 @@ class Mkt {
                 let sym = d_data.Sym
                 if (sym) {
                     aObj.lastTick[sym] = d_data
-                    gBroadcast.emit({cmd: gBroadcast.MSG_INDEX_UPD, data: {Ev: gBroadcast.MSG_INDEX_UPD, Sym: sym, data: d_data}})
+                    gBroadcast.emit({ cmd: gBroadcast.MSG_INDEX_UPD, data: { Ev: gBroadcast.MSG_INDEX_UPD, Sym: sym, data: d_data } })
                 }
                 break;
             }
@@ -256,8 +243,8 @@ class Mkt {
                 let sym = d_data.Sym;
                 let typ = d_data.Typ;
                 if (sym) {
-                    
-                    gBroadcast.emit({cmd: gBroadcast.MSG_KLINE_UPD, data: {Ev: gBroadcast.MSG_KLINE_UPD, Sym: sym, Typ: typ, data: d_data}})
+
+                    gBroadcast.emit({ cmd: gBroadcast.MSG_KLINE_UPD, data: { Ev: gBroadcast.MSG_KLINE_UPD, Sym: sym, Typ: typ, data: d_data } })
                 }
                 break;
             }
@@ -268,7 +255,7 @@ class Mkt {
                 let sym = d_data.Sym;
                 if (sym) {
                     aObj.trades[sym] = aObj.util_PushToHead(aObj.trades[sym], d_data, aObj.NumDataLenMax)
-                    gBroadcast.emit({cmd: gBroadcast.MSG_TRADE_UPD, data: {Ev: gBroadcast.MSG_TRADE_UPD, Sym: sym, data: d_data}})
+                    gBroadcast.emit({ cmd: gBroadcast.MSG_TRADE_UPD, data: { Ev: gBroadcast.MSG_TRADE_UPD, Sym: sym, data: d_data } })
                 }
                 break;
             }
@@ -276,11 +263,11 @@ class Mkt {
                 /*
                 {"subj":"order20","data":{"Sym":"BTC.USDT","At":1574605382624,"Asks":[[7147.5,2385],[7148,76],[7148.5,172],[7149,474],[7149.5,1137],[7150,41],[7150.5,2547],[7151,4032],[7151.5,824],[7152,15],[7152.5,18],[7153,586],[7153.5,4675],[7154,379],[7154.5,1185],[7155,1123],[7155.5,8030],[7156,426],[7156.5,308],[7157,127]],"Bids":[[7146.5,2718],[7146,6953],[7145.5,10616],[7145,1257],[7144.5,841],[7144,582],[7143.5,3989],[7143,1711],[7142.5,1136],[7142,831],[7141.5,1668],[7141,198],[7140.5,541],[7140,813],[7139.5,488],[7139,135],[7138.5,74],[7138,131],[7137.5,1591],[7137,427]],"SEQ":2616505}}
                 */
-               let sym = d_data.Sym
-               if (sym) {
-                   aObj.order20[sym] = d_data
-                   gBroadcast.emit({cmd: gBroadcast.MSG_ORDER20_UPD, data: {Ev: gBroadcast.MSG_ORDER20_UPD, Sym: sym, data: d_data}})
-               }
+                let sym = d_data.Sym
+                if (sym) {
+                    aObj.order20[sym] = d_data
+                    gBroadcast.emit({ cmd: gBroadcast.MSG_ORDER20_UPD, data: { Ev: gBroadcast.MSG_ORDER20_UPD, Sym: sym, data: d_data } })
+                }
                 break;
             }
 
@@ -318,10 +305,9 @@ class Mkt {
             delete aObj.Reqs[rid];
         }
     }
-
     WSCall_Mkt(aCmd, aParam, aFunc) {
         let s = this
-        if(DBG_WSCALL){_console.log(API_TAG, __filename,"WSCall_Mkt",aCmd,aParam)}
+        if (DBG_WSCALL) { _console.log(API_TAG, __filename, "WSCall_Mkt", aCmd, aParam) }
         let tm = Date.now();
         s.lastSendTm = tm;
 
@@ -340,22 +326,20 @@ class Mkt {
         msg.cb = aFunc
         s.Reqs[msg.rid] = msg;
     }
-
-    ReqTime(aFunc){
+    ReqTime(aFunc) {
         let s = this
         let now = Date.now()
-        s.WSCall_Mkt("Time", now, (aObj ,arg) => {
+        s.WSCall_Mkt("Time", now, (aObj, arg) => {
             _console.log(API_TAG, 'Time', arg)
             aObj.netLag = arg.data.time - Date.now();
             aObj.lastRecvTm = Date.now()
             aFunc && aFunc()
         })
     }
-
     // 获取合约详情
     ReqAssetD(aArg) {
         let s = this
-        s.WSCall_Mkt("GetAssetD",aArg,function(aMkt, aRaw) {
+        s.WSCall_Mkt("GetAssetD", aArg, function (aMkt, aRaw) {
             /*
             {"rid":"1","code":0,"data":[
             {"Sym":"EOS.USDT","Expire":253402185600000,"PrzMaxChg":1000,"PrzMinInc":0.001,"PrzMax":100000000,"OrderMaxQty":20000,"LotSz":5,"PrzM":2.54801185548,"MIR":0.04,"MMR":0.02,"OrderMinVal":0.0001,"PrzLatest":2.547,"TotalVol":838130240,"OpenInterest":21288,"PrzIndex":2.54797,"FeeMkrR":0.0002,"FeeTkrR":0.00025,"Mult":1,"FromC":"USDT","ToC":"EOS","TrdCls":3,"MkSt":1,"SettleCoin":"USDT","QuoteCoin":"USDT","SettleR":0.002,"DenyOpenAfter":253402185600000,"OrderMinQty":0,"FundingLongR":0.0001010892,"FundingInterval":28800000,"FundingNext":1574611200000,"FundingPredictedR":0.0001010892,"FundingTolerance":0.00025,"FundingFeeR":0.1,"Lbl":"main"},
@@ -363,30 +347,30 @@ class Mkt {
             */
             let d = aRaw.data;
             s.displaySym = []
-            for(let i = 0; i< d.length; i++){
+            for (let i = 0; i < d.length; i++) {
                 s.displaySym.push(d[i].Sym)
                 s.AssetD[d[i].Sym] = d[i]
             }
-            gBroadcast.emit({cmd: gBroadcast.MSG_ASSETD_UPD, data: {Ev: gBroadcast.MSG_ASSETD_UPD, data: d}})
+            gBroadcast.emit({ cmd: gBroadcast.MSG_ASSETD_UPD, data: { Ev: gBroadcast.MSG_ASSETD_UPD, data: d } })
         });
-        s.WSCall_Mkt("GetAssetEx",aArg,function(aMkt, aRaw) {
+        s.WSCall_Mkt("GetAssetEx", aArg, function (aMkt, aRaw) {
             /*
             {"rid":"1","code":0,"data":[
             {"Sym":"EOS.USDT","Expire":253402185600000,"PrzMaxChg":1000,"PrzMinInc":0.001,"PrzMax":100000000,"OrderMaxQty":20000,"LotSz":5,"PrzM":2.54801185548,"MIR":0.04,"MMR":0.02,"OrderMinVal":0.0001,"PrzLatest":2.547,"TotalVol":838130240,"OpenInterest":21288,"PrzIndex":2.54797,"FeeMkrR":0.0002,"FeeTkrR":0.00025,"Mult":1,"FromC":"USDT","ToC":"EOS","TrdCls":3,"MkSt":1,"SettleCoin":"USDT","QuoteCoin":"USDT","SettleR":0.002,"DenyOpenAfter":253402185600000,"OrderMinQty":0,"FundingLongR":0.0001010892,"FundingInterval":28800000,"FundingNext":1574611200000,"FundingPredictedR":0.0001010892,"FundingTolerance":0.00025,"FundingFeeR":0.1,"Lbl":"main"},
             {"Sym":"LTC.USDT","Expire":253402185600000,"PrzMaxChg":1000,"PrzMinInc":0.01,"PrzMax":100000000,"OrderMaxQty":20000,"LotSz":0.5,"PrzM":45.80077698824,"MIR":0.04,"MMR":0.02,"OrderMinVal":0.0001,"PrzLatest":45.8,"TotalVol":548694542,"OpenInterest":163602,"PrzIndex":45.8,"FeeMkrR":0.0002,"FeeTkrR":0.00025,"Mult":1,"FromC":"USDT","ToC":"LTC","TrdCls":3,"MkSt":1,"SettleCoin":"USDT","QuoteCoin":"USDT","SettleR":0.002,"DenyOpenAfter":253402185600000,"OrderMinQty":0,"FundingLongR":0.0001043988,"FundingInterval":28800000,"FundingNext":1574611200000,"FundingPredictedR":0.0001043988,"FundingTolerance":0.00025,"FundingFeeR":0.1,"Lbl":"main"},
             */
             let d = aRaw.data;
-            for(let i = 0; i< d.length; i++){
+            for (let i = 0; i < d.length; i++) {
                 s.AssetEx[d[i].Sym] = d[i]
             }
-            gBroadcast.emit({cmd: gBroadcast.MSG_ASSETEX_UPD, data: {Ev: gBroadcast.MSG_ASSETEX_UPD, data: d}})
+            gBroadcast.emit({ cmd: gBroadcast.MSG_ASSETEX_UPD, data: { Ev: gBroadcast.MSG_ASSETEX_UPD, data: d } })
         })
-        
+
     }
     // 行情订阅
     ReqSub(aTpcArray) {
         let s = this
-        
+
         let needSub = []
         // aTpcArray.map(item => {
         //     if(!s.subList.includes(item)){
@@ -394,13 +378,12 @@ class Mkt {
         //         needSub.push(item)
         //     }
         // })
-        if(!aTpcArray || aTpcArray.length == 0){
-           return 
+        if (!aTpcArray || aTpcArray.length == 0) {
+            return
         }
         aTpcArray.push(s.TickType)
-        s.WSCall_Mkt("Sub",aTpcArray)
+        s.WSCall_Mkt("Sub", aTpcArray)
     }
-
     // 取消订阅
     ReqUnSub(aTpcArray) {
         let s = this
@@ -412,10 +395,10 @@ class Mkt {
         //         s.subList.splice(i, 1)
         //     }
         // })
-        if(!aTpcArray || aTpcArray.length == 0){
-            return 
-         }
-        s.WSCall_Mkt("UnSub",aTpcArray)
+        if (!aTpcArray || aTpcArray.length == 0) {
+            return
+        }
+        s.WSCall_Mkt("UnSub", aTpcArray)
     }
 
     // 添加需要请阅的内容
@@ -436,7 +419,6 @@ class Mkt {
             }
         }
     }
-
     // 删除已订阅的内容
     TpcDel(aTpc) {
         let s = this;
@@ -452,20 +434,18 @@ class Mkt {
             }
         }
     }
-
     CheckAndSendHeartbeat(aObj) {
         let now = Date.now()
-        let diff = now -  aObj.lastRecvTm
+        let diff = now - aObj.lastRecvTm
         if (diff > aObj.timeoutClose) {
             return true;
-        } else if (now -  aObj.lastRecvTm>aObj.timeoutIdle) {
+        } else if (now - aObj.lastRecvTm > aObj.timeoutIdle) {
             if (now - aObj.lastSendTm > aObj.timeoutMsg) {
                 aObj.ReqTime()
             }
         }
         return false;
     }
-
     util_PushToHead(aArray, aElement, aMaxLen) {
         if (!aArray) {
             aArray = [aElement]
@@ -473,10 +453,9 @@ class Mkt {
             aArray = [aElement].concat(aArray)
         }
         if (aMaxLen) {
-            aArray = aArray.slice(0,aMaxLen);
+            aArray = aArray.slice(0, aMaxLen);
         }
-        return aArray
+        return aArray;
     }
 }
-
-module.exports = Mkt
+module.exports = Mkt;

@@ -1,5 +1,5 @@
 //开启手机验证
-let m = require('mithril')
+const m = require('mithril')
 
 module.exports = {
     oncreate: function () {

@@ -44,7 +44,7 @@ npm run watch
 * 各模块使用统一模版；  
 
 ```js
-let m = require('mithril')
+const m = require('mithril')
 
 const methods = {
     openNavbarDropdown: false,

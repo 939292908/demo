@@ -1,4 +1,4 @@
-let m = require('mithril')
+const m = require('mithril')
 
 require('@/styles/Myassets/myWallet.css')
 // import Table from './Table' // 表格

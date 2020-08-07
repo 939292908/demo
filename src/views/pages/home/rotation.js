@@ -1,9 +1,9 @@
-let m = require('mithril')
-// let m = require('swiper')
+const m = require('mithril');
+// const m = require('swiper')
 
-require('@/styles/pages/home.css')
+require('@/styles/pages/home.css');
 
-let marketList = require('./marketList')
+const marketList = require('./marketList');
 
 module.exports = {
     view:  function(){
@@ -30,6 +30,6 @@ module.exports = {
                     ])
                 ])
             ])
-        ])
+        ]);
     }
-}
+};
