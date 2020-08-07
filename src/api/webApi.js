@@ -8,26 +8,33 @@ const API = require('@/api/request_apis');
 
 class webApi {
     constructor(arg) {
-        this.axios = new _axios();
-        this.axios.baseUrl = arg.baseUrl;
+        let s = this
+        s.axios = new _axios();
+        s.axios.baseUrl = arg.baseUrl;
 
         // 变量命名
-        this.userInfo = {};
-        this.loginSms = true; // 登录短信验证
-        this.functions = null;
-        this.loginState = false;
-        this.wallet = {
+        s.userInfo = {};
+        s.loginSms = true; // 登录短信验证
+        s.functions = null;
+        s.loginState = false;
+        s.wallet = {
             '01': [],
             '02': [],
             '03': [],
             '04': []
         };
-        this.wallet_obj = {
+        s.wallet_obj = {
             '01': {},
             '02': {},
             '03': {},
             '04': {}
         };
+
+        s.getUserInfo({}, function(arg){
+            if(arg.result.code == 0){
+                s.loginState = true
+            }
+        })
     }
 
     /**
