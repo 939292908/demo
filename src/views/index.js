@@ -1,36 +1,28 @@
 let m = require('mithril')
 
-let header = require('./components/header').default
-let footer = require('./components/footer').default
-let message = require('./components/message')
+let layout = require('./components/layout').default
+let layout_m = require('./components/layout_m').default
 
 let obj = {
-    getHeader: function () {
-        let type = window.$config.views.header.type
+    
+    getLayout: function () {
+        let type = window.$config.views.layout.type
+        let mobile = window.$config.mobile
         switch (type) {
             case 0:
-                return (!window.isMobile?m(header):'')
+                if(window.isMobile && mobile){
+                    return m(layout_m)
+                }else{
+                    return m(layout)
+                }
+                
             case 1:
-                return this.customHeader()
+                return this.customLayout()
             default:
                 return null
         }
     },
-    customHeader: function () {
-
-    },
-
-    getFooter: function () {
-        let type = window.$config.views.footer.type
-        switch (type) {
-            case 0:
-                return m(footer)
-            case 1:
-                return this.customFooter()
-            default:
-                return null
-        }
-    },
+    
 }
 
 module.exports = {
@@ -50,10 +42,7 @@ module.exports = {
     },
     view: function(){
         return m('section', [
-            obj.getHeader(),
-            m('div.route-box'),
-            obj.getFooter(),
-            m(message)
+            obj.getLayout(),
         ])
     }
 }

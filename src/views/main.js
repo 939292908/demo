@@ -1,8 +1,10 @@
 var m = require("mithril")
 
-let layout = require('./components/layout').default
-let layout_m = require('./components/layout_m').default
-let layout_inf = require('./components/layout_inf').default
+
+
+let header = require('./components/header').default
+let footer = require('./components/footer').default
+let message = require('./components/message')
 
 let futureCalc = require('../futureCalc/calcFuture')
 
@@ -108,29 +110,35 @@ let main = {
             this.EV_WLT_UPD_unbinder()
         }
     },
-    getLayout: function () {
-        let type = window.$config.views.layout.type
-        let mobile = window.$config.mobile
-        let pageTradeStatus = window.gMkt.CtxPlaying.pageTradeStatus
+    
+    customLayout: function () {
+
+    },
+
+    getFooter: function () {
+        let type = window.$config.views.footer.type
         switch (type) {
             case 0:
-                if(window.isMobile && mobile){
-                    return m(layout_m)
-                }else{
-                    // if(pageTradeStatus == 3){
-                    //     return m(layout_inf)
-                    // }else {
-                        return m(layout)
-                    // }
-                }
-                
+                return m(footer)
             case 1:
-                return this.customLayout()
+                return this.customFooter()
             default:
                 return null
         }
     },
-    customLayout: function () {
+
+    getHeader: function () {
+        let type = window.$config.views.header.type
+        switch (type) {
+            case 0:
+                return (!window.isMobile?m(header):'')
+            case 1:
+                return this.customHeader()
+            default:
+                return null
+        }
+    },
+    customHeader: function () {
 
     },
 
@@ -197,6 +205,7 @@ let main = {
             }, function () {
                 that.getRSLastTm = Date.now()
                 that.setDisplayTrdInfo()
+                gEVBUS.emit(gTrd.EV_GETRISKLIMITSOVER_UPD, {Ev: gTrd.EV_GETRISKLIMITSOVER_UPD})
             })
         }
     },
@@ -365,7 +374,10 @@ module.exports = {
     view: function (vnode) {
 
         return m("div", { class: "" }, [
-            main.getLayout(),
+            main.getHeader(),
+            m('div.route-box'),
+            main.getFooter(),
+            m(message)
         ])
     },
     onremove: function () {

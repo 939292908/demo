@@ -120,8 +120,8 @@ window.themeColors = theme
 
 //路由
 // require('./route');
-import('./views/index').then(arg=>{
-    let root = document.querySelector('#app')//document.body
+import('./views/main').then(arg=>{
+    let root = document.body//document.querySelector('#app')//document.body
     m.mount(root,arg.default)
     import('./route/index')
 })

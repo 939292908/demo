@@ -5,7 +5,7 @@ const defaultRoutePath = "/future"
 m.route(document.querySelector('body .route-box'), defaultRoutePath,{
     "/future": {
         onmatch: function (vnode){
-            return import('../views/main')
+            return import('../views/index')
         },
     }, //require('../views/main'),
     "/delegation": {
