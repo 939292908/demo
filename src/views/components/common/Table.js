@@ -38,6 +38,7 @@
 // class: ''
 
 var m = require("mithril")
+
 // 获取滚动条宽度
 function getScrollBarWidth() {
     var el = document.createElement("p")
@@ -51,6 +52,7 @@ function getScrollBarWidth() {
 export default {
     tableWidth: 0,
     defaultColumnWidth: 150, // 默认每列宽
+    scrollBarWidth: 0, // 滚动条宽
     // 设置table宽
     setTableWidth (vnode, w) {
         if (vnode.attrs.width) { // 使用参数 width
@@ -77,13 +79,13 @@ export default {
     },
     // 表头 样式
     getTHStyle () {
-        return ` overflow-y: visible; padding-right: ${getScrollBarWidth()}px;`
+        return ` overflow-y: visible; padding-right: ${this.scrollBarWidth}px;`
     },
     // 表格 样式
     getTBStyle (vnode) {
-        return `overflow-y: scroll;` + 
-        ( vnode.attrs.height ? `height: ${vnode.attrs.height}px;` : ``) +
-        ( vnode.attrs.maxHeight ? `max-height: ${vnode.attrs.maxHeight}px;` : ``) 
+        return `overflow-y: scroll;`
+        + ( vnode.attrs.height ? `height: ${vnode.attrs.height}px;` : ``)
+        + ( vnode.attrs.maxHeight ? `max-height: ${vnode.attrs.maxHeight}px;` : ``) 
     },
     // tr + td 样式
     getTrTdStyle (headerItem) {
@@ -91,9 +93,8 @@ export default {
     },
     oninit (vnode) {
         this.tableWidth = 0
-        vnode.attrs.columns.map(item => {
-            this.setTableWidth(vnode, item.width) // 设置table宽
-        })
+        vnode.attrs.columns.map(item => this.setTableWidth(vnode, item.width)) // 设置table宽
+        this.scrollBarWidth = getScrollBarWidth() // 设置滚动条宽
     },
     oncreate (vnode) {
     },
