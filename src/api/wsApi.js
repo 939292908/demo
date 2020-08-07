@@ -79,13 +79,13 @@ class Mkt {
 
                     if (!aObj.ws.onopen) {
                         aObj.ws.onopen = (arg) => {
-                            aObj.ws_onopen(aObj, arg);
+                            aObj.wsOnOpen(aObj, arg);
                         };
                     }
 
                     if (!aObj.ws.onmessage) {
                         aObj.ws.onmessage = (arg) => {
-                            aObj.ws_onmessage(aObj, arg);
+                            aObj.wsOnMessage(aObj, arg);
                         };
                     }
                     return 'CONNECTING';
@@ -191,11 +191,11 @@ class Mkt {
     }
 
     wsOnOpen(aObj, evt) {
-        window._console.log(API_TAG, 'ws_onopen', evt);
+        window._console.log(API_TAG, 'wsOnOpen', evt);
     }
 
     wsOnMessage(aObj, evt) {
-        window._console.log(API_TAG, 'ws_onmessage', evt);
+        window._console.log(API_TAG, 'wsOnMessage', evt);
         // const s = this;
         aObj.lastRecvTm = Date.now();
         try {
