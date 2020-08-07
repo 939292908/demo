@@ -305,13 +305,15 @@ let header = {
     customLeft: function () {
 
     },
+    // 右边菜单栏
     getRightCon: function () {
         let type = window.$config.views.header.right.type
+        let isLogin = window.gWebAPI.isLogin()
         if (type == 0) {
             return m("div", { class: "navbar-menu" }, [
                 m("div", { class: "navbar-end" }, [
-                    header.getAssetMenu(), // 资产菜单
-                    header.getOrderMenu(), // 订单菜单
+                    isLogin ? header.getAssetMenu() : '', // 资产菜单
+                    isLogin ? header.getOrderMenu() : '', // 订单菜单
                     header.getSwitchLine(),
                     header.getSwitchTheme(),
                     header.getChangeLangDom(),
