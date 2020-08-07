@@ -1,7 +1,6 @@
 const m = require('mithril');
 const titleLogo = require("@/assets/img/logo/title-logo.png").default;
 
-
 const methods = {
     openNavbarDropdown: false,
 
@@ -90,52 +89,51 @@ module.exports = {
                     //  ]),
                 ])
             ]),
-             m('div.navbar-end', {}, [
-                 m('div.navbar-item' + (window.gWebApi.loginState ? '.is-hidden' : ''), {}, [
-                     m('div.buttons', {}, [
-
-                         m('div.button', {
-                             onclick:function(){
-                                 window.router.push('/login')
-                             }
-                         }, [
-                             "登录"
-                         ]),
-                         m('div.button.has-bg-primary', {
-                             onclick:function(){
-                                 window.router.push('/register')
-                             }
-                         }, [
-                             "注册"
-                         ]),
-                     ]),
+            m('div.navbar-end', {}, [
+                m('div.navbar-item' + (window.gWebApi.loginState ? '.is-hidden' : ''), {}, [
+                    m('div.buttons', {}, [
+                        m('div.button', {
+                            onclick: function () {
+                                window.router.push('/login');
+                            }
+                        }, [
+                            "登录"
+                        ]),
+                        m('div.button.has-bg-primary', {
+                            onclick: function () {
+                                window.router.push('/register');
+                            }
+                        }, [
+                            "注册"
+                        ])
+                    ])
                 ]),
                 m('div.navbar-item.cursor-pointer' + (!window.gWebApi.loginState ? '.is-hidden' : ''), {
-                    class: `has-dropdown is-hoverable`,
+                    class: `has-dropdown is-hoverable`
                 }, [
                     m('div', { class: `navbar-item` }, ["资产"]),
                     m('div', { class: `navbar-dropdown` }, [
                         m('a', {
                             class: `navbar-item`,
-                            onclick: function() {
+                            onclick: function () {
                                 window.router.push('/myWalletIndex');
                             }
                         }, ["我的钱包"]),
                         m('a', {
                             class: `navbar-item`,
-                            onclick: function() {
+                            onclick: function () {
                                 window.router.push('/myWalletIndex');
                             }
                         }, ["合约账户"]),
                         m('a', {
                             class: `navbar-item`,
-                            onclick: function() {
+                            onclick: function () {
                                 window.router.push('/myWalletIndex');
                             }
                         }, ["币币账号"]),
                         m('a', {
                             class: `navbar-item`,
-                            onclick: function() {
+                            onclick: function () {
                                 window.router.push('/myWalletIndex');
                             }
                         }, ["法币账户"])
@@ -164,13 +162,13 @@ module.exports = {
                 }, [
                     m('a', { class: 'navbar-item' }, [
                         m('div', {
-                            onclick: function(){
+                            onclick: function () {
                                 window.router.push('/userCenter');
                             }
                         }, ['用户中心']),
                         m('div', { class: `navbar-dropdown` }, [
                             m('a', { class: `navbar-item` }, [
-                                m('svg', { class: 'icon', "aria-hidden": true}, [
+                                m('svg', { class: 'icon', "aria-hidden": true }, [
                                     m('use', { "xlink:href": '#icon-logo' })
                                 ]),
                                 m('a', { class: `navbar-item` }, ["12"])
@@ -257,7 +255,7 @@ module.exports = {
                             '繁体中文'
                         ])
                     ])
-                ]),
+                ])
             ])
         ]);
     }
