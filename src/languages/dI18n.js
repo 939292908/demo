@@ -1,7 +1,7 @@
 const m = require('mithril');
 const DI18n = require('di18n-translate');
 
-export default class gDI18n {
+class gDI18n {
     constructor() {
         const s = this;
         const localStorageLang = localStorage.getItem('language');
@@ -14,105 +14,105 @@ export default class gDI18n {
 
         s.langList = {
             en: {
-                // "英文": "注释",
+                英文: "注释",
                 key: "en",
                 language: "English",
                 imgName: "English_icon",
                 open: 1
             },
             zh: {
-                // "简体中文": "注释",
+                简体中文: "注释",
                 key: "zh",
                 language: "简体中文",
                 imgName: "china_icon",
                 open: 1
             },
             tw: {
-                // "繁体中文": "注释",
+                繁体中文: "注释",
                 key: "tw",
                 language: "繁体中文",
                 imgName: "china_icon",
                 open: 0
             },
             kr: {
-                // "韩语": "注释",
+                韩语: "注释",
                 key: "kr",
                 language: "한국어",
                 imgName: "Korean",
                 open: 0
             },
             jp: {
-                // "日语": "注释",
+                日语: "注释",
                 key: "jp",
                 language: "日本语",
                 imgName: "Japanese",
                 open: 0
             },
             ar: {
-                // "阿拉伯语": "注释",
+                阿拉伯语: "注释",
                 key: "ar",
                 language: "اللغة العربية",
                 imgName: "Arabic",
                 open: 0
             },
             in: {
-                // "印地语": "注释",
+                印地语: "注释",
                 key: "in",
                 language: "भारत गणराज्य",
                 imgName: "Hindi",
                 open: 0
             },
             de: {
-                // "德语": "注释",
+                德语: "注释",
                 key: "de",
                 language: "Deutsch",
                 imgName: "German",
                 open: 0
             },
             tr: {
-                // "土耳其语": "注释",
+                土耳其语: "注释",
                 key: "tr",
                 language: "Türkiye",
                 imgName: "Turkish",
                 open: 0
             },
             th: {
-                // "泰语": "注释",
+                泰语: "注释",
                 key: "th",
                 language: "ไทย",
                 imgName: "Thai",
                 open: 0
             },
             fr: {
-                // "法语": "注释",
+                法语: "注释",
                 key: "fr",
                 language: "Français",
                 imgName: "French",
                 open: 0
             },
             es: {
-                // "西班牙语": "注释",
+                西班牙语: "注释",
                 key: "es",
                 language: "Español",
                 imgName: "Spanish",
                 open: 0
             },
             pt: {
-                // "葡萄牙语": "注释",
+                葡萄牙语: "注释",
                 key: "pt",
                 language: "Português",
                 imgName: "Portuguese",
                 open: 0
             },
             ru: {
-                // "俄语": "注释",
+                俄语: "注释",
                 key: "ru",
                 language: "Русский",
                 imgName: "Russian",
                 open: 0
             },
             vn: {
-                // "越南语": "注释",
+                越南语: "注释",
                 key: "vn",
                 language: "Tiếng Việt",
                 imgName: "Vietnamese",
@@ -168,3 +168,5 @@ export default class gDI18n {
         }
     }
 }
+
+export default gDI18n;
