@@ -15,16 +15,10 @@ module.exports = {
                     m('div.column', {}, []),
                     m('div.column', {}, []),
                     m('div.column', {}, [
-                        Login.isvalidate
+                        Login.validateType.length
                             ? m('div.box.has-bg-level-3.views-pages-login-index-box', {}, [
-                                m('div.mb-5.title-2.has-text-level-1', {}, [window.gI18n('10210')/* '谷歌验证' */]),
-                                m('input.input[type=text].mb-6', {
-                                    oninput: e => {
-                                        Login.code = e.target.value;
-                                    },
-                                    value: Login.code
-                                }, []),
-
+                                m('div.mb-5.title-2.has-text-level-1', {}, ['验证码']),
+                                m('div', {}, Login.validInput),
                                 m('button.button.my-3.is-primary.is-fullwidth.mb-2', {
                                     onclick: () => {
                                         window.validate.checkGoogleCode(Login.code);
@@ -42,7 +36,11 @@ module.exports = {
                                 }, []),
                                 m('div.columns.body-3.has-text-level-1.mb-2', {}, [
                                     m('div.column.py-0', {}, ['密码']),
-                                    m('div.column.has-text-primary.has-text-right.py-0', {}, ['忘记密码？'])
+                                    m('a.column.has-text-primary.has-text-right.py-0', {
+                                        onclick: () => {
+                                            window.router.push('/forgetPassword');
+                                        }
+                                    }, ['忘记密码？'])
                                 ]),
                                 m('input.input[type=password].mb-7', {
                                     oninput: e => {

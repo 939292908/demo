@@ -6,12 +6,13 @@ module.exports = {
     // account: 'qwer2@qq.com',
     // password: '123456ly',
     // loginType: "phone",
-    account: '123456789',
+    account: '233233233',
     password: 'a123456',
     loginType: 'phone',
     loading: false,
     code: '',
-    isvalidate: false,
+    validateType: [],
+    validInput: [],
     rulesEmail: {
         required: value => !!value || '该字段不能为空', // 该字段不能为空
         email: value => {
@@ -32,10 +33,24 @@ module.exports = {
     rulesPwd: {
         required: value => !!value || '该字段不能为空' // 该字段不能为空
     },
-    valid() {
+    setValidInput () {
+        if (!this.validateType.length) return;
+        this.validInput = [];
+        for (const item of this.validateType) {
+            this.validInput.push(m('div.py-0.mb-2', {}, [item.name]));
+            this.validInput.push(m('input.input[type=text].mb-6', {
+                oninput: e => {
+                    this.code[item.key] = e.target.value;
+                },
+                value: this.code[item.key]
+            }, []));
+        }
+        m.redraw();
+    },
+    valid () {
         return !!(this.password && this.account);
     },
-    login() {
+    login () {
         const that = this;
         if (/@/.test(this.account)) {
             this.loginType = "email";
@@ -49,7 +64,7 @@ module.exports = {
             });
         }
     },
-    loginFn() {
+    loginFn () {
         const self = this;
         window.gWebApi.loginCheck({
             loginType: this.loginType,
@@ -68,32 +83,39 @@ module.exports = {
                 } else if (res.result.tfa === 1) {
                     // 手机
                     self.loading = false;
-                    window.validate.activeSms({ phoneNum: res.result.phone }, self.loginEnter);
+                    window.validate.activeSms(
+                        { phoneNum: res.result.phone },
+                        () => {
+                            self.loginEnter();
+                        }
+                    );
+                    self.validateType = [{ key: 'phone', name: '手机验证码' }];
+                    self.setValidInput();
                 } else if (res.result.tfa === 2) {
                     // 谷歌
 
                     self.loading = false;
 
                     window.validate.activeGoogle(() => {
-                        // self.isvalidate = false;
+                        // self.validateType = false;
                         // m.redraw();
                         self.loginEnter();
                     });
-                    self.isvalidate = true;
-                    m.redraw();
+                    self.validateType = [{ key: 'google', name: '谷歌验证码' }];
+                    self.setValidInput();
                 } else if (res.result.tfa === 3) {
                     // 手机和谷歌
                     self.loading = false;
 
                     window.validate.activeGoogle(
                         () => {
-                            // self.isvalidate = false;
+                            // self.validateType = false;
                             // m.redraw();
                             self.loginEnter();
                         }
                     );
-                    self.isvalidate = true;
-                    m.redraw();
+                    self.validateType = [{ key: 'google', name: '谷歌验证码' }, { key: 'phone', name: '手机验证码' }];
+                    self.setValidInput();
                 }
             } else {
                 window.$message({ content: window.errCode.getWebApiErrorCode(res.result.code), type: 'danger' });
@@ -104,7 +126,7 @@ module.exports = {
             this.loading = false;
         });
     },
-    loginEnter() {
+    loginEnter () {
         window.gWebApi.loginWeb({}, res => {
             if (res.result.code === 0) {
                 this.checkAccountPwd();
@@ -119,7 +141,7 @@ module.exports = {
             this.loading = false;
         });
     },
-    getUserInfo() {
+    getUserInfo () {
         window.gWebApi.getUserInfo({}, data => {
             window.gWebApi.loginState = true;
             self.loading = false;
@@ -150,10 +172,10 @@ module.exports = {
         });
     },
     // 判断是否设置资产密码
-    checkAccountPwd(self) {
+    checkAccountPwd (self) {
 
     },
-    initGeetest() {
+    initGeetest () {
         geetest.init(() => {
         });
         window.gBroadcast.onMsg({
@@ -168,7 +190,7 @@ module.exports = {
             }
         });
     },
-    oninit() {
+    oninit () {
         if (window.gWebApi.loginState) {
             window.router.push('/home');
             return;
@@ -178,7 +200,7 @@ module.exports = {
         }
         this.initGeetest();
     },
-    onremove() {
+    onremove () {
         window.gBroadcast.offMsg({
             key: 'login',
             cmd: 'geetestMsg',

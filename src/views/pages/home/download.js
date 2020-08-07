@@ -3,10 +3,10 @@ const m = require('mithril');
 
 require('@/styles/pages/home.css');
 
-const marketList = require('./marketList');
+// const marketList = require('./marketList');
 
 module.exports = {
-    view:  function(){
+    view: function() {
         return m('views-pages-home-download', {}, [
             // 二维码下载
             m('div', { class: `border-1 w is-around is-align-items-center` }, [

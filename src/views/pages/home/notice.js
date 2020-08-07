@@ -3,10 +3,10 @@ const m = require('mithril');
 
 require('@/styles/pages/home.css');
 
-const marketList = require('./marketList');
+// const marketList = require('./marketList');
 
 module.exports = {
-    view:  function(){
+    view: function() {
         return m('views-pages-home-notice', {}, [
             // 公告
             m('div', { class: `Notice my-4 w` }, [
@@ -14,7 +14,7 @@ module.exports = {
                     m('div', { class: `Notice-1` }, ['我是公告我是公告']),
                     m('div', { class: `Notice-2` }, ['我是公告我是公告']),
                     m('div', { class: `Notice-3` }, ['我是公告我是公告']),
-                    m('div', { class: `Notice-4` }, ['我是公告我是公告']),
+                    m('div', { class: `Notice-4` }, ['我是公告我是公告'])
                 ])
             ])
         ]);

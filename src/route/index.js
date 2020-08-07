@@ -35,12 +35,12 @@ m.route(document.querySelector('body .route-box'), defaultRoutePath, {
     }
 });
 
-class router {
+class Router {
     constructor() {
         this.path = defaultRoutePath;
         this.params = {};
         this.route = m.route;
-        this.historyRouteList = new Array();
+        this.historyRouteList = new Array([]);
     }
 
     /**
@@ -59,13 +59,13 @@ class router {
      */
     push(param, replace = true) {
         if (typeof param === 'string') {
-            if (replace && this.path && this.path != param) {
+            if (replace && this.path && this.path !== param) {
                 this.historyRouteList.unshift({ path: this.path, data: this.params });
             }
             this.path = param;
             this.route.set(param);
         } else {
-            if (replace && this.path && this.path != param.path) {
+            if (replace && this.path && this.path !== param.path) {
                 this.historyRouteList.unshift({ path: this.path, data: this.params });
             }
             this.path = param.path;
@@ -104,4 +104,4 @@ class router {
     }
 }
 
-window.router = new router();
+window.router = new Router();
