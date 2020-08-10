@@ -425,15 +425,15 @@ let obj = {
                 //合约类型名称
                 typeName: '', 
                 //风险限额
-                Base:RS.Base,
+                Base:(RS && RS.Base) || "--",
                 //风险限额递增额
-                Step:RS.Step,
+                Step:(RS && RS.Step) || "--",
                 //委托保证金递增值
-                StepIR:RS.StepIR,
+                StepIR:(RS && RS.StepIR) || "--",
                 //仓位保证金递增值
-                StepMR:RS.StepMR,
-                BaseMIR:RS.BaseMIR,
-                BaseMMR:RS.BaseMMR
+                StepMR:(RS && RS.StepMR) || "--",
+                BaseMIR:(RS && RS.BaseMIR) || "--",
+                BaseMMR:(RS && RS.BaseMMR) || "--",
                 
             };
             if (ass.TrdCls == 2) {
@@ -534,20 +534,20 @@ let obj = {
         let Qty1 = 0
         let arr = []
         for(let i =1;i <=10;){
-            let Qty2 = (this.spotInfo.Base - 1) + (this.spotInfo.Step * (i - 1))
-            let MMR = (this.spotInfo.BaseMMR) + (this.spotInfo.StepMR * (i - 1))
-            let MIR = (this.spotInfo.BaseMIR) + (this.spotInfo.StepIR * (i - 1))
-            let LeverMax = 1 / MIR
+            let Qty2 = ((this.spotInfo.Base - 1) + (this.spotInfo.Step * (i - 1))) || "--"
+            let MMR = ((this.spotInfo.BaseMMR) + (this.spotInfo.StepMR * (i - 1))) || "--"
+            let MIR = ((this.spotInfo.BaseMIR) + (this.spotInfo.StepIR * (i - 1))) || "--"
+            let LeverMax = (1 / MIR) || false
             let BA = {
                 fx : i,
                 zs : [Qty1,Qty2],
-                cw : (MMR * 100).toFixed(2) + '%',
-                wt : (MIR * 100).toFixed(2) + '%',
-                zg : LeverMax.toFixed(2)
+                cw : ((MMR * 100).toFixed(2) + '%') || "--",
+                wt : ((MIR * 100).toFixed(2) + '%') || "--",
+                zg : (LeverMax && LeverMax.toFixed(2)) || "--"
             }
             arr.push(BA);
             i +=1;
-            Qty1 = Qty2 + 1
+            Qty1 = (Qty2 + 1) || "--"
         }
 
         let showData = {
