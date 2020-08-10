@@ -411,7 +411,10 @@ export default {
                         btnHeight: 40,
                         activeId: cb => cb(obj.form, 'transferFrom'),
                         showMenu: obj.showMenuFrom,
-                        setShowMenu: type => obj.showMenuFrom = type,
+                        setShowMenu: type => {
+                            obj.showMenuFrom = type
+                            obj.showMenuTo = false
+                        },
                         
                         onClick (item) {
                             console.log(obj.form.transferFrom);
@@ -431,7 +434,10 @@ export default {
                         btnHeight: 40,
                         activeId: cb => cb(obj.form, 'transferTo'),
                         showMenu: obj.showMenuTo,
-                        setShowMenu: type => obj.showMenuTo = type,
+                        setShowMenu: type => {
+                            obj.showMenuTo = type
+                            obj.showMenuFrom = false
+                        },
 
                         onClick (item) {
                             console.log(obj.form.transferTo);
