@@ -1,6 +1,6 @@
 const m = require('mithril');
 const Register = require('@/models/login/register');
-const InputWithComponent = require('@/components/inputWithComponent');
+const InputWithComponent = require('@/views/components/inputWithComponent');
 
 import('@/styles/pages/login/register.css');
 
@@ -21,7 +21,7 @@ module.exports = {
                         Register.isvalidate ? m('div.box.has-bg-level-3.views-pages-login-index-box', {}, [
                             m('div.mb-5.title-2.has-text-level-1', {}, ['验证码']),
                             m('div.control.has-icons-right.mb-6', {}, [
-                                InputWithComponent({
+                                m(InputWithComponent, {
                                     options: {
                                         oninput: e => {
                                             Register.code = e.target.value;
@@ -71,7 +71,7 @@ module.exports = {
                             ]),
                             m('div.py-0.mb-2', {}, [Register.type === 'phone' ? '手机号' : '邮箱']),
                             Register.type === 'phone'
-                                ? InputWithComponent({
+                                ? m(InputWithComponent, {
                                     addClass: 'mb-5',
                                     leftComponents: m('span.select.px-1', {}, [
                                         m('select.without-border.register-national-select', {
