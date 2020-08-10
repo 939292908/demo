@@ -1,7 +1,7 @@
 // 账户交易>法币账户
 const m = require('mithril');
 
-require('@/styles/Myassets/tradingAccount_legal.css');
+require('@/styles/pages/Myassets/tradingAccount_legal.css');
 
 const legal = {
     currency: 'BTC',

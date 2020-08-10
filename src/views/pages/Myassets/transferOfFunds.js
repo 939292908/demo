@@ -1,7 +1,7 @@
 //资金划转
 const m = require('mithril')
 
-require('@/styles/Myassets/transferOfFunds.css')
+require('@/styles/pages/Myassets/transferOfFunds.css')
 
 let transferOfFunds = {
     transferOfFundsPage: function () {

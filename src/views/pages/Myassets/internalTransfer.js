@@ -1,7 +1,7 @@
 //内部转账
 let m = require('mithril')
 
-require('@/styles/Myassets/internalTransfer.css')
+require('@/styles/pages/Myassets/internalTransfer.css')
 
 let internalTransfer = {
     internalTransferPage: function () {
