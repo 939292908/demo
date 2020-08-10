@@ -33,14 +33,14 @@ module.exports = {
     ASSETS_V1: '/v1/users/GetAssets',
     // 国家列表
     COUNTRY_LIST_V1: '/v1/country/list',
-    //提现
-    WITHDRAW : '/users/ReqWithdraw',
-    //提现和支付手续费
-    ACT_FEES : '/v1/exch/fees',//'/users/getFees';
-    //获取钱包地址列表
-    WALLET_ADDRESS_LIST : '/addressMg/getWalletList',
-    //钱包历史记录
-    WALLET_ASSETS_HISTORY_V1 : '/v1/users/GetMoneyHistory',
-    //钱包充值地址
-    WALLET_RECHARGE_ADDR_V1 : '/v1/users/GetRechargeAddr'
+    // 提现
+    WITHDRAW: '/users/ReqWithdraw',
+    // 提现和支付手续费
+    ACT_FEES: '/v1/exch/fees',
+    // 获取钱包地址列表
+    WALLET_ADDRESS_LIST: '/addressMg/getWalletList',
+    // 钱包历史记录
+    WALLET_ASSETS_HISTORY_V1: '/v1/users/GetMoneyHistory',
+    // 钱包充值地址
+    WALLET_RECHARGE_ADDR_V1: '/v1/users/GetRechargeAddr'
 };
