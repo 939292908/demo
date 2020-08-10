@@ -59,16 +59,12 @@
     width: 100%;
 }
 .frame.w{
-    height: 2000px;
     border: 1px solid rgba(19, 18, 18, 0.333);
     margin-top: 20px;
-    padding: 10px 20px;
-
 }
 .frame-1.w{
     border: 1px solid rgba(19, 18, 18, 0.333);
     margin-top: 20px;
-    padding: 20px 100px;
     line-height: 30px;
 }
 .frame-2.w{
