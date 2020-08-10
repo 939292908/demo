@@ -36,7 +36,7 @@ module.exports = {
     // 提现
     WITHDRAW: '/users/ReqWithdraw',
     // 提现和支付手续费
-    ACT_FEES: '/v1/exch/fees',
+    ACT_FEES: '/v1/exch/fees', // '/users/getFees';
     // 获取钱包地址列表
     WALLET_ADDRESS_LIST: '/addressMg/getWalletList',
     // 钱包历史记录

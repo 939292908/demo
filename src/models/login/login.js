@@ -10,8 +10,7 @@ module.exports = {
     password: 'a123456',
     loginType: 'phone',
     loading: false,
-    code: '',
-    validateType: [],
+    validateCode: [],
     validInput: [],
     rulesEmail: {
         required: value => !!value || '该字段不能为空', // 该字段不能为空
@@ -24,7 +23,7 @@ module.exports = {
         required: value => !!value || '该字段不能为空', // 该字段不能为空
         phone: value => {
             const pattern = /^[1][0-9]{10}$/;
-            return pattern.test(value) || window.gI18n.$t("10669"); // 手机号码不正确
+            return pattern.test(value) || window.gI18n.$t('10669'); // 手机号码不正确
         }
     },
     rulesAll: {
@@ -33,29 +32,29 @@ module.exports = {
     rulesPwd: {
         required: value => !!value || '该字段不能为空' // 该字段不能为空
     },
-    setValidInput () {
-        if (!this.validateType.length) return;
+    setValidInput() {
+        if (!this.validateCode.length) return;
         this.validInput = [];
-        for (const item of this.validateType) {
+        for (const item of this.validateCode) {
             this.validInput.push(m('div.py-0.mb-2', {}, [item.name]));
             this.validInput.push(m('input.input[type=text].mb-6', {
                 oninput: e => {
-                    this.code[item.key] = e.target.value;
+                    item.code = e.target.value;
                 },
-                value: this.code[item.key]
+                value: item.code
             }, []));
         }
         m.redraw();
     },
-    valid () {
+    valid() {
         return !!(this.password && this.account);
     },
-    login () {
+    login() {
         const that = this;
         if (/@/.test(this.account)) {
-            this.loginType = "email";
+            this.loginType = 'email';
         } else {
-            this.loginType = "phone";
+            this.loginType = 'phone';
         }
         if (this.valid) {
             this.loading = true;
@@ -64,7 +63,7 @@ module.exports = {
             });
         }
     },
-    loginFn () {
+    loginFn() {
         const self = this;
         window.gWebApi.loginCheck({
             loginType: this.loginType,
@@ -89,7 +88,13 @@ module.exports = {
                             self.loginEnter();
                         }
                     );
-                    self.validateType = [{ key: 'phone', name: '手机验证码' }];
+                    self.validateCode = [
+                        {
+                            key: window.validate.sms,
+                            name: '手机验证码',
+                            code: ''
+                        }
+                    ];
                     self.setValidInput();
                 } else if (res.result.tfa === 2) {
                     // 谷歌
@@ -97,11 +102,17 @@ module.exports = {
                     self.loading = false;
 
                     window.validate.activeGoogle(() => {
-                        // self.validateType = false;
+                        // self.validateCode = false;
                         // m.redraw();
                         self.loginEnter();
                     });
-                    self.validateType = [{ key: 'google', name: '谷歌验证码' }];
+                    self.validateCode = [
+                        {
+                            key: window.validate.google,
+                            name: '谷歌验证码',
+                            code: ''
+                        }
+                    ];
                     self.setValidInput();
                 } else if (res.result.tfa === 3) {
                     // 手机和谷歌
@@ -109,39 +120,62 @@ module.exports = {
 
                     window.validate.activeGoogle(
                         () => {
-                            // self.validateType = false;
+                            // self.validateCode = false;
                             // m.redraw();
                             self.loginEnter();
                         }
                     );
-                    self.validateType = [{ key: 'google', name: '谷歌验证码' }, { key: 'phone', name: '手机验证码' }];
+                    self.validateCode = [
+                        {
+                            key: window.validate.google,
+                            name: '谷歌验证码',
+                            code: ''
+                        },
+                        {
+                            key: window.validate.sms,
+                            name: '手机验证码',
+                            code: ''
+                        }
+                    ];
                     self.setValidInput();
                 }
             } else {
-                window.$message({ content: window.errCode.getWebApiErrorCode(res.result.code), type: 'danger' });
+                window.$message({
+                    content: window.errCode.getWebApiErrorCode(res.result.code),
+                    type: 'danger'
+                });
             }
         }, err => {
             window._console.log('tlh', err);
-            window.$message({ content: window.gI18n.$t('10683') + '(请求异常)', type: 'danger' });
+            window.$message({
+                content: window.gI18n.$t('10683') + '(请求异常)',
+                type: 'danger'
+            });
             this.loading = false;
         });
     },
-    loginEnter () {
+    loginEnter() {
         window.gWebApi.loginWeb({}, res => {
             if (res.result.code === 0) {
                 this.checkAccountPwd();
                 this.getUserInfo();
             } else {
-                window.$message({ content: window.gI18n.$t('10683') + `(${res.result.code})`, type: 'danger' });
+                window.$message({
+                    content: window.gI18n.$t('10683') + `(${res.result.code})`,
+                    type: 'danger'
+                });
                 this.loading = false;
             }
         }, err => {
             window._console.log('tlh', err);
-            window.$message({ content: window.gI18n.$t("10683") + '(请求异常)', type: 'danger' });
+            window.$message({
+                content: window.gI18n.$t('10683') + '(请求异常)',
+                type: 'danger'
+            });
             this.loading = false;
         });
     },
-    getUserInfo () {
+    getUserInfo() {
         window.gWebApi.getUserInfo({}, data => {
             window.gWebApi.loginState = true;
             self.loading = false;
@@ -167,15 +201,21 @@ module.exports = {
                 // window.gBroadcast.emit({cmd: "setIsLogin", data: false});
             }
         }, err => {
-            window.$message({ content: `网络异常，请稍后重试 ${err}`, type: 'danger' });
+            window.$message({
+                content: `网络异常，请稍后重试 ${err}`,
+                type: 'danger'
+            });
             this.loading = false;
         });
     },
+    validateAll() {
+        window.validate.checkAll(this.validateCode);
+    },
     // 判断是否设置资产密码
-    checkAccountPwd (self) {
+    checkAccountPwd(self) {
 
     },
-    initGeetest () {
+    initGeetest() {
         geetest.init(() => {
         });
         window.gBroadcast.onMsg({
@@ -190,8 +230,8 @@ module.exports = {
             }
         });
     },
-    oninit () {
-        if (window.gWebApi.loginState && window.utils.getItem("ex-session")) {
+    oninit() {
+        if (window.gWebApi.loginState && window.utils.getItem('ex-session')) {
             window.router.push('/home');
             return;
         }
@@ -200,7 +240,7 @@ module.exports = {
         }
         this.initGeetest();
     },
-    onremove () {
+    onremove() {
         window.gBroadcast.offMsg({
             key: 'login',
             cmd: 'geetestMsg',

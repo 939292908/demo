@@ -1,7 +1,7 @@
 // 账户交易>币币账户
 const m = require('mithril');
 
-require('@/styles/Myassets/tradingAccount_coin.css');
+require('@/styles/pages/Myassets/tradingAccount_coin.css');
 
 const coin = {
     currency: 'BTC',

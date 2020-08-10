@@ -1,6 +1,6 @@
 const m = require('mithril');
 
-require('@/styles/Myassets/tradingAccount.css');
+require('@/styles/pages/Myassets/tradingAccount.css');
 const tradingAccountContract = require('./tradingAccount_contract');
 const tradingAccountCoin = require('./tradingAccount_coin');
 const tradingAccountLegal = require('./tradingAccount_legal');

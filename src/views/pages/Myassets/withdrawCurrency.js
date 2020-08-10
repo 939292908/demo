@@ -1,7 +1,7 @@
 //提币
 const m = require('mithril')
 
-require('@/styles/Myassets/withdrawCurrency.css')
+require('@/styles/pages/Myassets/withdrawCurrency.css')
 
 let withdrawCurrency = {
     withdrawPage: function () {

@@ -1,6 +1,6 @@
 const m = require('mithril');
 
-require('@/styles/Myassets/myWallet.css');
+require('@/styles/pages/Myassets/myWallet.css');
 
 const myWallet = {
     currency: 'BTC',

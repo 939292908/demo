@@ -1,6 +1,6 @@
 const m = require('mithril');
 
-import('@/styles/components/inputWithComponents.scss');
+import('@/styles/components/inputWithComponent.scss');
 
 /**
  * 输入框扩展
