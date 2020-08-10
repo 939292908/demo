@@ -191,7 +191,7 @@ module.exports = {
         });
     },
     oninit () {
-        if (window.gWebApi.loginState) {
+        if (window.gWebApi.loginState && window.utils.getItem("ex-session")) {
             window.router.push('/home');
             return;
         }
