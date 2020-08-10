@@ -1,4 +1,4 @@
-import geetest from "@/libs/geetestTwo";
+import geetest from '@/libs/geetestTwo';
 
 class Validate {
     constructor() {
@@ -177,7 +177,10 @@ class Validate {
      */
     checkSmsCode(code) {
         if (!code) {
-            window.$message({ content: '该字段不能为空', type: 'danger' });
+            window.$message({
+                content: '该字段不能为空',
+                type: 'danger'
+            });
             return;
         }
         this.validateSheet.loading = true;
@@ -192,7 +195,11 @@ class Validate {
                 this.finished();
             } else {
                 this.validateSheet.loading = false;
-                window.$message({ content: window.errCode.getWebApiErrorCode(res.data.result.code), type: 'danger' });
+                window.$message({
+                    content: window.errCode.getWebApiErrorCode(
+                        res.data.result.code),
+                    type: 'danger'
+                });
             }
         }, () => {
             this.validateSheet.loading = false;
@@ -205,7 +212,10 @@ class Validate {
      */
     checkGoogleCode(code) {
         if (!code) {
-            window.$message({ content: '该字段不能为空', type: 'danger' });
+            window.$message({
+                content: '该字段不能为空',
+                type: 'danger'
+            });
             return;
         }
         this.validateSheet.loading = true;
@@ -215,7 +225,11 @@ class Validate {
                     this.finished();
                 } else {
                     this.validateSheet.loading = false;
-                    window.$message({ content: window.errCode.getWebApiErrorCode(res.data.result.code), type: 'danger' });
+                    window.$message({
+                        content: window.errCode.getWebApiErrorCode(
+                            res.data.result.code),
+                        type: 'danger'
+                    });
                 }
             },
             () => {
@@ -229,7 +243,10 @@ class Validate {
      */
     checkEmailCode(code) {
         if (!code) {
-            window.$message({ content: '该字段不能为空', type: 'danger' });
+            window.$message({
+                content: '该字段不能为空',
+                type: 'danger'
+            });
             return;
         }
         this.validateSheet.loading = true;
@@ -239,12 +256,65 @@ class Validate {
                     this.finished();
                 } else {
                     this.validateSheet.loading = false;
-                    window.$message({ content: window.errCode.getWebApiErrorCode(res.data.result.code), type: 'danger' });
+                    window.$message({
+                        content: window.errCode.getWebApiErrorCode(
+                            res.data.result.code),
+                        type: 'danger'
+                    });
                 }
             },
             () => {
                 this.validateSheet.loading = false;
             });
+    }
+
+    checkAll(codeList) {
+        const funs = [];
+        const getFunctionName = (key) => {
+            switch (key) {
+            case this.sms:
+                return 'smsVerify';
+            case this.email:
+                return 'emailCheck';
+            case this.google:
+                return 'googleCheck';
+            }
+        };
+        for (const item of codeList) {
+            if (!item.code) {
+                window.$message({
+                    content: '该字段不能为空',
+                    type: 'danger'
+                });
+                return;
+            }
+
+            funs.push(new Promise((resolve, reject) => {
+                window.gWebApi[getFunctionName(item.key)]({ code: item.code },
+                    res => {
+                        if (res.result.code === 0) {
+                            resolve();
+                        } else {
+                            this.validateSheet.loading = false;
+                            window.$message({
+                                content: window.errCode.getWebApiErrorCode(
+                                    res.data.result.code),
+                                type: 'danger'
+                            });
+                            reject(res.result.msg);
+                        }
+                    },
+                    err => {
+                        this.validateSheet.loading = false;
+                        reject(err);
+                    }
+                );
+            }));
+        }
+        this.validateSheet.loading = true;
+        Promise.all(funs).then(() => {
+            this.finished();
+        });
     }
 
     /**

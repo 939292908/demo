@@ -15,13 +15,13 @@ module.exports = {
                     m('div.column', {}, []),
                     m('div.column', {}, []),
                     m('div.column', {}, [
-                        Login.validateType.length
+                        Login.validateCode.length
                             ? m('div.box.has-bg-level-3.views-pages-login-index-box', {}, [
                                 m('div.mb-5.title-2.has-text-level-1', {}, ['验证码']),
                                 m('div', {}, Login.validInput),
                                 m('button.button.my-3.is-primary.is-fullwidth.mb-2', {
                                     onclick: () => {
-                                        window.validate.checkGoogleCode(Login.code);
+                                        Login.validateAll();
                                     }
                                 }, [window.gI18n.$t('10136')/* '登录' */])
 
