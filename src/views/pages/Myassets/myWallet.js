@@ -1,6 +1,7 @@
 const m = require('mithril');
 
-require('@/styles/pages/Myassets/myWallet.css');
+require('@/styles/pages/Myassets/myWallet.scss');
+require('@/styles/pages/Myassets/walletTableStyle.scss');
 
 const myWallet = {
     currency: 'BTC',
@@ -29,7 +30,7 @@ const myWallet = {
                 m('div', {}, [m('input[type=checkbox]'), m('span', {}, '隐藏0资产')]),
                 m('div', {}, [m('img', { src: 'zijinjilu' }), m('span', {}, '资金记录')])
             ]),
-            m('div', {}, [
+            m('div.wallet-tableSty', {}, [
                 m('table', { style: { border: '1px solid #ccc' } }, [
                     m('thead', {}, [
                         m('tr', {}, [
@@ -75,7 +76,7 @@ module.exports = {
         myWallet.initAssetList();
     },
     view: function () {
-        return m('div', { class: 'myWallet', style: { border: '1px solid red' } }, [
+        return m('div', { class: 'views-pages-myassets-myWallet', style: { border: '1px solid red' } }, [
             myWallet.myWalletPage()
         ]);
     },

@@ -1,6 +1,6 @@
 const m = require('mithril');
 
-require('@/styles/pages/Myassets/tradingAccount.css');
+require('@/styles/pages/Myassets/tradingAccount.scss');
 const tradingAccountContract = require('./tradingAccount_contract');
 const tradingAccountCoin = require('./tradingAccount_coin');
 const tradingAccountLegal = require('./tradingAccount_legal');
@@ -34,7 +34,7 @@ const tradingAccount = {
 };
 module.exports = {
     view: function () {
-        return m('div', { class: 'tradingAccount' }, [
+        return m('div', { class: 'views-pages-myassets-tradingAccount' }, [
             tradingAccount.tradingAccountPage()
         ]);
     }

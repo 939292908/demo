@@ -1,0 +1,24 @@
+.wallet-tableSty{
+    .wallet-nav{
+        display: flex;
+        flex-direction: row;
+    }
+    table{
+        width: 100%;
+        thead{
+            color: rgba(83, 83, 83, 0.555);
+        }
+        td{
+            width: 5%;
+            padding:8px 0;
+        }
+        /* tr悬浮 */
+        tbody tr:hover {
+            background-color: #f7fbfb;
+        }
+    }
+    a{
+        color: #FF8B00;
+        margin-right: 15px;
+    }
+}

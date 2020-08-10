@@ -1,7 +1,8 @@
 // 账户交易>法币账户
 const m = require('mithril');
 
-require('@/styles/pages/Myassets/tradingAccount_legal.css');
+require('@/styles/pages/Myassets/walletTableStyle.scss');
+// require('@/styles/pages/Myassets/tradingAccount_legal.scss');
 
 const legal = {
     currency: 'BTC',
@@ -25,8 +26,8 @@ const legal = {
         });
     },
     legalIndex: function () {
-        return m('div.tradingAccount_legal', [
-            m('div', { class: 'tradingAccount_legal-nav' }, [
+        return m('div.tradingAccount_legal wallet-tableSty', [
+            m('div', { class: 'tradingAccount_legal wallet-nav' }, [
                 m('div', {}, [m('input[type=checkbox]'), m('span', {}, '隐藏0资产')]),
                 m('div', {}, [m('img', { src: 'zijinjilu' }), m('span', {}, '资金记录')]),
                 m('div', { style: { marginLeft: 'auto' } }, [m('span', {}, '法币账户' + legal.currency)])
@@ -74,7 +75,7 @@ module.exports = {
         legal.initTableData();
     },
     view: function () {
-        return m('div', { class: 'legal' }, [
+        return m('div', { class: 'views-pages-myassets-legal' }, [
             legal.legalIndex()
         ]);
     },

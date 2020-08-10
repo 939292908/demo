@@ -1,7 +1,8 @@
 // 账户交易>币币账户
 const m = require('mithril');
 
-require('@/styles/pages/Myassets/tradingAccount_coin.css');
+require('@/styles/pages/Myassets/walletTableStyle.scss');
+// require('@/styles/pages/Myassets/tradingAccount_coin.scss');
 
 const coin = {
     currency: 'BTC',
@@ -25,8 +26,8 @@ const coin = {
         });
     },
     coinIndex: function () {
-        return m('div.tradingAccount_coin', [
-            m('div', { class: 'tradingAccount_coin-nav' }, [
+        return m('div.tradingAccount_coin wallet-tableSty', [
+            m('div', { class: 'tradingAccount_coin wallet-nav' }, [
                 m('div', {}, [m('input[type=checkbox]'), m('span', {}, '隐藏0资产')]),
                 m('div', {}, [m('img', { src: 'zijinjilu' }), m('span', {}, '资金记录')]),
                 m('div', { style: { marginLeft: 'auto' } }, [m('span', {}, '币币账户' + coin.currency)])
@@ -74,7 +75,7 @@ module.exports = {
         coin.initTableData();
     },
     view: function () {
-        return m('div', { class: 'coin' }, [
+        return m('div', { class: 'views-pages-myassets-coin' }, [
             coin.coinIndex()
         ]);
     },
