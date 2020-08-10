@@ -3,7 +3,7 @@
 const m = require('mithril');
 // const { call } = require('file-loader');
 
-require('@/styles/identity/authentication.css');
+require('@/styles/pages/identity/authentication.css');
 
 const authentication = {
     num: 0,

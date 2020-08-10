@@ -1,6 +1,6 @@
 const m = require('mithril');
 
-require('@/styles/Myassets/myWalletIndex.css');
+require('@/styles/pages/Myassets/myWalletIndex.css');
 
 const tradingAccount = require('@/views/pages/Myassets/tradingAccount');
 const myWallet = require('@/views/pages/Myassets/myWallet');

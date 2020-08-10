@@ -1,7 +1,7 @@
 // 账户交易>合约账户
 const m = require('mithril');
 
-require('@/styles/Myassets/tradingAccount_contract.css');
+require('@/styles/pages/Myassets/tradingAccount_contract.css');
 
 const contract = {
     currency: 'BTC',

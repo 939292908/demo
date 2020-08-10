@@ -1,7 +1,7 @@
 //充币
 const m = require('mithril')
 
-require('@/styles/Myassets/rechargeCurrency.css')
+require('@/styles/pages/Myassets/rechargeCurrency.css')
 
 let rechargeCurrency = {
     rechargePage:function(){

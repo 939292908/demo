@@ -1,6 +1,6 @@
 const m = require('mithril')
 
-require('@/styles/Myassets/myWallet.css')
+require('@/styles/pages/Myassets/myWallet.css')
 // import Table from './Table' // 表格
 let Table = require('@/views/pages/Myassets/Table.js')
 
