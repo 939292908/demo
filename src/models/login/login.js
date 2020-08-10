@@ -10,8 +10,19 @@ module.exports = {
     password: 'a123456',
     loginType: 'phone',
     loading: false,
-    validateCode: [],
-    validInput: [],
+    /**
+     * 验证码列表
+     * [
+     *      {
+     *          key: window.validate.sms,
+     *          name: '手机验证码',
+     *          code: ''
+     *      },
+     *      ...
+     * ]
+     */
+    validateCode: [], // 验证码列表
+    validInput: [], // 验证码输入框
     rulesEmail: {
         required: value => !!value || '该字段不能为空', // 该字段不能为空
         email: value => {
