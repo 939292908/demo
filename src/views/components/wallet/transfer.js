@@ -2,6 +2,8 @@ var m = require("mithril")
 import Dropdown from "../common/Dropdown"
 
 let obj = {
+    showMenuFrom: false,
+    showMenuTo: false,
     form: {
         coin: 'USDT', // 合约下拉列表 value
         transferFrom: '03', // 从xx钱包 value
@@ -408,6 +410,9 @@ export default {
                     m(Dropdown, {
                         btnHeight: 40,
                         activeId: cb => cb(obj.form, 'transferFrom'),
+                        showMenu: obj.showMenuFrom,
+                        setShowMenu: type => obj.showMenuFrom = type,
+                        
                         onClick (item) {
                             console.log(obj.form.transferFrom);
                             obj.initFromAndToWalletListByValue() // 初始化 2个钱包下拉列表
@@ -425,6 +430,9 @@ export default {
                     m(Dropdown, {
                         btnHeight: 40,
                         activeId: cb => cb(obj.form, 'transferTo'),
+                        showMenu: obj.showMenuTo,
+                        setShowMenu: type => obj.showMenuTo = type,
+
                         onClick (item) {
                             console.log(obj.form.transferTo);
                             obj.initFromAndToWalletListByValue() // 初始化 2个钱包下拉列表

@@ -10,6 +10,7 @@ import myInsurance from './myInsurance' // 我的保险
 import Dropdown from '../common/Dropdown'
 
 let obj = {
+    showMenu: false,
     tabsActive: 0,
     dropdownActive: 1,
     tabsList: [
@@ -150,6 +151,7 @@ let obj = {
 }
 
 export default {
+    bodyEven: false,
     oninit: function(vnode){
         obj.initEVBUS()
         obj.initLanguage()
@@ -168,6 +170,13 @@ export default {
                 m( Dropdown, {
                     class: 'pub-trade-list-tabs-dropdown is-hidden-mobile' + (obj.tabsActive == 5 ? " is-hidden" : ""),
                     activeId: cb => cb(obj, 'dropdownActive'),
+                    showMenu: obj.showMenu,
+                    setShowMenu: type => obj.showMenu = type,
+                    bodyEven: this.bodyEven,
+                    setBodyEven: (type) => {
+                        this.bodyEven = type
+                        console.log(this.bodyEven,666);
+                    },
                     menuWidth:110,
                     onClick (itme) {
                         console.log(itme);

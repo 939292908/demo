@@ -5,6 +5,8 @@ import Table from '../common/Table'
 
 
 let obj = {
+    showMenuContract: false,
+    showMenuExponent: false,
     // 合约下拉选中   
     contractId: 1,
     // 指数下拉选中   
@@ -113,6 +115,8 @@ export default {
                     m('span', { class: "inf_body_span inf_body_font" }, ['合约']),
                     m(Dropdown, {
                         activeId: cb => cb(obj, 'contractId'),
+                        showMenu: obj.showMenuContract,
+                        setShowMenu: type => obj.showMenuContract = type,
                         onClick (itme) {
                             console.log(itme);
                         },
@@ -126,6 +130,8 @@ export default {
                     m('span', { class: "inf_body_span inf_body_font" }, ['指数']),
                     m(Dropdown, {
                         activeId: cb => cb(obj, 'exponentId'),
+                        showMenu: obj.showMenuExponent,
+                        setShowMenu: type => obj.showMenuExponent = type,
                         onClick (itme) {
                             console.log(itme);
                         },
