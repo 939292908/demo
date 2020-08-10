@@ -6,6 +6,7 @@ import CompensateModal from './components/CompensateModal' // 申请赔付弹框
 import DetailModal from './components/DetailModal' // 详情弹框
 import BuyModal from './components/BuyModal' // 买保险弹框
 let obj = {
+    showMenu: false,
     dropdownActive: 1, // 下拉选中
     tableColumns: [], // 表头
     tableData: [], // 表格
@@ -423,6 +424,8 @@ let obj = {
                         m( Dropdown, {
                             class: 'my-insurance-dropdown',
                             activeId: cb => cb(obj, 'dropdownActive'),
+                            showMenu: obj.showMenu,
+                            setShowMenu: type => obj.showMenu = type,
                             menuWidth:110,
                             onClick (itme) {
                                 console.log(itme);
