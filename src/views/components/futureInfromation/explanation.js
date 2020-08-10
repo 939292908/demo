@@ -40,7 +40,6 @@ let obj = {
 
     //合约名称列表
     futureSymList: [],
-    futureSymObj: {},
     //风险限额
     RS: null,
 
