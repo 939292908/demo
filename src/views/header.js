@@ -11,16 +11,30 @@ const methods = {
 
 module.exports = {
     view: function () {
-        return m('nav.navbar.is-fixed-top', { role: "navigation", "aria-label": "main navigation" }, [
+        return m('nav.navbar.is-fixed-top', {
+            role: "navigation",
+            "aria-label": "main navigation"
+        }, [
             m('.navbar-brand', {}, [
                 m('a.navbar-item', {
                     onclick: function () {
                         window.router.push('/');
                     }
                 }, [
-                    m('img', { src: titleLogo, width: "112", height: "28" })
+                    m('img', {
+                        src: titleLogo,
+                        width: "112",
+                        height: "28"
+                    })
                 ]),
-                m('a.navbar-burger.burger', { class: "" + (methods.openNavbarDropdown ? " is-active" : ""), role: "button", "aria-label": "menu", "aria-expanded": false, "data-target": "navbarBasicExample", onclick: methods.clickNavbarOpenBtn }, [
+                m('a.navbar-burger.burger', {
+                    class: "" + (methods.openNavbarDropdown ? " is-active" : ""),
+                    role: "button",
+                    "aria-label": "menu",
+                    "aria-expanded": false,
+                    "data-target": "navbarBasicExample",
+                    onclick: methods.clickNavbarOpenBtn
+                }, [
                     m('span', { "aria-hidden": true }),
                     m('span', { "aria-hidden": true }),
                     m('span', { "aria-hidden": true })
@@ -168,7 +182,10 @@ module.exports = {
                         }, ['用户中心']),
                         m('div', { class: `navbar-dropdown` }, [
                             m('a', { class: `navbar-item` }, [
-                                m('svg', { class: 'icon', "aria-hidden": true }, [
+                                m('svg', {
+                                    class: 'icon',
+                                    "aria-hidden": true
+                                }, [
                                     m('use', { "xlink:href": '#icon-logo' })
                                 ]),
                                 m('a', { class: `navbar-item` }, ["12"])
@@ -201,7 +218,13 @@ module.exports = {
                                 m('span.icon', {}, [
                                     m('i.iconfont.icon-logo')
                                 ]),
-                                m('a', { class: `navbar-item` }, ["退出登录"])
+                                m('a', {
+                                    class: `navbar-item`,
+                                    onclick: () => {
+                                        window.utils.removeItem("ex-session");
+                                        window.gWebApi.loginState = false;
+                                    }
+                                }, ["退出登录"])
                             ])
                         ])
                     ])
