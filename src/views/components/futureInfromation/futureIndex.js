@@ -5,6 +5,8 @@ import Table from '../common/Table'
 
 
 let obj = {
+    showMenuContract: false,
+    showMenuExponent: false,
     // 指数下拉选中   
     exponentId: 0,
     // 指数下拉
@@ -208,6 +210,8 @@ export default {
                     m('span', { class: "inf_body_span inf_body_font" }, ['指数']),
                     m(Dropdown, {
                         activeId: cb => cb(obj, 'exponentId'),
+                        showMenu: obj.showMenuExponent,
+                        setShowMenu: type => obj.showMenuExponent = type,
                         onClick (itme) {
                             obj.changeId(itme)
                         },

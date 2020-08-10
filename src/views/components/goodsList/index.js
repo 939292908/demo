@@ -8,6 +8,7 @@ import Dropdown from '../common/Dropdown'
 // import wltRec from './goodsWltRec'
 
 let obj = {
+    showMenu: false,
     tabsActive: 0,
     dropdownActive: 1,
     tabsList: [
@@ -139,6 +140,8 @@ export default {
                 m(Dropdown, {
                     class: 'pub-trade-list-tabs-dropdown is-hidden-mobile' + (obj.tabsActive == 5 ? " is-hidden" : ""),
                     activeId: cb => cb(obj, 'dropdownActive'),
+                    showMenu: obj.showMenu,
+                    setShowMenu: type => obj.showMenu = type,
                     menuWidth: 110,
                     onClick (itme) {
                         console.log(itme);

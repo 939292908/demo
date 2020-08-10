@@ -38,21 +38,21 @@ export default {
     },
     //初始化 全局广播
     initEVBUS (vnode) {
-        // 订阅 语言切换广播
-        // this.EV_CHANGELOCALE_UPD_unbinder && this.EV_CHANGELOCALE_UPD_unbinder()
-        // this.EV_CHANGELOCALE_UPD_unbinder = window.gEVBUS.on(gDI18n.EV_CHANGELOCALE_UPD, arg => {
-        //     setTimeout(() => this.initTriggerText(vnode), 100)// 要在所有语言初始化结束后再获取选中的文字
-        // })
         // 订阅 body点击事件广播
         this.EV_ClICKBODY_unbinder && this.EV_ClICKBODY_unbinder()
         this.EV_ClICKBODY_unbinder = window.gEVBUS.on(gEVBUS.EV_ClICKBODY, arg => {
-            if (vnode.state.openClickBody) vnode.state.showMenu = false // body事件 节流
-            vnode.state.openClickBody = true
+            // console.log(vnode.attrs.bodyEven,777777);
+            vnode.attrs.setShowMenu(false)
+            // if (vnode.attrs.bodyEven) vnode.attrs.setShowMenu(false) // body事件 节流
+            // vnode.attrs.setBodyEven(true)
         })
+        // this.EV_ClICKBODY_unbinder = window.gEVBUS.on(gEVBUS.EV_ClICKBODY, arg => {
+        //     if (vnode.state.openClickBody) vnode.attrs.showMenu((p, k) => p[k] = false) // body事件 节流
+        //     vnode.state.openClickBody = true
+        // })
     },
     //删除全局广播
     rmEVBUS () {
-        // this.EV_CHANGELOCALE_UPD_unbinder && this.EV_CHANGELOCALE_UPD_unbinder() // 删除 语言切换广播
         this.EV_ClICKBODY_unbinder && this.EV_ClICKBODY_unbinder() // 删除 body点击事件广播
     },
 
@@ -67,7 +67,7 @@ export default {
         this.initTriggerText(vnode)
     },
     view (vnode) {
-        return m('div', { class: `${vnode.attrs.class || ''} my-dropdown dropdown ${vnode.attrs.type == 'hover' ? " is-hoverable" : vnode.state.showMenu ? " is-active" : ''}` }, [
+        return m('div', { class: `${vnode.attrs.class || ''} my-dropdown dropdown ${vnode.attrs.type == 'hover' ? " is-hoverable" : vnode.attrs.showMenu ? " is-active" : ''}` }, [
             // btn
             m('div', { class: "dropdown-trigger" }, [
                 m('button', {
@@ -75,9 +75,9 @@ export default {
                     style: (vnode.attrs.btnWidth ? `width:${vnode.attrs.btnWidth}px;` : '') +
                         (vnode.attrs.btnHeight ? `height:${vnode.attrs.btnHeight}px;` : ''),
                     onclick: (e) => {
-                        vnode.state.showMenu = !vnode.state.showMenu
-                        vnode.state.openClickBody = false
-                        // window.stopBubble(e)
+                        vnode.attrs.setShowMenu(!vnode.attrs.showMenu)
+                        // vnode.attrs.setBodyEven(false)
+                        window.stopBubble(e)
                     }
                 }, [
                     m('div', { class: "button-content has-text-1" }, [
@@ -93,10 +93,9 @@ export default {
                         return m('a', {
                             class: `dropdown-item has-hover ${vnode.state.activeId == item.id ? 'has-active' : ''}`, key: item.label + index, onclick () {
                                 vnode.state.btnText = item.label // 同步显示文字
-                                // vnode.state.activeId = item.id
                                 vnode.attrs.activeId((p, k) => p[k] = item.id) // 修改选中id
                                 vnode.attrs.onClick && vnode.attrs.onClick(item) // 传递数据
-                                vnode.state.showMenu = false // 关闭菜单
+                                vnode.attrs.setShowMenu(false) // 关闭菜单
                             }
                         }, [
                             m('span', { class: `my-menu-label` }, item.label),

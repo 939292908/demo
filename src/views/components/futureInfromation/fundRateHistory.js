@@ -5,6 +5,7 @@ import Table from '../common/Table'
 
 
 let obj = {
+    showMenu: false,
     // 合约下拉选中   
     contractId: 1,
     // 合约下拉
@@ -89,6 +90,8 @@ export default {
                     m('span', { class: "inf_body_span inf_body_font" }, ['合约']),
                     m(Dropdown, {
                         activeId: cb => cb(obj, 'contractId'),
+                        showMenu: obj.showMenu,
+                        setShowMenu: type => obj.showMenu = type,
                         onClick (itme) {
                             console.log(itme);
                         },

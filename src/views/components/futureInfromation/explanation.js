@@ -4,6 +4,7 @@ import Table from '../common/Table'
 import kline from '../market/kline'
 
 let obj = {
+    showMenu: false,
     spotInfo: {
         disSym: '--',
         ExpireStr: '--',
@@ -530,9 +531,11 @@ let obj = {
         this.contractList[23].info = this.spotInfo.StepMR
     },
     //下拉列表
-    getDownloadFuture: function () {
+    getDownloadFuture: function (vnode) {
         return m(Dropdown, {
             activeId: cb => cb(obj, 'dropdownActive'),
+            showMenu: obj.showMenu,
+            setShowMenu: type => obj.showMenu = type,
             menuWidth: 110,
             onClick (itme) {
                 obj.clickSelect(itme)
@@ -680,7 +683,7 @@ export default {
                     '合约',
                 ]),
                 //下拉列表
-                obj.getDownloadFuture(),
+                obj.getDownloadFuture(vnode),
             ]),
 
             //文案说明
