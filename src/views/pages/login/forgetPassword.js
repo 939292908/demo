@@ -1,4 +1,5 @@
 const m = require('mithril');
+const Validate = require('./validate');
 const ForgetPassword = require('@/models/login/forgetPassword');
 
 import('@/styles/pages/login/forgetPassword.css');
@@ -14,15 +15,7 @@ module.exports = {
                 m('div.column.is-three-fifths', {}, []),
                 m('div.column.forget-password-margin', {},
                     ForgetPassword.validateCode.length
-                        ? [
-                            m('div.mb-5.title-2.has-text-level-1', {}, ['验证码']),
-                            m('div', {}, ForgetPassword.validInput),
-                            m('button.button.my-3.has-bg-primary.btn-2.is-fullwidth.mb-2', {
-                                onclick: () => {
-                                    ForgetPassword.validateAll();
-                                }
-                            }, ['下一步'])
-                        ]
+                        ? m(Validate, { validateCode: ForgetPassword.validateCode })
                         : [
                             m('div.mb-2.title-3.has-text-level-1', {},
                                 ['忘记密码']),
