@@ -1,4 +1,4 @@
-import geetest from '@/libs/geetestTwo';
+// import geetest from '@/libs/geetestTwo';
 
 class Validate {
     constructor() {
@@ -8,12 +8,9 @@ class Validate {
         this.tradepwd = 4;
         this.emailConfig = null; // 发送邮件配置
         this.smsConfig = null; // 发送短信配置
+        this.allConfig = null;
         this.callbackHandler = null; // 验证结果回调
-        this.code = ''; // 用于google验证code临时储存
         this.validateType = ''; // sms：手机验证，google：谷歌验证，email：邮箱验证
-        this.validateSheet = {
-            loading: false
-        };
     }
 
     /**
@@ -67,7 +64,7 @@ class Validate {
         //     cmd: 'setValidateSheet',
         //     data: config,
         // });
-        this.initGeetest();
+        // this.initGeetest();
         if (callback) {
             this.callbackHandler = callback;
         }
@@ -91,6 +88,19 @@ class Validate {
         //     cmd: 'setValidateSheet',
         //     data: config,
         // });
+        if (callback) {
+            this.callbackHandler = callback;
+        }
+    }
+
+    /**
+     * 激活多重验证
+     * @param params
+     * @param callback
+     */
+    activeAll(params, callback) {
+        this.validateType = 'all';
+        this.allConfig = params;
         if (callback) {
             this.callbackHandler = callback;
         }
@@ -183,7 +193,6 @@ class Validate {
             });
             return;
         }
-        this.validateSheet.loading = true;
         const params = {};
         if (this.smsConfig) {
             params.phoneNum = this.smsConfig.phoneNum;
@@ -194,7 +203,6 @@ class Validate {
             if (res.result === 0) {
                 this.finished();
             } else {
-                this.validateSheet.loading = false;
                 window.$message({
                     content: window.errCode.getWebApiErrorCode(
                         res.data.result.code),
@@ -202,7 +210,6 @@ class Validate {
                 });
             }
         }, () => {
-            this.validateSheet.loading = false;
         });
     }
 
@@ -218,7 +225,6 @@ class Validate {
             });
             return;
         }
-        this.validateSheet.loading = true;
         window.gWebApi.googleCheck({ code: code },
             res => {
                 if (res.result === 0) {
@@ -233,7 +239,6 @@ class Validate {
                 }
             },
             () => {
-                this.validateSheet.loading = false;
             });
     }
 
@@ -249,13 +254,11 @@ class Validate {
             });
             return;
         }
-        this.validateSheet.loading = true;
         window.gWebApi.emailCheck({ code: code },
             res => {
                 if (res.result.code === 0) {
                     this.finished();
                 } else {
-                    this.validateSheet.loading = false;
                     window.$message({
                         content: window.errCode.getWebApiErrorCode(
                             res.data.result.code),
@@ -264,7 +267,6 @@ class Validate {
                 }
             },
             () => {
-                this.validateSheet.loading = false;
             });
     }
 
@@ -295,7 +297,6 @@ class Validate {
                         if (res.result.code === 0) {
                             resolve();
                         } else {
-                            this.validateSheet.loading = false;
                             window.$message({
                                 content: window.errCode.getWebApiErrorCode(
                                     res.data.result.code),
@@ -305,13 +306,11 @@ class Validate {
                         }
                     },
                     err => {
-                        this.validateSheet.loading = false;
                         reject(err);
                     }
                 );
             }));
         }
-        this.validateSheet.loading = true;
         Promise.all(funs).then(() => {
             this.finished();
         });
@@ -331,42 +330,47 @@ class Validate {
     }
 
     close() {
-        const config = {};
-        config.display = false;
-        config.inputValue = '';
-        config.type = 0;
-        config.loading = false;
+        // const config = {};
+        // config.display = false;
+        // config.inputValue = '';
+        // config.type = 0;
+        // config.loading = false;
         // window.gBroadcast.emit({
         //     cmd: 'setValidateSheet',
         //     data: config
         // });
-        window.gBroadcast.offMsg({
-            key: 'ValidateModule',
-            cmd: 'geetestMsg',
-            isall: true
-        });
+        this.emailConfig = null;
+        this.smsConfig = null;
+        this.allConfig = null;
+        this.callbackHandler = null;
+        this.validateType = '';
+        // window.gBroadcast.offMsg({
+        //     key: 'ValidateModule',
+        //     cmd: 'geetestMsg',
+        //     isall: true
+        // });
     }
 
-    initGeetest() {
-        const self = this;
-        geetest.init(() => {
-        });
-        window.gBroadcast.onMsg({
-            key: 'ValidateModule',
-            cmd: 'geetestMsg',
-            cb: res => {
-                if (this.validateType !== 'google') {
-                    return;
-                }
-                if (res === 'success') {
-                    self.checkGoogleCode(self.code);
-                    self.validateSheet.loading = false;
-                } else {
-                    self.validateSheet.loading = false;
-                }
-            }
-        });
-    }
+    // initGeetest() {
+    //     const self = this;
+    //     geetest.init(() => {
+    //     });
+    //     window.gBroadcast.onMsg({
+    //         key: 'ValidateModule',
+    //         cmd: 'geetestMsg',
+    //         cb: res => {
+    //             if (this.validateType !== 'google') {
+    //                 return;
+    //             }
+    //             if (res === 'success') {
+    //                 self.checkGoogleCode(self.code);
+    //                 self.validateSheet.loading = false;
+    //             } else {
+    //                 self.validateSheet.loading = false;
+    //             }
+    //         }
+    //     });
+    // }
 }
 
 export default Validate;
