@@ -42,6 +42,8 @@ let obj = {
     //合约名称列表
     futureSymList: [],
     futureSymObj: {},
+    //风险限额
+    RS: null,
 
     dropdownActive: 0,
     tabelList: [
@@ -319,6 +321,7 @@ let obj = {
         }
         this.EV_ASSETD_UPD_unbinder = window.gEVBUS.on(gMkt.EV_ASSETD_UPD, arg => {
             that.initSymList()
+            that.updateSpotInfo()
         })
 
         //页面交易类型全局广播
@@ -327,6 +330,16 @@ let obj = {
         }
         this.EV_PAGETRADESTATUS_UPD_unbinder = window.gEVBUS.on(gMkt.EV_PAGETRADESTATUS_UPD, arg => {
             that.initSymList()
+            that.updateSpotInfo()
+        })
+        // 退出登录
+        if (this.EV_WEB_LOGOUT_unbinder) {
+            this.EV_WEB_LOGOUT_unbinder()
+        }
+        this.EV_WEB_LOGOUT_unbinder = window.gEVBUS.on(gWebAPI.EV_WEB_LOGOUT, arg => {
+            that.initSymList()
+            that.updateSpotInfo()
+            this.RS = null
         })
 
     },
@@ -343,6 +356,10 @@ let obj = {
         //风险限额
         if (this.EV_GETRISKLIMITSOVER_UPD_unbinder) {
             this.EV_GETRISKLIMITSOVER_UPD_unbinder()
+        }
+        // 退出登录
+        if (this.EV_WEB_LOGOUT_unbinder) {
+            this.EV_WEB_LOGOUT_unbinder()
         }
     },
     //初始化合约列表
@@ -376,6 +393,7 @@ let obj = {
         let ass = window.gMkt.AssetD[Sym] || null
 
         let RS = window.gTrd.RS[Sym] || null
+        this.RS = RS
         if (ass && ass.TrdCls != 1) {
             let info = {
                 // 合约显示名称
@@ -426,15 +444,15 @@ let obj = {
                 //合约类型名称
                 typeName: '', 
                 //风险限额
-                Base:RS.Base,
+                Base:(RS && RS.Base) || "--",
                 //风险限额递增额
-                Step:RS.Step,
+                Step:(RS && RS.Step) || "--",
                 //委托保证金递增值
-                StepIR:RS.StepIR,
+                StepIR:(RS && RS.StepIR) || "--",
                 //仓位保证金递增值
-                StepMR:RS.StepMR,
-                BaseMIR:RS.BaseMIR,
-                BaseMMR:RS.BaseMMR
+                StepMR:(RS && RS.StepMR) || "--",
+                BaseMIR:(RS && RS.BaseMIR) || "--",
+                BaseMMR:(RS && RS.BaseMMR) || "--",
                 
             };
             if (ass.TrdCls == 2) {
@@ -484,6 +502,7 @@ let obj = {
                 BaseMMR: '--',   
             }
         }
+        m.redraw()
     },
     //合约详解数据
     getFutureData:function(){
@@ -537,20 +556,20 @@ let obj = {
         let Qty1 = 0
         let arr = []
         for(let i =1;i <=10;){
-            let Qty2 = (this.spotInfo.Base - 1) + (this.spotInfo.Step * (i - 1))
-            let MMR = (this.spotInfo.BaseMMR) + (this.spotInfo.StepMR * (i - 1))
-            let MIR = (this.spotInfo.BaseMIR) + (this.spotInfo.StepIR * (i - 1))
-            let LeverMax = 1 / MIR
+            let Qty2 = ((this.spotInfo.Base - 1) + (this.spotInfo.Step * (i - 1))) || "--"
+            let MMR = ((this.spotInfo.BaseMMR) + (this.spotInfo.StepMR * (i - 1))) || "--"
+            let MIR = ((this.spotInfo.BaseMIR) + (this.spotInfo.StepIR * (i - 1))) || "--"
+            let LeverMax = (1 / MIR) || false
             let BA = {
                 fx : i,
                 zs : [Qty1,Qty2],
-                cw : (MMR * 100).toFixed(2) + '%',
-                wt : (MIR * 100).toFixed(2) + '%',
-                zg : LeverMax.toFixed(2)
+                cw : ((MMR * 100).toFixed(2) + '%') || "--",
+                wt : ((MIR * 100).toFixed(2) + '%') || "--",
+                zg : (LeverMax && LeverMax.toFixed(2)) || "--"
             }
             arr.push(BA);
             i +=1;
-            Qty1 = Qty2 + 1
+            Qty1 = (Qty2 + 1) || "--"
         }
 
         let showData = {
@@ -564,6 +583,7 @@ let obj = {
         arr.push(showData)
 
         this.tableData = arr
+        m.redraw()
     },
 
     //文案说明
@@ -618,8 +638,7 @@ let obj = {
             ]),
             // list
             m('div', { class: `` }, obj.contractList.map((item, index) => {
-                let info = item.info
-                return m('div', { class: "columns inf_columns" +(index % 2 == 0 ? ' is-active-bg1' : '') }, [
+                return m('div', { class: "columns inf_columns" +(index % 2 == 0 ? ' is-active-bg1' : '') + (this.RS?"":((index == 20 || index == 21 || index == 22 || index == 23)?" is-hidden":"")) }, [
                     m('div', { class: "column is-3" }, [item.name]),
                     m('div', { class: "column is-6" }, [item.info])
                 ])
@@ -632,7 +651,7 @@ let obj = {
         let dropdownActive = obj.dropdownActive
         let spotInfo = obj.spotInfo
         let tabelList = obj.tabelList
-        return m('div', { class: "inf_dropdown inf_body_conent" }, [
+        return m('div', { class: "inf_dropdown inf_body_conent" + (this.RS?"":" is-hidden") }, [
             // title
             m('div', { class: "inf_body_title_font inf_dropdown" }, [
                 // `${tabelList[dropdownActive]?tabelList[dropdownActive].label : "--"}合约风险限额`
