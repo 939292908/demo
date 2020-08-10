@@ -2,10 +2,10 @@
     margin: 0;
     padding: 0;
 }
-.myWallet{
+.views-pages-myassets-myWallet{
     width: 96%;
 }
-.myWallet-nav{
+.views-pages-myassets-myWallet .myWallet-nav{
     display: flex;
     flex-direction: row;
 }
