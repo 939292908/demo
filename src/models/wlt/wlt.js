@@ -9,6 +9,12 @@ module.exports = {
         '03': {}, // 主钱包
         '04': {} // 法币账户
     }, // 资产
+    wallet: {
+        '01': [], // 合约账户
+        '02': [], // 币币账户
+        '03': [], // 主钱包
+        '04': [] // 法币账户
+    },
     // 总USDT估值
     totalValueForUSDT: 0,
     // 总BTC估值
@@ -41,8 +47,10 @@ module.exports = {
         const wlt = window.gWebApi.wallet_obj;
         for (const type in wlt) {
             this.wallet_obj[type] = this.wallet_obj[type] ? this.wallet_obj[type] : {};
+            this.wallet[type] = [];
             for (const coin in wlt[type]) {
                 this.wallet_obj[type][coin] = this.wltHandle(type, wlt[type][coin]);
+                this.wallet[type].push(this.wallet_obj[type][coin]);
                 // 总USDT估值
                 this.totalValueForUSDT += Number(this.wallet_obj[type][coin].valueForUSDT);
                 // 总BTC估值
