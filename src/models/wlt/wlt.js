@@ -101,6 +101,8 @@ module.exports = {
             this.wltItemEx.PNL = window.utils.toFixedForFloor(this.wltItemEx.PNL || 0, 8);
             // 未实现盈亏
             this.wltItemEx.UPNL = window.utils.toFixedForFloor(this.wltItemEx.UPNL || 0, 8);
+            // 账户可提金额，用于资产划转
+            this.wltItemEx.wdrawable = window.utils.toFixedForFloor(this.wltItemEx.wdrawable || 0, 8);
             break;
         case '02':
             // 币币账户
@@ -175,9 +177,6 @@ module.exports = {
         // window._console.log('ht', 'value', TOTAL, coinPrz, btcPrz, TOTAL * coinPrz);
         this.wltItemEx.valueForBTC = window.utils.toFixedForFloor(valueForBTC, 8);
         // window._console.log('ht', 'value', valueForUSDT, valueForBTC);
-
-        // 账户可提金额，用于资产划转
-        this.wltItemEx.wdrawable = window.utils.toFixedForFloor(this.wltItemEx.wdrawable || 0, 8);
         // 图标
         this.wltItemEx.icon = window.gWebApi.baseUrl + this.wltItemEx.icon;
 
