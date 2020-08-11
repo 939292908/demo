@@ -18,6 +18,11 @@ m.route(document.querySelector('body .route-box'), defaultRoutePath, {
             return import('@/views/pages/Myassets/myWalletIndex');
         }
     },
+    '/assetRecords': {
+        onmatch: function () {
+            return import('@/views/pages/Myassets/assetRecords/index');
+        }
+    },
     '/login': {
         onmatch: function () {
             return import('@/views/pages/login/login');
