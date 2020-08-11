@@ -102,7 +102,7 @@ export default {
         // table
         return m('div', { class: `table-container ${vnode.attrs.class ? vnode.attrs.class : ''}` }, [
             // tHead
-            m('div', { class: "pub-table-head-box", style: this.getAllBoxStyle() + this.getTHStyle() }, [
+            m('div', { class: `pub-table-head-box ${window.gWebAPI.isLogin() ? '' : 'is-hidden'}`, style: this.getAllBoxStyle() + this.getTHStyle() }, [
                 m("table", { class: "table is-hoverable ", style: 'min-width: 100%;', cellpadding: 0, cellspacing: 0 }, [
                     this.getColgroup(vnode),
                     // 表头

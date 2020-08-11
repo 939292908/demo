@@ -450,7 +450,7 @@ let obj = {
                 m('col', { name: "pub-table-11", width: 100 }),
             ])
             return m('div', { class: " table-container" }, [
-                m('div', { class: "pub-table-head-box", style: "width: 1470px" }, [
+                m('div', { class: `pub-table-head-box ${window.gWebAPI.isLogin() ? '' : 'is-hidden'}`, style: "width: 1470px" }, [
                     m("table", { class: "table is-hoverable ", width: '1470px', cellpadding: 0, cellspacing: 0 }, [
                         colgroup,
                         m("tr", { class: "" }, [

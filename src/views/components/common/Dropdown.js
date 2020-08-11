@@ -37,7 +37,7 @@ export default {
         if (curItem) { // 文字
             vnode.state.btnText = curItem.label
         } else {
-            vnode.state.btnText = vnode.attrs.placeholder || "click me"
+            vnode.state.btnText = vnode.attrs.placeholder || "--"
         }
         // console.log(curItem, vnode.state.btnText, 77777777777);
         m.redraw()
