@@ -41,14 +41,16 @@ class _axios {
 
   //执行请求
   request(method, url, data, options = {}) {
-    const config = Object.assign({
+    let config = Object.assign({
       url: url,
       method: method
-    }, options);
+    });
+
+    config = Object.assign(config, options)
 
     if (method === 'get') {
-      config.params = data ? data.params : {};
-
+      config.params = data ? data : {};
+      console.log('get', config)
     } else if (method === 'post') {
       //以表单形式上传数据(如图片)
       if (Object.prototype.toString.call(data) == '[object FormData]') {
@@ -65,6 +67,7 @@ class _axios {
         }
       }
     }
+    console.log(config)
     return this.service(config);
   };
 
