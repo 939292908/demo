@@ -19,11 +19,12 @@ function XHRConfig (xhr) {
 
 export function RequestWarp(aReq,aOnSucess,aOnError) {
     if (USE_AXIOS) {
-        aReq.data = aReq.body
-        if (aReq.data) {
-            aReq.data = qs.stringify(aReq.data)
+        let data = aReq.body
+        delete aReq.body
+        if (aReq.method == 'post' && data) {
+            data = qs.stringify(data)
         }
-        axios.request(aReq.method, aReq.url, aReq.data, aReq).then(function(res){
+        axios.request(aReq.method, aReq.url, data, aReq).then(function(res){
             aOnSucess(res.data)
         }).catch(aOnError);
     } else {

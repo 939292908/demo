@@ -229,7 +229,7 @@ class CAPI {
         let s = this;
         if (DBG_REQUEST) {console.debug(DBG_TAG,"ReqUserLoginCheck Req",aData)}
         RequestWarp({
-                method:"POST",
+                method:"post",
                 withCredentials:true,
                 url:s.CTX.Conf.WebAPI + "/v1/users/loginCheck",
                 body:aData,
@@ -264,7 +264,7 @@ class CAPI {
         let s = this;
         if (DBG_REQUEST) {console.debug(DBG_TAG,"ReqUserLoginWeb Req",aData)}
         RequestWarp({
-                method:"POST",
+                method:"post",
                 withCredentials:true,
                 url:s.CTX.Conf.WebAPI + "/v1/users/loginWeb",
                 body:aData,
@@ -302,7 +302,7 @@ class CAPI {
             console.debug(DBG_TAG, "ReqSMSVerifyCode Req", aData)
         }
         RequestWarp({
-                method: "POST",
+                method: "post",
                 withCredentials: true,
                 url: s.CTX.Conf.WebAPI + "/v1/sms/getSMSCode",
                 body: aData,
@@ -326,7 +326,7 @@ class CAPI {
             console.debug(DBG_TAG, "ReqSMSVerify Req", aData)
         }
         RequestWarp({
-                method: "POST",
+                method: "post",
                 withCredentials: true,
                 url: s.CTX.Conf.WebAPI + "/v1/sms/verify",
                 body: aData,
@@ -351,7 +351,7 @@ class CAPI {
             console.debug(DBG_TAG, "ReqGoogleVerify Req", aData)
         }
         RequestWarp({
-                method: "POST",
+                method: "post",
                 withCredentials: true,
                 url: s.CTX.Conf.WebAPI + "/g_auth/verify",
                 body: aData,
@@ -374,7 +374,7 @@ class CAPI {
         let s = this;
         if (DBG_REQUEST) {console.debug(DBG_TAG,"ReqUserInfo Req",aData)}
         RequestWarp({
-                method:"POST",
+                method:"post",
                 withCredentials:true,
                 url:s.CTX.Conf.WebAPI + "/users/userInfo",
                 body:aData,
@@ -406,7 +406,7 @@ class CAPI {
         let s = this;
         if (DBG_REQUEST) {console.debug(DBG_TAG,"ReqFavoriteSetting Req",aData)}
         RequestWarp({
-                method:"GET",
+                method:"get",
                 withCredentials:true,
                 url:s.CTX.Conf.WebAPI + "/v1/users/favoriteSetting",
                 body:aData,
@@ -428,7 +428,7 @@ class CAPI {
         let s = this;
         if (DBG_REQUEST) {console.debug(DBG_TAG,"ReqSignOut Req",aData)}
         RequestWarp({
-                method:"GET",
+                method:"get",
                 withCredentials:true,
                 url:s.CTX.Conf.WebAPI + "/users/out",
                 body:aData,
@@ -458,7 +458,7 @@ class CAPI {
         let s = this;
         if (DBG_REQUEST) {console.debug(DBG_TAG,"ReqGetAssets Req",aData)}
         RequestWarp({
-                method:"POST",
+                method:"post",
                 withCredentials:true,
                 url:s.CTX.Conf.WebAPI + "/v1/users/GetAssets",
                 body:aData,
@@ -508,7 +508,7 @@ class CAPI {
         let s = this;
         if (DBG_REQUEST) {console.debug(DBG_TAG,"ReqTransfer Req",aData)}
         RequestWarp({
-                method:"POST",
+                method:"post",
                 withCredentials:true,
                 url:s.CTX.Conf.WebAPI + "/users/Transfer",
                 body:aData,
@@ -615,7 +615,7 @@ class CAPI {
         
         if (DBG_REQUEST) {console.log(DBG_TAG,"ReqTransfer ReqSaveUserSetting",params)}
         RequestWarp({
-                method:"POST",
+                method:"post",
                 withCredentials:true,
                 url:s.CTX.Conf.WebAPI + url,
                 body:params,
@@ -634,6 +634,33 @@ class CAPI {
 
 
     }
+
+    // 资金费率历史
+    ReqFundRateHistory(aData, aOnSuccess, aOnError) {
+        let s = this;
+        if (DBG_REQUEST) {
+            console.debug(DBG_TAG, "ReqGoogleVerify Req", aData)
+        }
+        RequestWarp({
+                method: "get",
+                url: s.CTX.Conf.WebAPI + "/v1/markets/historyData",
+                body: aData,
+            }, function (result) {
+                if (DBG_REQUEST) {
+                    console.debug(DBG_TAG, "ReqGoogleVerify Rsp", result)
+                }
+                if (aOnSuccess) {
+                    aOnSuccess(result)
+                }
+            }
+            , function (e) {
+                if (aOnError) {
+                    aOnError(e)
+                }
+            })
+            console.log(aData,s.CTX.Conf.WebAPI + "v1/stat/contract/record/daily_stm",'url---------------------');
+    }
+
 }
 
 export default CAPI
