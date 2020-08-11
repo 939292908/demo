@@ -14,25 +14,32 @@ let obj = {
     tableColumns: [],
     // 表格
     tableData: [],
-
+    // 初始化合约列表
+    initSymList () {
+        let displaySym = window.gMkt.displaySym
+        let assetD = window.gMkt.AssetD
+        let futureSymList = []
+        let tabelList = []
+        displaySym.map(function (Sym) {
+            let ass = assetD[Sym]
+            if (ass.TrdCls == 3) {
+                futureSymList.push(Sym)
+            } else if (ass.TrdCls == 2) {
+                futureSymList.push(Sym)
+            }
+        })
+        this.futureSymList = futureSymList
+        futureSymList.map((key, i) => {
+            let obj = {
+                id: i,
+                label: utils.getSymDisplayName(window.gMkt.AssetD, key)
+            }
+            tabelList.push(obj)
+        })
+        this.contractList = tabelList
+    },
     // 初始化多语言
     initLanguage () {
-        // 合约详解列表
-        this.contractList = [
-            {
-                id: 1,
-                label: '合约1'
-            },
-            {
-                id: 2,
-                label: '合约2'
-            },
-            {
-                id: 3,
-                label: '合约3'
-            },
-        ]
-       
         // 表头
         this.tableColumns = [
             {
@@ -69,7 +76,7 @@ let obj = {
                 fl: '0.3344%'
             },
         ]
-        
+
         let params = {
             collection: 'FundingRateHistory',
             Sym: "BTC.USDT",
@@ -77,23 +84,38 @@ let obj = {
             pageNo: 1
         }
         window.gWebAPI.ReqFundRateHistory(params, data => {
-            console.log(data,6666666);
+            console.log(data, 6666666);
         }, err => {
             console.log(err)
         })
+    },
+    //初始化全局广播
+    initEVBUS () {
+        let that = this
+        //assetD合约详情全局广播
+        if (this.EV_ASSETD_UPD_unbinder) this.EV_ASSETD_UPD_unbinder()
+        this.EV_ASSETD_UPD_unbinder = window.gEVBUS.on(gMkt.EV_ASSETD_UPD, arg => {
+            that.initSymList()
+        })
+    },
+    //删除全局广播
+    rmEVBUS () {
+        //assetD合约详情全局广播
+        if (this.EV_ASSETD_UPD_unbinder) this.EV_ASSETD_UPD_unbinder()
     },
 }
 
 
 export default {
-    oninit: function (vnode) {
+    oninit (vnode) {
         obj.initLanguage()
+        obj.initSymList()
         obj.getTableData()
     },
-    oncreate: function (vnode) {
-
+    oncreate (vnode) {
+        obj.initEVBUS()
     },
-    view: function (vnode) {
+    view (vnode) {
         return m("div", { class: "" }, [
             // 下拉筛选
             m('div', { class: `futureIndex-filter is-flex` }, [
@@ -104,6 +126,7 @@ export default {
                         activeId: cb => cb(obj, 'contractId'),
                         showMenu: obj.showMenu,
                         setShowMenu: type => obj.showMenu = type,
+                        placeholder: '--',
                         onClick (itme) {
                             console.log(itme);
                         },
@@ -113,7 +136,7 @@ export default {
                     })
                 ]),
             ]),
-      
+
             // 表格
             m(Table, {
                 columns: obj.tableColumns,
@@ -121,5 +144,8 @@ export default {
                 defaultColumnWidth: "25%"
             })
         ])
+    },
+    onremove (vnode) {
+        obj.rmEVBUS()
     }
 }
