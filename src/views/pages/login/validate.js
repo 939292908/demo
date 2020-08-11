@@ -21,13 +21,13 @@ const Validate = require('@/models/login/validate');
  * ]
  */
 module.exports = {
-    oninit (vnode) {
+    oninit(vnode) {
         Validate.oninit();
     },
-    onremove (vnode) {
+    onremove(vnode) {
         Validate.onremove();
     },
-    view (vnode) {
+    view(vnode) {
         const validInput = [];
         for (const item of vnode.attrs.validateCode) {
             validInput.push(m('div.py-0.mb-2', {}, [item.name]));
@@ -40,12 +40,16 @@ module.exports = {
                         },
                         value: item.code
                     },
-                    rightComponents: m('a.body-1.register-send-code-width.px-2', {
-                        onclick: () => {
-                            if (Validate.smsCd > 0) return;
-                            Validate.sendSmsCode();
-                        }
-                    }, [Validate.smsCd > 0 ? `${Validate.smsCd}` : window.gI18n.$t('10214')/* '获取验证码' */])
+                    rightComponents: m('a.body-1.register-send-code-width.px-2',
+                        {
+                            onclick: () => {
+                                if (Validate.smsCd > 0) return;
+                                Validate.sendSmsCode();
+                            }
+                        }, [
+                            Validate.smsCd > 0
+                                ? `${Validate.smsCd}`
+                                : window.gI18n.$t('10214')/* '获取验证码' */])
                 }));
                 break;
             case window.validate.email:
@@ -56,12 +60,16 @@ module.exports = {
                         },
                         value: item.code
                     },
-                    rightComponents: m('a.body-1.register-send-code-width.px-2', {
-                        onclick: () => {
-                            if (Validate.emailCd > 0) return;
-                            Validate.sendEmailCode();
-                        }
-                    }, [Validate.emailCd > 0 ? `${Validate.emailCd}` : window.gI18n.$t('10214')/* '获取验证码' */])
+                    rightComponents: m('a.body-1.register-send-code-width.px-2',
+                        {
+                            onclick: () => {
+                                if (Validate.emailCd > 0) return;
+                                Validate.sendEmailCode();
+                            }
+                        }, [
+                            Validate.emailCd > 0
+                                ? `${Validate.emailCd}`
+                                : window.gI18n.$t('10214')/* '获取验证码' */])
                 }));
                 break;
             case window.validate.google:
@@ -75,10 +83,10 @@ module.exports = {
             }
         }
 
-        return m('div.box.has-bg-level-3.views-pages-login-index-box', {}, [
+        return m('div', {}, [
             m('div.mb-5.title-2.has-text-level-1', {}, ['验证码']),
             m('div', {}, validInput),
-            m('button.button.my-3.is-primary.is-fullwidth.mb-2', {
+            m('button.button.my-3.has-bg-primary.btn-2.is-fullwidth.mb-2', {
                 onclick: () => {
                     window.validate.checkAll(vnode.attrs.validateCode);
                 }

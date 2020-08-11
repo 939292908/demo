@@ -1,14 +1,13 @@
 .views-pages-myassets-myWallet{
-    width: 96%;
     .myWallet-nav{
         display: flex;
         flex-direction: row;
          input{
-            margin-right: 3px;
+            margin-right: var(--c-margin-level1);
         } 
         img{
-            margin-left: 20px;
-            margin-right: 5px;
+            margin-left: var(--c-margin-level5);
+            margin-right: var(--c-margin-level1);
         }
     } 
 }

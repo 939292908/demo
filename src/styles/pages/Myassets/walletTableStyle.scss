@@ -10,15 +10,15 @@
         }
         td{
             width: 5%;
-            padding:8px 0;
+            padding:var(--c-padding-level2) 0;
         }
         /* tr悬浮 */
         tbody tr:hover {
-            background-color: #f7fbfb;
+            background-color: var(--c-background-lighten1);
         }
     }
     a{
-        color: #FF8B00;
-        margin-right: 15px;
+        color: var(--c-primary-lighten);
+        margin-right: var(--c-margin-level4);
     }
 }
