@@ -71,6 +71,8 @@ const EV_SWITCHALL_UPD = 'EV_SWITCHALL_UPD'
 const EV_ORDTIPS_UPD = 'EV_ORDTIPS_UPD'
 const EV_PLANTIPS_UPD = 'EV_PLANTIPS_UPD'
 const EV_OPENORDERCOMMON_UPD = 'EV_OPENORDERCOMMON_UPD'
+const EV_COMPOSITEINDEX_UPD = 'EV_COMPOSITEINDEX_UPD'
+const EV_ASSETEX_UPD = 'EV_ASSETEX_UPD'
 
 const EV_GETRISKLIMITSOVER_UPD = EV_GETRISKLIMITSOVER_UPD
 
@@ -187,6 +189,8 @@ class Mkt {
     EV_PLANTIPS_UPD = EV_PLANTIPS_UPD
     EV_OPENORDERCOMMON_UPD = EV_OPENORDERCOMMON_UPD
     EV_GETRISKLIMITSOVER_UPD = EV_GETRISKLIMITSOVER_UPD
+    EV_COMPOSITEINDEX_UPD = EV_COMPOSITEINDEX_UPD
+    EV_ASSETEX_UPD = EV_ASSETEX_UPD
     Conf = {
         Host: "",
         ApiKey: "",
@@ -802,7 +806,7 @@ class Mkt {
             for(let i = 0; i< d.length; i++){
                 s.AssetEx[d[i].Sym] = d[i]
             }
-            gEVBUS.EmitDeDuplicate(EV_ASSETD_UPD,50,EV_ASSETD_UPD, {Ev: EV_ASSETD_UPD})
+            gEVBUS.EmitDeDuplicate(EV_ASSETEX_UPD,50,EV_ASSETEX_UPD, {Ev: EV_ASSETEX_UPD})
         })
         s.WSCall_Mkt("GetCompositeIndex",aArg,function(aMkt, aRaw) {
             let d = aRaw.data;
@@ -811,7 +815,7 @@ class Mkt {
                 s.currencyIndex.push(d[i])
             }
             
-            gEVBUS.EmitDeDuplicate(EV_ASSETD_UPD,50,EV_ASSETD_UPD, {Ev: EV_ASSETD_UPD})
+            gEVBUS.EmitDeDuplicate(EV_COMPOSITEINDEX_UPD,50,EV_COMPOSITEINDEX_UPD, {Ev: EV_COMPOSITEINDEX_UPD})
         })
         
     }

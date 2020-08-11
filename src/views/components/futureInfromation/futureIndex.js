@@ -1,6 +1,7 @@
 var m = require("mithril")
 import Dropdown from '../common/Dropdown'
 import Table from '../common/Table'
+import kline from '../market/kline'
 
 
 
@@ -15,6 +16,8 @@ let obj = {
     oldSubArr:[],
     //行情广播数据
     tableData:[],
+    //行情广播列表
+    tableList:[],
     //合约名称列表
     futureSymList: [],
     // 表头
@@ -41,21 +44,11 @@ let obj = {
     initEVBUS: function(){
         let that = this
 
-        //assetD合约详情全局广播
-        if (this.EV_ASSETD_UPD_unbinder) {
-            this.EV_ASSETD_UPD_unbinder()
+        //指数详情全局广播
+        if (this.EV_COMPOSITEINDEX_UPD_unbinder) {
+            this.EV_COMPOSITEINDEX_UPD_unbinder()
         }
-        this.EV_ASSETD_UPD_unbinder = window.gEVBUS.on(gMkt.EV_ASSETD_UPD, arg => {
-            that.initSymList()
-            that.subTick()
-        })
-
-        //页面交易类型全局广播
-        if (this.EV_PAGETRADESTATUS_UPD_unbinder) {
-            this.EV_PAGETRADESTATUS_UPD_unbinder()
-        }
-        this.EV_PAGETRADESTATUS_UPD_unbinder = window.gEVBUS.on(gMkt.EV_PAGETRADESTATUS_UPD, arg => {
-            
+        this.EV_COMPOSITEINDEX_UPD_unbinder = window.gEVBUS.on(gMkt.EV_COMPOSITEINDEX_UPD, arg => {
             that.initSymList()
             that.subTick()
         })
@@ -64,35 +57,20 @@ let obj = {
             this.EV_INDEX_UPD_unbinder()
         }
         this.EV_INDEX_UPD_unbinder = window.gEVBUS.on(gMkt.EV_INDEX_UPD,arg=> {
-            // console.log(arg,33333333333)
-            that.tableData = arg.data.RefThirdParty
-            console.log(arg.data.RefThirdParty,2222222222)
-            console.log(that.tableData,333333333)
-            that.subTick()
-            that.getTableData()
+            let exponentId = this.exponentId
+            let Sym = this.exponentList[exponentId] && this.exponentList[exponentId].name || null
+            if(Sym){
+                that.tableData = arg.data.RefThirdParty
+                that.getTableData()
+            } 
         })
-        //当前选中合约变化全局广播
-        if(this.EV_CHANGESYM_UPD_unbinder){
-            this.EV_CHANGESYM_UPD_unbinder()
-        }
-        this.EV_CHANGESYM_UPD_unbinder = window.gEVBUS.on(gMkt.EV_CHANGESYM_UPD,arg=> {
-            that.unSubTick()
-            that.subTick()
-        })
+        
     },
 
     rmEVBUS: function(){
-        //assetD合约详情全局广播
-        if (this.EV_ASSETD_UPD_unbinder) {
-            this.EV_ASSETD_UPD_unbinder()
-        }
-        //页面交易类型全局广播
-        if (this.EV_PAGETRADESTATUS_UPD_unbinder) {
-            this.EV_PAGETRADESTATUS_UPD_unbinder()
-        }
-        //当前选中合约变化全局广播
-        if(this.EV_CHANGESYM_UPD_unbinder){
-            this.EV_CHANGESYM_UPD_unbinder()
+        //指数详情全局广播
+        if (this.EV_COMPOSITEINDEX_UPD_unbinder) {
+            this.EV_COMPOSITEINDEX_UPD_unbinder()
         }
         //指数行情全局广播
         if(this.EV_INDEX_UPD_unbinder){
@@ -121,15 +99,14 @@ let obj = {
         let exponentId = this.exponentId
         let Sym = this.exponentList[exponentId] && this.exponentList[exponentId].name || null
         if(Sym){
-            let subArr = utils.setSubArrType('tick',[Sym])
-            subArr = subArr.concat(utils.setSubArrType('trade',[Sym]))
-            subArr = subArr.concat(utils.setSubArrType('order20',[Sym]))
-            subArr = subArr.concat(utils.setSubArrType('index',[utils.getGmexCi(window.gMkt.AssetD, Sym)]))
+            let subArr = []
+            subArr = subArr.concat(utils.setSubArrType('index',[Sym]))
             window.gMkt.ReqSub(subArr)
             this.oldSubArr = subArr
         }
         m.redraw();
     },
+    //清除订阅指数行情
     unSubTick(){
         let oldSubArr = this.oldSubArr
         window.gMkt.ReqUnSub(oldSubArr)
@@ -138,7 +115,12 @@ let obj = {
     //改变选中id
     changeId:function(itme){
         this.exponentId = itme.id
+        //先清除之前的广播数据
+        this.unSubTick()
+        //再订阅指数行情广播
         this.subTick()
+        //初始化指数数据
+        this.getTableData()
     },
 
     // 初始化多语言
@@ -165,27 +147,20 @@ let obj = {
     },
     // 获取table数据
     getTableData () {
-        console.log(this.tableData,1111111)
-        this.tableData = [
-            {
-                jys: 'Binance',
-                hbd: 'BTC/USDT',
-                dqbj: '9500.5',
-                qz: '1/3'
-            },
-            {
-                jys: 'OKEx',
-                hbd: 'BTC/USDT',
-                dqbj: '9500.5',
-                qz: '1/3'
-            },
-            {
-                jys: 'Huobi',
-                hbd: 'BTC/USDT',
-                dqbj: '9500.5',
-                qz: '1/3'
+        let tableKeys = Object.keys(this.tableData)
+        let exponentId = this.exponentId
+        let Sym = this.exponentList[exponentId].vie
+        let tableList = []
+        tableKeys.map((itme)=>{
+            let d = {
+                jys: itme,
+                hbd: Sym + "/USDT",
+                dqbj: this.tableData[itme].prz,
+                qz: "1/" + tableKeys.length
             }
-        ]
+            tableList.push(d)
+        })
+        this.tableList = tableList
     },
 }
 
@@ -193,7 +168,7 @@ let obj = {
 export default {
     oninit: function (vnode) {
         obj.initLanguage()
-        // obj.getTableData()
+        
     },
     oncreate: function (vnode) {
         obj.initEVBUS()
@@ -236,7 +211,9 @@ export default {
                 m('div', { class: `inf_body_title_font` }, [
                     (obj.exponentList[exponent] ? obj.exponentList[exponent].vie :"--") + '指数历史价值'
                 ]),
-                m('div', { class: `` }, ["k线box"])
+                m('div', { class: " inf_body_kline kline_border" }, [
+                    m(kline)
+                ]),
             ]),
             // 表格
             m('div', { class: `futureIndex-table inf_dropdown inf_body_conent` }, [
@@ -246,7 +223,7 @@ export default {
                 // table
                 m(Table, {
                     columns: obj.tableColumns,
-                    data: obj.tableData,
+                    data: obj.tableList,
                     defaultColumnWidth: "25%"
                 })
             ]),

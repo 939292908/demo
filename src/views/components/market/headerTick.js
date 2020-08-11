@@ -92,7 +92,6 @@ let spotTick = {
             subArr = subArr.concat(utils.setSubArrType('index',[utils.getGmexCi(window.gMkt.AssetD, Sym)]))
             window.gMkt.ReqSub(subArr)
             this.oldSubArr = subArr
-            console.log(subArr,999999999999)
         }
         m.redraw();
     },
