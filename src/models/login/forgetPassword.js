@@ -1,10 +1,9 @@
-// const m = require('mithril');
+const m = require('mithril');
 const geetest = require('@/libs/geetestTwo');
 
 module.exports = {
     loginType: 'phone',
     loginName: '',
-    validInput: [],
     validateCode: [],
     areaCode: '86',
     valid() {
@@ -40,46 +39,74 @@ module.exports = {
             this.loading = false;
             if (res.result.code === 0) {
                 if (res.exists === 1) {
-                    if (this.loginType === "phone") {
-                        this.forgotPwdSmsCheck();
-                    } else if (this.loginType === "email") {
-                        this.forgotPwdEmailCheck();
-                    }
+                    this.nextStep();
                 } else {
-                    window.$message({ content: window.gI18n.$t('10227'), type: 'danger' });// 用户不存在
+                    window.$message({
+                        content: window.gI18n.$t('10227'),
+                        type: 'danger'
+                    });// 用户不存在
                 }
             } else {
-                window.$message({ content: window.errCode.getWebApiErrorCode(res.result.code), type: 'danger' });
+                window.$message({
+                    content: window.errCode.getWebApiErrorCode(res.result.code),
+                    type: 'danger'
+                });
             }
         }, () => {
-            window.$message({ content: '网络异常，请稍后重试', type: 'danger' });
+            window.$message({
+                content: '网络异常，请稍后重试',
+                type: 'danger'
+            });
             this.loading = false;
         });
     },
-    // 重置邮件验证
-    forgotPwdEmailCheck() {
-        window.validate.activeEmail({
-            email: this.loginName,
-            host: this.config.href,
-            fn: 'rpw',
-            lang: window.gI18n.locale,
-            resetPwd: true,
-            mustCheckFn: 'resetPasswd'
-        }, this.toResetPwd);
-    },
-    // 重置密码短信
-    forgotPwdSmsCheck() {
-        window.validate.activeSms({
-            phoneNum: this.areaCode + this.loginName,
-            resetPwd: true,
-            areaCode: '00' + this.areaCode,
-            phone: this.loginName,
-            mustCheckFn: 'resetPasswd'
-        }, this.toResetPwd);
-    },
     toResetPwd() {
         window.validate.close();
+        window._console.log('tlh', '验证完成');
         // this.$router.push(`/resetPasswd`);
+    },
+    nextStep() {
+        switch (this.loginType) {
+        case 'phone':
+            this.validateCode = [
+                {
+                    key: window.validate.sms,
+                    name: '手机验证码',
+                    code: '',
+                    config: {
+                        phoneNum: this.areaCode + this.loginName,
+                        resetPwd: true,
+                        areaCode: '00' + this.areaCode,
+                        phone: this.loginName,
+                        mustCheckFn: 'resetPasswd'
+                    }
+                }
+            ];
+            break;
+        case 'email':
+            this.validateCode = [
+                {
+                    key: window.validate.email,
+                    name: '邮箱验证码',
+                    code: '',
+                    config: {
+                        phoneNum: this.areaCode + this.loginName,
+                        resetPwd: true,
+                        areaCode: '00' + this.areaCode,
+                        phone: this.loginName,
+                        mustCheckFn: 'resetPasswd'
+                    }
+                }
+            ];
+            break;
+        }
+        m.redraw();
+        window.validate.activeAll(
+            this.validateCode,
+            () => {
+                this.toResetPwd();
+            }
+        );
     },
     initGeetest() {
         const self = this;
@@ -94,6 +121,15 @@ module.exports = {
                     self.loading = false;
                 }
             }
+        });
+    },
+    onremove() {
+        this.validateCode = [];
+        window.validate.close();
+        window.gBroadcast.offMsg({
+            key: 'forgetPassword',
+            cmd: 'geetestMsg',
+            isall: true
         });
     }
 };

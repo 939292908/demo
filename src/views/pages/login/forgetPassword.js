@@ -8,6 +8,7 @@ module.exports = {
     oninit() {
     },
     onremove() {
+        ForgetPassword.onremove();
     },
     view() {
         return m('div.box.has-bg-level-2.content-width', {}, [
@@ -44,7 +45,9 @@ module.exports = {
                                 value: ForgetPassword.loginName
                             }, []),
                             m('button.button.my-3.has-bg-primary.btn-2.is-fullwidth.mb-2', {
-                                onclick: () => {}
+                                onclick: () => {
+                                    ForgetPassword.queryUserInfo();
+                                }
                             }, ['下一步'])
                         ]
                 )
