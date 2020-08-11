@@ -79,11 +79,11 @@ module.exports = {
                 }
                 self.loading = false;
 
-                let config = {};
+                // let config = {};
                 if (res.result.tfa === 1) {
                     // 手机
                     self.loading = false;
-                    config = { phoneNum: res.result.phone };
+                    // config = { phoneNum: res.result.phone };
                     self.validateCode = [
                         {
                             key: window.validate.sms,
@@ -93,7 +93,7 @@ module.exports = {
                     ];
                 } else if (res.result.tfa === 2) {
                     // 谷歌
-                    config = {};
+                    // config = {};
                     self.validateCode = [
                         {
                             key: window.validate.google,
@@ -103,7 +103,7 @@ module.exports = {
                     ];
                 } else if (res.result.tfa === 3) {
                     // 手机和谷歌
-                    config = { phoneNum: res.result.phone };
+                    // config = { phoneNum: res.result.phone };
                     self.validateCode = [
                         {
                             key: window.validate.google,
@@ -118,7 +118,7 @@ module.exports = {
                     ];
                 }
                 window.validate.activeAll(
-                    config,
+                    self.validateCode,
                     () => {
                         self.loginEnter();
                     }
@@ -193,9 +193,6 @@ module.exports = {
             this.loading = false;
         });
     },
-    validateAll() {
-        window.validate.checkAll(this.validateCode);
-    },
     // 判断是否设置资产密码
     checkAccountPwd(self) {
 
@@ -226,7 +223,8 @@ module.exports = {
         this.initGeetest();
     },
     onremove() {
-        window.validate.close();
+        this.validateCode = [];
+        // window.validate.close();
         window.gBroadcast.offMsg({
             key: 'login',
             cmd: 'geetestMsg',

@@ -8,7 +8,6 @@ class Validate {
         this.tradepwd = 4;
         this.emailConfig = null; // 发送邮件配置
         this.smsConfig = null; // 发送短信配置
-        this.allConfig = null;
         this.callbackHandler = null; // 验证结果回调
         this.validateType = ''; // sms：手机验证，google：谷歌验证，email：邮箱验证
     }
@@ -99,8 +98,17 @@ class Validate {
      * @param callback
      */
     activeAll(params, callback) {
+        for (const item of params) {
+            switch (item.key) {
+            case this.sms:
+                this.smsConfig = item.config;
+                break;
+            case this.email:
+                this.emailConfig = item.config;
+                break;
+            }
+        }
         this.validateType = 'all';
-        this.allConfig = params;
         if (callback) {
             this.callbackHandler = callback;
         }
@@ -270,18 +278,27 @@ class Validate {
             });
     }
 
+    /**
+     * 多重验证
+     * @param codeList 验证码
+     * [
+     *      {
+     *          key: window.validate.sms,
+     *          name: '手机验证码',
+     *          code: '',
+     *          config: {
+     *              phoneNum: this.areaCode + this.loginName,
+     *              resetPwd: true,
+     *              areaCode: '00' + this.areaCode,
+     *              phone: this.loginName,
+     *              mustCheckFn: 'resetPasswd'
+     *          }
+     *      },
+     *      ...
+     * ]
+     */
     checkAll(codeList) {
         const funs = [];
-        const getFunctionName = (key) => {
-            switch (key) {
-            case this.sms:
-                return 'smsVerify';
-            case this.email:
-                return 'emailCheck';
-            case this.google:
-                return 'googleCheck';
-            }
-        };
         for (const item of codeList) {
             if (!item.code) {
                 window.$message({
@@ -290,19 +307,36 @@ class Validate {
                 });
                 return;
             }
+            let funName = '';
+            const params = {};
+            params.code = item.code;
+            switch (item.key) {
+            case this.sms:
+                if (this.smsConfig) {
+                    params.phoneNum = this.smsConfig.phoneNum;
+                }
+                funName = 'smsVerify';
+                break;
+            case this.email:
+                funName = 'emailCheck';
+                break;
+            case this.google:
+                funName = 'googleCheck';
+                break;
+            }
 
             funs.push(new Promise((resolve, reject) => {
-                window.gWebApi[getFunctionName(item.key)]({ code: item.code },
+                window.gWebApi[funName](params,
                     res => {
-                        if (res.result.code === 0) {
+                        if (res.result === 0) {
                             resolve();
                         } else {
                             window.$message({
                                 content: window.errCode.getWebApiErrorCode(
-                                    res.data.result.code),
+                                    res.result.code),
                                 type: 'danger'
                             });
-                            reject(res.result.msg);
+                            reject(res.result);
                         }
                     },
                     err => {
@@ -313,6 +347,8 @@ class Validate {
         }
         Promise.all(funs).then(() => {
             this.finished();
+        }).catch(e => {
+            window._console.log('tlh', e);
         });
     }
 
@@ -341,7 +377,6 @@ class Validate {
         // });
         this.emailConfig = null;
         this.smsConfig = null;
-        this.allConfig = null;
         this.callbackHandler = null;
         this.validateType = '';
         // window.gBroadcast.offMsg({
