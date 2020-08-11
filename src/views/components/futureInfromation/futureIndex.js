@@ -203,7 +203,7 @@ export default {
                     obj.exponentList[exponent] ? obj.exponentList[exponent].label :"--"
                 ]),
                 m('div', { class: `inf_body_TD` }, [
-                    (obj.exponentList[exponent] ? obj.exponentList[exponent].label :"--") + "指数跟踪" + (obj.exponentList[exponent] ? obj.exponentList[exponent].vie :"--") + "/USDT币币价格，该指数代表了标的资产的市场共识价格，其价格源自于多个现货交易所。通过数据可用性验证的参考交易所报价，将经过加权计算后得到最终的指数。具体参考交易所报价的来源和权重，请参考下面的“指数成分分解”。"
+                    (obj.exponentList[exponent] ? obj.exponentList[exponent].vie :"--") + "指数跟踪" + (obj.exponentList[exponent] ? obj.exponentList[exponent].vie :"--") + "/USDT币币价格，该指数代表了标的资产的市场共识价格，其价格源自于多个现货交易所。通过数据可用性验证的参考交易所报价，将经过加权计算后得到最终的指数。具体参考交易所报价的来源和权重，请参考下面的“指数成分分解”。"
                 ])
             ]),
             // k线
