@@ -12,11 +12,11 @@ module.exports = {
     },
     view() {
         return m('div.is-align-items-center', {}, [
-            m('div.box.views-page-login-box-width', {},
+            m('div.box.views-page-login-box-width.px-7.py-8', {},
                 ForgetPassword.isValidate ? [
-                    m('div.mb-2.title-3.has-text-level-1', {},
+                    m('div.mb-2.title-4.has-text-level-1', {},
                         ['重置密码']),
-                    m('p.body-3.has-text-primary.mb-8', {},
+                    m('p.body-3.has-text-primary.mb-7', {},
                         ['出于安全考虑，修改账户安全项之后，24h内禁止提币、内部转出与卖币操作']),
                     m('div.has-text-level-1.body-3.mb-2', {}, ['新密码']),
                     m('input.input[type=password].mb-4', {
@@ -26,7 +26,7 @@ module.exports = {
                         value: ForgetPassword.password1
                     }, []),
                     m('div.has-text-level-1.body-3.mb-2', {}, ['确认密码']),
-                    m('input.input[type=password].mb-8', {
+                    m('input.input[type=password].mb-6', {
                         oninput: e => {
                             ForgetPassword.password2 = e.target.value;
                         },
@@ -40,9 +40,9 @@ module.exports = {
                 ] : ForgetPassword.validateCode.length
                     ? m(Validate, { validateCode: ForgetPassword.validateCode })
                     : [
-                        m('div.mb-2.title-3.has-text-level-1', {},
+                        m('div.mb-2.title-4.has-text-level-1', {},
                             ['忘记密码']),
-                        m('p.body-3.has-text-primary.mb-8', {},
+                        m('p.body-3.has-text-primary.mb-7', {},
                             ['出于安全考虑，修改账户安全项之后，24h内禁止提币、内部转出与卖币操作']),
                         m('div.body-3.mb-6', {}, [
                             m('a.mr-7.has-text-level-1', {
@@ -60,7 +60,7 @@ module.exports = {
                         ]),
                         m('div.has-text-level-1.body-3.mb-2', {}, [
                             ForgetPassword.loginType === 'phone' ? '手机号' : '邮箱']),
-                        m('input.input[type=text].mb-8', {
+                        m('input.input[type=text].mb-6', {
                             oninput: e => {
                                 ForgetPassword.loginName = e.target.value;
                             },

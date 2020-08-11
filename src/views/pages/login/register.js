@@ -13,7 +13,7 @@ module.exports = {
     },
     view() {
         return m('div.is-align-items-center', {}, [
-            m('div.box.views-page-login-box-width', {}, [
+            m('div.box.views-page-login-box-width.px-7.py-8', {}, [
                 Register.isvalidate ? [
                     m('div.mb-5.title-2.has-text-level-1', {},
                         ['验证码']),
@@ -55,32 +55,14 @@ module.exports = {
                             }
                         }, ['注册'])
                 ] : [
-                    m('div.mb-5.title-2.has-text-level-1', {},
-                        ['注册']),
-                    m('div.tabs', {}, [
+                    m('div.title-4.has-text-level-4', {}, [window.exchConfig.exchName]),
+                    m('div.mb-5.title-4.has-text-level-1', {}, ['注册']),
+                    m('div.tabs.mb-7', {}, [
                         m('ul', {}, [
-                            m('li', {
-                                class: Register.type === 'phone'
-                                    ? 'is-active'
-                                    : ''
-                            }, [
-                                m('a', {
-                                    onclick: () => {
-                                        Register.type = 'phone';
-                                    }
-                                }, ['手机'])
-                            ]),
-                            m('li', {
-                                class: Register.type === 'email'
-                                    ? 'is-active'
-                                    : ''
-                            }, [
-                                m('a', {
-                                    onclick: () => {
-                                        Register.type = 'email';
-                                    }
-                                }, ['邮箱'])
-                            ])
+                            m('li', { class: Register.type === 'phone' ? 'is-active' : '' },
+                                [m('a', { onclick: () => { Register.type = 'phone'; } }, ['手机'])]),
+                            m('li', { class: Register.type === 'email' ? 'is-active' : '' },
+                                [m('a', { onclick: () => { Register.type = 'email'; } }, ['邮箱'])])
                         ])
                     ]),
                     m('div.py-0.mb-2', {},

@@ -740,6 +740,11 @@ $primary-lighten: #FF8B00;
     box-shadow: 0 0 0 0.125em rgba($primary-lighten, 0.25) !important;
 }
 
+.tabs li.is-active a {
+    border-bottom-color: $primary-lighten;
+    color: $primary-lighten;
+}
+
 /* 主题样式 end */
 
 
