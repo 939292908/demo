@@ -369,6 +369,10 @@ module.exports = {
     oncreate: function (vnode) {
         main.initEVBUS()
         main.delNullPosPlan()
+        // 点击 body 全局广播 
+        document.body.addEventListener('click', function(){
+            gEVBUS.emit(gEVBUS.EV_ClICKBODY, { ev: gEVBUS.EV_ClICKBODY})
+        }, false)
 
     },
     view: function (vnode) {

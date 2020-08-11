@@ -30,9 +30,7 @@ module.exports = {
         
     },
     oncreate: function(vnode) {
-        document.body.addEventListener('click', function(){
-            gEVBUS.emit(gEVBUS.EV_ClICKBODY, { ev: gEVBUS.EV_ClICKBODY})
-        }, false)
+        
     },
     onupdate: function(vnode) {
         
