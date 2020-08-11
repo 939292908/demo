@@ -116,11 +116,11 @@ module.exports = {
             tick = Object.assign(tick, param);
             const PrzMinIncSize = 6;// indexPrzSize[Sym]
             const VolMinValSize = 0;
-            tick.LastPrz = Number(tick.Prz || 0).toPrecision2(PrzMinIncSize, 8);
+            tick.LastPrz = window.utils.toPrecision2(Number(tick.Prz || 0), PrzMinIncSize, 8);
             const rfpre = tick.Prz24 === 0 ? 0 : (tick.Prz - tick.Prz24) / tick.Prz24 * 100;
             tick.rfpre = (rfpre).toFixed(2) + '%';
             tick.rfpreColor = rfpre > 0 ? 1 : -1;
-            tick.rf = (Number(tick.Prz || 0) - Number(tick.Prz24 || 0)).toPrecision2(PrzMinIncSize, 8);
+            tick.rf = window.utils.toPrecision2(Number(tick.Prz || 0) - Number(tick.Prz24 || 0), PrzMinIncSize, 8);
             tick.Volume24 = Number(tick.Volume24 || 0).toFixed(VolMinValSize);
             tick.distSym = (param.Sym).split('_')[1] + window.gI18n.$t('10413');// 指数
         } else if (AssetD) {
