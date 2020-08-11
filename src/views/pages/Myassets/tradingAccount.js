@@ -24,9 +24,9 @@ const tradingAccount = {
     tradingAccountPage: function () {
         return m('div.tradingAccount', {}, [
             m('div.tradingAccount_nav', [
-                m('div', { class: "" + (tradingAccount.pageFlag === 0 ? "is-cyan" : ''), onclick: function () { tradingAccount.setPageFlag(0); } }, '合约账户'),
-                m('div', { class: "" + (tradingAccount.pageFlag === 1 ? "is-purple" : ''), onclick: function () { tradingAccount.setPageFlag(1); } }, '币币账户'),
-                m('div', { class: "" + (tradingAccount.pageFlag === 2 ? "is-red" : ''), onclick: function () { tradingAccount.setPageFlag(2); } }, '法币账户')
+                m('div', { class: "cursor-pointer " + (tradingAccount.pageFlag === 0 ? "is-cyan" : ''), onclick: function () { tradingAccount.setPageFlag(0); } }, '合约账户'),
+                m('div', { class: "cursor-pointer " + (tradingAccount.pageFlag === 1 ? "is-purple" : ''), onclick: function () { tradingAccount.setPageFlag(1); } }, '币币账户'),
+                m('div', { class: "cursor-pointer " + (tradingAccount.pageFlag === 2 ? "is-red" : ''), onclick: function () { tradingAccount.setPageFlag(2); } }, '法币账户')
             ]),
             tradingAccount.switchContent()
         ]);
