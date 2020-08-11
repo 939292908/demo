@@ -18,8 +18,7 @@ let obj = {
     tableData:[],
     //行情广播列表
     tableList:[],
-    //合约名称列表
-    futureSymList: [],
+    SymList: ['CI_ETH'],
     // 表头
     tableColumns: [
         {
@@ -51,6 +50,7 @@ let obj = {
         this.EV_COMPOSITEINDEX_UPD_unbinder = window.gEVBUS.on(gMkt.EV_COMPOSITEINDEX_UPD, arg => {
             that.initSymList()
             that.subTick()
+            that.setSymName()
         })
         //指数行情全局广播
         if(this.EV_INDEX_UPD_unbinder){
@@ -59,10 +59,10 @@ let obj = {
         this.EV_INDEX_UPD_unbinder = window.gEVBUS.on(gMkt.EV_INDEX_UPD,arg=> {
             let exponentId = this.exponentId
             let Sym = this.exponentList[exponentId] && this.exponentList[exponentId].name || null
-            if(Sym){
+            if(arg.Sym = Sym){
                 that.tableData = arg.data.RefThirdParty
                 that.getTableData()
-            } 
+            }
         })
         
     },
@@ -93,6 +93,11 @@ let obj = {
             }  
         })
         this.exponentList = arr
+        let barr = []
+        arr.map((item,i)=>{
+            barr[i] = item.name
+        })
+        this.SymList = barr
     },
     //订阅指数行情
     subTick:function(){
@@ -121,6 +126,13 @@ let obj = {
         this.subTick()
         //初始化指数数据
         this.getTableData()
+        this.setSymName()
+    },
+    //当前选中合约名称广播
+    setSymName:function(){
+        let exponentId = this.exponentId
+        let Sym = this.SymList[exponentId]
+        gEVBUS.emit(gMkt.EV_CHANGESYM_UPD, { Ev: gMkt.EV_CHANGESYM_UPD, Sym: Sym })
     },
 
     // 初始化多语言
@@ -174,6 +186,10 @@ export default {
         obj.initEVBUS()
         obj.subTick()
         obj.initSymList()
+        //延时操作
+        setTimeout(()=>{
+            obj.setSymName()
+        },0)
     },
     view: function (vnode) {
         let exponent = obj.exponentId
