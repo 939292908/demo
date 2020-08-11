@@ -2,13 +2,12 @@ const m = require('mithril');
 //  const m = require('swiper')
 
 require('@/styles/pages/home.css');
-
-const marketList = require('./marketList');
+const marketList = require('../../marketList');
+// const marketList = require('./marketList');
 const introduce = require('./introduce');
 const advantage = require('./advantage');
 const transaction = require('./transaction');
 const download = require('./download');
-// const buttom = require('./buttom');
 const rotation = require('./rotation');
 const notice = require('./notice');
 
@@ -62,8 +61,6 @@ module.exports = {
             m(transaction),
             // 二维码下载
             m(download)
-            // 底部 模块
-            // m(buttom),
         ]);
     }
 };

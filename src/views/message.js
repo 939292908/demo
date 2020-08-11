@@ -2,6 +2,9 @@ var m = require("mithril");
 
 import('@/styles/pages/message.css');
 
+// const Table = require('@/views/components/common/Table.js');
+// const market = require('@/models/market/market');
+
 const msg = {
     DBG_MESSAGE: true,
     DEL_INTERVAL: 10 * 1000,
