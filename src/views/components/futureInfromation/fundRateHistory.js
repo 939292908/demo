@@ -69,6 +69,18 @@ let obj = {
                 fl: '0.3344%'
             },
         ]
+        
+        let params = {
+            collection: 'FundingRateHistory',
+            Sym: "BTC.USDT",
+            pageSize: 20,
+            pageNo: 1
+        }
+        window.gWebAPI.ReqFundRateHistory(params, data => {
+            console.log(data,6666666);
+        }, err => {
+            console.log(err)
+        })
     },
 }
 
