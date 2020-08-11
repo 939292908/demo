@@ -1,3 +1,16 @@
-.views-pages-login-index-box {
-    width: 400px !important;
+.register-send-code-width {
+    width: 7rem !important;
+}
+
+.register-national-select {
+    top: 2px !important;
+    height: calc(100% - 4px) !important;
+}
+
+.views-page-login-box-width {
+    width: 364px;
+}
+
+.views-page-login-div-click {
+    cursor: pointer;
 }

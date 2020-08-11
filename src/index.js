@@ -14,6 +14,8 @@ import Conf from "@/api/apiConf";
 
 window.exchId = config.exchId;
 
+window.exchConfig = config;
+
 // log日志管理
 window._console = new _console();
 
