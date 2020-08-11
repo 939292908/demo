@@ -40,7 +40,7 @@ let obj = {
     tableData: [], // 表格
 
     //合约名称列表
-    futureSymList: [],
+    futureSymList: ['ETC.USDT'],
     //风险限额
     RS: null,
 
@@ -247,6 +247,7 @@ let obj = {
         this.EV_ASSETD_UPD_unbinder = window.gEVBUS.on(gMkt.EV_ASSETD_UPD, arg => {
             that.initSymList()
             that.updateSpotInfo()
+            that.setSymName()
         })
 
         //页面交易类型全局广播
@@ -311,6 +312,13 @@ let obj = {
         })
         this.tabelList = tabelList
     },
+    //当前选中合约名称广播
+    setSymName:function(){
+        let dropdownActive = this.dropdownActive
+        let Sym = this.futureSymList[dropdownActive]
+        gEVBUS.emit(gMkt.EV_CHANGESYM_UPD, { Ev: gMkt.EV_CHANGESYM_UPD, Sym: Sym })
+    },
+
     //初始化合约数据
     updateSpotInfo: function () {
         let dropdownActive = this.dropdownActive
@@ -474,6 +482,7 @@ let obj = {
     //点击选中合约
     clickSelect: function (item) {
         this.updateSpotInfo()
+        this.setSymName()
     },
 
     //获取风险限额数据
@@ -601,6 +610,10 @@ export default {
         obj.initEVBUS()
         obj.initSymList()
         obj.updateSpotInfo()
+        //延时操作
+        setTimeout(()=>{
+            obj.setSymName()
+        },0)
     },
     view: function (vnode) {
         return m("div", { class: "" }, [
