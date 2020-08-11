@@ -63,7 +63,7 @@ export class  GeeTest {
                                 return;
                             }
                             RequestWarp({
-                                method: "POST",
+                                method: "post",
                                 url: s.urlValidate,
                                 withCredentials:true,
                                 body:{
