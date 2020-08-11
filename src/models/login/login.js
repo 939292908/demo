@@ -22,7 +22,6 @@ module.exports = {
      * ]
      */
     validateCode: [], // 验证码列表
-    validInput: [], // 验证码输入框
     rulesEmail: {
         required: value => !!value || '该字段不能为空', // 该字段不能为空
         email: value => {
@@ -42,20 +41,6 @@ module.exports = {
     },
     rulesPwd: {
         required: value => !!value || '该字段不能为空' // 该字段不能为空
-    },
-    setValidInput() {
-        if (!this.validateCode.length) return;
-        this.validInput = [];
-        for (const item of this.validateCode) {
-            this.validInput.push(m('div.py-0.mb-2', {}, [item.name]));
-            this.validInput.push(m('input.input[type=text].mb-6', {
-                oninput: e => {
-                    item.code = e.target.value;
-                },
-                value: item.code
-            }, []));
-        }
-        m.redraw();
     },
     valid() {
         return !!(this.password && this.account);
@@ -90,15 +75,15 @@ module.exports = {
                     // 登录成功
                     self.getUserInfo();
                     self.checkAccountPwd();
-                } else if (res.result.tfa === 1) {
+                    return;
+                }
+                self.loading = false;
+
+                let config = {};
+                if (res.result.tfa === 1) {
                     // 手机
                     self.loading = false;
-                    window.validate.activeSms(
-                        { phoneNum: res.result.phone },
-                        () => {
-                            self.loginEnter();
-                        }
-                    );
+                    config = { phoneNum: res.result.phone };
                     self.validateCode = [
                         {
                             key: window.validate.sms,
@@ -106,17 +91,9 @@ module.exports = {
                             code: ''
                         }
                     ];
-                    self.setValidInput();
                 } else if (res.result.tfa === 2) {
                     // 谷歌
-
-                    self.loading = false;
-
-                    window.validate.activeGoogle(() => {
-                        // self.validateCode = false;
-                        // m.redraw();
-                        self.loginEnter();
-                    });
+                    config = {};
                     self.validateCode = [
                         {
                             key: window.validate.google,
@@ -124,18 +101,9 @@ module.exports = {
                             code: ''
                         }
                     ];
-                    self.setValidInput();
                 } else if (res.result.tfa === 3) {
                     // 手机和谷歌
-                    self.loading = false;
-
-                    window.validate.activeGoogle(
-                        () => {
-                            // self.validateCode = false;
-                            // m.redraw();
-                            self.loginEnter();
-                        }
-                    );
+                    config = { phoneNum: res.result.phone };
                     self.validateCode = [
                         {
                             key: window.validate.google,
@@ -148,8 +116,14 @@ module.exports = {
                             code: ''
                         }
                     ];
-                    self.setValidInput();
                 }
+                window.validate.activeAll(
+                    config,
+                    () => {
+                        self.loginEnter();
+                    }
+                );
+                m.redraw();
             } else {
                 window.$message({
                     content: window.errCode.getWebApiErrorCode(res.result.code),
@@ -252,6 +226,7 @@ module.exports = {
         this.initGeetest();
     },
     onremove() {
+        window.validate.close();
         window.gBroadcast.offMsg({
             key: 'login',
             cmd: 'geetestMsg',
