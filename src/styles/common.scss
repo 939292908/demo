@@ -20,11 +20,12 @@ html, body, .section {
 
 .is-align-items-center {
     display: flex;
+    justify-content: center;
     align-items: center;
 }
 
 /* 内容宽度 */
-.common-width {
+.content-width {
     width: 1204px;
 }
 
@@ -452,23 +453,23 @@ html, body, .section {
 }
 
 // #theme--light .has-bg-level-2{
-//     background-color: var(--c-background-lighten1); 
+//     background-color: var(--c-background-lighten1);
 // }
 
 // #theme--light .has-bg-level-3{
-//     background-color: var(--c-background-lighten2); 
+//     background-color: var(--c-background-lighten2);
 // }
 
 // #theme--light .has-bg-level-4{
-//     background-color: var(--c-background-lighten3); 
+//     background-color: var(--c-background-lighten3);
 // }
 
 // #theme--light .has-bg-level-5{
-//     background-color: var(--c-background-lighten4); 
+//     background-color: var(--c-background-lighten4);
 // }
 
 // #theme--light .has-bg-level-6{
-//     background-color: var(--c-background-lighten5); 
+//     background-color: var(--c-background-lighten5);
 // }
 
 /* 主色调 */
@@ -606,23 +607,23 @@ html, body, .section {
 }
 
 // #theme--dark .has-bg-level-2{
-//     background-color: var(--c-background-darken1); 
+//     background-color: var(--c-background-darken1);
 // }
 
 // #theme--dark .has-bg-level-3{
-//     background-color: var(--c-background-darken2); 
+//     background-color: var(--c-background-darken2);
 // }
 
 // #theme--dark .has-bg-level-4{
-//     background-color: var(--c-background-darken3); 
+//     background-color: var(--c-background-darken3);
 // }
 
 // #theme--dark .has-bg-level-5{
-//     background-color: var(--c-background-darken4); 
+//     background-color: var(--c-background-darken4);
 // }
 
 // #theme--dark .has-bg-level-6{
-//     background-color: var(--c-background-darken5); 
+//     background-color: var(--c-background-darken5);
 // }
 
 /* 主色调 */
@@ -739,8 +740,13 @@ $primary-lighten: #FF8B00;
     box-shadow: 0 0 0 0.125em rgba($primary-lighten, 0.25) !important;
 }
 
+.tabs li.is-active a {
+    border-bottom-color: $primary-lighten;
+    color: $primary-lighten;
+}
+
 /* 主题样式 end */
-  
+
 
 
 

@@ -1,8 +1,0 @@
-.register-send-code-width {
-    width: 7rem !important;
-}
-
-.register-national-select {
-    top: 2px !important;
-    height: calc(100% - 4px) !important;
-}
