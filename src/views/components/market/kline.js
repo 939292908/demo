@@ -5,64 +5,6 @@ var m = require("mithril")
 let obj = {
     Sym: '',
     Typ: '',
-    // targetList: [
-    //     // {
-    //     //     name: 'VOL',
-    //     //     title: 'Volume'
-    //     // },
-    //     {
-    //         name: 'MA',
-    //         title: 'Moving Average'
-    //     },
-    //     {
-    //         name: 'MACD',
-    //         title: 'Moving Average Convergence / Divergence'
-    //     },
-    //     {
-    //         name: 'KDJ',
-    //         title: 'Stochastic'
-    //     },
-    //     {
-    //         name: 'BOLL',
-    //         title: 'Bollinger Bands'
-    //     },
-    //     {
-    //         name: 'EMA',
-    //         title: 'Moving Average Exponential'
-    //     },
-    //     // {
-    //     //     name: 'StochRSI',
-    //     //     title: 'Stochastic RSI'
-    //     // },
-    //     {
-    //         name: 'RSI',
-    //         title: 'Relative Strength Index'
-    //     },
-    //     {
-    //         name: 'CCI',
-    //         title: 'Commodity Channel Index'
-    //     },
-    //     // {
-    //     //     name: 'ATR',
-    //     //     title: 'Average True Range'
-    //     // },
-    //     {
-    //         name: 'SAR',
-    //         title: 'Parabolic SAR'
-    //     },
-    //     {
-    //         name: 'DMI',
-    //         title: 'Directional Movement'
-    //     },
-    //     {
-    //         name: 'OBV',
-    //         title: 'On Balance Volume'
-    //     },
-    //     // {
-    //     //     name: 'ROC',
-    //     //     title: 'Rate Of Change'
-    //     // },
-    // ],
     targetList_main: [ //指标
         // {title:'VOL',name:"Volume"},
         {
