@@ -1,4 +1,5 @@
 const m = require('mithril');
+const md5 = require('md5');
 const geetest = require('@/libs/geetestTwo');
 
 module.exports = {
@@ -6,6 +7,20 @@ module.exports = {
     loginName: '',
     validateCode: [],
     areaCode: '86',
+    isValidate: false,
+    password1: '',
+    password2: '',
+    rulesPwd: {
+        required: value => !!value || window.gI18n.$t('10015'), // 该字段不能为空
+        password: value => {
+            const pattern = /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,}$/;
+            return pattern.test(value) || window.gI18n.$t('10028'); // 至少6个字符，必须是字母和数字
+        },
+        isSame: value => {
+            return this.password1 === this.password2 ||
+                window.gI18n.$t('10173'); // 两次输入密码不一致!
+        }
+    },
     valid() {
         return !!(this.loginName &&
             /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
@@ -13,6 +28,34 @@ module.exports = {
     },
     valid1() {
         return !!this.loginName;
+    },
+    validPassword() {
+        return this.password1 && this.password2 &&
+            /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,}$/.test(this.password1) &&
+            /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,}$/.test(this.password2) &&
+            this.password1 === this.password2;
+    },
+    submitReset() {
+        window.gWebApi.resetPassword({
+            Passwd1: md5(this.password1),
+            Passwd2: md5(this.password2),
+            exChannel: window.exchId
+        }, res => {
+            if (res.result.code === 0) {
+                // '您的密码已修改成功，现在为您跳转登录界面'
+                window.$message({
+                    content: '修改成功',
+                    type: 'success'
+                });
+                window.router.push('/login');
+            } else {
+                window.$message({
+                    content: window.errCode.getWebApiErrorCode(res.result.code),
+                    type: 'danger'
+                });
+            }
+        }, () => {
+        });
     },
     submitEmail() {
         const that = this;
@@ -63,7 +106,7 @@ module.exports = {
     toResetPwd() {
         window.validate.close();
         window._console.log('tlh', '验证完成');
-        // this.$router.push(`/resetPasswd`);
+        this.isValidate = true;
     },
     nextStep() {
         switch (this.loginType) {
@@ -124,6 +167,7 @@ module.exports = {
         });
     },
     onremove() {
+        this.isValidate = false;
         this.validateCode = [];
         window.validate.close();
         window.gBroadcast.offMsg({
