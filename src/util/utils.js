@@ -90,9 +90,12 @@ utils.getFullNum = function (num) {
  * @maxLen 最大小数位数
  */
 
-Number.toPrecision2 = function(n, maxLen) {
+utils.toPrecision2 = function(value, n, maxLen) {
+    if (!value) {
+        return value;
+    }
     // 保留n个有效数字
-    let num = this.toPrecision(n);
+    let num = value.toPrecision(n);
     // 处理科学计数法数字
     let str = num.toString();
     if (/e/i.test(str)) {
@@ -109,6 +112,45 @@ Number.toPrecision2 = function(n, maxLen) {
         }
     }
     return num;
+};
+
+/**
+ * 保留小数位向下取整
+ * @n 保留的位数
+ */
+
+utils.toFixedForFloor = function(value, n) {
+    if (isNaN(value)) {
+        return value;
+    }
+    // 处理浮点数
+    let num = Number(value).toFixed(12);
+    // 处理科学计数法数字
+    const str = num.toString();
+    if (/e/i.test(str)) {
+        num = Number(num).toFixed(18).replace(/\.?0+$/, "");
+    }
+    const pow = Math.pow(10, n);
+    num = Number(num) * pow;
+    num = Math.floor(num);
+    num = num / pow;
+    num = num.toFixed(n);
+    return num;
+};
+
+/**
+ * 用币种获取相关交易对名称
+ * @param {Object} assetD 合约交易对详情
+ * @param {String} coin1 交易对名称第一个币种
+ * @param {String} coin2 交易对名称第二个币种
+ */
+utils.getSpotName = function(assetD, coin1, coin2) {
+    for (const key in assetD) {
+        if (key.indexOf(`${coin1}/${coin2}`) === 0) {
+            return key;
+        }
+    }
+    return `${coin1}/${coin2}`;
 };
 
 export default utils;

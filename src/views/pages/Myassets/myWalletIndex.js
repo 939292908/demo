@@ -4,6 +4,7 @@ require('@/styles/pages/Myassets/myWalletIndex.scss');
 
 const tradingAccount = require('@/views/pages/Myassets/tradingAccount');
 const myWallet = require('@/views/pages/Myassets/myWallet');
+const wlt = require('@/models/wlt/wlt');
 
 const myWalletIndex = {
     currency: 'BTC',
@@ -144,9 +145,15 @@ const myWalletIndex = {
     }
 };
 module.exports = {
+    oncreate: function() {
+        wlt.init();
+    },
     view: function () {
         return m('div', { class: 'views-pages-myassets-myWalletIndex common-width' }, [
             myWalletIndex.assetValuation()
         ]);
+    },
+    onremove: function() {
+        wlt.remove();
     }
 };

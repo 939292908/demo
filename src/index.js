@@ -18,7 +18,7 @@ window.exchId = config.exchId;
 window._console = new _console();
 
 // 全局广播
-window.window.gBroadcast = new Broadcast();
+window.gBroadcast = new Broadcast();
 
 // 多语言
 window.gI18n = new I18n();
