@@ -21,18 +21,23 @@ module.exports = {
                         m(InputWithComponent, {
                             options: {
                                 oninput: e => {
-                                    Register.code = e.target.value;
+                                    Register.code = e.target.value.replace(/[^\d]/g, '');
                                 },
+                                onkeyup: e => {
+                                    if (e.keyCode === 13) {
+                                        Register.type === 'phone'
+                                            ? window.validate.checkSmsCode(Register.code)
+                                            : window.validate.checkEmailCode(Register.code);
+                                    }
+                                },
+                                maxlength: '6',
                                 value: Register.code
                             },
                             rightComponents: m(
                                 'a.body-1.register-send-code-width.px-2',
                                 {
                                     onclick: () => {
-                                        if (Register.smsCd >
-                                            0) {
-                                            return;
-                                        }
+                                        if (Register.smsCd > 0) { return; }
                                         Register.type === 'phone'
                                             ? Register.sendSmsCode()
                                             : Register.sendEmailCode();
@@ -48,10 +53,8 @@ module.exports = {
                         {
                             onclick: () => {
                                 Register.type === 'phone'
-                                    ? window.validate.checkSmsCode(
-                                        Register.code)
-                                    : window.validate.checkEmailCode(
-                                        Register.code);
+                                    ? window.validate.checkSmsCode(Register.code)
+                                    : window.validate.checkEmailCode(Register.code);
                             }
                         }, ['注册'])
                 ] : [
@@ -97,12 +100,26 @@ module.exports = {
                         oninput: e => {
                             Register.password = e.target.value;
                         },
+                        onkeyup: e => {
+                            if (e.keyCode === 13) {
+                                Register.type === 'phone'
+                                    ? Register.submitEmail()
+                                    : Register.submitPhone();
+                            }
+                        },
                         value: Register.password
                     }, []),
                     m('div.py-0.mb-2', {}, ['邀请码（选填）']),
                     m('input.input[type=password].mb-6', {
                         oninput: e => {
                             Register.refereeId = e.target.value;
+                        },
+                        onkeyup: e => {
+                            if (e.keyCode === 13) {
+                                Register.type === 'phone'
+                                    ? Register.submitEmail()
+                                    : Register.submitPhone();
+                            }
                         },
                         value: Register.refereeId
                     }, []),

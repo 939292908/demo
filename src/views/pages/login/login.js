@@ -33,6 +33,9 @@ module.exports = {
                             oninput: e => {
                                 Login.password = e.target.value;
                             },
+                            onkeyup: e => {
+                                if (e.keyCode === 13) { Login.login(); }
+                            },
                             value: Login.password
                         }, []),
                         m('div.mb-5.has-text-right', {}, [

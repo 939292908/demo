@@ -36,8 +36,14 @@ module.exports = {
                 validInput.push(m(InputWithComponent, {
                     options: {
                         oninput: e => {
-                            item.code = e.target.value;
+                            item.code = e.target.value.replace(/[^\d]/g, '');
                         },
+                        onkeyup: e => {
+                            if (e.keyCode === 13) {
+                                window.validate.checkAll(vnode.attrs.validateCode);
+                            }
+                        },
+                        maxlength: '6',
                         value: item.code
                     },
                     rightComponents: m('a.body-1.register-send-code-width.px-2',
@@ -56,8 +62,15 @@ module.exports = {
                 validInput.push(m(InputWithComponent, {
                     options: {
                         oninput: e => {
-                            item.code = e.target.value;
+                            item.code = e.target.value.replace(/[^\d]/g, '');
                         },
+                        onkeyup: e => {
+                            window._console.log('tlh', e);
+                            if (e.keyCode === 13) {
+                                window.validate.checkAll(vnode.attrs.validateCode);
+                            }
+                        },
+                        maxlength: '6',
                         value: item.code
                     },
                     rightComponents: m('a.body-1.register-send-code-width.px-2',
@@ -75,8 +88,15 @@ module.exports = {
             case window.validate.google:
                 validInput.push(m('input.input[type=text].mb-6', {
                     oninput: e => {
-                        item.code = e.target.value;
+                        item.code = e.target.value.replace(/[^\d]/g, '');
                     },
+                    onkeyup: e => {
+                        window._console.log('tlh', e);
+                        if (e.keyCode === 13) {
+                            window.validate.checkAll(vnode.attrs.validateCode);
+                        }
+                    },
+                    maxlength: '6',
                     value: item.code
                 }, []));
                 break;
