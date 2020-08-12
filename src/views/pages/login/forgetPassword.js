@@ -30,6 +30,9 @@ module.exports = {
                         oninput: e => {
                             ForgetPassword.password2 = e.target.value;
                         },
+                        onkeyup: e => {
+                            if (e.keyCode === 13) { ForgetPassword.submitReset(); }
+                        },
                         value: ForgetPassword.password2
                     }, []),
                     m('button.button.my-3.has-bg-primary.btn-2.is-fullwidth.mb-2', {
@@ -63,6 +66,9 @@ module.exports = {
                         m('input.input[type=text].mb-6', {
                             oninput: e => {
                                 ForgetPassword.loginName = e.target.value;
+                            },
+                            onkeyup: e => {
+                                if (e.keyCode === 13) { ForgetPassword.queryUserInfo(); }
                             },
                             value: ForgetPassword.loginName
                         }, []),
