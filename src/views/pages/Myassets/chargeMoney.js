@@ -1,17 +1,52 @@
 const m = require('mithril');
 const QRCode = require('qrcode');
+
+require('@/styles/pages/Myassets/chargeMoney.scss');
+
+const Back = require('../../../assets/img/temImg/toLeft.png').default;
+
+const QuickMark = async function (code = '这是个二维码！') {
+    return await QRCode.toDataURL(code);
+};
+
 module.exports = {
     data: {
-        QRSrc: ""
+        QRSrc: "",
+        selectVal: '',
+        coinList: [
+            'BTC 比特币',
+            "XRR 瑞波币",
+            "ETH 以太坊"
+        ]
     },
     oninit: function (vNode) {
-        QRCode.toDataURL('wtf').then(url => {
-            this.src = url;
-        }).catch(err => {
-            console.log(err);
-        });
+        console.log(QuickMark());
+        try {
+            this.QRSrc = QuickMark();
+        } catch (e) {
+            console.log(e);
+        }
     },
     view: function (vNode) {
-        return m('div', '快快乐乐');
+        const { coinList } = this.data;
+        console.log(this, this.data);
+        return m('div', { class: 'views-pages-myassets-chargeMoney' }, [
+            m('div', { class: 'back' }, [
+                m('img', { src: Back, class: 'back-Icon' }),
+                m('span', '充币')
+            ]),
+            m('div', { class: 'select' }, [
+                m('select', { onchange: function (e) { console.log(e); } }, [
+                    coinList.map(item => m('option', { value: item }, item))
+                ])
+            ]),
+            m('div', { class: 'columns' }, [
+                m('div', { class: 'column' }, [
+                    m('div', '充币地址'),
+                    m('img', { src: '' })
+                ]),
+                m('div', { class: 'column' }, '温馨提示')
+            ])
+        ]);
     }
 };
