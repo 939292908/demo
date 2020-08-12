@@ -4,6 +4,10 @@ let obj = {
     posList: [],
     theadList: [
         {
+            title: '操作',
+            class: ""
+        },
+        {
             title: gDI18n.$t('10067'),//'仓位ID',
             class: ""
         }, {
@@ -40,10 +44,7 @@ let obj = {
             title: gDI18n.$t('10065'),//'委托时间',
             class: ""
         },
-        {
-            title: '',
-            class: ""
-        }
+        
     ],
     //初始化全局广播
     initEVBUS: function () {
@@ -111,6 +112,10 @@ let obj = {
     initLanguage: function(){
         this.theadList = [
             {
+                title: '操作',
+                class: ""
+            },
+            {
                 title: gDI18n.$t('10067'),//'仓位ID',
                 class: ""
             }, {
@@ -147,10 +152,7 @@ let obj = {
                 title: gDI18n.$t('10065'),//'委托时间',
                 class: ""
             },
-            {
-                title: '',
-                class: ""
-            }
+            
         ]
     },
     //删除全局广播
@@ -281,6 +283,16 @@ let obj = {
     getOrdList: function () {
         return this.posList.map(function (item, i) {
             return m("tr", { key: "orderTableListItem" + i, class: "" }, [
+                m("td", { class: "table-tr-td-vertical" }, [
+                    m("button", {
+                        class: "button is-primary " + (item.loading ? ' is-loading' : ''),
+                        onclick: function () {
+                            obj.delOrder(item)
+                        }
+                    }, [
+                        gDI18n.$t('10082')//'撤单'
+                    ])
+                ]),
                 m("td", { class: " table-tr-td-vertical" }, [
                     item.PId ? item.PId.substr(-4) : '--'
                 ]),
@@ -323,16 +335,7 @@ let obj = {
                 m("td", { class: "table-tr-td-vertical" }, [
                     item.AtStr
                 ]),
-                m("td", { class: "table-tr-td-vertical" }, [
-                    m("button", {
-                        class: "button is-primary " + (item.loading ? ' is-loading' : ''),
-                        onclick: function () {
-                            obj.delOrder(item)
-                        }
-                    }, [
-                        gDI18n.$t('10082')//'撤单'
-                    ])
-                ])
+                
             ])
         })
     },
@@ -435,6 +438,7 @@ let obj = {
             return obj.getOrdListForM()
         } else {
             let colgroup = m('colgroup', {}, [
+                m('col', { name: "pub-table-13", width: 100 }),
                 m('col', { name: "pub-table-1", width: 70 }),
                 m('col', { name: "pub-table-2", width: 160 }),
                 m('col', { name: "pub-table-3", width: 130 }),
@@ -446,8 +450,8 @@ let obj = {
                 m('col', { name: "pub-table-9", width: 100 }),
                 m('col', { name: "pub-table-10", width: 150 }),
                 m('col', { name: "pub-table-11", width: 150 }),
-                m('col', { name: "pub-table-10", width: 150 }),
-                m('col', { name: "pub-table-11", width: 100 }),
+                m('col', { name: "pub-table-12", width: 150 }),
+                
             ])
             return m('div', { class: " table-container" }, [
                 m('div', { class: `pub-table-head-box ${window.gWebAPI.isLogin() ? '' : 'is-hidden'}`, style: "width: 1470px" }, [

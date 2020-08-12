@@ -5,6 +5,11 @@ let obj = {
   posList: [],
   theadList: [
     {
+      title: gDI18n.$t('10092'),//'策略',
+      tooltipContent: '',
+      class: "position-buttons pub-table-11"
+    },
+    {
       title: gDI18n.$t('10067'),//'仓位ID',
       class: "position-pid pub-table-1"
     }, {
@@ -41,11 +46,7 @@ let obj = {
       title: gDI18n.$t('10080') + "/" +gDI18n.$t('10101'),//'止盈/止损',
       tooltipContent: '止盈/止损',
       class: "position-stoppl pub-table-10"
-    }, {
-      title: gDI18n.$t('10092'),//'策略',
-      tooltipContent: '',
-      class: "position-buttons pub-table-11"
-    } 
+    }, 
   ],
   //初始化全局广播
   initEVBUS: function(){
@@ -118,6 +119,11 @@ let obj = {
   initLanguage: function(){
     this.theadList = [
         {
+          title: gDI18n.$t('10092'),//'策略',
+          tooltipContent: '',
+          class: "position-buttons pub-table-11"
+        },
+        {
           title: gDI18n.$t('10067'),//'仓位ID',
           class: "position-pid pub-table-1"
         }, {
@@ -154,11 +160,7 @@ let obj = {
           title: gDI18n.$t('10080') + "/" +gDI18n.$t('10101'),//'止盈/止损',
           tooltipContent: '止盈/止损',
           class: "position-stoppl pub-table-10"
-        }, {
-          title: gDI18n.$t('10092'),//'策略',
-          tooltipContent: '',
-          class: "position-buttons pub-table-11"
-        } 
+        },  
       ]
   },
   //删除全局广播
@@ -252,6 +254,33 @@ let obj = {
     let btnsOpen = window.$config.positionBtns.desktop
     return this.posList.map(function(item, i){
       return m("tr",{key: "posTableListItem"+i, class:""},[
+        m("td",{class:"pub-pos-buttons table-tr-td-vertical"},[
+          m("button",{class:"button is-primary "+(item.loading?' is-loading': '')+(btnsOpen.marketClose.open?'':' is-hidden'), onclick: function(){
+            obj.placeOrder('close', item)
+          }},[
+            gDI18n.$t('10093')//'市价平仓'
+          ]),
+          m("button",{class:"button is-primary table-tr-td-vertical"+(item.loading?' is-loading': '')+(btnsOpen.doubleOpen.open?'':' is-hidden'), onclick: function(){
+            obj.placeOrder('add', item)
+          }},[
+            gDI18n.$t('10094')//'加倍开仓'
+          ]),
+          m("button",{class:"button is-primary table-tr-td-vertical"+(item.loading?' is-loading': '')+(btnsOpen.backOpen.open?'':' is-hidden'), onclick: function(){
+            obj.placeOrder('back', item)
+          }},[
+            gDI18n.$t('10095')//'反向开仓'
+          ]),
+          m("button",{class:"button is-primary table-tr-td-vertical"+(item.loading?' is-loading': '')+(btnsOpen.narketAdd.open?'':' is-hidden'), onclick: function(){
+            obj.placeOrder('marketAdd', item)
+          }},[
+            gDI18n.$t('10096')//'市价加仓'
+          ]),
+          m("button",{class:"button is-primary table-tr-td-vertical"+(item.loading?' is-loading': '')+(btnsOpen.marketSomeClose.open || btnsOpen.limitSomeClose.open?'':' is-hidden'), onclick: function(){
+            obj.placeOrder('someClose', item)
+          }},[
+            btnsOpen.marketSomeClose.open && btnsOpen.limitSomeClose.open ?gDI18n.$t('10097'/*'平仓'*/): btnsOpen.marketSomeClose.open ?gDI18n.$t('10093'/*'市价平仓'*/):btnsOpen.limitSomeClose.open ?gDI18n.$t('10098'/*'限价平仓'*/): gDI18n.$t('10097'/*'平仓'*/)
+          ]),
+        ]),
         m("td",{class:"table-tr-td-vertical"},[
           item.PId.substr(-4)
         ]),
@@ -304,33 +333,7 @@ let obj = {
           ]),
           m("i",{class:"iconfont iconotc-editName iconfont-medium"+(btnsOpen.stopPL.open?'':' is-hidden')}),
         ]),
-        m("td",{class:"pub-pos-buttons table-tr-td-vertical"},[
-          m("button",{class:"button is-primary "+(item.loading?' is-loading': '')+(btnsOpen.marketClose.open?'':' is-hidden'), onclick: function(){
-            obj.placeOrder('close', item)
-          }},[
-            gDI18n.$t('10093')//'市价平仓'
-          ]),
-          m("button",{class:"button is-primary table-tr-td-vertical"+(item.loading?' is-loading': '')+(btnsOpen.doubleOpen.open?'':' is-hidden'), onclick: function(){
-            obj.placeOrder('add', item)
-          }},[
-            gDI18n.$t('10094')//'加倍开仓'
-          ]),
-          m("button",{class:"button is-primary table-tr-td-vertical"+(item.loading?' is-loading': '')+(btnsOpen.backOpen.open?'':' is-hidden'), onclick: function(){
-            obj.placeOrder('back', item)
-          }},[
-            gDI18n.$t('10095')//'反向开仓'
-          ]),
-          m("button",{class:"button is-primary table-tr-td-vertical"+(item.loading?' is-loading': '')+(btnsOpen.narketAdd.open?'':' is-hidden'), onclick: function(){
-            obj.placeOrder('marketAdd', item)
-          }},[
-            gDI18n.$t('10096')//'市价加仓'
-          ]),
-          m("button",{class:"button is-primary table-tr-td-vertical"+(item.loading?' is-loading': '')+(btnsOpen.marketSomeClose.open || btnsOpen.limitSomeClose.open?'':' is-hidden'), onclick: function(){
-            obj.placeOrder('someClose', item)
-          }},[
-            btnsOpen.marketSomeClose.open && btnsOpen.limitSomeClose.open ?gDI18n.$t('10097'/*'平仓'*/): btnsOpen.marketSomeClose.open ?gDI18n.$t('10093'/*'市价平仓'*/):btnsOpen.limitSomeClose.open ?gDI18n.$t('10098'/*'限价平仓'*/): gDI18n.$t('10097'/*'平仓'*/)
-          ]),
-        ])
+        
       ])
     })
   },
@@ -600,6 +603,7 @@ let obj = {
       return obj.getPosListForM()
     }else{
       let colgroup = m('colgroup', {},[
+        m('col', {name: "pub-table-11",width: 590}),
         m('col', {name: "pub-table-1",width: 100}),
         m('col', {name: "pub-table-2",width: 160}),
         m('col', {name: "pub-table-3",width: 70}),
@@ -610,7 +614,7 @@ let obj = {
         m('col', {name: "pub-table-8",width: 200}),
         m('col', {name: "pub-table-9",width: 150}),
         m('col', {name: "pub-table-10",width: 200}),
-        m('col', {name: "pub-table-11",width: 590}),
+        
       ])
       return m('div', { class: " table-container"}, [
         m('div', { class: `pub-table-head-box ${window.gWebAPI.isLogin() ? '' : 'is-hidden'}`, style: "width: 2150px" }, [
