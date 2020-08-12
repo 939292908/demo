@@ -14,7 +14,7 @@ module.exports = {
                     m('div', { class: `index-info-box-right-1` }, ['我要买']),
                     m('div', { class: `index-info-box-right-2` }, ['参考价 6.95CNY/USDT'])
                 ]),
-                m('div', { class: `index-info-box` }, [
+                m('div', { class: `index-info-box container` }, [
                     m('div', { class: `index-info-box-right` }, [
                         m('select', { class: `index-info-box-right-select` }, [
                             m('option', { class: `` }, ['USDT']),

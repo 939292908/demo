@@ -1,5 +1,6 @@
-.register-send-code-width {
-    width: 7rem !important;
+.views-page-login-send-code{
+    white-space: nowrap !important;
+    color: var(--c-primary-lighten);
 }
 
 .register-national-select {
