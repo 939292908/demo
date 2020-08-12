@@ -46,7 +46,7 @@ module.exports = {
                         maxlength: '6',
                         value: item.code
                     },
-                    rightComponents: m('a.body-1.register-send-code-width.px-2',
+                    rightComponents: m('a.body-1.views-page-login-send-code.px-2',
                         {
                             onclick: () => {
                                 if (Validate.smsCd > 0) return;
@@ -73,7 +73,7 @@ module.exports = {
                         maxlength: '6',
                         value: item.code
                     },
-                    rightComponents: m('a.body-1.register-send-code-width.px-2',
+                    rightComponents: m('a.body-1.views-page-login-send-code.px-2',
                         {
                             onclick: () => {
                                 if (Validate.emailCd > 0) return;

@@ -34,7 +34,7 @@ module.exports = {
                                 value: Register.code
                             },
                             rightComponents: m(
-                                'a.body-1.register-send-code-width.px-2',
+                                'a.body-1.views-page-login-send-code.px-2',
                                 {
                                     onclick: () => {
                                         if (Register.smsCd > 0) { return; }
@@ -49,7 +49,7 @@ module.exports = {
                                             '10214')/* '获取验证码' */])
                         })
                     ]),
-                    m('button.button.my-3.is-primary.is-fullwidth.mb-2',
+                    m('button.button.my-3.has-bg-primary.btn-2.is-fullwidth.mb-2',
                         {
                             onclick: () => {
                                 Register.type === 'phone'
