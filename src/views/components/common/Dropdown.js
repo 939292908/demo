@@ -81,9 +81,9 @@ export default {
                     style: (vnode.attrs.btnWidth ? `width:${vnode.attrs.btnWidth}px;` : '') +
                         (vnode.attrs.btnHeight ? `height:${vnode.attrs.btnHeight}px;` : ''),
                     onclick: (e) => {
-                        vnode.attrs.setShowMenu(!vnode.attrs.showMenu)
+                        setTimeout(() => vnode.attrs.setShowMenu(!vnode.attrs.showMenu), 0) // 进入下一次事件队列，先让body事件关闭所有下拉，再开启自己
                         // vnode.attrs.setBodyEven(false)
-                        window.stopBubble(e)
+                        // window.stopBubble(e)
                     }
                 }, [
                     m('div', { class: "button-content has-text-1" }, [

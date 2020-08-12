@@ -7,7 +7,7 @@ import Table from '../common/Table'
 let obj = {
     showMenu: false,
     // 合约下拉选中   
-    contractId: 1,
+    contractId: '',
     // 合约下拉
     contractList: [],
     // 表头
@@ -18,25 +18,18 @@ let obj = {
     initSymList () {
         let displaySym = window.gMkt.displaySym
         let assetD = window.gMkt.AssetD
-        let futureSymList = []
-        let tabelList = []
-        displaySym.map(function (Sym) {
-            let ass = assetD[Sym]
-            if (ass.TrdCls == 3) {
-                futureSymList.push(Sym)
-            } else if (ass.TrdCls == 2) {
-                futureSymList.push(Sym)
-            }
-        })
-        this.futureSymList = futureSymList
-        futureSymList.map((key, i) => {
-            let obj = {
-                id: i,
+        let futureSymList = displaySym.filter(Sym => assetD[Sym].TrdCls == 2 || assetD[Sym].TrdCls == 3)
+        // 1. 获取下拉列表
+        this.contractList = futureSymList.map((key, i) => { 
+            return {
+                id: key,
                 label: utils.getSymDisplayName(window.gMkt.AssetD, key)
             }
-            tabelList.push(obj)
         })
-        this.contractList = tabelList
+        // 2. 默认选中第一个
+        this.contractId = this.contractList[0] && this.contractList[0].id 
+        // 3. 获取table数据
+        this.getTableData()
     },
     // 初始化多语言
     initLanguage () {
@@ -79,7 +72,7 @@ let obj = {
 
         let params = {
             collection: 'FundingRateHistory',
-            Sym: "BTC.USDT",
+            Sym: obj.contractId,
             pageSize: 20,
             pageNo: 1
         }
@@ -110,7 +103,7 @@ export default {
     oninit (vnode) {
         obj.initLanguage()
         obj.initSymList()
-        obj.getTableData()
+        
     },
     oncreate (vnode) {
         obj.initEVBUS()
@@ -129,6 +122,7 @@ export default {
                         placeholder: '--',
                         onClick (itme) {
                             console.log(itme);
+                            obj.getTableData()
                         },
                         getList () {
                             return obj.contractList
