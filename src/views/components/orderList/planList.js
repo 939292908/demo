@@ -6,12 +6,10 @@ let obj = {
         {
             title: '操作',
             class: ""
-        },
-        // {
-        //     title: gDI18n.$t('10067'),//'仓位ID',
-        //     class: ""
-        // }, 
-        {
+        }, {
+            title: gDI18n.$t('10067'),//'仓位ID',
+            class: ""
+        }, {
             title: gDI18n.$t('10053'),//'合约',
             class: ""
         }, {
@@ -109,12 +107,10 @@ let obj = {
             {
                 title: '操作',
                 class: ""
-            },
-            // {
-            //     title: gDI18n.$t('10067'),//'仓位ID',
-            //     class: ""
-            // }, 
-            {
+            },{
+                title: gDI18n.$t('10067'),//'仓位ID',
+                class: ""
+            }, {
                 title: gDI18n.$t('10053'),//'合约',
                 class: ""
             }, {
@@ -282,9 +278,9 @@ let obj = {
                         gDI18n.$t('10085')//'删除'
                     ])
                 ]),
-                // m("td", { class: " table-tr-td-vertical" }, [
-                //     item.PId ? item.PId.substr(-4) : '--'
-                // ]),
+                m("td", { class: " table-tr-td-vertical" }, [
+                    item.PId ? item.PId.substr(-4) : '--'
+                ]),
                 m("td", { class: "table-tr-td-vertical cursor-pointer" ,onclick:function(){
                     obj.setSym(item.Sym)
                 }}, [
@@ -336,9 +332,9 @@ let obj = {
                             ]),
                         ]),
                         m('.spacer'),
-                        // m('p', { class: '' }, [
-                        //     gDI18n.$t('10067',/*'仓位ID: '*/) + item.PId.substr(-4)
-                        // ]),
+                        m('p', { class: '' }, [
+                            gDI18n.$t('10067',/*'仓位ID: '*/) + (item.PId ? item.PId.substr(-4) : '--')
+                        ]),
                     ]),
                     m('div', { class: 'pub-plan-m-content content is-flex' }, [
                         m('div', {}, [
@@ -421,29 +417,30 @@ let obj = {
             return obj.getOrdListForM()
         } else {
             let colgroup = m('colgroup', {}, [
-                m('col', { name: "pub-table-10", width: 100 }),
-                m('col', { name: "pub-table-1", width: 160 }),
-                m('col', { name: "pub-table-2", width: 130 }),
-                m('col', { name: "pub-table-3", width: 80 }),
+                m('col', { name: "pub-table-11", width: 100 }),
+                m('col', { name: "pub-table-1", width: 70 }),
+                m('col', { name: "pub-table-2", width: 160 }),
+                m('col', { name: "pub-table-3", width: 130 }),
                 m('col', { name: "pub-table-4", width: 80 }),
-                m('col', { name: "pub-table-5", width: 100 }),
+                m('col', { name: "pub-table-5", width: 80 }),
                 m('col', { name: "pub-table-6", width: 100 }),
-                m('col', { name: "pub-table-7", width: 150 }),
+                m('col', { name: "pub-table-7", width: 100 }),
                 m('col', { name: "pub-table-8", width: 150 }),
                 m('col', { name: "pub-table-9", width: 150 }),
+                m('col', { name: "pub-table-10", width: 150 }),
                 
             ])
             return m('div', { class: " table-container" }, [
-                m('div', { class: `pub-table-head-box ${window.gWebAPI.isLogin() ? '' : 'is-hidden'}`, style: "width: 1200px" }, [
-                    m("table", { class: "table is-hoverable ", width: '1200px', cellpadding: 0, cellspacing: 0 }, [
+                m('div', { class: `pub-table-head-box ${window.gWebAPI.isLogin() ? '' : 'is-hidden'}`, style: "width: 1270px" }, [
+                    m("table", { class: "table is-hoverable ", width: '1270px', cellpadding: 0, cellspacing: 0 }, [
                         colgroup,
                         m("tr", { class: "" }, [
                             obj.getTheadList()
                         ])
                     ]),
                 ]),
-                m('div', { class: "pub-table-body-box", style: "width: 1200px" }, [
-                    m("table", { class: "table is-hoverable ", width: '1200px', cellpadding: 0, cellspacing: 0 }, [
+                m('div', { class: "pub-table-body-box", style: "width: 1270px" }, [
+                    m("table", { class: "table is-hoverable ", width: '1270px', cellpadding: 0, cellspacing: 0 }, [
                         colgroup,
                         obj.getOrdList()
                     ])
