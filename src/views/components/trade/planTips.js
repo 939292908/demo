@@ -1,12 +1,12 @@
 import utils from "../../../utils/utils"
+import * as clacMgnNeed from '../../../futureCalc/calcMgnNeed.js'
 
 var m = require("mithril")
 
 let obj = {
     open: false,
     tipsData:{},
-    MgnNeedForBuy:0,
-    MgnNeedForSell:0,
+    MgnNeed: 0,
     isShow:false,
     //需要显示的行情数据
     lastTick: {},
@@ -28,11 +28,9 @@ let obj = {
         }
         this.EV_PLANTIPS_UPD_unbinder = window.gEVBUS.on(gTrd.EV_PLANTIPS_UPD, arg => {
             utils.copyTab(that.tipsData,arg.data.p)
-            that.MgnNeedForBuy = arg.data.MgnNeedForBuy
-            that.MgnNeedForSell = arg.data.MgnNeedForSell
-            console.log(arg)
             that.open = true
             that.initObj()
+            that.setMgnNeed()
         })
         //监听多元
         if (this.EV_CHANGELOCALE_UPD_unbinder) {
@@ -48,6 +46,7 @@ let obj = {
         }
         this.EV_TICK_UPD_unbinder = window.gEVBUS.on(gMkt.EV_TICK_UPD,arg=> {
             that.onTick(arg)
+            that.setMgnNeed()
         })
         
         //指数行情全局广播
@@ -56,6 +55,7 @@ let obj = {
         }
         this.EV_INDEX_UPD_unbinder = window.gEVBUS.on(gMkt.EV_INDEX_UPD,arg=> {
             that.onTick(arg)
+            that.setMgnNeed()
         })
     },
 
@@ -67,15 +67,6 @@ let obj = {
         let assetD = window.gMkt.AssetD[Sym] || {}
         if(assetD && this.tipsData){
             this.tipsData.FromC = assetD.FromC
-
-            switch(this.tipsData.Dir){
-                case 1:
-                    this.tipsData.MgnNeed = this.MgnNeedForBuy
-                    break;
-                case -1:
-                    this.tipsData.MgnNeed = this.MgnNeedForSell
-                    break;
-            }
         }
 
         if (this.tipsData.StopPrz) {
@@ -111,6 +102,42 @@ let obj = {
             this.tickObj = {}
         }
     },
+    //仓位保证金
+    //保证金
+    setMgnNeed(){
+        let that = this
+        let posObj = window.gTrd.Poss
+        let pos = []
+        for (let key in posObj) {
+            pos.push(posObj[key])
+        }
+        let wallet = window.gTrd.Wlts['01']
+        // 筛选出当前委托，不要计划委托
+        let order = window.gTrd.Orders['01']
+        let _order = order.filter(function (item) {
+            return item.OType == 1 || item.OType == 2
+        })
+        let RSdata = window.gTrd.RS
+        let assetD = window.gMkt.AssetD
+        let lastTick = window.gMkt.lastTick
+
+        let newOrder = {
+            Sym: that.tipsData.Sym,
+            Prz: obj.tipsData.OType == 3?obj.tipsData.Prz : obj.getLastTick().LastPrz,
+            Qty: that.tipsData.Qty,
+            QtyF: 0,
+            Dir: that.tipsData.Dir,
+            PId: that.tipsData.PId,
+            Lvr: that.tipsData.lvr,
+            MIRMy: that.tipsData.MIRMy
+        }
+        clacMgnNeed.calcFutureWltAndPosAndMI(pos, wallet, _order, RSdata, assetD, lastTick, window.$config.future.UPNLPrzActive, newOrder, window.$config.future.MMType, res => {
+        // console.log('bug 成本计算结果： ', res)
+        that.MgnNeed = Number(res || 0)
+        })
+        m.redraw()
+    },
+
     //更新最新行情
     updateTick: function(ticks){
         for(let key in ticks){
@@ -224,7 +251,7 @@ let obj = {
                     gDI18n.$t('10167')//"委托保证金"
                 ]),
                 m('div',{class:"ord-tips-num-right"},[
-                    Number(obj.tipsData.MgnNeed).toPrecision2(6, 8) + " " + obj.tipsData.FromC
+                    Number(obj.MgnNeed).toPrecision2(6, 8) + " " + obj.tipsData.FromC
                 ]),
             ]),
         ])

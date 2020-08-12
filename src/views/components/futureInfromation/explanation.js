@@ -366,7 +366,7 @@ let obj = {
                 //资金费率
                 FundingLongR: (ass.FundingLongR * 100).toSubstrFixed(4) + '%',
                 //资金费用收取间隔
-                Chargein:8,
+                Chargein:Number(ass.FundingInterval)/(60 * 60 * 1000),
                 //预测下一资金费率
                 FundingPredictedR: (ass.FundingPredictedR * 100).toSubstrFixed(4) + '%',  
                 //资金交换时间
@@ -531,7 +531,7 @@ let obj = {
                 (tabelList[dropdownActive]?tabelList[dropdownActive].label : "--") + ' 合约明细'
             ]),
             m('div', { class: "inf_body_TD" }, [
-                (tabelList[dropdownActive]?tabelList[dropdownActive].label : "--") + '合约' + (spotInfo.ExpireStr == 0?"没有到期日":spotInfo.ExpireStr) + '。每张合约大小' + spotInfo.LotSz + '。每' + '8' + '小时交换资金费用。下一个交换将发生在' + spotInfo.FundingNext + '。'
+                (tabelList[dropdownActive]?tabelList[dropdownActive].label : "--") + '合约' + (spotInfo.ExpireStr == 0?"没有到期日":spotInfo.ExpireStr) + '。每张合约大小' + spotInfo.LotSz + '。每' + spotInfo.Chargein + '小时交换资金费用。下一个交换将发生在' + spotInfo.FundingNext + '。'
             ]),
             m('div', { class: " inf_body_TD" }, [
                 window.$config.exchName + '交易平台利用利率与每分钟溢价指数的加权平均值计算出资金费率。',
