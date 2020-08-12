@@ -47,7 +47,7 @@ module.exports = {
         });
     },
     view: function () {
-        return m('div.view-pages-home-marketlist', {}, [
+        return m('div.view-pages-home-marketlist container', {}, [
             // '行情列表'
             m('div', { class: `frame w` }, [
                 m('div', { class: `Market-data` }, [

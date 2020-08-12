@@ -6,8 +6,8 @@ require('@/styles/pages/home.css');
 // const marketList = require('./marketList');
 
 module.exports = {
-    view: function() {
-        return m('views-pages-home-transaction', {}, [
+    view: function () {
+        return m('div.views-pages-home-transaction', { class: 'container' }, [
             // 平台介绍
             m('div', { class: `my-7` }, [
                 m('div', { class: `title-2` }, ['开启交易之旅']),
