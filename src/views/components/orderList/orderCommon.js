@@ -40,6 +40,7 @@ let obj = {
             obj.setOrderName(arg.data.status)
             that.initObj()
             this.open = true
+            that.setMgnNeed()
         })
         //监听多元
         if (this.EV_CHANGELOCALE_UPD_unbinder) {
@@ -55,6 +56,7 @@ let obj = {
         }
         this.EV_TICK_UPD_unbinder = window.gEVBUS.on(gMkt.EV_TICK_UPD,arg=> {
             that.onTick(arg)
+            that.setMgnNeed()
         })
         
         //指数行情全局广播
@@ -63,6 +65,7 @@ let obj = {
         }
         this.EV_INDEX_UPD_unbinder = window.gEVBUS.on(gMkt.EV_INDEX_UPD,arg=> {
             that.onTick(arg)
+            that.setMgnNeed()
         })
 
         //当前选中合约变化全局广播
@@ -261,7 +264,7 @@ let obj = {
                     gDI18n.$t('10167')//"委托保证金"
                 ]),
                 m('div',{class:"ord-tips-num-right"},[
-                    obj.MgnNeed.toFixed2(2,8) + obj.FromC
+                    Number(obj.MgnNeed).toPrecision2(6, 8) + " " + obj.FromC
                 ]),
             ]),
             m('div',{class:"ord-tips-num is-flex"},[
