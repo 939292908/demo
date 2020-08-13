@@ -11,6 +11,7 @@ module.exports = {
     GOOGLE_VERIFY_V1: '/g_auth/verify',
     // 登陆验证
     LOGIN_CHECK_V1: '/v1/users/loginCheck',
+    LOGIN_CHECK_V2: '/v2/users/loginCheck',
     // 查询用户简介
     QUERY_USER_INFO_V1: '/v1/users/queryUserInfo',
     // 极验注册
@@ -19,6 +20,7 @@ module.exports = {
     GEETEST_VALIDATE: '/geetest/validate',
     // 用户登陆
     LOGIN_WEB_V1: '/v1/users/loginWeb',
+    LOGIN_WEB_V2: '/v2/users/loginWeb',
     // 重置密码
     RESET_PASSWD_V1: '/v1/users/ResetPasswd',
     // 邮箱验证

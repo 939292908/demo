@@ -4,15 +4,6 @@
         display: flex;
         flex-wrap: wrap;
     }
-    .myWalletIndex-nav{
-        padding-left: 10px;
-        .myWalletIndex-nav-my,.myWalletIndex-nav-record{
-            margin-right: var(--c-margin-level5);
-        }
-        .myWalletIndex-nav-my{
-            border-bottom: 2px solid var(--c-primary-lighten);
-        }
-    }
     .myAccount{
         .show-desc{
             margin-left: auto;
@@ -39,6 +30,22 @@
             background-color: var(--c-primary-lighten);
             border-color: var(--c-primary-lighten);
             color: var(--c-font-darken);
+        }
+        .tradeCard{
+            display: flex;
+            flex-direction: column;
+            z-index: 9999;
+            position: fixed;
+            background-color: white;
+            margin-left: 680px;
+            margin-top: 40px;
+            padding: 3px 10px;
+            border-radius: 5px;
+            font-size: 8px;
+            span{
+                color:gray;
+            }
+            
         }
     }
     .myWalletIndex-head-right div{

@@ -19,6 +19,35 @@ module.exports = {
     totalValueForUSDT: 0,
     // 总BTC估值
     totalValueForBTC: 0,
+
+    // 人民币总BTC估值
+    totalCNYValue: 0,
+
+    // 我的钱包总USDT估值
+    walletTotalValueForUSDT: 0,
+    // 我的钱包总BTC估值
+    walletTotalValueForBTC: 0,
+
+    // 交易账户总USDT估值
+    tradingAccountTotalValueForUSDT: 0,
+    // 交易账户总BTC估值
+    tradingAccountTotalValueForBTC: 0,
+
+    // 币币交易总USDT估值
+    coinTotalValueForUSDT: 0,
+    // 币币交易总BTC估值
+    coinTotalValueForBTC: 0,
+
+    // 法币交易总USDT估值
+    legalTotalValueForUSDT: 0,
+    // 法币交易总BTC估值
+    legalTotalValueForBTC: 0,
+
+    // 合约交易总USDT估值
+    contractTotalValueForUSDT: 0,
+    // 合约交易总BTC估值
+    contractTotalValueForBTC: 0,
+
     init: function () {
         // 初始化
         const that = this;
@@ -44,6 +73,22 @@ module.exports = {
         // 计算之前先将估值归0
         this.totalValueForUSDT = 0;
         this.totalValueForBTC = 0;
+
+        this.walletTotalValueForUSDT = 0;
+        this.walletTotalValueForBTC = 0;
+
+        this.tradingAccountTotalValueForUSDT = 0;
+        this.tradingAccountTotalValueForBTC = 0;
+
+        this.coinTotalValueForUSDT = 0;
+        this.coinTotalValueForBTC = 0;
+
+        this.legalTotalValueForUSDT = 0;
+        this.legalTotalValueForBTC = 0;
+
+        this.contractTotalValueForUSDT = 0;
+        this.contractTotalValueForBTC = 0;
+
         const wlt = window.gWebApi.wallet_obj;
         for (const type in wlt) {
             this.wallet_obj[type] = this.wallet_obj[type] ? this.wallet_obj[type] : {};
@@ -58,6 +103,48 @@ module.exports = {
             }
         }
         window._console.log('ht', 'initWlt ', this.wallet_obj, this.totalValueForUSDT, this.totalValueForBTC);
+        for (const type in this.wallet) {
+            if (type === '03') {
+                for (const coin in this.wallet[type]) {
+                    if (this.wallet[type][coin].TOTAL === '0.00000000') {
+                        continue;
+                    } else {
+                        // 我的钱包总估值
+                        this.walletTotalValueForBTC += Number(this.wallet[type][coin].valueForBTC);
+                        this.walletTotalValueForUSDT += Number(this.wallet[type][coin].valueForUSDT);
+                    }
+                }
+            } else if (type === '01') {
+                for (const coin in this.wallet[type]) {
+                    if (this.wallet[type][coin].TOTAL === '0.00000000') {
+                        continue;
+                    } else {
+                        this.contractTotalValueForBTC += Number(this.wallet[type][coin].valueForBTC);
+                        this.contractTotalValueForUSDT += Number(this.wallet[type][coin].valueForUSDT);
+                    }
+                }
+            } else if (type === '02') {
+                for (const coin in this.wallet[type]) {
+                    if (this.wallet[type][coin].TOTAL === '0.00000000') {
+                        continue;
+                    } else {
+                        this.coinTotalValueForBTC += Number(this.wallet[type][coin].valueForBTC);
+                        this.coinTotalValueForUSDT += Number(this.wallet[type][coin].valueForUSDT);
+                    }
+                }
+            } else if (type === '04') {
+                for (const coin in this.wallet[type]) {
+                    if (this.wallet[type][coin].TOTAL === '0.00000000') {
+                        continue;
+                    } else {
+                        this.legalTotalValueForBTC += Number(this.wallet[type][coin].valueForBTC);
+                        this.legalTotalValueForUSDT += Number(this.wallet[type][coin].valueForUSDT);
+                    }
+                }
+            }
+        }
+        this.tradingAccountTotalValueForBTC = Number(this.legalTotalValueForBTC) + Number(this.contractTotalValueForBTC) + Number(this.coinTotalValueForBTC);
+        this.tradingAccountTotalValueForUSDT = Number(this.legalTotalValueForUSDT) + Number(this.contractTotalValueForUSDT) + Number(this.coinTotalValueForUSDT);
     },
     updWlt: function() {
         const that = this;

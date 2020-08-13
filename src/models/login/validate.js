@@ -5,6 +5,11 @@ module.exports = {
     smsCd: 0,
     emailCd: 0,
     geetestCallBackType: '',
+    selectType: '',
+    anotherType: '',
+    selectName: '',
+    anotherName: '',
+    code: '',
     sendSmsCode() {
         window.validate.sendSmsCode(res => {
             if (res.result.code === 0) {
@@ -95,9 +100,73 @@ module.exports = {
             }
         });
     },
+
+    check() {
+        switch (this.selectType) {
+        case 'sms':
+            window.validate.checkSmsCode(this.code);
+            break;
+        case 'email':
+            window.validate.checkEmailCode(this.code);
+            break;
+        case 'google':
+            window.validate.checkGoogleCode(this.code);
+            break;
+        }
+    },
+
+    /**
+     * 设置显示的文字
+     */
+    setName() {
+        switch (this.selectType) {
+        case 'sms':
+            this.selectName = '短信验证码';
+            break;
+        case 'email':
+            this.selectName = '邮箱验证码';
+            break;
+        case 'google':
+            this.selectName = '谷歌验证码';
+            break;
+        }
+        if (!this.anotherType.length) return;
+        switch (this.anotherType) {
+        case 'sms':
+            this.anotherName = '切换短信验证';
+            break;
+        case 'email':
+            this.anotherName = '切换邮箱验证';
+            break;
+        case 'google':
+            this.anotherName = '切换谷歌验证';
+            break;
+        }
+    },
+
+    /**
+     * 切换验证方式
+     */
+    changeValidate() {
+        const temp = this.selectType;
+        this.selectType = this.anotherType;
+        this.anotherType = temp;
+        this.setName();
+        m.redraw();
+    },
+
     oninit() {
+        if (window.validate.validateType.indexOf('&') !== -1) {
+            const selectTypeList = window.validate.validateType.split('&');
+            this.selectType = selectTypeList[0];
+            this.anotherType = selectTypeList[1];
+        } else {
+            this.selectType = window.validate.validateType;
+        }
+        this.setName();
         this.initGeetest();
     },
+
     onremove() {
         window.gBroadcast.offMsg({
             key: 'validate',

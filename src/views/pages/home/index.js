@@ -2,12 +2,11 @@ const m = require('mithril');
 //  const m = require('swiper')
 
 require('@/styles/pages/home.css');
-const marketList = require('../../marketList');
-// const marketList = require('./marketList');
-const introduce = require('./introduce');
+const top = require('./top');
+const picture = require('./picture');
+const rotationtwo = require('./rotationtwo');
 const advantage = require('./advantage');
-const transaction = require('./transaction');
-const download = require('./download');
+const introduce = require('./introduce');
 const rotation = require('./rotation');
 const notice = require('./notice');
 
@@ -47,20 +46,20 @@ module.exports = {
     },
     view: function () {
         return m('div.views-pages-home-index', [
-            //  轮播 + 下拉
+            // 顶部
+            m(top),
+            // 轮播
             m(rotation),
             //  公告
             m(notice),
-            //  行情表格
-            m(marketList),
-            // 平台介绍
-            m(introduce),
+            // 大图
+            m(picture),
+            // 轮播2
+            m(rotationtwo),
             // 平台优势
             m(advantage),
-            // 交易之旅
-            m(transaction),
-            // 二维码下载
-            m(download)
+            // 平台介绍+平台优势+交易
+            m(introduce)
         ]);
     }
 };

@@ -1,7 +1,7 @@
 /**头部*/
 .head-download {
-    margin-top: 10px;
-    margin-left: 15px;
+    /* margin-top: 10px;
+    margin-left: 15px; */
 }
 
 .navbar-item {
@@ -14,16 +14,21 @@
     text-align: center;
 }
 
+.home-introduce {
+    margin-top: 30px;
+}
+
+.pages-home-advantage {
+    background: #0D1C33 url("~@/assets/img/home/rectangle.png") no-repeat center center;
+    background-size: "cover";
+}
+
 .my-7 {
     text-align: center;
-}
-
-.pub-footer {
-    border-top: 1px solid rgba(19, 18, 18, 0.333);
-}
-
-.border-1 {
-    border: 1px solid rgba(19, 18, 18, 0.333);
+    background: #0D1C33 url("~@/assets/img/home/Rectangle 465.png") no-repeat center center;
+    background-size: "cover";
+    width: 1920px;
+    height: 902px;
 }
 
 .index-info-box-right-1 {
@@ -39,14 +44,13 @@
 
 .index-info-box-right-select {
     height: 32px;
-    ;
     margin-left: 340px;
     text-align: center;
 }
 
 .purchase-btn {
-    height: 33px;
-    margin-left: 15px;
+    text-align: center;
+    margin-top: 40px;
 }
 
 .select {
@@ -54,14 +58,35 @@
     text-align-last: right;
 }
 
-.Notice {
+.notice {
     margin-top: 30px;
     width: 100%;
 }
 
-.Notice-content {
-    display: flex;
-    justify-content: space-around;
+.rotation-content {
+    height: 200px;
+    margin-top: 180px;
+}
+
+.rotationtwo-content {
+    height: 200px;
+}
+
+.notice-content {
+    height: 70px;
+    margin-top: 30px;
+}
+
+.home-banner {
+    background: #0D1C33 url("~@/assets/img/home/vector.png") no-repeat center center;
+    background-size: "cover";
+    text-align: center;
+}
+
+.home-picture {
+    background: #0D1C33 url("~@/assets/img/home/layer 1.png") no-repeat center center;
+    background-size: "cover";
+    /* text-align: center; */
 }
 
 .listing {
@@ -74,19 +99,32 @@
 }
 
 .frame.w {
-    border: 1px solid rgba(19, 18, 18, 0.333);
     margin-top: 20px;
 }
 
 .frame-1.w {
-    border: 1px solid rgba(19, 18, 18, 0.333);
-    margin-top: 20px;
-    line-height: 30px;
+    background: #0D1C33 url("~@/assets/img/home/layer 14.png") no-repeat center center;
+    background-size: "cover";
+    width: 1920px;
+    height: 717px;
+}
+
+.picture-layer {
+    width: 1400px;
+    height: 764px;
+}
+
+.introduce-rectangle{
+    margin-left: 100px;
+}
+
+。introduce-image {
+    background: #0D1C33 url("~@/assets/img/home/Rectangle 468.png") no-repeat center center;
+    background-size: "cover";
 }
 
 .frame-2.w {
     height: 200px;
-    border: 1px solid rgba(19, 18, 18, 0.333);
     margin-top: 20px;
 }
 
@@ -106,7 +144,6 @@
 
 .frame-3.w {
     height: 270px;
-    border: 1px solid rgba(19, 18, 18, 0.333);
     margin-top: 20px;
 }
 
@@ -143,16 +180,17 @@
 .frame-4 {
     width: 100%;
     height: 300px;
-    border: 1px solid rgba(19, 18, 18, 0.333);
 }
 
 .download-ios {
     height: 32px;
+    margin-top: 80px;
 }
 
 .download-Android {
     height: 32px;
-    margin-left: 30px;
+    margin-right: 300px;
+    margin-top: 80px;
 }
 
 .navigation {
@@ -169,6 +207,16 @@
     text-align: center;
 }
 
+.download-title {
+    margin-right: 200px;
+}
+
+.introduce {
+    margin-top: 200px;
+}
+
+
+
 /**底部*/
 .bottom-navigation-tab-1 {
     text-align-last: left;
@@ -183,12 +231,8 @@
     margin-left: 1800px;
 }
 
-.is-between {
-    margin-top: 40px;
-}
-
 .community {
-    margin-left: 10px;
+    margin-top: 10px;
 }
 
 .community:hover {
@@ -197,4 +241,8 @@
 
 .bottom-copyright {
     text-align: center;
+}
+
+.pub-footer {
+    background-color: #101217;
 }

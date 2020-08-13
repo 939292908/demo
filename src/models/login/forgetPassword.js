@@ -50,14 +50,14 @@ module.exports = {
         const that = this;
         if (this.valid) {
             this.loading = true;
-            geetest.verify(function() { that.loading = false; });
+            geetest.verify(() => { that.loading = false; });
         }
     },
     submitPhone() {
         const that = this;
         if (this.valid1) {
             this.loading = true;
-            geetest.verify(function() { that.loading = false; });
+            geetest.verify(() => { that.loading = false; });
         }
     },
     // 查询是否注册顾过
@@ -154,6 +154,9 @@ module.exports = {
                 }
             }
         });
+    },
+    oninit() {
+        this.initGeetest();
     },
     onremove() {
         this.isValidate = false;

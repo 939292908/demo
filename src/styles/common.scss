@@ -1,6 +1,8 @@
 /* 公共样式 start */
 
-html, body, .section {
+html,
+body,
+.section {
     height: 100%;
     overflow: auto;
     font-size: var(--c-fontsz-level4);
@@ -29,11 +31,18 @@ html, body, .section {
     width: 1204px;
 }
 
+.columns {
+    margin-left: 0;
+    margin-right: 0;
+    margin-top: 0;
+}
+
 /* 动画相关 start */
 @keyframes sliding-out-from-right {
     from {
         transform: translateX(100%);
     }
+
     to {
         transform: translateX(0%);
     }
@@ -43,6 +52,7 @@ html, body, .section {
     from {
         transform: translateY(-100%);
     }
+
     to {
         transform: translateY(0%);
     }
@@ -116,6 +126,7 @@ html, body, .section {
     font-size: var(--c-iconsz-level3) !important;
     font-style: normal;
 }
+
 .iconfont-min {
     font-size: var(--c-iconsz-level0) !important;
 }
@@ -283,6 +294,7 @@ html, body, .section {
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
 }
+
 // 鼠标浮动指针显示
 .cursor-pointer {
     cursor: pointer;
@@ -731,12 +743,24 @@ html, body, .section {
 /* dark UI库样式覆盖 start */
 $primary-lighten: #FF8B00;
 
-.input:focus, .textarea:focus, .select select:focus, .is-focused.input, .is-focused.textarea, .select select.is-focused, .input:active, .textarea:active, .select select:active, .is-active.input, .is-active.textarea, .select select.is-active {
+.input:focus,
+.textarea:focus,
+.select select:focus,
+.is-focused.input,
+.is-focused.textarea,
+.select select.is-focused,
+.input:active,
+.textarea:active,
+.select select:active,
+.is-active.input,
+.is-active.textarea,
+.select select.is-active {
     border-color: var(--c-primary-lighten) !important;
     box-shadow: 0 0 0 0.125em rgba($primary-lighten, 0.25) !important;
 }
 
-.has-bg-primary.button:focus:not(:active), .has-bg-primary.button.is-focused:not(:active) {
+.has-bg-primary.button:focus:not(:active),
+.has-bg-primary.button.is-focused:not(:active) {
     box-shadow: 0 0 0 0.125em rgba($primary-lighten, 0.25) !important;
 }
 
@@ -746,7 +770,3 @@ $primary-lighten: #FF8B00;
 }
 
 /* 主题样式 end */
-
-
-
-
