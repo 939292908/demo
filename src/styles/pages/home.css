@@ -14,12 +14,21 @@
     text-align: center;
 }
 
+.pages-home-advantage {
+    background: #0D1C33 url("~@/assets/img/home/rectangle.png") no-repeat center center;
+    background-size: "cover";
+}
+
 .my-7 {
     text-align: center;
+    background: #0D1C33 url("~@/assets/img/home/Rectangle 465.png") no-repeat center center;
+    background-size: "cover";
+    width: 1920px;
+    height: 902px;
 }
 
 .pub-footer {
-    border-top: 1px solid rgba(19, 18, 18, 0.333);
+    /* border-top: 1px solid rgba(19, 18, 18, 0.333); */
 }
 
 .border-1 {
@@ -39,14 +48,16 @@
 
 .index-info-box-right-select {
     height: 32px;
-    ;
     margin-left: 340px;
     text-align: center;
 }
 
 .purchase-btn {
-    height: 33px;
-    margin-left: 15px;
+    /* height: 40px; */
+    /* width: 150px; */
+    /* margin-left: 15px; */
+    text-align: center;
+    margin-top: 40px;
 }
 
 .select {
@@ -54,14 +65,39 @@
     text-align-last: right;
 }
 
-.Notice {
+.notice {
     margin-top: 30px;
     width: 100%;
 }
 
-.Notice-content {
-    display: flex;
-    justify-content: space-around;
+.rotation-content {
+    height: 200px;
+    border: 1px solid rgba(19, 18, 18, 0.333);
+    margin-top: 180px;
+}
+
+.rotationtwo-content {
+    height: 200px;
+    border: 1px solid rgba(19, 18, 18, 0.333);
+    /* margin-top: 50px; */
+}
+
+.notice-content {
+    height: 70px;
+    border: 1px solid rgba(19, 18, 18, 0.333);
+    margin-top: 30px;
+}
+
+.home-banner {
+    background: #0D1C33 url("~@/assets/img/home/vector.png") no-repeat center center;
+    background-size: "cover";
+    text-align: center;
+}
+
+.home-picture {
+    background: #0D1C33 url("~@/assets/img/home/layer 1.png") no-repeat center center;
+    background-size: "cover";
+    /* text-align: center; */
 }
 
 .listing {
@@ -79,9 +115,12 @@
 }
 
 .frame-1.w {
-    border: 1px solid rgba(19, 18, 18, 0.333);
     margin-top: 20px;
     line-height: 30px;
+    background: #0D1C33 url("~@/assets/img/home/layer 14.png") no-repeat center center;
+    background-size: "cover";
+    width: 1920px;
+    height: 717px;
 }
 
 .frame-2.w {
@@ -148,11 +187,13 @@
 
 .download-ios {
     height: 32px;
+    margin-top: 80px;
 }
 
 .download-Android {
     height: 32px;
-    margin-left: 30px;
+    margin-right: 300px;
+    margin-top: 80px;
 }
 
 .navigation {
@@ -168,6 +209,12 @@
 .introduce-content {
     text-align: center;
 }
+
+.download-title {
+    margin-right: 200px;
+}
+
+
 
 /**底部*/
 .bottom-navigation-tab-1 {
@@ -188,7 +235,7 @@
 }
 
 .community {
-    margin-left: 10px;
+    margin-top: 10px;
 }
 
 .community:hover {
