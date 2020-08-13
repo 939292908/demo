@@ -196,6 +196,9 @@ let spotTick = {
                     m('span', {class:"pub-header-tick-left-pre-prz is-hidden-touch"+utils.getColorStr(spotTick.getLastTick().color, 'font')},[
                         spotTick.getLastTick().LastPrz || '--'
                     ]),
+                    m('span', {class:"pub-header-tick-left-pre-prz is-hidden-touch pub-fall-rise"+utils.getColorStr(spotTick.getLastTick().color, 'font')},[
+                        m('i',{class:"icon-fall-rise iconfont" + (spotTick.getLastTick().color == 1?" iconrise" :spotTick.getLastTick().color == -1?" iconfall" :" ")})
+                    ]),
                     m('span', {class:"pub-header-tick-left-pre-button tag is-hidden-touch"+utils.getColorStr(spotTick.getLastTick().rfpreColor)},[
                         spotTick.getLastTick().rfpre || '--'
                     ]),

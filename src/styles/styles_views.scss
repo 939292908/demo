@@ -249,6 +249,15 @@ hr {
             @extend %font-10;
         }
 
+        .pub-fall-rise{
+            width: 15px;
+            
+
+            .icon-fall-rise{
+                @extend %font-7;
+            }
+        }
+
         table {
             @extend %font-2;
             display: inline-table;

@@ -358,7 +358,6 @@ export default {
         dish.updateOrder20()
     },
     view: function(vnode) {
-        
         return m("div",{class:"pub-dish has-text-1"},[
             m('div', { class: `` + (window.isMobile ? "pub-dish-top-m" : " pub-dish-top")}, [
                 m('p', { class: `pub-dish-top-pic` }, [
@@ -393,7 +392,12 @@ export default {
                 m("div",{class:"is-flex"},[
                     m("div",{class:""},[
                         m('span', {class:"has-text-weight-semibold is-size-4"+utils.getColorStr(dish.getLastTick().color, 'font')},[
-                            dish.getLastTick().LastPrz || '--'
+                            dish.getLastTick().LastPrz || '--',
+                            
+                        ]),
+                        m('span', {class:"has-text-weight-semibold is-size-4"+utils.getColorStr(dish.getLastTick().color, 'font')},[
+                            m('i',{class:"iconfont" + (dish.getLastTick().color == 1?" iconrise" :dish.getLastTick().color == -1?" iconfall" :" ")})
+                            
                         ]),
                     ]),
                     m('.spacer'),

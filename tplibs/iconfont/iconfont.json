@@ -6,6 +6,27 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "16549483",
+      "name": "Frame",
+      "font_class": "rise",
+      "unicode": "e643",
+      "unicode_decimal": 58947
+    },
+    {
+      "icon_id": "16549484",
+      "name": "Frame-1",
+      "font_class": "fall",
+      "unicode": "e644",
+      "unicode_decimal": 58948
+    },
+    {
+      "icon_id": "13717500",
+      "name": "vbit-Homepage",
+      "font_class": "vbit-Homepage",
+      "unicode": "e615",
+      "unicode_decimal": 58901
+    },
+    {
       "icon_id": "15455940",
       "name": "logo-1",
       "font_class": "logo-1",
