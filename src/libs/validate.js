@@ -37,11 +37,11 @@ class Validate {
         //     cmd: 'setValidateSheet',
         //     data: config,
         // });
-        window.gBroadcast.offMsg({
-            key: 'ValidateModule',
-            cmd: 'setValidateSheet',
-            isall: true
-        });
+        // window.gBroadcast.offMsg({
+        //     key: 'ValidateModule',
+        //     cmd: 'setValidateSheet',
+        //     isall: true
+        // });
         if (callback) {
             this.callbackHandler = callback;
         }
@@ -213,7 +213,7 @@ class Validate {
             } else {
                 window.$message({
                     content: window.errCode.getWebApiErrorCode(
-                        res.data.result.code),
+                        res.result.code),
                     type: 'danger'
                 });
             }
@@ -235,18 +235,19 @@ class Validate {
         }
         window.gWebApi.googleCheck({ code: code },
             res => {
-                if (res.result === 0) {
+                if (res.result.code === 0) {
                     this.finished();
                 } else {
-                    this.validateSheet.loading = false;
+                    // this.validateSheet.loading = false;
                     window.$message({
                         content: window.errCode.getWebApiErrorCode(
-                            res.data.result.code),
+                            res.result.code),
                         type: 'danger'
                     });
                 }
             },
-            () => {
+            err => {
+                window._console.log('tlh', err);
             });
     }
 
@@ -350,6 +351,46 @@ class Validate {
         }).catch(e => {
             window._console.log('tlh', e);
         });
+    }
+
+    /**
+     * 激活双选择验证手机和Google
+     * @param params
+     * @param callback
+     */
+    activeSmsAndGoogle(params, callback) {
+        this.validateType = 'sms&google';
+        this.smsConfig = params;
+        if (callback) {
+            this.callbackHandler = callback;
+        }
+    }
+
+    /**
+     * 激活双选择验证手机和邮箱
+     * @param params
+     * @param callback
+     */
+    activeSmsAndEmail(params, callback) {
+        this.validateType = 'sms&email';
+        this.smsConfig = params.smsconfig;
+        this.emailConfig = params.emailconfig;
+        if (callback) {
+            this.callbackHandler = callback;
+        }
+    }
+
+    /**
+     * 激活双选择验证邮箱和Google
+     * @param params
+     * @param callback
+     */
+    activeEmailAndGoogle(params, callback) {
+        this.validateType = 'email&google';
+        this.emailConfig = params;
+        if (callback) {
+            this.callbackHandler = callback;
+        }
     }
 
     /**

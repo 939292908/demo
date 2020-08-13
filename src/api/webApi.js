@@ -225,7 +225,7 @@ class webApi {
     }
 
     /**
-     * 登录
+     * 登录验证
      * @param aData
      * {
      *      loginType: loginType,   //  登录方式
@@ -274,6 +274,34 @@ class webApi {
     }
 
     /**
+     * 登录验证V2
+     * @param aData
+     * @param aOnSuccess
+     * @param aOnError
+     */
+    loginCheckV2(aData, aOnSuccess, aOnError) {
+        const s = this;
+
+        s.axios.request({
+            method: "post",
+            url: s.axios.baseUrl + API.LOGIN_CHECK_V2,
+            data: qs.stringify(aData),
+            options: {
+                withCredentials: true
+            }
+        }).then(function (result) {
+            const arg = result.data;
+            if (aOnSuccess) {
+                aOnSuccess(arg);
+            }
+        }).catch(function (e) {
+            if (aOnError) {
+                aOnError(e);
+            }
+        });
+    }
+
+    /**
      * 登录
      * @param aData
      * @param aOnSuccess
@@ -285,6 +313,34 @@ class webApi {
         s.axios.request({
             method: "post",
             url: s.axios.baseUrl + API.LOGIN_WEB_V1,
+            data: qs.stringify(aData),
+            options: {
+                withCredentials: true
+            }
+        }).then(function (result) {
+            const arg = result.data;
+            if (aOnSuccess) {
+                aOnSuccess(arg);
+            }
+        }).catch(function (e) {
+            if (aOnError) {
+                aOnError(e);
+            }
+        });
+    }
+
+    /**
+     * 登录V2
+     * @param aData
+     * @param aOnSuccess
+     * @param aOnError
+     */
+    loginWebV2(aData, aOnSuccess, aOnError) {
+        const s = this;
+
+        s.axios.request({
+            method: "post",
+            url: s.axios.baseUrl + API.LOGIN_WEB_V2,
             data: qs.stringify(aData),
             options: {
                 withCredentials: true
