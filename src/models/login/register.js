@@ -236,6 +236,7 @@ module.exports = {
         this.getCountryList();
     },
     onremove () {
+        this.isvalidate = false;
         window.gBroadcast.offMsg({
             key: 'register',
             cmd: 'geetestMsg',

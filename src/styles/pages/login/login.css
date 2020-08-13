@@ -1,3 +1,17 @@
-.views-pages-login-index-box {
-    width: 400px !important;
+.views-page-login-send-code{
+    white-space: nowrap !important;
+    color: var(--c-primary-lighten);
+}
+
+.register-national-select {
+    top: 2px !important;
+    height: calc(100% - 4px) !important;
+}
+
+.views-page-login-box-width {
+    width: 364px;
+}
+
+.views-page-login-div-click {
+    cursor: pointer;
 }

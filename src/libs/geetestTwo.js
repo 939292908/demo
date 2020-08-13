@@ -46,7 +46,7 @@ geeObj.initGee = function (readyCallBack) {
             }
         }, () => {
             // 提示验证码失败
-            window.gBroadcast.emit('geetestMsg', 'fail');
+            window.gBroadcast.emit({ cmd: 'geetestMsg', data: 'fail' });
             window.$message({ content: '网络异常，请稍后重试', type: 'danger' });
             captchaObj.reset();
         }

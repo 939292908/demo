@@ -117,6 +117,33 @@ class webApi {
     }
 
     /**
+     * 发送短信验证码V2
+     * @param aData
+     * @param aOnSuccess
+     * @param aOnError
+     */
+    getSMSCodeV2(aData, aOnSuccess, aOnError) {
+        const s = this;
+
+        s.axios.request({
+            method: "post",
+            url: s.axios.baseUrl + API.SEND_SMS_CODE_V2,
+            data: qs.stringify(aData),
+            options: {}
+        }).then(function (result) {
+            const arg = result.data;
+            if (aOnSuccess) {
+                aOnSuccess(arg);
+            }
+        }).catch(function (e) {
+            window._console.log('tlh', e);
+            if (aOnError) {
+                aOnError(e);
+            }
+        });
+    }
+
+    /**
      * 发送邮箱验证码
      * @param aData
      * @param aOnSuccess
@@ -144,6 +171,33 @@ class webApi {
     }
 
     /**
+     * 发送邮箱验证码V2
+     * @param aData
+     * @param aOnSuccess
+     * @param aOnError
+     */
+    sendEmailV2(aData, aOnSuccess, aOnError) {
+        const s = this;
+
+        s.axios.request({
+            method: "post",
+            url: s.axios.baseUrl + API.SEND_EMAIL_V2,
+            data: qs.stringify(aData),
+            options: {}
+        }).then(function (result) {
+            const arg = result.data;
+            if (aOnSuccess) {
+                aOnSuccess(arg);
+            }
+        }).catch(function (e) {
+            window._console.log('tlh', e);
+            if (aOnError) {
+                aOnError(e);
+            }
+        });
+    }
+
+    /**
      * 校验短信验证码
      * @param aData
      * @param aOnSuccess
@@ -155,6 +209,33 @@ class webApi {
         s.axios.request({
             method: "post",
             url: s.axios.baseUrl + API.SMS_VERIFY_V1,
+            data: qs.stringify(aData),
+            options: {}
+        }).then(function (result) {
+            const arg = result.data;
+            if (aOnSuccess) {
+                aOnSuccess(arg);
+            }
+        }).catch(function (e) {
+            window._console.log('tlh', e);
+            if (aOnError) {
+                aOnError(e);
+            }
+        });
+    }
+
+    /**
+     * 校验短信验证码V2
+     * @param aData
+     * @param aOnSuccess
+     * @param aOnError
+     */
+    smsVerifyV2(aData, aOnSuccess, aOnError) {
+        const s = this;
+
+        s.axios.request({
+            method: "post",
+            url: s.axios.baseUrl + API.SMS_VERIFY_V2,
             data: qs.stringify(aData),
             options: {}
         }).then(function (result) {
@@ -225,7 +306,34 @@ class webApi {
     }
 
     /**
-     * 登录
+     * 校验邮箱验证码V2
+     * @param aData
+     * @param aOnSuccess
+     * @param aOnError
+     */
+    emailCheckV2(aData, aOnSuccess, aOnError) {
+        const s = this;
+
+        s.axios.request({
+            method: "post",
+            url: s.axios.baseUrl + API.EMAIL_VERIFY_V2,
+            data: qs.stringify(aData),
+            options: {}
+        }).then(function (result) {
+            const arg = result.data;
+            if (aOnSuccess) {
+                aOnSuccess(arg);
+            }
+        }).catch(function (e) {
+            window._console.log('tlh', e);
+            if (aOnError) {
+                aOnError(e);
+            }
+        });
+    }
+
+    /**
+     * 登录验证
      * @param aData
      * {
      *      loginType: loginType,   //  登录方式
@@ -274,6 +382,34 @@ class webApi {
     }
 
     /**
+     * 登录验证V2
+     * @param aData
+     * @param aOnSuccess
+     * @param aOnError
+     */
+    loginCheckV2(aData, aOnSuccess, aOnError) {
+        const s = this;
+
+        s.axios.request({
+            method: "post",
+            url: s.axios.baseUrl + API.LOGIN_CHECK_V2,
+            data: qs.stringify(aData),
+            options: {
+                withCredentials: true
+            }
+        }).then(function (result) {
+            const arg = result.data;
+            if (aOnSuccess) {
+                aOnSuccess(arg);
+            }
+        }).catch(function (e) {
+            if (aOnError) {
+                aOnError(e);
+            }
+        });
+    }
+
+    /**
      * 登录
      * @param aData
      * @param aOnSuccess
@@ -285,6 +421,34 @@ class webApi {
         s.axios.request({
             method: "post",
             url: s.axios.baseUrl + API.LOGIN_WEB_V1,
+            data: qs.stringify(aData),
+            options: {
+                withCredentials: true
+            }
+        }).then(function (result) {
+            const arg = result.data;
+            if (aOnSuccess) {
+                aOnSuccess(arg);
+            }
+        }).catch(function (e) {
+            if (aOnError) {
+                aOnError(e);
+            }
+        });
+    }
+
+    /**
+     * 登录V2
+     * @param aData
+     * @param aOnSuccess
+     * @param aOnError
+     */
+    loginWebV2(aData, aOnSuccess, aOnError) {
+        const s = this;
+
+        s.axios.request({
+            method: "post",
+            url: s.axios.baseUrl + API.LOGIN_WEB_V2,
             data: qs.stringify(aData),
             options: {
                 withCredentials: true

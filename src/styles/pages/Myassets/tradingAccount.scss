@@ -2,8 +2,7 @@
     .tradingAccount_nav{
         display: flex;
         flex-direction: row;
-        border:1px solid red;
-        cursor: pointer; 
+        margin-bottom: var(--c-margin-level3);
         .is-cyan{
             border-bottom: 2px solid hsl(171, 100%, 41%);
             color:hsl(171, 100%, 41%) ;
@@ -18,6 +17,6 @@
         }
     }
     div{
-        margin-right: 20px;
+        margin-right: var(--c-margin-level5);
     }
 }

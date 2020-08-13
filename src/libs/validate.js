@@ -8,7 +8,6 @@ class Validate {
         this.tradepwd = 4;
         this.emailConfig = null; // 发送邮件配置
         this.smsConfig = null; // 发送短信配置
-        this.allConfig = null;
         this.callbackHandler = null; // 验证结果回调
         this.validateType = ''; // sms：手机验证，google：谷歌验证，email：邮箱验证
     }
@@ -26,23 +25,16 @@ class Validate {
         //     type: this.sms,
         //     loading: false,
         // };
-        if (params) {
-            params.lang = window.gI18n.lang;
-        } else {
-            params = {
-                lang: window.gI18n.lang
-            };
-        }
         this.smsConfig = params;
         // window.gBroadcast.emit({
         //     cmd: 'setValidateSheet',
         //     data: config,
         // });
-        window.gBroadcast.offMsg({
-            key: 'ValidateModule',
-            cmd: 'setValidateSheet',
-            isall: true
-        });
+        // window.gBroadcast.offMsg({
+        //     key: 'ValidateModule',
+        //     cmd: 'setValidateSheet',
+        //     isall: true
+        // });
         if (callback) {
             this.callbackHandler = callback;
         }
@@ -99,8 +91,17 @@ class Validate {
      * @param callback
      */
     activeAll(params, callback) {
+        for (const item of params) {
+            switch (item.key) {
+            case this.sms:
+                this.smsConfig = item.config;
+                break;
+            case this.email:
+                this.emailConfig = item.config;
+                break;
+            }
+        }
         this.validateType = 'all';
-        this.allConfig = params;
         if (callback) {
             this.callbackHandler = callback;
         }
@@ -141,7 +142,7 @@ class Validate {
                 lang: window.gI18n.locale
             };
         }
-        window.gWebApi.getSMSCode(this.smsConfig, res => {
+        window.gWebApi.getSMSCodeV2(this.smsConfig, res => {
             if (callback1) {
                 callback1();
             }
@@ -167,7 +168,7 @@ class Validate {
             this.emailConfig = { exChannel: window.exchId };
         }
 
-        window.gWebApi.sendEmail(this.emailConfig, res => {
+        window.gWebApi.sendEmailV2(this.emailConfig, res => {
             if (callback1) {
                 callback1();
             }
@@ -199,13 +200,13 @@ class Validate {
         }
         params.code = code;
 
-        window.gWebApi.smsVerify(params, res => {
+        window.gWebApi.smsVerifyV2(params, res => {
             if (res.result === 0) {
                 this.finished();
             } else {
                 window.$message({
                     content: window.errCode.getWebApiErrorCode(
-                        res.data.result.code),
+                        res.result.code),
                     type: 'danger'
                 });
             }
@@ -227,18 +228,19 @@ class Validate {
         }
         window.gWebApi.googleCheck({ code: code },
             res => {
-                if (res.result === 0) {
+                if (res.result.code === 0) {
                     this.finished();
                 } else {
-                    this.validateSheet.loading = false;
+                    // this.validateSheet.loading = false;
                     window.$message({
                         content: window.errCode.getWebApiErrorCode(
-                            res.data.result.code),
+                            res.result.code),
                         type: 'danger'
                     });
                 }
             },
-            () => {
+            err => {
+                window._console.log('tlh', err);
             });
     }
 
@@ -254,7 +256,7 @@ class Validate {
             });
             return;
         }
-        window.gWebApi.emailCheck({ code: code },
+        window.gWebApi.emailCheckV2({ code: code },
             res => {
                 if (res.result.code === 0) {
                     this.finished();
@@ -270,18 +272,27 @@ class Validate {
             });
     }
 
+    /**
+     * 多重验证
+     * @param codeList 验证码
+     * [
+     *      {
+     *          key: window.validate.sms,
+     *          name: '手机验证码',
+     *          code: '',
+     *          config: {
+     *              phoneNum: this.areaCode + this.loginName,
+     *              resetPwd: true,
+     *              areaCode: '00' + this.areaCode,
+     *              phone: this.loginName,
+     *              mustCheckFn: 'resetPasswd'
+     *          }
+     *      },
+     *      ...
+     * ]
+     */
     checkAll(codeList) {
         const funs = [];
-        const getFunctionName = (key) => {
-            switch (key) {
-            case this.sms:
-                return 'smsVerify';
-            case this.email:
-                return 'emailCheck';
-            case this.google:
-                return 'googleCheck';
-            }
-        };
         for (const item of codeList) {
             if (!item.code) {
                 window.$message({
@@ -290,19 +301,36 @@ class Validate {
                 });
                 return;
             }
+            let funName = '';
+            const params = {};
+            params.code = item.code;
+            switch (item.key) {
+            case this.sms:
+                if (this.smsConfig) {
+                    params.phoneNum = this.smsConfig.phoneNum;
+                }
+                funName = 'smsVerify';
+                break;
+            case this.email:
+                funName = 'emailCheck';
+                break;
+            case this.google:
+                funName = 'googleCheck';
+                break;
+            }
 
             funs.push(new Promise((resolve, reject) => {
-                window.gWebApi[getFunctionName(item.key)]({ code: item.code },
+                window.gWebApi[funName](params,
                     res => {
-                        if (res.result.code === 0) {
+                        if (res.result === 0) {
                             resolve();
                         } else {
                             window.$message({
                                 content: window.errCode.getWebApiErrorCode(
-                                    res.data.result.code),
+                                    res.result.code),
                                 type: 'danger'
                             });
-                            reject(res.result.msg);
+                            reject(res.result);
                         }
                     },
                     err => {
@@ -313,7 +341,49 @@ class Validate {
         }
         Promise.all(funs).then(() => {
             this.finished();
+        }).catch(e => {
+            window._console.log('tlh', e);
         });
+    }
+
+    /**
+     * 激活双选择验证手机和Google
+     * @param params
+     * @param callback
+     */
+    activeSmsAndGoogle(params, callback) {
+        this.validateType = 'sms&google';
+        this.smsConfig = params;
+        if (callback) {
+            this.callbackHandler = callback;
+        }
+    }
+
+    /**
+     * 激活双选择验证手机和邮箱
+     * @param params
+     * @param callback
+     */
+    activeSmsAndEmail(params, callback) {
+        this.validateType = 'sms&email';
+        this.smsConfig = params.smsconfig;
+        this.emailConfig = params.emailconfig;
+        if (callback) {
+            this.callbackHandler = callback;
+        }
+    }
+
+    /**
+     * 激活双选择验证邮箱和Google
+     * @param params
+     * @param callback
+     */
+    activeEmailAndGoogle(params, callback) {
+        this.validateType = 'email&google';
+        this.emailConfig = params;
+        if (callback) {
+            this.callbackHandler = callback;
+        }
     }
 
     /**
@@ -341,7 +411,6 @@ class Validate {
         // });
         this.emailConfig = null;
         this.smsConfig = null;
-        this.allConfig = null;
         this.callbackHandler = null;
         this.validateType = '';
         // window.gBroadcast.offMsg({

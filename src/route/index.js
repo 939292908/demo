@@ -1,6 +1,6 @@
 const m = require('mithril');
 
-const defaultRoutePath = "/home";
+const defaultRoutePath = "/chargeMoney";
 
 m.route(document.querySelector('body .route-box'), defaultRoutePath, {
     '/home': {
@@ -36,6 +36,11 @@ m.route(document.querySelector('body .route-box'), defaultRoutePath, {
     '/forgetPassword': {
         onmatch: function () {
             return import('@/views/pages/login/forgetPassword');
+        }
+    },
+    '/chargeMoney': {
+        onmatch: function () {
+            return import('@/views/pages/Myassets/chargeMoney');
         }
     }
 });

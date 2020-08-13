@@ -1,0 +1,58 @@
+.views-pages-myassets-myWalletIndex{
+    margin: auto;
+    .columns-flex{
+        display: flex;
+        flex-wrap: wrap;
+    }
+    .myAccount{
+        .show-desc{
+            margin-left: auto;
+            font-size: var(--c-fontsz-level7);
+        }
+        .hide-desc{
+            display: none;
+        }
+        .show-desc{
+            display: block;
+        }
+        &:nth-child(2){
+            margin-left: var(--c-margin-level5);
+            margin-right: var(--c-margin-level5);
+        }
+    }
+    .myAccount,.otherAccount{
+        display: flex;
+        flex-direction: row;
+    }
+    .myWalletIndex-switch{
+        margin-bottom: var(--c-margin-level5);
+        .is-primary{
+            background-color: var(--c-primary-lighten);
+            border-color: var(--c-primary-lighten);
+            color: var(--c-font-darken);
+        }
+        .tradeCard{
+            display: flex;
+            flex-direction: column;
+            z-index: 9999;
+            position: fixed;
+            background-color: white;
+            margin-left: 680px;
+            margin-top: 40px;
+            padding: 3px 10px;
+            border-radius: 5px;
+            font-size: 8px;
+            span{
+                color:gray;
+            }
+            
+        }
+    }
+    .myWalletIndex-head-right div{
+        div{
+            margin: 0 var(--c-margin-level3);
+            text-align: center;
+            border: 1px solid var(--c-primary-lighten);
+        }
+    }
+}

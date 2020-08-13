@@ -14,11 +14,13 @@ import Conf from "@/api/apiConf";
 
 window.exchId = config.exchId;
 
+window.exchConfig = config;
+
 // log日志管理
 window._console = new _console();
 
 // 全局广播
-window.window.gBroadcast = new Broadcast();
+window.gBroadcast = new Broadcast();
 
 // 多语言
 window.gI18n = new I18n();
