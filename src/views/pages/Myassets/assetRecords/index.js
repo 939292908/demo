@@ -1,6 +1,6 @@
 const m = require('mithril');
-const myWallet = require('@/views/pages/Myassets/assetRecords/myWallet');
-const tradingAccount = require('@/views/pages/Myassets/assetRecords/tradingAccount');
+const assetRecordsWallet = require('./assetRecordsWallet');
+const tradingAccount = require('./tradingAccount');
 
 require('@/styles/pages/Myassets/assetRecords.scss');
 
@@ -12,7 +12,7 @@ const assetRecords = {
     switchContent: function () {
         switch (this.switchValue) {
         case 0:
-            return m(myWallet);
+            return m(assetRecordsWallet);
         case 1:
             return m(tradingAccount);
         }
@@ -52,7 +52,7 @@ module.exports = {
         // assetRecords.initAssetList();
     },
     view: function () {
-        return m('div', { class: 'views-pages-Myassets-assetRecords' }, [
+        return m('div', { class: 'views-pages-Myassets-assetRecords commonAuto common-width' }, [
             assetRecords.assetValuation()
         ]);
     }

@@ -1,11 +1,11 @@
 const m = require('mithril');
-const myWalletTable = require('@/views/pages/Myassets/assetRecords/myWalletTable');
+const accountTable = require('./accountTable');
 
 require('@/styles/pages/Myassets/assetRecords.scss');
 const contractAccount = {
     assetValuation: function () {
         return m('div', {}, [
-            m(myWalletTable)
+            m(accountTable)
         ]);
     }
 };
