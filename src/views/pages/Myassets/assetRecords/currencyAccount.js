@@ -1,5 +1,5 @@
 const m = require('mithril');
-const myWalletTable = require('@/views/pages/Myassets/assetRecords/myWalletTable');
+const accountTable = require('./accountTable');
 
 require('@/styles/pages/Myassets/assetRecords.scss');
 module.exports = {
@@ -7,7 +7,7 @@ module.exports = {
     },
     view: function () {
         return m('div', { class: 'views-pages-Myassets-assetRecords-currencyAccount' }, [
-            m(myWalletTable)
+            m(accountTable)
         ]);
     }
 };

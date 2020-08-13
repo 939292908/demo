@@ -14,6 +14,36 @@ const myWalletTable = {
     dataObj: [],
     displayValue: null,
     noDisplay: false,
+    timeValue: null,
+    currencyValue: null,
+    typeValue: null,
+    initAssetList: function () {
+        const arg = {
+            aType: "03",
+            mhType: 5
+        };
+        window.gWebApi.assetRecords(arg, data => {
+            if (data.result.code === 0) {
+                myWalletTable.dataObj = data.history;
+                m.redraw();
+            }
+        }, err => {
+            window.$message({
+                content: `网络异常，请稍后重试 ${err}`,
+                type: 'danger'
+            });
+        }
+        );
+    },
+    displayEvnet: function (val) {
+        this.displayValue = val;
+        this.noDisplay = !this.noDisplay;
+    },
+    bodydisplayEvnet: function () {
+        if (this.noDisplay) {
+            this.noDisplay = false;
+        }
+    },
     timestampToTime: function (timestamp) {
         var date = new Date(timestamp * 1000);// 时间戳为10位需*1000，时间戳为13位的话不需乘1000
         var Y = date.getFullYear() + '-';
@@ -25,10 +55,10 @@ const myWalletTable = {
         return Y + M + D + h + m + s;
     },
     assetValuation: function () {
-        return m('div', { class: 'views-pages-Myassets-assetRecords-myWalletTable-content pl-3 pr-3' }, [
+        return m('div', { class: 'views-pages-Myassets-assetRecords-myWalletTable-content' }, [
             m('tbody', { class: 'tbody' }, [
                 myWalletTable.dataArrObj.map(items => {
-                    return m('tr', { class: 'pb-2  pt-2 pl-2 mb-3 columns-flex-justify1 has-bg-primary has-text-level-2 border-radius-small' }, [
+                    return m('tr', { class: 'pb-2  pt-2 pl-2 mb-3 columns-flex-justify1 bgColor has-text-level-2 border-radius-small' }, [
                         m('td', {}, [items.category]),
                         m('td', {}, [items.type]),
                         m('td', {}, [items.num]),
@@ -54,13 +84,9 @@ const myWalletTable = {
                                     class: 'dropdown-trigger',
                                     onclick: function () {
                                         myWalletTable.displayEvnet(index);
-                                        console.log(index);
                                     }
                                 }, [
-                                    m('span', {
-                                        ariaHaspopup: 'true',
-                                        ariaControls: 'dropdown-menu6'
-                                    }, ['详情']),
+                                    m('span', { ariaHaspopup: 'true', ariaControls: 'dropdown-menu6' }, ['详情']),
                                     m('span', { class: 'icon is-small' }, [
                                         m('i', { class: 'fas fa-angle-down', ariaHidden: 'true' }, [myWalletTable.displayValue === index && myWalletTable.noDisplay ? 1 : 2])
                                     ])
@@ -87,40 +113,19 @@ const myWalletTable = {
                 })
             ])
         ]);
-    },
-    initAssetList: function () {
-        const arg = {
-            aType: "03",
-            mhType: 5
-        };
-        window.gWebApi.assetRecords(arg, data => {
-            console.log(data);
-            if (data.result.code === 0) {
-                myWalletTable.dataObj = data.history;
-                console.log(myWalletTable.dataObj);
-            }
-        }, err => {
-            window.$message({
-                content: `网络异常，请稍后重试 ${err}`,
-                type: 'danger'
-            });
-        }
-        );
-    },
-    displayEvnet: function (val) {
-        this.displayValue = val;
-        this.noDisplay = !this.noDisplay;
-        console.log(this.displayValue, this.noDisplay);
-    },
-    bodydisplayEvnet: function () {
-        if (this.noDisplay) {
-            this.noDisplay = false;
-        }
     }
 };
 
 module.exports = {
     oninit: function () {
+        window.gBroadcast.onMsg({
+            key: 'myWalletTable',
+            cmd: window.gBroadcast.CHANGE_SW_CURRENCY,
+            cb: function (arg) {
+                myWalletTable.typeValue = arg;
+                console.log(myWalletTable.typeValue);
+            }
+        });
         myWalletTable.initAssetList();
     },
     view: function () {
