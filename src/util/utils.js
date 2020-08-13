@@ -153,4 +153,18 @@ utils.getSpotName = function(assetD, coin1, coin2) {
     return `${coin1}/${coin2}`;
 };
 
+// 隐藏手机号码重要部分
+utils.hideMobileInfo = mobile => {
+    let newMobile = '';
+    if (mobile.length > 11) {
+        newMobile = mobile.substr(0, 8) + '****' + mobile.substr(12);
+        return newMobile;
+    } else if (mobile.length === 11) {
+        newMobile = mobile.substr(0, 3) + '****' + mobile.substr(7);
+        return newMobile;
+    } else {
+        return mobile;
+    }
+};
+
 export default utils;
