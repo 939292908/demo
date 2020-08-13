@@ -41,8 +41,7 @@ module.exports = {
                             ForgetPassword.submitReset();
                         }
                     }, ['确定'])
-                ] : ForgetPassword.validateCode.length
-                    ? m(Validate, { validateCode: ForgetPassword.validateCode })
+                ] : ForgetPassword.is2fa ? m(Validate, {})
                     : [
                         m('div.mb-2.title-4.has-text-level-1', {},
                             ['忘记密码']),

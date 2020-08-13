@@ -203,8 +203,8 @@ module.exports = {
         this.initGeetest();
     },
     onremove() {
-        this.validateCode = [];
-        // window.validate.close();
+        this.is2fa = false;
+        window.validate.close();
         window.gBroadcast.offMsg({
             key: 'login',
             cmd: 'geetestMsg',

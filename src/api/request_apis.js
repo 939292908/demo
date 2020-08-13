@@ -3,10 +3,13 @@ module.exports = {
     REQ_USER_INFO: '/users/userInfo',
     // 发送短信
     SEND_SMS_CODE_V1: '/v1/sms/getSMSCode',
+    SEND_SMS_CODE_V2: '/v2/sms/getSMSCode',
     // 发送邮件
     SEND_EMAIL_V1: '/v1/emails/sendEmail',
+    SEND_EMAIL_V2: '/v2/emails/sendEmail',
     // 短信验证
     SMS_VERIFY_V1: '/v1/sms/verify',
+    SMS_VERIFY_V2: '/v2/sms/verify',
     // 谷歌验证
     GOOGLE_VERIFY_V1: '/g_auth/verify',
     // 登陆验证
@@ -25,6 +28,7 @@ module.exports = {
     RESET_PASSWD_V1: '/v1/users/ResetPasswd',
     // 邮箱验证
     EMAIL_VERIFY_V1: '/v1/emails/emailCheck',
+    EMAIL_VERIFY_V2: '/v2/emails/emailCheck',
     // 钱包子账户资产
     SUB_ASSETS_V1: '/v1/users/subAssets',
     // 账号注册

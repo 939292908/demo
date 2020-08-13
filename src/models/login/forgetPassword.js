@@ -4,12 +4,13 @@ const geetest = require('@/libs/geetestTwo');
 
 module.exports = {
     loginType: 'phone',
-    loginName: '',
+    loginName: '233233233',
     validateCode: [],
     areaCode: '86',
     isValidate: false,
     password1: '',
     password2: '',
+    is2fa: false,
     valid() {
         return !!(this.loginName &&
             /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
@@ -17,12 +18,6 @@ module.exports = {
     },
     valid1() {
         return !!this.loginName;
-    },
-    validPassword() {
-        return this.password1 && this.password2 &&
-            /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,}$/.test(this.password1) &&
-            /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,}$/.test(this.password2) &&
-            this.password1 === this.password2;
     },
     submitReset() {
         window.gWebApi.resetPassword({
@@ -71,7 +66,7 @@ module.exports = {
             this.loading = false;
             if (res.result.code === 0) {
                 if (res.exists === 1) {
-                    this.nextStep();
+                    this.check(res);
                 } else {
                     window.$message({
                         content: '用户不存在',
@@ -92,53 +87,105 @@ module.exports = {
             this.loading = false;
         });
     },
-    toResetPwd() {
-        window.validate.close();
-        window._console.log('tlh', '验证完成');
-        this.isValidate = true;
-    },
-    nextStep() {
-        switch (this.loginType) {
-        case 'phone':
-            this.validateCode = [
-                {
-                    key: window.validate.sms,
-                    name: '手机验证码',
-                    code: '',
-                    config: {
-                        phoneNum: this.areaCode + this.loginName,
-                        resetPwd: true,
-                        areaCode: '00' + this.areaCode,
-                        phone: this.loginName,
-                        mustCheckFn: 'resetPasswd'
-                    }
-                }
-            ];
-            break;
-        case 'email':
-            this.validateCode = [
-                {
-                    key: window.validate.email,
-                    name: '邮箱验证码',
-                    code: '',
-                    config: {
-                        phoneNum: this.areaCode + this.loginName,
-                        resetPwd: true,
-                        areaCode: '00' + this.areaCode,
-                        phone: this.loginName,
-                        mustCheckFn: 'resetPasswd'
-                    }
-                }
-            ];
-            break;
-        }
-        m.redraw();
-        window.validate.activeAll(
-            this.validateCode,
-            () => {
-                this.toResetPwd();
+    /**
+     * 2fa验证
+     * @param res
+     */
+    check(res) {
+        if (this.loginType === "phone") {
+            if (res.ga !== '' && res.email !== '') { // 谷歌和邮箱
+                window.validate.activeEmailAndGoogle({
+                    secureEmail: res.email,
+                    host: window.exchConfig.official,
+                    fn: 'be',
+                    lang: window.gI18n.locale
+                }, () => {
+                    this.nextPhoneValidate(res.phone);
+                });
+                this.is2fa = true;
+                m.redraw();
+            } else if (res.ga === '' && res.email !== '') { // 邮箱
+                window.validate.activeEmail({
+                    secureEmail: res.email,
+                    host: window.exchConfig.official,
+                    fn: 'be',
+                    lang: window.gI18n.locale
+                }, () => {
+                    this.nextPhoneValidate(res.phone);
+                });
+                this.is2fa = true;
+                m.redraw();
+            } else if (res.ga !== '' && res.email === '') { // 谷歌
+                window.validate.activeGoogle(() => { this.nextPhoneValidate(res.phone); });
+                this.is2fa = true;
+                m.redraw();
+            } else {
+                this.nextPhoneValidate(res.phone);
             }
-        );
+        } else {
+            if (res.ga !== '' && res.phone !== '') { // 谷歌和手机
+                window.validate.activeSmsAndGoogle({
+                    securePhone: res.phone,
+                    resetPwd: true,
+                    areaCode: '00' + this.areaCode,
+                    phone: res.phone,
+                    lang: window.gI18n.locale
+                }, () => {
+                    this.nextEmailValidate(res.email);
+                });
+                this.is2fa = true;
+                m.redraw();
+            } else if (res.ga === '' && res.phone !== '') { // 手机
+                window.validate.activeSms({
+                    securePhone: res.phone,
+                    resetPwd: true,
+                    areaCode: '00' + this.areaCode,
+                    phone: res.phone,
+                    lang: window.gI18n.locale
+                }, () => {
+                    this.nextEmailValidate(res.email);
+                });
+                this.is2fa = true;
+                m.redraw();
+            } else if (res.ga !== '' && res.phone === '') { // 谷歌
+                window.validate.activeGoogle(() => { this.nextEmailValidate(res.email); });
+                this.is2fa = true;
+                m.redraw();
+            } else {
+                this.nextEmailValidate(res.email);
+            }
+        }
+    },
+    /**
+     * 下一步手机验证
+     */
+    nextPhoneValidate(phone) {
+        window.validate.activeSms({
+            securePhone: phone,
+            resetPwd: true,
+            areaCode: '00' + this.areaCode,
+            phone: this.loginName,
+            lang: window.gI18n.locale
+        }, () => {
+            this.isValidate = true;
+            m.redraw();
+        });
+        window.gBroadcast.emit({ cmd: 'redrawValidate', data: '' });
+    },
+    /**
+     * 下一步邮箱验证
+     */
+    nextEmailValidate(email) {
+        window.validate.activeEmail({
+            secureEmail: email,
+            host: window.exchConfig.official,
+            fn: 'be',
+            lang: window.gI18n.locale
+        }, () => {
+            this.isValidate = true;
+            m.redraw();
+        });
+        window.gBroadcast.emit({ cmd: 'redrawValidate', data: '' });
     },
     initGeetest() {
         const self = this;
@@ -160,7 +207,7 @@ module.exports = {
     },
     onremove() {
         this.isValidate = false;
-        this.validateCode = [];
+        this.is2fa = false;
         window.validate.close();
         window.gBroadcast.offMsg({
             key: 'forgetPassword',

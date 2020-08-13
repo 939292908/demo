@@ -155,22 +155,44 @@ module.exports = {
         m.redraw();
     },
 
-    oninit() {
+    init() {
         if (window.validate.validateType.indexOf('&') !== -1) {
             const selectTypeList = window.validate.validateType.split('&');
             this.selectType = selectTypeList[0];
             this.anotherType = selectTypeList[1];
         } else {
             this.selectType = window.validate.validateType;
+            this.anotherType = '';
         }
         this.setName();
+    },
+
+    oninit() {
+        this.init();
+        window.gBroadcast.onMsg({
+            key: 'validate',
+            cmd: 'redrawValidate',
+            cb: () => {
+                this.code = '';
+                this.init();
+                m.redraw();
+            }
+        });
         this.initGeetest();
     },
 
     onremove() {
+        this.code = '';
+        this.selectType = '';
+        this.anotherType = '';
         window.gBroadcast.offMsg({
             key: 'validate',
             cmd: 'geetestMsg',
+            isall: true
+        });
+        window.gBroadcast.offMsg({
+            key: 'validate',
+            cmd: 'redrawValidate',
             isall: true
         });
         window.validate.close();
