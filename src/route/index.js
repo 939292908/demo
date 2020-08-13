@@ -1,6 +1,6 @@
 const m = require('mithril');
 
-const defaultRoutePath = "/home";
+const defaultRoutePath = "/chargeMoney";
 
 m.route(document.querySelector('body .route-box'), defaultRoutePath, {
     '/home': {
@@ -18,6 +18,11 @@ m.route(document.querySelector('body .route-box'), defaultRoutePath, {
             return import('@/views/pages/Myassets/myWalletIndex');
         }
     },
+    '/assetRecords': {
+        onmatch: function () {
+            return import('@/views/pages/Myassets/assetRecords/index');
+        }
+    },
     '/login': {
         onmatch: function () {
             return import('@/views/pages/login/login');
@@ -31,6 +36,11 @@ m.route(document.querySelector('body .route-box'), defaultRoutePath, {
     '/forgetPassword': {
         onmatch: function () {
             return import('@/views/pages/login/forgetPassword');
+        }
+    },
+    '/chargeMoney': {
+        onmatch: function () {
+            return import('@/views/pages/Myassets/chargeMoney');
         }
     }
 });

@@ -4,7 +4,7 @@ require('@/styles/pages/home.css');
 
 module.exports = {
     view: function () {
-        return m('views-pages-home-rotationtwo', {}, [
+        return m('div.views-pages-home-rotationtwo', {}, [
             // // 轮播2
             // m('div', { class: `rotationtwo-content container mt-7` }, [
             // ])

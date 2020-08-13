@@ -7,7 +7,7 @@ require('@/styles/pages/home.css');
 
 module.exports = {
     view: function() {
-        return m('views-pages-home-notice', {}, [
+        return m('div.views-pages-home-notice', {}, [
             // // 公告
             // m('div', { class: `notice my-4 w` }, [
             //     m('div', { class: `notice-content container` }, [

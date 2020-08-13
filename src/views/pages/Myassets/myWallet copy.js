@@ -1,39 +1,40 @@
-const m = require('mithril')
+/* eslint-disable no-undef */
+const m = require('mithril');
 
-require('@/styles/pages/Myassets/myWallet.css')
+require('@/styles/pages/Myassets/myWallet.css');
 // import Table from './Table' // 表格
-let Table = require('@/views/pages/Myassets/Table.js')
+const Table = require('@/views/pages/Myassets/Table.js');
 
-let myWallet = {
+const myWallet = {
     tableColumns: [], // 表头
     tableData: [], // 表格
-    currency:'BTC',
-    setCurrency:function(param){
+    currency: 'BTC',
+    setCurrency: function (param) {
         this.currency = param;
     },
-    assetList:[],
-    copyAry:function(ary) {
-        let res = []
+    assetList: [],
+    copyAry: function (ary) {
+        var res = [];
         for (let i = 0; i < ary.length; i++) {
-            res.push(ary[i])
+            res.push(ary[i]);
         }
         return res;
     },
-    initTableColumns:function(){
+    initTableColumns: function () {
         myWallet.tableColumns = [
             {
                 title: '币种',
                 align: 'left',
-                class:'table-header',
-                key: 'wType',
+                class: 'table-header',
+                key: 'wType'
             },
             {
                 title: '总额',
                 key: 'Num',
-                render (params) { // 自定义 列内容
+                render(params) { // 自定义 列内容
                     return m('div', [
-                        params.Num+''+myWallet.currency
-                    ])
+                        params.Num + '' + myWallet.currency
+                    ]);
                 }
             },
             {
@@ -45,76 +46,78 @@ let myWallet = {
                 key: 'wType'
             },
             {
-                title: this.currency+'估值',
+                title: this.currency + '估值',
                 key: 'wType'
             },
             {
                 title: '操作', // 表头文字
-                render (params) { // 自定义 列内容
+                render(params) { // 自定义 列内容
                     return m('div', [
-                        m('a',{},['充值']),
-                        m('a',{},['提现']),
-                        m('a',{},['划转'])
-                    ], params.state)
+                        m('a', {}, ['充值']),
+                        m('a', {}, ['提现']),
+                        m('a', {}, ['划转'])
+                    ], params.state);
                 }
             },
             {
-            },
-        ]
+            }
+        ];
     },
-    ininTableData:function(){
+    ininTableData: function () {
+        // eslint-disable-next-line no-undef
         gWebApi.getWallet({
             exChange: window.exchId
-        }, function(res){
-            myWallet.tableData = myWallet.copyAry(res.assetLists03)
+        }, function (res) {
+            myWallet.tableData = myWallet.copyAry(res.assetLists03);
             m.redraw();
         });
     },
-    myWalletPage:function(){
-        return m('div',[
-            m('div',{class:'myWallet-nav'},[
-                m('div',{},[m('input[type=checkbox]'),m('span',{},'隐藏0资产')]),
-                m('div',{},[m('img',{src:'zijinjilu'}),m('span',{},'资金记录')]),
+    myWalletPage: function () {
+        return m('div', [
+            m('div', { class: 'myWallet-nav' }, [
+                m('div', {}, [m('input[type=checkbox]'), m('span', {}, '隐藏0资产')]),
+                m('div', {}, [m('img', { src: 'zijinjilu' }), m('span', {}, '资金记录')])
             ]),
-            m('div',{},[
+            m('div', {}, [
                 // 表格
                 m(Table, {
                     columns: myWallet.tableColumns,
                     data: myWallet.tableData,
-                    class:'myWallet-table',
-                    defaultColumnWidth:190
-                }),
+                    class: 'myWallet-table',
+                    defaultColumnWidth: 190
+                })
             ])
-        ])
+        ]);
     }
-}
+};
 
 module.exports = {
-    oninit: function(){
+    oninit: function () {
+        // eslint-disable-next-line no-undef
         gBroadcast.onMsg({
             key: 'myWallet',
+            // eslint-disable-next-line no-undef
             cmd: gBroadcast.CHANGE_SW_CURRENCY,
-            cb: function(arg){
+            cb: function (arg) {
                 myWallet.setCurrency(arg);
                 myWallet.initTableColumns();
-            } 
-        })
-        console.log(myWallet.tableData)
+            }
+        });
+        console.log(myWallet.tableData);
         myWallet.ininTableData();
         myWallet.initTableColumns();
     },
     view: function () {
-        return m('div',{class:'myWallet',style:{border:'1px solid red'}},[
+        return m('div', { class: 'myWallet', style: { border: '1px solid red' } }, [
             myWallet.myWalletPage()
-        ])
-        
+        ]);
     },
-    oncreate:function(){
+    oncreate: function () {
     },
-    onremove:function(){
+    onremove: function () {
         gBroadcast.offMsg({
             key: 'myWallet',
             isall: true
-        })
+        });
     }
-}
+};
