@@ -1,5 +1,6 @@
 const m = require('mithril');
 const Validate = require('./validate');
+const InputWithComponent = require('@/views/components/inputWithComponent');
 const ForgetPassword = require('@/models/login/forgetPassword');
 
 import('@/styles/pages/login/login.css');
@@ -61,19 +62,42 @@ module.exports = {
                                 }
                             }, ['邮箱'])
                         ]),
-                        m('div.has-text-level-1.body-3.mb-2', {}, [
-                            ForgetPassword.loginType === 'phone' ? '手机号' : '邮箱']),
-                        m('input.input[type=text].mb-6', {
-                            oninput: e => {
-                                ForgetPassword.loginName = e.target.value;
-                            },
-                            onkeyup: e => {
-                                if (e.keyCode === 13) {
-                                    ForgetPassword.loginType === 'phone' ? ForgetPassword.submitPhone() : ForgetPassword.submitEmail();
+                        m('div.has-text-level-1.body-3.mb-2', {}, [ForgetPassword.loginType === 'phone' ? '手机号' : '邮箱']),
+                        ForgetPassword.loginType === 'phone'
+                            ? m(InputWithComponent, {
+                                addClass: 'mb-5',
+                                leftComponents: m('span.select.px-1', {}, [
+                                    m('select.without-border.register-national-select',
+                                        {
+                                            value: ForgetPassword.areaCode,
+                                            onchange: e => {
+                                                ForgetPassword.areaCode = e.target.value;
+                                            }
+                                        }, ForgetPassword.selectList)
+                                ]),
+                                options: {
+                                    oninput: e => {
+                                        ForgetPassword.loginName = e.target.value;
+                                    },
+                                    onkeyup: e => {
+                                        if (e.keyCode === 13) {
+                                            ForgetPassword.loginType === 'phone' ? ForgetPassword.submitPhone() : ForgetPassword.submitEmail();
+                                        }
+                                    },
+                                    value: ForgetPassword.loginName
                                 }
-                            },
-                            value: ForgetPassword.loginName
-                        }, []),
+                            })
+                            : m('input.input[type=text].mb-5', {
+                                oninput: e => {
+                                    ForgetPassword.loginName = e.target.value;
+                                },
+                                onkeyup: e => {
+                                    if (e.keyCode === 13) {
+                                        ForgetPassword.loginType === 'phone' ? ForgetPassword.submitPhone() : ForgetPassword.submitEmail();
+                                    }
+                                },
+                                value: ForgetPassword.loginName
+                            }, []),
                         m('button.button.my-3.has-bg-primary.btn-2.is-fullwidth.mb-2', {
                             onclick: () => {
                                 ForgetPassword.loginType === 'phone' ? ForgetPassword.submitPhone() : ForgetPassword.submitEmail();

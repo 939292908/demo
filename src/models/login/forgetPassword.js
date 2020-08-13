@@ -5,6 +5,7 @@ const geetest = require('@/libs/geetestTwo');
 module.exports = {
     loginType: 'phone',
     loginName: '233233233',
+    selectList: [m('option', { value: '86' }, [`+86`])],
     validateCode: [],
     areaCode: '86',
     isValidate: false,
@@ -187,6 +188,18 @@ module.exports = {
         });
         window.gBroadcast.emit({ cmd: 'redrawValidate', data: '' });
     },
+    getCountryList () {
+        window.gWebApi.getCountryList({}, res => {
+            if (res.result.code === 0) {
+                this.selectList = [];
+                for (const item of res.result.data) {
+                    if (item.support === '1') this.selectList.push(m('option', { value: item.code }, [`+${item.code}`]));
+                }
+                m.redraw();
+            }
+        }, () => {
+        });
+    },
     initGeetest() {
         const self = this;
         geetest.init(() => {});
@@ -204,6 +217,7 @@ module.exports = {
     },
     oninit() {
         this.initGeetest();
+        this.getCountryList();
     },
     onremove() {
         this.isValidate = false;
