@@ -1054,6 +1054,14 @@ utils.splitList=function(list,num){
     }
     return newList
 }
+// 滚动时 指定触发条件 触发callback
+utils.triggerScroll = function (e, cb, trigger = 0) {
+    // 事件对象: e; 触发回调: cb; 触发距离: trigger;
+    let contentH = e.target.clientHeight; // 可见区高度
+    let scrollHight = e.target.scrollHeight; // 全文高度
+    let scrollTop = e.target.scrollTop // 卷去的高度
+    if (scrollHight - contentH - scrollTop <= trigger) cb() // 满足触发距离
+}
 // 获取两个时间差 转换为时分秒
 utils.getTimeDifference = function(end, start) {
     let sdate = new Date(end);//结束时间
