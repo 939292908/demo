@@ -48,6 +48,9 @@ const assetRecords = {
     }
 };
 module.exports = {
+    oninit: function () {
+        // assetRecords.initAssetList();
+    },
     view: function () {
         return m('div', { class: 'views-pages-Myassets-assetRecords' }, [
             assetRecords.assetValuation()

@@ -1,10 +1,13 @@
 
 const m = require('mithril');
+const myWalletTable = require('@/views/pages/Myassets/assetRecords/myWalletTable');
 
 require('@/styles/pages/Myassets/assetRecords.scss');
 const myWallet = {
     assetValuation: function () {
-        return m('div', { class: 'views-pages-Myassets-assetRecords-myWallet-wrapper' }, [
+        return m('div', {
+            class: 'views-pages-Myassets-assetRecords-myWallet-wrapper'
+        }, [
             m('div', { class: 'cursor-pointer  mb-3 has-text-primary' }, [
                 m('span', {}, ['我的钱包'])
             ]),
@@ -26,21 +29,13 @@ const myWallet = {
                     ])
                 ])
             ]),
-            m('div', { class: 'views-pages-Myassets-assetRecords-myWallet-content' }, [
-                m('div', { class: 'columns-flex-justify1 pl-3 pr-7 has-bg-level-1 has-text-level-2' }, [
-                    m('span', {}, ['币种']),
-                    m('span', {}, ['类型']),
-                    m('span', {}, ['数量']),
-                    m('span', {}, ['手续费']),
-                    m('span', {}, ['状态']),
-                    m('span', {}, ['时间']),
-                    m('span', { class: 'has-text-primary cursor-pointer' }, ['备注'])
-                ])
-            ])
+            m(myWalletTable)
         ]);
     }
 };
 module.exports = {
+    oninit: function () {
+    },
     view: function () {
         return m('div', { class: 'views-pages-Myassets-assetRecords-myWallet' }, [
             myWallet.assetValuation()

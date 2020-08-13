@@ -1,8 +1,21 @@
 const m = require('mithril');
+const LegalCurrencyAccount = require('./LegalCurrencyAccount');
+const contractAccount = require('./contractAccount');
+const currencyAccount = require('./currencyAccount');
 const tradingAccount = {
     switchValue: 0,
     switchEvnet: function (val) {
         this.switchValue = val;
+    },
+    switchContent: function () {
+        switch (this.switchValue) {
+        case 0:
+            return m(contractAccount);
+        case 1:
+            return m(currencyAccount);
+        case 2:
+            return m(LegalCurrencyAccount);
+        }
     },
     assetValuation: function () {
         return ('div', { class: 'views-pages-Myassets-assetRecords-tradingAccount-wrapper' }, [
@@ -25,7 +38,8 @@ const tradingAccount = {
                         tradingAccount.switchEvnet(2);
                     }
                 }, ['法币账户'])
-            ])
+            ]),
+            tradingAccount.switchContent()
         ]);
     }
 };
