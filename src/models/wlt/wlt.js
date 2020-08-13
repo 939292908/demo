@@ -161,7 +161,6 @@ module.exports = {
         });
     },
     wltHandle: function (type, wlt) {
-        window._console.log('ht', 'value==================>>>>>>');
         this.wltItemEx = {};
         this.wltItemEx = Object.assign({}, wlt);
         let TOTAL = 0;
@@ -237,7 +236,7 @@ module.exports = {
             TOTAL = Number(this.wltItemEx.mainBal || 0) + Number(this.wltItemEx.financeBal || 0) + Number(this.wltItemEx.mainLock || 0) + Number(this.wltItemEx.depositLock || 0) + Number(this.wltItemEx.pawnBal || 0) + Number(this.wltItemEx.creditNum || 0);
             // 账户总额
             this.wltItemEx.TOTAL = window.utils.toFixedForFloor(TOTAL, 8);
-            // 锁定
+            // 锁定(冻结)
             this.wltItemEx.otcLock = window.utils.toFixedForFloor(this.wltItemEx.otcLock || 0, 8);
             // 理财
             this.wltItemEx.financeBal = window.utils.toFixedForFloor(this.wltItemEx.financeBal || 0, 8);

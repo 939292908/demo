@@ -6,6 +6,7 @@ import('@/styles/pages/login/login.css');
 
 module.exports = {
     oninit() {
+        ForgetPassword.oninit();
     },
     onremove() {
         ForgetPassword.onremove();
@@ -29,6 +30,9 @@ module.exports = {
                     m('input.input[type=password].mb-6', {
                         oninput: e => {
                             ForgetPassword.password2 = e.target.value;
+                        },
+                        onkeyup: e => {
+                            if (e.keyCode === 13) { ForgetPassword.submitReset(); }
                         },
                         value: ForgetPassword.password2
                     }, []),
@@ -64,11 +68,16 @@ module.exports = {
                             oninput: e => {
                                 ForgetPassword.loginName = e.target.value;
                             },
+                            onkeyup: e => {
+                                if (e.keyCode === 13) {
+                                    ForgetPassword.loginType === 'phone' ? ForgetPassword.submitPhone() : ForgetPassword.submitEmail();
+                                }
+                            },
                             value: ForgetPassword.loginName
                         }, []),
                         m('button.button.my-3.has-bg-primary.btn-2.is-fullwidth.mb-2', {
                             onclick: () => {
-                                ForgetPassword.queryUserInfo();
+                                ForgetPassword.loginType === 'phone' ? ForgetPassword.submitPhone() : ForgetPassword.submitEmail();
                             }
                         }, ['下一步'])
                     ]

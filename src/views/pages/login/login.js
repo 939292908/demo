@@ -14,8 +14,8 @@ module.exports = {
     view() {
         return m('div.is-align-items-center', {}, [
             m('div.box.views-page-login-box-width.px-7.py-8', {},
-                Login.validateCode.length
-                    ? [m(Validate, { validateCode: Login.validateCode })]
+                Login.is2fa
+                    ? [m(Validate, { is2fa: Login.is2fa })]
                     : [
                         m('div.title-4.has-text-level-4', {},
                             [window.exchConfig.exchName]),
@@ -32,6 +32,9 @@ module.exports = {
                         m('input.input[type=password].mb-2', {
                             oninput: e => {
                                 Login.password = e.target.value;
+                            },
+                            onkeyup: e => {
+                                if (e.keyCode === 13) { Login.login(); }
                             },
                             value: Login.password
                         }, []),

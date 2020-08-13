@@ -10,6 +10,7 @@ module.exports = {
     password: 'a123456',
     loginType: 'phone',
     loading: false,
+    is2fa: false,
     /**
      * 验证码列表
      * [
@@ -21,7 +22,7 @@ module.exports = {
      *      ...
      * ]
      */
-    validateCode: [], // 验证码列表
+    // validateCode: [], // 验证码列表
     rulesEmail: {
         required: value => !!value || '该字段不能为空', // 该字段不能为空
         email: value => {
@@ -60,70 +61,49 @@ module.exports = {
         }
     },
     loginFn() {
-        const self = this;
-        window.gWebApi.loginCheck({
+        window.gWebApi.loginCheckV2({
             loginType: this.loginType,
             loginName: this.account,
             pass: md5(this.password),
             exChannel: window.exchId
         }, res => {
             if (res.result.code === 0) {
-                // window.gBroadcast.emit({cmd: 'setShowPhone', data: !!res.result.phone});
-                // window.gBroadcast.emit({cmd: 'setShowGoogle', data: !!res.result.googleId});
-                window.gWebApi.loginSms = res.result.loginSms;
-                if (res.result.tfa === 0) {
-                    // 登录成功
-                    self.getUserInfo();
-                    self.checkAccountPwd();
-                    return;
-                }
-                self.loading = false;
-
-                // let config = {};
-                if (res.result.tfa === 1) {
-                    // 手机
-                    self.loading = false;
-                    // config = { phoneNum: res.result.phone };
-                    self.validateCode = [
-                        {
-                            key: window.validate.sms,
-                            name: '手机验证码',
-                            code: ''
-                        }
-                    ];
-                } else if (res.result.tfa === 2) {
-                    // 谷歌
-                    // config = {};
-                    self.validateCode = [
-                        {
-                            key: window.validate.google,
-                            name: '谷歌验证码',
-                            code: ''
-                        }
-                    ];
-                } else if (res.result.tfa === 3) {
+                // 2fa 设置: email2fa, phone2fa, ga2fa
+                if (!!res.result.phone && !!res.result.googleId) {
+                    this.loading = false;
                     // 手机和谷歌
-                    // config = { phoneNum: res.result.phone };
-                    self.validateCode = [
-                        {
-                            key: window.validate.google,
-                            name: '谷歌验证码',
-                            code: ''
-                        },
-                        {
-                            key: window.validate.sms,
-                            name: '手机验证码',
-                            code: ''
-                        }
-                    ];
-                }
-                window.validate.activeAll(
-                    self.validateCode,
+                    window.validate.activeSmsAndGoogle({
+                        securePhone: window.utils.hideMobileInfo(res.result.phone),
+                        phoneNum: res.result.phone
+                    }, () => {
+                        this.loginEnter();
+                    });
+                    this.is2fa = true;
+                    m.redraw();
+                } else if (res.result.phone) {
+                    this.loading = false;
+                    // 手机
+                    this.validate.activeSms({
+                        securePhone: window.utils.hideMobileInfo(res.result.phone),
+                        phoneNum: res.result.phone
+                    },
                     () => {
-                        self.loginEnter();
-                    }
-                );
-                m.redraw();
+                        this.loginEnter();
+                    });
+                    this.is2fa = true;
+                    m.redraw();
+                } else if (res.result.googleId) {
+                    this.loading = false;
+                    // 谷歌
+                    this.validate.activeGoogle(() => {
+                        this.loginEnter();
+                    });
+                    this.is2fa = true;
+                    m.redraw();
+                } else {
+                    this.queryUserInfo();
+                }
+                // this.loginSms = res.result.loginSms;
             } else {
                 window.$message({
                     content: window.errCode.getWebApiErrorCode(res.result.code),
@@ -140,7 +120,7 @@ module.exports = {
         });
     },
     loginEnter() {
-        window.gWebApi.loginWeb({}, res => {
+        window.gWebApi.loginWebV2({}, res => {
             if (res.result.code === 0) {
                 this.checkAccountPwd();
                 this.getUserInfo();

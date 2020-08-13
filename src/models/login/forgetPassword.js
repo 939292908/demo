@@ -10,17 +10,6 @@ module.exports = {
     isValidate: false,
     password1: '',
     password2: '',
-    rulesPwd: {
-        required: value => !!value || window.gI18n.$t('10015'), // 该字段不能为空
-        password: value => {
-            const pattern = /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,}$/;
-            return pattern.test(value) || window.gI18n.$t('10028'); // 至少6个字符，必须是字母和数字
-        },
-        isSame: value => {
-            return this.password1 === this.password2 ||
-                window.gI18n.$t('10173'); // 两次输入密码不一致!
-        }
-    },
     valid() {
         return !!(this.loginName &&
             /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
@@ -61,14 +50,14 @@ module.exports = {
         const that = this;
         if (this.valid) {
             this.loading = true;
-            geetest.verify(function() { that.loading = false; });
+            geetest.verify(() => { that.loading = false; });
         }
     },
     submitPhone() {
         const that = this;
         if (this.valid1) {
             this.loading = true;
-            geetest.verify(function() { that.loading = false; });
+            geetest.verify(() => { that.loading = false; });
         }
     },
     // 查询是否注册顾过
@@ -85,7 +74,7 @@ module.exports = {
                     this.nextStep();
                 } else {
                     window.$message({
-                        content: window.gI18n.$t('10227'),
+                        content: '用户不存在',
                         type: 'danger'
                     });// 用户不存在
                 }
@@ -165,6 +154,9 @@ module.exports = {
                 }
             }
         });
+    },
+    oninit() {
+        this.initGeetest();
     },
     onremove() {
         this.isValidate = false;
