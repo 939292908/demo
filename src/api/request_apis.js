@@ -11,7 +11,7 @@ module.exports = {
     SMS_VERIFY_V1: '/v1/sms/verify',
     SMS_VERIFY_V2: '/v2/sms/verify',
     // 谷歌验证
-    GOOGLE_VERIFY_V1: '/g_auth/verify',
+    GOOGLE_VERIFY_V1: '/v1/g_auth/verify',
     // 登陆验证
     LOGIN_CHECK_V1: '/v1/users/loginCheck',
     LOGIN_CHECK_V2: '/v2/users/loginCheck',
