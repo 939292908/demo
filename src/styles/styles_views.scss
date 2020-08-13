@@ -1773,6 +1773,11 @@ hr {
     input {
         @extend %mr-2;
     }
+    &[disabled] {
+        input {
+            cursor: no-drop;
+        }
+    }
 }
 .table {
     min-width: 100%;
