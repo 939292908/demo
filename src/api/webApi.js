@@ -855,6 +855,27 @@ class webApi {
             s.wallet_obj['04'][item.wType] = item;
         }
     }
+
+    assetRecords(aData, aOnSuccess, aOnError) {
+        console.log(aData);
+        const that = this;
+        that.axios.request({
+            method: "post",
+            url: that.axios.baseUrl + API.WALLET_ASSETS_HISTORY_V1,
+            data: qs.stringify(aData),
+            options: {}
+        }).then(res => {
+            const arg = res.data;
+            if (aOnSuccess) {
+                aOnSuccess(arg);
+            }
+            console.log(res);
+        }).catch(function(e) {
+            if (aOnError) {
+                aOnError(e);
+            }
+        });
+    }
 }
 
 module.exports = webApi;
