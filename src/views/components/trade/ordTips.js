@@ -158,6 +158,7 @@ let obj = {
 
     closeMode: function(){
         this.open = false
+        this.tipsData = {}
     },
     submit:function(){
         switch(this.tipsData.OType){
@@ -184,7 +185,7 @@ let obj = {
             }
         })
 
-        this.open = false
+        obj.closeMode()
     },
     
     getOType:function(type){
@@ -288,7 +289,7 @@ export default {
   
       return m('div', {class: 'pub-stoppl'}, [
         m("div", { class: "modal" + (obj.open ? " is-active" : ''), }, [
-          m("div", { class: "modal-background", onclick: () => { obj.open = false}}),
+          m("div", { class: "modal-background", onclick: () => { obj.closeMode()}}),
           m("div", { class: "modal-card modal-card-width" }, [
             m("header", { class: "pub-stoppl-head modal-card-head modal-card-font-title" }, [
               m("p", { class: "modal-card-title" }, [

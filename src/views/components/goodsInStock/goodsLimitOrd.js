@@ -178,7 +178,6 @@ let obj = {
     initWlt: function(arg){
         let Sym = window.gMkt.CtxPlaying.Sym
         let assetD = window.gMkt.AssetD[Sym] || {}
-        // console.log(assetD,44444444444)
         let LastPrz = obj.getLastTick().LastPrz || " "
         let wallets = []
         if(assetD.TrdCls == 1){
@@ -205,10 +204,6 @@ let obj = {
         if(!isUSDTP){
             this.USDTWlt = {}
         }
-
-        // console.log(this.wlt,11111111111)
-        // console.log(this.USDTWlt,2222222222)
-        // console.log(this.getLastTick(),333333333333)
         m.redraw()
     },
     setPercentageType:function(pram){
