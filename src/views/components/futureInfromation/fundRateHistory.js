@@ -110,7 +110,7 @@ let obj = {
 export default {
     oninit (vnode) {
         obj.initLanguage()
-        obj.initSymList()
+        // obj.initSymList()
     },
     oncreate (vnode) {
         obj.initEVBUS()
