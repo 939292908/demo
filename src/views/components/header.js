@@ -53,7 +53,7 @@ let header = {
         },
         {
             id: 1,
-            name: "指数"
+            name: "币币指数"
         },
         {
             id: 2,

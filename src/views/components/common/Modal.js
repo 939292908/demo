@@ -18,7 +18,8 @@ export default {
 
     },
     view (vnode) {
-        return m("div", { class: "modal" + (vnode.attrs.isShow ? " is-active" : '') }, [
+        // return m("div", { class: "modal" + (vnode.attrs.isShow ? " is-active" : '') }, [
+        return m("div", { class: `modal ${vnode.attrs.class ? vnode.attrs.class : ''} ${vnode.attrs.isShow ? "is-active" : ''}` }, [
             m("div", { class: "modal-background"}),
             m("div", { class: "modal-card", style: `width: ${vnode.attrs.width ? vnode.attrs.width : ''}` }, [
                 // 头部

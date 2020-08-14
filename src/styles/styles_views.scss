@@ -112,6 +112,9 @@ hr {
 }
 //table子项垂直居中end
 
+.table-tr-td-pr{
+    @extend %pr-3;
+}
 //覆盖ui样式end
 //header样式 start
 
@@ -247,6 +250,15 @@ hr {
 
         .pub-header-tick-left-pre-prz {
             @extend %font-10;
+        }
+
+        .pub-fall-rise{
+            width: 15px;
+            
+
+            .icon-fall-rise{
+                @extend %font-7;
+            }
         }
 
         table {
@@ -1772,6 +1784,11 @@ hr {
     }
     input {
         @extend %mr-2;
+    }
+    &[disabled] {
+        input {
+            cursor: no-drop;
+        }
     }
 }
 .table {

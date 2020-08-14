@@ -4,13 +4,10 @@ let obj = {
     posList: [],
     theadList: [
         {
-            title: gDI18n.$t('10067'),//'仓位ID',
+            title: '操作',
             class: ""
         }, {
             title: gDI18n.$t('10053'),//'合约',
-            class: ""
-        }, {
-            title: gDI18n.$t('10054'),//'杠杆',
             class: ""
         }, {
             title: gDI18n.$t('10055'),//'交易类型',
@@ -19,31 +16,33 @@ let obj = {
             title: gDI18n.$t('10056'),//'委托类型',
             class: ""
         }, {
-            title: gDI18n.$t('10058'),//'委托价格',
-            class: ""
-        }, {
-            title: gDI18n.$t('10059'),//'委托数量',
+            title: gDI18n.$t('10061'),//'成交数量',
             class: ""
         }, {
             title: gDI18n.$t('10060'),//'成交均价',
             class: ""
         }, {
-            title: gDI18n.$t('10061'),//'成交数量',
+            title: gDI18n.$t('10059'),//'委托数量',
+            class: ""
+        }, {
+            title: gDI18n.$t('10058'),//'委托价格',
             class: ""
         }, {
             title: gDI18n.$t('10080') + "/" +gDI18n.$t('10101'),//'止盈/止损',
             class: ""
-        }, {
-            title: gDI18n.$t('10064'),//'触发条件',
-            class: ""
-        }, {
+        },
+        //  {
+        //     title: gDI18n.$t('10064'),//'触发条件',
+        //     class: ""
+        // }, 
+        {
             title: gDI18n.$t('10065'),//'委托时间',
             class: ""
-        },
-        {
-            title: '',
+        },{
+            title: gDI18n.$t('10067'),//'仓位ID',
             class: ""
-        }
+        },
+        
     ],
     //初始化全局广播
     initEVBUS: function () {
@@ -111,13 +110,10 @@ let obj = {
     initLanguage: function(){
         this.theadList = [
             {
-                title: gDI18n.$t('10067'),//'仓位ID',
+                title: '操作',
                 class: ""
             }, {
                 title: gDI18n.$t('10053'),//'合约',
-                class: ""
-            }, {
-                title: gDI18n.$t('10054'),//'杠杆',
                 class: ""
             }, {
                 title: gDI18n.$t('10055'),//'交易类型',
@@ -126,31 +122,33 @@ let obj = {
                 title: gDI18n.$t('10056'),//'委托类型',
                 class: ""
             }, {
-                title: gDI18n.$t('10058'),//'委托价格',
-                class: ""
-            }, {
-                title: gDI18n.$t('10059'),//'委托数量',
+                title: gDI18n.$t('10061'),//'成交数量',
                 class: ""
             }, {
                 title: gDI18n.$t('10060'),//'成交均价',
                 class: ""
             }, {
-                title: gDI18n.$t('10061'),//'成交数量',
+                title: gDI18n.$t('10059'),//'委托数量',
+                class: ""
+            }, {
+                title: gDI18n.$t('10058'),//'委托价格',
                 class: ""
             }, {
                 title: gDI18n.$t('10080') + "/" +gDI18n.$t('10101'),//'止盈/止损',
                 class: ""
-            }, {
-                title: gDI18n.$t('10064'),//'触发条件',
-                class: ""
-            }, {
+            }, 
+            // {
+            //     title: gDI18n.$t('10064'),//'触发条件',
+            //     class: ""
+            // }, 
+            {
                 title: gDI18n.$t('10065'),//'委托时间',
                 class: ""
-            },
-            {
-                title: '',
+            }, {
+                title: gDI18n.$t('10067'),//'仓位ID',
                 class: ""
-            }
+            },
+            
         ]
     },
     //删除全局广播
@@ -281,48 +279,6 @@ let obj = {
     getOrdList: function () {
         return this.posList.map(function (item, i) {
             return m("tr", { key: "orderTableListItem" + i, class: "" }, [
-                m("td", { class: " table-tr-td-vertical" }, [
-                    item.PId ? item.PId.substr(-4) : '--'
-                ]),
-                m("td", { class: "table-tr-td-vertical cursor-pointer" ,onclick :function(){
-                    obj.setSym(item.Sym)
-                }}, [
-                    m("p", { class: " " }, [
-                        utils.getSymDisplayName(window.gMkt.AssetD, item.Sym)
-                    ])
-                ]),
-                m("td", { class: "table-tr-td-vertical" }, [
-                    m("p", { class: " " }, [
-                        item.displayLever
-                    ]),
-                ]),
-                m("td", { class: " table-tr-td-vertical" + utils.getColorStr(item.Dir, 'font') }, [
-                    item.DirStr
-                ]),
-                m("td", { class: " table-tr-td-vertical" }, [
-                    item.OTypeStr
-                ]),
-                m("td", { class: " table-tr-td-vertical" }, [
-                    item.displayPrz
-                ]),
-                m("td", { class: " table-tr-td-vertical" }, [
-                    item.Qty
-                ]),
-                m("td", { class: " table-tr-td-vertical" }, [
-                    item.PrzF
-                ]),
-                m("td", { class: " table-tr-td-vertical" }, [
-                    item.QtyF
-                ]),
-                m("td", { class: "table-tr-td-vertical" }, [
-                    (item.StopP || '--') + '/' + (item.StopL || '--')
-                ]),
-                m("td", { class: "table-tr-td-vertical" }, [
-                    item.cond
-                ]),
-                m("td", { class: "table-tr-td-vertical" }, [
-                    item.AtStr
-                ]),
                 m("td", { class: "table-tr-td-vertical" }, [
                     m("button", {
                         class: "button is-primary " + (item.loading ? ' is-loading' : ''),
@@ -332,7 +288,51 @@ let obj = {
                     }, [
                         gDI18n.$t('10082')//'撤单'
                     ])
-                ])
+                ]),
+                m("td", { class: "table-tr-td-vertical cursor-pointer" ,onclick :function(){
+                    obj.setSym(item.Sym)
+                }}, [
+                    m("span", { class: "table-tr-td-pr " }, [
+                        utils.getSymDisplayName(window.gMkt.AssetD, item.Sym)
+                    ]),
+                    m("span", { class: " " }, [
+                        item.displayLever
+                    ]),
+                ]),
+                // m("td", { class: "table-tr-td-vertical" }, [
+                    
+                // ]),
+                m("td", { class: " table-tr-td-vertical" + utils.getColorStr(item.Dir, 'font') }, [
+                    item.DirStr
+                ]),
+                m("td", { class: " table-tr-td-vertical" }, [
+                    item.OTypeStr
+                ]),
+                m("td", { class: " table-tr-td-vertical" }, [
+                    item.QtyF
+                ]),
+                m("td", { class: " table-tr-td-vertical" }, [
+                    item.PrzF
+                ]),
+                m("td", { class: " table-tr-td-vertical" }, [
+                    item.Qty
+                ]),
+                m("td", { class: " table-tr-td-vertical" }, [
+                    item.displayPrz
+                ]),
+                m("td", { class: "table-tr-td-vertical" }, [
+                    (item.StopP || '--') + '/' + (item.StopL || '--')
+                ]),
+                // m("td", { class: "table-tr-td-vertical" }, [
+                //     item.cond
+                // ]),
+                m("td", { class: "table-tr-td-vertical" }, [
+                    item.AtStr
+                ]),
+                m("td", { class: " table-tr-td-vertical" }, [
+                    item.PId ? item.PId.substr(-4) : '--'
+                ]),
+                
             ])
         })
     },
@@ -435,31 +435,31 @@ let obj = {
             return obj.getOrdListForM()
         } else {
             let colgroup = m('colgroup', {}, [
-                m('col', { name: "pub-table-1", width: 70 }),
-                m('col', { name: "pub-table-2", width: 160 }),
-                m('col', { name: "pub-table-3", width: 130 }),
-                m('col', { name: "pub-table-4", width: 80 }),
-                m('col', { name: "pub-table-5", width: 80 }),
+                m('col', { name: "pub-table-1", width: 100 }),
+                m('col', { name: "pub-table-2", width: 220 }),
+                m('col', { name: "pub-table-3", width: 100 }),
+                m('col', { name: "pub-table-4", width: 100 }),
+                m('col', { name: "pub-table-5", width: 100 }),
                 m('col', { name: "pub-table-6", width: 100 }),
                 m('col', { name: "pub-table-7", width: 100 }),
                 m('col', { name: "pub-table-8", width: 100 }),
-                m('col', { name: "pub-table-9", width: 100 }),
+                m('col', { name: "pub-table-9", width: 150 }),
+                // m('col', { name: "pub-table-11", width: 150 }),
                 m('col', { name: "pub-table-10", width: 150 }),
-                m('col', { name: "pub-table-11", width: 150 }),
-                m('col', { name: "pub-table-10", width: 150 }),
-                m('col', { name: "pub-table-11", width: 100 }),
+                m('col', { name: "pub-table-11", width: 70 }),
+                
             ])
             return m('div', { class: " table-container" }, [
-                m('div', { class: "pub-table-head-box", style: "width: 1470px" }, [
-                    m("table", { class: "table is-hoverable ", width: '1470px', cellpadding: 0, cellspacing: 0 }, [
+                m('div', { class: `pub-table-head-box ${window.gWebAPI.isLogin() ? '' : 'is-hidden'}`, style: "width: 1290px" }, [
+                    m("table", { class: "table is-hoverable ", width: '1290px', cellpadding: 0, cellspacing: 0 }, [
                         colgroup,
                         m("tr", { class: "" }, [
                             obj.getTheadList()
                         ])
                     ]),
                 ]),
-                m('div', { class: "pub-table-body-box", style: "width: 1470px" }, [
-                    m("table", { class: "table is-hoverable ", width: '1470px', cellpadding: 0, cellspacing: 0 }, [
+                m('div', { class: "pub-table-body-box", style: "width: 1290px" }, [
+                    m("table", { class: "table is-hoverable ", width: '1290px', cellpadding: 0, cellspacing: 0 }, [
                         colgroup,
                         obj.getOrdList()
                     ])

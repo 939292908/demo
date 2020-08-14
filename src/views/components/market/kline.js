@@ -5,64 +5,6 @@ var m = require("mithril")
 let obj = {
     Sym: '',
     Typ: '',
-    // targetList: [
-    //     // {
-    //     //     name: 'VOL',
-    //     //     title: 'Volume'
-    //     // },
-    //     {
-    //         name: 'MA',
-    //         title: 'Moving Average'
-    //     },
-    //     {
-    //         name: 'MACD',
-    //         title: 'Moving Average Convergence / Divergence'
-    //     },
-    //     {
-    //         name: 'KDJ',
-    //         title: 'Stochastic'
-    //     },
-    //     {
-    //         name: 'BOLL',
-    //         title: 'Bollinger Bands'
-    //     },
-    //     {
-    //         name: 'EMA',
-    //         title: 'Moving Average Exponential'
-    //     },
-    //     // {
-    //     //     name: 'StochRSI',
-    //     //     title: 'Stochastic RSI'
-    //     // },
-    //     {
-    //         name: 'RSI',
-    //         title: 'Relative Strength Index'
-    //     },
-    //     {
-    //         name: 'CCI',
-    //         title: 'Commodity Channel Index'
-    //     },
-    //     // {
-    //     //     name: 'ATR',
-    //     //     title: 'Average True Range'
-    //     // },
-    //     {
-    //         name: 'SAR',
-    //         title: 'Parabolic SAR'
-    //     },
-    //     {
-    //         name: 'DMI',
-    //         title: 'Directional Movement'
-    //     },
-    //     {
-    //         name: 'OBV',
-    //         title: 'On Balance Volume'
-    //     },
-    //     // {
-    //     //     name: 'ROC',
-    //     //     title: 'Rate Of Change'
-    //     // },
-    // ],
     targetList_main: [ //指标
         // {title:'VOL',name:"Volume"},
         {
@@ -245,13 +187,15 @@ let obj = {
         let that = this
         this.onResetCacheNeededCallback = null;
         this.onRealtimeCallback = null;
+        console.log("init执行")
 
         //当前选中合约变化全局广播
         if (this.EV_CHANGESYM_UPD_unbinder) {
             this.EV_CHANGESYM_UPD_unbinder()
         }
         this.EV_CHANGESYM_UPD_unbinder = window.gEVBUS.on(gMkt.EV_CHANGESYM_UPD, arg => {
-            that.setSymbol()
+            let Sym = arg.Sym
+            that.setSymbol(Sym)
         })
 
         if (this.EV_REALTIME_UPD_unbinder) {
@@ -419,9 +363,9 @@ let obj = {
         }
     },
     
-    setSymbol: function () {
+    setSymbol: function (Sym) {
         let that = this
-        this.Sym = window.gMkt.CtxPlaying.Sym
+        this.Sym = Sym//window.gMkt.CtxPlaying.Sym
         this.Typ = window.gMkt.CtxPlaying.Typ || '1m'
         this.setKcross()
     },
@@ -603,7 +547,7 @@ let obj = {
     },
 
     setKcross: function() {
-        console.log(window._chart, this.Sym)
+        // console.log(window._chart, this.Sym)
 
         // 动态设置k线高度
         if(window.isMobile){
@@ -1053,7 +997,7 @@ let obj = {
 
         if(Sym.includes('CI')){
             // 处理指数小数位
-            let lastPrz = (this.lastTick[Sym] && this.lastTick[Sym].Prz || 0).toPrecision2(6,8)
+            let lastPrz = (window.gMkt.lastTick[Sym] && window.gMkt.lastTick[Sym].Prz || 0).toPrecision2(6,8)
             lastPrz = lastPrz.toString().split('.')[1]
             PrzMinIncSize = lastPrz.length
         }

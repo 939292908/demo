@@ -1,11 +1,14 @@
 var m = require("mithril")
 import Dropdown from "../common/Dropdown"
+import Modal from "../common/Modal"
 
 let obj = {
     showMenuFrom: false,
     showMenuTo: false,
+    isShowModal: false,
     form: {
-        coin: 'USDT', // 合约下拉列表 value
+        // coin: 'USDT', // 合约下拉列表 value
+        coin: window.gMkt.CtxPlaying.Sym, // 合约下拉列表 value
         transferFrom: '03', // 从xx钱包 value
         transferTo: '01', // 到xx钱包 value
         num: '',
@@ -80,7 +83,14 @@ let obj = {
             that.initFromAndToValueByAuthWalletList() // 2个钱包value 初始化
             that.initTransferInfo()
         })
-
+        //当前选中合约变化全局广播
+        if (this.EV_CHANGESYM_UPD_unbinder) {
+            this.EV_CHANGESYM_UPD_unbinder()
+        }
+        this.EV_CHANGESYM_UPD_unbinder = window.gEVBUS.on(gMkt.EV_CHANGESYM_UPD, arg => {
+            // 根据头部下拉 默认选中此处合约下拉
+            obj.form.coin = window.gMkt.AssetD[window.gMkt.CtxPlaying.Sym].SettleCoin
+        })
     },
     initLanguage: function () {
         this.baseWltList = [
@@ -158,7 +168,7 @@ let obj = {
     switchBtnClick () {
         this.form.num = ''
         this.switchTransfer() // 2个钱包value切换
-        this.initFromAndToWalletListByValue() // 2个钱包列表 初始化
+        this.initFromAndToWalletListByValue() // 2个钱包列表 初始化 （依赖钱包value）
         this.setMaxTransfer() // 设置 最大划转
     },
     // 2个钱包value切换
@@ -215,7 +225,8 @@ let obj = {
             })
         })
 
-        if (this.canTransferCoin[0]) this.form.coin = this.canTransferCoin[0].wType  // 合约下拉列表 默认选中第一个
+        // if (this.canTransferCoin[0]) this.form.coin = this.canTransferCoin[0].wType  // 合约下拉列表 默认选中第一个
+        if (this.canTransferCoin[0]) this.form.coin = window.gMkt.AssetD[window.gMkt.CtxPlaying.Sym].SettleCoin || this.canTransferCoin[0].wType  // 合约下拉列表 默认选中第一个
 
         this.initWalletListByWTypeAndValue(obj.form.coin) // 初始化钱包 list 和 value
 
@@ -242,11 +253,11 @@ let obj = {
     },
     // 初始化钱包 list 和 value
     initWalletListByWTypeAndValue (wType) {
-        this.initAuthWalletListByWType(wType)// 1. 权限钱包list 初始化
+        this.initAuthWalletListByWType(wType)// 1. 有权限的钱包list 初始化
         this.initFromAndToValueByAuthWalletList() // 2. 钱包value  初始化
-        this.initFromAndToWalletListByValue() // 3. 2个钱包list 初始化
+        this.initFromAndToWalletListByValue() // 3. 2个钱包list 初始化 （依赖钱包value）
     },
-    // 权限钱包列表 初始化（wType: 合约）
+    // 有权限的钱包列表 初始化（wType: 合约）
     initAuthWalletListByWType (wType) {
         // 遍历不同种类钱包
         this.authWltList = this.allWalletList.map(wallet => {
@@ -268,7 +279,7 @@ let obj = {
             4: '04',
         }
 
-        // 校验钱包value 如果没权限默认选中第一个
+        // 校验钱包value是否有权限 如果没权限默认选中第一个
         let verifyWalletValueByValue = (value) => {
             if (this.authWltList.some(item => item.id == value)) {
                 return value
@@ -283,7 +294,7 @@ let obj = {
         // 到xx钱包
         this.form.transferTo = verifyWalletValueByValue(pageMap[window.gMkt.CtxPlaying.pageTradeStatus])
     },
-    // 2个钱包list 初始化
+    // 2个钱包list 初始化 （依赖钱包value）
     initFromAndToWalletListByValue () {
         this.fromWltList = this.authWltList.filter(item => item.id != obj.form.transferTo)
         this.toWltList = this.authWltList.filter(item => item.id != obj.form.transferFrom)
@@ -299,6 +310,7 @@ let obj = {
     setMaxTransfer () {
         let coin = this.form.coin
         switch (this.form.transferFrom) {
+            // 合约
             case '01':
                 let wallet01 = window.gTrd.Wlts['01']
                 for (let item of wallet01) {
@@ -307,7 +319,7 @@ let obj = {
                     }
                 }
                 break;
-
+            // 币币
             case '02':
                 let wallet02 = window.gTrd.Wlts['02']
                 for (let item of wallet02) {
@@ -316,13 +328,19 @@ let obj = {
                     }
                 }
                 break;
-
+            // 我的钱包
             case '03':
                 let wallet03 = window.gWebAPI.CTX.wallets_obj['03']
                 this.form.maxTransfer = Number(wallet03[coin] && wallet03[coin].mainBal || 0).toFixed2(8)
                 break;
-            default:
 
+            // 法币
+            case '04':
+                let wallet04 = window.gWebAPI.CTX.wallets_obj['04']
+                this.form.maxTransfer = Number(wallet04[coin] && wallet04[coin].otcBal || 0).toFixed2(8)
+                break;
+            default:
+                this.form.maxTransfer = "--"
         }
     },
     setTransferNum: function (param) {
@@ -356,6 +374,11 @@ let obj = {
                     obj.initFromAndToValueByAuthWalletList() // 2个钱包value 初始化
                 }, 2500)
             } else {
+                // 往法币划转
+                if (arg.result.code == 9040) {
+                    // 提示弹框
+                    obj.isShowModal = true
+                }
                 window.$message({ title: gDI18n.$t('10037'/*"提示"*/), content: utils.getWebApiErrorCode(arg.result.code), type: 'danger' })
                 that.loading = false
             }
@@ -415,10 +438,10 @@ export default {
                             obj.showMenuFrom = type
                             obj.showMenuTo = false
                         },
-                        
                         onClick (item) {
-                            console.log(obj.form.transferFrom);
-                            obj.initFromAndToWalletListByValue() // 初始化 2个钱包下拉列表
+                            // console.log(obj.form.transferFrom);
+                            obj.initFromAndToWalletListByValue() // 初始化 2个钱包下拉列表 （依赖钱包value）
+                            obj.setMaxTransfer() // 设置 最大划转
                         },
                         getList () {
                             return obj.fromWltList
@@ -440,8 +463,9 @@ export default {
                         },
 
                         onClick (item) {
-                            console.log(obj.form.transferTo);
-                            obj.initFromAndToWalletListByValue() // 初始化 2个钱包下拉列表
+                            // console.log(obj.form.transferTo);
+                            obj.initFromAndToWalletListByValue() // 初始化 2个钱包下拉列表 （依赖钱包value）
+                            obj.setMaxTransfer() // 设置 最大划转
                         },
                         getList () {
                             return obj.toWltList
@@ -485,6 +509,26 @@ export default {
                     gDI18n.$t('10230')//'划转'
                 ])
             ]),
+            m(Modal, {
+                isShow: obj.isShowModal,
+                width: '493px',
+                class: "has-text-left",
+                onClose: () => obj.isShowModal = false, // 关闭事件
+                slot: {
+                    header: m('div', { class: `` }, ["法币审核提示"]),
+                    body: m('div', { class: `` }, [`为防止大额资金流动,您划转至法币账户的${obj.form.num + obj.form.coin}需进行人工审核,请耐心等候.`]),
+                    footer: [
+                        m('.spacer'),
+                        m("button", {
+                            class: "button", onclick () {
+                                obj.isShowModal = false
+                            }
+                        }, [
+                            "我知道了"
+                        ])
+                    ]
+                }
+            })
         ])
     },
     onremove: function () {

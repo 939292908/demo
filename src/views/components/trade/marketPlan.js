@@ -25,6 +25,30 @@ let obj = {
         maxLeverForSell: 0,
         // 交易模式2相关内容 end
     },
+    setingList:[
+        {
+          id:"0",
+          value:"标记价"
+        },
+        {
+          id:"1",
+          value:"最新价"
+        },
+        {
+          id:"2",
+          value:"指数价"
+        },
+    ],
+    setType: 1,
+    //行情数据接收
+    tickObj: {},
+    //需要显示的行情数据
+    lastTick: {},
+    //行情最后更新时间
+    lastTmForTick: 0,
+    //行情限制数据处理时间间隔
+    TICKCLACTNTERVAL: 100,
+    ORDER20CLACTNTERVAL: 100,
     faceValue: '= 0.0000 USDT',
     LeverInputValue: gDI18n.$t('10135'),//'杠杆',
     wlt: {},
@@ -62,6 +86,15 @@ let obj = {
         this.EV_TICK_UPD_unbinder = window.gEVBUS.on(gMkt.EV_TICK_UPD, arg => {
             this.onTick(arg)
             that.setFaceV()
+            that.onTickObj(arg)
+        })
+
+        //指数行情全局广播
+        if(this.EV_INDEX_UPD_unbinder){
+            this.EV_INDEX_UPD_unbinder()
+        }
+        this.EV_INDEX_UPD_unbinder = window.gEVBUS.on(gMkt.EV_INDEX_UPD,arg=> {
+            that.onTickObj(arg)
         })
 
         //当前选中合约变化全局广播
@@ -131,6 +164,20 @@ let obj = {
     },
     initLanguage : function (){
         obj.updateSpotInfo()
+        this.setingList = [
+            {
+              id:"0",
+              value:"标记价"
+            },
+            {
+              id:"1",
+              value:"最新价"
+            },
+            {
+              id:"2",
+              value:"指数价"
+            },
+        ]
     },
     //删除全局广播
     rmEVBUS: function () {
@@ -169,6 +216,10 @@ let obj = {
     
         if(this.EV_POS_UPD_unbinder){
           this.EV_POS_UPD_unbinder()
+        }
+        //指数行情全局广播
+        if(this.EV_INDEX_UPD_unbinder){
+            this.EV_INDEX_UPD_unbinder()
         }
     },
     // 杠杆 存本地
@@ -271,6 +322,37 @@ let obj = {
             this.setMgnNeed()
             this.lastTmForTick = tm
         }
+    },
+    onTickObj: function(param){
+        let tm = Date.now()
+        this.tickObj[param.Sym] = param.data
+        if(tm - this.lastTmForTick > this.TICKCLACTNTERVAL){
+            this.updateTick(this.tickObj)
+            this.lastTmForTick = tm
+            this.tickObj = {}
+        }
+    },
+    //更新最新行情
+    updateTick: function(ticks){
+        for(let key in ticks){
+            let item = ticks[key];
+            let gmexCI = utils.getGmexCi(window.gMkt.AssetD, item.Sym)
+            let indexTick = this.lastTick[gmexCI]
+            
+            let obj = utils.getTickObj(window.gMkt.AssetD, window.gMkt.AssetEx, item, this.lastTick[key], indexTick)
+            obj?this.lastTick[key] = obj:''
+        }
+        m.redraw();
+    },
+    //获取当前合约最新行情
+    getLastTick: function(){
+        obj.getQuoteCoin() // 获取QuoteCoin
+        let Sym = window.gMkt.CtxPlaying.Sym
+        return this.lastTick[Sym] || {}
+    },
+    // 获取QuoteCoin
+    getQuoteCoin () {
+        this.QuoteCoin = window.gMkt.AssetD[window.gMkt.CtxPlaying.Sym] ? window.gMkt.AssetD[window.gMkt.CtxPlaying.Sym].QuoteCoin : ""
     },
     updateSpotInfo: function(){
         this.form = {
@@ -446,26 +528,50 @@ let obj = {
             OrdFlag: 0,
             PrzChg: 0,
             StopPrz: Number(this.form.triggerPrz),
-            StopBy: 1
+            StopBy: this.setType//1
         }
 
         let lastTick = window.gMkt.lastTick
         let assetD = window.gMkt.AssetD
 
         let prz = (lastTick[Sym] && lastTick[Sym].LastPrz) || (assetD[Sym] && assetD[Sym].PrzLatest) || 0
-        if (prz) {
-            if (p.StopPrz >= prz) {
-                p.OrdFlag = (p.OrdFlag | 8)
-            } else {
-                p.OrdFlag = (p.OrdFlag | 16)
-            }
-        } else {
-            if (dir == 1) {
-                p.OrdFlag = (p.OrdFlag | 8)
-            } else {
-                p.OrdFlag = (p.OrdFlag | 16)
-            }
+
+        switch(this.setType){
+            case 0:
+                if (p.StopPrz >= this.getLastTick().SettPrz) {
+                    p.OrdFlag = (p.OrdFlag | 8)
+                } else {
+                    p.OrdFlag = (p.OrdFlag | 16)
+                }
+                break;
+            case 1:
+                if (p.StopPrz >= this.getLastTick().LastPrz) {
+                    p.OrdFlag = (p.OrdFlag | 8)
+                } else {
+                    p.OrdFlag = (p.OrdFlag | 16)
+                }
+                break;
+            case 2:
+                if (p.StopPrz >= this.getLastTick().indexPrz) {
+                    p.OrdFlag = (p.OrdFlag | 8)
+                } else {
+                    p.OrdFlag = (p.OrdFlag | 16)
+                }
+                break;
         }
+        // if (prz) {
+        //     if (p.StopPrz >= prz) {
+        //         p.OrdFlag = (p.OrdFlag | 8)
+        //     } else {
+        //         p.OrdFlag = (p.OrdFlag | 16)
+        //     }
+        // } else {
+        //     if (dir == 1) {
+        //         p.OrdFlag = (p.OrdFlag | 8)
+        //     } else {
+        //         p.OrdFlag = (p.OrdFlag | 16)
+        //     }
+        // }
 
         // 根据配置判断处理
         // let tradeType = window.$config.future.tradeType
@@ -993,7 +1099,7 @@ let obj = {
                 show = false;
                 break;
             case 3:
-                show = true
+                show = false
                 break;
             default:
                 show = false
@@ -1152,7 +1258,25 @@ let obj = {
             this.setPId()
         }
         this.setMgnNeed()
-    }
+    },
+
+    getSettingValue:function(){
+        return this.setingList.map((item,i)=>{
+          return m('label',{class:"radio",key:"setlist"+i+item.id},[
+            m('input',{type:"radio",name:"foobar",checked : (i == obj.setType),onclick:function(){
+              obj.setTypeOfInput(i)
+            }},[
+              
+            ]),
+            m('span',[
+              item.value
+            ])
+          ])
+        })
+      },
+    setTypeOfInput:function(num){
+        this.setType = num
+    },
 }
 export default {
     oninit: function (vnode) {
@@ -1186,6 +1310,14 @@ export default {
             ]),
             obj.getStopPL(),
             m("div", { class: "pub-place-order-form-trigger-prz-input field" }, [
+                m('div',{},[
+                    m('div',{},[
+                        '触发类型'
+                    ]),
+                    m('div',{class : "control"},[
+                        obj.getSettingValue()
+                    ]),
+                ]),
                 m("div", { class: "control" }, [
                     m("input", { class: "input", type: 'number', placeholder: gDI18n.$t('10164'/*"请输入触发价格"*/), step: obj.PrzStep, value: obj.form.triggerPrz, pattern:"\d*",oninput: function(e) {
                         obj.onInputFortriggerPrz(e)

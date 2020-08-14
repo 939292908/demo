@@ -40,8 +40,7 @@ let obj = {
     tableData: [], // 表格
 
     //合约名称列表
-    futureSymList: [],
-    futureSymObj: {},
+    futureSymList: ['ETC.USDT'],
     //风险限额
     RS: null,
 
@@ -130,11 +129,11 @@ let obj = {
             info: '--'
         },
         {
-            name: '流动性提供方(Maker)手续费率：',
+            name: '流动性提供方(Maker)手续费率',
             info: '--'
         },
         {
-            name: '流动性提取方(Taker)手续费率：',
+            name: '流动性提取方(Taker)手续费率',
             info: '--'
         },
         {
@@ -178,104 +177,30 @@ let obj = {
     // 初始化多语言
     initLanguage () {
         // 合约详解列表
-        this.contractList = [
-            {
-                name: '合约名称',
-                info: '--'
-            },
-            {
-                name: '到期日期',
-                info: '--'
-            },
-            {
-                name: '计价货币',
-                info: '--'
-            },
-            {
-                name: '结算货币',
-                info: '--'
-            },
-            {
-                name: '合约大小',
-                info: '--'
-            },
-            {
-                name: '最小价格变动',
-                info: '--'
-            },
-            {
-                name: '最小数量变动',
-                info: '--'
-            },
-            {
-                name: '杠杆模式',
-                info: '--'
-            },
-            {
-                name: '标记方法',
-                info: '--'
-            },
-            {
-                name: '标记价格',
-                info: '--'
-            },
-            {
-                name: '启用自动减仓',
-                info: '--'
-            },
-            {
-                name: '委托保证金率',
-                info: '--'
-            },
-            {
-                name: '仓位保证金率',
-                info: '--'
-            },
-            {
-                name: '流动性提供方(Maker)手续费率：',
-                info: '--'
-            },
-            {
-                name: '流动性提取方(Taker)手续费率：',
-                info: '--'
-            },
-            {
-                name: '委托保证金',
-                info: '--'
-            },
-            {
-                name: '仓位保证金',
-                info: '--'
-            },
-            {
-                name: '资金费率',
-                info: '--'
-            },
-            {
-                name: '资金费用收取间隔',
-                info: '--'
-            },
-            {
-                name: '下一个资金费率',
-                info: '--'
-            },
-            {
-                name: '风险限额',
-                info: '--'
-            },
-            {
-                name: '风险限额递增额',
-                info: '--'
-            },
-            {
-                name: '委托保证金递增值',
-                info: '--'
-            },
-            {
-                name: '仓位保证金递增值',
-                info: '--'
-            },
-        ]
+        this.contractList[0].name = "合约名称"
+        this.contractList[1].name = "到期日期"
+        this.contractList[2].name = "计价货币"
+        this.contractList[3].name = "结算货币"
+        this.contractList[4].name = "合约大小"
+        this.contractList[5].name = "最小价格变动"
+        this.contractList[6].name = "最小数量变动"
+        this.contractList[7].name = "杠杆模式"
+        this.contractList[8].name = "标记方法"
+        this.contractList[9].name = "标记价格"
+        this.contractList[10].name = "启用自动减仓"
+        this.contractList[11].name = "委托保证金率"
+        this.contractList[12].name = "仓位保证金率"
+        this.contractList[13].name = "流动性提供方(Maker)手续费率"
+        this.contractList[14].name = "流动性提取方(Taker)手续费率"
+        this.contractList[15].name = "委托保证金"
+        this.contractList[16].name = "仓位保证金"
+        this.contractList[17].name = "资金费率"
+        this.contractList[18].name = "资金费用收取间隔"
+        this.contractList[19].name = "下一个资金费率"
+        this.contractList[20].name = "风险限额"
+        this.contractList[21].name = "风险限额递增额"
+        this.contractList[22].name = "委托保证金递增值"
+        this.contractList[23].name = "仓位保证金递增值"
         // 表头
         this.tableColumns = [
             {
@@ -322,6 +247,7 @@ let obj = {
         this.EV_ASSETD_UPD_unbinder = window.gEVBUS.on(gMkt.EV_ASSETD_UPD, arg => {
             that.initSymList()
             that.updateSpotInfo()
+            that.setSymName()
         })
 
         //页面交易类型全局广播
@@ -386,6 +312,13 @@ let obj = {
         })
         this.tabelList = tabelList
     },
+    //当前选中合约名称广播
+    setSymName:function(){
+        let dropdownActive = this.dropdownActive
+        let Sym = this.futureSymList[dropdownActive]
+        gEVBUS.emit(gMkt.EV_CHANGESYM_UPD, { Ev: gMkt.EV_CHANGESYM_UPD, Sym: Sym })
+    },
+
     //初始化合约数据
     updateSpotInfo: function () {
         let dropdownActive = this.dropdownActive
@@ -433,7 +366,7 @@ let obj = {
                 //资金费率
                 FundingLongR: (ass.FundingLongR * 100).toSubstrFixed(4) + '%',
                 //资金费用收取间隔
-                Chargein:8,
+                Chargein:Number(ass.FundingInterval)/(60 * 60 * 1000),
                 //预测下一资金费率
                 FundingPredictedR: (ass.FundingPredictedR * 100).toSubstrFixed(4) + '%',  
                 //资金交换时间
@@ -549,6 +482,7 @@ let obj = {
     //点击选中合约
     clickSelect: function (item) {
         this.updateSpotInfo()
+        this.setSymName()
     },
 
     //获取风险限额数据
@@ -597,7 +531,7 @@ let obj = {
                 (tabelList[dropdownActive]?tabelList[dropdownActive].label : "--") + ' 合约明细'
             ]),
             m('div', { class: "inf_body_TD" }, [
-                (tabelList[dropdownActive]?tabelList[dropdownActive].label : "--") + '合约' + (spotInfo.ExpireStr == 0?"没有到期日":spotInfo.ExpireStr) + '。每张合约大小' + spotInfo.LotSz + '。每' + '8' + '小时交换资金费用。下一个交换将发生在' + spotInfo.FundingNext + '。'
+                (tabelList[dropdownActive]?tabelList[dropdownActive].label : "--") + '合约' + (spotInfo.ExpireStr == 0?"没有到期日":spotInfo.ExpireStr) + '。每张合约大小' + spotInfo.LotSz + '。每' + spotInfo.Chargein + '小时交换资金费用。下一个交换将发生在' + spotInfo.FundingNext + '。'
             ]),
             m('div', { class: " inf_body_TD" }, [
                 window.$config.exchName + '交易平台利用利率与每分钟溢价指数的加权平均值计算出资金费率。',
@@ -676,6 +610,10 @@ export default {
         obj.initEVBUS()
         obj.initSymList()
         obj.updateSpotInfo()
+        //延时操作
+        setTimeout(()=>{
+            obj.setSymName()
+        },0)
     },
     view: function (vnode) {
         return m("div", { class: "" }, [

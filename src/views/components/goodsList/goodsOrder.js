@@ -6,6 +6,9 @@ let obj = {
     posList:[],
     theadList: [
         {
+            title: '操作',
+            class: ""
+        }, {
             title: '交易对', //'',
             class: ""
         }, {
@@ -32,10 +35,7 @@ let obj = {
         },{
             title: gDI18n.$t('10065'/*'委托时间'*/),
             class: ""
-        },{
-            title: '',
-            class: ""
-        }
+        },
     ],
     //初始化全局广播
     initEVBUS:function(){
@@ -114,6 +114,9 @@ let obj = {
     initLanguage:function(){
         this.theadList = [
             {
+                title: '操作',
+                class: ""
+            }, {
                 title: '交易对', //'',
                 class: ""
             }, {
@@ -140,10 +143,7 @@ let obj = {
             },  {
                 title: gDI18n.$t('10065'/*'委托时间'*/),
                 class: ""
-            }, {
-                title: '',
-                class: ""
-            }
+            },
         ]
     },
     initObj(){
@@ -227,6 +227,14 @@ let obj = {
                 key: "goodsOrderTableListItem2" + i,
                 class: ""
             }, [
+                m("td", {class: "table-tr-td-vertical"}, [
+                    m("button", {class: "button is-primary " + (item.loading ? ' is-loading' : ''),onclick: function () {
+                            obj.delOrder(item)
+                        }
+                    }, [
+                        gDI18n.$t('10082') //'撤单'
+                    ])
+                ]),
                 m("td", {class: "table-tr-td-vertical cursor-pointer",onclick:function(){
                     obj.setSym(item.Sym)
                 }}, [
@@ -258,14 +266,7 @@ let obj = {
                 m("td", {class: "table-tr-td-vertical"}, [
                     item.AtStr
                 ]),
-                m("td", {class: "table-tr-td-vertical"}, [
-                    m("button", {class: "button is-primary " + (item.loading ? ' is-loading' : ''),onclick: function () {
-                            obj.delOrder(item)
-                        }
-                    }, [
-                        gDI18n.$t('10082') //'撤单'
-                    ])
-                ])
+                
             ])
         })
     },
@@ -351,6 +352,7 @@ let obj = {
             return obj.getOrdListForM()
         } else {
             let colgroup = m('colgroup', {}, [
+                m('col', { name: "pub-table-10", width: 120 }),
                 m('col', { name: "pub-table-1", width: 160 }),
                 m('col', { name: "pub-table-2", width: 100 }),
                 m('col', { name: "pub-table-3", width: 100 }),
@@ -360,19 +362,19 @@ let obj = {
                 m('col', { name: "pub-table-7", width: 100 }),
                 m('col', { name: "pub-table-8", width: 150 }),
                 m('col', { name: "pub-table-9", width: 150 }),
-                m('col', { name: "pub-table-10", width: 100 }),
+                
             ])
             return m('div', { class: " table-container" }, [
-                m('div', { class: "pub-table-head-box", style: "width: 1160px" }, [
-                    m("table", { class: "table is-hoverable ", width: '1160px', cellpadding: 0, cellspacing: 0 }, [
+                m('div', { class: `pub-table-head-box ${window.gWebAPI.isLogin() ? '' : 'is-hidden'}`, style: "width: 1180px" }, [
+                    m("table", { class: "table is-hoverable ", width: '1180px', cellpadding: 0, cellspacing: 0 }, [
                         colgroup,
                         m("tr", { class: "" }, [
                             obj.getTheadList()
                         ])
                     ]),
                 ]),
-                m('div', { class: "pub-table-body-box", style: "width: 1160px" }, [
-                    m("table", { class: "table is-hoverable ", width: '1160px', cellpadding: 0, cellspacing: 0 }, [
+                m('div', { class: "pub-table-body-box", style: "width: 1180px" }, [
+                    m("table", { class: "table is-hoverable ", width: '1180px', cellpadding: 0, cellspacing: 0 }, [
                         colgroup,
                         obj.getOrdList()
                     ])

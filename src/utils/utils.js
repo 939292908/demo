@@ -926,7 +926,7 @@ utils.getPrzDecimal = function(e,maxPrz,minPrz,numb){
         }
     }
 
-    return Prz
+    return Number(Prz)
 }
 
 //对输入数量随合约进行小数取值
@@ -993,7 +993,7 @@ utils.getNumDecimal = function(e,maxNum,minNum,numb){
     }
     
 
-    return Num
+    return Number(Num)
 }
 
 //根据合约对价值小数进行取值
@@ -1029,7 +1029,7 @@ utils.getTotalDecimal = function(total,numb){
             Num = total
         }
     }
-    return Num
+    return Number(Num)
 }
 
 //按一定的数量分割数据
@@ -1054,6 +1054,14 @@ utils.splitList=function(list,num){
     }
     return newList
 }
+// 滚动时 指定触发条件 触发callback
+utils.triggerScroll = function (e, cb, trigger = 0) {
+    // 事件对象: e; 触发回调: cb; 触发距离: trigger;
+    let contentH = e.target.clientHeight; // 可见区高度
+    let scrollHight = e.target.scrollHeight; // 全文高度
+    let scrollTop = e.target.scrollTop // 卷去的高度
+    if (scrollHight - contentH - scrollTop <= trigger) cb() // 满足触发距离
+}
 // 获取两个时间差 转换为时分秒
 utils.getTimeDifference = function(end, start) {
     let sdate = new Date(end);//结束时间
@@ -1064,13 +1072,13 @@ utils.getTimeDifference = function(end, start) {
     let hours = parseInt((timeDiff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
     let minutes = parseInt((timeDiff % (1000 * 60 * 60)) / (1000 * 60));
     let seconds = parseInt((timeDiff % (1000 * 60)) / 1000);
-    hours < 10 ? hours='0'+hours : hours; //小时格式化
-    minutes < 10 ? minutes='0'+minutes : minutes; //分钟格式化
-    seconds < 10 ? seconds='0'+seconds : seconds; //秒钟格式化
+    hours < 10 && hours >= 0 ? hours = '0' + hours : hours; //小时格式化
+    minutes < 10  && minutes >= 0 ? minutes = '0' + minutes : minutes; //分钟格式化
+    seconds < 10  && seconds >= 0 ? seconds = '0' + seconds : seconds; //秒钟格式化
 
-    let k=hours+':'+minutes+':'+seconds;
+    let k = hours + ':' + minutes + ':' + seconds;
     // return k;
-    if("0" > seconds){
+    if(seconds < "0" || hours < "0" || minutes < "0"){
         return "--"
     }else{
         return k;

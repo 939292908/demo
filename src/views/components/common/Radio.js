@@ -33,6 +33,7 @@ export default {
                 return m('label', {
                     class: `radio`,
                     key: item.id,
+                    disabled: vnode.attrs.disabled || item.disabled,
                     onclick () {
                         vnode.state.current = item
                         vnode.attrs.onclick(item)

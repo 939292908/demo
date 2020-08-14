@@ -505,7 +505,7 @@ let obj = {
         }
         let tradType = window.gWebAPI.CTX.UserSetting.trade[1]
         if(tradType){
-            gEVBUS.emit(gTrd.EV_ORDTIPS_UPD, {Ev: gTrd.EV_ORDTIPS_UPD,data:{p,MgnNeedForBuy:this.MgnNeedForBuy,MgnNeedForSell:this.MgnNeedForSell}})
+            gEVBUS.emit(gTrd.EV_ORDTIPS_UPD, {Ev: gTrd.EV_ORDTIPS_UPD,data:{p}})
         }else{
             window.gTrd.ReqTrdOrderNew(p, function(aTrd, arg){
                 console.log(p,'pppppParames');
@@ -706,7 +706,6 @@ let obj = {
             }
         }
         //
-        
     },
     onStopLInput: function(e){
         let Sym = window.gMkt.CtxPlaying.Sym

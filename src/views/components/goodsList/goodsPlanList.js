@@ -2,7 +2,11 @@ var m = require("mithril")
 
 let obj = {
     posList: [],
-    theadList: [{
+    theadList: [
+        {
+            title: '操作', //'',
+            class: ""
+        }, {
             title: '交易对', //'',
             class: ""
         }, {
@@ -20,10 +24,7 @@ let obj = {
         }, {
             title: '生成时间', //'',
             class: ""
-        }, {
-            title: '', //'',
-            class: ""
-        }
+        }, 
     ],
     //初始化全局广播
     initEVBUS: function () {
@@ -89,6 +90,9 @@ let obj = {
     initLanguage: function () {
         this.theadList = [
             {
+                title: '操作', //'',
+                class: ""
+            }, {
                 title: '交易对', //'',
                 class: ""
             }, {
@@ -106,10 +110,7 @@ let obj = {
             }, {
                 title: '生成时间', //'',
                 class: ""
-            }, {
-                title: '', //'',
-                class: ""
-            }
+            },
         ]
     },
     //删除全局广播
@@ -202,6 +203,14 @@ let obj = {
     getOrdList: function () {
         return this.posList.map(function (item, i) {
             return m("tr", {key: "goodsPlanListTableListItem1" + i,class: ""}, [
+                m("td", {class: "table-tr-td-vertical"}, [
+                    m("button", {class: "button is-primary " + (item.loading ? ' is-loading' : ''),onclick: function () {
+                            obj.delOrder(item)
+                        }
+                    }, [
+                        gDI18n.$t('10085') //'删除'
+                    ])
+                ]),
                 m("td", {class: " table-tr-td-vertical cursor-pointer",onclick:function(){
                     obj.setSym(item.Sym)
                 }}, [
@@ -224,14 +233,7 @@ let obj = {
                 m("td", {class: " table-tr-td-vertical"}, [
                     item.AtStr
                 ]),
-                m("td", {class: "table-tr-td-vertical"}, [
-                    m("button", {class: "button is-primary " + (item.loading ? ' is-loading' : ''),onclick: function () {
-                            obj.delOrder(item)
-                        }
-                    }, [
-                        gDI18n.$t('10085') //'删除'
-                    ])
-                ])
+                
             ])
         })
     },
@@ -330,25 +332,25 @@ let obj = {
             return obj.getOrdListForM()
         } else {
             let colgroup = m('colgroup', {}, [
-                m('col', {name: "pub-table-1",width: 160}),
-                m('col', {name: "pub-table-2",width: 100}),
-                m('col', {name: "pub-table-3",width: 100}),
-                m('col', {name: "pub-table-4",width: 100}),
+                m('col', {name: "pub-table-1",width: 143}),
+                m('col', {name: "pub-table-2",width: 150}),
+                m('col', {name: "pub-table-3",width: 150}),
+                m('col', {name: "pub-table-4",width: 150}),
                 m('col', {name: "pub-table-5",width: 150}),
-                m('col', {name: "pub-table-8",width: 150}),
-                m('col', {name: "pub-table-9",width: 100}),
+                m('col', {name: "pub-table-6",width: 150}),
+                m('col', {name: "pub-table-7",width: 150}),
             ])
             return m('div', {class: " table-container"}, [
-                m('div', {class: "pub-table-head-box",style: "width: 860px"}, [
-                    m("table", {class: "table is-hoverable ",width: '860px',cellpadding: 0,cellspacing: 0}, [
+                m('div', {class: `pub-table-head-box ${window.gWebAPI.isLogin() ? '' : 'is-hidden'}`,style: "width: 1043px"}, [
+                    m("table", {class: "table is-hoverable ",width: '1043px',cellpadding: 0,cellspacing: 0}, [
                         colgroup,
                         m("tr", {class: ""}, [
                             obj.getTheadList()
                         ])
                     ]),
                 ]),
-                m('div', {class: "pub-table-body-box",style: "width: 860px"}, [
-                    m("table", {class: "table is-hoverable ",width: '860px',cellpadding: 0,cellspacing: 0
+                m('div', {class: "pub-table-body-box",style: "width: 1043px"}, [
+                    m("table", {class: "table is-hoverable ",width: '1043px',cellpadding: 0,cellspacing: 0
                     }, [
                         colgroup,
                         obj.getOrdList()

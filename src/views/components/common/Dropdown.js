@@ -5,6 +5,8 @@
 // activeId 默认选中id (选填)
 // type 触发类型：active / hover (选填)默认active
 
+// placeholder 提示文字 (选填)
+
 // class 类名 (选填)
 
 // btnClass 按钮 类名 (选填)
@@ -18,7 +20,7 @@ var m = require("mithril")
 export default {
     // ============= 状态 =============
     showMenu: false,
-    btnText: "click me",
+    btnText: "",
     activeId: "", // 内部临时保存id
     openClickBody: true, // body事件 节流
 
@@ -32,7 +34,11 @@ export default {
         this.initId(vnode) // id
         let curItem = null // 当前选中元素
         curItem = vnode.attrs.getList().find(item => item.id == vnode.state.activeId) // 根据 id
-        if (curItem) vnode.state.btnText = curItem.label // 文字
+        if (curItem) { // 文字
+            vnode.state.btnText = curItem.label
+        } else {
+            vnode.state.btnText = vnode.attrs.placeholder || "--"
+        }
         // console.log(curItem, vnode.state.btnText, 77777777777);
         m.redraw()
     },
@@ -75,9 +81,9 @@ export default {
                     style: (vnode.attrs.btnWidth ? `width:${vnode.attrs.btnWidth}px;` : '') +
                         (vnode.attrs.btnHeight ? `height:${vnode.attrs.btnHeight}px;` : ''),
                     onclick: (e) => {
-                        vnode.attrs.setShowMenu(!vnode.attrs.showMenu)
+                        setTimeout(() => vnode.attrs.setShowMenu(!vnode.attrs.showMenu), 0) // 进入下一次事件队列，先让body事件关闭所有下拉，再开启自己
                         // vnode.attrs.setBodyEven(false)
-                        window.stopBubble(e)
+                        // window.stopBubble(e)
                     }
                 }, [
                     m('div', { class: "button-content has-text-1" }, [
@@ -88,7 +94,7 @@ export default {
             ]),
             // menu
             m('div', { class: "dropdown-menu ", style: vnode.attrs.menuWidth ? `width:${vnode.attrs.menuWidth}px` : '' }, [
-                m('div', { class: "dropdown-content" },
+                m('div', { class: "dropdown-content", style: "max-height: 400px; overflow: auto;"},
                     vnode.attrs.getList().map((item, index) => {
                         return m('a', {
                             class: `dropdown-item has-hover ${vnode.state.activeId == item.id ? 'has-active' : ''}`, key: item.label + index, onclick () {
