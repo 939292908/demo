@@ -273,7 +273,7 @@ let obj = {
         //使用getFullNum转换科学计数法为小数
         let numb = utils.getFullNum(ass.PrzMinInc).toString()
         
-        this.form.Prz = utils.getPrzDecimal(_e,maxPrz,minPrz,numb)
+        this.form.Prz = utils.getFullNum(utils.getPrzDecimal(_e,maxPrz,minPrz,numb))
         obj.getTotalValue()
     },
     //数量
@@ -286,7 +286,7 @@ let obj = {
         //使用getFullNum转换科学计数法为小数
         let numb = utils.getFullNum(ass.OrderMinQty).toString()
         
-        this.form.Num = utils.getNumDecimal(_e,maxNum,minNum,numb)
+        this.form.Num = utils.getFullNum(utils.getNumDecimal(_e,maxNum,minNum,numb))
         obj.getTotalValue()
     },
     //价值
@@ -296,12 +296,12 @@ let obj = {
         //使用getFullNum转换科学计数法为小数
         let numb = utils.getFullNum(ass.PrzMinInc).toString()
         let total = ((this.form.Num || 0) * (this.form.Prz || 0)).toString()
-        this.form.Total = utils.getTotalDecimal(total,numb)
+        this.form.Total = utils.getFullNum(utils.getTotalDecimal(total,numb))
         
     },
     //价值变化改变数量
     getValueChange:function(e){
-        this.form.Total = e.target.value
+        this.form.Total = utils.getFullNum(Number(e.target.value))
         let formNum = (e.target.value / this.form.Prz).toString()
         let Sym = window.gMkt.CtxPlaying.Sym
         let ass = window.gMkt.AssetD[Sym]
@@ -322,7 +322,7 @@ let obj = {
         //使用getFullNum转换科学计数法为小数
         let numb = utils.getFullNum(ass.PrzMinInc).toString()
         
-        this.form.stopPL = utils.getPrzDecimal(stop,maxPrz,minPrz,numb)
+        this.form.stopPL = utils.getFullNum(utils.getPrzDecimal(stop,maxPrz,minPrz,numb))
     },
 
     // 校验
