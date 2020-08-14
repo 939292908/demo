@@ -4,6 +4,27 @@
         display: flex;
         flex-wrap: wrap;
     }
+    .myWalletIndex-head{
+        .myWalletIndex-head-left{
+            .myWalletIndex-head-left-total{
+                & span:nth-child(1){
+                    font-size: 16px;
+                }
+                select{
+                    background: none;
+                    border: none;
+                    outline: none;
+                }
+            }
+            & div:nth-child(2){
+                & span{
+                    &:nth-child(1),&:nth-child(2){
+                        font-size: 32px;
+                    }
+                }
+            }
+        }
+    }
     .myAccount{
         .show-desc{
             margin-left: auto;
@@ -13,23 +34,29 @@
             display: none;
         }
         .show-desc{
-            display: block;
+            display: '';
         }
         &:nth-child(2){
             margin-left: var(--c-margin-level5);
             margin-right: var(--c-margin-level5);
         }
     }
-    .myAccount,.otherAccount{
+    .myAccount{
         display: flex;
         flex-direction: row;
+        width: 388px;
+        height: 113px;
+        div div{
+            font-size: 18px;
+            color: #282a2f;
+        }
     }
     .myWalletIndex-switch{
         margin-bottom: var(--c-margin-level5);
         .is-primary{
             background-color: var(--c-primary-lighten);
             border-color: var(--c-primary-lighten);
-            color: var(--c-font-darken);
+            color: #FFFFFF !important;
         }
         .tradeCard{
             display: flex;
@@ -50,6 +77,9 @@
     }
     .myWalletIndex-head-right div{
         div{
+            height: 44px;
+            width: 68px;
+            border-radius: 2px;
             margin: 0 var(--c-margin-level3);
             text-align: center;
             border: 1px solid var(--c-primary-lighten);

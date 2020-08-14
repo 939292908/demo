@@ -115,20 +115,17 @@ const myWalletIndex = {
             {
                 title: '我的钱包',
                 val: myWalletIndex.walletTotalValue,
-                descCls: 'hide-desc',
-                divBg: 'is-primary'
+                descCls: 'hide-desc'
             },
             {
                 title: '交易账户',
                 val: myWalletIndex.tradingAccountTotalValue,
-                descCls: 'show-desc cursor-pointer',
-                divBg: 'is-primary'
+                descCls: 'show-desc cursor-pointer'
             },
             {
                 title: '其他账户',
                 val: '0.00000000 ',
-                descCls: 'show-desc cursor-pointer',
-                divBg: 'is-primary'
+                descCls: 'show-desc cursor-pointer'
             }
         ];
     },
@@ -156,14 +153,13 @@ const myWalletIndex = {
                     m('div', { class: 'myWalletIndex-head-left-total columns' }, [
                         m('span', { class: '', style: 'padding:10px' }, ['总资产估值']),
                         m('span.navbar-item.has-dropdown.is-hoverable', {}, [
-                            m('select.select', { onchange: function () { myWalletIndex.currencyChange(this.value); } }, [
+                            m('select.has-text-primary', { onchange: function () { myWalletIndex.currencyChange(this.value); } }, [
                                 m('option', {}, ['BTC']),
                                 m('option', {}, ['USDT'])
                             ])
                         ])
                     ]),
                     m('div', { class: 'number-hide' }, [
-                        // m('span', {}, [myWalletIndex[myWalletIndex.valuation]]),
                         m('span', {}, [myWalletIndex.totalValue]),
                         m('span', {}, [' ' + this.currency]),
                         m('span.cursor-pointer', {
@@ -190,7 +186,7 @@ const myWalletIndex = {
             m('div', { class: 'myWalletIndex-switch columns-flex' }, [
                 myWalletIndex.Nav.secondNav.map((item, index) => {
                     return m('div.myAccount column', {
-                        class: myWalletIndex.swValue === index ? item.divBg : '',
+                        class: myWalletIndex.swValue === index ? 'is-primary' : '',
                         onclick: function () {
                             // 其他账户未开放
                             if (index <= 1) {
@@ -200,10 +196,13 @@ const myWalletIndex = {
                         style: { border: '1px solid #ccc' }
                     }, [
                         m('div', {}, [
-                            m('span', {}, [item.title]),
-                            m('br'),
-                            m('span', {}, [item.val]),
-                            m('span', {}, [' ' + this.currency])
+                            m('div', {}, [
+                                m('span', {}, [item.title])
+                            ]),
+                            m('div', {}, [
+                                m('span', {}, [item.val]),
+                                m('span', {}, [' ' + this.currency])
+                            ])
                         ]),
                         m('div', { class: item.descCls }, [
                             m('span', { class: 'card' + index, onmouseover: function () { myWalletIndex.switchDisplay('card' + index, 'show'); }, onmouseleave: function () { myWalletIndex.switchDisplay('card' + index, 'hide'); } }, '...')
