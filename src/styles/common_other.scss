@@ -1,0 +1,88 @@
+/** 
+    此文件用于放除尺寸和颜色之外的公用样式
+*/
+
+/* 公共样式 start */
+
+.is-between {
+    display: flex;
+    justify-content: space-between;
+    // align-items: center;
+}
+
+.is-around {
+    display: flex;
+    justify-content: space-around;
+    // align-items: center;
+}
+
+.is-align-items-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* 动画相关 start */
+@keyframes sliding-out-from-right {
+    from {
+        transform: translateX(100%);
+    }
+
+    to {
+        transform: translateX(0%);
+    }
+}
+
+@keyframes sliding-out-from-top {
+    from {
+        transform: translateY(-100%);
+    }
+
+    to {
+        transform: translateY(0%);
+    }
+}
+
+/* 动画相关 end */
+
+/* 旋转 */
+.rotate-x-90 {
+    transform: rotateX(90deg);
+    display: inline-block
+}
+
+.rotate-x-180 {
+    transform: rotateX(180deg);
+    display: inline-block
+}
+
+.rotate-x-270 {
+    transform: rotateX(270deg);
+    display: inline-block
+}
+
+
+
+/* 滚动 */
+.scroll {
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+.scroll-y {
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+.scroll-x {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+// 鼠标浮动指针显示
+.cursor-pointer {
+    cursor: pointer;
+}
+
+/* 公共样式 end */
+
