@@ -116,7 +116,9 @@ export default {
                 ]),
             ]),
             // tBody
-            m('div', { class: "pub-table-body-box", style: this.getAllBoxStyle() + this.getTBStyle(vnode)}, [
+            m('div', { class: "pub-table-body-box", style: this.getAllBoxStyle() + this.getTBStyle(vnode), onscroll(e) {
+                vnode.attrs.onscroll ? vnode.attrs.onscroll(e) : ''
+            }}, [
                 m("table", { class: "table is-hoverable ", style: 'min-width: 100%;', cellpadding: 0, cellspacing: 0 }, [
                     this.getColgroup(vnode),
                     // 表格
