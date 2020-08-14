@@ -926,7 +926,7 @@ utils.getPrzDecimal = function(e,maxPrz,minPrz,numb){
         }
     }
 
-    return Prz
+    return Number(Prz)
 }
 
 //对输入数量随合约进行小数取值
@@ -993,7 +993,7 @@ utils.getNumDecimal = function(e,maxNum,minNum,numb){
     }
     
 
-    return Num
+    return Number(Num)
 }
 
 //根据合约对价值小数进行取值
@@ -1029,7 +1029,7 @@ utils.getTotalDecimal = function(total,numb){
             Num = total
         }
     }
-    return Num
+    return Number(Num)
 }
 
 //按一定的数量分割数据
