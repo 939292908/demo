@@ -23,12 +23,17 @@
     background-size: "cover";
 }
 
-.my-7 {
+.introduce-transaction {
     text-align: center;
     background: #0D1C33 url("~@/assets/img/home/Rectangle 465.png") no-repeat center center;
     background-size: "cover";
     width: 1920px;
-    height: 902px;
+    /* height: 902px; */
+}
+
+.home-picture-vbit{
+    margin-right: 600px;
+    /* margin-bottom: 200px; */
 }
 
 .index-info-box-right-1 {
@@ -78,7 +83,7 @@
 }
 
 .home-banner {
-    background: #0D1C33 url("~@/assets/img/home/vector.png") no-repeat center center;
+    background: url("~@/assets/img/home/vector.png") no-repeat center center;
     background-size: "cover";
     text-align: center;
 }
@@ -106,16 +111,23 @@
     background: #0D1C33 url("~@/assets/img/home/layer 14.png") no-repeat center center;
     background-size: "cover";
     width: 1920px;
-    height: 717px;
 }
 
 .picture-layer {
-    width: 1400px;
-    height: 764px;
+    /* text-align: center; */
+    width: 80%;
+    height: 80%;
+    margin-left: 130px;
 }
 
 .introduce-rectangle{
     margin-left: 100px;
+}
+
+.home-introduce-Rectangle{
+    background-color: #FF8B00;
+    width: 1000px;
+    border-radius: 40px 40px 0 0;
 }
 
 。introduce-image {
@@ -126,10 +138,6 @@
 .frame-2.w {
     height: 200px;
     margin-top: 20px;
-}
-
-.title-1 {
-    margin-top: 40px;
 }
 
 .register {
@@ -182,16 +190,6 @@
     height: 300px;
 }
 
-.download-ios {
-    height: 32px;
-    margin-top: 80px;
-}
-
-.download-Android {
-    height: 32px;
-    margin-right: 300px;
-    margin-top: 80px;
-}
 
 .navigation {
     width: 300px;
@@ -207,20 +205,15 @@
     text-align: center;
 }
 
-.download-title {
-    margin-right: 200px;
-}
-
-.introduce {
-    margin-top: 200px;
-}
-
-
 
 /**底部*/
 .bottom-navigation-tab-1 {
     text-align-last: left;
     line-height: 27px;
+}
+
+.footer-right{
+    margin-bottom: 200px;
 }
 
 .bottom-navigation-tab-2 {

@@ -12,23 +12,23 @@ module.exports = {
         Login.onremove();
     },
     view() {
-        return m('div.is-align-items-center', {}, [
+        return m('div.is-align-items-center.pa-8', {}, [
             m('div.box.views-page-login-box-width.px-7.py-8', {},
                 Login.is2fa
                     ? [m(Validate, { is2fa: Login.is2fa })]
                     : [
-                        m('div.title-4.has-text-level-4', {},
+                        m('div.title-4.has-text-level-1', {},
                             [window.exchConfig.exchName]),
-                        m('div.mb-8.title-4.has-text-level-1', {},
+                        m('div.mb-8.title-4.has-text-level-2', {},
                             [`登录${window.exchConfig.exchName}账号`]),
-                        m('div.has-text-level-1.body-3.mb-2', {}, ['手机/邮箱']),
+                        m('div.has-text-level-2.body-3.mb-2', {}, ['手机/邮箱']),
                         m('input.input[type=text].mb-5', {
                             oninput: e => {
                                 Login.account = e.target.value;
                             },
                             value: Login.account
                         }, []),
-                        m('div.body-3.has-text-level-1.mb-2', {}, ['密码']),
+                        m('div.body-3.has-text-level-2.mb-2', {}, ['密码']),
                         m('input.input[type=password].mb-2', {
                             oninput: e => {
                                 Login.password = e.target.value;
@@ -50,7 +50,7 @@ module.exports = {
                                     Login.login();
                                 }
                             }, [window.gI18n.$t('10136')/* '登录' */]),
-                        m('div.has-text-centered.body-3.has-text-level-1',
+                        m('div.has-text-centered.body-3.has-text-level-2',
                             {}, [
                                 '还没账号？去',
                                 m('a.has-text-primary', {
