@@ -7,7 +7,6 @@ module.exports = {
         return m('div.views-pages-home-rotation', {}, [
             // // 轮播
             // m('div', { class: `rotation-content container` }, [
-
             // ])
         ]);
     }
