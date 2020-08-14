@@ -188,6 +188,7 @@ export default {
         obj.initSymList()
         //延时操作
         setTimeout(()=>{
+            obj.unSubTick()
             obj.setSymName()
         },0)
     },

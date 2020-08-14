@@ -129,11 +129,11 @@ let obj = {
             info: '--'
         },
         {
-            name: '流动性提供方(Maker)手续费率：',
+            name: '流动性提供方(Maker)手续费率',
             info: '--'
         },
         {
-            name: '流动性提取方(Taker)手续费率：',
+            name: '流动性提取方(Taker)手续费率',
             info: '--'
         },
         {
@@ -190,8 +190,8 @@ let obj = {
         this.contractList[10].name = "启用自动减仓"
         this.contractList[11].name = "委托保证金率"
         this.contractList[12].name = "仓位保证金率"
-        this.contractList[13].name = "流动性提供方(Maker)手续费率："
-        this.contractList[14].name = "流动性提取方(Taker)手续费率："
+        this.contractList[13].name = "流动性提供方(Maker)手续费率"
+        this.contractList[14].name = "流动性提取方(Taker)手续费率"
         this.contractList[15].name = "委托保证金"
         this.contractList[16].name = "仓位保证金"
         this.contractList[17].name = "资金费率"
