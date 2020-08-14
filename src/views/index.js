@@ -17,7 +17,7 @@ module.exports = {
 
     },
     view: function() {
-        return m('section.section' + (window.themeDark ? " #theme--dark" : " #theme--light"), [
+        return m('section.section' + (window.themeDark ? " .theme--dark" : " .theme--light"), [
             m(header),
             m('div.route-box'),
             m(footer),
