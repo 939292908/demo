@@ -413,6 +413,7 @@ export default {
         ])
     },
     onremove: function(vnode) {
+        spotTick.unSubTick()
         spotTick.rmEVBUS()
     },
     
