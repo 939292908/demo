@@ -951,9 +951,9 @@ let obj = {
         Typ = Typ == '0'?'1m':Typ
         if(window._chart.Sym != Sym || window._chart.Typ != Typ){
             if(window._chart.Sym && window._chart.Typ){
-                gMkt.ReqUnSub(["kline_" + Typ + "_" + Sym])
+                gMkt.TpcDelArr(["kline_" + Typ + "_" + Sym])
             }
-            gMkt.ReqSub(["kline_" + Typ + "_" + Sym])
+            gMkt.TpcAddArr(["kline_" + Typ + "_" + Sym])
             // 此时更改k线获取状态为false，可以继续获取k线数据
             this.isGetKlineDataLoading = false
             window._chart.Sym = Sym

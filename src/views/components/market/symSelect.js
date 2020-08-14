@@ -349,7 +349,7 @@ let symSelect = {
         }
         if (SymList.length > 0) {
             let subArr = utils.setSubArrType('tick', SymList)
-            window.gMkt.ReqSub(subArr)
+            window.gMkt.TpcAddArr(subArr)
         }
     },
     unSubSym: function () {
@@ -369,7 +369,7 @@ let symSelect = {
         })
         if (SymList.length > 0) {
             let subArr = utils.setSubArrType('tick', SymList)
-            window.gMkt.ReqUnSub(subArr)
+            window.gMkt.TpcDelArr(subArr)
         }
     },
     onTick: function (param) {

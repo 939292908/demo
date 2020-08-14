@@ -286,14 +286,14 @@ let obj = {
             // subArr = subArr.concat(utils.setSubArrType('trade',[Sym]))
             subArr = subArr.concat(utils.setSubArrType('order20', [Sym]))
             subArr = subArr.concat(utils.setSubArrType('index', [utils.getGmexCi(window.gMkt.AssetD, Sym)]))
-            window.gMkt.ReqSub(subArr)
+            window.gMkt.TpcAddArr(subArr)
             this.oldSubArr = subArr
         }
         m.redraw();
     },
     unSubTick () {
         let oldSubArr = this.oldSubArr
-        window.gMkt.ReqUnSub(oldSubArr)
+        window.gMkt.TpcDelArr(oldSubArr)
     },
     getUserInfoCon: function () {
         if (window.gWebAPI.isLogin()) {

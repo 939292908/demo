@@ -106,7 +106,7 @@ let obj = {
         if(Sym){
             let subArr = []
             subArr = subArr.concat(utils.setSubArrType('index',[Sym]))
-            window.gMkt.ReqSub(subArr)
+            window.gMkt.TpcAddArr(subArr)
             this.oldSubArr = subArr
         }
         m.redraw();
@@ -114,7 +114,7 @@ let obj = {
     //清除订阅指数行情
     unSubTick(){
         let oldSubArr = this.oldSubArr
-        window.gMkt.ReqUnSub(oldSubArr)
+        window.gMkt.TpcDelArr(oldSubArr)
     },
 
     //改变选中id
@@ -247,6 +247,7 @@ export default {
         ])
     },
     onremove: function(){
+        obj.unSubTick()
         obj.rmEVBUS()
     }
 }

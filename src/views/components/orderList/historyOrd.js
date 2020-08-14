@@ -1017,7 +1017,7 @@ let obj = {
             }
         }
         if (needSub.length > 0) {
-            window.gMkt.ReqSub(needSub)
+            window.gMkt.TpcAddArr(needSub)
         }
     },
     getHistoryOrd: function () {

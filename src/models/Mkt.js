@@ -634,43 +634,42 @@ class Mkt {
                             }
                         }
 
-                        let books
-                        let unbooks
-                        let toberemove
+                        let books;
+                        let unbooks;
+                        let toberemove;
                         for (var propName in aObj.booking) {
-                            let book = aObj.booking[propName];
+                            const book = aObj.booking[propName];
                             if (book.want) {
                                 if (!book.done) {
                                     book.done = true;
                                     if (!books) {
-                                        books = []
+                                        books = [];
                                     }
-                                    books.push(propName)
+                                    books.push(propName);
                                 }
                             } else {
                                 if (!book.done) {
                                     book.done = true;
                                     if (!unbooks) {
-                                        unbooks = []
+                                        unbooks = [];
                                     }
-                                    unbooks.push(propName)
+                                    unbooks.push(propName);
                                     if (!toberemove) {
-                                        toberemove = []
+                                        toberemove = [];
                                     }
                                     toberemove.push(propName);
                                 }
                             }
-
                         }
-                        if (books && (books.length>0)) {
-                            aObj.ReqSub(books)
+                        if (books && (books.length > 0)) {
+                            aObj.ReqSub(books);
                         }
-                        if (unbooks && unbooks.length>0) {
-                            aObj.ReqUnSub(unbooks)
+                        if (unbooks && unbooks.length > 0) {
+                            aObj.ReqUnSub(unbooks);
                         }
                         if (toberemove) {
-                            for (let i = toberemove.length - 1; i >=0; i--) {
-                                delete aObj.booking,toberemove[i]
+                            for (let i = toberemove.length - 1; i >= 0; i--) {
+                                delete aObj.booking[toberemove[i]];
                             }
                         }
 
@@ -1330,6 +1329,24 @@ class Mkt {
                         book.done = false;
                     }
                 }
+            }
+        }
+    }
+
+    TpcAddArr(aTpcArr) {
+        let s = this;
+        if(aTpcArr.length > 0){
+            for(let item of aTpcArr){
+                s.TpcAdd(item)
+            }
+        }
+    }
+
+    TpcDelArr(aTpcArr) {
+        let s = this;
+        if(aTpcArr.length > 0){
+            for(let item of aTpcArr){
+                s.TpcDel(item)
             }
         }
     }
