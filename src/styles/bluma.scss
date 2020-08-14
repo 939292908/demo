@@ -1,5 +1,12 @@
 @charset "utf-8";
 
+$primary: #FF8B00;
+$info: #FF8B00;
+$success: #42DC3F;
+$danger: #F33309;
+$light: #FFFFFF;
+$dark: #171A21;
+
 // Import only what you need from Bulma
 @import "@/../node_modules/bulma/sass/utilities/_all.sass";
 @import "@/../node_modules/bulma/sass/base/_all.sass";
