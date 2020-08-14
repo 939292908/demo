@@ -112,6 +112,9 @@ hr {
 }
 //table子项垂直居中end
 
+.table-tr-td-pr{
+    @extend %pr-3;
+}
 //覆盖ui样式end
 //header样式 start
 
