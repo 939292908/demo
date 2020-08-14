@@ -14,7 +14,7 @@ module.exports = {
     },
     view() {
         return m('div.is-align-items-center.pa-8', {}, [
-            m('div.box.views-page-login-box-width.px-7.py-8', {},
+            m('div.box.has-bg-level-2.views-page-login-box-width.px-7.py-8', {},
                 ForgetPassword.isValidate ? [
                     m('div.mb-2.title-4.has-text-level-1.title-x-large-1.has-text-title', {},
                         ['重置密码']),

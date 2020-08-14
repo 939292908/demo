@@ -13,7 +13,7 @@ module.exports = {
     },
     view() {
         return m('div.is-align-items-center.pa-8', {}, [
-            m('div.box.views-page-login-box-width.px-7.py-8', {}, [
+            m('div.box.has-bg-level-2.views-page-login-box-width.px-7.py-8', {}, [
                 Register.isvalidate ? [
                     m('div.title-x-large-1.views-page-login-title.opacity', {}, [window.exchConfig.exchName]),
                     m('div.mb-5.title-x-large-1.has-text-title', {}, ['注册验证']),
