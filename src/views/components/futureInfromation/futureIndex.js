@@ -167,7 +167,7 @@ let obj = {
             let d = {
                 jys: itme,
                 hbd: Sym + "/USDT",
-                dqbj: this.tableData[itme].prz,
+                dqbj: (this.tableData[itme].prz).toFixed2(2),
                 qz: "1/" + tableKeys.length
             }
             tableList.push(d)
