@@ -333,14 +333,9 @@ let obj = {
     },
     //删除全局广播
     rmEVBUS: function () {
+        //当前选中合约变化全局广播
         if (this.EV_CHANGESYM_UPD_unbinder) {
             this.EV_CHANGESYM_UPD_unbinder()
-        }
-        if (this.EV_HIST_UPD_unbinder) {
-            this.EV_HIST_UPD_unbinder();
-        }
-        if (this.EV_FUNC_PTR_unbinder) {
-            this.EV_FUNC_PTR_unbinder();
         }
         if (this.EV_REALTIME_UPD_unbinder) {
             this.EV_REALTIME_UPD_unbinder();
@@ -351,8 +346,16 @@ let obj = {
         if(this.EV_ClICKBODY_unbinder){
             this.EV_ClICKBODY_unbinder()
         }
+        //监听多元
         if(this.EV_CHANGELOCALE_UPD_unbinder){
             this.EV_CHANGELOCALE_UPD_unbinder()
+        }
+        //监听主题变化
+        if(this.EV_THEME_UP_unbinder){
+            this.EV_THEME_UP_unbinder()
+        }
+        if(this.EV_ONRESIZE_UPD_unbinder){
+            this.EV_ONRESIZE_UPD_unbinder()
         }
 
         if (window.removeEventListener) {
@@ -1170,7 +1173,7 @@ let obj = {
         if(!window._chart) return
 
         let arg = param.data
-        let Sym = window._chart.Sym
+        let Sym = arg.Sym
         let Typ = window._chart.Typ || '1m';
         if (window._chart && Sym == window._chart.Sym) {
             Typ = Typ == '0'?'1m':Typ
