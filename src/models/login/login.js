@@ -83,7 +83,7 @@ module.exports = {
                 } else if (res.result.phone) {
                     this.loading = false;
                     // 手机
-                    this.validate.activeSms({
+                    window.validate.activeSms({
                         securePhone: window.utils.hideMobileInfo(res.result.phone),
                         phoneNum: res.result.phone
                     },
@@ -95,13 +95,13 @@ module.exports = {
                 } else if (res.result.googleId) {
                     this.loading = false;
                     // 谷歌
-                    this.validate.activeGoogle(() => {
+                    window.validate.activeGoogle(() => {
                         this.loginEnter();
                     });
                     this.is2fa = true;
                     m.redraw();
                 } else {
-                    this.queryUserInfo();
+                    this.getUserInfo();
                 }
                 // this.loginSms = res.result.loginSms;
             } else {
@@ -203,8 +203,8 @@ module.exports = {
         this.initGeetest();
     },
     onremove() {
-        this.validateCode = [];
-        // window.validate.close();
+        this.is2fa = false;
+        window.validate.close();
         window.gBroadcast.offMsg({
             key: 'login',
             cmd: 'geetestMsg',

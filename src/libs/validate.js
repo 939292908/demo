@@ -25,13 +25,6 @@ class Validate {
         //     type: this.sms,
         //     loading: false,
         // };
-        if (params) {
-            params.lang = window.gI18n.lang;
-        } else {
-            params = {
-                lang: window.gI18n.lang
-            };
-        }
         this.smsConfig = params;
         // window.gBroadcast.emit({
         //     cmd: 'setValidateSheet',
@@ -149,7 +142,7 @@ class Validate {
                 lang: window.gI18n.locale
             };
         }
-        window.gWebApi.getSMSCode(this.smsConfig, res => {
+        window.gWebApi.getSMSCodeV2(this.smsConfig, res => {
             if (callback1) {
                 callback1();
             }
@@ -175,7 +168,7 @@ class Validate {
             this.emailConfig = { exChannel: window.exchId };
         }
 
-        window.gWebApi.sendEmail(this.emailConfig, res => {
+        window.gWebApi.sendEmailV2(this.emailConfig, res => {
             if (callback1) {
                 callback1();
             }
@@ -207,7 +200,7 @@ class Validate {
         }
         params.code = code;
 
-        window.gWebApi.smsVerify(params, res => {
+        window.gWebApi.smsVerifyV2(params, res => {
             if (res.result === 0) {
                 this.finished();
             } else {
@@ -263,7 +256,7 @@ class Validate {
             });
             return;
         }
-        window.gWebApi.emailCheck({ code: code },
+        window.gWebApi.emailCheckV2({ code: code },
             res => {
                 if (res.result.code === 0) {
                     this.finished();

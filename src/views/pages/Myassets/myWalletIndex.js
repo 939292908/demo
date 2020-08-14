@@ -40,7 +40,7 @@ const myWalletIndex = {
         if (this.hideMoneyFlag) {
             this.hideMoneyFlag = !this.hideMoneyFlag;
             this.setTotalValue(wlt[this.currency === 'BTC' ? 'totalValueForBTC' : 'totalValueForUSDT']);
-            this.setTotalCNY('123');
+            this.setTotalCNY(wlt[this.currency === 'BTC' ? 'totalCNYValueForBTC' : 'totalCNYValueForUSDT']);
         } else {
             this.hideMoneyFlag = !this.hideMoneyFlag;
             this.setTotalValue('******');
@@ -90,7 +90,7 @@ const myWalletIndex = {
             {
                 title: '充币',
                 // 跳转至哪个链接 例如：to: 'http://www.baidu.com'
-                to: ''
+                to: '#!/chargeMoney'
             },
             {
                 title: '提币',
@@ -181,7 +181,7 @@ const myWalletIndex = {
                     // 充币  提币  内部转账  资金划转
                     m('div', { class: 'is-between' }, [
                         myWalletIndex.Nav.firstNav.map(item => {
-                            return m('div', { class: 'column cursor-pointer' }, [item.title]);
+                            return m('div', { class: 'column cursor-pointer', onclick: function () { myWalletIndex.toPage(item.to); } }, [item.title]);
                         })
                     ])
                 ])
@@ -233,6 +233,7 @@ module.exports = {
             myWalletIndex.setLegalTotal(wlt.legalTotalValueForBTC);
             myWalletIndex.setContractTotal(wlt.contractTotalValueForBTC);
             myWalletIndex.setCoinTotal(wlt.coinTotalValueForBTC);
+            myWalletIndex.setTotalCNY(wlt.totalCNYValueForBTC);
             myWalletIndex.initSecondNav();
             m.redraw();
         }, '100');

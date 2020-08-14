@@ -1,0 +1,40 @@
+.commonAuto{
+    margin: auto;
+}
+.columns-flex-warp{
+    display: flex;
+    flex-wrap: wrap;
+}
+.columns-flex-justify{
+    display: flex;
+    justify-content: space-between;
+    width: 70%;
+}
+.columns-flex-justify1{
+    display: flex;
+    justify-content: space-between;
+}
+.identicalInput{
+    width: 192px !important;
+    height: 27px !important;
+}
+.identicalInput[type=date]:focus{
+    outline: none;
+ }
+.tbody tr{
+    display: block;
+}
+.tbody tr td{
+    width: 200px;
+}
+.dropdown-menu{
+    width: 500px;
+    display: block;
+}
+.dropdown-menu1{
+    display: none;
+}
+.bgColor{
+    background-color: rgba(255, 143, 9, 0.15);
+}
+

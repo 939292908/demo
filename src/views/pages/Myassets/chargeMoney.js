@@ -4,9 +4,14 @@ const QRCode = require('qrcode');
 require('@/styles/pages/Myassets/chargeMoney.scss');
 
 const Back = require('../../../assets/img/temImg/toLeft.png').default;
+const header = require('@/views/pages/Myassets/header');
 
-const QuickMark = async function (code = '这是个二维码！') {
-    return await QRCode.toDataURL(code);
+const QuickMark = function (code = '这是个二维码！') {
+    const self = this;
+    return QRCode.toDataURL(code).then(res => {
+        self.data.QRSrc = res;
+        m.redraw();
+    });
 };
 
 module.exports = {
@@ -20,17 +25,13 @@ module.exports = {
         ]
     },
     oninit: function (vNode) {
-        console.log(QuickMark());
-        try {
-            this.QRSrc = QuickMark();
-        } catch (e) {
-            console.log(e);
-        }
+        QuickMark.call(this);
     },
     view: function (vNode) {
-        const { coinList } = this.data;
+        const { coinList, QRSrc } = this.data;
         console.log(this, this.data);
         return m('div', { class: 'views-pages-myassets-chargeMoney' }, [
+            m(header, { highlightFlag: 0 }),
             m('div', { class: 'back' }, [
                 m('img', { src: Back, class: 'back-Icon' }),
                 m('span', '充币')
@@ -43,7 +44,7 @@ module.exports = {
             m('div', { class: 'columns' }, [
                 m('div', { class: 'column' }, [
                     m('div', '充币地址'),
-                    m('img', { src: '' })
+                    m('img', { src: QRSrc })
                 ]),
                 m('div', { class: 'column' }, '温馨提示')
             ])
