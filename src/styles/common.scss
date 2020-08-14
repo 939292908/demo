@@ -60,64 +60,108 @@ body,
 
 /* 动画相关 end */
 
-/* 文字大小 */
-@for $i from 1 through 6 {
-    .title-#{$i} {
-        font-size: var(--c-fontsz-level#{$i + 5});
+/* 文字大小 根据pc和手机的尺寸不同来区分对应类名的字体大小 */
+
+@media screen and (min-width: 769px) {
+    .title-small {
+        font-size: var(--c-fontsz-level6);
         font-weight: var(--c-fontweight-level3);
     }
-}
-
-// .title-1 {
-//     font-size: var(--c-fontsz-level6);
-//     font-weight: var(--c-fontweight-level3);
-// }
-
-// .title-2 {
-//     font-size: var(--c-fontsz-level7);
-//     font-weight: var(--c-fontweight-level3);
-// }
-
-// .title-3 {
-//     font-size: var(--c-fontsz-level8);
-//     font-weight: var(--c-fontweight-level3);
-// }
-
-// .title-4 {
-//     font-size: var(--c-fontsz-level9);
-//     font-weight: var(--c-fontweight-level3);
-// }
-
-// .title-5 {
-//     font-size: var(--c-fontsz-level10);
-//     font-weight: var(--c-fontweight-level3);
-// }
-
-@for $i from 0 through 4 {
-    .body-#{$i + 1} {
-        font-size: var(--c-fontsz-level#{$i + 2}) !important;
+    
+    .title-medium {
+        font-size: var(--c-fontsz-level7);
+        font-weight: var(--c-fontweight-level3);
     }
-}
+    
+    .title-large {
+        font-size: var(--c-fontsz-level8);
+        font-weight: var(--c-fontweight-level3);
+    }
+    
+    .title-x-large {
+        font-size: var(--c-fontsz-level8);
+        font-weight: var(--c-fontweight-level3);
+    }
+    
+    .title-x-large-1 {
+        font-size: var(--c-fontsz-level8);
+        font-weight: var(--c-fontweight-level3);
+    }
 
-// .body-1 {
-//     font-size: var(--c-fontsz-level0);
-// }
-// .body-2 {
-//     font-size: var(--c-fontsz-level1);
-// }
-// .body-3 {
-//     font-size: var(--c-fontsz-level2);
-// }
-// .body-4 {
-//     font-size: var(--c-fontsz-level3);
-// }
-// .body-5 {
-//     font-size: var(--c-fontsz-level4);
-// }
-// .body-6 {
-//     font-size: var(--c-fontsz-level5);
-// }
+    .title-x-large-2 {
+        font-size: var(--c-fontsz-level8);
+        font-weight: var(--c-fontweight-level3);
+    }
+    
+    .body-1 {
+        font-size: var(--c-fontsz-level0);
+    }
+    .body-2 {
+        font-size: var(--c-fontsz-level1);
+    }
+    .body-3 {
+        font-size: var(--c-fontsz-level2);
+    }
+    .body-4 {
+        font-size: var(--c-fontsz-level3);
+    }
+    .body-5 {
+        font-size: var(--c-fontsz-level4);
+    }
+    .body-6 {
+        font-size: var(--c-fontsz-level5);
+    }
+} 
+@media screen and (max-width: 769px) {
+    .title-small {
+        font-size: var(--c-fontsz-level6);
+        font-weight: var(--c-fontweight-level3);
+    }
+    
+    .title-medium {
+        font-size: var(--c-fontsz-level7);
+        font-weight: var(--c-fontweight-level3);
+    }
+    
+    .title-large {
+        font-size: var(--c-fontsz-level8);
+        font-weight: var(--c-fontweight-level3);
+    }
+    
+    .title-x-large {
+        font-size: var(--c-fontsz-level9);
+        font-weight: var(--c-fontweight-level3);
+    }
+    
+    .title-x-large-1 {
+        font-size: var(--c-fontsz-level10);
+        font-weight: var(--c-fontweight-level3);
+    }
 
+    .title-x-large-2 {
+        font-size: var(--c-fontsz-level11);
+        font-weight: var(--c-fontweight-level3);
+    }
+    
+    .body-1 {
+        font-size: var(--c-fontsz-level3);
+    }
+    .body-2 {
+        font-size: var(--c-fontsz-level3);
+    }
+    .body-3 {
+        font-size: var(--c-fontsz-level3);
+    }
+    .body-4 {
+        font-size: var(--c-fontsz-level3);
+    }
+    .body-5 {
+        font-size: var(--c-fontsz-level4);
+    }
+    .body-6 {
+        font-size: var(--c-fontsz-level5);
+    }
+} 
 
 /* iconfont尺寸 */
 
@@ -458,31 +502,17 @@ body,
     background-color: var(--c-background-lighten);
 }
 
-@for $i from 2 through 6 {
-    .theme--light .has-bg-level-#{$i} {
-        background-color: var(--c-background-lighten#{$i - 1});
-    }
+.theme--light .has-bg-level-2{
+    background-color: var(--c-background-lighten1);
 }
 
-// .theme--light .has-bg-level-2{
-//     background-color: var(--c-background-lighten1);
-// }
+.theme--light .has-bg-level-3{
+    background-color: var(--c-background-lighten2);
+}
 
-// .theme--light .has-bg-level-3{
-//     background-color: var(--c-background-lighten2);
-// }
-
-// .theme--light .has-bg-level-4{
-//     background-color: var(--c-background-lighten3);
-// }
-
-// .theme--light .has-bg-level-5{
-//     background-color: var(--c-background-lighten4);
-// }
-
-// .theme--light .has-bg-level-6{
-//     background-color: var(--c-background-lighten5);
-// }
+.theme--light .has-bg-level-4{
+    background-color: var(--c-background-lighten3);
+}
 
 /* 主色调 */
 .theme--light .has-bg-primary {
@@ -491,17 +521,51 @@ body,
     color: var(--c-font-darken);
 }
 
-/* 红 */
-.theme--light .has-bg-error {
-    background-color: var(--c-error-lighten);
-    border-color: var(--c-error-lighten);
+/* 跌红 */
+.theme--light .has-bg-up {
+    background-color: var(--c-red-lighten);
+    border-color: var(--c-red-lighten);
     color: var(--c-font-darken);
 }
 
-/* 绿 */
-.theme--light .has-bg-success {
-    background-color: var(--c-success-lighten);
-    border-color: var(--c-success-lighten);
+/* 涨绿 */
+.theme--light .has-bg-down {
+    background-color: var(--c-green-lighten);
+    border-color: var(--c-green-lighten);
+    color: var(--c-font-darken);
+}
+
+/* 提示颜色 */
+.theme--light .has-bg-tip-error {
+    background-color: var(--c-tip-errorLighten);
+    border-color: var(--c-tip-errorLighten);
+    color: var(--c-font-darken);
+}
+.theme--light .has-bg-tip-warning {
+    background-color: var(--c-tip-warningLighten);
+    border-color: var(--c-tip-warningLighten);
+    color: var(--c-font-darken);
+}
+.theme--light .has-bg-tip-success {
+    background-color: var(--c-tip-successLighten);
+    border-color: var(--c-tip-successLighten);
+    color: var(--c-font-darken);
+}
+.theme--light .has-bg-tip-fail {
+    background-color: var(--c-tip-failLighten);
+    border-color: var(--c-tip-failLighten);
+    color: var(--c-font-darken);
+}
+
+/* 标记背景颜色 */
+.theme--light .has-bg-sign-1 {
+    background-color: var(--c-sign-lighten);
+    border-color: var(--c-sign-lighten);
+    color: var(--c-font-darken);
+}
+.theme--light .has-bg-sign-2 {
+    background-color: var(--c-sign-lighten1);
+    border-color: var(--c-sign-lighten1);
     color: var(--c-font-darken);
 }
 
@@ -532,23 +596,41 @@ body,
     color: var(--c-font-lighten2) !important;
 }
 
-.theme--light .has-text-level-4 {
-    color: var(--c-font-lighten3) !important;
-}
-
 /* 主色调 */
 .theme--light .has-text-primary {
     color: var(--c-primary-lighten) !important;
 }
 
-/* 红 */
-.theme--light .has-text-error {
-    color: var(--c-error-lighten);
+/* 跌红 */
+.theme--light .has-text-up {
+    color: var(--c-red-lighten);
 }
 
-/* 绿 */
-.theme--light .has-text-success {
-    color: var(--c-success-lighten);
+/* 涨绿 */
+.theme--light .has-text-down {
+    color: var(--c-green-lighten);
+}
+
+/* 提示文字颜色 */
+.theme--light .has-text-tip-error {
+    color: var(--c-tip-errorLighten);
+}
+.theme--light .has-text-tip-warning {
+    color: var(--c-tip-warningLighten);
+}
+.theme--light .has-text-tip-success {
+    color: var(--c-tip-successLighten);
+}
+.theme--light .has-text-tip-fail {
+    color: var(--c-tip-failLighten);
+}
+
+/* 标记文字颜色 */
+.theme--light .has-text-sign-1 {
+    color: var(--c-sign-lighten);
+}
+.theme--light .has-text-sign-2 {
+    color: var(--c-sign-lighten1);
 }
 
 /* 文字颜色 end */
@@ -574,7 +656,17 @@ body,
     border-color: var(--c-line-lighten2);
 }
 
+.theme--light .has-line-level-4 {
+    border-color: var(--c-line-lighten3);
+}
+
 /* 线颜色 end */
+
+/* 遮罩层颜色 start */
+.theme--light .has-mode {
+    background-color: var(--c-mode-lighten);
+}
+/* 遮罩层颜色 end */
 
 /* light UI库样式覆盖 end */
 
@@ -607,36 +699,23 @@ body,
 }
 
 
-/* 背景颜色三级 */
+/* 背景颜色六级 */
+
 .theme--dark .has-bg-level-1 {
     background-color: var(--c-background-darken);
 }
 
-@for $i from 2 through 6 {
-    .theme--dark .has-bg-level-#{$i} {
-        background-color: var(--c-background-darken#{$i - 1});
-    }
+.theme--dark .has-bg-level-2{
+    background-color: var(--c-background-darken1);
 }
 
-// .theme--dark .has-bg-level-2{
-//     background-color: var(--c-background-darken1);
-// }
+.theme--dark .has-bg-level-3{
+    background-color: var(--c-background-darken2);
+}
 
-// .theme--dark .has-bg-level-3{
-//     background-color: var(--c-background-darken2);
-// }
-
-// .theme--dark .has-bg-level-4{
-//     background-color: var(--c-background-darken3);
-// }
-
-// .theme--dark .has-bg-level-5{
-//     background-color: var(--c-background-darken4);
-// }
-
-// .theme--dark .has-bg-level-6{
-//     background-color: var(--c-background-darken5);
-// }
+.theme--dark .has-bg-level-4{
+    background-color: var(--c-background-darken3);
+}
 
 /* 主色调 */
 .theme--dark .has-bg-primary {
@@ -645,23 +724,57 @@ body,
     color: var(--c-font-darken);
 }
 
-/* 红 */
-.theme--dark .has-bg-error {
-    background-color: var(--c-error-darken);
-    border-color: var(--c-error-darken);
+/* 跌红 */
+.theme--dark .has-bg-up {
+    background-color: var(--c-red-darken);
+    border-color: var(--c-red-darken);
     color: var(--c-font-darken);
 }
 
-/* 绿 */
-.theme--dark .has-bg-success {
-    background-color: var(--c-success-darken);
-    border-color: var(--c-success-darken);
+/* 涨绿 */
+.theme--dark .has-bg-down {
+    background-color: var(--c-green-darken);
+    border-color: var(--c-green-darken);
+    color: var(--c-font-darken);
+}
+
+/* 提示颜色 */
+.theme--dark .has-bg-tip-error {
+    background-color: var(--c-tip-errordarken);
+    border-color: var(--c-tip-errordarken);
+    color: var(--c-font-darken);
+}
+.theme--dark .has-bg-tip-warning {
+    background-color: var(--c-tip-warningdarken);
+    border-color: var(--c-tip-warningdarken);
+    color: var(--c-font-darken);
+}
+.theme--dark .has-bg-tip-success {
+    background-color: var(--c-tip-successdarken);
+    border-color: var(--c-tip-successdarken);
+    color: var(--c-font-darken);
+}
+.theme--dark .has-bg-tip-fail {
+    background-color: var(--c-tip-faildarken);
+    border-color: var(--c-tip-faildarken);
+    color: var(--c-font-darken);
+}
+
+/* 标记背景颜色 */
+.theme--dark .has-bg-sign-1 {
+    background-color: var(--c-sign-darken);
+    border-color: var(--c-sign-darken);
+    color: var(--c-font-darken);
+}
+.theme--dark .has-bg-sign-2 {
+    background-color: var(--c-sign-darken1);
+    border-color: var(--c-sign-darken1);
     color: var(--c-font-darken);
 }
 
 /* 背景颜色 end */
 
-/* 文字 */
+/* 文字颜色 start */
 
 .theme--dark .navbar-item,
 .theme--dark .navbar-link,
@@ -675,30 +788,52 @@ body,
 
 /* 内容文字三级 */
 .theme--dark .has-text-level-1 {
-    color: var(--c-font-darken);
+    color: var(--c-font-darken) !important;
 }
 
 .theme--dark .has-text-level-2 {
-    color: var(--c-font-darken1);
+    color: var(--c-font-darken1) !important;
 }
 
 .theme--dark .has-text-level-3 {
-    color: var(--c-font-darken2);
+    color: var(--c-font-darken2) !important;
 }
 
 /* 主色调 */
 .theme--dark .has-text-primary {
-    color: var(--c-primary-darken);
+    color: var(--c-primary-darken) !important;
 }
 
-/* 红 */
-.theme--dark .has-text-error {
-    color: var(--c-error-darken);
+/* 跌红 */
+.theme--dark .has-text-up {
+    color: var(--c-red-darken);
 }
 
-/* 绿 */
-.theme--dark .has-text-success {
-    color: var(--c-success-darken);
+/* 涨绿 */
+.theme--dark .has-text-down {
+    color: var(--c-green-darken);
+}
+
+/* 提示文字颜色 */
+.theme--dark .has-text-tip-error {
+    color: var(--c-tip-errordarken);
+}
+.theme--dark .has-text-tip-warning {
+    color: var(--c-tip-warningdarken);
+}
+.theme--dark .has-text-tip-success {
+    color: var(--c-tip-successdarken);
+}
+.theme--dark .has-text-tip-fail {
+    color: var(--c-tip-faildarken);
+}
+
+/* 标记文字颜色 */
+.theme--dark .has-text-sign-1 {
+    color: var(--c-sign-darken);
+}
+.theme--dark .has-text-sign-2 {
+    color: var(--c-sign-darken1);
 }
 
 /* 文字颜色 end */
@@ -724,23 +859,18 @@ body,
     border-color: var(--c-line-darken2);
 }
 
-/* 按钮高度 */
-@for $i from 2 through 3 {
-    .btn-#{$i} {
-        height: var(--c-button-level#{$i}) !important;
-        color: white !important;
-    }
-}
-
-@for $i from 2 through 3 {
-    .btn-outline-#{$i} {
-        height: var(--c-button-level#{$i}) !important;
-        background: white !important;
-    }
+.theme--dark .has-line-level-4 {
+    border-color: var(--c-line-darken3);
 }
 
 /* 线颜色 end */
-/* dark UI库样式覆盖 start */
+
+/* 遮罩层颜色 start */
+.theme--dark .has-mode {
+    background-color: var(--c-mode-darken);
+}
+/* 遮罩层颜色 end */
+/* dark UI库样式覆盖 end */
 $primary-lighten: #FF8B00;
 
 .input:focus,
