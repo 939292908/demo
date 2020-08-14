@@ -62,10 +62,11 @@ let obj = {
         this.pageIndex = 0
         for (var i = 0; i < 500; i++) {
             this.allTableData.push({
-                sj: '2020-01-22 12:20:00',
+                // sj: '2020-01-22 12:20:00',
+                sj: new Date().format('yyyy-MM-dd hh:mm:ss'),
                 hy: 'BTC/USDT 永续',
                 zj: i + '小时',
-                fl: '0.3344%'
+                fl: i + '%'
             })
         }
         // 把数据切割成分页

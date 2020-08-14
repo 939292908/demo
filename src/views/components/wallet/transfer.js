@@ -516,7 +516,7 @@ export default {
                 onClose: () => obj.isShowModal = false, // 关闭事件
                 slot: {
                     header: m('div', { class: `` }, ["法币审核提示"]),
-                    body: m('div', { class: `` }, ["为防止大额资金流动,您划转至法币账户的1000USDT需进行人工审核,请耐心等候."]),
+                    body: m('div', { class: `` }, [`为防止大额资金流动,您划转至法币账户的${obj.form.num + obj.form.coin}需进行人工审核,请耐心等候.`]),
                     footer: [
                         m('.spacer'),
                         m("button", {
