@@ -25,6 +25,21 @@ let obj = {
         maxLeverForSell: 0,
         // 交易模式2相关内容 end
     },
+    setType: 1,
+    setingList:[
+        {
+          id:"0",
+          value:"标记价"
+        },
+        {
+          id:"1",
+          value:"最新价"
+        },
+        {
+          id:"2",
+          value:"指数价"
+        },
+    ],
     faceValue: '= 0.0000 USDT',
     LeverInputValue: gDI18n.$t('10135'),//'杠杆',
     wlt: {},
@@ -132,6 +147,20 @@ let obj = {
     },
     initLanguage : function (){
         obj.updateSpotInfo()
+        this.setingList = [
+            {
+              id:"0",
+              value:"标记价"
+            },
+            {
+              id:"1",
+              value:"最新价"
+            },
+            {
+              id:"2",
+              value:"指数价"
+            },
+        ]
     },
     //删除全局广播
     rmEVBUS: function () {
@@ -443,7 +472,7 @@ let obj = {
             OrdFlag: 0,
             PrzChg: 0,
             StopPrz: Number(this.form.triggerPrz),
-            StopBy: 1
+            StopBy: this.setType//1
         }
 
         if (p.StopPrz >= p.Prz) {
@@ -1025,7 +1054,7 @@ let obj = {
                 show = false;
                 break;
             case 3:
-                show = true
+                show = false
                 break;
             default:
                 show = false
@@ -1179,7 +1208,25 @@ let obj = {
             this.setPId()
         }
         this.setMgnNeed()
-    }
+    },
+
+    getSettingValue:function(){
+        return this.setingList.map((item,i)=>{
+          return m('label',{class:"radio",key:"setlist"+i+item.id},[
+            m('input',{type:"radio",name:"setting",checked : (i == obj.setType),onclick:function(){
+              obj.setTypeOfInput(i)
+            }},[
+              
+            ]),
+            m('span',[
+              item.value
+            ])
+          ])
+        })
+      },
+    setTypeOfInput:function(num){
+        this.setType = num
+    },
 }
 export default {
     oninit: function (vnode) {
@@ -1216,6 +1263,14 @@ export default {
             obj.getStopPL(),
             m("div", { class: "pub-place-order-form-trigger-prz-input field" }, [
                 m("div", { class: "control" }, [
+                    m('div',{},[
+                        m('div',{},[
+                            '触发类型'
+                        ]),
+                        m('div',{},[
+                            obj.getSettingValue()
+                        ]),
+                    ]),
                     m("input", { class: "input", type: 'number', placeholder: gDI18n.$t('10164'/*"请输入触发价格"*/), step: obj.PrzStep, value: obj.form.triggerPrz, pattern:"\d*",oninput: function(e) {
                         obj.onInputFortriggerPrz(e)
                     }})
