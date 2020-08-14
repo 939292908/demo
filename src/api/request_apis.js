@@ -48,5 +48,7 @@ module.exports = {
     // 钱包历史记录
     WALLET_ASSETS_HISTORY_V1: '/v1/users/GetMoneyHistory',
     // 钱包充值地址
-    WALLET_RECHARGE_ADDR_V1: '/v1/users/GetRechargeAddr'
+    WALLET_RECHARGE_ADDR_V1: '/v1/users/GetRechargeAddr',
+    // 渠道信息
+    EXCH_INFO_V1: '/v1/exch/info'
 };

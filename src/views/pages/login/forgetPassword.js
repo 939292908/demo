@@ -14,9 +14,9 @@ module.exports = {
     },
     view() {
         return m('div.is-align-items-center.pa-8', {}, [
-            m('div.box.views-page-login-box-width.px-7.py-8', {},
+            m('div.box.has-bg-level-2.views-page-login-box-width.px-7.py-8', {},
                 ForgetPassword.isValidate ? [
-                    m('div.mb-2.title-4.has-text-level-1', {},
+                    m('div.mb-2.title-4.has-text-level-1.title-x-large-1.has-text-title', {},
                         ['重置密码']),
                     m('p.body-3.has-text-primary.mb-7', {},
                         ['出于安全考虑，修改账户安全项之后，24h内禁止提币、内部转出与卖币操作']),
@@ -37,14 +37,15 @@ module.exports = {
                         },
                         value: ForgetPassword.password2
                     }, []),
-                    m('button.button.my-3.has-bg-primary.btn-2.is-fullwidth.mb-2', {
+                    m('button.button.my-3.has-bg-primary.button-medium.is-fullwidth.has-text-white.mb-2', {
                         onclick: () => {
                             ForgetPassword.submitReset();
-                        }
+                        },
+                        class: ForgetPassword.loading ? 'is-loading' : ''
                     }, ['确定'])
                 ] : ForgetPassword.is2fa ? m(Validate, {})
                     : [
-                        m('div.mb-2.title-4.has-text-level-1', {},
+                        m('div.mb-2.title-x-large-1.has-text-title', {},
                             ['忘记密码']),
                         m('p.body-3.has-text-primary.mb-7', {},
                             ['出于安全考虑，修改账户安全项之后，24h内禁止提币、内部转出与卖币操作']),
@@ -65,7 +66,7 @@ module.exports = {
                         m('div.has-text-level-1.body-3.mb-2', {}, [ForgetPassword.loginType === 'phone' ? '手机号' : '邮箱']),
                         ForgetPassword.loginType === 'phone'
                             ? m(InputWithComponent, {
-                                addClass: 'mb-5',
+                                addClass: 'mb-7',
                                 leftComponents: m('span.select.px-1', {}, [
                                     m('select.without-border.register-national-select',
                                         {
@@ -87,7 +88,7 @@ module.exports = {
                                     value: ForgetPassword.loginName
                                 }
                             })
-                            : m('input.input[type=text].mb-5', {
+                            : m('input.input[type=text].mb-7', {
                                 oninput: e => {
                                     ForgetPassword.loginName = e.target.value;
                                 },
@@ -98,10 +99,11 @@ module.exports = {
                                 },
                                 value: ForgetPassword.loginName
                             }, []),
-                        m('button.button.my-3.has-bg-primary.btn-2.is-fullwidth.mb-2', {
+                        m('button.button.my-3.has-bg-primary.button-medium.is-fullwidth.has-text-white', {
                             onclick: () => {
                                 ForgetPassword.loginType === 'phone' ? ForgetPassword.submitPhone() : ForgetPassword.submitEmail();
-                            }
+                            },
+                            class: ForgetPassword.loading ? 'is-loading' : ''
                         }, ['下一步'])
                     ]
             )

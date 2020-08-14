@@ -114,6 +114,7 @@ module.exports = {
                 type: 'danger'
             });
             this.loading = false;
+            m.redraw();
         });
     },
     loginEnter() {
@@ -127,6 +128,7 @@ module.exports = {
                     type: 'danger'
                 });
                 this.loading = false;
+                m.redraw();
             }
         }, err => {
             window._console.log('tlh', err);
@@ -135,6 +137,7 @@ module.exports = {
                 type: 'danger'
             });
             this.loading = false;
+            m.redraw();
         });
     },
     getUserInfo() {
@@ -168,6 +171,7 @@ module.exports = {
                 type: 'danger'
             });
             this.loading = false;
+            m.redraw();
         });
     },
     // 判断是否设置资产密码
@@ -185,6 +189,7 @@ module.exports = {
                     this.loginFn(self);
                 } else {
                     this.loading = false;
+                    m.redraw();
                 }
             }
         });

@@ -18,14 +18,15 @@ module.exports = {
     isvalidate: false,
     waiting: false,
     smsCd: 0, // 激活短信按钮倒计时
-    exchInfo: {}, // 渠道信息
+    exchInfo: null, // 渠道信息
     mustInvited () {
+        if (!this.exchInfo) return false;
         return Boolean(parseInt(this.exchInfo.mustInvited));
     },
     valid () {
         const uid = cryptoChar.decrypt(this.refereeId);
         let valid = false;
-        if (this.mustInvited) {
+        if (this.mustInvited()) {
             valid = this.loginName && this.password &&
                 /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(this.loginName) &&
                 /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,}$/.test(this.password) &&
@@ -35,6 +36,7 @@ module.exports = {
                 /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(this.loginName) &&
                 /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,}$/.test(this.password);
         }
+        if (!this.exchInfo) return valid;
         if (this.exchInfo.helpCenter.website && this.exchInfo.helpCenter.termsServiceId && this.exchInfo.helpCenter.privacyPolicyId) {
             return this.checkbox && valid;
         } else {
@@ -44,7 +46,7 @@ module.exports = {
     valid1 () {
         const uid = cryptoChar.decrypt(this.refereeId);
         let valid = false;
-        if (this.mustInvited) {
+        if (this.mustInvited()) {
             valid = this.loginName && this.password &&
                 /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,}$/.test(this.password) &&
                 !(uid <= 1000000 || uid > 100000000) && /^\d+$/.test(uid);
@@ -52,6 +54,7 @@ module.exports = {
             valid = this.loginName && this.password &&
                 /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,}$/.test(this.password);
         }
+        if (!this.exchInfo) return valid;
         if (this.exchInfo.helpCenter.website && this.exchInfo.helpCenter.termsServiceId && this.exchInfo.helpCenter.privacyPolicyId) {
             return this.checkbox && valid;
         } else {
@@ -126,6 +129,7 @@ module.exports = {
         }, () => {
             window.$message({ content: '网络异常，请稍后重试', type: 'danger' });
             this.loading = false;
+            m.redraw();
         });
     },
     register () {
@@ -215,6 +219,16 @@ module.exports = {
         });
     },
 
+    getExchInfo () {
+        window.gWebApi.getExchInfo({ exchannel: window.exchId }, res => {
+            if (res.result.code === 0) {
+                this.exchInfo = res.result.data;
+            }
+        }, () => {
+
+        });
+    },
+
     initGeetest () {
         const self = this;
         geetest.init(() => {
@@ -227,6 +241,7 @@ module.exports = {
                     self.queryUserInfo();
                 } else {
                     self.loading = false;
+                    m.redraw();
                 }
             }
         });
@@ -234,6 +249,7 @@ module.exports = {
     oninit () {
         this.initGeetest();
         this.getCountryList();
+        this.getExchInfo();
     },
     onremove () {
         this.isvalidate = false;
