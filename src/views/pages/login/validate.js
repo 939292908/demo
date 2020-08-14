@@ -13,8 +13,8 @@ module.exports = {
     },
     view() {
         const validInput = [];
-        validInput.push(m('div.title-4.has-text-level-2', {}, ['安全验证']));
-        validInput.push(m('div.py-0.mb-5.body-3', {}, ['为了您的账户安全，请完成以下验证']));
+        validInput.push(m('div.title-x-large-1.has-text-title', {}, ['安全验证']));
+        validInput.push(m('div.py-0.mb-7.body-3.has-text-level-2', {}, ['为了您的账户安全，请完成以下验证']));
         validInput.push(m('div.has-text-level-2.body-3.mb-2', {}, [Validate.selectName]));
         switch (Validate.selectType) {
         case 'sms':
@@ -80,14 +80,14 @@ module.exports = {
         }
 
         if (Validate.anotherType.length) {
-            validInput.push(m('div.mb-5.has-text-right.mt-2', {}, [
+            validInput.push(m('div.has-text-right.mt-2', {}, [
                 m('a.has-text-primary', {
                     onclick: () => { Validate.changeValidate(); }
                 }, [Validate.anotherName])
             ]));
         }
 
-        validInput.push(m('button.button.my-3.has-bg-primary.btn-2.is-fullwidth.mb-2', {
+        validInput.push(m('button.button.my-3.has-bg-primary.button-medium.is-fullwidth.has-text-white.mb-2.mt-7', {
             onclick: () => {
                 Validate.check();
             },

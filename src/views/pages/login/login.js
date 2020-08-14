@@ -43,7 +43,7 @@ module.exports = {
                                     window.router.push('/forgetPassword');
                                 }
                             }, ['忘记密码？'])]),
-                        m('button.button.my-3.has-bg-primary.btn-2.is-fullwidth.mb-2',
+                        m('button.button.my-3.has-bg-primary.button-medium.is-fullwidth.mb-2.has-text-white',
                             {
                                 onclick: () => { Login.login(); },
                                 disabled: !Login.valid(),

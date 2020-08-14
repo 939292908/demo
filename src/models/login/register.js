@@ -20,6 +20,7 @@ module.exports = {
     smsCd: 0, // 激活短信按钮倒计时
     exchInfo: null, // 渠道信息
     mustInvited () {
+        if (!this.exchInfo) return false;
         return Boolean(parseInt(this.exchInfo.mustInvited));
     },
     valid () {
