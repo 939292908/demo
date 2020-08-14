@@ -572,10 +572,7 @@ let obj = {
                     window.$message({title: utils.getTradeErrorCode(arg.code || arg.data.ErrCode), content: utils.getTradeErrorCode(arg.code || arg.data.ErrCode), type: 'danger'})
                 }
             })
-        }
-        
-
-        
+        }  
     },
     setLeverage: function(dir){
         let that = this
