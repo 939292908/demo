@@ -3,11 +3,8 @@ const geetest = require('@/libs/geetestTwo');
 const md5 = require('md5');
 
 module.exports = {
-    // account: 'qwer2@qq.com',
-    // password: '123456ly',
-    // loginType: "phone",
-    account: '233233233',
-    password: 'a123456',
+    account: '',
+    password: '',
     loginType: 'phone',
     loading: false,
     is2fa: false,

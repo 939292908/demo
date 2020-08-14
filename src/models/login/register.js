@@ -7,8 +7,8 @@ const md5 = require('md5');
 module.exports = {
     type: 'phone',
     refereeId: '',
-    loginName: '13482854047',
-    password: 'a123456',
+    loginName: '',
+    password: '',
     code: '',
     areaCode: '86',
     selectList: [m('option', { value: '86' }, [`+86`])],
