@@ -18,6 +18,7 @@ let spotTick = {
     //需要显示的行情数据
     lastTick: {},
     FundingNextTmStr: '',
+    FundingTimeDifference: '',
     FundingLongRStr: '',
     //设置窗口
     isSetting:false,
@@ -128,8 +129,8 @@ let spotTick = {
         let FundingNext = ass && ass.FundingNext || 0
         let FundingLongR = (this.getLastTick().FundingLongR || 0).toString().split('%')[0]
         // let str = `下次资金费率交换时间：${new Date(FundingNext).format('yyyy-MM-dd hh:mm:ss')}<br/>${Number(this.FundingLongR.split('%')[0])>0?this.$t('11634'):this.$t('11635')/*多头需要向空头补偿持仓价值的':'空头需要向多头补偿持仓价值的'*/}${Math.abs(Number(this.FundingLongR.split('%')[0]))}%`
-        // this.FundingNextTmStr =gDI18n.$t('10414',{value : (FundingNext?new Date(FundingNext).format('yyyy-MM-dd hh:mm:ss'):'--')})
-        this.FundingNextTmStr =gDI18n.$t('10414',{value : ( FundingNext ? utils.getTimeDifference(new Date(FundingNext), new Date()) : '--')}) // 时间差
+        this.FundingNextTmStr =gDI18n.$t('10414',{value : (FundingNext?new Date(FundingNext).format('yyyy-MM-dd hh:mm:ss'):'--')})
+        this.FundingTimeDifference = FundingNext ? utils.getTimeDifference(new Date(FundingNext), new Date()) : '--' // 时间差
         //this.FundingNextTmStr = `下次资金费率交换时间：${FundingNext?new Date(FundingNext).format('yyyy-MM-dd hh:mm:ss'):'--'}`
         this.FundingLongRStr = `${Number(FundingLongR)>0? gDI18n.$t('10014'/*'多头需要向空头补偿持仓价值的'*/): gDI18n.$t('10015'/*'空头需要向多头补偿持仓价值的'*/)}${Math.abs(Number(FundingLongR))}%`
         
@@ -287,6 +288,16 @@ let spotTick = {
                                 ]),
                                 m('p', {class:"has-text-1-important"}, [
                                     '≈ ' + (utils.toThousands(spotTick.getLastTick().OpenInterestForUSDT) || '--') + " " + (spotTick.getLastTick().FromC || "--")//' USDT'
+                                ]),
+                            ]),
+                            m('td', {class :"" + (pageTradeStatus == 1? "" : " is-hidden")}, [
+                                m('p', {class:""}, [
+                                    m('span', [
+                                        "资金时间:"
+                                    ])
+                                ]),
+                                m('p', {class:"has-text-1-important"}, [
+                                    spotTick.FundingTimeDifference
                                 ]),
                             ]),
                         ])

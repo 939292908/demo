@@ -1072,13 +1072,13 @@ utils.getTimeDifference = function(end, start) {
     let hours = parseInt((timeDiff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
     let minutes = parseInt((timeDiff % (1000 * 60 * 60)) / (1000 * 60));
     let seconds = parseInt((timeDiff % (1000 * 60)) / 1000);
-    hours < 10 ? hours='0'+hours : hours; //小时格式化
-    minutes < 10 ? minutes='0'+minutes : minutes; //分钟格式化
-    seconds < 10 ? seconds='0'+seconds : seconds; //秒钟格式化
+    hours < 10 && hours >= 0 ? hours = '0' + hours : hours; //小时格式化
+    minutes < 10  && minutes >= 0 ? minutes = '0' + minutes : minutes; //分钟格式化
+    seconds < 10  && seconds >= 0 ? seconds = '0' + seconds : seconds; //秒钟格式化
 
-    let k=hours+':'+minutes+':'+seconds;
+    let k = hours + ':' + minutes + ':' + seconds;
     // return k;
-    if("0" > seconds){
+    if(seconds < "0" || hours < "0" || minutes < "0"){
         return "--"
     }else{
         return k;

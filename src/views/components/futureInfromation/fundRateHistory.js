@@ -152,7 +152,7 @@ export default {
                     })
                 }
             })
-        ]),
+        ])
         
     },
     onremove (vnode) {
