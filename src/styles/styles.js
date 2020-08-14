@@ -164,9 +164,12 @@ const button = {
 };
 
 const radius = {
-    level1: '5px',
-    level2: '10px',
-    level3: '15px'
+    level1: '2px',
+    level2: '4px',
+    level3: '8px',
+    level4: '16px',
+    level5: '24px',
+    level6: '32px'
 };
 
 const fontweight = {
