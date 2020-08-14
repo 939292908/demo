@@ -689,7 +689,7 @@ body,
 
 /* 主色调 */
 .theme--dark .has-text-primary {
-    color: var(--c-primary-darken);
+    color: var(--c-primary-darken) !important;
 }
 
 /* 红 */

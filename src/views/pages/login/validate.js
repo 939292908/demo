@@ -13,8 +13,9 @@ module.exports = {
     },
     view() {
         const validInput = [];
-        validInput.push(m('div.mb-5.title-2.has-text-level-1', {}, ['验证码']));
-        validInput.push(m('div.has-text-level-1.body-3.mb-2', {}, [Validate.selectName]));
+        validInput.push(m('div.title-4.has-text-level-2', {}, ['安全验证']));
+        validInput.push(m('div.py-0.mb-5.body-3', {}, ['为了您的账户安全，请完成以下验证']));
+        validInput.push(m('div.has-text-level-2.body-3.mb-2', {}, [Validate.selectName]));
         switch (Validate.selectType) {
         case 'sms':
             validInput.push(m(InputWithComponent, {
@@ -79,7 +80,7 @@ module.exports = {
         }
 
         if (Validate.anotherType.length) {
-            validInput.push(m('div.mb-5.has-text-right', {}, [
+            validInput.push(m('div.mb-5.has-text-right.mt-2', {}, [
                 m('a.has-text-primary', {
                     onclick: () => { Validate.changeValidate(); }
                 }, [Validate.anotherName])
