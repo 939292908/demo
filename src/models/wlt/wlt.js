@@ -21,7 +21,11 @@ module.exports = {
     totalValueForBTC: 0,
 
     // 人民币总BTC估值
-    totalCNYValue: 0,
+    totalCNYValueForBTC: 0,
+    // 人民币总USDT估值
+    totalCNYValueForUSDT: 0,
+
+    prz: 7,
 
     // 我的钱包总USDT估值
     walletTotalValueForUSDT: 0,
@@ -273,6 +277,10 @@ module.exports = {
         // window._console.log('ht', 'value', valueForUSDT, valueForBTC);
         // 图标
         this.wltItemEx.icon = window.gWebApi.baseUrl + this.wltItemEx.icon;
+
+        // !!!
+        this.totalCNYValueForBTC = valueForBTC * this.prz;
+        this.totalCNYValueForUSDT = valueForUSDT * this.prz;
 
         return this.wltItemEx;
     }

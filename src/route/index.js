@@ -18,6 +18,11 @@ m.route(document.querySelector('body .route-box'), defaultRoutePath, {
             return import('@/views/pages/Myassets/myWalletIndex');
         }
     },
+    '/chargeMoney': {
+        onmatch: function () {
+            return import('@/views/pages/Myassets/chargeMoney');
+        }
+    },
     '/assetRecords': {
         onmatch: function () {
             return import('@/views/pages/Myassets/assetRecords/index');
@@ -36,11 +41,6 @@ m.route(document.querySelector('body .route-box'), defaultRoutePath, {
     '/forgetPassword': {
         onmatch: function () {
             return import('@/views/pages/login/forgetPassword');
-        }
-    },
-    '/chargeMoney': {
-        onmatch: function () {
-            return import('@/views/pages/Myassets/chargeMoney');
         }
     }
 });

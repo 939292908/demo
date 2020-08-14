@@ -13,7 +13,7 @@ module.exports = {
         ForgetPassword.onremove();
     },
     view() {
-        return m('div.is-align-items-center', {}, [
+        return m('div.is-align-items-center.pa-8', {}, [
             m('div.box.views-page-login-box-width.px-7.py-8', {},
                 ForgetPassword.isValidate ? [
                     m('div.mb-2.title-4.has-text-level-1', {},

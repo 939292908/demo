@@ -157,6 +157,7 @@ module.exports = {
         }, '100');
     },
     onremove: function () {
+        wlt.remove();
         window.gBroadcast.offMsg({
             key: 'tradingAccount_contract',
             isall: true

@@ -4,7 +4,7 @@ const geetest = require('@/libs/geetestTwo');
 
 module.exports = {
     loginType: 'phone',
-    loginName: '233233233',
+    loginName: '',
     selectList: [m('option', { value: '86' }, [`+86`])],
     validateCode: [],
     areaCode: '86',

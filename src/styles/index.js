@@ -18,7 +18,7 @@ style.type = 'text/css';
 style.innerHTML = styleStr;
 document.getElementsByTagName('head').item(0).appendChild(style);
 // 设置全局变量
-let themeDark = false;
+let themeDark = true;
 const _themeDark = utils.getItem('themeDark');
 if (_themeDark === true || _themeDark === false) {
     themeDark = _themeDark;

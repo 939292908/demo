@@ -12,11 +12,13 @@ module.exports = {
         Register.onremove();
     },
     view() {
-        return m('div.is-align-items-center', {}, [
+        return m('div.is-align-items-center.pa-8', {}, [
             m('div.box.views-page-login-box-width.px-7.py-8', {}, [
                 Register.isvalidate ? [
-                    m('div.mb-5.title-2.has-text-level-1', {},
-                        ['验证码']),
+                    m('div.title-4.has-text-level-4.has-text-level-1', {}, [window.exchConfig.exchName]),
+                    m('div.mb-5.title-4.has-text-level-2', {}, ['注册验证']),
+                    m('div.py-0.mb-2', {},
+                        [Register.type === 'phone' ? '手机验证码' : '邮箱验证码']),
                     m('div.control.has-icons-right.mb-6', {}, [
                         m(InputWithComponent, {
                             options: {
@@ -58,8 +60,8 @@ module.exports = {
                             }
                         }, ['注册'])
                 ] : [
-                    m('div.title-4.has-text-level-4', {}, [window.exchConfig.exchName]),
-                    m('div.mb-5.title-4.has-text-level-1', {}, ['注册']),
+                    m('div.title-4.has-text-level-4.has-text-level-1', {}, [window.exchConfig.exchName]),
+                    m('div.mb-5.title-4.has-text-level-2', {}, ['注册']),
                     m('div.tabs.mb-7', {}, [
                         m('ul', {}, [
                             m('li', { class: Register.type === 'phone' ? 'is-active' : '' },
@@ -131,7 +133,7 @@ module.exports = {
                                     : Register.submitPhone();
                             }
                         }, ['注册']),
-                    m('div.has-text-centered.body-3.has-text-level-1',
+                    m('div.has-text-centered.body-3.has-text-level-2',
                         {}, [
                             '已有账号？去',
                             m('a.has-text-primary', {

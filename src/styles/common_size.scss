@@ -1,0 +1,399 @@
+/** 
+    此文件用于放规范内尺寸相关公用样式
+*/
+/* 公共样式 start */
+
+html,
+body,
+.section {
+    padding: 0;
+    height: 100%;
+    overflow: auto;
+    font-size: var(--c-fontsz-level4);
+}
+
+/* 内容宽度 */
+.content-width {
+    width: 1204px;
+}
+
+.columns {
+    margin-left: 0;
+    margin-right: 0;
+    margin-top: 0;
+}
+
+
+/* UI组件样式覆盖 */
+
+.button, .input, .textarea, .select select, .file-cta, .file-name {
+    border-radius: var(--c-radius-level1);
+    font-size: var(--c-fontsz-level3);
+    height: var(--c-button-level1);
+}
+
+/* 文字大小 根据pc和手机的尺寸不同来区分对应类名的字体大小 */
+
+@media screen and (min-width: 769px) {
+    .title-small {
+        font-size: var(--c-fontsz-level6);
+        font-weight: var(--c-fontweight-level3);
+    }
+    
+    .title-medium {
+        font-size: var(--c-fontsz-level7);
+        font-weight: var(--c-fontweight-level3);
+    }
+    
+    .title-large {
+        font-size: var(--c-fontsz-level8);
+        font-weight: var(--c-fontweight-level3);
+    }
+    
+    .title-x-large {
+        font-size: var(--c-fontsz-level8);
+        font-weight: var(--c-fontweight-level3);
+    }
+    
+    .title-x-large-1 {
+        font-size: var(--c-fontsz-level8);
+        font-weight: var(--c-fontweight-level3);
+    }
+
+    .title-x-large-2 {
+        font-size: var(--c-fontsz-level8);
+        font-weight: var(--c-fontweight-level3);
+    }
+    
+    .body-1 {
+        font-size: var(--c-fontsz-level0);
+    }
+    .body-2 {
+        font-size: var(--c-fontsz-level1);
+    }
+    .body-3 {
+        font-size: var(--c-fontsz-level2);
+    }
+    .body-4 {
+        font-size: var(--c-fontsz-level3);
+    }
+    .body-5 {
+        font-size: var(--c-fontsz-level4);
+    }
+    .body-6 {
+        font-size: var(--c-fontsz-level5);
+    }
+} 
+@media screen and (max-width: 769px) {
+    .title-small {
+        font-size: var(--c-fontsz-level6);
+        font-weight: var(--c-fontweight-level3);
+    }
+    
+    .title-medium {
+        font-size: var(--c-fontsz-level7);
+        font-weight: var(--c-fontweight-level3);
+    }
+    
+    .title-large {
+        font-size: var(--c-fontsz-level8);
+        font-weight: var(--c-fontweight-level3);
+    }
+    
+    .title-x-large {
+        font-size: var(--c-fontsz-level9);
+        font-weight: var(--c-fontweight-level3);
+    }
+    
+    .title-x-large-1 {
+        font-size: var(--c-fontsz-level10);
+        font-weight: var(--c-fontweight-level3);
+    }
+
+    .title-x-large-2 {
+        font-size: var(--c-fontsz-level11);
+        font-weight: var(--c-fontweight-level3);
+    }
+    
+    .body-1 {
+        font-size: var(--c-fontsz-level3);
+    }
+    .body-2 {
+        font-size: var(--c-fontsz-level3);
+    }
+    .body-3 {
+        font-size: var(--c-fontsz-level3);
+    }
+    .body-4 {
+        font-size: var(--c-fontsz-level3);
+    }
+    .body-5 {
+        font-size: var(--c-fontsz-level4);
+    }
+    .body-6 {
+        font-size: var(--c-fontsz-level5);
+    }
+} 
+
+/* iconfont尺寸 */
+
+.iconfont {
+    font-family: "iconfont" !important;
+    font-size: var(--c-iconsz-level3) !important;
+    font-style: normal;
+}
+
+.iconfont-min {
+    font-size: var(--c-iconsz-level0) !important;
+}
+
+.iconfont-small {
+    font-size: var(--c-iconsz-level1) !important;
+}
+
+.iconfont-medium {
+    font-size: var(--c-iconsz-level2) !important;
+}
+
+.iconfont-large {
+    font-size: var(--c-iconsz-level3) !important;
+}
+
+.iconfont-x-large-1 {
+    font-size: var(--c-iconsz-level4) !important;
+}
+
+.iconfont-x-large-2 {
+    font-size: var(--c-iconsz-level5) !important;
+}
+
+.iconfont-x-large-3 {
+    font-size: var(--c-iconsz-level6) !important;
+}
+
+.iconfont-x-large-4 {
+    font-size: var(--c-iconsz-level7) !important;
+}
+
+/* 字体粗细 */
+.font-weight-regular {
+    font-weight: var(--c-fontweight-level1);
+}
+
+.font-weight-medium {
+    font-weight: var(--c-fontweight-level2);
+}
+
+.font-weight-bold {
+    font-weight: var(--c-fontweight-level3);
+}
+
+/* 元素圆角 */
+.border-radius-small {
+    border-radius: var(--c-radius-level1) !important;
+}
+
+.border-radius-small-top {
+    border-radius: var(--c-radius-level1) var(--c-radius-level1) 0 0 !important;
+}
+
+.border-radius-small-bottom {
+    border-radius: 0 0 var(--c-radius-level1) var(--c-radius-level1) !important;
+}
+
+.border-radius-small-left {
+    border-radius: var(--c-radius-level1) 0 0 var(--c-radius-level1) !important;
+}
+
+.border-radius-small-right {
+    border-radius: 0 var(--c-radius-level1) var(--c-radius-level1) 0 !important;
+}
+
+.border-radius-medium {
+    border-radius: var(--c-radius-level2) !important;
+}
+
+.border-radius-medium-top {
+    border-radius: var(--c-radius-level2) var(--c-radius-level2) 0 0 !important;
+}
+
+.border-radius-medium-bottom {
+    border-radius: 0 0 var(--c-radius-level2) var(--c-radius-level2) !important;
+}
+
+.border-radius-medium-left {
+    border-radius: var(--c-radius-level2) 0 0 var(--c-radius-level2) !important;
+}
+
+.border-radius-medium-right {
+    border-radius: 0 var(--c-radius-level2) var(--c-radius-level2) 0 !important;
+}
+
+.border-radius-large {
+    border-radius: var(--c-radius-level3) !important;
+}
+
+.border-radius-large-top {
+    border-radius: var(--c-radius-level3) var(--c-radius-level3) 0 0 !important;
+}
+
+.border-radius-large-bottom {
+    border-radius: 0 0 var(--c-radius-level3) var(--c-radius-level3) !important;
+}
+
+.border-radius-large-left {
+    border-radius: var(--c-radius-level3) 0 0 var(--c-radius-level3) !important;
+}
+
+.border-radius-large-right {
+    border-radius: 0 var(--c-radius-level3) var(--c-radius-level3) 0 !important;
+}
+
+.border-radius-none {
+    border-radius: 0 !important;
+}
+
+.border-radius-none-top {
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+}
+
+.border-radius-none-bottom {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+.border-radius-none-left {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+}
+
+.border-radius-none-right {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+
+/* 页边距 */
+
+.side-pa {
+    padding: var(--c-padding-level4);
+}
+
+.side-px {
+    padding: 0 var(--c-padding-level4);
+}
+
+.side-py {
+    padding: var(--c-padding-level4) 0;
+}
+
+.side-pt {
+    padding-top: var(--c-padding-level4);
+}
+
+.side-pl {
+    padding-left: var(--c-padding-level4);
+}
+
+.side-pb {
+    padding-bottom: var(--c-padding-level4);
+}
+
+.side-pr {
+    padding-right: var(--c-padding-level4);
+}
+
+.side-ma {
+    padding: var(--c-padding-level4);
+}
+
+.side-mx {
+    padding: 0 var(--c-padding-level4);
+}
+
+.side-my {
+    padding: var(--c-padding-level4) 0;
+}
+
+.side-mt {
+    padding-top: var(--c-padding-level4);
+}
+
+.side-ml {
+    padding-left: var(--c-padding-level4);
+}
+
+.side-mb {
+    padding-bottom: var(--c-padding-level4);
+}
+
+.side-mr {
+    padding-right: var(--c-padding-level4);
+}
+
+@for $i from 0 through 8 {
+    .pa-#{$i} {
+        padding: var(--c-padding-level#{$i}) !important;
+    }
+
+    .px-#{$i} {
+        padding-left: var(--c-padding-level#{$i}) !important;
+        padding-right: var(--c-padding-level#{$i}) !important;
+    }
+
+    .py-#{$i} {
+        padding-top: var(--c-padding-level#{$i}) !important;
+        padding-bottom: var(--c-padding-level#{$i}) !important;
+    }
+
+    .pt-#{$i} {
+        padding-top: var(--c-padding-level#{$i}) !important;
+    }
+
+    .pl-#{$i} {
+        padding-left: var(--c-padding-level#{$i}) !important;
+    }
+
+    .pb-#{$i} {
+        padding-bottom: var(--c-padding-level#{$i}) !important;
+    }
+
+    .pr-#{$i} {
+        padding-right: var(--c-padding-level#{$i}) !important;
+    }
+
+    .ma-#{$i} {
+        margin: var(--c-margin-level#{$i}) !important;
+    }
+
+    .mx-#{$i} {
+        margin-left: var(--c-margin-level#{$i}) !important;
+        margin-right: var(--c-margin-level#{$i}) !important;
+    }
+
+    .my-#{$i} {
+        margin-top: var(--c-margin-level#{$i}) !important;
+        margin-bottom: var(--c-margin-level#{$i}) !important;
+    }
+
+    .mt-#{$i} {
+        margin-top: var(--c-margin-level#{$i}) !important;
+    }
+
+    .ml-#{$i} {
+        margin-left: var(--c-margin-level#{$i}) !important;
+    }
+
+    .mb-#{$i} {
+        margin-bottom: var(--c-margin-level#{$i}) !important;
+    }
+
+    .mr-#{$i} {
+        margin-right: var(--c-margin-level#{$i}) !important;
+    }
+}
+
+
+/* 公共样式 end */
+

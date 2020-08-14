@@ -4,6 +4,7 @@ const QRCode = require('qrcode');
 require('@/styles/pages/Myassets/chargeMoney.scss');
 
 const Back = require('../../../assets/img/temImg/toLeft.png').default;
+const header = require('@/views/pages/Myassets/header');
 
 const QuickMark = function (code = '这是个二维码！') {
     const self = this;
@@ -30,6 +31,7 @@ module.exports = {
         const { coinList, QRSrc } = this.data;
         console.log(this, this.data);
         return m('div', { class: 'views-pages-myassets-chargeMoney' }, [
+            m(header, { highlightFlag: 0 }),
             m('div', { class: 'back' }, [
                 m('img', { src: Back, class: 'back-Icon' }),
                 m('span', '充币')
