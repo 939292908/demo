@@ -90,7 +90,8 @@ module.exports = {
         validInput.push(m('button.button.my-3.has-bg-primary.btn-2.is-fullwidth.mb-2', {
             onclick: () => {
                 Validate.check();
-            }
+            },
+            class: Validate.loading ? 'is-loading' : ''
         }, ['确定']));
 
         return m('div', {}, validInput);

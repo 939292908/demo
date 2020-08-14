@@ -131,7 +131,9 @@ module.exports = {
                                 Register.type === 'phone'
                                     ? Register.submitEmail()
                                     : Register.submitPhone();
-                            }
+                            },
+                            disabled: Register.type === 'phone' ? !Register.valid1() : !Register.valid(),
+                            class: Register.loading ? 'is-loading' : ''
                         }, ['注册']),
                     m('div.has-text-centered.body-3.has-text-level-2',
                         {}, [

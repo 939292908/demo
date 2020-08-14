@@ -40,7 +40,8 @@ module.exports = {
                     m('button.button.my-3.has-bg-primary.btn-2.is-fullwidth.mb-2', {
                         onclick: () => {
                             ForgetPassword.submitReset();
-                        }
+                        },
+                        class: ForgetPassword.loading ? 'is-loading' : ''
                     }, ['确定'])
                 ] : ForgetPassword.is2fa ? m(Validate, {})
                     : [
@@ -101,7 +102,8 @@ module.exports = {
                         m('button.button.my-3.has-bg-primary.btn-2.is-fullwidth.mb-2', {
                             onclick: () => {
                                 ForgetPassword.loginType === 'phone' ? ForgetPassword.submitPhone() : ForgetPassword.submitEmail();
-                            }
+                            },
+                            class: ForgetPassword.loading ? 'is-loading' : ''
                         }, ['下一步'])
                     ]
             )

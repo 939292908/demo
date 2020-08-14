@@ -984,6 +984,33 @@ class webApi {
             }
         });
     }
+
+    /**
+     * 获取渠道信息
+     * @param aData
+     * @param aOnSuccess
+     * @param aOnError
+     */
+    getExchInfo(aData, aOnSuccess, aOnError) {
+        const s = this;
+
+        s.axios.request({
+            method: "get",
+            url: s.axios.baseUrl + API.EXCH_INFO_V1,
+            data: qs.stringify(aData),
+            options: {}
+        }).then(function (result) {
+            const arg = result.data;
+            if (aOnSuccess) {
+                aOnSuccess(arg);
+            }
+        }).catch(function (e) {
+            window._console.log('tlh', e);
+            if (aOnError) {
+                aOnError(e);
+            }
+        });
+    }
 }
 
 module.exports = webApi;
