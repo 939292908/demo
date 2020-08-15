@@ -55,6 +55,9 @@ const font = Object.freeze({
     darken2: '#717480',
     darken3: '#44464D'
 });
+const fontwhite = Object.freeze({
+    base: '#FFFFFF'
+});
 // 线条颜色
 const line = Object.freeze({
     lighten: 'rgba(10, 13, 22, 0.04)',
@@ -100,6 +103,7 @@ const theme = {
     red,
     sign,
     font,
+    fontwhite,
     line,
     background,
     mode
