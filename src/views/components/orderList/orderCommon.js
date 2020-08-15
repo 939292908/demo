@@ -166,11 +166,13 @@ let obj = {
                 window.gWebAPI.CTX.UserSetting._trade[0] =this.ORD_Type
                 break;
         }
+        //提交设置
+        window.gWebAPI.ReqSaveUserSetting()
 
-    window.gTrd.ReqTrdOrderNew(obj.orderData, function(gTrd, arg){
-      if (arg.code != 0 || arg.data.ErrCode) {
-        window.$message({ title: gDI18n.$t('10037'/*"提示"*/),content: utils.getTradeErrorCode(msg.code || arg.data.ErrCode), type: 'danger'})
-      }
+        window.gTrd.ReqTrdOrderNew(obj.orderData, function(gTrd, arg){
+        if (arg.code != 0 || arg.data.ErrCode) {
+            window.$message({ title: gDI18n.$t('10037'/*"提示"*/),content: utils.getTradeErrorCode(msg.code || arg.data.ErrCode), type: 'danger'})
+        }
     })
 
 
