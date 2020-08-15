@@ -147,7 +147,7 @@ module.exports = {
     view(vnode) {
         // table
         return m('div', { class: 'views-pages-Myassets-Table' }, [
-            m('div', { class: 'nav' }, [
+            m('div', { class: 'nav mb-3' }, [
                 m('div.search', {}, [
                     m('input', {
                         placeholder: '币种搜索',
@@ -162,11 +162,11 @@ module.exports = {
                         '隐藏0资产'
                     ])
                 ]),
-                m('div', {}, [
-                    m('img', {}),
+                m('div.fundRecords.', {}, [
+                    m('img', { }),
                     m('span', ['资金记录'])
                 ]),
-                m('div', { style: { display: vnode.attrs.typeData === 'contractData' ? '' : 'none' } }, [
+                m('div.profit', { style: { display: vnode.attrs.typeData === 'contractData' ? '' : 'none' } }, [
                     m('img', {}),
                     m('span', ['盈亏分析'])
                 ])

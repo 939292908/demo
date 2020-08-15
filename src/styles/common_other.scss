@@ -1,4 +1,4 @@
-/** 
+/**
     此文件用于放除尺寸和颜色之外的公用样式
 */
 
@@ -20,6 +20,12 @@
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.is-align-items-right {
+    display: flex;
+    justify-content: right;
+    align-items: end;
 }
 
 /* 动画相关 start */

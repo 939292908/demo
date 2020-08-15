@@ -9,6 +9,11 @@
 }
 
 /**中部*/
+.views-pages-home-top {
+    border-radius: 0 0 25% 25%;
+    background: #293850;
+}
+
 .home-introduce .introduce-item {
     width: 20%;
     text-align: center;
@@ -94,21 +99,12 @@
     margin-top: 20px;
 }
 
-.frame-1.w {
-    background: #0D1C33 url("~@/assets/img/home/layer 14.png") no-repeat center center;
-    background-size: "cover";
-    width: 1920px;
-}
-
 .picture-layer {
-    /* text-align: center; */
     width: 80%;
     height: 80%;
     margin-left: 130px;
-}
+    margin-top: -100px;
 
-.introduce-rectangle{
-    margin-left: 100px;
 }
 
 .introduce-image {
@@ -182,19 +178,7 @@
     justify-content: space-around;
 }
 
-.introduce-content {
-    text-align: center;
-}
-
-.home-introduce-p{
-    margin-right: 570px;
-}
-
-.introduce-item-Object2{
-    margin-top: 15px;
-}
-
-.introduce-item-Object4{
+.introduce-item-Object2 {
     margin-top: 15px;
 }
 
@@ -205,7 +189,7 @@
     line-height: 27px;
 }
 
-.footer-right{
+.footer-right {
     margin-bottom: 200px;
 }
 
@@ -219,6 +203,10 @@
 
 .community {
     margin-top: 10px;
+    border: 1px solid beige;
+    height: 15px;
+    width: 15px;
+    border-radius: 50%;
 }
 
 .community:hover {

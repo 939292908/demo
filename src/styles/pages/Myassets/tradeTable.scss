@@ -2,7 +2,6 @@
     .nav{
         display: flex;
         flex-direction: row;
-        margin-bottom: 10px;
         div{
             margin-right: 10px;
         }
@@ -19,6 +18,27 @@
                 border-radius: 2px;
                 outline:none;
             }
+        }
+        .hideZeroAsset{
+            margin: auto 0px;
+            margin-right: 10px;
+            label{
+                clear: both;
+                input{
+                    width: 18px;
+                    height: 18px;
+                    margin-right: 5px;
+                    float: left;
+                }
+            }
+        }
+        .fundRecords{
+            margin: auto 0px;
+            margin-right: 10px;
+        }
+        .profit{
+            margin: auto 0px;
+            clear: both;
         }
     }
     table{

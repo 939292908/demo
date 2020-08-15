@@ -7,9 +7,9 @@ require('@/styles/pages/home.css');
 
 module.exports = {
     view: function () {
-        return m('div.views-pages-home-advantage.theme--light', {}, [
+        return m('div.views-pages-home-advantage.theme--light container', {}, [
             m('div', { class: `pages-home-advantage container` }, [
-                m('div', { class: `home-introduce is-around  w container py-5 border-1` }, [
+                m('div', { class: `home-introduce is-around  w container py-8 border-1` }, [
                     // 平台优势
                     // 1
                     m('div', { class: `introduce-item` }, [
@@ -31,7 +31,7 @@ module.exports = {
                     ]),
                     // 4
                     m('div', { class: `introduce-item` }, [
-                        m('img', { class: 'introduce-item-Object4', src: require("@/assets/img/home/Object4.png").default }), m('div', { class: `title-medium` }, ["尊享服务"]),
+                        m('img', { class: 'mt-4', src: require("@/assets/img/home/Object4.png").default }), m('div', { class: `title-medium` }, ["尊享服务"]),
                         m('p', { class: `pt-5` }, ["7*24全天候专业客服团队守候，快速反馈！"])
                     ])
                 ])

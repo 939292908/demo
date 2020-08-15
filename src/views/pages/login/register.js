@@ -1,6 +1,7 @@
 const m = require('mithril');
 const Register = require('@/models/login/register');
 const InputWithComponent = require('@/views/components/inputWithComponent');
+const AreaCodeSelect = require('@/views/pages/login/areaCodeSelect');
 
 import('@/styles/pages/login/login.css');
 
@@ -12,7 +13,7 @@ module.exports = {
         Register.onremove();
     },
     view() {
-        return m('div.is-align-items-center.pa-8', {}, [
+        return m('div.is-align-items-center.has-bg-level-1.pa-8.theme--light', {}, [
             m('div.box.has-bg-level-2.views-page-login-box-width.px-7.py-8', {}, [
                 Register.isvalidate ? [
                     m('div.title-x-large-1.views-page-login-title.opacity', {}, [window.exchConfig.exchName]),
@@ -75,15 +76,11 @@ module.exports = {
                     Register.type === 'phone'
                         ? m(InputWithComponent, {
                             addClass: 'mb-5',
-                            leftComponents: m('span.select.px-1', {}, [
-                                m('select.without-border.register-national-select',
-                                    {
-                                        value: Register.areaCode,
-                                        onchange: e => {
-                                            Register.areaCode = e.target.value;
-                                        }
-                                    }, Register.selectList)
-                            ]),
+                            leftComponents: m(AreaCodeSelect, {
+                                selectList: Register.selectList,
+                                areaCode: Register.areaCode,
+                                onSelect: areaCode => { Register.areaCode = areaCode; }
+                            }),
                             options: {
                                 oninput: e => {
                                     Register.loginName = e.target.value;
@@ -112,7 +109,7 @@ module.exports = {
                         value: Register.password
                     }, []),
                     m('div.py-0.mb-2.has-text-level-1.body-3', {}, ['邀请码（选填）']),
-                    m('input.input[type=password].mb-6', {
+                    m('input.input.mb-6', {
                         oninput: e => {
                             Register.refereeId = e.target.value;
                         },
