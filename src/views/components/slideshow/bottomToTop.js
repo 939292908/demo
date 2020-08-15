@@ -6,6 +6,20 @@ const item1 = require('../../../assets/img/temImg/Group556.jpg').default;
 const item2 = require('../../../assets/img/temImg/Group557.jpg').default;
 const item3 = require('../../../assets/img/temImg/Group558.jpg').default;
 
+const vertical = {
+    direction: 'vertical',
+    loop: true,
+    speed: 300,
+    autoplay: {
+        delay: 3000,
+        disableOnInteraction: false
+    },
+    pagination: {
+        el: '.swiper-pagination',
+        clickable: true
+    }
+};
+
 module.exports = {
     data: {
         list: [],
@@ -14,33 +28,21 @@ module.exports = {
     oninit: function (vnode) {
         const srcList = [item1, item2, item3];
         this.data.list = [1, 2, 3].map((item, index) => [1, 2, 3].map(i => srcList[index]));
-        console.log(Swiper);
     },
     oncreate: function (vnode) {
-        this.mySwiper = new Swiper('#slideShowLTR', {
-            direction: 'vertical', // 垂直切换选项
-            loop: true, // 循环模式选项
-            speed: 300, // 跳转时间
-            autoplay: {
-                delay: 3000, // 显示时间
-                disableOnInteraction: false
-            },
-            // 如果需要分页器
-            pagination: {
-                el: '.swiper-pagination',
-                clickable: true
-            }
+        this.mySwiper = new Swiper('#slideShowBTT', vertical);
+    },
+    bottomToTop: function () {
+        return this.data.list.map(item => {
+            return m('div.swiper-slide', [
+                item.map(node => m('div', { class: "imgBox" }, m('img', { src: node })))
+            ]);
         });
     },
-    view: function () {
-        console.log(this.data.list, 'leez');
-        return m('div', { class: 'swiper-container', id: "slideShowLTR" }, [
+    view: function (vnode) {
+        return m('div', { class: 'swiper-container', id: "slideShowBTT" }, [
             m('div.swiper-wrapper', [
-                this.data.list.map(item => {
-                    return m('div.swiper-slide', [
-                        item.map(node => m('div', { class: "imgBox" }, m('img', { src: node })))
-                    ]);
-                })
+                this.bottomToTop()
             ]),
             m('div.swiper-pagination')
         ]);
