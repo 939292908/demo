@@ -7,7 +7,7 @@ require('@/styles/pages/home.css');
 
 module.exports = {
     view: function () {
-        return m('div.views-pages-home-advantage', {}, [
+        return m('div.views-pages-home-advantage.theme--light', {}, [
             m('div', { class: `pages-home-advantage container` }, [
                 m('div', { class: `home-introduce is-around  w container py-5 border-1` }, [
                     // 平台优势
