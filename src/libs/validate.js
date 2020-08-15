@@ -205,8 +205,7 @@ class Validate {
                 this.finished();
             } else {
                 window.$message({
-                    content: window.errCode.getWebApiErrorCode(
-                        res.result.code),
+                    content: res.result.msg,
                     type: 'danger'
                 });
             }
@@ -233,8 +232,7 @@ class Validate {
                 } else {
                     // this.validateSheet.loading = false;
                     window.$message({
-                        content: window.errCode.getWebApiErrorCode(
-                            res.result.code),
+                        content: res.result.msg,
                         type: 'danger'
                     });
                 }
@@ -262,8 +260,7 @@ class Validate {
                     this.finished();
                 } else {
                     window.$message({
-                        content: window.errCode.getWebApiErrorCode(
-                            res.data.result.code),
+                        content: res.result.msg,
                         type: 'danger'
                     });
                 }

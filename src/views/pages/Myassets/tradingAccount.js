@@ -1,9 +1,9 @@
 const m = require('mithril');
 
 require('@/styles/pages/Myassets/tradingAccount.scss');
-const tradingAccountContract = require('./tradingAccount_contract');
-const tradingAccountCoin = require('./tradingAccount_coin');
-const tradingAccountLegal = require('./tradingAccount_legal');
+const tradingAccountContract = require('@/views/pages/Myassets/tradingAccount_contract');
+const tradingAccountCoin = require('@/views/pages/Myassets/tradingAccount_coin');
+const tradingAccountLegal = require('@/views/pages/Myassets/tradingAccount_legal');
 
 const tradingAccount = {
     // 0：合约账户，1：币币账户，2：法币账户

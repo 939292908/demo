@@ -1,0 +1,42 @@
+.views-pages-Myassets-Table{
+    .nav{
+        display: flex;
+        flex-direction: row;
+        margin-bottom: 10px;
+        div{
+            margin-right: 10px;
+        }
+        .search{
+            input{
+                width: 128px;
+                height: 28px;
+                background-image: url('../../../assets/img/myAssets/search.svg');
+                background-repeat: no-repeat;
+                background-position: 105px center;
+                padding-right: 25px;
+                border: none;
+                border: 1px solid #ccc;
+                border-radius: 2px;
+                outline:none;
+            }
+        }
+    }
+    table{
+        width: 100%;
+        thead{
+            color: rgba(83, 83, 83, 0.555);
+        }
+        td{
+            width: 5%;
+            padding:var(--c-padding-level2) 0;
+        }
+        /* tr悬浮 */
+        tbody tr:hover {
+            background-color: var(--c-background-lighten1);
+        }
+    }
+    a{
+        color: var(--c-primary-lighten);
+        margin-right: var(--c-margin-level4);
+    }
+}

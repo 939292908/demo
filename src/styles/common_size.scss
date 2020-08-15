@@ -1,4 +1,4 @@
-/** 
+/**
     此文件用于放规范内尺寸相关公用样式
 */
 /* 公共样式 start */
@@ -39,22 +39,22 @@ body,
         font-size: var(--c-fontsz-level6);
         font-weight: var(--c-fontweight-level3);
     }
-    
+
     .title-medium {
         font-size: var(--c-fontsz-level7);
         font-weight: var(--c-fontweight-level3);
     }
-    
+
     .title-large {
         font-size: var(--c-fontsz-level8);
         font-weight: var(--c-fontweight-level3);
     }
-    
+
     .title-x-large {
         font-size: var(--c-fontsz-level8);
         font-weight: var(--c-fontweight-level3);
     }
-    
+
     .title-x-large-1 {
         font-size: var(--c-fontsz-level8);
         font-weight: var(--c-fontweight-level3);
@@ -64,7 +64,7 @@ body,
         font-size: var(--c-fontsz-level8);
         font-weight: var(--c-fontweight-level3);
     }
-    
+
     .body-1 {
         font-size: var(--c-fontsz-level0);
     }
@@ -83,28 +83,29 @@ body,
     .body-6 {
         font-size: var(--c-fontsz-level5);
     }
-} 
+}
+
 @media screen and (max-width: 769px) {
     .title-small {
         font-size: var(--c-fontsz-level6);
         font-weight: var(--c-fontweight-level3);
     }
-    
+
     .title-medium {
         font-size: var(--c-fontsz-level7);
         font-weight: var(--c-fontweight-level3);
     }
-    
+
     .title-large {
         font-size: var(--c-fontsz-level8);
         font-weight: var(--c-fontweight-level3);
     }
-    
+
     .title-x-large {
         font-size: var(--c-fontsz-level9);
         font-weight: var(--c-fontweight-level3);
     }
-    
+
     .title-x-large-1 {
         font-size: var(--c-fontsz-level10);
         font-weight: var(--c-fontweight-level3);
@@ -114,7 +115,7 @@ body,
         font-size: var(--c-fontsz-level11);
         font-weight: var(--c-fontweight-level3);
     }
-    
+
     .body-1 {
         font-size: var(--c-fontsz-level3);
     }
@@ -133,7 +134,7 @@ body,
     .body-6 {
         font-size: var(--c-fontsz-level5);
     }
-} 
+}
 
 /* iconfont尺寸 */
 
@@ -394,6 +395,17 @@ body,
     }
 }
 
+.button-small {
+    height: var(--c-button-level0) !important;
+}
+
+.button-medium {
+    height: var(--c-button-level1) !important;
+}
+
+.button-large {
+    height: var(--c-button-level2) !important;
+}
 
 /* 公共样式 end */
 

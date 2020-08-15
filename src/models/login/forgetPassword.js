@@ -21,11 +21,15 @@ module.exports = {
         return !!this.loginName;
     },
     submitReset() {
+        this.loading = true;
+        m.redraw();
         window.gWebApi.resetPassword({
             Passwd1: md5(this.password1),
             Passwd2: md5(this.password2),
             exChannel: window.exchId
         }, res => {
+            this.loading = false;
+            m.redraw();
             if (res.result.code === 0) {
                 // '您的密码已修改成功，现在为您跳转登录界面'
                 window.$message({
@@ -40,6 +44,8 @@ module.exports = {
                 });
             }
         }, () => {
+            this.loading = false;
+            m.redraw();
         });
     },
     submitEmail() {
@@ -65,6 +71,7 @@ module.exports = {
             exChannel: window.exchId
         }, res => {
             this.loading = false;
+            m.redraw();
             if (res.result.code === 0) {
                 if (res.exists === 1) {
                     this.check(res);
@@ -86,6 +93,7 @@ module.exports = {
                 type: 'danger'
             });
             this.loading = false;
+            m.redraw();
         });
     },
     /**
@@ -204,6 +212,7 @@ module.exports = {
                     self.queryUserInfo();
                 } else {
                     self.loading = false;
+                    m.redraw();
                 }
             }
         });
