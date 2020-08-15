@@ -38,10 +38,60 @@
   .swiper-slide {
 
     .imgBox {
+      width: 327px;
+      height: 198px;
+      padding: 24px;
       overflow: hidden;
       border-radius: 16px;
-      background: #0E1C33;
+      background: #0E1C33 url("~@/assets/img/home/bgImg.png") no-repeat center bottom;
+      box-sizing: border-box;
       box-shadow: 0px 0px 33.8px 15.2px rgba(0, 0, 0, 0.24);
+
+
+      .marketTitle {
+        margin-bottom: 24px;
+        display: flex;
+        align-items: center;
+
+        .marketName {
+          width: 174px;
+          height: 34px;
+          color: #FFFFFF;
+          margin-right: 30px;
+          font-style: normal;
+          font-weight: 500;
+          font-size: 24px;
+          line-height: 34px;
+        }
+
+        .marketGrowth {
+          width: 73px;
+          height: 30px;
+          line-height: 30px;
+          text-align: center;
+          border-radius: 4px;
+          margin-bottom: 4px;
+        }
+      }
+
+      .marketPrice {
+        height: 44px;
+        font-style: normal;
+        font-weight: 600;
+        font-size: 32px;
+        line-height: 45px;
+        margin-bottom: 4px;
+      }
+
+      .marketNumber {
+        height: 20px;
+        font-style: normal;
+        font-weight: normal;
+        font-size: 14px;
+        line-height: 20px;
+        align-items: flex-end;
+        color: #9A9EAC;
+      }
     }
   }
 }
@@ -50,6 +100,7 @@
   .button-prev, .button-next {
     position: absolute;
     top: 50%;
+    outline: none;
     width: calc(var(--swiper-navigation-size) / 44 * 27);
     height: var(--swiper-navigation-size);
     margin-top: calc(-1 * var(--swiper-navigation-size) / 2);
@@ -58,6 +109,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    transform: translateY(-50%);
     color: var(--swiper-navigation-color, var(--swiper-theme-color));
   }
   .button-prev {
@@ -65,5 +117,56 @@
   }
   .button-next {
     right: -47px;
+  }
+}
+
+.components-slideshow-trumpet {
+  width: 100%;
+  height: 25px;
+  display: flex;
+  justify-content: center;
+
+  .slideshow-trumpet-icon {
+    height: 100%;
+    position: relative;
+
+    img {
+      vertical-align: middle;
+    }
+    span {
+      margin-left: 14px;
+      vertical-align: middle;
+    }
+  }
+
+  .slideshow-trumpet-content {
+    width: 444px;
+    overflow: hidden;
+    height: 100%;
+    margin: 0px 32px 0px 12px;
+
+    #slideShowNotice {
+      height: 100%;
+
+      .noticeText {
+        cursor: pointer;
+      }
+    }
+  }
+
+  .slideshow-trumpet-more {
+    color: var(--c-primary-darken);
+    cursor: pointer;
+
+    &:after {
+      content: '';
+      width: 7px;
+      height: 7px;
+      margin-left: 4px;
+      display: inline-block;
+      border-top: 2px solid var(--c-primary-darken);
+      border-right: 2px solid var(--c-primary-darken);
+      transform: rotate(45deg)
+    }
   }
 }

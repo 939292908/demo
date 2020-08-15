@@ -50,5 +50,9 @@ module.exports = {
     // 钱包充值地址
     WALLET_RECHARGE_ADDR_V1: '/v1/users/GetRechargeAddr',
     // 渠道信息
-    EXCH_INFO_V1: '/v1/exch/info'
+    EXCH_INFO_V1: '/v1/exch/info',
+    // 宣传图
+    DESKTOP_BANNER_V2: '/v2/desk/banner',
+    // 最新公告
+    ANNOUNCEMENTS_LATEST: '/v2/hc/announcements/latest'
 };
