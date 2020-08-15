@@ -2,7 +2,6 @@ const m = require('mithril');
 const LegalCurrencyAccount = require('./LegalCurrencyAccount');
 const contractAccount = require('./contractAccount');
 const currencyAccount = require('./currencyAccount');
-const commonSelectionBox = require('./commonSelectionBox');
 
 const tradingAccount = {
     switchValue: 0,
@@ -41,7 +40,7 @@ const tradingAccount = {
                     }
                 }, ['法币账户'])
             ]),
-            m(commonSelectionBox),
+            // m(commonSelectionBox),
             tradingAccount.switchContent()
         ]);
     }

@@ -1,6 +1,7 @@
 const m = require('mithril');
-const myWalletTable = require('./myWalletTable');
 const commonSelectionBox = require('./commonSelectionBox');
+// const fundRecordsSelect = require('@/views/components/fundRecordsSelect');
+const assetRecordsTable = require('@/models/assetRecords/assetRecordsTable');
 
 const assetRecordsWallet = {
     assetValuation: function () {
@@ -8,15 +9,17 @@ const assetRecordsWallet = {
             m('div', { class: 'cursor-pointer mb-3 has-text-primary' }, [
                 m('span', {}, ['我的钱包'])
             ]),
-            m(commonSelectionBox),
-            m(myWalletTable)
+            m(commonSelectionBox, { num: 0 })
+            // m(fundRecordsSelect, assetRecordsTable.dataArrObj)
         ]);
     }
 };
 module.exports = {
-    oninit: function () {
+    oninit () {
+        assetRecordsTable.oninit();
+        console.log('---------------------');
     },
-    view: function () {
+    view () {
         return m('div', { class: 'views-pages-Myassets-assetRecords-assetRecordsWallet' }, [
             assetRecordsWallet.assetValuation()
         ]);

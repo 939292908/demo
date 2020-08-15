@@ -1,6 +1,7 @@
 const m = require('mithril');
 const assetRecordsWallet = require('./assetRecordsWallet');
 const tradingAccount = require('./tradingAccount');
+const header = require('@/views/pages/Myassets/header');
 
 require('@/styles/pages/Myassets/assetRecords.scss');
 
@@ -20,8 +21,7 @@ const assetRecords = {
     assetValuation: function () {
         return m('div', {}, [
             m('div', { class: 'mb-3 columns-flex-warp' }, [
-                m('div', { class: 'cursor-pointer' }, ['我的资产']),
-                m('div', { class: 'cursor-pointer has-text-primary ml-4' }, ['资产记录'])
+                m(header, { highlightFlag: 1 })
             ]),
             m('div', { class: 'columns-flex-warp mb-3' }, [
                 m('div', {
@@ -52,7 +52,7 @@ module.exports = {
         // assetRecords.initAssetList();
     },
     view: function () {
-        return m('div', { class: 'views-pages-Myassets-assetRecords commonAuto common-width' }, [
+        return m('div', { class: 'views-pages-Myassets-assetRecords commonAuto content-width' }, [
             assetRecords.assetValuation()
         ]);
     }

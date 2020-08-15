@@ -984,6 +984,19 @@ class webApi {
             }
         });
     }
+
+    assetRecordsAll (aData) {
+        return this.axios.all(aData);
+    }
+
+    axiosAPI (aData) {
+        return this.axios.request({
+            method: "post",
+            url: this.axios.baseUrl + API.WALLET_ASSETS_HISTORY_V1,
+            data: qs.stringify(aData),
+            options: {}
+        });
+    }
 }
 
 module.exports = webApi;
