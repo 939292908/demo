@@ -25,7 +25,8 @@ module.exports = {
                     }
                 }
             }, [
-                m('div.column.pa-0', {}, [item.cn_name]),
+                m('div.column.pa-0', {}, [window.gI18n.locale === "zh" ||
+                    window.gI18n.locale === "tw" ? item.cn_name : item.us_name]),
                 m('div.column.has-text-right.pa-0', {}, [`+${item.code}`])
             ]));
         }
