@@ -1,6 +1,6 @@
 const m = require('mithril');
 
-const defaultRoutePath = "/chargeMoney";
+const defaultRoutePath = "/home";
 
 m.route(document.querySelector('body .route-box'), defaultRoutePath, {
     '/home': {

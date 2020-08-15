@@ -1,5 +1,5 @@
 
-/** 
+/**
     此文件用于放规范内颜色相关公用样式
 */
 /* 主题样式 start */
@@ -315,6 +315,10 @@
 .theme--dark .navbar-link,
 .theme--dark strong {
     color: var(--c-font-darken);
+}
+
+.has-text-white {
+    color: white !important;
 }
 
 .theme--dark .has-text-title {

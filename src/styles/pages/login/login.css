@@ -1,4 +1,4 @@
-.views-page-login-send-code{
+.views-page-login-send-code {
     white-space: nowrap !important;
     color: var(--c-primary-lighten);
 }
@@ -14,4 +14,8 @@
 
 .views-page-login-div-click {
     cursor: pointer;
+}
+
+.views-page-login-title.opacity {
+    opacity: 0.12;
 }
