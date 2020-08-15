@@ -1,6 +1,7 @@
 const m = require('mithril');
 const Register = require('@/models/login/register');
 const InputWithComponent = require('@/views/components/inputWithComponent');
+const AreaCodeSelect = require('@/views/pages/login/areaCodeSelect');
 
 import('@/styles/pages/login/login.css');
 
@@ -75,15 +76,11 @@ module.exports = {
                     Register.type === 'phone'
                         ? m(InputWithComponent, {
                             addClass: 'mb-5',
-                            leftComponents: m('span.select.px-1', {}, [
-                                m('select.without-border.register-national-select',
-                                    {
-                                        value: Register.areaCode,
-                                        onchange: e => {
-                                            Register.areaCode = e.target.value;
-                                        }
-                                    }, Register.selectList)
-                            ]),
+                            leftComponents: m(AreaCodeSelect, {
+                                selectList: Register.selectList,
+                                areaCode: Register.areaCode,
+                                onSelect: areaCode => { Register.areaCode = areaCode; }
+                            }),
                             options: {
                                 oninput: e => {
                                     Register.loginName = e.target.value;

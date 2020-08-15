@@ -2,6 +2,7 @@ const m = require('mithril');
 const Validate = require('./validate');
 const InputWithComponent = require('@/views/components/inputWithComponent');
 const ForgetPassword = require('@/models/login/forgetPassword');
+const AreaCodeSelect = require('@/views/pages/login/areaCodeSelect');
 
 import('@/styles/pages/login/login.css');
 
@@ -67,15 +68,11 @@ module.exports = {
                         ForgetPassword.loginType === 'phone'
                             ? m(InputWithComponent, {
                                 addClass: 'mb-7',
-                                leftComponents: m('span.select.px-1', {}, [
-                                    m('select.without-border.register-national-select',
-                                        {
-                                            value: ForgetPassword.areaCode,
-                                            onchange: e => {
-                                                ForgetPassword.areaCode = e.target.value;
-                                            }
-                                        }, ForgetPassword.selectList)
-                                ]),
+                                leftComponents: m(AreaCodeSelect, {
+                                    selectList: ForgetPassword.selectList,
+                                    areaCode: ForgetPassword.areaCode,
+                                    onSelect: areaCode => { ForgetPassword.areaCode = areaCode; }
+                                }),
                                 options: {
                                     oninput: e => {
                                         ForgetPassword.loginName = e.target.value;

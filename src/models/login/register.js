@@ -11,7 +11,7 @@ module.exports = {
     password: '',
     code: '',
     areaCode: '86',
-    selectList: [m('option', { value: '86' }, [`+86`])],
+    selectList: [{ cn_name: '中国', code: '86', support: '1', us_name: 'China' }],
     refereeType: '',
     prom: '',
     os: '',
@@ -209,10 +209,7 @@ module.exports = {
     getCountryList () {
         window.gWebApi.getCountryList({}, res => {
             if (res.result.code === 0) {
-                this.selectList = [];
-                for (const item of res.result.data) {
-                    if (item.support === '1') this.selectList.push(m('option', { value: item.code }, [`+${item.code}`]));
-                }
+                this.selectList = res.result.data;
                 m.redraw();
             }
         }, () => {
