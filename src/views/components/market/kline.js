@@ -603,12 +603,6 @@ let obj = {
     setKlineOptions: function(){
         let $color = window.themeColors
         console.log(window.$theme,"主题类型")
-        // let lineColor = "#f4f4f4"
-        // let fontPrimary = "#111"
-        // let fontSecondary = "#8e8e8e"
-        // let upColor = "#48c774"
-        // let downColor = "#f14668"
-        // let promptFont = "#f6f6f6"
         let lineColor = "";
         let fontPrimary = "";
         let fontSecondary = "";
@@ -619,15 +613,15 @@ let obj = {
             lineColor =  $color.line.lighten
             fontPrimary = $color.font.lighten1
             fontSecondary = $color.font.lighten1
-            upColor = $color.success.lighten1
-            downColor = $color.error.lighten1
+            upColor = $color.green.lighten1
+            downColor = $color.red.lighten1
             promptFont = $color.font.lighten
         }else if(window.$theme == "dark"){
             lineColor =  $color.line.darken1
             fontPrimary = $color.font.darken1
             fontSecondary = $color.font.darken2
-            upColor = $color.success.darken1
-            downColor = $color.error.darken1
+            upColor = $color.green.darken1
+            downColor = $color.red.darken1
             promptFont = $color.font.darken
         }
         let fontSize = window.isMobile? 8: 12

@@ -5,70 +5,132 @@
 $white-main-color: var(--primary-lighten);//#00BDBD;
 //主题色end
 
-//标准色start
-$white-standard-green:var(--success-lighten);//#2AD7AA;
-$white-standard-red:var(--error-lighten);//#F57340;
-//标准色end
+//辅助色 start
+$white-sub-lighten:var(--tip-lighten);
+$white-sub-lighten1:var(--tip-lighten1);
+$white-sub-lighten2:var(--tip-lighten2);
+//辅助色 end
 
-//标记色start
-$white-marker-color-green:var(--success-lighten1);//#22B992;
-$white-marker-color-red:var(--error-lighten1);//#CB5F35;
+//提示 start
+$white-tip-errorLighten:var(--tip-errorLighten);
+$white-tip-warningLighten:var(--tip-warningLighten);
+$white-tip-successLighten:var(--tip-successLighten);
+$white-tip-failLighten:var(--tip-failLighten);
+//提示 end
+
+//涨绿 （行业色）start
+$white-green-shallow:var(--green-lighten);
+$white-green-deep:var(--green-lighten1);
+//涨绿 （行业色）end
+
+//跌红 （行业色）start
+$white-red-shallow:var(--red-lighten);
+$white-red-deep:var(--red-lighten1);
+//跌红 （行业色）end
+
+//标记色（主题色）start
+$white-sign-shallow:var(--sign-lighten);
+$white-sign-deep:var(--sign-lighten1);
 //标记色end
-
-//背景色start
-$white-background-color-once-level:var(--background-lighten);//#EDF1F1;
-$white-background-color-second-level:var(--background-lighten1);//#FFFFFF;
-$white-background-color-three-level:var(--background-lighten2);//#F1F6F6;
-$white-background-mask:var(--mode-lighten);//rgba(16, 18, 23, .8);
-//背景色end
 
 //字体颜色start
 $white-font-color-title:var(--font-lighten);//#081111;
 $white-font-color-conent:var(--font-lighten1);//#869595;
 $white-font-color-light:var(--font-lighten2);//#A2ADAD;
+$white-font-color-shallow:var(--font-lighten3);//#A2ADAD;
 //字体颜色end
 
-// 线
+// 线条颜色start
 $white-line1:var(--line-lighten);//EFF5F5
 $white-line2:var(--line-lighten1);//#E9ECEC
 $white-line3:var(--line-lighten2);//#E9ECEC
+// 线条颜色end
+
+//背景色start
+$white-background-color-once-level:var(--background-lighten);//#EDF1F1;
+$white-background-color-second-level:var(--background-lighten1);//#FFFFFF;
+$white-background-color-three-level:var(--background-lighten2);//#F1F6F6;
+$white-background-color-four-level:var(--background-lighten3);//#F7FBFB;
+//背景色end
+
+//遮罩层颜色start
+$white-background-mask:var(--mode-lighten);//rgba(16, 18, 23, .8);
+//遮罩层颜色end
 
 //选中-高亮
-$white-list-color:var(--background-lighten5);//#F7FBFB;
+$white-list-color:var(--background-lighten3);//#F7FBFB;
 //白色主题end
 
 
+
+//补充字体颜色start
+$commmon-font-color:var(--fontwhite-base);//#FFFFFF
+//补充字体颜色end
+
+
+
+//-----------------------------------主题分割-----------------------------------
 
 //黑色主题start
 //主题色start
 $black-main-color:var(--primary-darken);//#00BDBD;
 //主题色end
 
-//标准色start
-$black-standard-green:var(--success-darken);//#22B992;
-$black-standard-red:var(--error-darken);//#CB5F35;
-//标准色end
+//辅助色 start
+$black-sub-darken:var(--tip-darken);
+$black-sub-darken1:var(--tip-darken1);
+$black-sub-darken2:var(--tip-darken2);
+//辅助色 end
 
-//背景色start
-$black-background-color-once-level:var(--background-darken);//#101217;
-$black-background-color-second-level:var(--background-darken1);//#171A21;
-$black-background-color-three-level:var(--background-darken2);//#1E222B;
-$black-background-mask:var(--mode-darken);//rgba(16, 18, 23, .8);
-//背景色end
+//提示 start
+$black-tip-errorDarken:var(--tip-errorDarken);
+$black-tip-warningDarken:var(--tip-warningDarken);
+$black-tip-successDarken:var(--tip-successDarken);
+$black-tip-failDarken:var(--tip-failDarken);
+//提示 end
+
+//涨绿 （行业色）start
+$black-green-shallow:var(--green-darken);
+$black-green-deep:var(--green-darken1);
+//涨绿 （行业色）end
+
+//跌红 （行业色）start
+$black-red-shallow:var(--red-darken);
+$black-red-deep:var(--red-darken1);
+//跌红 （行业色）end
+
+//标记色（主题色）start
+$black-sign-shallow:var(--sign-darken);
+$black-sign-deep:var(--sign-darken1);
+//标记色end
 
 //字体颜色start
 $black-font-color-title:var(--font-darken);//#E9E9E9;
 $black-font-color-conent:var(--font-darken1);//#555A69;
 $black-font-color-light:var(--font-darken2);//#414450;
+$black-font-color-shallow:var(--font-darken3);//#414450;
 //字体颜色end
-
-//选中-高亮
-$black-list-color:var(--background-darken4);//#20252F;
 
 // 线
 $black-line1:var(--line-darken);//#1D212B;
 $black-line2:var(--line-darken1);//#2C3240;
 $black-line3:var(--line-darken2);//#2C3240;
+
+//背景色start
+$black-background-color-once-level:var(--background-darken);//#101217;
+$black-background-color-second-level:var(--background-darken1);//#171A21;
+$black-background-color-three-level:var(--background-darken2);//#1E222B;
+$black-background-color-four-level:var(--background-darken3);//#20252F;
+//背景色end
+
+//遮罩层颜色start
+$black-background-mask:var(--mode-darken);//rgba(16, 18, 23, .8);
+//遮罩层颜色end
+
+//选中-高亮
+$black-list-color:var(--background-darken3);//#20252F;
+
+
 //黑色主题end
 
 

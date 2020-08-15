@@ -1603,8 +1603,8 @@ hr {
     &.is-checked {
         // background-color: rgb(19, 206, 102);
         // border-color: rgb(19, 206, 102);
-        background-color: $white-standard-green !important;
-        border-color: $white-standard-green !important;
+        background-color: $white-tip-successLighten !important;
+        border-color: $white-tip-successLighten !important;
         &::after {
             left: 100%;
             transform: translateX(calc(-100% - 1px));
@@ -1947,16 +1947,16 @@ input[type="checkbox"] {
         }
     }
     .pub-bibi-order-BS-color1 {
-        border-color: $white-standard-green;
+        border-color: $white-green-shallow;
     }
     .pub-bibi-order-BS-color2 {
-        border-color: $white-standard-red;
+        border-color: $white-red-shallow;
     }
     .iconfont-switch1 {
-        color: $white-standard-green;
+        color: $white-green-shallow;
     }
     .iconfont-switch2 {
-        color: $white-standard-red;
+        color: $white-red-shallow;
     }
 }
 
@@ -2020,12 +2020,12 @@ input[type="checkbox"] {
         }
 
         .pub-buy-sell-1 {
-            border-color: $white-standard-green;
-            background-color: $white-standard-green;
+            border-color: $white-green-shallow;
+            background-color: $white-green-shallow;
         }
         .pub-buy-sell-2 {
-            border-color: $white-standard-red;
-            background-color: $white-standard-red;
+            border-color: $white-red-shallow;
+            background-color: $white-red-shallow;
         }
     }
 }
@@ -2294,19 +2294,19 @@ input[type="checkbox"] {
     }
     .has-text-danger {
         // 文字-红
-        color: $white-standard-red !important;
+        color: $white-red-shallow !important;
     }
     .has-text-success {
         // 文字-绿
-        color: $white-standard-green !important;
+        color: $white-green-shallow !important;
     }
     .has-border-danger {
         // 边框-红
-        border: 1px solid $white-standard-red !important;
+        border: 1px solid $white-red-shallow !important;
     }
     .has-border-success {
         // 边框-绿
-        border: 1px solid $white-standard-green !important;
+        border: 1px solid $white-green-shallow !important;
     }
     .has-text-1-important {
         // 特殊情况 加权重
@@ -2335,20 +2335,20 @@ input[type="checkbox"] {
     }
     .is-danger {
         // 背景-红
-        background-color: $white-standard-red !important;
+        background-color: $white-red-shallow !important;
     }
     .is-success {
         // 背景-绿
-        background-color: $white-standard-green !important;
+        background-color: $white-green-shallow !important;
     }
     .has-background-danger {
         // 背景-透明红
-        background-color: $white-standard-red !important;
+        background-color: $white-red-shallow !important;
         opacity: 0.1;
     }
     .has-background-success {
         // 背景-透明绿
-        background-color: $white-standard-green !important;
+        background-color: $white-red-shallow !important;
         opacity: 0.1;
     }
     // ------------------------ 公共 ------------------------
@@ -2412,7 +2412,7 @@ input[type="checkbox"] {
                     a {
                         border-bottom-width: 2px;
                         color: $white-font-color-title;
-                        border-bottom-color: $white-main-color;
+                        border-bottom-color: $white-sign-shallow;
                     }
                 }
             }
@@ -2673,19 +2673,19 @@ input[type="checkbox"] {
     }
     .has-text-danger {
         // 文字-红
-        color: $black-standard-red !important;
+        color: $black-red-shallow !important;
     }
     .has-text-success {
         // 文字-绿
-        color: $black-standard-green !important;
+        color: $black-green-shallow !important;
     }
     .has-border-danger {
         // 边框-红
-        border: 1px solid $black-standard-red !important;
+        border: 1px solid $black-red-shallow !important;
     }
     .has-border-success {
         // 边框-绿
-        border: 1px solid $black-standard-green !important;
+        border: 1px solid $black-green-shallow !important;
     }
     .has-text-1-important {
         // 特殊情况 加权重
@@ -2714,20 +2714,20 @@ input[type="checkbox"] {
     }
     .is-danger {
         // 背景-红
-        background-color: $black-standard-red !important;
+        background-color: $black-red-shallow !important;
     }
     .is-success {
         // 背景-绿
-        background-color: $black-standard-green !important;
+        background-color: $black-green-shallow !important;
     }
     .has-background-danger {
         // 背景-透明红
-        background-color: $black-standard-red !important;
+        background-color: $black-red-shallow !important;
         opacity: 0.1;
     }
     .has-background-success {
         // 背景-透明绿
-        background-color: $black-standard-green !important;
+        background-color: $black-green-shallow !important;
         opacity: 0.1;
     }
     // ------------------------ 公共 ------------------------
@@ -2791,7 +2791,7 @@ input[type="checkbox"] {
                     a {
                         border-bottom-width: 2px;
                         color: $black-font-color-title;
-                        border-bottom-color: $black-main-color;
+                        border-bottom-color: $black-sign-shallow;
                     }
                 }
             }
