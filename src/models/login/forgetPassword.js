@@ -5,7 +5,7 @@ const geetest = require('@/libs/geetestTwo');
 module.exports = {
     loginType: 'phone',
     loginName: '',
-    selectList: [m('option', { value: '86' }, [`+86`])],
+    selectList: [{ cn_name: '中国', code: '86', support: '1', us_name: 'China' }],
     validateCode: [],
     areaCode: '86',
     isValidate: false,
@@ -192,10 +192,7 @@ module.exports = {
     getCountryList () {
         window.gWebApi.getCountryList({}, res => {
             if (res.result.code === 0) {
-                this.selectList = [];
-                for (const item of res.result.data) {
-                    if (item.support === '1') this.selectList.push(m('option', { value: item.code }, [`+${item.code}`]));
-                }
+                this.selectList = res.result.data;
                 m.redraw();
             }
         }, () => {

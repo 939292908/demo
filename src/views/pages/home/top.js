@@ -1,8 +1,13 @@
 const m = require('mithril');
-
+const Slideshow = require('@/views/components/slideshow/bottomToTop');
+const SlideshowNotice = require('@/views/components/slideshow/notice');
 require('@/styles/pages/home.css');
 
 module.exports = {
+    data: {
+        banneList: [],
+        noticeList: []
+    },
     toPage() {
         if (window.gWebApi.loginState) {
             window.router.push('/chargeMoney');
@@ -10,7 +15,36 @@ module.exports = {
             window.router.push('/login');
         }
     },
+    oninit: function () {
+        this.getBanne();
+        this.getnotice();
+    },
+    getBanne () {
+        window.gWebApi.getBanne({ locale: window.gI18n.locale, vp: window.exchId }, res => {
+            if (res.result.code === 0) {
+                var bannList = [];
+                const list = res.result.data;
+                for (let i = 0; i < list.length && i < 9; i += 3) {
+                    bannList.push(list.slice(i, i + 3));
+                }
+                this.data.banneList = bannList;
+                m.redraw();
+            }
+        });
+    },
+    getnotice () {
+        window.gWebApi.getNotice({ locale: window.gI18n.locale, vp: window.exchId }, res => {
+            if (res.result.code === 0) {
+                this.data.noticeList = res.result.data;
+                m.redraw();
+            }
+        });
+    },
+    handleNoticeClick (item) {
+        if (item) window.open(item.html_url);
+    },
     view: function () {
+        const { banneList, noticeList } = this.data;
         return m('div.views-pages-home-top', {
         }, [
             // 顶部
@@ -23,12 +57,12 @@ module.exports = {
                 ]),
                 // 轮播
                 m('div', { class: `rotation-content container` }, [
-                    m('p', { class: `` }, ['轮播1'])
+                    banneList.length > 0 ? m(Slideshow, { banneList }) : null
                 ]),
                 // 公告
                 m('div', { class: `notice w` }, [
                     m('div', { class: `notice-content container` }, [
-                        m('p', { class: `` }, ['公告'])
+                        noticeList.length > 0 ? m(SlideshowNotice, { noticeList, click: this.handleNoticeClick }) : null
                     ])
                 ])
             ])

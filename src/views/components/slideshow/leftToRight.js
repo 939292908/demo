@@ -4,8 +4,6 @@ const Swiper = require('swiper/bundle').default;
 require('@/styles/components/slideshow.scss');
 const TOLEFT = require('@/assets/img/home/toLeft.png').default;
 const TORIGHT = require('@/assets/img/home/toRight.png').default;
-const item1 = require('../../../assets/img/temImg/Group556.jpg').default;
-const item2 = require('../../../assets/img/temImg/Group557.jpg').default;
 
 const horizontal = {
     direction: 'horizontal',
@@ -27,25 +25,31 @@ module.exports = {
         list: [],
         mySwiper: null
     },
-    oninit: function (vnode) {
-        const srcList = [item1, item2];
-        this.data.list = [1, 2, 3, 4, 5, 6, 7].map((i, index) => srcList[index % 2]);
-    },
     oncreate: function (vnode) {
         this.mySwiper = new Swiper('#slideShowLTR', horizontal);
     },
-    leftToRight: function () {
-        return this.data.list.map(item => {
+    leftToRight: function (vnode) {
+        const nameList = Object.keys(vnode.attrs.list);
+        return nameList.map(item => {
             return m('div.swiper-slide', [
-                m('div.imgBox', m('img', { src: item }))
+                m('div.imgBox', [
+                    m('div.marketTitle', [
+                        m('div.marketName', vnode.attrs.list[item].distSym),
+                        m('div.marketGrowth has-bg-up', vnode.attrs.list[item].rfpre)
+                    ]),
+                    m('div.marketPrice', `$${vnode.attrs.list[item].LastPrz}`),
+                    m('div.marketNumber', `24H量 ${vnode.attrs.list[item].Volume24}`),
+                    m('div.marketNumber', `24H额 ${vnode.attrs.list[item].Turnover24}`)
+                ])
             ]);
         });
     },
     view: function (vnode) {
+        console.log(vnode);
         return m('div', { class: 'slideshow' }, [
             m('div', { class: 'swiper-container', id: "slideShowLTR" }, [
                 m('div.swiper-wrapper', [
-                    this.leftToRight()
+                    this.leftToRight(vnode)
                 ])
             ]),
             m('div.button-prev', m('img', { src: TOLEFT })),

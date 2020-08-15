@@ -1011,6 +1011,53 @@ class webApi {
             }
         });
     }
+
+    /**
+     * 获取最新宣传图
+     */
+    getBanne (aData, aOnSuccess, aOnError) {
+        const s = this;
+
+        s.axios.request({
+            method: "get",
+            url: s.axios.baseUrl + API.DESKTOP_BANNER_V2,
+            data: qs.stringify(aData),
+            options: {}
+        }).then(function (result) {
+            const arg = result.data;
+            if (aOnSuccess) {
+                aOnSuccess(arg);
+            }
+        }).catch(function (e) {
+            window._console.log('tlh', e);
+            if (aOnError) {
+                aOnError(e);
+            }
+        });
+    }
+
+    /**
+     * 获取最新宣传图
+     */
+    getNotice (aData, aOnSuccess, aOnError) {
+        const s = this;
+        s.axios.request({
+            method: "get",
+            url: s.axios.baseUrl + API.ANNOUNCEMENTS_LATEST,
+            data: qs.stringify(aData),
+            options: {}
+        }).then(function (result) {
+            const arg = result.data;
+            if (aOnSuccess) {
+                aOnSuccess(arg);
+            }
+        }).catch(function (e) {
+            window._console.log('tlh', e);
+            if (aOnError) {
+                aOnError(e);
+            }
+        });
+    }
 }
 
 module.exports = webApi;

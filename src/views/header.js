@@ -69,7 +69,7 @@ module.exports = {
                             window.router.push('/');
                         }
                     }, [
-                        'ETG专区'
+                        'ETF专区'
                     ]),
                     m('a.navbar-item', {
                         onclick: function () {

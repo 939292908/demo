@@ -2,6 +2,7 @@ const m = require('mithril');
 const Validate = require('./validate');
 const InputWithComponent = require('@/views/components/inputWithComponent');
 const ForgetPassword = require('@/models/login/forgetPassword');
+const AreaCodeSelect = require('@/views/pages/login/areaCodeSelect');
 
 import('@/styles/pages/login/login.css');
 
@@ -13,7 +14,7 @@ module.exports = {
         ForgetPassword.onremove();
     },
     view() {
-        return m('div.is-align-items-center.pa-8', {}, [
+        return m('div.is-align-items-center.has-bg-level-1.pa-8.theme--light', {}, [
             m('div.box.has-bg-level-2.views-page-login-box-width.px-7.py-8', {},
                 ForgetPassword.isValidate ? [
                     m('div.mb-2.title-4.has-text-level-1.title-x-large-1.has-text-title', {},
@@ -67,15 +68,11 @@ module.exports = {
                         ForgetPassword.loginType === 'phone'
                             ? m(InputWithComponent, {
                                 addClass: 'mb-7',
-                                leftComponents: m('span.select.px-1', {}, [
-                                    m('select.without-border.register-national-select',
-                                        {
-                                            value: ForgetPassword.areaCode,
-                                            onchange: e => {
-                                                ForgetPassword.areaCode = e.target.value;
-                                            }
-                                        }, ForgetPassword.selectList)
-                                ]),
+                                leftComponents: m(AreaCodeSelect, {
+                                    selectList: ForgetPassword.selectList,
+                                    areaCode: ForgetPassword.areaCode,
+                                    onSelect: areaCode => { ForgetPassword.areaCode = areaCode; }
+                                }),
                                 options: {
                                     oninput: e => {
                                         ForgetPassword.loginName = e.target.value;

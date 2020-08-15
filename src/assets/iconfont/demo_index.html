@@ -121,6 +121,12 @@
           
           <li class="dib">
             <span class="icon iconfont icon-signal"></span>
+            m('div', { class: `navbar-dropdown` }, [
+                        m('a', { class: `navbar-item` }, ["合约订单"]),
+                        m('a', { class: `navbar-item` }, ["币币订单"]),
+                        m('a', { class: `navbar-item` }, ["法币订单"]),
+                        m('a', { class: `navbar-item` }, ["跟单订单"])
+                    ])
             <div class="name">
               信号
             </div>
