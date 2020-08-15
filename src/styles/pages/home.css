@@ -19,7 +19,7 @@
 }
 
 .pages-home-advantage {
-    background: #0D1C33 url("~@/assets/img/home/rectangle.png") no-repeat center center;
+    /* background: #0D1C33 url("~@/assets/img/home/rectangle.png") no-repeat center center; */
     background-size: "cover";
 }
 
