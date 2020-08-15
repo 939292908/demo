@@ -109,7 +109,7 @@ module.exports = {
                         value: Register.password
                     }, []),
                     m('div.py-0.mb-2.has-text-level-1.body-3', {}, ['邀请码（选填）']),
-                    m('input.input[type=password].mb-6', {
+                    m('input.input.mb-6', {
                         oninput: e => {
                             Register.refereeId = e.target.value;
                         },

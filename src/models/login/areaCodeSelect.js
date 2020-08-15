@@ -11,10 +11,11 @@ module.exports = {
         for (const i of pinyin(item.cn_name, { style: pinyin.STYLE_NORMAL })) {
             py += i;
         }
+        const code = '+' + item.code;
         return py.indexOf(this.search) >= 0 ||
             item.cn_name.indexOf(this.search) >= 0 ||
             item.us_name.toUpperCase().indexOf(this.search.toUpperCase()) >= 0 ||
-            item.code.indexOf(this.search) >= 0;
+            code.indexOf(this.search) >= 0;
     },
     oninit(vnode) {
         this.selectList = vnode.attrs.selectList;
