@@ -16,23 +16,19 @@
         }
     }
     .myAccount{
+        display: flex;
+        flex-direction: row;
+        width: 388px;
+        height: 113px;
         .show-desc{
             display: '';
+            margin: auto 0px;
             margin-left: auto;
         }
         .hide-desc{
             display: none;
         }
-    }
-    .myAccount{
-        display: flex;
-        flex-direction: row;
-        width: 388px;
-        height: 113px;
-        div div{
-            font-size: 18px;
-            color: #282a2f;
-        }
+        background-color: white;
     }
     .myWalletIndex-switch{
         margin-bottom: var(--c-margin-level5);
@@ -47,8 +43,8 @@
             z-index: 9999;
             position: fixed;
             background-color: white;
-            margin-left: 680px;
-            margin-top: 40px;
+            margin-left: 640px;
+            margin-top: 80px;
             padding: 3px 10px;
             border-radius: 5px;
             font-size: 8px;
@@ -58,11 +54,8 @@
         }
     }
     .myWalletIndex-head-right div{
-        div{
-            height: 44px;
+        button{
             width: 68px;
-            border-radius: 2px;
-            margin: 0 var(--c-margin-level3);
             text-align: center;
             border: 1px solid var(--c-primary-lighten);
         }
