@@ -99,6 +99,115 @@ module.exports = {
                         ])
                     ])
                 ]),
+                // 已登录样式
+                m('div.navbar-item.cursor-pointer' + (!window.gWebApi.loginState ? '.is-hidden' : ''), {
+                    class: `has-dropdown is-hoverable`
+                }, [
+                    m('div', { class: `navbar-item` }, ["资产"]),
+                    m('div', { class: `navbar-dropdown` }, [
+                        m('a', {
+                            class: `navbar-item`,
+                            onclick: function () {
+                                window.router.push('/myWalletIndex');
+                            }
+                        }, ["我的钱包"]),
+                        m('a', {
+                            class: `navbar-item`,
+                            onclick: function () {
+                                window.router.push('/myWalletIndex');
+                            }
+                        }, ["合约账户"]),
+                        m('a', {
+                            class: `navbar-item`,
+                            onclick: function () {
+                                window.router.push('/myWalletIndex');
+                            }
+                        }, ["币币账号"]),
+                        m('a', {
+                            class: `navbar-item`,
+                            onclick: function () {
+                                window.router.push('/myWalletIndex');
+                            }
+                        }, ["法币账户"])
+                    ])
+                ]),
+                m('a.navbar-item.cursor-pointer' + (!window.gWebApi.loginState ? '.is-hidden' : ''), {
+                    class: `has-dropdown is-hoverable`,
+                    onclick: function () {
+                        window.router.push('/');
+                    }
+                }, [
+                    m('a', { class: `navbar-item` }, ["订单"]),
+                    m('div', { class: `navbar-dropdown` }, [
+                        m('a', { class: `navbar-item` }, ["合约订单"]),
+                        m('a', { class: `navbar-item` }, ["币币订单"]),
+                        m('a', { class: `navbar-item` }, ["法币订单"]),
+                        m('a', { class: `navbar-item` }, ["跟单订单"])
+                    ])
+                ]),
+                // 我的
+                m('a.navbar-item' + (!window.gWebApi.loginState ? '.is-hidden' : ''), {
+                    class: `has-dropdown is-hoverable`,
+                    onclick: function () {
+                        // window.router.push('/userCenter');
+                    }
+                }, [
+                    m('a', { class: 'navbar-item' }, [
+                        m('div', {
+                            onclick: function () {
+                                window.router.push('/userCenter');
+                            }
+                        }, ['用户中心']),
+                        m('div', { class: `navbar-dropdown` }, [
+                            m('a', { class: `navbar-item` }, [
+                                m('svg', {
+                                    class: 'icon',
+                                    "aria-hidden": true
+                                }, [
+                                    m('use', { "xlink:href": '#icon-logo' })
+                                ]),
+                                m('a', { class: `navbar-item` }, ["12"])
+                            ]),
+                            m('a', { class: `navbar-item` }, [
+                                m('span.icon', {}, [
+                                    m('i.iconfont.icon-logo')
+                                ]),
+                                m('a', { class: `navbar-item` }, ["账户安全"])
+                            ]),
+                            m('a', { class: `navbar-item` }, [
+                                m('span.icon', {}, [
+                                    m('i.iconfont.icon-logo')
+                                ]),
+                                m('a', { class: `navbar-item` }, ["身份认证"])
+                            ]),
+                            m('a', { class: `navbar-item` }, [
+                                m('span.icon', {}, [
+                                    m('i.iconfont.icon-logo')
+                                ]),
+                                m('a', { class: `navbar-item` }, ["API管理"])
+                            ]),
+                            m('a', { class: `navbar-item` }, [
+                                m('span.icon', {}, [
+                                    m('i.iconfont.icon-logo')
+                                ]),
+                                m('a', { class: `navbar-item` }, ["邀请返佣"])
+                            ]),
+                            m('a', { class: `navbar-item` }, [
+                                m('span.icon', {}, [
+                                    m('i.iconfont.icon-logo')
+                                ]),
+                                m('a', {
+                                    class: `navbar-item`,
+                                    onclick: () => {
+                                        window.utils.removeItem("ex-session");
+                                        window.gWebApi.loginState = false;
+                                    }
+                                }, ["退出登录"])
+                            ])
+                        ])
+                    ])
+                ]),
+
                 // 下载
                 m('div.navbar-item.cursor-pointer', { class: `` }, [
                     m('span.icon', {}, [
@@ -147,115 +256,6 @@ module.exports = {
                         }, [
                             '繁体中文'
                         ])
-
-                        // 已登录样式
-                        // m('div.navbar-item.cursor-pointer' + (!window.gWebApi.loginState ? '.is-hidden' : ''), {
-                        //     class: `has-dropdown is-hoverable`
-                        // }, [
-                        //     m('div', { class: `navbar-item` }, ["资产"]),
-                        //     m('div', { class: `navbar-dropdown` }, [
-                        //         m('a', {
-                        //             class: `navbar-item`,
-                        //             onclick: function () {
-                        //                 window.router.push('/myWalletIndex');
-                        //             }
-                        //         }, ["我的钱包"]),
-                        //         m('a', {
-                        //             class: `navbar-item`,
-                        //             onclick: function () {
-                        //                 window.router.push('/myWalletIndex');
-                        //             }
-                        //         }, ["合约账户"]),
-                        //         m('a', {
-                        //             class: `navbar-item`,
-                        //             onclick: function () {
-                        //                 window.router.push('/myWalletIndex');
-                        //             }
-                        //         }, ["币币账号"]),
-                        //         m('a', {
-                        //             class: `navbar-item`,
-                        //             onclick: function () {
-                        //                 window.router.push('/myWalletIndex');
-                        //             }
-                        //         }, ["法币账户"])
-                        //     ])
-                        // ]),
-                        // m('a.navbar-item.cursor-pointer' + (!window.gWebApi.loginState ? '.is-hidden' : ''), {
-                        //     class: `has-dropdown is-hoverable`,
-                        //     onclick: function () {
-                        //         window.router.push('/');
-                        //     }
-                        // }, [
-                        //     m('a', { class: `navbar-item` }, ["订单"]),
-                        //     m('div', { class: `navbar-dropdown` }, [
-                        //         m('a', { class: `navbar-item` }, ["合约订单"]),
-                        //         m('a', { class: `navbar-item` }, ["币币订单"]),
-                        //         m('a', { class: `navbar-item` }, ["法币订单"]),
-                        //         m('a', { class: `navbar-item` }, ["跟单订单"])
-                        //     ])
-                        // ]),
-                        // // 我的
-                        // m('a.navbar-item' + (!window.gWebApi.loginState ? '.is-hidden' : ''), {
-                        //     class: `has-dropdown is-hoverable`,
-                        //     onclick: function () {
-                        //         // window.router.push('/userCenter');
-                        //     }
-                        // }, [
-                        //     m('a', { class: 'navbar-item' }, [
-                        //         m('div', {
-                        //             onclick: function () {
-                        //                 window.router.push('/userCenter');
-                        //             }
-                        //         }, ['用户中心']),
-                        //         m('div', { class: `navbar-dropdown` }, [
-                        //             m('a', { class: `navbar-item` }, [
-                        //                 m('svg', {
-                        //                     class: 'icon',
-                        //                     "aria-hidden": true
-                        //                 }, [
-                        //                     m('use', { "xlink:href": '#icon-logo' })
-                        //                 ]),
-                        //                 m('a', { class: `navbar-item` }, ["12"])
-                        //             ]),
-                        //             m('a', { class: `navbar-item` }, [
-                        //                 m('span.icon', {}, [
-                        //                     m('i.iconfont.icon-logo')
-                        //                 ]),
-                        //                 m('a', { class: `navbar-item` }, ["账户安全"])
-                        //             ]),
-                        //             m('a', { class: `navbar-item` }, [
-                        //                 m('span.icon', {}, [
-                        //                     m('i.iconfont.icon-logo')
-                        //                 ]),
-                        //                 m('a', { class: `navbar-item` }, ["身份认证"])
-                        //             ]),
-                        //             m('a', { class: `navbar-item` }, [
-                        //                 m('span.icon', {}, [
-                        //                     m('i.iconfont.icon-logo')
-                        //                 ]),
-                        //                 m('a', { class: `navbar-item` }, ["API管理"])
-                        //             ]),
-                        //             m('a', { class: `navbar-item` }, [
-                        //                 m('span.icon', {}, [
-                        //                     m('i.iconfont.icon-logo')
-                        //                 ]),
-                        //                 m('a', { class: `navbar-item` }, ["邀请返佣"])
-                        //             ]),
-                        //             m('a', { class: `navbar-item` }, [
-                        //                 m('span.icon', {}, [
-                        //                     m('i.iconfont.icon-logo')
-                        //                 ]),
-                        //                 m('a', {
-                        //                     class: `navbar-item`,
-                        //                     onclick: () => {
-                        //                         window.utils.removeItem("ex-session");
-                        //                         window.gWebApi.loginState = false;
-                        //                     }
-                        //                 }, ["退出登录"])
-                        //             ])
-                        //         ])
-                        //     ])
-                        // ]),
                     ])
                 ])
             ])

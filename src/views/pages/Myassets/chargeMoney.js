@@ -3,8 +3,9 @@ const QRCode = require('qrcode');
 
 require('@/styles/pages/Myassets/chargeMoney.scss');
 
-const Back = require('../../../assets/img/temImg/toLeft.png').default;
-const header = require('@/views/pages/Myassets/header');
+// const Back = require('../../../assets/img/temImg/toLeft.png').default;
+// const header = require('@/views/pages/Myassets/header');
+const SlideshowLTR = require('@/views/components/slideshow/bottomToTop');
 
 const QuickMark = function (code = '这是个二维码！') {
     const self = this;
@@ -28,26 +29,26 @@ module.exports = {
         QuickMark.call(this);
     },
     view: function (vNode) {
-        const { coinList, QRSrc } = this.data;
-        console.log(this, this.data);
+        // const { coinList, QRSrc } = this.data;
         return m('div', { class: 'views-pages-myassets-chargeMoney' }, [
-            m(header, { highlightFlag: 0 }),
-            m('div', { class: 'back' }, [
-                m('img', { src: Back, class: 'back-Icon' }),
-                m('span', '充币')
-            ]),
-            m('div', { class: 'select' }, [
-                m('select', { onchange: function (e) { console.log(e); } }, [
-                    coinList.map(item => m('option', { value: item }, item))
-                ])
-            ]),
-            m('div', { class: 'columns' }, [
-                m('div', { class: 'column' }, [
-                    m('div', '充币地址'),
-                    m('img', { src: QRSrc })
-                ]),
-                m('div', { class: 'column' }, '温馨提示')
-            ])
+            // m(header, { highlightFlag: 0 }),
+            // m('div', { class: 'back' }, [
+            //     m('img', { src: Back, class: 'back-Icon' }),
+            //     m('span', '充币')
+            // ]),
+            // m('div', { class: 'select' }, [
+            //     m('select', { onchange: function (e) { console.log(e); } }, [
+            //         coinList.map(item => m('option', { value: item }, item))
+            //     ])
+            // ]),
+            // m('div', { class: 'columns' }, [
+            //     m('div', { class: 'column' }, [
+            //         m('div', '充币地址'),
+            //         m('img', { src: QRSrc })
+            //     ]),
+            //     m('div', { class: 'column' }, '温馨提示')
+            // ]),
+            m(SlideshowLTR)
         ]);
     }
 };
