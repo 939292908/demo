@@ -120,12 +120,13 @@ const myWalletIndex = {
             {
                 title: '交易账户',
                 val: myWalletIndex.tradingAccountTotalValue,
-                descCls: 'show-desc cursor-pointer'
+                sty: 'mx-5',
+                descCls: 'show-desc cursor-pointer title-medium'
             },
             {
                 title: '其他账户',
                 val: '0.00000000 ',
-                descCls: 'show-desc cursor-pointer'
+                descCls: 'show-desc cursor-pointer title-medium'
             }
         ];
     },
@@ -151,7 +152,7 @@ const myWalletIndex = {
             m('div', { class: 'myWalletIndex-head columns-flex' }, [
                 m('div', { class: 'myWalletIndex-head-left column' }, [
                     m('div', { class: 'myWalletIndex-head-left-total columns' }, [
-                        m('span', { class: '', style: 'padding:10px' }, ['总资产估值']),
+                        m('span', { class: 'body-6', style: 'padding:10px' }, ['总资产估值']),
                         m('span.navbar-item.has-dropdown.is-hoverable', {}, [
                             m('select.has-text-primary', { onchange: function () { myWalletIndex.currencyChange(this.value); } }, [
                                 m('option', {}, ['BTC']),
@@ -160,8 +161,8 @@ const myWalletIndex = {
                         ])
                     ]),
                     m('div', { class: 'number-hide' }, [
-                        m('span', {}, [myWalletIndex.totalValue]),
-                        m('span', {}, [' ' + this.currency]),
+                        m('span', { class: 'title-large' }, [myWalletIndex.totalValue]),
+                        m('span', { class: 'title-large' }, [' ' + this.currency]),
                         m('span.cursor-pointer', {
                             onclick: function () {
                                 myWalletIndex.hideValue();
@@ -186,7 +187,7 @@ const myWalletIndex = {
             m('div', { class: 'myWalletIndex-switch columns-flex' }, [
                 myWalletIndex.Nav.secondNav.map((item, index) => {
                     return m('div.myAccount column', {
-                        class: myWalletIndex.swValue === index ? 'is-primary' : '',
+                        class: (myWalletIndex.swValue === index ? 'is-primary' : '') + ' ' + item.sty,
                         onclick: function () {
                             // 其他账户未开放
                             if (index <= 1) {

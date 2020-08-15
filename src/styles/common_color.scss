@@ -53,55 +53,55 @@
 .theme--light .has-bg-primary {
     background-color: var(--c-primary-lighten);
     border-color: var(--c-primary-lighten);
-    color: var(--c-font-darken);
+    color: var(--c-fontwhite-base);
 }
 
 /* 跌红 */
 .theme--light .has-bg-up {
     background-color: var(--c-red-lighten);
     border-color: var(--c-red-lighten);
-    color: var(--c-font-darken);
+    color: var(--c-fontwhite-base);
 }
 
 /* 涨绿 */
 .theme--light .has-bg-down {
     background-color: var(--c-green-lighten);
     border-color: var(--c-green-lighten);
-    color: var(--c-font-darken);
+    color: var(--c-fontwhite-base);
 }
 
 /* 提示颜色 */
 .theme--light .has-bg-tip-error {
     background-color: var(--c-tip-errorLighten);
     border-color: var(--c-tip-errorLighten);
-    color: var(--c-font-darken);
+    color: var(--c-fontwhite-base);
 }
 .theme--light .has-bg-tip-warning {
     background-color: var(--c-tip-warningLighten);
     border-color: var(--c-tip-warningLighten);
-    color: var(--c-font-darken);
+    color: var(--c-fontwhite-base);
 }
 .theme--light .has-bg-tip-success {
     background-color: var(--c-tip-successLighten);
     border-color: var(--c-tip-successLighten);
-    color: var(--c-font-darken);
+    color: var(--c-fontwhite-base);
 }
 .theme--light .has-bg-tip-fail {
     background-color: var(--c-tip-failLighten);
     border-color: var(--c-tip-failLighten);
-    color: var(--c-font-darken);
+    color: var(--c-fontwhite-base);
 }
 
 /* 标记背景颜色 */
 .theme--light .has-bg-sign-1 {
     background-color: var(--c-sign-lighten);
     border-color: var(--c-sign-lighten);
-    color: var(--c-font-darken);
+    color: var(--c-fontwhite-base);
 }
 .theme--light .has-bg-sign-2 {
     background-color: var(--c-sign-lighten1);
     border-color: var(--c-sign-lighten1);
-    color: var(--c-font-darken);
+    color: var(--c-fontwhite-base);
 }
 
 /* 背景颜色 end */
@@ -256,55 +256,55 @@
 .theme--dark .has-bg-primary {
     background-color: var(--c-primary-darken);
     border-color: var(--c-primary-darken);
-    color: var(--c-font-darken);
+    color: var(--c-fontwhite-base);
 }
 
 /* 跌红 */
 .theme--dark .has-bg-up {
     background-color: var(--c-red-darken);
     border-color: var(--c-red-darken);
-    color: var(--c-font-darken);
+    color: var(--c-fontwhite-base);
 }
 
 /* 涨绿 */
 .theme--dark .has-bg-down {
     background-color: var(--c-green-darken);
     border-color: var(--c-green-darken);
-    color: var(--c-font-darken);
+    color: var(--c-fontwhite-base);
 }
 
 /* 提示颜色 */
 .theme--dark .has-bg-tip-error {
     background-color: var(--c-tip-errordarken);
     border-color: var(--c-tip-errordarken);
-    color: var(--c-font-darken);
+    color: var(--c-fontwhite-base);
 }
 .theme--dark .has-bg-tip-warning {
     background-color: var(--c-tip-warningdarken);
     border-color: var(--c-tip-warningdarken);
-    color: var(--c-font-darken);
+    color: var(--c-fontwhite-base);
 }
 .theme--dark .has-bg-tip-success {
     background-color: var(--c-tip-successdarken);
     border-color: var(--c-tip-successdarken);
-    color: var(--c-font-darken);
+    color: var(--c-fontwhite-base);
 }
 .theme--dark .has-bg-tip-fail {
     background-color: var(--c-tip-faildarken);
     border-color: var(--c-tip-faildarken);
-    color: var(--c-font-darken);
+    color: var(--c-fontwhite-base);
 }
 
 /* 标记背景颜色 */
 .theme--dark .has-bg-sign-1 {
     background-color: var(--c-sign-darken);
     border-color: var(--c-sign-darken);
-    color: var(--c-font-darken);
+    color: var(--c-fontwhite-base);
 }
 .theme--dark .has-bg-sign-2 {
     background-color: var(--c-sign-darken1);
     border-color: var(--c-sign-darken1);
-    color: var(--c-font-darken);
+    color: var(--c-fontwhite-base);
 }
 
 /* 背景颜色 end */

@@ -7,38 +7,21 @@
     .myWalletIndex-head{
         .myWalletIndex-head-left{
             .myWalletIndex-head-left-total{
-                & span:nth-child(1){
-                    font-size: 16px;
-                }
                 select{
                     background: none;
                     border: none;
                     outline: none;
                 }
             }
-            & div:nth-child(2){
-                & span{
-                    &:nth-child(1),&:nth-child(2){
-                        font-size: 32px;
-                    }
-                }
-            }
         }
     }
     .myAccount{
         .show-desc{
+            display: '';
             margin-left: auto;
-            font-size: var(--c-fontsz-level7);
         }
         .hide-desc{
             display: none;
-        }
-        .show-desc{
-            display: '';
-        }
-        &:nth-child(2){
-            margin-left: var(--c-margin-level5);
-            margin-right: var(--c-margin-level5);
         }
     }
     .myAccount{
@@ -72,7 +55,6 @@
             span{
                 color:gray;
             }
-            
         }
     }
     .myWalletIndex-head-right div{

@@ -51,10 +51,10 @@ import('@/styles/common_other.scss');
 // iconfont
 import('@/assets/iconfont/iconfont.js');
 import('@/assets/iconfont/iconfont.css');
-
+// 轮播
+import('swiper/swiper-bundle.css');
 // 极验
 import('@/libs/gt');
-
 // 全局API请求
 const WebApi = require('@/api/webApi');
 window.gWebApi = new WebApi({ baseUrl: api.WebAPI });
