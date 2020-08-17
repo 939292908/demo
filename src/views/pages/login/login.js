@@ -19,7 +19,7 @@ module.exports = {
                     : [
                         m('div.title-x-large-1.views-page-login-title.opacity', {}, [window.exchConfig.exchName]),
                         m('div.mb-8.title-x-large-1.has-text-title', {},
-                            [`登录${window.exchConfig.exchName}账号`]),
+                            [`登录`]),
                         m('div.has-text-level-1.body-3.mb-2', {}, ['手机/邮箱']),
                         m('input.input[type=text].mb-5', {
                             oninput: e => {

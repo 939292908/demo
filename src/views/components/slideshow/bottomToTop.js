@@ -6,6 +6,7 @@ const vertical = {
     direction: 'vertical',
     loop: true,
     speed: 300,
+    spaceBetween: 10,
     autoplay: {
         delay: 3000,
         disableOnInteraction: false
@@ -27,7 +28,10 @@ module.exports = {
         const { banneList } = vnode.attrs;
         return banneList.map(item => {
             return m('div.swiper-slide', [
-                item.map(item => m('div', { class: "imgBox" }, m('img', { src: item.image })))
+                item.map(item => {
+                    const srcUrl = item.image.indexOf('http') === 0 ? item.image : window.gWebApi.axios.baseUrl + item.image;
+                    return m('div', { class: "imgBox" }, m('img', { src: srcUrl }));
+                })
             ]);
         });
     },
