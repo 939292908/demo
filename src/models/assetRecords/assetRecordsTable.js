@@ -4,135 +4,136 @@ const m = require('mithril');
 
 module.exports = {
     type: '03',
+    readyAlldata: [],
     allType: { // 主钱包类型
         allType: {
-            value: '全部类型', // '全部类型',
+            value: window.gI18n.$t('10131'), // '全部类型',
             key: 'allType',
             show: true
         },
         recharge: {
-            value: '钱包充币', // '钱包充币',
+            value: window.gI18n.$t('10246'), // '钱包充币',
             key: 'recharge',
             show: true
         },
         withdrawa: {
-            value: '钱包提币', // '钱包提币',
+            value: window.gI18n.$t('10247'), // '钱包提币',
             key: 'withdrawa',
             show: true
         },
         transfer: {
-            value: '资产划转', // '资产划转',
+            value: window.gI18n.$t('10408'), // '资产划转',
             key: 'transfer',
             show: true
         },
-        // paymentTransfer: {
-        //     value: window.gI18n.$t('支付', {
-        //         // value: $params.exchInfo.exchName
-        //         value: ""
-        //     }), // $params.exchInfo.exchName + '支付',
-        //     key: 'paymentTransfer',
-        //     show: true
-        // },
+        paymentTransfer: {
+            value: window.gI18n.$t('10502', {
+                // value: $params.exchInfo.exchName
+                value: ""
+            }), // $params.exchInfo.exchName + '支付',
+            key: 'paymentTransfer',
+            show: true
+        },
         gf: {
-            value: 'GF兑换', // 'GF兑换',
+            value: window.gI18n.$t('10249'), // 'GF兑换',
             key: 'gf',
             show: true
         },
         active: {
-            value: '活动资金', // '活动资金',
+            value: window.gI18n.$t('10132'), // '活动资金',
             key: 'active',
             show: true
         },
         exchange: {
-            value: '系统兑换', // '系统兑换',
+            value: window.gI18n.$t('10821'), // '系统兑换',
             key: 'exchange',
             show: true
         },
         Active: {
-            value: '锁定激活', // '锁定激活',
+            value: window.gI18n.$t('10822'), // '锁定激活',
             key: 'Active',
             show: true
         },
         ore: {
-            value: '矿池出矿', // '矿池出矿',
+            value: window.gI18n.$t('10823'), // '矿池出矿',
             key: 'ore',
             show: true
         },
         mineTransfer: {
-            value: '矿池划转', // '矿池划转',
+            value: window.gI18n.$t('10864'), // '矿池划转',
             key: 'mineTransfer',
             show: true
         },
         other: {
-            value: '其他类型', // '其他类型',
+            value: window.gI18n.$t('10824'), // '其他类型',
             key: 'other',
             show: true
         }
     },
     hyType: {
         allType: {
-            value: '全部类型', // ' 全部类型',
+            value: window.gI18n.$t('10131'), // '全部类型',
             key: 'allType',
             show: true
         },
         transfer: {
-            value: '资产划转', // '资产划转',
+            value: window.gI18n.$t('10408'), // '资产划转',
             key: 'transfer',
             show: true
         },
         gift: {
-            value: '合约赠金', // 合约赠金
+            value: window.gI18n.$t('11610'), // 合约赠金
             key: 'gift',
             show: true
         }
     },
     bbType: {
         allType: {
-            value: '全部类型', // '全部类型',
+            value: window.gI18n.$t('10131'), // '全部类型',
             key: 'allType',
             show: true
         },
         transfer: {
-            value: '资产划转', // '资产划转',
+            value: window.gI18n.$t('10408'), // '资产划转',
             key: 'transfer',
             show: true
         },
         other: {
-            value: '其他类型', // '其他类型',
+            value: window.gI18n.$t('10824'), // '其他类型',
             key: 'other',
             show: true
         }
     },
     otcType: {
         allType: {
-            value: '全部类型', // '全部类型',
+            value: window.gI18n.$t('10131'), // '全部类型',
             key: 'allType',
             show: true
         },
         transfer: {
-            value: '资产划转', // '资产划转',
+            value: window.gI18n.$t('10408'), // '资产划转',
             key: 'transfer',
             show: true
         },
         otcSell: {
-            value: '法币交易', // '法币交易',
+            value: window.gI18n.$t('10676'), // '法币交易',
             key: 'otcSell',
             show: true
         }
     },
     documentaryType: {
         allType: {
-            value: '全部类型', // '全部类型',
+            value: window.gI18n.$t('10131'), // '全部类型',
             key: 'allType',
             show: true
         },
         transfer: {
-            value: '资产划转', // '资产划转',
+            value: window.gI18n.$t('10408'), // '资产划转',
             key: 'transfer',
             show: true
         },
         other: {
-            value: '其他类型', // '其他类型',
+            value: window.gI18n.$t('10824'), // '其他类型',
             key: 'other',
             show: true
         }
@@ -278,10 +279,10 @@ module.exports = {
         let that = this;
         if (that.type === '03') {
             window.gWebApi.assetRecordsAll([
-                window.gWebApi.axiosAPI({ aType: that.type, mhType: 1 }), // 充币
-                window.gWebApi.axiosAPI({ aType: that.type, mhType: 2 }), // 提币
-                window.gWebApi.axiosAPI({ aType: that.type, mhType: 4 }), // 划转
-                window.gWebApi.axiosAPI({ aType: that.type, mhType: 5 }) // 其他
+                window.gWebApi.assetRecords({ aType: that.type, mhType: 1 }), // 充币
+                window.gWebApi.assetRecords({ aType: that.type, mhType: 2 }), // 提币
+                window.gWebApi.assetRecords({ aType: that.type, mhType: 4 }), // 划转
+                window.gWebApi.assetRecords({ aType: that.type, mhType: 5 }) // 其他
             ]).then(res => {
                 // eslint-disable-next-line prefer-const
                 let walletLog = that.walletLog[that.type];
@@ -289,14 +290,14 @@ module.exports = {
                 that.walletLog[that.type]['2'] = res[1].data.result.code === 0 ? res[1].data.history : walletLog['2'] ? walletLog['2'] : [];
                 that.walletLog[that.type]['4'] = res[2].data.result.code === 0 ? res[2].data.history : walletLog['4'] ? walletLog['4'] : [];
                 that.walletLog[that.type]['5'] = res[3].data.result.code === 0 ? res[3].data.history : walletLog['5'] ? walletLog['5'] : [];
+                console.log(res, '1111111111111111111111111111');
                 that.updateList();
-                console.log(that.walletLog[that.type]['4']);
             }).catch(err => {
                 console.log('error ', err);
             });
         } else if (that.type === '01' || that.type === '02') {
             window.gWebApi.assetRecordsAll([
-                window.gWebApi.axiosAPI({ aType: that.type, mhType: 4 }) // 划转
+                window.gWebApi.assetRecords({ aType: that.type, mhType: 4 }) // 划转
             ]).then(res => {
                 // eslint-disable-next-line prefer-const
                 let walletLog = that.walletLog[that.type];
@@ -307,8 +308,8 @@ module.exports = {
             });
         } else if (that.type === '04') {
             window.gWebApi.assetRecordsAll([
-                window.gWebApi.axiosAPI({ aType: that.type, mhType: 4 }), // 划转
-                window.gWebApi.axiosAPI({ aType: that.type, mhType: 5 }) // 其他
+                window.gWebApi.assetRecords({ aType: that.type, mhType: 4 }), // 划转
+                window.gWebApi.assetRecords({ aType: that.type, mhType: 5 }) // 其他
             ]).then(res => {
                 // eslint-disable-next-line prefer-const
                 let walletLog = that.walletLog[that.type];
@@ -320,7 +321,7 @@ module.exports = {
             });
         } else if (that.type === '06') {
             window.gWebApi.assetRecordsAll([
-                window.gWebApi.axiosAPI({ aType: '018', mhType: 5 })// 其他
+                window.gWebApi.assetRecords({ aType: '018', mhType: 5 })// 其他
             ]).then(res => {
                 // eslint-disable-next-line no-undef
                 that.walletLog[that.type]['5'] = res[0].data.result.code === 0 ? res[0].data.history : walletLog['5'] ? walletLog['5'] : [];
@@ -331,7 +332,6 @@ module.exports = {
         }
     },
     updateList() {
-        console.log("updateList");
         // eslint-disable-next-line prefer-const
         let that = this;
         // eslint-disable-next-line prefer-const
@@ -400,6 +400,7 @@ module.exports = {
             allHistoryList.sort(function (a, b) {
                 return b.timestamp - a.timestamp;
             });
+            console.log(allHistoryList, '22222222222222222222222222222');
         }
         // 划转
         if (walletLog['4'] && walletLog['4'].length > 0) {
@@ -546,6 +547,7 @@ module.exports = {
             allHistoryList.sort(function (a, b) {
                 return b.timestamp - a.timestamp;
             });
+            console.log(allHistoryList, '3333333333333333333333333');
         }
         // 其他
         if (this.type === '04' && walletLog['5'] && walletLog['5'].length > 0) {
@@ -713,6 +715,7 @@ module.exports = {
             allHistoryList.sort(function (a, b) {
                 return b.timestamp - a.timestamp;
             });
+            console.log(allHistoryList, '444444444444444444444444444');
         }
         // eslint-disable-next-line no-empty
         if (this.type === '06' && walletLog['5'] && walletLog['5'].length) {
@@ -734,7 +737,7 @@ module.exports = {
         //     };
         // });
         // console.log('this.allCoin', that.Wallet[obj[this.type]], this.allCoin);
-        console.log(allHistoryList);
+        // console.log(allHistoryList);
 
         allHistoryList.sort(function (a, b) {
             // console.log(b.timestamp - a.timestamp)
@@ -744,12 +747,13 @@ module.exports = {
         this.allInfo = allHistoryList;
         // this.readyAlldata = allHistoryList.slice(0,this.listNum)
         this.readyAlldata = allHistoryList;
-        console.log(this.readyAlldata);
+        m.redraw();
+        console.log(this.readyAlldata, '------------------------------');
         setTimeout(() => {
             that.loadingProgress = false;
             // document.getElementsByClassName('records_wrap')[0].style.height = `calc(100%)`;
         }, 100);
-        this.switchCoin();
+        // this.switchCoin();
     },
     removeGIFT(value) {
         if (value.includes('@GIFT')) {
