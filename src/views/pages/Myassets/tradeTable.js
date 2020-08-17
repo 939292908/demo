@@ -171,41 +171,43 @@ module.exports = {
                     m('span', ['盈亏分析'])
                 ])
             ]),
-            m('table', { style: { border: '1px solid #ccc' } }, [
-                m('thead', {}, [
-                    // 循环表头
-                    m('tr', {}, [
-                        t.columnData[vnode.attrs.type].map((item, index) => {
-                            return m('td', {}, item.col);
-                        })
-                    ])
-                ]),
-                m('tbody', {}, [
-                    // 循环表身
-                    t.tableData[vnode.attrs.typeData].map((row) => {
-                        return m('tr', {}, [
-                            t.columnData[vnode.attrs.type].map((item, i) => {
-                                if (i === t.columnData[vnode.attrs.type].length - 1) {
-                                    // 操作列
-                                    return m('td', {}, [
-                                        item.val.map(aHref => {
-                                            return m('a', {}, aHref.operation);
-                                        })
-                                    ]);
-                                } else if (i === t.columnData[vnode.attrs.type].length - 2) {
-                                    // 估值列
-                                    return m('td', {}, row[item.val] + ' ' + t.currency);
-                                } else {
-                                    return m('td', {}, row[item.val]);
-                                }
+            m('div.tab', { class: 'pl-5 pt-7 border-radius-medium' },
+                m('table', {}, [
+                    m('thead', {}, [
+                        // 循环表头
+                        m('tr', {}, [
+                            t.columnData[vnode.attrs.type].map((item, index) => {
+                                return m('td.pt-2 pb-2', { class: '' }, item.col);
                             })
-                        ]);
-                    }),
-                    m('tr', { style: { display: 'none' } }, [
-                        m('td', { colspan: 6, style: { textAlign: 'center' } }, '暂无数据')
+                        ])
+                    ]),
+                    m('tbody', {}, [
+                        // 循环表身
+                        t.tableData[vnode.attrs.typeData].map((row) => {
+                            return m('tr', {}, [
+                                t.columnData[vnode.attrs.type].map((item, i) => {
+                                    if (i === t.columnData[vnode.attrs.type].length - 1) {
+                                        // 操作列
+                                        return m('td.pt-2 pb-2', {}, [
+                                            item.val.map(aHref => {
+                                                return m('a', {}, aHref.operation);
+                                            })
+                                        ]);
+                                    } else if (i === t.columnData[vnode.attrs.type].length - 2) {
+                                        // 估值列
+                                        return m('td.pt-2 pb-2', {}, row[item.val] + ' ' + t.currency);
+                                    } else {
+                                        return m('td.pt-2 pb-2', {}, row[item.val]);
+                                    }
+                                })
+                            ]);
+                        }),
+                        m('tr', { style: { display: 'none' } }, [
+                            m('td', { colspan: 6, style: { textAlign: 'center' } }, '暂无数据')
+                        ])
                     ])
                 ])
-            ])
+            )
         ]);
     },
     onremove: function () {

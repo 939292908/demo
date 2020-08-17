@@ -121,12 +121,12 @@ const myWalletIndex = {
                 title: '交易账户',
                 val: myWalletIndex.tradingAccountTotalValue,
                 sty: 'mx-5',
-                descCls: 'show-desc cursor-pointer title-medium'
+                descCls: 'show-desc title-medium'
             },
             {
                 title: '其他账户',
                 val: '0.00000000 ',
-                descCls: 'show-desc cursor-pointer title-medium'
+                descCls: 'show-desc title-medium'
             }
         ];
     },
@@ -146,80 +146,89 @@ const myWalletIndex = {
         }
     },
     assetValuation: function () {
-        return m('div', { class: 'myWalletIndex-warpper' }, [
-            // highlightFlag:哪个高亮   0：我的资产  1：资产记录
-            m(header, { highlightFlag: 0 }),
-            m('div', { class: 'myWalletIndex-head columns-flex' }, [
-                m('div', { class: 'myWalletIndex-head-left column' }, [
-                    m('div', { class: 'myWalletIndex-head-left-total columns' }, [
-                        m('span', { class: 'body-6', style: 'padding:10px' }, ['总资产估值']),
-                        m('span.navbar-item.has-dropdown.is-hoverable', {}, [
-                            m('select.has-text-primary', { onchange: function () { myWalletIndex.currencyChange(this.value); } }, [
-                                m('option', {}, ['BTC']),
-                                m('option', {}, ['USDT'])
+        return m('div', {}, [
+            m('div', { style: { height: '344px', width: '100%', backgroundColor: '#0E1C33' } }, [
+                m('div', { class: 'myWalletIndex-warpper container' }, [
+                    // highlightFlag:哪个高亮   0：我的资产  1：资产记录
+                    m(header, { highlightFlag: 0 }),
+                    m('div', { class: 'myWalletIndex-head columns-flex' }, [
+                        m('div', { class: 'myWalletIndex-head-left column' }, [
+                            m('div', { class: 'myWalletIndex-head-left-total columns' }, [
+                                m('span', { class: 'body-6', style: 'padding:10px' }, ['总资产估值']),
+                                m('span.navbar-item.has-dropdown.is-hoverable', {}, [
+                                    m('select.has-text-primary', { onchange: function () { myWalletIndex.currencyChange(this.value); } }, [
+                                        m('option', {}, ['BTC']),
+                                        m('option', {}, ['USDT'])
+                                    ])
+                                ])
+                            ]),
+                            m('div', { class: 'number-hide' }, [
+                                m('span', { class: 'title-large' }, [myWalletIndex.totalValue]),
+                                m('span', { class: 'title-large' }, [' ' + this.currency]),
+                                m('span.cursor-pointer', {
+                                    onclick: function () {
+                                        myWalletIndex.hideValue();
+                                    }
+                                }, [' 图标']),
+                                m('br'),
+                                m('span', {}, ['≈ ']),
+                                m('span', {}, [this.totalCNY]),
+                                m('span', {}, [' CNY'])
+                            ])
+                        ]),
+                        m('div', { class: 'myWalletIndex-head-right column', style: 'padding:20px;' }, [
+                            // 充币  提币  内部转账  资金划转
+                            m('div', { class: 'is-between' }, [
+                                myWalletIndex.Nav.firstNav.map(item => {
+                                    return m('button', { class: 'column button-large mx-3 border-radius-small', onclick: function () { myWalletIndex.toPage(item.to); } }, [item.title]);
+                                })
                             ])
                         ])
                     ]),
-                    m('div', { class: 'number-hide' }, [
-                        m('span', { class: 'title-large' }, [myWalletIndex.totalValue]),
-                        m('span', { class: 'title-large' }, [' ' + this.currency]),
-                        m('span.cursor-pointer', {
-                            onclick: function () {
-                                myWalletIndex.hideValue();
-                            }
-                        }, [' 图标']),
-                        m('br'),
-                        m('span', {}, ['≈ ']),
-                        m('span', {}, [this.totalCNY]),
-                        m('span', {}, [' CNY'])
-                    ])
-                ]),
-                m('div', { class: 'myWalletIndex-head-right column', style: 'padding:20px;' }, [
-                    // 充币  提币  内部转账  资金划转
-                    m('div', { class: 'is-between' }, [
-                        myWalletIndex.Nav.firstNav.map(item => {
-                            return m('div', { class: 'column cursor-pointer', onclick: function () { myWalletIndex.toPage(item.to); } }, [item.title]);
-                        })
-                    ])
-                ])
-            ]),
-            // 我的钱包  交易账户  其他账户
-            m('div', { class: 'myWalletIndex-switch columns-flex' }, [
-                myWalletIndex.Nav.secondNav.map((item, index) => {
-                    return m('div.myAccount column', {
-                        class: (myWalletIndex.swValue === index ? 'is-primary' : '') + ' ' + item.sty,
-                        onclick: function () {
-                            // 其他账户未开放
-                            if (index <= 1) {
-                                myWalletIndex.switchChange(index);
-                            }
-                        },
-                        style: { border: '1px solid #ccc' }
-                    }, [
-                        m('div', {}, [
-                            m('div', {}, [
-                                m('span', {}, [item.title])
-                            ]),
-                            m('div', {}, [
-                                m('span', {}, [item.val]),
-                                m('span', {}, [' ' + this.currency])
-                            ])
-                        ]),
-                        m('div', { class: item.descCls }, [
-                            m('span', { class: 'card' + index, onmouseover: function () { myWalletIndex.switchDisplay('card' + index, 'show'); }, onmouseleave: function () { myWalletIndex.switchDisplay('card' + index, 'hide'); } }, '...')
+                    // 我的钱包  交易账户  其他账户
+                    m('div', { class: 'myWalletIndex-switch columns-flex' }, [
+                        myWalletIndex.Nav.secondNav.map((item, index) => {
+                            return m('div.myAccount column border-radius-medium pr-7 pl-7', {
+                                class: (myWalletIndex.swValue === index ? 'is-primary' : '') + ' ' + item.sty,
+                                onclick: function () {
+                                    // 其他账户未开放
+                                    if (index <= 1) {
+                                        myWalletIndex.switchChange(index);
+                                    }
+                                }
+                            }, [
+                                m('div', {}, [
+                                    m('div', { class: 'mt-5 body-5 has-text-level-3 mb-1' }, [
+                                        m('span', { }, [item.title])
+                                    ]),
+                                    m('div', { class: 'title-small ' }, [
+                                        m('span', { style: { } }, [item.val]),
+                                        m('span', {}, [' ' + this.currency])
+                                    ])
+                                ]),
+                                m('div.cursor-pointer', {
+                                    class: item.descCls,
+                                    onmouseover: function () { myWalletIndex.switchDisplay('card' + index, 'show'); },
+                                    onmouseleave: function () { myWalletIndex.switchDisplay('card' + index, 'hide'); }
+                                }, '...', [
+                                    m('span', { class: 'card' + index })
+                                ])
+                            ]);
+                        }),
+                        m('div.tradeCard', { style: { display: 'none' } }, [
+                            m('span', '合约账户'),
+                            m('font', myWalletIndex.contractTotal + ' ' + myWalletIndex.currency),
+                            m('span', '币币账户'),
+                            m('font', myWalletIndex.coinTotal + ' ' + myWalletIndex.currency),
+                            m('span', '法币账户'),
+                            m('font', myWalletIndex.legalTotal + ' ' + myWalletIndex.currency)
                         ])
-                    ]);
-                }),
-                m('div.tradeCard', { style: { display: 'none' } }, [
-                    m('span', '合约账户'),
-                    m('font', myWalletIndex.contractTotal + ' ' + myWalletIndex.currency),
-                    m('span', '币币账户'),
-                    m('font', myWalletIndex.coinTotal + ' ' + myWalletIndex.currency),
-                    m('span', '法币账户'),
-                    m('font', myWalletIndex.legalTotal + ' ' + myWalletIndex.currency)
+                    ])
                 ])
             ]),
-            myWalletIndex.switchContent()
+            m('div', { class: 'myWalletIndex-warpper container' }, [
+                myWalletIndex.switchContent()
+            ])
         ]);
     }
 };
@@ -239,7 +248,7 @@ module.exports = {
         }, '100');
     },
     view: function () {
-        return m('div', { class: 'views-pages-myassets-myWalletIndex content-width' }, [
+        return m('div', { class: 'views-pages-myassets-myWalletIndex theme--light' }, [
             myWalletIndex.assetValuation()
         ]);
     },
