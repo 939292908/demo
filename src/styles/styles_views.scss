@@ -39,6 +39,68 @@ hr {
     @extend %my-3;
 }
 
+@for $i from 0 through 9 {
+    .pa-#{$i} {
+        padding: var(--padding-level#{$i}) !important;
+    }
+
+    .px-#{$i} {
+        padding-left: var(--padding-level#{$i}) !important;
+        padding-right: var(--padding-level#{$i}) !important;
+    }
+
+    .py-#{$i} {
+        padding-top: var(--padding-level#{$i}) !important;
+        padding-bottom: var(--padding-level#{$i}) !important;
+    }
+
+    .pt-#{$i} {
+        padding-top: var(--padding-level#{$i}) !important;
+    }
+
+    .pl-#{$i} {
+        padding-left: var(--padding-level#{$i}) !important;
+    }
+
+    .pb-#{$i} {
+        padding-bottom: var(--padding-level#{$i}) !important;
+    }
+
+    .pr-#{$i} {
+        padding-right: var(--padding-level#{$i}) !important;
+    }
+
+    .ma-#{$i} {
+        margin: var(--margin-level#{$i}) !important;
+    }
+
+    .mx-#{$i} {
+        margin-left: var(--margin-level#{$i}) !important;
+        margin-right: var(--margin-level#{$i}) !important;
+    }
+
+    .my-#{$i} {
+        margin-top: var(--margin-level#{$i}) !important;
+        margin-bottom: var(--margin-level#{$i}) !important;
+    }
+
+    .mt-#{$i} {
+        margin-top: var(--margin-level#{$i}) !important;
+    }
+
+    .ml-#{$i} {
+        margin-left: var(--margin-level#{$i}) !important;
+    }
+
+    .mb-#{$i} {
+        margin-bottom: var(--margin-level#{$i}) !important;
+    }
+
+    .mr-#{$i} {
+        margin-right: var(--margin-level#{$i}) !important;
+    }
+}
+
 //html标签样式覆盖 end
 
 //动画相关 start

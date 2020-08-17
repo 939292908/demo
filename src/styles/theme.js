@@ -96,6 +96,32 @@ const mode = Object.freeze({
     darken: 'rgba(16, 18, 23, .8)',
 });
 
+const padding = {
+    level0: '0px',
+    level1: '4px',
+    level2: '8px',
+    level3: '12px',
+    level4: '16px',
+    level5: '20px',
+    level6: '24px',
+    level7: '32px',
+    level8: '64px',
+    level9: '128px'
+};
+
+const margin = {
+    level0: '0px',
+    level1: '4px',
+    level2: '8px',
+    level3: '12px',
+    level4: '16px',
+    level5: '20px',
+    level6: '24px',
+    level7: '32px',
+    level8: '64px',
+    level9: '128px'
+};
+
 // 图标颜色
 // const chart = Object.freeze({
 //     lighten: '#2AD7AA',
@@ -117,7 +143,9 @@ const theme = {
     sub,
     tip,
     sign,
-    fontwhite
+    fontwhite,
+    padding,
+    margin
 }
 
 let styleStr = ':root{'
