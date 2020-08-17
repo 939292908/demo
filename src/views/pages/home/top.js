@@ -1,14 +1,14 @@
 const m = require('mithril');
 const Slideshow = require('@/views/components/slideshow/bottomToTop');
 const SlideshowNotice = require('@/views/components/slideshow/notice');
-require('@/styles/pages/home.css');
+require('@/styles/pages/home/top.scss');
 
 module.exports = {
     data: {
         banneList: [],
         noticeList: []
     },
-    toPage() {
+    toPage () {
         if (window.gWebApi.loginState) {
             window.router.push('/chargeMoney');
         } else {
@@ -55,13 +55,13 @@ module.exports = {
                 m('div', { class: `has-text-centered mt-5` }, [
                     m('a', { class: `has-text-white`, href: "http://localhost:8080/#!/register" }, ['还没账号？立即前往账号注册 →'])
                 ]),
-                // 轮播
-                m('div', { class: `rotation-content container` }, [
-                    banneList.length > 0 ? m(Slideshow, { banneList }) : null
-                ]),
-                // 公告
-                m('div', { class: `notice w` }, [
-                    m('div', { class: `notice-content container` }, [
+                m('div', { class: `top-bottom-box mt-8` }, [
+                    // 轮播
+                    m('div', { class: `top-banner` }, [
+                        banneList.length > 0 ? m(Slideshow, { banneList }) : null
+                    ]),
+                    // 公告
+                    m('div', { class: `mt-6 mb-8` }, [
                         noticeList.length > 0 ? m(SlideshowNotice, { noticeList, click: this.handleNoticeClick }) : null
                     ])
                 ])
