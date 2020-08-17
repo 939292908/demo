@@ -45,7 +45,6 @@ module.exports = {
         });
     },
     view: function (vnode) {
-        console.log(vnode);
         return m('div', { class: 'slideshow' }, [
             m('div', { class: 'swiper-container', id: "slideShowLTR" }, [
                 m('div.swiper-wrapper', [
