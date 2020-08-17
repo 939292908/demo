@@ -21,6 +21,9 @@ module.exports = {
     oncreate: function (vnode) {
         this.mySwiper = new Swiper('#slideShowNotice', vertical);
     },
+    handleClickMore: () => {
+        window.open('https://vbithelp.zendesk.com/hc/zh-cn/categories/360003415534-%E5%85%AC%E5%91%8A%E4%B8%AD%E5%BF%83');
+    },
     swiperVnode: function (vnode) {
         const { noticeList, click } = vnode.attrs;
         return m('div', { class: 'swiper-container', id: "slideShowNotice" }, m('div.swiper-wrapper', [
@@ -34,7 +37,7 @@ module.exports = {
                 m('span', '最新公告:')
             ]),
             m('div.slideshow-trumpet-content', this.swiperVnode(vnode)),
-            m('div.slideshow-trumpet-more', '更多')
+            m('div.slideshow-trumpet-more', { onclick: this.handleClickMore }, '更多')
         ]);
     },
     onremove: function () {
