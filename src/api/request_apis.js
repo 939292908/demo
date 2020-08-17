@@ -11,7 +11,7 @@ module.exports = {
     SMS_VERIFY_V1: '/v1/sms/verify',
     SMS_VERIFY_V2: '/v2/sms/verify',
     // 谷歌验证
-    GOOGLE_VERIFY_V1: '/g_auth/verify',
+    GOOGLE_VERIFY_V1: '/v1/g_auth/verify',
     // 登陆验证
     LOGIN_CHECK_V1: '/v1/users/loginCheck',
     LOGIN_CHECK_V2: '/v2/users/loginCheck',
@@ -48,5 +48,11 @@ module.exports = {
     // 钱包历史记录
     WALLET_ASSETS_HISTORY_V1: '/v1/users/GetMoneyHistory',
     // 钱包充值地址
-    WALLET_RECHARGE_ADDR_V1: '/v1/users/GetRechargeAddr'
+    WALLET_RECHARGE_ADDR_V1: '/v1/users/GetRechargeAddr',
+    // 渠道信息
+    EXCH_INFO_V1: '/v1/exch/info',
+    // 宣传图
+    DESKTOP_BANNER_V2: '/v2/desk/banner',
+    // 最新公告
+    ANNOUNCEMENTS_LATEST: '/v2/hc/announcements/latest'
 };

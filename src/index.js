@@ -44,16 +44,17 @@ import("@/styles/index");
 // UI库
 import('@/styles/bluma.scss');
 // 公用样式
-// import('@/styles/common.css');
-import('@/styles/common.scss');
+import('@/styles/common_size.scss');
+import('@/styles/common_color.scss');
+import('@/styles/common_other.scss');
 
 // iconfont
 import('@/assets/iconfont/iconfont.js');
 import('@/assets/iconfont/iconfont.css');
-
+// 轮播
+import('swiper/swiper-bundle.css');
 // 极验
 import('@/libs/gt');
-
 // 全局API请求
 const WebApi = require('@/api/webApi');
 window.gWebApi = new WebApi({ baseUrl: api.WebAPI });

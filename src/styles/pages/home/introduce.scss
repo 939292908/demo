@@ -1,0 +1,30 @@
+.views-pages-home-introduce {
+    .introduce-box {
+        background: #0D1C33 url("~@/assets/img/home/layer 14.png") no-repeat center center;
+        background-size: "cover";
+    }
+    .introduce-box-masking {
+        height: 80px;
+        background-color: rgba(0, 0, 0, 0.3);
+    }
+    .introduce-transaction {
+        .home-introduce-Rectangle {
+            background-color: #FF8B00;
+            border-radius: 40px 40px 0 0;
+            height: 150px;
+            position: relative;
+            margin-top: 200px;
+            .home-picture-vbit {
+                position: absolute;
+                bottom: 0;
+                left: 8%;
+            }
+        }
+    }
+    .button.is-inverted {
+        &:hover {
+            background-color: transparent !important;
+            color: #fff !important;
+        }
+    }
+}

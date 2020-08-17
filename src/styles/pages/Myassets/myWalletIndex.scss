@@ -4,32 +4,38 @@
         display: flex;
         flex-wrap: wrap;
     }
+    .myWalletIndex-head{
+        .myWalletIndex-head-left{
+            .myWalletIndex-head-left-total{
+                select{
+                    background: none;
+                    border: none;
+                    outline: none;
+                }
+            }
+        }
+    }
     .myAccount{
+        display: flex;
+        flex-direction: row;
+        width: 388px;
+        height: 113px;
         .show-desc{
+            display: '';
+            margin: auto 0px;
             margin-left: auto;
-            font-size: var(--c-fontsz-level7);
         }
         .hide-desc{
             display: none;
         }
-        .show-desc{
-            display: block;
-        }
-        &:nth-child(2){
-            margin-left: var(--c-margin-level5);
-            margin-right: var(--c-margin-level5);
-        }
-    }
-    .myAccount,.otherAccount{
-        display: flex;
-        flex-direction: row;
+        background-color: white;
     }
     .myWalletIndex-switch{
         margin-bottom: var(--c-margin-level5);
         .is-primary{
             background-color: var(--c-primary-lighten);
             border-color: var(--c-primary-lighten);
-            color: var(--c-font-darken);
+            color: #FFFFFF !important;
         }
         .tradeCard{
             display: flex;
@@ -37,20 +43,19 @@
             z-index: 9999;
             position: fixed;
             background-color: white;
-            margin-left: 680px;
-            margin-top: 40px;
+            margin-left: 640px;
+            margin-top: 80px;
             padding: 3px 10px;
             border-radius: 5px;
             font-size: 8px;
             span{
                 color:gray;
             }
-            
         }
     }
     .myWalletIndex-head-right div{
-        div{
-            margin: 0 var(--c-margin-level3);
+        button{
+            width: 68px;
             text-align: center;
             border: 1px solid var(--c-primary-lighten);
         }

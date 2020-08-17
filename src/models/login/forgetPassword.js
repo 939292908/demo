@@ -4,7 +4,8 @@ const geetest = require('@/libs/geetestTwo');
 
 module.exports = {
     loginType: 'phone',
-    loginName: '233233233',
+    loginName: '',
+    selectList: [{ cn_name: '中国', code: '86', support: '1', us_name: 'China' }],
     validateCode: [],
     areaCode: '86',
     isValidate: false,
@@ -20,11 +21,15 @@ module.exports = {
         return !!this.loginName;
     },
     submitReset() {
+        this.loading = true;
+        m.redraw();
         window.gWebApi.resetPassword({
             Passwd1: md5(this.password1),
             Passwd2: md5(this.password2),
             exChannel: window.exchId
         }, res => {
+            this.loading = false;
+            m.redraw();
             if (res.result.code === 0) {
                 // '您的密码已修改成功，现在为您跳转登录界面'
                 window.$message({
@@ -39,6 +44,8 @@ module.exports = {
                 });
             }
         }, () => {
+            this.loading = false;
+            m.redraw();
         });
     },
     submitEmail() {
@@ -64,6 +71,7 @@ module.exports = {
             exChannel: window.exchId
         }, res => {
             this.loading = false;
+            m.redraw();
             if (res.result.code === 0) {
                 if (res.exists === 1) {
                     this.check(res);
@@ -85,6 +93,7 @@ module.exports = {
                 type: 'danger'
             });
             this.loading = false;
+            m.redraw();
         });
     },
     /**
@@ -102,8 +111,6 @@ module.exports = {
                 }, () => {
                     this.nextPhoneValidate(res.phone);
                 });
-                this.is2fa = true;
-                m.redraw();
             } else if (res.ga === '' && res.email !== '') { // 邮箱
                 window.validate.activeEmail({
                     secureEmail: res.email,
@@ -113,12 +120,8 @@ module.exports = {
                 }, () => {
                     this.nextPhoneValidate(res.phone);
                 });
-                this.is2fa = true;
-                m.redraw();
             } else if (res.ga !== '' && res.email === '') { // 谷歌
                 window.validate.activeGoogle(() => { this.nextPhoneValidate(res.phone); });
-                this.is2fa = true;
-                m.redraw();
             } else {
                 this.nextPhoneValidate(res.phone);
             }
@@ -133,8 +136,6 @@ module.exports = {
                 }, () => {
                     this.nextEmailValidate(res.email);
                 });
-                this.is2fa = true;
-                m.redraw();
             } else if (res.ga === '' && res.phone !== '') { // 手机
                 window.validate.activeSms({
                     securePhone: res.phone,
@@ -145,16 +146,14 @@ module.exports = {
                 }, () => {
                     this.nextEmailValidate(res.email);
                 });
-                this.is2fa = true;
-                m.redraw();
             } else if (res.ga !== '' && res.phone === '') { // 谷歌
                 window.validate.activeGoogle(() => { this.nextEmailValidate(res.email); });
-                this.is2fa = true;
-                m.redraw();
             } else {
                 this.nextEmailValidate(res.email);
             }
         }
+        this.is2fa = true;
+        m.redraw();
     },
     /**
      * 下一步手机验证
@@ -165,7 +164,8 @@ module.exports = {
             resetPwd: true,
             areaCode: '00' + this.areaCode,
             phone: this.loginName,
-            lang: window.gI18n.locale
+            lang: window.gI18n.locale,
+            mustCheckFn: 'resetPasswd'
         }, () => {
             this.isValidate = true;
             m.redraw();
@@ -179,13 +179,24 @@ module.exports = {
         window.validate.activeEmail({
             secureEmail: email,
             host: window.exchConfig.official,
-            fn: 'be',
-            lang: window.gI18n.locale
+            fn: 'rpw',
+            lang: window.gI18n.locale,
+            resetPwd: true,
+            mustCheckFn: 'resetPasswd'
         }, () => {
             this.isValidate = true;
             m.redraw();
         });
         window.gBroadcast.emit({ cmd: 'redrawValidate', data: '' });
+    },
+    getCountryList () {
+        window.gWebApi.getCountryList({}, res => {
+            if (res.result.code === 0) {
+                this.selectList = res.result.data;
+                m.redraw();
+            }
+        }, () => {
+        });
     },
     initGeetest() {
         const self = this;
@@ -198,16 +209,20 @@ module.exports = {
                     self.queryUserInfo();
                 } else {
                     self.loading = false;
+                    m.redraw();
                 }
             }
         });
     },
     oninit() {
         this.initGeetest();
+        this.getCountryList();
     },
     onremove() {
         this.isValidate = false;
         this.is2fa = false;
+        this.password1 = '';
+        this.password2 = '';
         window.validate.close();
         window.gBroadcast.offMsg({
             key: 'forgetPassword',

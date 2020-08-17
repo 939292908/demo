@@ -1,0 +1,489 @@
+/**
+    此文件用于放规范内颜色相关公用样式
+*/
+/* 主题样式 start */
+/* 黑夜 */
+.theme--dark {
+    background-color: var(--c-background-darken);
+    color: var(--c-font-darken);
+}
+
+/* dark UI库样式覆盖 start */
+/* 背景颜色 start */
+.theme--dark .navbar,
+.theme--dark .footer,
+.theme--dark .navbar-dropdown {
+    background-color: var(--c-background-darken1);
+}
+
+.theme--dark a.navbar-item:focus,
+.theme--dark a.navbar-item:focus-within,
+.theme--dark a.navbar-item:hover,
+.theme--dark a.navbar-item.is-active,
+.theme--dark .navbar-link:focus,
+.theme--dark .navbar-link:focus-within,
+.theme--dark .navbar-link:hover,
+.theme--dark .navbar-link.is-active,
+.theme--dark .navbar-item.has-dropdown:focus .navbar-link,
+.theme--dark .navbar-item.has-dropdown:hover .navbar-link,
+.theme--dark .navbar-item.has-dropdown.is-active .navbar-link {
+    background-color: var(--c-background-darken2);
+}
+
+
+/* 背景颜色六级 */
+
+.theme--dark .has-bg-level-1 {
+    background-color: var(--c-background-darken);
+}
+
+.theme--dark .has-bg-level-2 {
+    background-color: var(--c-background-darken1);
+}
+
+.theme--dark .has-bg-level-3 {
+    background-color: var(--c-background-darken2);
+}
+
+.theme--dark .has-bg-level-4 {
+    background-color: var(--c-background-darken3);
+}
+
+/* 主色调 */
+.theme--dark .has-bg-primary {
+    background-color: var(--c-primary-darken);
+    border-color: var(--c-primary-darken);
+    color: var(--c-fontwhite-base);
+}
+
+/* 跌红 */
+.theme--dark .has-bg-up {
+    background-color: var(--c-red-darken);
+    border-color: var(--c-red-darken);
+    color: var(--c-fontwhite-base);
+}
+
+/* 涨绿 */
+.theme--dark .has-bg-down {
+    background-color: var(--c-green-darken);
+    border-color: var(--c-green-darken);
+    color: var(--c-fontwhite-base);
+}
+
+/* 提示颜色 */
+.theme--dark .has-bg-tip-error {
+    background-color: var(--c-tip-errordarken);
+    border-color: var(--c-tip-errordarken);
+    color: var(--c-fontwhite-base);
+}
+
+.theme--dark .has-bg-tip-warning {
+    background-color: var(--c-tip-warningdarken);
+    border-color: var(--c-tip-warningdarken);
+    color: var(--c-fontwhite-base);
+}
+
+.theme--dark .has-bg-tip-success {
+    background-color: var(--c-tip-successdarken);
+    border-color: var(--c-tip-successdarken);
+    color: var(--c-fontwhite-base);
+}
+
+.theme--dark .has-bg-tip-fail {
+    background-color: var(--c-tip-faildarken);
+    border-color: var(--c-tip-faildarken);
+    color: var(--c-fontwhite-base);
+}
+
+/* 标记背景颜色 */
+.theme--dark .has-bg-sign-1 {
+    background-color: var(--c-sign-darken);
+    border-color: var(--c-sign-darken);
+    color: var(--c-fontwhite-base);
+}
+
+.theme--dark .has-bg-sign-2 {
+    background-color: var(--c-sign-darken1);
+    border-color: var(--c-sign-darken1);
+    color: var(--c-fontwhite-base);
+}
+
+/* 背景颜色 end */
+
+/* 文字颜色 start */
+
+.theme--dark .navbar-item,
+.theme--dark .navbar-link,
+.theme--dark strong {
+    color: var(--c-font-darken);
+}
+
+.has-text-white {
+    color: white !important;
+}
+
+.theme--dark .has-text-title,
+.theme--dark .has-text-title{
+    color: var(--c-font-darken);
+}
+
+/* 内容文字三级 */
+.theme--dark .has-text-level-1 {
+    color: var(--c-font-darken) !important;
+}
+
+.theme--dark .has-text-level-2 {
+    color: var(--c-font-darken1) !important;
+}
+
+.theme--dark .has-text-level-3 {
+    color: var(--c-font-darken2) !important;
+}
+
+/* 主色调 */
+.theme--dark .has-text-primary {
+    color: var(--c-primary-darken) !important;
+}
+
+/* 跌红 */
+.theme--dark .has-text-up {
+    color: var(--c-red-darken);
+}
+
+/* 涨绿 */
+.theme--dark .has-text-down {
+    color: var(--c-green-darken);
+}
+
+/* 提示文字颜色 */
+.theme--dark .has-text-tip-error {
+    color: var(--c-tip-errordarken);
+}
+
+.theme--dark .has-text-tip-warning {
+    color: var(--c-tip-warningdarken);
+}
+
+.theme--dark .has-text-tip-success {
+    color: var(--c-tip-successdarken);
+}
+
+.theme--dark .has-text-tip-fail {
+    color: var(--c-tip-faildarken);
+}
+
+/* 标记文字颜色 */
+.theme--dark .has-text-sign-1 {
+    color: var(--c-sign-darken);
+}
+
+.theme--dark .has-text-sign-2 {
+    color: var(--c-sign-darken1);
+}
+
+/* 文字颜色 end */
+
+/* 线颜色 start */
+.theme--dark .navbar-divider {
+    background-color: var(--c-line-darken1);
+}
+
+.theme--dark .navbar-dropdown {
+    border-color: var(--c-line-darken1);
+}
+
+.theme--dark .has-line-level-1 {
+    border-color: var(--c-line-darken);
+}
+
+.theme--dark .has-line-level-2 {
+    border-color: var(--c-line-darken1);
+}
+
+.theme--dark .has-line-level-3 {
+    border-color: var(--c-line-darken2);
+}
+
+.theme--dark .has-line-level-4 {
+    border-color: var(--c-line-darken3);
+}
+
+/* 线颜色 end */
+
+/* 遮罩层颜色 start */
+.theme--dark .has-mode {
+    background-color: var(--c-mode-darken);
+}
+
+/* 遮罩层颜色 end */
+/* dark UI库样式覆盖 end */
+/* 白天 */
+.theme--light {
+    background-color: var(--c-background-lighten);
+    color: var(--c-font-lighten);
+}
+
+/* light UI库样式覆盖 start */
+/* 背景颜色 start */
+.theme--light .navbar,
+.theme--light .footer,
+.theme--light .navbar-dropdown {
+    background-color: var(--c-background-lighten1);
+}
+
+.theme--light a.navbar-item:focus,
+.theme--light a.navbar-item:focus-within,
+.theme--light a.navbar-item:hover,
+.theme--light a.navbar-item.is-active,
+.theme--light .navbar-link:focus,
+.theme--light .navbar-link:focus-within,
+.theme--light .navbar-link:hover,
+.theme--light .navbar-link.is-active,
+.theme--light .navbar-item.has-dropdown:focus .navbar-link,
+.theme--light .navbar-item.has-dropdown:hover .navbar-link,
+.theme--light .navbar-item.has-dropdown.is-active .navbar-link {
+    background-color: var(--c-background-lighten2);
+}
+
+/* 背景颜色六级 */
+
+.theme--light .has-bg-level-1 {
+    background-color: var(--c-background-lighten);
+}
+
+.theme--light .has-bg-level-2 {
+    background-color: var(--c-background-lighten1);
+}
+
+.theme--light .has-bg-level-3 {
+    background-color: var(--c-background-lighten2);
+}
+
+.theme--light .has-bg-level-4 {
+    background-color: var(--c-background-lighten3);
+}
+
+/* 主色调 */
+.theme--light .has-bg-primary {
+    background-color: var(--c-primary-lighten);
+    border-color: var(--c-primary-lighten);
+    color: var(--c-fontwhite-base);
+}
+
+/* 跌红 */
+.theme--light .has-bg-up {
+    background-color: var(--c-red-lighten);
+    border-color: var(--c-red-lighten);
+    color: var(--c-fontwhite-base);
+}
+
+/* 涨绿 */
+.theme--light .has-bg-down {
+    background-color: var(--c-green-lighten);
+    border-color: var(--c-green-lighten);
+    color: var(--c-fontwhite-base);
+}
+
+/* 提示颜色 */
+.theme--light .has-bg-tip-error {
+    background-color: var(--c-tip-errorLighten);
+    border-color: var(--c-tip-errorLighten);
+    color: var(--c-fontwhite-base);
+}
+
+.theme--light .has-bg-tip-warning {
+    background-color: var(--c-tip-warningLighten);
+    border-color: var(--c-tip-warningLighten);
+    color: var(--c-fontwhite-base);
+}
+
+.theme--light .has-bg-tip-success {
+    background-color: var(--c-tip-successLighten);
+    border-color: var(--c-tip-successLighten);
+    color: var(--c-fontwhite-base);
+}
+
+.theme--light .has-bg-tip-fail {
+    background-color: var(--c-tip-failLighten);
+    border-color: var(--c-tip-failLighten);
+    color: var(--c-fontwhite-base);
+}
+
+/* 标记背景颜色 */
+.theme--light .has-bg-sign-1 {
+    background-color: var(--c-sign-lighten);
+    border-color: var(--c-sign-lighten);
+    color: var(--c-fontwhite-base);
+}
+
+.theme--light .has-bg-sign-2 {
+    background-color: var(--c-sign-lighten1);
+    border-color: var(--c-sign-lighten1);
+    color: var(--c-fontwhite-base);
+}
+
+/* 背景颜色 end */
+
+/* 文字颜色 start */
+
+.theme--light .navbar-item,
+.theme--light .navbar-link,
+.theme--light strong {
+    color: var(--c-font-lighten);
+}
+
+.theme--light .has-text-title {
+    color: var(--c-font-lighten);
+}
+
+/* 内容文字三级 */
+.theme--light .has-text-level-1 {
+    color: var(--c-font-lighten) !important;
+}
+
+.theme--light .has-text-level-2 {
+    color: var(--c-font-lighten1) !important;
+}
+
+.theme--light .has-text-level-3 {
+    color: var(--c-font-lighten2) !important;
+}
+
+/* 主色调 */
+.theme--light .has-text-primary {
+    color: var(--c-primary-lighten) !important;
+}
+
+/* 跌红 */
+.theme--light .has-text-up {
+    color: var(--c-red-lighten);
+}
+
+/* 涨绿 */
+.theme--light .has-text-down {
+    color: var(--c-green-lighten);
+}
+
+/* 提示文字颜色 */
+.theme--light .has-text-tip-error {
+    color: var(--c-tip-errorLighten);
+}
+
+.theme--light .has-text-tip-warning {
+    color: var(--c-tip-warningLighten);
+}
+
+.theme--light .has-text-tip-success {
+    color: var(--c-tip-successLighten);
+}
+
+.theme--light .has-text-tip-fail {
+    color: var(--c-tip-failLighten);
+}
+
+/* 标记文字颜色 */
+.theme--light .has-text-sign-1 {
+    color: var(--c-sign-lighten);
+}
+
+.theme--light .has-text-sign-2 {
+    color: var(--c-sign-lighten1);
+}
+
+/* 文字颜色 end */
+
+/* 线颜色 start */
+.theme--light .navbar-divider {
+    background-color: var(--c-line-lighten1);
+}
+
+.theme--light .navbar-dropdown {
+    border-color: var(--c-line-lighten1);
+}
+
+.theme--light .has-line-level-1 {
+    border-color: var(--c-line-lighten);
+}
+
+.theme--light .has-line-level-2 {
+    border-color: var(--c-line-lighten1);
+}
+
+.theme--light .has-line-level-3 {
+    border-color: var(--c-line-lighten2);
+}
+
+.theme--light .has-line-level-4 {
+    border-color: var(--c-line-lighten3);
+}
+
+/* 线颜色 end */
+
+/* 遮罩层颜色 start */
+.theme--light .has-mode {
+    background-color: var(--c-mode-lighten);
+}
+
+/* 遮罩层颜色 end */
+
+/* light UI库样式覆盖 end */
+
+
+$primary-lighten: #FF8B00;
+
+.input:focus,
+.textarea:focus,
+.select select:focus,
+.is-focused.input,
+.is-focused.textarea,
+.select select.is-focused,
+.input:active,
+.textarea:active,
+.select select:active,
+.is-active.input,
+.is-active.textarea,
+.select select.is-active {
+    border-color: var(--c-primary-lighten) !important;
+    box-shadow: 0 0 0 0.125em rgba($primary-lighten, 0.25) !important;
+}
+
+.has-bg-primary.button:focus:not(:active),
+.has-bg-primary.button.is-focused:not(:active) {
+    box-shadow: 0 0 0 0.125em rgba($primary-lighten, 0.25) !important;
+}
+
+.tabs li.is-active a {
+    border-bottom-color: $primary-lighten;
+    color: $primary-lighten;
+}
+
+.button:focus,
+.button.is-focused {
+    border-color: $primary-lighten !important;
+}
+
+.button:focus:not(:active),
+.button.is-focused:not(:active) {
+    box-shadow: 0 0 0 0.125em rgba($primary-lighten, 0.25);
+}
+
+/* 主题样式 end */
+
+
+/* 阴影 */
+.box-shadow {
+    box-shadow: 0 0.5em 1em -0.125em rgba(10, 10, 10, 0.1), 0 0px 0 1px rgba(10, 10, 10, 0.02);
+}
+
+// 滚动条
+::-webkit-scrollbar-track-piece {
+    background: var(--c-background-lighten1);
+}
+::-webkit-scrollbar {
+    width: 6px;
+    height: 10px;
+}
+::-webkit-scrollbar-thumb {
+    background: var(--c-background-lighten2);
+    border-radius: 20px;
+}

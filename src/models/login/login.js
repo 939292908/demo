@@ -3,11 +3,8 @@ const geetest = require('@/libs/geetestTwo');
 const md5 = require('md5');
 
 module.exports = {
-    // account: 'qwer2@qq.com',
-    // password: '123456ly',
-    // loginType: "phone",
-    account: '233233233',
-    password: 'a123456',
+    account: '',
+    password: '',
     loginType: 'phone',
     loading: false,
     is2fa: false,
@@ -83,7 +80,7 @@ module.exports = {
                 } else if (res.result.phone) {
                     this.loading = false;
                     // 手机
-                    this.validate.activeSms({
+                    window.validate.activeSms({
                         securePhone: window.utils.hideMobileInfo(res.result.phone),
                         phoneNum: res.result.phone
                     },
@@ -95,16 +92,17 @@ module.exports = {
                 } else if (res.result.googleId) {
                     this.loading = false;
                     // 谷歌
-                    this.validate.activeGoogle(() => {
+                    window.validate.activeGoogle(() => {
                         this.loginEnter();
                     });
                     this.is2fa = true;
                     m.redraw();
                 } else {
-                    this.queryUserInfo();
+                    this.getUserInfo();
                 }
                 // this.loginSms = res.result.loginSms;
             } else {
+                this.loading = false;
                 window.$message({
                     content: window.errCode.getWebApiErrorCode(res.result.code),
                     type: 'danger'
@@ -112,11 +110,11 @@ module.exports = {
             }
         }, err => {
             window._console.log('tlh', err);
+            this.loading = false;
             window.$message({
                 content: window.gI18n.$t('10683') + '(请求异常)',
                 type: 'danger'
             });
-            this.loading = false;
         });
     },
     loginEnter() {
@@ -125,19 +123,19 @@ module.exports = {
                 this.checkAccountPwd();
                 this.getUserInfo();
             } else {
+                this.loading = false;
                 window.$message({
                     content: window.gI18n.$t('10683') + `(${res.result.code})`,
                     type: 'danger'
                 });
-                this.loading = false;
             }
         }, err => {
+            this.loading = false;
             window._console.log('tlh', err);
             window.$message({
                 content: window.gI18n.$t('10683') + '(请求异常)',
                 type: 'danger'
             });
-            this.loading = false;
         });
     },
     getUserInfo() {
@@ -166,11 +164,11 @@ module.exports = {
                 // window.gBroadcast.emit({cmd: "setIsLogin", data: false});
             }
         }, err => {
+            this.loading = false;
             window.$message({
                 content: `网络异常，请稍后重试 ${err}`,
                 type: 'danger'
             });
-            this.loading = false;
         });
     },
     // 判断是否设置资产密码
@@ -188,6 +186,7 @@ module.exports = {
                     this.loginFn(self);
                 } else {
                     this.loading = false;
+                    m.redraw();
                 }
             }
         });

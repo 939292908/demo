@@ -1,9 +1,7 @@
-@import "../common.scss";
-
 .input-with-components {
     .without-border {
         border: none;
-        box-shadow: initial;
+        box-shadow: 0 0 0 0 !important;
         border-radius: 0;
     }
 
@@ -20,9 +18,9 @@
         border-color: initial !important;
     }
 
-    .input:focus-within {
-        @extend .input:focus
-    }
+    // .input:focus-within {
+    //     @extend .input:focus
+    // }
 
     .line {
         width: 1px;

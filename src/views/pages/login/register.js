@@ -1,6 +1,7 @@
 const m = require('mithril');
 const Register = require('@/models/login/register');
 const InputWithComponent = require('@/views/components/inputWithComponent');
+const AreaCodeSelect = require('@/views/pages/login/areaCodeSelect');
 
 import('@/styles/pages/login/login.css');
 
@@ -12,11 +13,13 @@ module.exports = {
         Register.onremove();
     },
     view() {
-        return m('div.is-align-items-center', {}, [
-            m('div.box.views-page-login-box-width.px-7.py-8', {}, [
+        return m('div.is-align-items-center.has-bg-level-1.pa-8.theme--light', {}, [
+            m('div.box.has-bg-level-2.views-page-login-box-width.px-7.py-8', {}, [
                 Register.isvalidate ? [
-                    m('div.mb-5.title-2.has-text-level-1', {},
-                        ['验证码']),
+                    m('div.title-x-large-1.views-page-login-title.opacity', {}, [window.exchConfig.exchName]),
+                    m('div.mb-5.title-x-large-1.has-text-title', {}, ['注册验证']),
+                    m('div.py-0.mb-2.has-text-level-1.body-3', {},
+                        [Register.type === 'phone' ? '手机验证码' : '邮箱验证码']),
                     m('div.control.has-icons-right.mb-6', {}, [
                         m(InputWithComponent, {
                             options: {
@@ -49,7 +52,7 @@ module.exports = {
                                             '10214')/* '获取验证码' */])
                         })
                     ]),
-                    m('button.button.my-3.has-bg-primary.btn-2.is-fullwidth.mb-2',
+                    m('button.button.my-3.has-bg-primary.button-medium.is-fullwidth.has-text-white.mb-2',
                         {
                             onclick: () => {
                                 Register.type === 'phone'
@@ -58,8 +61,8 @@ module.exports = {
                             }
                         }, ['注册'])
                 ] : [
-                    m('div.title-4.has-text-level-4', {}, [window.exchConfig.exchName]),
-                    m('div.mb-5.title-4.has-text-level-1', {}, ['注册']),
+                    m('div.title-x-large-1.views-page-login-title.opacity', {}, [window.exchConfig.exchName]),
+                    m('div.mb-5.title-x-large-1.has-text-title', {}, ['注册']),
                     m('div.tabs.mb-7', {}, [
                         m('ul', {}, [
                             m('li', { class: Register.type === 'phone' ? 'is-active' : '' },
@@ -68,20 +71,16 @@ module.exports = {
                                 [m('a', { onclick: () => { Register.type = 'email'; } }, ['邮箱'])])
                         ])
                     ]),
-                    m('div.py-0.mb-2', {},
+                    m('div.py-0.mb-2.has-text-level-1.body-3', {},
                         [Register.type === 'phone' ? '手机号' : '邮箱']),
                     Register.type === 'phone'
                         ? m(InputWithComponent, {
                             addClass: 'mb-5',
-                            leftComponents: m('span.select.px-1', {}, [
-                                m('select.without-border.register-national-select',
-                                    {
-                                        value: Register.areaCode,
-                                        onchange: e => {
-                                            Register.areaCode = e.target.value;
-                                        }
-                                    }, Register.selectList)
-                            ]),
+                            leftComponents: m(AreaCodeSelect, {
+                                selectList: Register.selectList,
+                                areaCode: Register.areaCode,
+                                onSelect: areaCode => { Register.areaCode = areaCode; }
+                            }),
                             options: {
                                 oninput: e => {
                                     Register.loginName = e.target.value;
@@ -95,7 +94,7 @@ module.exports = {
                             },
                             value: Register.loginName
                         }, []),
-                    m('div.py-0.mb-2', {}, ['密码']),
+                    m('div.py-0.mb-2.has-text-level-1.body-3', {}, ['密码']),
                     m('input.input[type=password].mb-5', {
                         oninput: e => {
                             Register.password = e.target.value;
@@ -109,8 +108,8 @@ module.exports = {
                         },
                         value: Register.password
                     }, []),
-                    m('div.py-0.mb-2', {}, ['邀请码（选填）']),
-                    m('input.input[type=password].mb-6', {
+                    m('div.py-0.mb-2.has-text-level-1.body-3', {}, ['邀请码（选填）']),
+                    m('input.input.mb-6', {
                         oninput: e => {
                             Register.refereeId = e.target.value;
                         },
@@ -123,15 +122,17 @@ module.exports = {
                         },
                         value: Register.refereeId
                     }, []),
-                    m('button.button.my-3.has-bg-primary.btn-2.is-fullwidth.mb-2',
+                    m('button.button.my-3.has-bg-primary.button-medium.is-fullwidth.has-text-white.mb-2',
                         {
                             onclick: () => {
                                 Register.type === 'phone'
                                     ? Register.submitEmail()
                                     : Register.submitPhone();
-                            }
+                            },
+                            disabled: Register.type === 'phone' ? !Register.valid1() : !Register.valid(),
+                            class: Register.loading ? 'is-loading' : ''
                         }, ['注册']),
-                    m('div.has-text-centered.body-3.has-text-level-1',
+                    m('div.has-text-centered.body-3.has-text-level-2',
                         {}, [
                             '已有账号？去',
                             m('a.has-text-primary', {

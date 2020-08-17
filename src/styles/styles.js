@@ -1,80 +1,112 @@
+// 主题色
 const primary = Object.freeze({
     lighten: '#FF8B00',
     darken: '#FF8B00'
 });
-
-const success = Object.freeze({
+// 辅助色
+const sub = Object.freeze({
+    lighten: '#0E1C33',
+    lighten1: '#FF8B00',
+    lighten2: '#D8D0C5',
+    darken: '#0E1C33',
+    darken1: '#FF8B00',
+    darken2: '#D8D0C5'
+});
+// 提示
+const tip = Object.freeze({
+    errorLighten: '#F33309',
+    warningLighten: '#FFB524',
+    successLighten: '#42DC3F',
+    failLighten: '#878B98',
+    errorDarken: '#F33309',
+    warningDarken: '#FFB524',
+    successDarken: '#42DC3F',
+    failDarken: '#878B98'
+});
+// 涨绿（行业色）
+const green = Object.freeze({
     lighten: '#42DC3F',
     lighten1: '#57BD7D',
     darken: '#42DC3F',
     darken1: '#57BD7D'
 });
-
-const error = Object.freeze({
+// 跌红（行业色）
+const red = Object.freeze({
     lighten: '#F33309',
     lighten1: '#E55764',
     darken: '#F33309',
     darken1: '#E55764'
 });
-
+// 标记颜色
+const sign = Object.freeze({
+    lighten: '#FF8B00',
+    lighten1: '#3485FF',
+    darken: '#FF8B00',
+    darken1: '#3485FF'
+});
+// 文字颜色
 const font = Object.freeze({
     lighten: '#1E2846',
     lighten1: '#404862',
-    lighten2: '#61687E',
+    lighten2: '#585E71',
     lighten3: '#9A9EAC',
-    darken: '#E9E9E9',
-    darken1: '#555A69',
-    darken2: '#414450'
+    darken: '#DDDFE5',
+    darken1: '#9196A8',
+    darken2: '#717480',
+    darken3: '#44464D'
 });
-
+const fontwhite = Object.freeze({
+    base: '#FFFFFF'
+});
+// 线条颜色
 const line = Object.freeze({
-    lighten: 'rgba(30, 40, 70, .02)',
-    lighten1: 'rgba(30, 40, 70, .04)',
-    lighten2: 'rgba(30, 40, 70, .06)',
-    lighten3: 'rgba(30, 40, 70, .08)',
+    lighten: 'rgba(10, 13, 22, 0.04)',
+    lighten1: 'rgba(30, 40, 70, 0.08)',
+    lighten2: 'rgba(30, 40, 70, 0.12)',
+    lighten3: 'rgba(30, 40, 70, 0.16)',
 
-    darken: '#1D212B',
-    darken1: '#2C3240',
-    darken2: '#2C3240'
+    darken: 'rgba(255, 255, 255, 0.04)',
+    darken1: 'rgba(255, 255, 255, 0.08)',
+    darken2: 'rgba(255, 255, 255, 0.12)',
+    darken3: 'rgba(255, 255, 255, 0.16)'
 });
-
+// 背景颜色
 const background = Object.freeze({
-    lighten: '#EBECEF',
+    lighten: '#F1F3F5',
     lighten1: '#FFFFFF',
-    lighten2: '#F7F7FA',
+    lighten2: '#FAFAFA',
     lighten3: '#F2F2F7',
-    lighten4: 'rgba(16, 21, 37, 0.8)',
-    lighten5: '#C4C4C4',
     darken: '#101217',
     darken1: '#171A21',
     darken2: '#1E222B',
-    darken3: 'rgba(0, 189, 189, .1)',
-    darken4: '#1E222B',
-    darken5: '#20252F'
+    darken3: '#21252F'
 });
-
+// 遮罩层颜色
 const mode = Object.freeze({
-    lighten: 'rgba(16, 18, 23, .8)',
-    darken: 'rgba(16, 18, 23, .8)'
+    lighten: 'rgba(7, 13, 23, 0.6)',
+    darken: 'rgba(7, 13, 23, 0.6)'
 });
 
-// 图标颜色
-const chart = Object.freeze({
-    lighten: '#2AD7AA',
-    lighten1: '#22B992',
-    darken: '#22B992',
-    darken1: '#22B992'
-});
+// 图表颜色
+// const chart = Object.freeze({
+//     lighten: '#2AD7AA',
+//     lighten1: '#22B992',
+//     darken: '#22B992',
+//     darken1: '#22B992'
+// });
 // 主题颜色合集
 const theme = {
     primary,
-    success,
-    error,
+    sub,
+    tip,
+    green,
+    red,
+    sign,
     font,
+    fontwhite,
     line,
     background,
-    mode,
-    chart
+    mode
 };
 
 // 样式类
@@ -86,9 +118,9 @@ const fontsz = {
     level4: '14px',
     level5: '16px',
     level6: '18px',
-    level7: '20px',
-    level8: '24px',
-    level9: '32px',
+    level7: '24px',
+    level8: '32px',
+    level9: '48px',
     level10: '64px',
     level11: '72px'
 };
@@ -136,9 +168,12 @@ const button = {
 };
 
 const radius = {
-    level1: '5px',
-    level2: '10px',
-    level3: '15px'
+    level1: '2px',
+    level2: '4px',
+    level3: '8px',
+    level4: '16px',
+    level5: '24px',
+    level6: '32px'
 };
 
 const fontweight = {
