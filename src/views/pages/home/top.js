@@ -27,6 +27,10 @@ module.exports = {
                 for (let i = 0; i < list.length && i < 9; i += 3) {
                     bannList.push(list.slice(i, i + 3));
                 }
+
+                // for (let i = 0; i < 3 - bannList[bannList.length - 1].length; i++) {
+                //     bannList[bannList.length - 1].push({});
+                // }
                 this.data.banneList = bannList;
                 m.redraw();
             }
