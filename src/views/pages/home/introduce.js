@@ -11,9 +11,9 @@ module.exports = {
         }
     },
     view: function () {
-        return m('div', { class: 'views-pages-home-introduce' }, [
+        return m('div', { class: 'views-pages-home-introduce ' }, [
             // 1. 平台介绍 模块
-            m('div', { class: `introduce-box container` }, [
+            m('div', { class: `introduce-box ` }, [
                 // 内容
                 m('div', { class: `container pl-8` }, [
                     m('div', { class: `pt-8 title-x-large` }, [
@@ -54,7 +54,7 @@ module.exports = {
                         ]),
                         // iOS 按钮
                         m('a', { class: `button is-info is-inverted is-outlined download-iOS`, href: "https://vbit.me/m#/downloadApp" }, [
-                            m('img', { class: 'pr-2', src: require("@/assets/img/home/Android.png").default }),
+                            m('img', { class: 'pr-2', src: require("@/assets/img/home/iOS.png").default }),
                             m('span', { class: `` }, 'iOS下载')
                         ])
                     ])
