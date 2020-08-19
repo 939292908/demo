@@ -21,7 +21,8 @@ module.exports = {
                         m('img', { class: 'mb-7', src: require("@/assets/img/home/rectangle1.png").default })
                     ]),
                     m('div', { class: ` pt-8 has-text-level-2` }, ["Vbit平台金融量化团队均来自JP摩根、摩根士丹利、OKCoin、Binance等知名金融机构。Vbit平台由国际化各领域专家团队研发运营,确保平台拥有最前沿的技术，用户享有最极致的产品体验。"]),
-                    m('div', { class: `mt-7 has-text-level-2` }, [" Vbit秉承用户至上的服务理念，坚持公平、公正、公开的交易原则，致力于为全球投资者提供安全、快捷的数字货币衍生品交易服务。"])
+                    m('div', { class: `mt-7 has-text-level-2` }, [" Vbit秉承用户至上的服务理念，坚持公平、公正、公开的交易原则，致力于为全球投资者提供安全、快捷的数字货币衍生品交易服务。"]),
+                    m('div', { class: `introduce-div` }, [])
                 ]),
                 // 蒙板
                 m('div', { class: `introduce-box-masking` })
