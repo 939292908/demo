@@ -7,7 +7,7 @@ module.exports = {
     view: function (vnode) {
         return m('div', { class: 'views-pages-myassets-header' }, [
             m('div', {
-                class: (vnode.attrs.highlightFlag === 0 ? 'header-highlight has-text-primary ' : '') + 'header-my navbar-item cursor-pointer',
+                class: (vnode.attrs.highlightFlag === 0 ? 'header-highlight has-text-primary ' : '') + 'header-my ml-2 cursor-pointer',
                 onclick: function () {
                     window.location.href = '#!/myWalletIndex';
                 }
