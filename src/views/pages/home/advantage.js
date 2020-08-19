@@ -26,7 +26,7 @@ module.exports = {
                     // 3
                     m('div', { class: `introduce-item` }, [
                         m('img', { class: '', src: require("@/assets/img/home/Object3.png").default }),
-                        m('div', { class: `title-medium mr-7 has-text-primary` }, ["极致体验"]),
+                        m('div', { class: `title-medium has-text-primary advantage-title` }, ["极致体验"]),
                         m('p', { class: `pt-5` }, ["业内领先的百万级交易撮合引擎，一站式交易服务！"])
                     ]),
                     // 4
