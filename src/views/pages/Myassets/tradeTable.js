@@ -78,7 +78,7 @@ const t = {
             let count = 1;
             if (searchContent !== "") {
                 for (let i = 1; i < rowsLength; i++) {
-                    var searchText = table.rows[i].cells[0].innerHTML;
+                    const searchText = table.rows[i].cells[0].innerHTML;
                     if (searchText.toUpperCase().indexOf(searchContent.toUpperCase()) !== -1) {
                         // 显示行操作
                         table.rows[i].style.display = '';
@@ -93,7 +93,7 @@ const t = {
                 }
             } else if (searchContent === "") {
                 table.rows[rowsLength - 1].style.display = 'none';
-                for (var j = 1; j < rowsLength - 1; j++) {
+                for (let j = 1; j < rowsLength - 1; j++) {
                     table.rows[j].style.display = '';
                 }
             }
@@ -101,7 +101,7 @@ const t = {
             this.hideZeroFlag = !this.hideZeroFlag;
             let count = 1;
             if (this.hideZeroFlag) {
-                for (let i = 1; i < rowsLength; i++) {
+                for (let i = 1; i < rowsLength - 1; i++) {
                     const value = table.rows[i].cells[1].innerHTML;
                     if (value !== '0.00000000') {
                         // 显示行操作
@@ -123,6 +123,18 @@ const t = {
                 }
             }
         }
+    },
+    accountTitle: '',
+    setAccountTitle: function(param) {
+        t.accountTitle = param;
+    },
+    accountBanlance: 0,
+    setAccountBanlance: function(param) {
+        t.accountBanlance = param;
+    },
+    dataLength: 0,
+    setDataLength: function (param) {
+        t.dataLength = param;
     }
 };
 
@@ -135,49 +147,76 @@ module.exports = {
                 t.setCurrency(arg);
             }
         });
+        t.hideZeroFlag = false;
     },
     oncreate(vnode) {
         wlt.init();
         setTimeout(() => {
             t.initTableData();
             t.initColumnData();
+            if (vnode.attrs.type === 'coinColumnData') {
+                t.setDataLength(t.tableData.coinData.length);
+                t.setAccountTitle('币币账户');
+                t.setAccountBanlance(wlt.coinTotalValueForBTC);
+            } else if (vnode.attrs.type === 'legalColumnData') {
+                t.setDataLength(t.tableData.legalData.length);
+                t.setAccountTitle('法币账户');
+                t.setAccountBanlance(wlt.legalTotalValueForBTC);
+            } else if (vnode.attrs.type === 'contractColumnData') {
+                t.setDataLength(t.tableData.contractData.length);
+                t.setAccountTitle('合约账户');
+                t.setAccountBanlance(wlt.contractTotalValueForBTC);
+            } else {
+                t.setDataLength(t.tableData.walletData.length);
+            }
+            if (t.dataLength === 0) {
+                document.getElementsByTagName('table')[0].rows[document.getElementsByTagName('table')[0].rows.length - 1].style.display = '';
+            } else {
+                document.getElementsByTagName('table')[0].rows[document.getElementsByTagName('table')[0].rows.length - 1].style.display = 'none';
+            }
             m.redraw();
         }, '100');
     },
     view(vnode) {
         // table
-        return m('div', { class: 'views-pages-Myassets-Table' }, [
-            m('div', { class: 'nav mb-3' }, [
-                m('div.search', {}, [
+        return m('div', { class: 'views-pages-Myassets-Table pt-7 pl-5 pr-5' }, [
+            m('div', { class: 'nav mb-3 pr-5' }, [
+                m('div.search mr-7', {}, [
                     m('input', {
+                        class: 'has-line-level-3 border-radius-small py-1 pl-1',
                         placeholder: '币种搜索',
                         oninput: function () {
                             t.tableAction(this.value, 'search');
                         }
                     })
                 ]),
-                m('div.hideZeroAsset', {}, [
+                m('div.hideZeroAsset mr-7', {}, [
                     m('label.checkbox', { onclick: function () { t.tableAction('', 'hideZero'); } }, [
-                        m('input[type=checkbox]', { checked: t.hideZeroFlag }),
+                        m('input[type=checkbox].mr-1', { checked: t.hideZeroFlag }),
                         '隐藏0资产'
                     ])
                 ]),
-                m('div.fundRecords.', {}, [
+                m('div.fundRecords mr-7', {}, [
                     m('img', { }),
                     m('span', ['资金记录'])
                 ]),
                 m('div.profit', { style: { display: vnode.attrs.typeData === 'contractData' ? '' : 'none' } }, [
                     m('img', {}),
                     m('span', ['盈亏分析'])
+                ]),
+                m('div.account', { style: { display: vnode.attrs.typeData !== 'walletData' ? '' : 'none' } }, [
+                    m('span', {}, t.accountTitle),
+                    m('span', {}, '  '),
+                    m('span', {}, t.accountBanlance)
                 ])
             ]),
-            m('div.tab', { class: 'pl-5 pt-7 border-radius-medium' },
+            m('div.tab', { class: 'pb-7 border-radius-medium' },
                 m('table', {}, [
                     m('thead', {}, [
                         // 循环表头
                         m('tr', {}, [
                             t.columnData[vnode.attrs.type].map((item, index) => {
-                                return m('td.pt-2 pb-2', { class: '' }, item.col);
+                                return m('td.pt-7', { class: '' }, item.col);
                             })
                         ])
                     ]),
@@ -188,16 +227,16 @@ module.exports = {
                                 t.columnData[vnode.attrs.type].map((item, i) => {
                                     if (i === t.columnData[vnode.attrs.type].length - 1) {
                                         // 操作列
-                                        return m('td.pt-2 pb-2', {}, [
+                                        return m('td.pt-7 has-text-level-1', {}, [
                                             item.val.map(aHref => {
-                                                return m('a', {}, aHref.operation);
+                                                return m('a.mr-4 has-text-primary', {}, aHref.operation);
                                             })
                                         ]);
                                     } else if (i === t.columnData[vnode.attrs.type].length - 2) {
                                         // 估值列
-                                        return m('td.pt-2 pb-2', {}, row[item.val] + ' ' + t.currency);
+                                        return m('td.pt-7 has-text-level-1', {}, row[item.val] + ' ' + t.currency);
                                     } else {
-                                        return m('td.pt-2 pb-2', {}, row[item.val]);
+                                        return m('td.pt-7 has-text-level-1', {}, row[item.val]);
                                     }
                                 })
                             ]);

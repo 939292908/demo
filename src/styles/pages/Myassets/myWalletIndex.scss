@@ -7,57 +7,75 @@
     .myWalletIndex-head{
         .myWalletIndex-head-left{
             .myWalletIndex-head-left-total{
-                select{
-                    background: none;
-                    border: none;
+                // select{
+                //     background: none;
+                //     border: none;
+                //     outline: none;
+                // }
+                button{
+                    background:none;
                     outline: none;
+                    color: white;
+                    border: none;
+                    width: 70px;
+                }
+                div{
+                    ul{
+                        background-color: white;
+                        li{
+                            width: 100px;
+                            height: 40px;
+                            line-height: 40px;
+                        }
+                        z-index: 999999;
+                        position: fixed;
+                    }
                 }
             }
         }
     }
-    .myAccount{
-        display: flex;
-        flex-direction: row;
-        width: 388px;
-        height: 113px;
-        .show-desc{
-            display: '';
-            margin: auto 0px;
-            margin-left: auto;
-        }
-        .hide-desc{
-            display: none;
-        }
-        background-color: white;
-    }
     .myWalletIndex-switch{
-        margin-bottom: var(--c-margin-level5);
-        .is-primary{
-            background-color: var(--c-primary-lighten);
-            border-color: var(--c-primary-lighten);
-            color: #FFFFFF !important;
-        }
+        position: relative;
         .tradeCard{
             display: flex;
             flex-direction: column;
-            z-index: 9999;
-            position: fixed;
+            // ！！！
             background-color: white;
-            margin-left: 640px;
-            margin-top: 80px;
-            padding: 3px 10px;
-            border-radius: 5px;
-            font-size: 8px;
+            z-index: 99999;
+            position: absolute;
+            left: 855px;
+            top: 80px;
             span{
+                // 设计图未说明颜色！！！
                 color:gray;
+            }
+        }
+        .myAccount{
+            display: flex;
+            flex-direction: row;
+            .show-desc{
+                display: '';
+                margin: auto 0px;
+                margin-left: auto;
+            }
+            .hide-desc{
+                display: none;
             }
         }
     }
     .myWalletIndex-head-right div{
         button{
-            width: 68px;
-            text-align: center;
-            border: 1px solid var(--c-primary-lighten);
+            outline: none;
+            border: none;
+            &:hover{
+                background:#FF8B00 !important;
+                color: white !important;
+            }
+            &.bgNone{
+                // 边框主色 规范未找到！！！
+                border: 1px solid #FF8B00;
+                background:none;
+            }
         }
     }
 }
