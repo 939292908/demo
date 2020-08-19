@@ -45,7 +45,7 @@ class _axios {
             method: method
         }, options);
         if (method === 'get') {
-            config.params = data ? data.params : {};
+            config.params = data || {};
         } else if (method === 'post') {
             // 以表单形式上传数据(如图片)
             if (Object.prototype.toString.call(data) === '[object FormData]') {

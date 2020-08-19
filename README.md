@@ -111,7 +111,25 @@ module.exports = {
 * 多语言使用统一方法，详情查看[dI18n.js](./src/languages/dI18n.js)；
 * API接口调用使用统一模版，详情查看[webApi.js](./src/api/webApi.js)；
 * [utils.js](./src/util/utils.js)内禁止添加全局变量，统一通过函数传参的形式引用；
-* 错误码统一写在[errCode.js](./src/util/errCode.js)内；
+* 错误码统一写在[errCode.js](./src/util/errCode.js)内；  
+
+
+## 各目录内容限制
+
+`api`目录只写Api  
+assets      只能放静态资源
+broadcast   全局广播
+config.js   项目配置
+index.html  html
+index.js    入口文件
+languages   多语言
+libs        第三方库
+log         日志文件
+models      公用逻辑库，禁止放UI相关内容
+route       路由
+styles      公用样式
+util        工具类
+views       视图，
 
 
 
