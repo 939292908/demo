@@ -1,6 +1,15 @@
+/*
+ * @Author: your name
+ * @Date: 2020-08-17 13:35:47
+ * @LastEditTime: 2020-08-19 17:52:15
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: \website-project\src\views\pages\home\top.js
+ */
 const m = require('mithril');
 const Slideshow = require('@/views/components/slideshow/bottomToTop');
 const SlideshowNotice = require('@/views/components/slideshow/notice');
+const Http = require('@/newApi');
 require('@/styles/pages/home/top.scss');
 
 module.exports = {
@@ -19,27 +28,24 @@ module.exports = {
         this.getBanne();
         this.getnotice();
     },
-    getBanne() {
-        window.gWebApi.getBanne({ locale: window.gI18n.locale, vp: window.exchId }, res => {
-            if (res.result.code === 0) {
+    getBanne () {
+        const params = { locale: window.gI18n.locale, vp: window.exchId };
+        Http.getBanne(params).then(res => {
+            if (res.code === 0) {
                 var bannList = [];
-                const list = res.result.data;
+                const list = res.data;
                 for (let i = 0; i < list.length && i < 9; i += 3) {
                     bannList.push(list.slice(i, i + 3));
                 }
-
-                // for (let i = 0; i < 3 - bannList[bannList.length - 1].length; i++) {
-                //     bannList[bannList.length - 1].push({});
-                // }
                 this.data.banneList = bannList;
                 m.redraw();
             }
         });
     },
-    getnotice() {
-        window.gWebApi.getNotice({ locale: window.gI18n.locale, vp: window.exchId }, res => {
-            if (res.result.code === 0) {
-                this.data.noticeList = res.result.data;
+    getnotice () {
+        Http.getNotice({ locale: window.gI18n.locale, vp: window.exchId }).then(res => {
+            if (res.code === 0) {
+                this.data.noticeList = res.data;
                 m.redraw();
             }
         });

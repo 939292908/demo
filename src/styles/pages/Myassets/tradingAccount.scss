@@ -1,22 +1,12 @@
 .views-pages-myassets-tradingAccount{
+    background-color: white;
     .tradingAccount_nav{
         display: flex;
         flex-direction: row;
-        margin-bottom: var(--c-margin-level3);
-        .is-cyan{
-            border-bottom: 2px solid hsl(171, 100%, 41%);
-            color:hsl(171, 100%, 41%) ;
-        }
-        .is-purple{
-            border-bottom: 2px solid purple;
-            color:purple ;
-        }
-        .is-red{
-            border-bottom: 2px solid hsl(348, 100%, 61%);
-            color:hsl(348, 100%, 61%);
-        }
+        height: 52px;
+        width: 30%;
     }
-    div{
-        margin-right: var(--c-margin-level5);
+    li{
+        margin: auto 0px;
     }
 }
