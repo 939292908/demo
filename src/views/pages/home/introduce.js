@@ -29,14 +29,14 @@ module.exports = {
             // 2. 交易之旅 模块
             m('div', { class: `introduce-transaction container` }, [
                 // 标题
-                m('div', { class: `pt-8 has-text-centered title-x-large` }, ['开启交易之旅']),
+                m('div', { class: `pt-8 has-text-centered title-x-large container` }, ['开启交易之旅']),
                 // 按钮
                 m('div', { class: `has-text-centered mt-8` }, [
                     m('a', { class: `button mr-2 has-bg-primary`, href: "http://localhost:8080/#!/register" }, ['立即注册']),
                     m('button', { class: `button has-bg-primary`, onclick: this.toPage, href: "http://localhost:8080/#!/register" }, ['即可交易'])
                 ]),
                 // 橘色 盒子
-                m('div', { class: `home-introduce-Rectangle border-1 container is-align-items-center` }, [
+                m('div', { class: `home-introduce-Rectangle border-1 container is-align-items-center has-bg-primary` }, [
                     // 图片
                     m('img', { class: 'home-picture-vbit', src: require("@/assets/img/home/vbit.png").default }
                     ),
@@ -48,7 +48,7 @@ module.exports = {
                     // 下载按钮
                     m('div', { class: `pl-6` }, [
                         // Android 按钮
-                        m('a', { class: `button is-info is-inverted is-outlined download-ios mr-2`, href: "https://vbit.me/m#/downloadApp" }, [
+                        m('a', { class: `button is-info is-inverted is-outlined download-ios mr-4 ml-7`, href: "https://vbit.me/m#/downloadApp" }, [
                             m('img', { class: 'pr-2', src: require("@/assets/img/home/Android.png").default }),
                             m('span', { class: `` }, "Android下载")
                         ]),

@@ -211,13 +211,73 @@ module.exports = {
                 // 下载
                 m('div.navbar-item.cursor-pointer', { class: `` }, [
                     m('span.icon', {}, [
-                        m('i.iconfont.icon-downLoad')
+                        m('i.iconfont.icon-downLoad'),
+                        m('div', { class: `navbar-dropdown` }, [
+                            m('a', { class: `navbar-item` }, [
+                                m('svg', {
+                                    class: 'icon',
+                                    "aria-hidden": true
+                                }, [
+                                    m('use', { "xlink:href": '#icon-logo' })
+                                ]),
+                                m('a', { class: `navbar-item` }, ["12"])
+                            ]),
+                            m('a', { class: `navbar-item` }, [
+                                m('span.icon', {}, [
+                                    m('i.iconfont.icon-logo')
+                                ]),
+                                m('a', { class: `navbar-item` }, ["账户安全"])
+                            ]),
+                            m('a', { class: `navbar-item` }, [
+                                m('span.icon', {}, [
+                                    m('i.iconfont.icon-logo')
+                                ]),
+                                m('a', { class: `navbar-item` }, ["身份认证"])
+                            ]),
+                            m('a', { class: `navbar-item` }, [
+                                m('span.icon', {}, [
+                                    m('i.iconfont.icon-logo')
+                                ]),
+                                m('a', { class: `navbar-item` }, ["API管理"])
+                            ]),
+                            m('a', { class: `navbar-item` }, [
+                                m('span.icon', {}, [
+                                    m('i.iconfont.icon-logo')
+                                ]),
+                                m('a', { class: `navbar-item` }, ["邀请返佣"])
+                            ]),
+                            m('a', { class: `navbar-item` }, [
+                                m('span.icon', {}, [
+                                    m('i.iconfont.icon-logo')
+                                ]),
+                                m('a', {
+                                    class: `navbar-item`,
+                                    onclick: () => {
+                                        window.utils.removeItem("ex-session");
+                                        window.gWebApi.loginState = false;
+                                    }
+                                }, ["退出登录"])
+                            ])
+                        ])
                     ])
                 ]),
                 // 切换线路
-                m('div.navbar-item.cursor-pointer', { class: `` }, [
-                    m('span.icon', {}, [
-                        m('i.iconfont.icon-signal')
+                m('a.navbar-item.cursor-pointer' + (!window.gWebApi.loginState ? '.is-hidden' : ''), {
+                    class: `has-dropdown is-hoverable`,
+                    onclick: function () {
+                        window.router.push('/');
+                    }
+                }, [
+                    m('div.navbar-item.cursor-pointer', { class: `` }, [
+                        m('span.icon', {}, [
+                            m('i.iconfont.icon-signal')
+                        ])
+                    ]),
+                    m('div', { class: `navbar-dropdown` }, [
+                        m('p', { class: `navbar-item` }, ["线路切换(10)"]),
+                        m('a', { class: `navbar-item` }, ["币币订单"]),
+                        m('a', { class: `navbar-item` }, ["法币订单"]),
+                        m('a', { class: `navbar-item` }, ["跟单订单"])
                     ])
                 ]),
                 // 语言

@@ -8,7 +8,7 @@ module.exports = {
         banneList: [],
         noticeList: []
     },
-    toPage () {
+    toPage() {
         if (window.gWebApi.loginState) {
             window.router.push('/chargeMoney');
         } else {
@@ -19,7 +19,7 @@ module.exports = {
         this.getBanne();
         this.getnotice();
     },
-    getBanne () {
+    getBanne() {
         window.gWebApi.getBanne({ locale: window.gI18n.locale, vp: window.exchId }, res => {
             if (res.result.code === 0) {
                 var bannList = [];
@@ -27,12 +27,16 @@ module.exports = {
                 for (let i = 0; i < list.length && i < 9; i += 3) {
                     bannList.push(list.slice(i, i + 3));
                 }
+
+                // for (let i = 0; i < 3 - bannList[bannList.length - 1].length; i++) {
+                //     bannList[bannList.length - 1].push({});
+                // }
                 this.data.banneList = bannList;
                 m.redraw();
             }
         });
     },
-    getnotice () {
+    getnotice() {
         window.gWebApi.getNotice({ locale: window.gI18n.locale, vp: window.exchId }, res => {
             if (res.result.code === 0) {
                 this.data.noticeList = res.result.data;
@@ -40,7 +44,7 @@ module.exports = {
             }
         });
     },
-    handleNoticeClick (item) {
+    handleNoticeClick(item) {
         if (item) window.open(item.html_url);
     },
     view: function () {
@@ -48,7 +52,7 @@ module.exports = {
         return m('div.views-pages-home-top', {
         }, [
             // 顶部
-            m('div', { class: `home-banner rotation container ` }, [
+            m('div', { class: `home-banner rotation container` }, [
                 m('p', { class: `font-weight-regular pt-8 title-large ` }, ['最值得信任的数字资产交易平台']),
                 m('p', { class: `mt-5 title-small` }, ['自主研发钱包加密技术，全面保护用户数字资产安全']),
                 m('button', { class: `purchase-btn theme--light has-bg-primary btn-2 button `, onclick: this.toPage }, ['立即交易']),
