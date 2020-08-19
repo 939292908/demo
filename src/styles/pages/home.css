@@ -14,13 +14,43 @@
     background: #293850;
 }
 
+.introduce-item {
+    width: 20%;
+    text-align: center;
+}
+
+.picture-layer {
+    margin-top: -110px;
+}
+
+.advantage-div {
+    display: flex;
+    justify-items: center;
+    align-items: center;
+}
+
 .home-introduce .introduce-item {
     width: 20%;
     text-align: center;
 }
 
-.home-introduce {
-    margin-top: 30px;
+.button-size {
+    width: 224px;
+    height: 58px;
+}
+
+.button-register {
+    width: 170px;
+    height: 58px;
+}
+
+.button-transaction {
+    width: 170px;
+    height: 58px;
+}
+
+.advantage-div {
+    height: 524px;
 }
 
 .pages-home-advantage {
@@ -46,7 +76,8 @@
 
 .purchase-btn {
     text-align: center;
-    margin-top: 40px;
+    width: 224px;
+    height: 58px;
 }
 
 .select {
@@ -59,18 +90,8 @@
     width: 100%;
 }
 
-.rotation-content {
-    height: 200px;
-    margin-top: 180px;
-}
-
 .rotationtwo-content {
     height: 200px;
-}
-
-.notice-content {
-    height: 70px;
-    margin-top: 300px;
 }
 
 .home-banner {
@@ -81,8 +102,7 @@
 
 .home-picture {
     background: url("~@/assets/img/home/layer 1.png") no-repeat center center;
-    /* background-size: "cover"; */
-    /* text-align: center; */
+    text-align: center;
 }
 
 .listing {
@@ -94,75 +114,19 @@
     width: 100%;
 }
 
-.frame.w {
-    margin-top: 20px;
-}
-
-.picture-layer {
-    margin-top: -100px;
-
-}
-
 .introduce-image {
     background: url("~@/assets/img/home/Rectangle 468.png") no-repeat center center;
     background-size: "cover";
-}
-
-.frame-2.w {
-    height: 200px;
-    margin-top: 20px;
-}
-
-.register {
-    height: 32px;
-    margin-top: 20px;
-}
-
-.transaction {
-    height: 32px;
-    margin-left: 30px;
-}
-
-.frame-3.w {
-    height: 270px;
-    margin-top: 20px;
 }
 
 .w {
     margin: 0 auto;
 }
 
-.frame-image-1 {
-    display: flex;
-    justify-content: space-around;
-    margin-top: 30px;
-}
-
-.frame-image-2 {
-    margin-left: 100px;
-}
-
-.frame-image-3 {
-    margin-left: 100px;
-    margin-top: 80px;
-}
-
-.QR code-1 {
-    margin-left: 300px;
-}
-
-.index-info-box {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: -34px;
-}
-
 .frame-4 {
     width: 100%;
     height: 300px;
 }
-
 
 .navigation {
     width: 300px;
@@ -174,17 +138,9 @@
     justify-content: space-around;
 }
 
-.introduce-item-Object2 {
-    margin-top: 15px;
-}
-
 .advantage-img {
     width: 72px;
     height: 74px;
-}
-
-.advantage-title{
-    margin-top: -8px;
 }
 
 
@@ -200,10 +156,6 @@
 
 .bottom-navigation-tab-2 {
     line-height: 27px;
-}
-
-.online-customer-service {
-    margin-left: 1800px;
 }
 
 .community {

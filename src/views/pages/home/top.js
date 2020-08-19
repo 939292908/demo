@@ -60,10 +60,10 @@ module.exports = {
             // 顶部
             m('div', { class: `home-banner rotation container` }, [
                 m('p', { class: `font-weight-regular pt-8 title-x-large-1` }, ['最值得信任的数字资产交易平台']),
-                m('p', { class: `mt-5 title-small font-weight-regular` }, ['自主研发钱包加密技术，全面保护用户数字资产安全']),
-                m('button', { class: `purchase-btn theme--light has-bg-primary btn-2 button `, onclick: this.toPage }, ['立即交易']),
+                m('p', { class: `mt-5 title-small font-weight-regular has-text-level-2` }, ['自主研发钱包加密技术，全面保护用户数字资产安全']),
+                m('a', { class: `purchase-btn mt-7 theme--light has-bg-primary btn-2 button title-medium font-weight-regular`, onclick: this.toPage, target: "_blank", href: "http://localhost:8080/#!/register" }, ['立即交易']),
                 m('div', { class: `has-text-centered mt-5` }, [
-                    m('a', { class: `has-text-white`, href: "http://localhost:8080/#!/register" }, ['还没账号？立即前往账号注册 →'])
+                    m('a', { class: `has-text-level-2`, href: "http://localhost:8080/#!/register", target: "_blank" }, ['还没账号？立即前往账号注册 →'])
                 ]),
                 m('div', { class: `top-bottom-box mt-8` }, [
                     // 轮播
