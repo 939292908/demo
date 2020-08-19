@@ -10,7 +10,7 @@
 
 /**中部*/
 .views-pages-home-top {
-    border-radius: 0 0 25% 25%;
+    border-radius: 0 0 100% 100% / 50%;
     background: #293850;
 }
 
@@ -24,7 +24,6 @@
 }
 
 .pages-home-advantage {
-    /* background: #0D1C33 url("~@/assets/img/home/rectangle.png") no-repeat center center; */
     background-size: "cover";
 }
 
@@ -81,8 +80,8 @@
 }
 
 .home-picture {
-    background: #0D1C33 url("~@/assets/img/home/layer 1.png") no-repeat center center;
-    background-size: "cover";
+    background: url("~@/assets/img/home/layer 1.png") no-repeat center center;
+    /* background-size: "cover"; */
     /* text-align: center; */
 }
 
@@ -100,15 +99,12 @@
 }
 
 .picture-layer {
-    width: 80%;
-    height: 80%;
-    margin-left: 130px;
     margin-top: -100px;
 
 }
 
 .introduce-image {
-    background: #0D1C33 url("~@/assets/img/home/Rectangle 468.png") no-repeat center center;
+    background: url("~@/assets/img/home/Rectangle 468.png") no-repeat center center;
     background-size: "cover";
 }
 
@@ -182,6 +178,15 @@
     margin-top: 15px;
 }
 
+.advantage-img {
+    width: 72px;
+    height: 74px;
+}
+
+.advantage-title{
+    margin-top: -8px;
+}
+
 
 /**底部*/
 .bottom-navigation-tab-1 {
@@ -203,9 +208,7 @@
 
 .community {
     margin-top: 10px;
-    border: 1px solid beige;
     height: 15px;
-    width: 15px;
     border-radius: 50%;
 }
 
@@ -218,6 +221,5 @@
 }
 
 .pub-footer {
-    background-color: #101217;
     height: 250px;
 }

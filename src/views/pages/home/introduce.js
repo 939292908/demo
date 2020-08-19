@@ -16,8 +16,8 @@ module.exports = {
             m('div', { class: `introduce-box ` }, [
                 // 内容
                 m('div', { class: `container pl-8` }, [
-                    m('div', { class: `pt-8 title-x-large` }, [
-                        m('p', { class: `` }, "世界领先的专业数字资产衍生品交易平台"),
+                    m('div', { class: `pt-8 title-x-large-1` }, [
+                        m('p', { class: `font-weight-regular` }, "世界领先的专业数字资产衍生品交易平台"),
                         m('img', { class: '', src: require("@/assets/img/home/rectangle1.png").default })
                     ]),
                     m('div', { class: `has-text-level-4 pt-8` }, ["Vbit平台金融量化团队均来自JP摩根、摩根士丹利、OKCoin、Binance等知名金融机构。Vbit平台由国际化各领域专家团队研发运营,确保平台拥有最前沿的技术，用户享有最极致的产品体验。"]),
@@ -29,14 +29,14 @@ module.exports = {
             // 2. 交易之旅 模块
             m('div', { class: `introduce-transaction container` }, [
                 // 标题
-                m('div', { class: `pt-8 has-text-centered title-x-large` }, ['开启交易之旅']),
+                m('p', { class: `pt-8 has-text-centered font-weight-regular title-x-large-1` }, "开启交易之旅"),
                 // 按钮
                 m('div', { class: `has-text-centered mt-8` }, [
                     m('a', { class: `button mr-2 has-bg-primary`, href: "http://localhost:8080/#!/register" }, ['立即注册']),
                     m('button', { class: `button has-bg-primary`, onclick: this.toPage, href: "http://localhost:8080/#!/register" }, ['即可交易'])
                 ]),
                 // 橘色 盒子
-                m('div', { class: `home-introduce-Rectangle border-1 container is-align-items-center` }, [
+                m('div', { class: `home-introduce-Rectangle border-1 container is-align-items-center has-bg-primary` }, [
                     // 图片
                     m('img', { class: 'home-picture-vbit', src: require("@/assets/img/home/vbit.png").default }
                     ),
@@ -48,7 +48,7 @@ module.exports = {
                     // 下载按钮
                     m('div', { class: `pl-6` }, [
                         // Android 按钮
-                        m('a', { class: `button is-info is-inverted is-outlined download-ios mr-2`, href: "https://vbit.me/m#/downloadApp" }, [
+                        m('a', { class: `button is-info is-inverted is-outlined download-ios mr-4 ml-7`, href: "https://vbit.me/m#/downloadApp" }, [
                             m('img', { class: 'pr-2', src: require("@/assets/img/home/Android.png").default }),
                             m('span', { class: `` }, "Android下载")
                         ]),

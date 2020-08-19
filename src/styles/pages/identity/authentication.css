@@ -7,13 +7,13 @@
     height: 50px;
     margin-right:10px;
     padding: 10px;
-    background-color: pink;
+    /* background-color: pink; */
 }
 .display{
     display: inline;
-    color: darkcyan;
+    /* color: darkcyan; */
 }
 .nodisplay{
     display: none;
-    color: pink;
+    /* color: pink; */
 }
