@@ -2,6 +2,7 @@ const m = require('mithril');
 const utils = require('../../util/utils');
 const broadcast = require('../../broadcast/broadcast');
 const titleLogo = require("@/assets/img/logo/title-logo.png").default;
+const I18n = require("../../languages/I18n").default;
 
 const methods = {
     openNavbarDropdown: false,
@@ -98,7 +99,7 @@ module.exports = {
                                 window.router.push('/login');
                             }
                         }, [
-                            "登录"
+                            I18n.$t('10136')
                         ]),
                         m('div.button.has-bg-primary', {
                             onclick: function () {
@@ -297,32 +298,32 @@ module.exports = {
                     ]),
                     m('div.navbar-dropdown', {}, [
                         m('a.navbar-item', {
-                            // class: "" + (window.gI18n.locale === 'zh' ? ' is-active' : ''),
-                            // onclick: function () {
-                            //     window.gI18n.setLocale('zh', res => {
-                            //         window._console.log('header setLocale', res);
-                            //     });
-                            // }
+                            class: "" + (I18n.getLocale() === 'zh' ? ' is-active' : ''),
+                            onclick: function () {
+                                I18n.setLocale('zh', res => {
+                                    // window._console.log('header setLocale', res);
+                                });
+                            }
                         }, [
                             '简体中文'
                         ]),
                         m('a.navbar-item', {
-                            // class: "" + (window.gI18n.locale === 'en' ? ' is-active' : ''),
-                            // onclick: function () {
-                            //     window.gI18n.setLocale('en', res => {
-                            //         window._console.log('header setLocale', res);
-                            //     });
-                            // }
+                            class: "" + (I18n.getLocale() === 'en' ? ' is-active' : ''),
+                            onclick: function () {
+                                I18n.setLocale('en', res => {
+                                    // window._console.log('header setLocale', res);
+                                });
+                            }
                         }, [
                             'English'
                         ]),
                         m('a.navbar-item', {
-                            // class: "" + (window.gI18n.locale === 'tw' ? ' is-active' : ''),
-                            // onclick: function () {
-                            //     window.gI18n.setLocale('tw', res => {
-                            //         window._console.log('header setLocale', res);
-                            //     });
-                            // }
+                            class: "" + (I18n.getLocale() === 'tw' ? ' is-active' : ''),
+                            onclick: function () {
+                                I18n.setLocale('tw', res => {
+                                    // window._console.log('header setLocale', res);
+                                });
+                            }
                         }, [
                             '繁体中文'
                         ])
