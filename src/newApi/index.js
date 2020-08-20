@@ -8,8 +8,14 @@
  */
 import Axios from './config/request';
 import API from '@/api/request_apis';
+// 请求接口配置
+import Conf from "@/api/apiConf";
+const instConf = new Conf(process.env.BUILD_ENV);
 
-const Http = new Axios().service;
+const api = instConf.GetActive();
+instConf.updateNetLines();
+
+const Http = new Axios(api.WebAPI).service;
 
 /**
  * @description: 极验初始化
