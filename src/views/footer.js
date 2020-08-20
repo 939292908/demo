@@ -18,7 +18,7 @@ module.exports = {
                 m('div', { class: `footer-left column is-6` }, [
                     // logo
                     m('img', { class: '', src: "static/img/title-logo.png", style: "width: 112;height:28px;" }),
-                    m('p', { class: `` }, ["全球区块链资产衍生品交易平台"]),
+                    m('p', { class: `mt-2` }, ["全球区块链资产衍生品交易平台"]),
                     // 社区
                     m('div', { class: `is-flex mt-5 is-between`, style: "width: 200px" }, [
                         m('a', { class: ``, href: "index.html" }, [

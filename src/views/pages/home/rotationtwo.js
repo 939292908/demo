@@ -1,13 +1,13 @@
-const m = require('mithril');
+// const m = require('mithril');
 
-require('@/styles/pages/home.css');
+// require('@/styles/pages/home.css');
 
-module.exports = {
-    view: function () {
-        return m('div.views-pages-home-rotationtwo', {}, [
-            // // 轮播2
-            // m('div', { class: `rotationtwo-content container mt-7` }, [
-            // ])
-        ]);
-    }
-};
+// module.exports = {
+//     view: function () {
+//         return m('div.views-pages-home-rotationtwo', {}, [
+//             // // 轮播2
+//             // m('div', { class: `rotationtwo-content container mt-7` }, [
+//             // ])
+//         ]);
+//     }
+// };
