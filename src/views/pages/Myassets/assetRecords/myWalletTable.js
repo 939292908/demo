@@ -1,4 +1,5 @@
 const m = require('mithril');
+const Http = require('@/newApi');
 
 require('@/styles/pages/Myassets/assetRecords.scss');
 const myWalletTable = {
@@ -22,18 +23,17 @@ const myWalletTable = {
             aType: "03",
             mhType: 5
         };
-        window.gWebApi.assetRecords(arg, data => {
+        Http.assetRecords(arg).then(data => {
             if (data.result.code === 0) {
                 myWalletTable.dataObj = data.history;
                 m.redraw();
             }
-        }, err => {
+        }).catch(err => {
             window.$message({
                 content: `网络异常，请稍后重试 ${err}`,
                 type: 'danger'
             });
-        }
-        );
+        });
     },
     displayEvnet: function (val) {
         this.displayValue = val;

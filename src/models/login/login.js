@@ -119,7 +119,7 @@ module.exports = {
         });
     },
     loginEnter() {
-        window.gWebApi.loginWebV2({}, res => {
+        Http.loginWebV2({}).then(res => {
             if (res.result.code === 0) {
                 this.checkAccountPwd();
                 this.getUserInfo();
@@ -130,7 +130,7 @@ module.exports = {
                     type: 'danger'
                 });
             }
-        }, err => {
+        }).catch(err => {
             this.loading = false;
             window._console.log('tlh', err);
             window.$message({
@@ -140,7 +140,7 @@ module.exports = {
         });
     },
     getUserInfo() {
-        window.gWebApi.getUserInfo({}, data => {
+        Http.getUserInfo({}).then(data => {
             window.gWebApi.loginState = true;
             self.loading = false;
             if (data.result.code === 0) {
@@ -164,7 +164,7 @@ module.exports = {
                 // 获取个人信息不成功
                 // window.gBroadcast.emit({cmd: "setIsLogin", data: false});
             }
-        }, err => {
+        }).catch(err => {
             this.loading = false;
             window.$message({
                 content: `网络异常，请稍后重试 ${err}`,

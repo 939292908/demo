@@ -1,6 +1,7 @@
 const m = require('mithril');
 const md5 = require('md5');
 const geetest = require('@/libs/geetestTwo');
+const Http = require('@/newApi');
 
 module.exports = {
     loginType: 'phone',
@@ -23,11 +24,11 @@ module.exports = {
     submitReset() {
         this.loading = true;
         m.redraw();
-        window.gWebApi.resetPassword({
+        Http.resetPassword({
             Passwd1: md5(this.password1),
             Passwd2: md5(this.password2),
             exChannel: window.exchId
-        }, res => {
+        }).then(res => {
             this.loading = false;
             m.redraw();
             if (res.result.code === 0) {
@@ -43,7 +44,7 @@ module.exports = {
                     type: 'danger'
                 });
             }
-        }, () => {
+        }).catch(() => {
             this.loading = false;
             m.redraw();
         });
@@ -64,12 +65,12 @@ module.exports = {
     },
     // 查询是否注册顾过
     queryUserInfo() {
-        window.gWebApi.queryUserInfo({
+        Http.queryUserInfo({
             loginType: this.loginType,
             loginName: this.loginName,
             nationNo: '00' + this.areaCode,
             exChannel: window.exchId
-        }, res => {
+        }).then(res => {
             this.loading = false;
             m.redraw();
             if (res.result.code === 0) {
@@ -87,7 +88,7 @@ module.exports = {
                     type: 'danger'
                 });
             }
-        }, () => {
+        }).then(() => {
             window.$message({
                 content: '网络异常，请稍后重试',
                 type: 'danger'
@@ -190,12 +191,11 @@ module.exports = {
         window.gBroadcast.emit({ cmd: 'redrawValidate', data: '' });
     },
     getCountryList () {
-        window.gWebApi.getCountryList({}, res => {
+        Http.getCountryList({}).then(res => {
             if (res.result.code === 0) {
                 this.selectList = res.result.data;
                 m.redraw();
             }
-        }, () => {
         });
     },
     initGeetest() {
