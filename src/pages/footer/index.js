@@ -20,7 +20,7 @@ module.exports = {
                     m('img', { class: '', src: "static/img/title-logo.png", style: "width: 112;height:28px;" }),
                     m('p', { class: `` }, ["全球区块链资产衍生品交易平台"]),
                     // 社区
-                    m('div', { class: `is-flex mt-5 is-between`, style: "width: 200px" }, [
+                    m('div', { class: `is-flex mt-7 is-between`, style: "width: 300px" }, [
                         m('a', { class: ``, href: "index.html" }, [
                             m('a', { class: ``, href: "" }, [
                                 m('img', { class: 'community ', src: require("@/assets/img/home/wechat.png").default })
@@ -50,7 +50,7 @@ module.exports = {
                 m('div', { class: `footer-right column is-6 is-between ` }, [
                     // 导航栏
                     m('div', { class: `bottom-navigation-tab-1` }, [
-                        m('div', { class: `has-text-level-4 body-6  has-text-primary-hover` }, ['平台服务']),
+                        m('div', { class: `has-text-level-4 body-6` }, ['平台服务']),
                         m('a', { class: `has-text-white  has-text-primary-hover`, href: "https://vbithelp.zendesk.com/hc/zh-cn/sections/360007961613" }, ["币币交易"]),
                         m('p', { class: `` },
                             m('a', { class: `has-text-white  has-text-primary-hover`, href: "https://vbithelp.zendesk.com/hc/zh-cn/sections/360007961593" }, ["法币交易"])
@@ -66,7 +66,7 @@ module.exports = {
                         )
                     ]),
                     m('div', { class: `bottom-navigation-tab-2` }, [
-                        m('p', { class: `has-text-level-4 body-6  has-text-primary-hover`, href: "" }, ["平台条款"]),
+                        m('p', { class: `has-text-level-4 body-6 `, href: "" }, ["平台条款"]),
                         m('p', { class: `` },
                             m('a', { class: `has-text-white  has-text-primary-hover`, href: "https://vbithelp.zendesk.com/hc/zh-cn/articles/360045404594" }, ["服务协议"])
                         ),
@@ -79,7 +79,7 @@ module.exports = {
                         )
                     ]),
                     m('div', { class: `bottom-navigation-tab-2 ` }, [
-                        m('p', { class: `has-text-level-4 body-6 has-text-primary-hover` }, ["服务支持"]),
+                        m('p', { class: `has-text-level-4 body-6` }, ["服务支持"]),
                         m('p', { class: `` },
                             m('a', { class: `has-text-white  has-text-primary-hover`, href: `https://vbithelp.zendesk.com/hc/zh-cn/sections/360007960273` }, ["新手帮助"])
                         ),
@@ -94,7 +94,7 @@ module.exports = {
                         )
                     ]),
                     m('div', { class: `bottom-navigation-tab-2` }, [
-                        m('p', { class: `has-text-level-4 body-6  has-text-primary-hover` }, ["联系我们"]),
+                        m('p', { class: `has-text-level-4 body-6` }, ["联系我们"]),
                         m('p', { class: `has-text-white  has-text-primary-hover` }, m(Tooltip, {
                             label: "服务邮箱",
                             content: [

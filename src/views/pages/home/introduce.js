@@ -20,8 +20,8 @@ module.exports = {
                         m('p', { class: `font-weight-regular` }, "世界领先的专业数字资产衍生品交易平台"),
                         m('img', { class: 'mb-7', src: require("@/assets/img/home/rectangle1.png").default })
                     ]),
-                    m('div', { class: ` pt-8 has-text-level-2` }, ["Vbit平台金融量化团队均来自JP摩根、摩根士丹利、OKCoin、Binance等知名金融机构。Vbit平台由国际化各领域专家团队研发运营,确保平台拥有最前沿的技术，用户享有最极致的产品体验。"]),
-                    m('div', { class: `mt-7 has-text-level-2` }, [" Vbit秉承用户至上的服务理念，坚持公平、公正、公开的交易原则，致力于为全球投资者提供安全、快捷的数字货币衍生品交易服务。"]),
+                    m('div', { class: ` pt-8 has-text-level-2 body-6` }, ["Vbit平台金融量化团队均来自JP摩根、摩根士丹利、OKCoin、Binance等知名金融机构。Vbit平台由国际化各领域专家团队研发运营,确保平台拥有最前沿的技术，用户享有最极致的产品体验。"]),
+                    m('div', { class: `mt-7 has-text-level-2 body-6` }, [" Vbit秉承用户至上的服务理念，坚持公平、公正、公开的交易原则，致力于为全球投资者提供安全、快捷的数字货币衍生品交易服务。"]),
                     m('div', { class: `introduce-div` }, [])
                 ]),
                 // 蒙板
@@ -47,16 +47,16 @@ module.exports = {
                         m('p', { class: ` pt-2` }, ['下载Vbit移动应用端'])
                     ]),
                     // 下载按钮
-                    m('div', { class: `pl-6` }, [
+                    m('div', { class: `pl-8` }, [
                         // Android 按钮
                         m('a', { class: `button is-info is-inverted is-outlined download-ios mr-4 ml-7`, target: "_blank", href: "https://vbit.me/m#/downloadApp" }, [
                             m('img', { class: 'pr-2', src: require("@/assets/img/home/Android.png").default }),
-                            m('span', { class: `title-small` }, "Android")
+                            m('span', { class: `title-small font-weight-regular` }, "Android")
                         ]),
                         // iOS 按钮
                         m('a', { class: `button is-info is-inverted is-outlined download-iOS`, target: "_blank", href: "https://vbit.me/m#/downloadApp" }, [
                             m('img', { class: 'pr-2', src: require("@/assets/img/home/iOS.png").default }),
-                            m('span', { class: `title-small ` }, 'IOS')
+                            m('span', { class: `title-small font-weight-regular` }, 'IOS')
                         ])
                     ])
                 ])
