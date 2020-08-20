@@ -67,10 +67,6 @@
         button{
             outline: none;
             border: none;
-            &:hover{
-                background:#FF8B00 !important;
-                color: white !important;
-            }
             &.bgNone{
                 // 边框主色 规范未找到！！！
                 border: 1px solid #FF8B00;

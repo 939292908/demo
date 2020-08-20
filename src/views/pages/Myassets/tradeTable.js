@@ -112,7 +112,7 @@ const t = {
                         count = count + 1;
                     }
                 }
-                if (count === rowsLength) {
+                if (count === rowsLength - 1) {
                     table.rows[rowsLength - 1].style.display = '';
                 }
             } else {

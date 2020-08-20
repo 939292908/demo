@@ -137,12 +137,14 @@ const myWalletIndex = {
         }
         window.location.href = val;
     },
-    switchDisplay: function (param, flag) {
+    switchDisplay: function (param, flag, type) {
         if (param === 'card1') {
             if (flag === 'show') {
                 document.getElementsByClassName('tradeCard')[0].style.display = '';
             } else if (flag === 'hide') {
-                document.getElementsByClassName('tradeCard')[0].style.display = 'none';
+                setTimeout(() => {
+                    document.getElementsByClassName('tradeCard')[0].style.display = 'none';
+                }, 200);
             }
         }
     },
@@ -179,16 +181,16 @@ const myWalletIndex = {
             document.getElementsByTagName('ul')[0].style.display = 'none';
         }
     },
-    // buttonHoverSty: function(e, type, title) {
-    //     if (title !== '充币') {
-    //         if (type === 'over') {
-    //             e.target.classList.value += ' has-bg-primary';
-    //         } else {
-    //             e.target.classList.value = e.target.classList.value.replace(' has-bg-primary', '');
-    //         }
-    //     }
-    //     console.log(e.target.classList.value);
-    // },
+    changeBtnSty: function (index, type) {
+        if (index !== 0) {
+            const ele = document.getElementsByClassName('Operation' + index)[0];
+            if (type === 'show') {
+                ele.classList.value = ele.classList.value.replace('bgNone has-text-primary has-line-level-2', 'has-bg-primary');
+            } else {
+                ele.classList.value = ele.classList.value.replace('has-bg-primary', 'bgNone has-text-primary has-line-level-2');
+            }
+        }
+    },
     assetValuation: function () {
         return m('div', { onclick: function() { myWalletIndex.optionDisplay(event); } }, [
             m('div.top mb-8', { style: { height: '344px', width: '100%', backgroundColor: '#0E1C33' } }, [
@@ -230,16 +232,11 @@ const myWalletIndex = {
                             // 充币  提币  内部转账  资金划转
                             m('div', { class: 'is-between  pt-8' }, [
                                 myWalletIndex.Nav.firstNav.map((item, index) => {
-                                    // return m('button.column button-large mx-3 border-radius-small', {
-                                    //     class: item.title === '充币' ? ' has-bg-primary' : ` bgNone has-text-primary has-line-level-2`,
-                                    //     onclick: function () { myWalletIndex.toPage(item.to); },
-                                    //     onmouseover: function() { myWalletIndex.buttonHoverSty(event, 'over', item.title, index); },
-                                    //     onmouseleave: function() { myWalletIndex.buttonHoverSty(event, 'leave', item.title, index); }
-                                    // },
-                                    // [item.title]);
-                                    return m('button.column button-large mx-3 border-radius-small cursor-pointer', {
-                                        class: item.title === '充币' ? ' has-bg-primary' : `bgNone has-text-primary`,
-                                        onclick: function () { myWalletIndex.toPage(item.to); }
+                                    return m(`button.column button-large mx-3 border-radius-small cursor-pointer Operation${index}`, {
+                                        class: item.title === '充币' ? 'has-bg-primary' : `bgNone has-text-primary has-line-level-2`,
+                                        onclick: function () { myWalletIndex.toPage(item.to); },
+                                        onmouseover: function() { myWalletIndex.changeBtnSty(index, 'show'); },
+                                        onmouseleave: function() { myWalletIndex.changeBtnSty(index, 'hide'); }
                                     },
                                     [item.title]);
                                 })
@@ -271,12 +268,16 @@ const myWalletIndex = {
                                     class: item.descCls,
                                     onmouseover: function () { myWalletIndex.switchDisplay('card' + index, 'show'); },
                                     onmouseleave: function () { myWalletIndex.switchDisplay('card' + index, 'hide'); }
-                                }, '...', [
-                                    m('span', { class: 'card' + index })
+                                }, [
+                                    m('span', { class: 'card' + index }, '...')
                                 ])
                             ]);
                         }),
-                        m('div.tradeCard body-2 border-radius-medium py-1 px-3', { style: { display: 'none' } }, [
+                        m('div.tradeCard body-2 border-radius-medium py-1 px-3', {
+                            style: { display: 'none' },
+                            onmouseover: function () { myWalletIndex.switchDisplay('card1', 'show'); },
+                            onmouseleave: function () { myWalletIndex.switchDisplay('card1', 'hide'); }
+                        }, [
                             m('span', '合约账户'),
                             m('font', myWalletIndex.contractTotal + ' ' + myWalletIndex.currency),
                             m('span', '币币账户'),
