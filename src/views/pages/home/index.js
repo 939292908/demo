@@ -4,11 +4,8 @@ const m = require('mithril');
 require('@/styles/pages/home.css');
 const top = require('./top');
 const picture = require('./picture');
-const rotationtwo = require('./rotationtwo');
 const advantage = require('./advantage');
 const introduce = require('./introduce');
-const rotation = require('./rotation');
-const notice = require('./notice');
 
 //  const demo = require('@/views/pages/demo')
 // var prev = document.getElementById("prev");
@@ -46,16 +43,10 @@ module.exports = {
     },
     view: function () {
         return m('div.views-pages-home-index', [
-            // 顶部
+            // 顶部+轮播+公告
             m(top),
-            // 轮播
-            m(rotation),
-            //  公告
-            m(notice),
-            // 大图
+            // 大图+轮播2
             m(picture),
-            // 轮播2
-            m(rotationtwo),
             // 平台优势
             m(advantage),
             // 平台介绍+平台优势+交易
