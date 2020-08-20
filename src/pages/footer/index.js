@@ -50,47 +50,47 @@ module.exports = {
                 m('div', { class: `footer-right column is-6 is-between ` }, [
                     // 导航栏
                     m('div', { class: `bottom-navigation-tab-1` }, [
-                        m('div', { class: `body-6  has-text-primary-hover` }, ['平台服务']),
-                        m('a', { class: `has-text-white  has-text-primary-hover`, href: "https://vbithelp.zendesk.com/hc/zh-cn/sections/360007961613", target: "_blank" }, ["币币交易"]),
+                        m('div', { class: `has-text-level-4 body-6  has-text-primary-hover` }, ['平台服务']),
+                        m('a', { class: `has-text-white  has-text-primary-hover`, href: "https://vbithelp.zendesk.com/hc/zh-cn/sections/360007961613" }, ["币币交易"]),
                         m('p', { class: `` },
-                            m('a', { class: `has-text-white  has-text-primary-hover`, href: "https://vbithelp.zendesk.com/hc/zh-cn/sections/360007961593", target: "_blank" }, ["法币交易"])
+                            m('a', { class: `has-text-white  has-text-primary-hover`, href: "https://vbithelp.zendesk.com/hc/zh-cn/sections/360007961593" }, ["法币交易"])
                         ),
                         m('p', { class: `` },
-                            m('a', { class: `has-text-white  has-text-primary-hover`, href: "https://vbithelp.zendesk.com/hc/zh-cn/sections/360007961633", target: "_blank" }, ["永续合约"])
+                            m('a', { class: `has-text-white  has-text-primary-hover`, href: "https://vbithelp.zendesk.com/hc/zh-cn/sections/360007961633" }, ["永续合约"])
                         ),
                         m('p', { class: `` },
-                            m('a', { class: `has-text-white  has-text-primary-hover`, href: "https://vbithelp.zendesk.com/hc/zh-cn/sections/360008544873", target: "_blank" }, ["杠杆ETF"])
+                            m('a', { class: `has-text-white  has-text-primary-hover`, href: "https://vbithelp.zendesk.com/hc/zh-cn/sections/360008544873" }, ["杠杆ETF"])
                         ),
                         m('p', { class: `` },
-                            m('a', { class: `has-text-white  has-text-primary-hover`, href: "https://vbithelp.zendesk.com/hc/zh-cn/categories/360003442694", target: "_blank" }, ["全币种合约"])
+                            m('a', { class: `has-text-white  has-text-primary-hover`, href: "https://vbithelp.zendesk.com/hc/zh-cn/categories/360003442694" }, ["全币种合约"])
                         )
                     ]),
                     m('div', { class: `bottom-navigation-tab-2` }, [
-                        m('p', { class: `body-6  has-text-primary-hover`, href: "" }, ["平台条款"]),
+                        m('p', { class: `has-text-level-4 body-6  has-text-primary-hover`, href: "" }, ["平台条款"]),
                         m('p', { class: `` },
-                            m('a', { class: `has-text-white  has-text-primary-hover`, href: "https://vbithelp.zendesk.com/hc/zh-cn/articles/360045404594", target: "_blank" }, ["服务协议"])
+                            m('a', { class: `has-text-white  has-text-primary-hover`, href: "https://vbithelp.zendesk.com/hc/zh-cn/articles/360045404594" }, ["服务协议"])
                         ),
-                        m('a', { class: `has-text-white  has-text-primary-hover`, href: "https://vbithelp.zendesk.com/hc/zh-cn/articles/360045404554", target: "_blank" }, ["法律声明"]),
+                        m('a', { class: `has-text-white  has-text-primary-hover`, href: "https://vbithelp.zendesk.com/hc/zh-cn/articles/360045404554" }, ["法律声明"]),
                         m('p', { class: `` },
-                            m('a', { class: `has-text-white has-text-primary-hover`, href: "https://vbithelp.zendesk.com/hc/zh-cn/articles/360045404594", target: "_blank" }, ["隐私条款"])
+                            m('a', { class: `has-text-white has-text-primary-hover`, href: "https://vbithelp.zendesk.com/hc/zh-cn/articles/360045404594" }, ["隐私条款"])
                         ),
                         m('p', { class: `` },
-                            m('a', { class: `has-text-white has-text-primary-hover`, href: "https://vbithelp.zendesk.com/hc/zh-cn/articles/360048389153", target: "_blank" }, ["合约牌照"])
+                            m('a', { class: `has-text-white has-text-primary-hover`, href: "https://vbithelp.zendesk.com/hc/zh-cn/articles/360048389153" }, ["合约牌照"])
                         )
                     ]),
                     m('div', { class: `bottom-navigation-tab-2 ` }, [
-                        m('p', { class: `body-6 has-text-primary-hover` }, ["服务支持"]),
+                        m('p', { class: `has-text-level-4 body-6 has-text-primary-hover` }, ["服务支持"]),
                         m('p', { class: `` },
-                            m('a', { class: `has-text-white  has-text-primary-hover`, href: `https://vbithelp.zendesk.com/hc/zh-cn/sections/360007960273`, target: "_blank" }, ["新手帮助"])
+                            m('a', { class: `has-text-white  has-text-primary-hover`, href: `https://vbithelp.zendesk.com/hc/zh-cn/sections/360007960273` }, ["新手帮助"])
                         ),
                         m('p', { class: `` },
-                            m('a', { class: `has-text-white has-text-primary-hover`, href: `https://vbithelp.zendesk.com/hc/zh-cn/categories/360003464933`, target: "_blank" }, ["常见问题"])
+                            m('a', { class: `has-text-white has-text-primary-hover`, href: `https://vbithelp.zendesk.com/hc/zh-cn/categories/360003464933` }, ["常见问题"])
                         ),
                         m('p', { class: `` },
-                            m('a', { class: `has-text-white has-text-primary-hover`, href: `https://vbithelp.zendesk.com/hc/zh-cn/categories/360003415534`, target: "_blank" }, ["公告中心"])
+                            m('a', { class: `has-text-white has-text-primary-hover`, href: `https://vbithelp.zendesk.com/hc/zh-cn/categories/360003415534` }, ["公告中心"])
                         ),
                         m('p', { class: `` },
-                            m('a', { class: `has-text-white has-text-primary-hover`, href: `https://vbithelp.zendesk.com/hc/zh-cn/sections/360007979093`, target: "_blank" }, ["相关费率"])
+                            m('a', { class: `has-text-white has-text-primary-hover`, href: `https://vbithelp.zendesk.com/hc/zh-cn/sections/360007979093` }, ["相关费率"])
                         )
                     ]),
                     m('div', { class: `bottom-navigation-tab-2` }, [

@@ -16,6 +16,10 @@
     // align-items: center;
 }
 
+.navbar-start {
+    width: 100%;
+}
+
 .is-align-items-center {
     display: flex;
     justify-content: center;
@@ -27,14 +31,17 @@
     justify-content: right;
     align-items: end;
 }
+
 // hover 提示消息
 .my-tooltip {
     .bdb-dashed {
         // 下边框-虚线
         border-bottom: 1px dashed;
     }
+
     .dropdown-menu {
         padding-top: 6px;
+
         // 三角形
         &::before {
             content: "";
@@ -49,11 +56,13 @@
             border-right: solid 6px transparent !important;
             border-bottom: solid 6px;
         }
+
         // 提示 居中
         &.my-tooltip-center {
             left: 50%;
             right: auto;
             transform: translateX(-50%);
+
             // 三角形
             &::before {
                 left: 50%;
@@ -61,20 +70,24 @@
                 transform: translate(-50%, -50%);
             }
         }
+
         // 提示 居左
         &.my-tooltip-left {
             left: 0;
             right: auto;
+
             // 三角形
             &::before {
                 left: 5%;
                 right: auto;
             }
         }
+
         // 提示 居右
         &.my-tooltip-right {
             right: 0;
             left: auto;
+
             // 三角形
             &::before {
                 right: 5%;
@@ -83,6 +96,7 @@
         }
     }
 }
+
 /* 动画相关 start */
 @keyframes sliding-out-from-right {
     from {
@@ -146,4 +160,3 @@
 }
 
 /* 公共样式 end */
-
