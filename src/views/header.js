@@ -44,6 +44,7 @@ module.exports = {
             m('div#navbarBasicExample.navbar-menu', { class: "" + (methods.openNavbarDropdown ? " is-active" : "") }, [
                 m('div.navbar-start', {}, [
                     m('a.navbar-item', {
+                        class: "has-text-primary-hover",
                         onclick: function () {
                             window.router.push('/');
                         }
@@ -51,6 +52,7 @@ module.exports = {
                         '法币交易'
                     ]),
                     m('a.navbar-item', {
+                        class: "has-text-primary-hover",
                         onclick: function () {
                             window.router.push('/');
                         }
@@ -58,6 +60,7 @@ module.exports = {
                         '合约交易'
                     ]),
                     m('a.navbar-item', {
+                        class: "has-text-primary-hover",
                         onclick: function () {
                             window.router.push('/');
                         }
@@ -65,6 +68,7 @@ module.exports = {
                         '币币交易'
                     ]),
                     m('a.navbar-item', {
+                        class: "has-text-primary-hover",
                         onclick: function () {
                             window.router.push('/');
                         }
@@ -72,6 +76,7 @@ module.exports = {
                         'ETF专区'
                     ]),
                     m('a.navbar-item', {
+                        class: "has-text-primary-hover",
                         onclick: function () {
                             window.router.push('/');
                         }
@@ -101,7 +106,7 @@ module.exports = {
                         m('div.navbar-item.cursor-pointer' + (!window.gWebApi.loginState ? '.is-hidden' : ''), {
                             class: `has-dropdown is-hoverable`
                         }, [
-                            m('div', { class: `navbar-item` }, ["资产"]),
+                            m('div', { class: `navbar-item has-text-primary-hover` }, ["资产"]),
                             m('div', { class: `navbar-dropdown` }, [
                                 m('a', {
                                     class: `navbar-item`,
@@ -135,7 +140,7 @@ module.exports = {
                                 window.router.push('/');
                             }
                         }, [
-                            m('a', { class: `navbar-item` }, ["订单"]),
+                            m('a', { class: `navbar-item has-text-primary-hover` }, ["订单"]),
                             m('div', { class: `navbar-dropdown` }, [
                                 m('a', { class: `navbar-item` }, ["合约订单"]),
                                 m('a', { class: `navbar-item` }, ["币币订单"]),
@@ -150,7 +155,7 @@ module.exports = {
                                 // window.router.push('/userCenter');
                             }
                         }, [
-                            m('a', { class: 'navbar-item' }, [
+                            m('a', { class: 'navbar-item has-text-primary-hover' }, [
                                 m('div', {
                                     onclick: function () {
                                         window.router.push('/userCenter');

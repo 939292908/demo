@@ -1,4 +1,5 @@
 // const m = require('mithril');
+const Http = require('@/newApi');
 
 module.exports = {
     name: "modelsForWlt",
@@ -152,15 +153,15 @@ module.exports = {
     },
     updWlt: function() {
         const that = this;
-        window.gWebApi.getWallet({
+        Http.getWallet({
             exChannel: window.exchId
-        }, function(arg) {
+        }).then(function(arg) {
             window._console.log('ht', 'getWallet success', arg);
             if (arg.result.code === 0) {
                 // 初始化资产数据
                 that.initWlt();
             }
-        }, function(err) {
+        }).catch(function(err) {
             window._console.log('ht', 'getWallet error', err);
         });
     },

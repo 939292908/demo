@@ -98,6 +98,7 @@
     background: url("~@/assets/img/home/vector.png") no-repeat center center;
     background-size: "cover";
     text-align: center;
+    width: 100%;
 }
 
 .home-picture {

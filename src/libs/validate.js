@@ -1,4 +1,5 @@
 // import geetest from '@/libs/geetestTwo';
+const Http = require('@/newApi');
 
 class Validate {
     constructor() {
@@ -142,14 +143,14 @@ class Validate {
                 lang: window.gI18n.locale
             };
         }
-        window.gWebApi.getSMSCodeV2(this.smsConfig, res => {
+        Http.getSMSCodeV2(this.smsConfig).then(res => {
             if (callback1) {
                 callback1();
             }
             if (callback) {
                 callback(res);
             }
-        }, () => {
+        }).catch(() => {
             if (callback1) {
                 callback1();
             }
@@ -168,14 +169,14 @@ class Validate {
             this.emailConfig = { exChannel: window.exchId };
         }
 
-        window.gWebApi.sendEmailV2(this.emailConfig, res => {
+        Http.sendEmailV2(this.emailConfig).then(res => {
             if (callback1) {
                 callback1();
             }
             if (callback) {
                 callback(res);
             }
-        }, () => {
+        }).catch(() => {
             if (callback1) {
                 callback1();
             }
@@ -200,7 +201,7 @@ class Validate {
         }
         params.code = code;
 
-        window.gWebApi.smsVerifyV2(params, res => {
+        Http.smsVerifyV2(params).then(res => {
             if (res.result === 0) {
                 this.finished();
             } else {
@@ -209,7 +210,6 @@ class Validate {
                     type: 'danger'
                 });
             }
-        }, () => {
         });
     }
 
@@ -225,21 +225,19 @@ class Validate {
             });
             return;
         }
-        window.gWebApi.googleCheck({ code: code },
-            res => {
-                if (res.result.code === 0) {
-                    this.finished();
-                } else {
-                    // this.validateSheet.loading = false;
-                    window.$message({
-                        content: res.result.msg,
-                        type: 'danger'
-                    });
-                }
-            },
-            err => {
-                window._console.log('tlh', err);
-            });
+        Http.googleCheck({ code: code }).then(res => {
+            if (res.result.code === 0) {
+                this.finished();
+            } else {
+                // this.validateSheet.loading = false;
+                window.$message({
+                    content: res.result.msg,
+                    type: 'danger'
+                });
+            }
+        }).catch(err => {
+            window._console.log('tlh', err);
+        });
     }
 
     /**
@@ -254,19 +252,16 @@ class Validate {
             });
             return;
         }
-        window.gWebApi.emailCheckV2({ code: code },
-            res => {
-                if (res.result.code === 0) {
-                    this.finished();
-                } else {
-                    window.$message({
-                        content: res.result.msg,
-                        type: 'danger'
-                    });
-                }
-            },
-            () => {
-            });
+        Http.emailCheckV2({ code: code }).then(res => {
+            if (res.result.code === 0) {
+                this.finished();
+            } else {
+                window.$message({
+                    content: res.result.msg,
+                    type: 'danger'
+                });
+            }
+        });
     }
 
     /**
@@ -317,23 +312,20 @@ class Validate {
             }
 
             funs.push(new Promise((resolve, reject) => {
-                window.gWebApi[funName](params,
-                    res => {
-                        if (res.result === 0) {
-                            resolve();
-                        } else {
-                            window.$message({
-                                content: window.errCode.getWebApiErrorCode(
-                                    res.result.code),
-                                type: 'danger'
-                            });
-                            reject(res.result);
-                        }
-                    },
-                    err => {
-                        reject(err);
+                Http[funName](params).then(res => {
+                    if (res.result === 0) {
+                        resolve();
+                    } else {
+                        window.$message({
+                            content: window.errCode.getWebApiErrorCode(
+                                res.result.code),
+                            type: 'danger'
+                        });
+                        reject(res.result);
                     }
-                );
+                }).catch(err => {
+                    reject(err);
+                });
             }));
         }
         Promise.all(funs).then(() => {

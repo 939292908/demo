@@ -1,5 +1,6 @@
 const m = require('mithril');
 const geetest = require('@/libs/geetestTwo');
+const Http = require('@/newApi');
 const md5 = require('md5');
 
 module.exports = {
@@ -58,12 +59,12 @@ module.exports = {
         }
     },
     loginFn() {
-        window.gWebApi.loginCheckV2({
+        Http.loginCheckV2({
             loginType: this.loginType,
             loginName: this.account,
             pass: md5(this.password),
             exChannel: window.exchId
-        }, res => {
+        }).then(res => {
             if (res.result.code === 0) {
                 // 2fa 设置: email2fa, phone2fa, ga2fa
                 if (!!res.result.phone && !!res.result.googleId) {
@@ -108,7 +109,7 @@ module.exports = {
                     type: 'danger'
                 });
             }
-        }, err => {
+        }).catch(err => {
             window._console.log('tlh', err);
             this.loading = false;
             window.$message({
@@ -118,7 +119,7 @@ module.exports = {
         });
     },
     loginEnter() {
-        window.gWebApi.loginWebV2({}, res => {
+        Http.loginWebV2({}).then(res => {
             if (res.result.code === 0) {
                 this.checkAccountPwd();
                 this.getUserInfo();
@@ -129,7 +130,7 @@ module.exports = {
                     type: 'danger'
                 });
             }
-        }, err => {
+        }).catch(err => {
             this.loading = false;
             window._console.log('tlh', err);
             window.$message({
@@ -139,7 +140,7 @@ module.exports = {
         });
     },
     getUserInfo() {
-        window.gWebApi.getUserInfo({}, data => {
+        Http.getUserInfo({}).then(data => {
             window.gWebApi.loginState = true;
             self.loading = false;
             if (data.result.code === 0) {
@@ -163,7 +164,7 @@ module.exports = {
                 // 获取个人信息不成功
                 // window.gBroadcast.emit({cmd: "setIsLogin", data: false});
             }
-        }, err => {
+        }).catch(err => {
             this.loading = false;
             window.$message({
                 content: `网络异常，请稍后重试 ${err}`,
