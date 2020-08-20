@@ -1,18 +1,19 @@
 import axios from 'axios';
+import utils from '@/util/utils';
 // import qs from 'qs';
 class _axios {
-    constructor() {
+    constructor(baseURL) {
         this.service = null;
         // 接口请求频次限制集合
         this.requestFilters = {};
-        this.initService();
+        this.initService(baseURL);
         this.interceptorsRequest();
         this.interceptorsResponse();
     }
 
-    initService() {
+    initService(baseURL) {
         this.service = axios.create({
-            baseURL: 'http://192.168.2.89:8888',
+            baseURL,
             timeout: 30000
         });
     }
@@ -21,8 +22,8 @@ class _axios {
     interceptorsRequest() {
         this.service.interceptors.request.use(config => {
             if (config.method === 'post') console.log(config);
-            if (window.utils.getItem("ex-session")) {
-                config.headers['ex-session'] = window.utils.getItem("ex-session");
+            if (utils.getItem("ex-session")) {
+                config.headers['ex-session'] = utils.getItem("ex-session");
             }
             // if (config.method === 'post') {
 
@@ -37,7 +38,7 @@ class _axios {
     interceptorsResponse() {
         this.service.interceptors.response.use(function (response) {
             if (response.headers['set-exsession']) {
-                window.utils.setItem("ex-session", response.headers['set-exsession']);
+                utils.setItem("ex-session", response.headers['set-exsession']);
             }
             if (response.data && response.data.result) {
                 return response.data.result;
