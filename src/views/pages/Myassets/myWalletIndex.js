@@ -9,13 +9,6 @@ const header = require('@/views/pages/Myassets/header');
 
 const myWalletIndex = {
     currency: 'BTC',
-    // currencyChange: function (val) {
-    //     this.setCurrency(val);
-    //     window.gBroadcast.emit({ cmd: window.gBroadcast.CHANGE_SW_CURRENCY, data: val });
-    //     val === 'BTC' ? myWalletIndex.setTotalValue(wlt.totalValueForBTC) : myWalletIndex.setTotalValue(wlt.totalValueForUSDT);
-    //     val === 'BTC' ? myWalletIndex.setWalletTotalValue(wlt.walletTotalValueForBTC) : myWalletIndex.setWalletTotalValue(wlt.walletTotalValueForUSDT);
-    //     val === 'BTC' ? myWalletIndex.setTradingAccountTotalValue(wlt.tradingAccountTotalValueForBTC) : myWalletIndex.setTradingAccountTotalValue(wlt.tradingAccountTotalValueForUSDT);
-    // },
     setCurrency: function (param) {
         myWalletIndex.currency = param;
     },
@@ -201,12 +194,6 @@ const myWalletIndex = {
                         m('div', { class: 'myWalletIndex-head-left column' }, [
                             m('div', { class: 'myWalletIndex-head-left-total columns pt-3' }, [
                                 m('span', { class: 'body-6', style: 'color:white' }, ['总资产估值']),
-                                // m('span.navbar-item.has-dropdown.is-hoverable', {}, [
-                                //     m('select.has-text-primary', { onchange: function () { myWalletIndex.currencyChange(this.value); } }, [
-                                //         m('option.pa-3', {}, ['BTC']),
-                                //         m('option', {}, ['USDT'])
-                                //     ])
-                                // ])
                                 m('div', {}, [
                                     m(`button.cursor-pointer`, { onclick: myWalletIndex.setSelectOpFlag, style: { color: `#FF8B00` } }, myWalletIndex.selectOpText + ' ▼'),
                                     m('ul.border-radius-small ml-3', { style: { display: 'none' } }, [
@@ -273,15 +260,15 @@ const myWalletIndex = {
                                 ])
                             ]);
                         }),
-                        m('div.tradeCard body-2 border-radius-medium py-1 px-3', {
+                        m('div.tradeCard body-2 border-radius-medium pa-7', {
                             style: { display: 'none' },
                             onmouseover: function () { myWalletIndex.switchDisplay('card1', 'show'); },
                             onmouseleave: function () { myWalletIndex.switchDisplay('card1', 'hide'); }
                         }, [
                             m('span', '合约账户'),
-                            m('font', myWalletIndex.contractTotal + ' ' + myWalletIndex.currency),
+                            m('font.mb-5', myWalletIndex.contractTotal + ' ' + myWalletIndex.currency),
                             m('span', '币币账户'),
-                            m('font', myWalletIndex.coinTotal + ' ' + myWalletIndex.currency),
+                            m('font.mb-5', myWalletIndex.coinTotal + ' ' + myWalletIndex.currency),
                             m('span', '法币账户'),
                             m('font', myWalletIndex.legalTotal + ' ' + myWalletIndex.currency)
                         ])
