@@ -51,7 +51,7 @@ module.exports = {
                     }, [
                         '法币交易'
                     ]),
-                    m('a.navbar-item', {
+                    m('a.navbar-item ', {
                         class: "has-text-primary-hover",
                         onclick: function () {
                             window.router.push('/');
