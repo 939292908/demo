@@ -2,6 +2,7 @@ const m = require('mithril');
 const wlt = require('@/models/wlt/wlt');
 
 require('@/styles/pages/Myassets/tradeTable.scss');
+const broadcast = require('@/broadcast/broadcast');
 
 const t = {
     currency: 'BTC',
@@ -164,11 +165,11 @@ const t = {
 };
 
 module.exports = {
-    oninit() {
-        window.gBroadcast.onMsg({
+    oninit: function () {
+        broadcast.onMsg({
             key: 'view-pages-Myassets-TablegB',
-            cmd: window.gBroadcast.CHANGE_SW_CURRENCY,
-            cb: function(arg) {
+            cmd: broadcast.CHANGE_SW_CURRENCY,
+            cb: (arg) => {
                 t.setCurrency(arg);
             }
         });
@@ -176,7 +177,7 @@ module.exports = {
     },
     oncreate(vnode) {
         // ！！！！
-        wlt.init();
+        // wlt.init();
         setTimeout(() => {
             t.initTableData();
             t.initColumnData();
@@ -267,7 +268,7 @@ module.exports = {
                                 })
                             ]);
                         }),
-                        m('tr', { style: { display: 'none' } }, [
+                        m('tr', { style: { display: 'none', height: '400px' } }, [
                             m('td', { colspan: 6, style: { textAlign: 'center' } }, '暂无数据')
                         ])
                     ])
@@ -276,8 +277,8 @@ module.exports = {
         ]);
     },
     onremove: function () {
-        wlt.remove();
-        window.gBroadcast.offMsg({
+        // wlt.remove();
+        broadcast.offMsg({
             key: 'view-pages-Myassets-TablegB',
             isall: true
         });

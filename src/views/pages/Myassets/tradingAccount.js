@@ -1,4 +1,7 @@
+
+// import broadcast from '@/broadcast/broadcast';
 const m = require('mithril');
+const broadcast = require('@/broadcast/broadcast');
 
 require('@/styles/pages/Myassets/tradingAccount.scss');
 const tradingAccountContract = require('@/views/pages/Myassets/tradingAccount_contract');
@@ -40,15 +43,18 @@ const tradingAccount = {
 };
 module.exports = {
     oninit: function () {
-        tradingAccount.pageFlag = 0;
-        // window.gBroadcast.onMsg({
-        //     key: 'tradingAccount',
-        //     cmd: window.gBroadcast.MA_CHANGE_TRADE_PAGE,
-        //     cb: function (arg) {
-        //         console.log('----0000------');
-        //         console.log(arg === '', 'nzm----', arg);
-        //     }
-        // });
+        console.log("%c nzm %c", 'color:red');
+        let page = 0;
+        broadcast.onMsg({
+            key: 'tradingAccount',
+            cmd: broadcast.MA_CHANGE_TRADE_PAGE,
+            cb: function (arg) {
+                if (arg !== null) {
+                    page = arg;
+                }
+            }
+        });
+        tradingAccount.setPageFlag(page);
     },
     view: function () {
         return m('div', { class: 'views-pages-myassets-tradingAccount pt-4' }, [
@@ -56,9 +62,9 @@ module.exports = {
         ]);
     },
     onremove: function () {
-        // window.gBroadcast.offMsg({
-        //     key: 'tradingAccount',
-        //     isall: true
-        // });
+        broadcast.offMsg({
+            key: 'tradingAccount',
+            isall: true
+        });
     }
 };
