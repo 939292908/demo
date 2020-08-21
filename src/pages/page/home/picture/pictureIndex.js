@@ -6,8 +6,7 @@ const market = require('@/models/market/market');
 
 module.exports = {
     oninit: function () {
-        // market.init();
-        console.log(broadcast);
+        market.init();
         broadcast.onMsg({
             key: "picture",
             cmd: broadcast.MSG_ASSETD_UPD,
