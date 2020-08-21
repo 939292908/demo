@@ -1,5 +1,5 @@
 const listenerObj = {};
-export default {
+module.exports = {
     /**
      * 发送广播
      * @param {string} cmd
