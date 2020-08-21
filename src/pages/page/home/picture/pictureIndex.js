@@ -6,10 +6,11 @@ const market = require('@/models/market/market');
 
 module.exports = {
     oninit: function () {
-        market.init();
+        // market.init();
+        console.log(broadcast);
         broadcast.onMsg({
             key: "picture",
-            cmd: window.gBroadcast.MSG_ASSETD_UPD,
+            cmd: broadcast.MSG_ASSETD_UPD,
             cb: this.assetDCallBack
         });
     },

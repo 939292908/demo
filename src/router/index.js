@@ -7,12 +7,12 @@ m.route(document.querySelector('body .route-box'), defaultRoutePath, {
         onmatch: function () {
             return import('@/pages/page/home/index');
         }
-    },
-    '/login': {
-        onmatch: function () {
-            return import('@/pages/page/login/loginIndex');
-        }
     }
+    // '/login': {
+    //     onmatch: function () {
+    //         return import('@/pages/page/login/loginIndex');
+    //     }
+    // }
 });
 
 class Router {
