@@ -1,6 +1,6 @@
 import m from 'mithril';
 import home from '@/pages/page/home';
-import login from '@/pages/page/login/loginIndex';
+// import login from '@/pages/page/login/loginIndex';
 
 const defaultRoutePath = "/home";
 
@@ -9,12 +9,12 @@ m.route(document.querySelector('body .route-box'), defaultRoutePath, {
         onmatch: function () {
             return home;
         }
-    },
-    '/login': {
-        onmatch: function () {
-            return login;
-        }
     }
+    // '/login': {
+    //     onmatch: function () {
+    //         return login;
+    //     }
+    // }
 });
 
 class Router {
