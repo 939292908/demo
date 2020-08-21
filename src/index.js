@@ -29,5 +29,5 @@ window.onresize = function (arg) {
 import('./pages/index').then(arg => {
     const root = document.body;
     m.mount(root, arg.default);
-    import('@/route/index');
+    import('@/router/index');
 });
