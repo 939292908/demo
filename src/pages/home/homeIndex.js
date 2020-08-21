@@ -1,4 +1,4 @@
-import home from './home';
+import home from './homeView';
 import broadcast from '../../broadcast/broadcast';
 import utils from '../../util/utils';
 
