@@ -1,5 +1,5 @@
 import m from 'mithril';
-import home from '@/pages/page/home/homeIndex';
+import home from '@/pages/page/home';
 import login from '@/pages/page/login/loginIndex';
 
 const defaultRoutePath = "/home";
