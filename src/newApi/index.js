@@ -6,16 +6,8 @@
  * @Description: In User Settings Edit
  * @FilePath: \website-project\src\newApi\index.js
  */
-import Axios from './config/request';
 import API from '@/api/request_apis';
-// 请求接口配置
-import Conf from "@/api/apiConf";
-const instConf = new Conf(process.env.BUILD_ENV);
-
-const api = instConf.GetActive();
-instConf.updateNetLines();
-
-const Http = new Axios(api.WebAPI).service;
+const Http = require('./config').default.Http;
 
 /**
  * @description: 极验初始化
