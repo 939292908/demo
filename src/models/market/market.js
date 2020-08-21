@@ -1,4 +1,6 @@
 const m = require('mithril');
+const broadcast = require('@/broadcast/broadcast');
+const utils = require('@/util/utils');
 
 module.exports = {
     //  行情数据
@@ -49,16 +51,16 @@ module.exports = {
     init: function () {
         const that = this;
         //  添加最新价行情更新监听
-        window.gBroadcast.onMsg({
+        broadcast.onMsg({
             key: 'market',
-            cmd: window.gBroadcast.MSG_TICK_UPD,
+            cmd: broadcast.MSG_TICK_UPD,
             cb: function (arg) {
                 that.onTick(arg);
             }
         });
     },
     remove: function () {
-        window.gBroadcast.offMsg({
+        broadcast.offMsg({
             key: 'market',
             isall: true
         });
@@ -116,18 +118,18 @@ module.exports = {
             tick = Object.assign(tick, param);
             const PrzMinIncSize = 6;// indexPrzSize[Sym]
             const VolMinValSize = 0;
-            tick.LastPrz = window.utils.toPrecision2(Number(tick.Prz || 0), PrzMinIncSize, 8);
+            tick.LastPrz = utils.toPrecision2(Number(tick.Prz || 0), PrzMinIncSize, 8);
             const rfpre = tick.Prz24 === 0 ? 0 : (tick.Prz - tick.Prz24) / tick.Prz24 * 100;
             tick.rfpre = (rfpre).toFixed(2) + '%';
             tick.rfpreColor = rfpre > 0 ? 1 : -1;
-            tick.rf = window.utils.toPrecision2(Number(tick.Prz || 0) - Number(tick.Prz24 || 0), PrzMinIncSize, 8);
+            tick.rf = utils.toPrecision2(Number(tick.Prz || 0) - Number(tick.Prz24 || 0), PrzMinIncSize, 8);
             tick.Volume24 = Number(tick.Volume24 || 0).toFixed(VolMinValSize);
             tick.distSym = (param.Sym).split('_')[1] + window.gI18n.$t('10413');// 指数
         } else if (AssetD) {
             let tick = Object.assign({}, this.tickDefault);
             tick = Object.assign(tick, param);
-            const PrzMinIncSize = window.utils.getFloatSize(window.utils.getFullNum(AssetD.PrzMinInc || 0));
-            const VolMinValSize = window.utils.getFloatSize(window.utils.getFullNum(AssetD.OrderMinQty || 0));
+            const PrzMinIncSize = utils.getFloatSize(utils.getFullNum(AssetD.PrzMinInc || 0));
+            const VolMinValSize = utils.getFloatSize(utils.getFullNum(AssetD.OrderMinQty || 0));
 
             const rfpre = tick.Prz24 === 0 ? 0 : (tick.LastPrz - tick.Prz24) / tick.Prz24 * 100;
             tick.distSym = this.getSymDisplayName(AssetD, tick.Sym);
@@ -208,7 +210,6 @@ module.exports = {
     //  初始化首页需要请阅的行情
     initHomeNeedSub: function () {
         const displaySym = window.gWsApi.displaySym;
-        window._console.log('ht', displaySym);
         this.subTick(this.setSubArrType('tick', [...displaySym]));
     }
 };
