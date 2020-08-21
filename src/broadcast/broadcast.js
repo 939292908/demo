@@ -1,4 +1,4 @@
-var listenerObj = {};
+const listenerObj = {};
 export default {
     /**
      * 发送广播

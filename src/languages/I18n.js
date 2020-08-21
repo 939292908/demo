@@ -1,9 +1,9 @@
 import DI18n from 'di18n-translate';
 import m from 'mithril';
 
-var localStorageLang = localStorage.getItem('language');
-var locale = localStorageLang || (navigator.language || navigator.userLanguage).substr(0, 2);
-var di18n = new DI18n({
+const localStorageLang = localStorage.getItem('language');
+let locale = localStorageLang || (navigator.language || navigator.userLanguage).substr(0, 2);
+const di18n = new DI18n({
     locale: locale, // 语言环境
     isReplace: false, // 是否开启运行时功能(适用于没有使用任何构建工具开发流程)
     messages: {}
@@ -134,13 +134,12 @@ export default {
             cb && cb(arg)
         })
     },
-    setLocale(lang, cb) {
+    setLocale(lang) {
         this.setLocaleMessages(lang, arg => {
             di18n.setLocale(lang, res => {
                 locale = lang;
                 localStorage.setItem('language', lang);
                 m.redraw();
-                cb && cb(lang);
             });
         });
     },
