@@ -110,25 +110,25 @@ module.exports = {
                         m('div', { class: `navbar-item has-text-primary-hover` }, ["资产"]),
                         m('div', { class: `navbar-dropdown` }, [
                             m('a', {
-                                class: `navbar-item`,
+                                class: `navbar-item has-text-primary-hover`,
                                 onclick: function () {
                                     window.router.push('/myWalletIndex');
                                 }
                             }, ["我的钱包"]),
                             m('a', {
-                                class: `navbar-item`,
+                                class: `navbar-item has-text-primary-hover`,
                                 onclick: function () {
                                     window.router.push('/myWalletIndex');
                                 }
                             }, ["合约账户"]),
                             m('a', {
-                                class: `navbar-item`,
+                                class: `navbar-item has-text-primary-hover`,
                                 onclick: function () {
                                     window.router.push('/myWalletIndex');
                                 }
                             }, ["币币账号"]),
                             m('a', {
-                                class: `navbar-item`,
+                                class: `navbar-item has-text-primary-hover`,
                                 onclick: function () {
                                     window.router.push('/myWalletIndex');
                                 }
@@ -143,10 +143,10 @@ module.exports = {
                     }, [
                         m('a', { class: `navbar-item has-text-primary-hover` }, ["订单"]),
                         m('div', { class: `navbar-dropdown` }, [
-                            m('a', { class: `navbar-item` }, ["合约订单"]),
-                            m('a', { class: `navbar-item` }, ["币币订单"]),
-                            m('a', { class: `navbar-item` }, ["法币订单"]),
-                            m('a', { class: `navbar-item` }, ["跟单订单"])
+                            m('a', { class: `navbar-item has-text-primary-hover` }, ["合约订单"]),
+                            m('a', { class: `navbar-item has-text-primary-hover` }, ["币币订单"]),
+                            m('a', { class: `navbar-item has-text-primary-hover` }, ["法币订单"]),
+                            m('a', { class: `navbar-item has-text-primary-hover` }, ["跟单订单"])
                         ])
                     ]),
                     // 我的
@@ -176,32 +176,32 @@ module.exports = {
                                     m('span.icon', {}, [
                                         m('i.iconfont.icon-logo')
                                     ]),
-                                    m('a', { class: `navbar-item` }, ["账户安全"])
+                                    m('a', { class: `navbar-item has-text-primary-hover` }, ["账户安全"])
                                 ]),
                                 m('a', { class: `navbar-item` }, [
                                     m('span.icon', {}, [
                                         m('i.iconfont.icon-logo')
                                     ]),
-                                    m('a', { class: `navbar-item` }, ["身份认证"])
+                                    m('a', { class: `navbar-item has-text-primary-hover` }, ["身份认证"])
                                 ]),
                                 m('a', { class: `navbar-item` }, [
                                     m('span.icon', {}, [
                                         m('i.iconfont.icon-logo')
                                     ]),
-                                    m('a', { class: `navbar-item` }, ["API管理"])
+                                    m('a', { class: `navbar-item has-text-primary-hover` }, ["API管理"])
                                 ]),
                                 m('a', { class: `navbar-item` }, [
                                     m('span.icon', {}, [
                                         m('i.iconfont.icon-logo')
                                     ]),
-                                    m('a', { class: `navbar-item` }, ["邀请返佣"])
+                                    m('a', { class: `navbar-item has-text-primary-hover` }, ["邀请返佣"])
                                 ]),
                                 m('a', { class: `navbar-item` }, [
                                     m('span.icon', {}, [
                                         m('i.iconfont.icon-logo')
                                     ]),
                                     m('a', {
-                                        class: `navbar-item`,
+                                        class: `navbar-item has-text-primary-hover`,
                                         onclick: () => {
                                             window.utils.removeItem("ex-session");
                                             window.gWebApi.loginState = false;

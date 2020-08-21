@@ -9,10 +9,6 @@
 }
 
 /**中部*/
-.views-pages-home-top {
-    border-radius: 0 0 100% 100% / 50%;
-    background: #293850;
-}
 
 .introduce-item {
     width: 20%;
@@ -85,29 +81,13 @@
     text-align-last: right;
 }
 
-.notice {
-    margin-top: 30px;
-    width: 100%;
-}
-
 .rotationtwo-content {
     height: 200px;
 }
 
-.home-banner {
-    background: url("~@/assets/img/home/vector.png") no-repeat center center;
-    background-size: 100% 100%;
-    text-align: center;
-}
-
 .home-picture {
-    background: url("~@/assets/img/home/layer 1.png") no-repeat center center;
+    background: url("~@/assets/img/home/layer-1.png") no-repeat center center;
     text-align: center;
-}
-
-.listing {
-    display: flex;
-    justify-content: space-around;
 }
 
 .Market-data {
