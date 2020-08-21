@@ -1,6 +1,6 @@
 const m = require('mithril');
 const md5 = require('md5');
-const geetest = require('@/libs/geetestTwo');
+const geetest = require('@/libs/oldGeetestTwo');
 const Http = require('@/newApi');
 
 module.exports = {

@@ -1,6 +1,5 @@
 const m = require('mithril');
-const geetest = require('@/libs/geetestTwo');
-const Http = require('@/newApi');
+const geetest = require('@/libs/oldGeetestTwo');
 const md5 = require('md5');
 
 module.exports = {
@@ -59,12 +58,12 @@ module.exports = {
         }
     },
     loginFn() {
-        Http.loginCheckV2({
+        window.gWebApi.loginCheckV2({
             loginType: this.loginType,
             loginName: this.account,
             pass: md5(this.password),
             exChannel: window.exchId
-        }).then(res => {
+        }, res => {
             if (res.result.code === 0) {
                 // 2fa 设置: email2fa, phone2fa, ga2fa
                 if (!!res.result.phone && !!res.result.googleId) {
@@ -103,44 +102,46 @@ module.exports = {
                 }
                 // this.loginSms = res.result.loginSms;
             } else {
-                this.loading = false;
                 window.$message({
                     content: window.errCode.getWebApiErrorCode(res.result.code),
                     type: 'danger'
                 });
             }
-        }).catch(err => {
+        }, err => {
             window._console.log('tlh', err);
-            this.loading = false;
             window.$message({
                 content: window.gI18n.$t('10683') + '(请求异常)',
                 type: 'danger'
             });
+            this.loading = false;
+            m.redraw();
         });
     },
     loginEnter() {
-        Http.loginWebV2({}).then(res => {
+        window.gWebApi.loginWebV2({}, res => {
             if (res.result.code === 0) {
                 this.checkAccountPwd();
                 this.getUserInfo();
             } else {
-                this.loading = false;
                 window.$message({
                     content: window.gI18n.$t('10683') + `(${res.result.code})`,
                     type: 'danger'
                 });
+                this.loading = false;
+                m.redraw();
             }
-        }).catch(err => {
-            this.loading = false;
+        }, err => {
             window._console.log('tlh', err);
             window.$message({
                 content: window.gI18n.$t('10683') + '(请求异常)',
                 type: 'danger'
             });
+            this.loading = false;
+            m.redraw();
         });
     },
     getUserInfo() {
-        Http.getUserInfo({}).then(data => {
+        window.gWebApi.getUserInfo({}, data => {
             window.gWebApi.loginState = true;
             self.loading = false;
             if (data.result.code === 0) {
@@ -164,12 +165,13 @@ module.exports = {
                 // 获取个人信息不成功
                 // window.gBroadcast.emit({cmd: "setIsLogin", data: false});
             }
-        }).catch(err => {
-            this.loading = false;
+        }, err => {
             window.$message({
                 content: `网络异常，请稍后重试 ${err}`,
                 type: 'danger'
             });
+            this.loading = false;
+            m.redraw();
         });
     },
     // 判断是否设置资产密码
