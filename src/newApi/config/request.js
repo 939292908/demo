@@ -1,6 +1,6 @@
 import axios from 'axios';
 import utils from '@/util/utils';
-// import qs from 'qs';
+import qs from 'qs';
 class _axios {
     constructor(baseURL) {
         this.service = null;
@@ -25,9 +25,9 @@ class _axios {
             if (utils.getItem("ex-session")) {
                 config.headers['ex-session'] = utils.getItem("ex-session");
             }
-            // if (config.method === 'post') {
-
-            // }
+            if (config.method === 'post') {
+                config.data = qs.stringify(config.data);
+            }
             return config;
         }, function (err) {
             return Promise.reject(err);
