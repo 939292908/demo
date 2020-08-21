@@ -1,13 +1,13 @@
 const m = require('mithril');
 const Slideshow = require('@/views/components/slideshow/leftToRight');
+const broadcast = require('@/broadcast/broadcast');
 require('@/styles/pages/home.css');
-
 const market = require('@/models/market/market');
 
 module.exports = {
     oninit: function () {
         market.init();
-        window.gBroadcast.onMsg({
+        broadcast.onMsg({
             key: "picture",
             cmd: window.gBroadcast.MSG_ASSETD_UPD,
             cb: this.assetDCallBack
@@ -31,7 +31,7 @@ module.exports = {
     },
     onremove: function() {
         market.remove();
-        window.gBroadcast.onMsg({
+        broadcast.onMsg({
             key: "picture",
             isall: true
         });
