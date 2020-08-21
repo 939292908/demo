@@ -49,12 +49,12 @@ module.exports = {
                     // 下载按钮
                     m('div', { class: `pl-8` }, [
                         // Android 按钮
-                        m('a', { class: `button is-info is-inverted is-outlined download-ios mr-4 ml-7`, target: "_blank", href: "https://vbit.me/m#/downloadApp" }, [
+                        m('a', { class: `Android-button button is-info is-inverted is-outlined download-ios mr-4 ml-7 `, target: "_blank", href: "https://vbit.me/m#/downloadApp" }, [
                             m('img', { class: 'pr-2', src: require("@/assets/img/home/Android.png").default }),
                             m('span', { class: `title-small font-weight-regular` }, "Android")
                         ]),
                         // iOS 按钮
-                        m('a', { class: `button is-info is-inverted is-outlined download-iOS`, target: "_blank", href: "https://vbit.me/m#/downloadApp" }, [
+                        m('a', { class: `IOS-button button is-info is-inverted is-outlined download-iOS`, target: "_blank", href: "https://vbit.me/m#/downloadApp" }, [
                             m('img', { class: 'pr-2', src: require("@/assets/img/home/iOS.png").default }),
                             m('span', { class: `title-small font-weight-regular` }, 'IOS')
                         ])

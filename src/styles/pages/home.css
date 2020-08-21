@@ -123,6 +123,16 @@
     height: 74px;
 }
 
+.Android-button{
+    width: 163px;
+    height: 48px;
+}
+
+.IOS-button{
+    width: 163px;
+    height: 48px;
+}
+
 
 /**底部*/
 .bottom-navigation-tab-1 {

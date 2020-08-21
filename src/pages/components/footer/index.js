@@ -23,12 +23,16 @@ module.exports = {
                     m('div', { class: `is-flex mt-7 is-between`, style: "width: 300px" }, [
                         m('a', { class: ``, href: "index.html" }, [
                             m('a', { class: ``, href: "" }, [
-                                m('img', { class: 'community ', src: require("@/assets/img/home/wechat.png").default })
+                                m(Tooltip, {
+                                    label: m('img', { style: "height:17px", src: require("@/assets/img/home/wechat.png").default }),
+                                    content: m('img', { class: '', src: require("@/assets/img/home/Communitywechat.png").default })
+                                })
                             ])
                         ]),
-                        m('a', { class: ``, href: "" }, [
-                            m('img', { class: 'community ', src: require("@/assets/img/home/qq.png").default })
-                        ]),
+                        m(Tooltip, {
+                            label: m('img', { style: "height:17px", src: require("@/assets/img/home/qq.png").default }),
+                            content: m('img', { class: '', src: require("@/assets/img/home/QQcustomer_service.png").default })
+                        }),
                         m('a', { class: ``, href: "https://www.facebook.com/Vbit-107388547588403/" }, [
                             m('img', { class: 'community ', src: require("@/assets/img/home/fb.png").default })
                         ]),
@@ -50,52 +54,52 @@ module.exports = {
                 m('div', { class: `footer-right column is-6 is-between ` }, [
                     // 导航栏
                     m('div', { class: `bottom-navigation-tab-1` }, [
-                        m('div', { class: `has-text-level-4 body-6` }, ['平台服务']),
-                        m('a', { class: `has-text-white  has-text-primary-hover`, href: "https://vbithelp.zendesk.com/hc/zh-cn/sections/360007961613" }, ["币币交易"]),
+                        m('div', { class: `body-6 ` }, ['平台服务']),
+                        m('a', { class: `has-text-white  has-text-primary-hover has-text-level-2`, href: "https://vbithelp.zendesk.com/hc/zh-cn/sections/360007961613", target: "_blank" }, ["币币交易"]),
                         m('p', { class: `` },
-                            m('a', { class: `has-text-white  has-text-primary-hover`, href: "https://vbithelp.zendesk.com/hc/zh-cn/sections/360007961593" }, ["法币交易"])
+                            m('a', { class: `has-text-white  has-text-primary-hover has-text-level-2`, href: "https://vbithelp.zendesk.com/hc/zh-cn/sections/360007961593", target: "_blank" }, ["法币交易"])
                         ),
                         m('p', { class: `` },
-                            m('a', { class: `has-text-white  has-text-primary-hover`, href: "https://vbithelp.zendesk.com/hc/zh-cn/sections/360007961633" }, ["永续合约"])
+                            m('a', { class: `has-text-white  has-text-primary-hover has-text-level-2`, href: "https://vbithelp.zendesk.com/hc/zh-cn/sections/360007961633", target: "_blank" }, ["永续合约"])
                         ),
                         m('p', { class: `` },
-                            m('a', { class: `has-text-white  has-text-primary-hover`, href: "https://vbithelp.zendesk.com/hc/zh-cn/sections/360008544873" }, ["杠杆ETF"])
+                            m('a', { class: `has-text-white  has-text-primary-hover has-text-level-2`, href: "https://vbithelp.zendesk.com/hc/zh-cn/sections/360008544873", target: "_blank" }, ["杠杆ETF"])
                         ),
                         m('p', { class: `` },
-                            m('a', { class: `has-text-white  has-text-primary-hover`, href: "https://vbithelp.zendesk.com/hc/zh-cn/categories/360003442694" }, ["全币种合约"])
+                            m('a', { class: `has-text-white  has-text-primary-hover has-text-level-2`, href: "https://vbithelp.zendesk.com/hc/zh-cn/categories/360003442694", target: "_blank" }, ["全币种合约"])
                         )
                     ]),
                     m('div', { class: `bottom-navigation-tab-2` }, [
-                        m('p', { class: `has-text-level-4 body-6 `, href: "" }, ["平台条款"]),
+                        m('p', { class: `body-6`, href: "" }, ["平台条款"]),
                         m('p', { class: `` },
-                            m('a', { class: `has-text-white  has-text-primary-hover`, href: "https://vbithelp.zendesk.com/hc/zh-cn/articles/360045404594" }, ["服务协议"])
+                            m('a', { class: `has-text-white  has-text-primary-hover has-text-level-2`, href: "https://vbithelp.zendesk.com/hc/zh-cn/articles/360045404594", target: "_blank" }, ["服务协议"])
                         ),
-                        m('a', { class: `has-text-white  has-text-primary-hover`, href: "https://vbithelp.zendesk.com/hc/zh-cn/articles/360045404554" }, ["法律声明"]),
+                        m('a', { class: `has-text-white  has-text-primary-hover has-text-level-2`, href: "https://vbithelp.zendesk.com/hc/zh-cn/articles/360045404554", target: "_blank" }, ["法律声明"]),
                         m('p', { class: `` },
-                            m('a', { class: `has-text-white has-text-primary-hover`, href: "https://vbithelp.zendesk.com/hc/zh-cn/articles/360045404594" }, ["隐私条款"])
+                            m('a', { class: `has-text-white has-text-primary-hover has-text-level-2`, href: "https://vbithelp.zendesk.com/hc/zh-cn/articles/360045404594", target: "_blank" }, ["隐私条款"])
                         ),
                         m('p', { class: `` },
-                            m('a', { class: `has-text-white has-text-primary-hover`, href: "https://vbithelp.zendesk.com/hc/zh-cn/articles/360048389153" }, ["合约牌照"])
+                            m('a', { class: `has-text-white has-text-primary-hover has-text-level-2`, href: "https://vbithelp.zendesk.com/hc/zh-cn/articles/360048389153", target: "_blank" }, ["合约牌照"])
                         )
                     ]),
                     m('div', { class: `bottom-navigation-tab-2 ` }, [
-                        m('p', { class: `has-text-level-4 body-6` }, ["服务支持"]),
+                        m('p', { class: `body-6` }, ["服务支持"]),
                         m('p', { class: `` },
-                            m('a', { class: `has-text-white  has-text-primary-hover`, href: `https://vbithelp.zendesk.com/hc/zh-cn/sections/360007960273` }, ["新手帮助"])
+                            m('a', { class: `has-text-white  has-text-primary-hover has-text-level-2`, href: `https://vbithelp.zendesk.com/hc/zh-cn/sections/360007960273`, target: "_blank" }, ["新手帮助"])
                         ),
                         m('p', { class: `` },
-                            m('a', { class: `has-text-white has-text-primary-hover`, href: `https://vbithelp.zendesk.com/hc/zh-cn/categories/360003464933` }, ["常见问题"])
+                            m('a', { class: `has-text-white has-text-primary-hover has-text-level-2`, href: `https://vbithelp.zendesk.com/hc/zh-cn/categories/360003464933`, target: "_blank" }, ["常见问题"])
                         ),
                         m('p', { class: `` },
-                            m('a', { class: `has-text-white has-text-primary-hover`, href: `https://vbithelp.zendesk.com/hc/zh-cn/categories/360003415534` }, ["公告中心"])
+                            m('a', { class: `has-text-white has-text-primary-hover has-text-level-2`, href: `https://vbithelp.zendesk.com/hc/zh-cn/categories/360003415534`, target: "_blank" }, ["公告中心"])
                         ),
                         m('p', { class: `` },
-                            m('a', { class: `has-text-white has-text-primary-hover`, href: `https://vbithelp.zendesk.com/hc/zh-cn/sections/360007979093` }, ["相关费率"])
+                            m('a', { class: `has-text-white has-text-primary-hover has-text-level-2`, href: `https://vbithelp.zendesk.com/hc/zh-cn/sections/360007979093`, target: "_blank" }, ["相关费率"])
                         )
                     ]),
                     m('div', { class: `bottom-navigation-tab-2` }, [
                         m('p', { class: `has-text-level-4 body-6` }, ["联系我们"]),
-                        m('p', { class: `has-text-white  has-text-primary-hover` }, m(Tooltip, {
+                        m('p', { class: `has-text-white  has-text-primary-hover has-text-level-2` }, m(Tooltip, {
                             label: "服务邮箱",
                             content: [
                                 m('div', { class: `is-flex` }, [
@@ -105,24 +109,17 @@ module.exports = {
                         })),
 
                         // ),
-                        m('p', { class: `has-text-white  has-text-primary-hover` },
+                        m('p', { class: `has-text-white  has-text-primary-hover has-text-level-2` },
                             m(Tooltip, {
                                 label: "加入社群",
                                 content: [
-                                    m('div', { class: `is-flex` }, [
-                                        m('div', { class: `` }, [
-                                            m('p', { class: `` }, 'wechat'),
-                                            m('img', { class: '', src: require("@/assets/img/home/Communitywechat.png").default })
-                                        ]),
-                                        m('div', { class: `` }, [
-                                            m('p', { class: `` }, 'QQ'),
-                                            m('img', { class: '', src: require("@/assets/img/home/CommunityQQ.png").default })
-                                        ])
+                                    m('div', { class: `` }, [
+                                        m('img', { class: '', src: require("@/assets/img/home/Communitywechat.png").default })
                                     ])
                                 ]
                             })
                         ),
-                        m('p', { class: `has-text-white  has-text-primary-hover` }, m(Tooltip, {
+                        m('p', { class: `has-text-white  has-text-primary-hover has-text-level-2` }, m(Tooltip, {
                             label: "联系客服",
                             content: [
                                 m('div', { class: `is-flex` }, [

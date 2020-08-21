@@ -3,6 +3,7 @@ const utils = require('../../../util/utils');
 const broadcast = require('../../../broadcast/broadcast');
 const titleLogo = require("@/assets/img/logo/title-logo.png").default;
 const I18n = require("../../../languages/I18n").default;
+const Tooltip = require('@/views/components/common/Tooltip');
 
 const methods = {
     openNavbarDropdown: false,
@@ -47,20 +48,39 @@ module.exports = {
             m('div#navbarBasicExample.navbar-menu', { class: "" + (methods.openNavbarDropdown ? " is-active" : "") }, [
                 m('div.navbar-start', {}, [
                     m('a.navbar-item', {
+                        class: "has-text-primary-hover",
                         onclick: function () {
                             window.router.push('/');
                         }
                     }, [
                         '法币交易'
                     ]),
-                    m('a.navbar-item', {
-                        onclick: function () {
-                            window.router.push('/');
-                        }
+                    m('div.navbar-item.cursor-pointer'/* + (!window.gWebApi.loginState ? '.is-hidden' : '') */, {
+                        class: `has-dropdown is-hoverable`
                     }, [
-                        '合约交易'
+                        m('div', { class: `navbar-item has-text-primary-hover ` }, ["合约交易"]),
+                        m('div', { class: `navbar-dropdown` }, [
+                            m('a', {
+                                class: `navbar-item has-text-primary-hover body-6 `,
+                                onclick: function () {
+                                    window.router.push('/myWalletIndex');
+                                }
+                            }, ["USDT永续合约"]),
+                            m('p', { class: `` }, [" 最高百倍杠杆，交易简单"]),
+                            m('a', {
+                                class: `navbar-item has-text-primary-hover body-6 `,
+                                onclick: function () {
+                                    window.router.push('/myWalletIndex');
+                                }
+                            }, ["全币种合约"],
+                            m('span', { class: `has-text-primary-hover border-radius-small` }, [])
+                            ),
+                            m('p', { class: `` }, [" 小币种开仓，统一价格标的"])
+                        ])
                     ]),
+
                     m('a.navbar-item', {
+                        class: "has-text-primary-hover",
                         onclick: function () {
                             window.router.push('/');
                         }
@@ -68,6 +88,7 @@ module.exports = {
                         '币币交易'
                     ]),
                     m('a.navbar-item', {
+                        class: "has-text-primary-hover",
                         onclick: function () {
                             window.router.push('/');
                         }
@@ -75,6 +96,7 @@ module.exports = {
                         'ETF专区'
                     ]),
                     m('a.navbar-item', {
+                        class: "has-text-primary-hover",
                         onclick: function () {
                             window.router.push('/');
                         }
@@ -114,28 +136,28 @@ module.exports = {
                 m('div.navbar-item.cursor-pointer'/* + (!window.gWebApi.loginState ? '.is-hidden' : '') */, {
                     class: `has-dropdown is-hoverable`
                 }, [
-                    m('div', { class: `navbar-item` }, ["资产"]),
+                    m('div', { class: `navbar-item has-text-primary-hover` }, ["资产"]),
                     m('div', { class: `navbar-dropdown` }, [
                         m('a', {
-                            class: `navbar-item`,
+                            class: `navbar-item has-text-primary-hover`,
                             onclick: function () {
                                 window.router.push('/myWalletIndex');
                             }
                         }, ["我的钱包"]),
                         m('a', {
-                            class: `navbar-item`,
+                            class: `navbar-item has-text-primary-hover`,
                             onclick: function () {
                                 window.router.push('/myWalletIndex');
                             }
                         }, ["合约账户"]),
                         m('a', {
-                            class: `navbar-item`,
+                            class: `navbar-item has-text-primary-hover`,
                             onclick: function () {
                                 window.router.push('/myWalletIndex');
                             }
                         }, ["币币账号"]),
                         m('a', {
-                            class: `navbar-item`,
+                            class: `navbar-item has-text-primary-hover`,
                             onclick: function () {
                                 window.router.push('/myWalletIndex');
                             }
@@ -148,12 +170,12 @@ module.exports = {
                         window.router.push('/');
                     }
                 }, [
-                    m('a', { class: `navbar-item` }, ["订单"]),
+                    m('a', { class: `navbar-item has-text-primary-hover` }, ["订单"]),
                     m('div', { class: `navbar-dropdown` }, [
-                        m('a', { class: `navbar-item` }, ["合约订单"]),
-                        m('a', { class: `navbar-item` }, ["币币订单"]),
-                        m('a', { class: `navbar-item` }, ["法币订单"]),
-                        m('a', { class: `navbar-item` }, ["跟单订单"])
+                        m('a', { class: `navbar-item has-text-primary-hover` }, ["合约订单"]),
+                        m('a', { class: `navbar-item has-text-primary-hover` }, ["币币订单"]),
+                        m('a', { class: `navbar-item has-text-primary-hover` }, ["法币订单"]),
+                        m('a', { class: `navbar-item has-text-primary-hover` }, ["跟单订单"])
                     ])
                 ]),
                 // 我的
@@ -163,7 +185,7 @@ module.exports = {
                         // window.router.push('/userCenter');
                     }
                 }, [
-                    m('a', { class: 'navbar-item' }, [
+                    m('a', { class: 'navbar-item has-text-primary-hover' }, [
                         m('div', {
                             // onclick: function () {
                             //     window.router.push('/userCenter');
@@ -183,32 +205,32 @@ module.exports = {
                                 m('span.icon', {}, [
                                     m('i.iconfont.icon-logo')
                                 ]),
-                                m('a', { class: `navbar-item` }, ["账户安全"])
+                                m('a', { class: `navbar-item has-text-primary-hover` }, ["账户安全"])
                             ]),
                             m('a', { class: `navbar-item` }, [
                                 m('span.icon', {}, [
                                     m('i.iconfont.icon-logo')
                                 ]),
-                                m('a', { class: `navbar-item` }, ["身份认证"])
+                                m('a', { class: `navbar-item has-text-primary-hover` }, ["身份认证"])
                             ]),
                             m('a', { class: `navbar-item` }, [
                                 m('span.icon', {}, [
                                     m('i.iconfont.icon-logo')
                                 ]),
-                                m('a', { class: `navbar-item` }, ["API管理"])
+                                m('a', { class: `navbar-item has-text-primary-hover` }, ["API管理"])
                             ]),
                             m('a', { class: `navbar-item` }, [
                                 m('span.icon', {}, [
                                     m('i.iconfont.icon-logo')
                                 ]),
-                                m('a', { class: `navbar-item` }, ["邀请返佣"])
+                                m('a', { class: `navbar-item has-text-primary-hover` }, ["邀请返佣"])
                             ]),
                             m('a', { class: `navbar-item` }, [
                                 m('span.icon', {}, [
                                     m('i.iconfont.icon-logo')
                                 ]),
                                 m('a', {
-                                    class: `navbar-item`
+                                    class: `navbar-item has-text-primary-hover`
                                     // onclick: () => {
                                     //     window.utils.removeItem("ex-session");
                                     //     window.gWebApi.loginState = false;
@@ -220,75 +242,31 @@ module.exports = {
                 ]),
 
                 // 下载
-                m('div.navbar-item.cursor-pointer', { class: `` }, [
+                m('div.navbar-item.cursor-pointer', { class: `has-text-primary-hover` }, [
                     m('span.icon', {}, [
-                        m('i.iconfont.icon-downLoad'),
-                        m('div', { class: `navbar-dropdown` }, [
-                            m('a', { class: `navbar-item` }, [
-                                m('svg', {
-                                    class: 'icon',
-                                    "aria-hidden": true
-                                }, [
-                                    m('use', { "xlink:href": '#icon-logo' })
-                                ]),
-                                m('a', { class: `navbar-item` }, ["12"])
-                            ]),
-                            m('a', { class: `navbar-item` }, [
-                                m('span.icon', {}, [
-                                    m('i.iconfont.icon-logo')
-                                ]),
-                                m('a', { class: `navbar-item` }, ["账户安全"])
-                            ]),
-                            m('a', { class: `navbar-item` }, [
-                                m('span.icon', {}, [
-                                    m('i.iconfont.icon-logo')
-                                ]),
-                                m('a', { class: `navbar-item` }, ["身份认证"])
-                            ]),
-                            m('a', { class: `navbar-item` }, [
-                                m('span.icon', {}, [
-                                    m('i.iconfont.icon-logo')
-                                ]),
-                                m('a', { class: `navbar-item` }, ["API管理"])
-                            ]),
-                            m('a', { class: `navbar-item` }, [
-                                m('span.icon', {}, [
-                                    m('i.iconfont.icon-logo')
-                                ]),
-                                m('a', { class: `navbar-item` }, ["邀请返佣"])
-                            ]),
-                            m('a', { class: `navbar-item` }, [
-                                m('span.icon', {}, [
-                                    m('i.iconfont.icon-logo')
-                                ]),
-                                m('a', {
-                                    class: `navbar-item`
-                                    // onclick: () => {
-                                    //     window.utils.removeItem("ex-session");
-                                    //     window.gWebApi.loginState = false;
-                                    // }
-                                }, ["退出登录"])
-                            ])
-                        ])
+                        m(Tooltip, {
+                            label: m('i.iconfont.icon-downLoad'),
+                            content: m('img', { class: '', src: require("@/assets/img/home/QQcustomer_service.png").default })
+                        })
                     ])
                 ]),
                 // 切换线路
                 m('a.navbar-item.cursor-pointer'/* + (!window.gWebApi.loginState ? '.is-hidden' : '') */, {
-                    class: `has-dropdown is-hoverable`
+                    class: `has-dropdown is-hoverable has-text-primary-hover`
                     // onclick: function () {
                     //     window.router.push('/');
                     // }
                 }, [
-                    m('div.navbar-item.cursor-pointer', { class: `` }, [
+                    m('div.navbar-item.cursor-pointer', { class: `has-text-primary-hover` }, [
                         m('span.icon', {}, [
                             m('i.iconfont.icon-signal')
                         ])
                     ]),
                     m('div', { class: `navbar-dropdown` }, [
-                        m('p', { class: `navbar-item` }, ["线路切换(10)"]),
-                        m('a', { class: `navbar-item` }, ["币币订单"]),
-                        m('a', { class: `navbar-item` }, ["法币订单"]),
-                        m('a', { class: `navbar-item` }, ["跟单订单"])
+                        m('p', { class: `navbar-item has-text-primary-hover` }, ["线路切换(10)"]),
+                        m('a', { class: `navbar-item has-text-primary-hover` }, ["币币订单"]),
+                        m('a', { class: `navbar-item has-text-primary-hover` }, ["法币订单"]),
+                        m('a', { class: `navbar-item has-text-primary-hover` }, ["跟单订单"])
                     ])
                 ]),
                 // 语言
