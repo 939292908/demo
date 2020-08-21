@@ -1,5 +1,5 @@
 const m = require('mithril');
-const geetest = require('@/libs/geetestTwo');
+const geetest = require('@/libs/oldGeetestTwo');
 
 module.exports = {
     smsCd: 0,

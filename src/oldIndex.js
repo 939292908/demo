@@ -8,7 +8,7 @@ import I18n from '@/languages/dI18n';
 import utils from '@/util/utils';
 // 错误码库
 import errCode from '@/util/errCode';
-import Validate from '@/libs/validate';
+import Validate from '@/libs/oldValidate';
 // 请求接口配置
 import Conf from "@/api/apiConf";
 
