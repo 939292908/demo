@@ -102,7 +102,7 @@ export default {
                         m(Tooltip, {
                             dashed: true,
                             label: gDI18n.$t('10231'),//'账户权益'
-                            content: '存入-取出+已实现盈亏+未实现盈亏'
+                            content: gDI18n.$t('10574'), //'存入-取出+已实现盈亏+未实现盈亏'
                         }),
                     ]),
                     m('div', {class: 'has-text-1'}, [
@@ -114,7 +114,7 @@ export default {
                         m(Tooltip, {
                             dashed: true,
                             label: gDI18n.$t('10427'),//'未实现盈亏'
-                            content: '所有未平仓合约的当前盈亏'
+                            content: gDI18n.$t('10575'), //'所有未平仓合约的当前盈亏'
                         }),
                     ]),
                     m('div', {class: 'has-text-1 '}, [
@@ -131,7 +131,7 @@ export default {
                         m(Tooltip, {
                             dashed: true,
                             label: gDI18n.$t('10232'),//'仓位保证金'
-                            content: '保留所持仓位所需要的保证金'
+                            content: gDI18n.$t('10576'), //'保留所持仓位所需要的保证金'
                         }),
                     ]),
                     m('div', {class: 'has-text-1'}, [
@@ -143,7 +143,7 @@ export default {
                         m(Tooltip, {
                             dashed: true,
                             label: gDI18n.$t('10167'),//'委托保证金'
-                            content: '委托所需要的保证金'
+                            content: gDI18n.$t('10577'), //'委托所需要的保证金'
                         }),
                     ]),
                     m('div', {class: 'has-text-1'}, [
@@ -155,7 +155,7 @@ export default {
                         m(Tooltip, {
                             dashed: true,
                             label: gDI18n.$t('10157'),//'可用保证金'
-                            content: '当前可用于开仓的保证金'
+                            content: gDI18n.$t('10578'), //'当前可用于开仓的保证金'
                         }),
                     ]),
                     m('div', {class: 'has-text-1'}, [
@@ -167,7 +167,7 @@ export default {
                         m(Tooltip, {
                             dashed: true,
                             label: gDI18n.$t('10233'),//'可用赠金'
-                            content: '当前可用于开仓的赠金'
+                            content: gDI18n.$t('10579'), //'当前可用于开仓的赠金'
                         }),
                     ]),
                     m('div', {class: 'has-text-1'}, [

@@ -6,24 +6,7 @@ let header = {
     uid: '',
     headerMenu: false,
     // 资产菜单列表
-    assetMenuList: [
-        {
-            id: 1,
-            label: '我的钱包（充币&提币）'
-        },
-        {
-            id: 2,
-            label: '合约账户'
-        },
-        {
-            id: 3,
-            label: '币币账户'
-        },
-        {
-            id: 4,
-            label: '法币账户'
-        },
-    ],
+    assetMenuList: [],
     // 订单菜单列表
     orderMenuList: [
         {
@@ -46,21 +29,42 @@ let header = {
     // 线路切换弹框
     netLineOpen: false,
     informationOpen: false,
-    informationList: [
-        {
-            id: 0,
-            name: "合约详解"
-        },
-        {
-            id: 1,
-            name: "币币指数"
-        },
-        {
-            id: 2,
-            name: "资金费率历史"
-        }
-    ],
-
+    informationList: [],
+    initLanguage:function(){
+        // 资产菜单列表
+        this.assetMenuList = [
+            {
+                id: 1,
+                label: `${gDI18n.$t('10219')}（充币&提币）`, //'我的钱包（充币&提币）'
+            },
+            {
+                id: 2,
+                label: gDI18n.$t('10217'), //'合约账户'
+            },
+            {
+                id: 3,
+                label: gDI18n.$t('10218'), //'币币账户'
+            },
+            {
+                id: 4,
+                label: gDI18n.$t('10220'), //'法币账户'
+            },
+        ]
+        this.informationList = [
+            {
+                id:0,
+                name: gDI18n.$t('10529'), //"合约详解"
+            },
+            {
+                id:1,
+                name: gDI18n.$t('10530'), //"币币指数"
+            },
+            {
+                id:2,
+                name: gDI18n.$t('10531'), //"资金费率历史"
+            },
+        ]
+    },
     initEVBUS: function () {
         let that = this
 
@@ -81,7 +85,9 @@ let header = {
             that.userName = ''
             m.redraw()
         })
-
+        // 切换语言 广播
+        this.EV_CHANGELOCALE_UPD_unbinder && this.EV_CHANGELOCALE_UPD_unbinder();
+        this.EV_CHANGELOCALE_UPD_unbinder = window.gEVBUS.on(gDI18n.EV_CHANGELOCALE_UPD, arg => this.initLanguage())
 
     },
     rmEVBUS: function () {
@@ -91,6 +97,7 @@ let header = {
         if (this.EV_WEB_LOGOUT_unbinder) {
             this.EV_WEB_LOGOUT_unbinder()
         }
+        this.EV_CHANGELOCALE_UPD_unbinder && this.EV_CHANGELOCALE_UPD_unbinder();
     },
     initTradeStatus: function () {
         // 读取地址栏参数并赋值,地址参数为加密参数
@@ -224,7 +231,7 @@ let header = {
                         header.clearInType()
                     }
                 }, [
-                    '币币交易',
+                    gDI18n.$t('10524'), // '币币交易',
                 ])
             case 0:
                 return null
@@ -266,7 +273,7 @@ let header = {
                 }
             }, [
                 m("a", { class: "navbar-item" }, [
-                    '合约信息',
+                    gDI18n.$t('10109'), //'合约信息',
                     m('span', { class: "icon " }, [
                         m('i', { class: "my-trigger-icon iconfont iconxiala1 has-text-primary", "aria-hidden": true })
                     ]),
@@ -463,6 +470,7 @@ export default {
 
     },
     oncreate: function (vnode) {
+        header.initLanguage()
         header.initTradeStatus()
         header.initEVBUS()
         header.theme = window.$theme ? window.$theme : header.theme

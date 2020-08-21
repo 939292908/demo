@@ -20,31 +20,31 @@ let obj = {
       class: "position-sz pub-table-3"
     }, {
       title: gDI18n.$t('10416'),//'开仓均价',
-      tooltipContent: '目前仓位的平均成交价格',
+      tooltipContent: gDI18n.$t('10557'), //'目前仓位的平均成交价格',
       class: "position-prz pub-table-4"
     }, {
       title: gDI18n.$t('10417'),//'强平价格',
-      tooltipContent: '合约标记价格穿过该价格时触发强制平仓',
+      tooltipContent: gDI18n.$t('10558'), //'合约标记价格穿过该价格时触发强制平仓',
       class: "position-przLiq pub-table-5"
     }, {
       title: gDI18n.$t('10088'),//'风险度',
-      tooltipContent: '当前风险度/风险度参考值，当前风险度到达风险度参考值时触发强制平仓',
+      tooltipContent: gDI18n.$t('10559'), //'当前风险度/风险度参考值，当前风险度到达风险度参考值时触发强制平仓',
       class: "position-rate pub-table-6"
     }, {
       title: gDI18n.$t('10500'),//'保证金',
-      tooltipContent: '被仓位占用的保证金',
+      tooltipContent: gDI18n.$t('10560'), //'被仓位占用的保证金',
       class: "position-mm pub-table-7"
     }, {
       title: gDI18n.$t('10419'),//'未实现盈亏(回报率)',
-      tooltipContent: '所持仓位的当前盈亏(回报率=未实现盈亏/保证金)',
+      tooltipContent: gDI18n.$t('10561'), //'所持仓位的当前盈亏(回报率=未实现盈亏/保证金)',
       class: "position-upnl pub-table-8"
     }, {
       title: gDI18n.$t('10091'),//'已实现盈亏',
-      tooltipContent: '仓位自开仓以来的已实现盈亏，包括手续费，资金费用',
+      tooltipContent: gDI18n.$t('10562'), //'仓位自开仓以来的已实现盈亏，包括手续费，资金费用',
       class: "position-pnl pub-table-9"
     }, {
       title: gDI18n.$t('10080') + "/" +gDI18n.$t('10101'),//'止盈/止损',
-      tooltipContent: '止盈/止损',
+      tooltipContent: gDI18n.$t('10563'), //'止盈/止损',
       class: "position-stoppl pub-table-10"
     }, 
   ],
@@ -134,31 +134,31 @@ let obj = {
           class: "position-sz pub-table-3"
         }, {
           title: gDI18n.$t('10416'),//'开仓均价',
-          tooltipContent: '目前仓位的平均成交价格',
+          tooltipContent: gDI18n.$t('10557'), //'目前仓位的平均成交价格',
           class: "position-prz pub-table-4"
         }, {
           title: gDI18n.$t('10417'),//'强平价格',
-          tooltipContent: '合约标记价格穿过该价格时触发强制平仓',
+          tooltipContent: gDI18n.$t('10558'), //'合约标记价格穿过该价格时触发强制平仓',
           class: "position-przLiq pub-table-5"
         }, {
           title: gDI18n.$t('10088'),//'风险度',
-          tooltipContent: '当前风险度/风险度参考值，当前风险度到达风险度参考值时触发强制平仓',
+          tooltipContent: gDI18n.$t('10559'), //'当前风险度/风险度参考值，当前风险度到达风险度参考值时触发强制平仓',
           class: "position-rate pub-table-6"
         }, {
           title: gDI18n.$t('10500'),//'保证金',
-          tooltipContent: '被仓位占用的保证金',
+          tooltipContent: gDI18n.$t('10560'), //'被仓位占用的保证金',
           class: "position-mm pub-table-7"
         }, {
           title: gDI18n.$t('10419'),//'未实现盈亏(回报率)',
-          tooltipContent: '所持仓位的当前盈亏(回报率=未实现盈亏/保证金)',
+          tooltipContent: gDI18n.$t('10561'), //'所持仓位的当前盈亏(回报率=未实现盈亏/保证金)',
           class: "position-upnl pub-table-8"
         }, {
           title: gDI18n.$t('10091'),//'已实现盈亏',
-          tooltipContent: '仓位自开仓以来的已实现盈亏，包括手续费，资金费用',
+          tooltipContent: gDI18n.$t('10562'), //'仓位自开仓以来的已实现盈亏，包括手续费，资金费用',
           class: "position-pnl pub-table-9"
         }, {
           title: gDI18n.$t('10080') + "/" +gDI18n.$t('10101'),//'止盈/止损',
-          tooltipContent: '止盈/止损',
+          tooltipContent: gDI18n.$t('10563'), //'止盈/止损',
           class: "position-stoppl pub-table-10"
         },  
       ]

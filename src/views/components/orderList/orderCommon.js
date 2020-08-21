@@ -271,7 +271,7 @@ let obj = {
             ]),
             m('div',{class:"ord-tips-num is-flex"},[
                 m('div',{class:"ord-tips-num-left"},[
-                    "成交后仓位"
+                    gDI18n.$t('10565'), //"成交后仓位"
                 ]),
                 m('div',{class:"ord-tips-num-right"},[
                     this.AfterNum + " " + gDI18n.$t('10423')//"张"
@@ -321,7 +321,7 @@ export default {
                         obj.changeCheck()
                     }}),
                     m('span',{class:""},[
-                        "每次提醒"
+                        gDI18n.$t('10566'), //"每次提醒"
                     ])
                 ])
             ]),

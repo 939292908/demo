@@ -87,7 +87,7 @@ let obj = {
         arr = arr.map((itme,i)=>{
             return {
                 id: i,
-                label: itme.split("_")[1] + " 币币指数",
+                label: itme.split("_")[1] + " " + gDI18n.$t('10530'), //" 币币指数",
                 name: itme,
                 vie: itme.split("_")[1]
             }  

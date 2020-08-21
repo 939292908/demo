@@ -306,7 +306,7 @@ export default {
                         obj.changeCheck()
                     }}),
                     m('span',{class:""},[
-                        "每次提醒"
+                        gDI18n.$t('10566'), //"每次提醒"
                     ])
                 ])
             ]),
