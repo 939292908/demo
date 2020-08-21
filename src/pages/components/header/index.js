@@ -60,22 +60,33 @@ module.exports = {
                     }, [
                         m('div', { class: `navbar-item has-text-primary-hover ` }, ["合约交易"]),
                         m('div', { class: `navbar-dropdown` }, [
+                            m('div', {
+                                class: `navbar-item has-text-primary-hover body-6 `,
+                                onclick: function () {
+                                    window.router.push('/myWalletIndex');
+                                }
+                            }, [
+                                m('div', { class: `` }, [
+                                    m('p', { class: `` }, "USDT永续合约"),
+                                    m('p', { class: `body-4` }, [" 最高百倍杠杆，交易简单"])
+                                ])
+                            ]),
                             m('a', {
                                 class: `navbar-item has-text-primary-hover body-6 `,
                                 onclick: function () {
                                     window.router.push('/myWalletIndex');
                                 }
-                            }, ["USDT永续合约"]),
-                            m('p', { class: `` }, [" 最高百倍杠杆，交易简单"]),
-                            m('a', {
-                                class: `navbar-item has-text-primary-hover body-6 `,
-                                onclick: function () {
-                                    window.router.push('/myWalletIndex');
-                                }
-                            }, ["全币种合约"],
+                            }, [
+                                m('div', { class: `` }, [
+                                    m('p', { class: `` }, [
+                                        m('span', { class: `` }, "全币种合约"),
+                                        m('span', { class: `px-3 ml-2`, style: `background: orange; border-radius: 10px 10px 10px 0; color:#fff` }, "NEW")
+                                    ]),
+                                    m('p', { class: `body-4` }, [" 小币种开仓，统一价格标的"])
+                                ])
+                            ],
                             m('span', { class: `has-text-primary-hover border-radius-small` }, [])
-                            ),
-                            m('p', { class: `` }, [" 小币种开仓，统一价格标的"])
+                            )
                         ])
                     ]),
 
