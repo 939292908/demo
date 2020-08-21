@@ -166,6 +166,7 @@ const myWalletIndex = {
     changeTradeAccount: function(param) {
         // 点击交易账户(...)中则显示对应page
         myWalletIndex.switchChange(1);
+        console.log(param, 'nzm--------');
         broadcast.emit({ cmd: broadcast.MA_CHANGE_TRADE_PAGE, data: param });
     },
     assetValuation: function () {
@@ -253,12 +254,12 @@ const myWalletIndex = {
                                 m('div.tradeCard body-2 border-radius-medium pa-7 has-bg-level-2', {
                                     style: { display: 'none' }
                                 }, [
-                                    m('span.mb-1 has-line-level-4', '合约账户'),
-                                    m('a.mb-5 has-line-level-3', { onclick: function () { myWalletIndex.changeTradeAccount(0); } }, myWalletIndex.contractTotal + ' ' + myWalletIndex.currency),
-                                    m('span.mb-1 has-line-level-4', '币币账户'),
-                                    m('a.mb-5 has-line-level-3', { onclick: function () { myWalletIndex.changeTradeAccount(1); } }, myWalletIndex.coinTotal + ' ' + myWalletIndex.currency),
-                                    m('span.mb-1 has-line-level-4', '法币账户'),
-                                    m('a.has-line-level-3', { onclick: function () { myWalletIndex.changeTradeAccount(2); } }, myWalletIndex.legalTotal + ' ' + myWalletIndex.currency)
+                                    m('span.mb-1', '合约账户'),
+                                    m('a.mb-5 has-text-level-3', { onclick: function () { myWalletIndex.changeTradeAccount(0); } }, myWalletIndex.contractTotal + ' ' + myWalletIndex.currency),
+                                    m('span.mb-1', '币币账户'),
+                                    m('a.mb-5 has-text-level-3', { onclick: function () { myWalletIndex.changeTradeAccount(1); } }, myWalletIndex.coinTotal + ' ' + myWalletIndex.currency),
+                                    m('span.mb-1', '法币账户'),
+                                    m('a.has-text-level-3', { onclick: function () { myWalletIndex.changeTradeAccount(2); } }, myWalletIndex.legalTotal + ' ' + myWalletIndex.currency)
                                 ])
                             ])
                         ]),
