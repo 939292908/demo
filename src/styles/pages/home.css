@@ -20,7 +20,7 @@
 }
 
 .picture-layer {
-    margin-top: -110px;
+    margin-top: -120px;
 }
 
 .advantage-div {
@@ -96,9 +96,8 @@
 
 .home-banner {
     background: url("~@/assets/img/home/vector.png") no-repeat center center;
-    background-size: "cover";
+    background-size: 100% 100%;
     text-align: center;
-    width: 100%;
 }
 
 .home-picture {
@@ -116,7 +115,7 @@
 }
 
 .introduce-image {
-    background: url("~@/assets/img/home/Rectangle 468.png") no-repeat center center;
+    background: url("~@/assets/img/home/Rectangle-465.png") no-repeat center center;
     background-size: "cover";
 }
 
@@ -159,10 +158,8 @@
     line-height: 27px;
 }
 
-.community {
-    margin-top: 10px;
-    height: 15px;
-    border-radius: 50%;
+.community{
+    height: 17px;
 }
 
 .community:hover {
@@ -174,5 +171,5 @@
 }
 
 .pub-footer {
-    height: 250px;
+    height: 320px;
 }

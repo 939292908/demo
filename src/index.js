@@ -1,5 +1,4 @@
 import broadcast from './broadcast/broadcast';
-import utils from './util/utils';
 import m from 'mithril';
 // 主题颜色
 import("./styles/index");
@@ -23,7 +22,6 @@ require('@/util/log');
 
 window.onresize = function (arg) {
     // 判断是否是移动端
-    window.isMobile = utils.isMobile();
     broadcast.emit({ cmd: 'ONRESIZE_UPD', data: { Ev: 'ONRESIZE_UPD' } });
     // window.gBroadcast.emit(window.gBroadcast.ONRESIZE_UPD, { Ev: window.gBroadcast.ONRESIZE_UPD });
 };

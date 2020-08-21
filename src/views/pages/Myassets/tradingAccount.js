@@ -41,10 +41,24 @@ const tradingAccount = {
 module.exports = {
     oninit: function () {
         tradingAccount.pageFlag = 0;
+        // window.gBroadcast.onMsg({
+        //     key: 'tradingAccount',
+        //     cmd: window.gBroadcast.MA_CHANGE_TRADE_PAGE,
+        //     cb: function (arg) {
+        //         console.log('----0000------');
+        //         console.log(arg === '', 'nzm----', arg);
+        //     }
+        // });
     },
     view: function () {
         return m('div', { class: 'views-pages-myassets-tradingAccount pt-4' }, [
             tradingAccount.tradingAccountPage()
         ]);
+    },
+    onremove: function () {
+        // window.gBroadcast.offMsg({
+        //     key: 'tradingAccount',
+        //     isall: true
+        // });
     }
 };

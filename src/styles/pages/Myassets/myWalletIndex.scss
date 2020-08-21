@@ -35,32 +35,35 @@
         }
     }
     .myWalletIndex-switch{
-        position: relative;
-        .tradeCard{
+        .wallet{
             display: flex;
             flex-direction: column;
-            // ！！！
-            background-color: white;
-            z-index: 99999;
-            position: absolute;
-            left: 855px;
-            top: 80px;
-            span{
-                // 设计图未说明颜色！！！
-                color:gray;
+        }
+        .trade{
+            display: flex;
+            .right{
+                margin-left: auto;
+                .tradeCard{
+                    display: flex;
+                    flex-direction: column;
+                    // 规范未找到单独设置此背景颜色！！！
+                    background-color: white;
+                    z-index: 99999;
+                    position: absolute;
+                    left: 820px;
+                    span{
+                        // 规范未找到单独设置此字体颜色！！！
+                        color:#9A9EAC;
+                    }
+                    a{
+                        color: black;
+                    }
+                }
             }
         }
-        .myAccount{
+        .other{
             display: flex;
-            flex-direction: row;
-            .show-desc{
-                display: '';
-                margin: auto 0px;
-                margin-left: auto;
-            }
-            .hide-desc{
-                display: none;
-            }
+            flex-direction: column;
         }
     }
     .myWalletIndex-head-right div{

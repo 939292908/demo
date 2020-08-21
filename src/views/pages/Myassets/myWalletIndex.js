@@ -83,8 +83,7 @@ const myWalletIndex = {
             {
                 title: '充币',
                 // 跳转至哪个链接 例如：to: 'http://www.baidu.com'
-                to: '#!/chargeMoney',
-                defaultSty: 'highlight'
+                to: '#!/chargeMoney'
             },
             {
                 title: '提币',
@@ -101,28 +100,7 @@ const myWalletIndex = {
                 // 跳转至哪个链接
                 to: ''
             }
-        ],
-        secondNav: []
-    },
-    initSecondNav: function () {
-        myWalletIndex.Nav.secondNav = [
-            {
-                title: '我的钱包',
-                val: myWalletIndex.walletTotalValue,
-                descCls: 'hide-desc'
-            },
-            {
-                title: '交易账户',
-                val: myWalletIndex.tradingAccountTotalValue,
-                sty: 'mx-5',
-                descCls: 'show-desc title-medium'
-            },
-            {
-                title: '其他账户',
-                val: '0.00000000 ',
-                descCls: 'show-desc title-medium'
-            }
-        ];
+        ]
     },
     toPage: function (val) {
         if (val === "") {
@@ -130,14 +108,12 @@ const myWalletIndex = {
         }
         window.location.href = val;
     },
-    switchDisplay: function (param, flag, type) {
-        if (param === 'card1') {
+    switchDisplay: function (param, flag) {
+        if (param === 'tradeCard') {
             if (flag === 'show') {
                 document.getElementsByClassName('tradeCard')[0].style.display = '';
             } else if (flag === 'hide') {
-                setTimeout(() => {
-                    document.getElementsByClassName('tradeCard')[0].style.display = 'none';
-                }, 200);
+                document.getElementsByClassName('tradeCard')[0].style.display = 'none';
             }
         }
     },
@@ -183,6 +159,11 @@ const myWalletIndex = {
                 ele.classList.value = ele.classList.value.replace('has-bg-primary', 'bgNone has-text-primary has-line-level-2');
             }
         }
+    },
+    changeTradeAccount: function(param) {
+        // 点击交易账户(...)中则显示对应page
+        // myWalletIndex.switchChange(1);
+        // window.gBroadcast.emit({ cmd: window.gBroadcast.MA_CHANGE_TRADE_PAGE, data: param });
     },
     assetValuation: function () {
         return m('div', { onclick: function() { myWalletIndex.optionDisplay(event); } }, [
@@ -231,46 +212,60 @@ const myWalletIndex = {
                         ])
                     ]),
                     // 我的钱包  交易账户  其他账户
-                    m('div', { class: 'myWalletIndex-switch columns-flex mt-7' }, [
-                        myWalletIndex.Nav.secondNav.map((item, index) => {
-                            return m('div.myAccount column border-radius-medium px-7 is-white py-7', {
-                                class: (myWalletIndex.swValue === index ? 'has-bg-primary' : 'has-bg-level-2') + ' ' + item.sty,
-                                onclick: function () {
-                                    // 其他账户未开放
-                                    if (index <= 1) {
-                                        myWalletIndex.switchChange(index);
-                                    }
-                                }
-                            }, [
-                                m('div', {}, [
-                                    m('div', { class: 'body-5 mb-1' }, [
-                                        m('span', { }, [item.title])
-                                    ]),
-                                    m('div', { class: 'title-small ' }, [
-                                        m('span', { style: { } }, [item.val]),
-                                        m('span', {}, [' ' + myWalletIndex.currency])
-                                    ])
-                                ]),
-                                m('div.cursor-pointer', {
-                                    class: item.descCls,
-                                    onmouseover: function () { myWalletIndex.switchDisplay('card' + index, 'show'); },
-                                    onmouseleave: function () { myWalletIndex.switchDisplay('card' + index, 'hide'); }
-                                }, [
-                                    m('span', { class: 'card' + index }, '...')
-                                ])
-                            ]);
-                        }),
-                        m('div.tradeCard body-2 border-radius-medium pa-7', {
-                            style: { display: 'none' },
-                            onmouseover: function () { myWalletIndex.switchDisplay('card1', 'show'); },
-                            onmouseleave: function () { myWalletIndex.switchDisplay('card1', 'hide'); }
+                    m('div', { class: 'myWalletIndex-switch columns-flex mt-7 is-between' }, [
+                        m('div.wallet border-radius-medium px-7 py-7 column', {
+                            class: (myWalletIndex.swValue === 0 ? 'has-bg-primary' : 'has-bg-level-2'),
+                            onclick: function() { myWalletIndex.switchChange(0); }
                         }, [
-                            m('span', '合约账户'),
-                            m('font.mb-5', myWalletIndex.contractTotal + ' ' + myWalletIndex.currency),
-                            m('span', '币币账户'),
-                            m('font.mb-5', myWalletIndex.coinTotal + ' ' + myWalletIndex.currency),
-                            m('span', '法币账户'),
-                            m('font', myWalletIndex.legalTotal + ' ' + myWalletIndex.currency)
+                            m('div', { class: 'body-5 mb-1' }, [
+                                m('span', { }, '我的钱包')
+                            ]),
+                            m('div', { class: 'title-small ' }, [
+                                m('span', {}, myWalletIndex.walletTotalValue),
+                                m('span', {}, [' ' + myWalletIndex.currency])
+                            ])
+                        ]),
+                        m('div.trade border-radius-medium px-7 py-7 mx-5 column', {
+                            class: (myWalletIndex.swValue === 1 ? 'has-bg-primary' : 'has-bg-level-2'),
+                            onclick: function() { myWalletIndex.switchChange(1); }
+                        }, [
+                            m('div.left', {}, [
+                                m('div', { class: 'body-5 mb-1' }, [
+                                    m('span', { }, '交易账户')
+                                ]),
+                                m('div', { class: 'title-small ' }, [
+                                    m('span', {}, myWalletIndex.tradingAccountTotalValue),
+                                    m('span', {}, [' ' + myWalletIndex.currency])
+                                ])
+                            ]),
+                            m('div.right', {
+                                onmouseover: function () { myWalletIndex.switchDisplay('tradeCard', 'show'); },
+                                onmouseleave: function () { myWalletIndex.switchDisplay('tradeCard', 'hide'); }
+                            }, [
+                                m('div.cursor-pointer', {
+                                }, [
+                                    m('span', { class: 'card1 title-medium' }, '...')
+                                ]),
+                                m('div.tradeCard body-2 border-radius-medium pa-7', {
+                                    style: { display: 'none' }
+                                }, [
+                                    m('span.mb-1', '合约账户'),
+                                    m('a.mb-5', { onclick: function () { myWalletIndex.changeTradeAccount(0); } }, myWalletIndex.contractTotal + ' ' + myWalletIndex.currency),
+                                    m('span.mb-1', '币币账户'),
+                                    m('a.mb-5', { onclick: function () { myWalletIndex.changeTradeAccount(1); } }, myWalletIndex.coinTotal + ' ' + myWalletIndex.currency),
+                                    m('span.mb-1', '法币账户'),
+                                    m('a', { onclick: function () { myWalletIndex.changeTradeAccount(2); } }, myWalletIndex.legalTotal + ' ' + myWalletIndex.currency)
+                                ])
+                            ])
+                        ]),
+                        m('div.other border-radius-medium px-7 py-7 column has-bg-level-2', {}, [
+                            m('div', { class: 'body-5 mb-1' }, [
+                                m('span', { }, '其他账户')
+                            ]),
+                            m('div', { class: 'title-small ' }, [
+                                m('span', {}, '0.00000000 '),
+                                m('span', {}, [' ' + myWalletIndex.currency])
+                            ])
                         ])
                     ])
                 ])
@@ -279,22 +274,22 @@ const myWalletIndex = {
                 myWalletIndex.switchContent()
             ])
         ]);
+    },
+    DelayDataAcquisition: function() {
+        myWalletIndex.setTotalValue(wlt.totalValueForBTC);
+        myWalletIndex.setWalletTotalValue(wlt.walletTotalValueForBTC);
+        myWalletIndex.setTradingAccountTotalValue(wlt.tradingAccountTotalValueForBTC);
+        myWalletIndex.setLegalTotal(wlt.legalTotalValueForBTC);
+        myWalletIndex.setContractTotal(wlt.contractTotalValueForBTC);
+        myWalletIndex.setCoinTotal(wlt.coinTotalValueForBTC);
+        myWalletIndex.setTotalCNY(wlt.totalCNYValueForBTC);
+        m.redraw();
     }
 };
 module.exports = {
     oncreate: function() {
         wlt.init();
-        setTimeout(() => {
-            myWalletIndex.setTotalValue(wlt.totalValueForBTC);
-            myWalletIndex.setWalletTotalValue(wlt.walletTotalValueForBTC);
-            myWalletIndex.setTradingAccountTotalValue(wlt.tradingAccountTotalValueForBTC);
-            myWalletIndex.setLegalTotal(wlt.legalTotalValueForBTC);
-            myWalletIndex.setContractTotal(wlt.contractTotalValueForBTC);
-            myWalletIndex.setCoinTotal(wlt.coinTotalValueForBTC);
-            myWalletIndex.setTotalCNY(wlt.totalCNYValueForBTC);
-            myWalletIndex.initSecondNav();
-            m.redraw();
-        }, '100');
+        setTimeout(myWalletIndex.DelayDataAcquisition, '100');
     },
     view: function () {
         return m('div', { class: 'views-pages-myassets-myWalletIndex theme--light' }, [

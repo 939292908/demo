@@ -123,7 +123,6 @@ module.exports = {
             cmd: window.gBroadcast.CHANGE_SW_CURRENCY,
             cb: function (arg) {
                 myWalletTable.typeValue = arg;
-                console.log(myWalletTable.typeValue);
             }
         });
         myWalletTable.initAssetList();
