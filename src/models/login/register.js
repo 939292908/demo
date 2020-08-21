@@ -1,5 +1,5 @@
 const m = require('mithril');
-const geetest = require('@/libs/geetestTwo');
+const geetest = require('@/libs/oldGeetestTwo');
 const cryptoChar = require('@/util/cryptoChar');
 const config = require('@/config');
 const md5 = require('md5');
