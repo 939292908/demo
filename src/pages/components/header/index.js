@@ -1,8 +1,8 @@
 const m = require('mithril');
-const utils = require('../../util/utils');
-const broadcast = require('../../broadcast/broadcast');
+const utils = require('../../../util/utils');
+const broadcast = require('../../../broadcast/broadcast');
 const titleLogo = require("@/assets/img/logo/title-logo.png").default;
-const I18n = require("../../languages/I18n").default;
+const I18n = require("../../../languages/I18n").default;
 
 const methods = {
     openNavbarDropdown: false,

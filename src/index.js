@@ -26,8 +26,8 @@ window.onresize = function (arg) {
     // window.gBroadcast.emit(window.gBroadcast.ONRESIZE_UPD, { Ev: window.gBroadcast.ONRESIZE_UPD });
 };
 
-import('./pages/home/index').then(arg => {
+import('./pages/index').then(arg => {
     const root = document.body;
     m.mount(root, arg.default);
-    import('@/router/index');
+    import('@/route/index');
 });
