@@ -70,13 +70,14 @@ const myWalletIndex = {
     switchChange: function (val) {
         myWalletIndex.swValue = val;
     },
+    wltIdx: 0,
     switchContent: function () {
         broadcast.emit({ cmd: broadcast.CHANGE_SW_CURRENCY, data: myWalletIndex.currency });
         switch (myWalletIndex.swValue) {
         case 0:
             return m(myWallet);
         case 1:
-            return m(tradingAccount);
+            return m(tradingAccount, { idx: this.wltIdx });
         default:
             break;
         }
@@ -166,7 +167,7 @@ const myWalletIndex = {
     changeTradeAccount: function(param) {
         // 点击交易账户(...)中则显示对应page
         myWalletIndex.switchChange(1);
-        console.log(param, 'nzm--------');
+        this.wltIdx = param;
         broadcast.emit({ cmd: broadcast.MA_CHANGE_TRADE_PAGE, data: param });
     },
     assetValuation: function () {

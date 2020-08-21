@@ -13,6 +13,7 @@ const tradingAccount = {
     pageFlag: 0,
     setPageFlag: function (param) {
         this.pageFlag = param;
+        console.log('pageFlag', param);
     },
     switchContent: function () {
         switch (this.pageFlag) {
@@ -25,7 +26,7 @@ const tradingAccount = {
         }
     },
     navAry: ['合约账户', '币币账户', '法币账户'],
-    tradingAccountPage: function () {
+    tradingAccountPage: function (vnode) {
         return m('div.tradingAccount mb-3', {}, [
             m('ul.tradingAccount_nav ml-5 tabs', [
                 tradingAccount.navAry.map((item, index) => {
@@ -37,28 +38,28 @@ const tradingAccount = {
             //         return m('li', { class: 'cursor-pointer mr-8 ' + (tradingAccount.pageFlag === index ? "has-text-primary" : ''), onclick: function () { tradingAccount.setPageFlag(index); } }, item);
             //     })
             // ]),
+            vnode.attrs.idx,
             tradingAccount.switchContent()
         ]);
     }
 };
 module.exports = {
     oninit: function () {
-        console.log("%c nzm %c", 'color:red');
-        let page = 0;
+        tradingAccount.setPageFlag(0);
         broadcast.onMsg({
             key: 'tradingAccount',
             cmd: broadcast.MA_CHANGE_TRADE_PAGE,
             cb: function (arg) {
                 if (arg !== null) {
-                    page = arg;
+                    tradingAccount.setPageFlag(arg);
+                    tradingAccount.switchContent();
                 }
             }
         });
-        tradingAccount.setPageFlag(page);
     },
-    view: function () {
+    view: function (vnode) {
         return m('div', { class: 'views-pages-myassets-tradingAccount pt-4' }, [
-            tradingAccount.tradingAccountPage()
+            tradingAccount.tradingAccountPage(vnode)
         ]);
     },
     onremove: function () {
