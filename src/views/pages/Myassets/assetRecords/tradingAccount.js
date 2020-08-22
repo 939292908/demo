@@ -22,13 +22,13 @@ const tradingAccount = {
         return ('div', { class: 'views-pages-Myassets-assetRecords-tradingAccount-wrapper' }, [
             m('div', { class: 'cursor-pointer  mb-3' }, [
                 m('span', {
-                    class: "cursor-pointer mr-3" + (tradingAccount.switchValue === 0 ? ' has-text-primary' : ''),
+                    class: "cursor-pointer mr-7" + (tradingAccount.switchValue === 0 ? ' has-text-primary' : ''),
                     onclick: function () {
                         tradingAccount.switchEvnet(0);
                     }
                 }, ['合约账户']),
                 m('span', {
-                    class: "cursor-pointer mr-3" + (tradingAccount.switchValue === 1 ? ' has-text-primary' : ''),
+                    class: "cursor-pointer mr-7" + (tradingAccount.switchValue === 1 ? ' has-text-primary' : ''),
                     onclick: function () {
                         tradingAccount.switchEvnet(1);
                     }

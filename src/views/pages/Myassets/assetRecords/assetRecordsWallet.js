@@ -10,14 +10,14 @@ const assetRecordsWallet = {
             //     m('span', {}, ['我的钱包'])
             // ]),
             m(commonSelectionBox, { num: 0 }),
-            m(fundRecordsSelect, { dataArrObj: assetRecordsTable.dataArrObj, grossValue: assetRecordsTable.readyAlldata })
+            m(fundRecordsSelect, { dataArrObj: assetRecordsTable.dataArrObj, grossValue: assetRecordsTable.grossValue })
         ]);
     }
 };
 module.exports = {
     oninit () {
         assetRecordsTable.oninit();
-        console.log(assetRecordsTable.readyAlldata);
+        console.log(assetRecordsTable.grossValue);
     },
     view () {
         return m('div', { class: 'views-pages-Myassets-assetRecords-assetRecordsWallet' }, [

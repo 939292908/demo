@@ -223,11 +223,14 @@ module.exports = {
     oninit() {
         console.log('111111111111111111111111');
         window.gBroadcast.onMsg({
-            key: 'assetRecordsTable',
-            cmd: window.gBroadcast.CHANGE_SW_CURRENCY,
+            key: 'onAssetRecordsTable',
+            cmd: 'assetRecordsTable',
             cb: function (arg) {
+                // eslint-disable-next-line no-debugger
+                debugger;
+                console.log('11111111111');
                 if (arg.num === 0) {
-                    this.selectDisplay(arg.name, this.dataObj);
+                    this.selectDisplay(arg.name, this.readyAlldata);
                 } else if (arg.num === 1) {
                     this.currencyValue = arg.name;
                     if (this.typeValue === '全部类型') {
@@ -269,7 +272,7 @@ module.exports = {
     },
     onremove () {
         window.gBroadcast.offMsg({
-            cmd: '',
+            cmd: 'onAssetRecordsTable',
             key: 'assetRecordsTable',
             isall: true
         });

@@ -148,7 +148,7 @@ const commonSelectionBox = {
                             name: this.value,
                             num: 0
                         };
-                        window.gBroadcast.emit({ cmd: window.gBroadcast.CHANGE_SW_CURRENCY, data: data });
+                        window.gBroadcast.emit({ cmd: 'onAssetRecordsTable', data: data });
                         window.utils.setItem('timeValue', this.value);
                     }
                 })
@@ -164,7 +164,7 @@ const commonSelectionBox = {
                         };
                         window.utils.setItem('currencyValue', e.target.selectedOptions[0].attributes.name.value);
                         // console.log(e.target.selectedOptions[0].attributes.name.value);
-                        window.gBroadcast.emit({ cmd: window.gBroadcast.CHANGE_SW_CURRENCY, data: data });
+                        window.gBroadcast.emit({ cmd: 'onAssetRecordsTable', data: data });
                     }
                 },
                 this.currencyValue.map(item => m('option', {
@@ -182,7 +182,7 @@ const commonSelectionBox = {
                             num: 2
                         };
                         // window.utils.setItem('typeValue', this.value);
-                        window.gBroadcast.emit({ cmd: window.gBroadcast.CHANGE_SW_CURRENCY, data: data });
+                        window.gBroadcast.emit({ cmd: 'onAssetRecordsTable', data: data });
                     }
                 }, this.typeValue.map(item => m('option', {
                     name: item.name

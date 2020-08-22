@@ -25,23 +25,18 @@ const assetRecords = {
             ]),
             m('div', { class: 'columns-flex-warp mb-3' }, [
                 m('div', {
-                    class: "cursor-pointer mr-6" + (assetRecords.switchValue === 0 ? ' has-text-primary' : ''),
+                    class: "cursor-pointer mr-7" + (assetRecords.switchValue === 0 ? ' has-text-primary' : ''),
                     onclick: function () {
                         assetRecords.switchEvnet(0);
                     }
                 }, ['我的钱包']),
                 m('div', {
-                    class: "cursor-pointer mr-6" + (assetRecords.switchValue === 1 ? ' has-text-primary' : ''),
+                    class: "cursor-pointer mr-7" + (assetRecords.switchValue === 1 ? ' has-text-primary' : ''),
                     onclick: function () {
                         assetRecords.switchEvnet(1);
                     }
                 }, ['交易账户']),
-                m('div', {
-                    class: "cursor-pointer mr-6" + (assetRecords.switchValue === 2 ? ' has-text-primary' : ''),
-                    onclick: function () {
-                        assetRecords.switchEvnet(2);
-                    }
-                }, ['其他账户'])
+                m('div', {}, ['其他账户'])
             ]),
             assetRecords.switchContent()
         ]);
