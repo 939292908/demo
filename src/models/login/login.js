@@ -1,5 +1,5 @@
 const m = require('mithril');
-const geetest = require('@/libs/geetestTwo');
+const geetest = require('@/libs/oldGeetestTwo');
 const md5 = require('md5');
 
 module.exports = {
@@ -102,7 +102,6 @@ module.exports = {
                 }
                 // this.loginSms = res.result.loginSms;
             } else {
-                this.loading = false;
                 window.$message({
                     content: window.errCode.getWebApiErrorCode(res.result.code),
                     type: 'danger'
@@ -110,11 +109,12 @@ module.exports = {
             }
         }, err => {
             window._console.log('tlh', err);
-            this.loading = false;
             window.$message({
                 content: window.gI18n.$t('10683') + '(请求异常)',
                 type: 'danger'
             });
+            this.loading = false;
+            m.redraw();
         });
     },
     loginEnter() {
@@ -123,19 +123,21 @@ module.exports = {
                 this.checkAccountPwd();
                 this.getUserInfo();
             } else {
-                this.loading = false;
                 window.$message({
                     content: window.gI18n.$t('10683') + `(${res.result.code})`,
                     type: 'danger'
                 });
+                this.loading = false;
+                m.redraw();
             }
         }, err => {
-            this.loading = false;
             window._console.log('tlh', err);
             window.$message({
                 content: window.gI18n.$t('10683') + '(请求异常)',
                 type: 'danger'
             });
+            this.loading = false;
+            m.redraw();
         });
     },
     getUserInfo() {
@@ -164,11 +166,12 @@ module.exports = {
                 // window.gBroadcast.emit({cmd: "setIsLogin", data: false});
             }
         }, err => {
-            this.loading = false;
             window.$message({
                 content: `网络异常，请稍后重试 ${err}`,
                 type: 'danger'
             });
+            this.loading = false;
+            m.redraw();
         });
     },
     // 判断是否设置资产密码

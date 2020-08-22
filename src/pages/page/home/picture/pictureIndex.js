@@ -1,15 +1,15 @@
 const m = require('mithril');
 const Slideshow = require('@/views/components/slideshow/leftToRight');
-require('@/styles/pages/home/picture.scss');
-
+const broadcast = require('@/broadcast/broadcast');
+require('@/styles/pages/home.css');
 const market = require('@/models/market/market');
 
 module.exports = {
     oninit: function () {
         market.init();
-        window.gBroadcast.onMsg({
+        broadcast.onMsg({
             key: "picture",
-            cmd: window.gBroadcast.MSG_ASSETD_UPD,
+            cmd: broadcast.MSG_ASSETD_UPD,
             cb: this.assetDCallBack
         });
     },
@@ -21,9 +21,9 @@ module.exports = {
         }, [
             // 大图
             m('div', { class: `home-picture container` }, [
-                m('img', { class: 'picture-layer', src: require("@/assets/img/home/layer 4.png").default }),
+                m('img', { class: 'picture-layer', src: require("@/assets/img/home/layer-4.png").default }),
                 // 轮播2
-                m('div', { class: `home-picture-banner container my-7` }, [
+                m('div', { class: `rotationtwo-content container mt-7` }, [
                     Object.keys(market.tickData).length > 0 ? m(Slideshow, { list: market.tickData }) : null
                 ])
             ])
@@ -31,7 +31,7 @@ module.exports = {
     },
     onremove: function() {
         market.remove();
-        window.gBroadcast.onMsg({
+        broadcast.onMsg({
             key: "picture",
             isall: true
         });

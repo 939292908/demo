@@ -1012,7 +1012,7 @@ class webApi {
         s.axios.request({
             method: "get",
             url: s.axios.baseUrl + API.DESKTOP_BANNER_V2,
-            data: qs.stringify(aData),
+            data: aData,
             options: {}
         }).then(function (result) {
             const arg = result.data;
@@ -1035,7 +1035,7 @@ class webApi {
         s.axios.request({
             method: "get",
             url: s.axios.baseUrl + API.ANNOUNCEMENTS_LATEST,
-            data: qs.stringify(aData),
+            data: aData,
             options: {}
         }).then(function (result) {
             const arg = result.data;

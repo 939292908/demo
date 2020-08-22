@@ -28,6 +28,94 @@
     align-items: end;
 }
 
+// 左 斜切
+.skew-left {
+    position: relative;
+    border: none;
+    &::before {
+        display: block;
+        content: "";
+        width: 10px;
+        height: 100%;
+        position: absolute;
+        left: -4px;
+        background-color: inherit;
+        transform: skewX(-8deg);
+    }
+}
+// 右 斜切
+.skew-right {
+    position: relative;
+    border: none;
+    &::after {
+        display: block;
+        content: "";
+        width: 10px;
+        height: 100%;
+        position: absolute;
+        right: -4px;
+        background-color: inherit;
+        transform: skewX(-8deg);
+    }
+}
+
+// hover 提示消息
+.my-tooltip {
+    .bdb-dashed {
+        // 下边框-虚线
+        border-bottom: 1px dashed;
+    }
+    .dropdown-menu {
+        padding-top: 6px;
+        // 三角形
+        &::before {
+            content: "";
+            width: 0;
+            height: 0;
+            position: absolute;
+            z-index: 9;
+            top: 0;
+            transform: translateY(-50%);
+            border-top: solid 6px transparent !important;
+            border-left: solid 6px transparent !important;
+            border-right: solid 6px transparent !important;
+            border-bottom: solid 6px;
+        }
+        // 提示 居中
+        &.my-tooltip-center {
+            left: 50%;
+            right: auto;
+            transform: translateX(-50%);
+            // 三角形
+            &::before {
+                left: 50%;
+                right: auto;
+                transform: translate(-50%, -50%);
+            }
+        }
+        // 提示 居左
+        &.my-tooltip-left {
+            left: 0;
+            right: auto;
+            // 三角形
+            &::before {
+                left: 5%;
+                right: auto;
+            }
+        }
+        // 提示 居右
+        &.my-tooltip-right {
+            right: 0;
+            left: auto;
+            // 三角形
+            &::before {
+                right: 5%;
+                left: auto;
+            }
+        }
+    }
+}
+
 /* 动画相关 start */
 @keyframes sliding-out-from-right {
     from {

@@ -1,8 +1,9 @@
 const m = require('mithril');
-const geetest = require('@/libs/geetestTwo');
+const geetest = require('@/libs/oldGeetestTwo');
 const cryptoChar = require('@/util/cryptoChar');
 const config = require('@/config');
 const md5 = require('md5');
+const Http = require('@/newApi');
 
 module.exports = {
     type: 'phone',
@@ -104,12 +105,12 @@ module.exports = {
     },
     // 查询是否注册顾过
     queryUserInfo () {
-        window.gWebApi.queryUserInfo({
+        Http.queryUserInfo({
             loginType: this.type,
             loginName: this.loginName,
             nationNo: '00' + this.areaCode,
             exChannel: window.exchId
-        }, res => {
+        }).then(res => {
             this.loading = false;
             if (res.result.code === 0) {
                 if (res.exists === 1) {
@@ -126,14 +127,14 @@ module.exports = {
             } else {
                 window.$message({ content: window.errCode.getWebApiErrorCode(res.result.code), type: 'danger' });
             }
-        }, () => {
+        }).catch(() => {
             window.$message({ content: '网络异常，请稍后重试', type: 'danger' });
             this.loading = false;
             m.redraw();
         });
     },
     register () {
-        window.gWebApi.usersRegister({
+        Http.usersRegister({
             loginType: this.type,
             loginName: this.loginName,
             pass: md5(this.password),
@@ -143,7 +144,7 @@ module.exports = {
             os: this.os,
             nationNo: '00' + this.areaCode,
             exChannel: window.exchId
-        }, res => {
+        }).then(res => {
             if (res.result.code === 0) {
                 // 注册成功
                 window.$message({ content: '注册成功', type: 'success' });
@@ -152,7 +153,7 @@ module.exports = {
                 // 输入信息有误
                 window.$message({ content: window.errCode.getWebApiErrorCode(res.result.code), type: 'danger' });
             }
-        }, () => {
+        }).catch(() => {
             window.$message({ content: '网络异常，请稍后重试', type: 'danger' });
         });
     },
@@ -207,22 +208,19 @@ module.exports = {
     },
 
     getCountryList () {
-        window.gWebApi.getCountryList({}, res => {
+        Http.getCountryList({}).then(res => {
             if (res.result.code === 0) {
                 this.selectList = res.result.data;
                 m.redraw();
             }
-        }, () => {
         });
     },
 
     getExchInfo () {
-        window.gWebApi.getExchInfo({ exchannel: window.exchId }, res => {
+        Http.getExchInfo({ exchannel: window.exchId }).then(res => {
             if (res.result.code === 0) {
                 this.exchInfo = res.result.data;
             }
-        }, () => {
-
         });
     },
 

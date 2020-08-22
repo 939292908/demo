@@ -1,4 +1,7 @@
+
+// import broadcast from '@/broadcast/broadcast';
 const m = require('mithril');
+const broadcast = require('@/broadcast/broadcast');
 
 require('@/styles/pages/Myassets/tradingAccount.scss');
 const tradingAccountContract = require('@/views/pages/Myassets/tradingAccount_contract');
@@ -10,6 +13,7 @@ const tradingAccount = {
     pageFlag: 0,
     setPageFlag: function (param) {
         this.pageFlag = param;
+        console.log('pageFlag', param);
     },
     switchContent: function () {
         switch (this.pageFlag) {
@@ -21,21 +25,47 @@ const tradingAccount = {
             return m(tradingAccountLegal);
         }
     },
-    tradingAccountPage: function () {
-        return m('div.tradingAccount', {}, [
-            m('div.tradingAccount_nav', [
-                m('div', { class: "cursor-pointer " + (tradingAccount.pageFlag === 0 ? "is-cyan" : ''), onclick: function () { tradingAccount.setPageFlag(0); } }, '合约账户'),
-                m('div', { class: "cursor-pointer " + (tradingAccount.pageFlag === 1 ? "is-purple" : ''), onclick: function () { tradingAccount.setPageFlag(1); } }, '币币账户'),
-                m('div', { class: "cursor-pointer " + (tradingAccount.pageFlag === 2 ? "is-red" : ''), onclick: function () { tradingAccount.setPageFlag(2); } }, '法币账户')
+    navAry: ['合约账户', '币币账户', '法币账户'],
+    tradingAccountPage: function (vnode) {
+        return m('div.tradingAccount mb-3', {}, [
+            m('ul.tradingAccount_nav ml-5 tabs', [
+                tradingAccount.navAry.map((item, index) => {
+                    return m('li', { class: 'cursor-pointer mr-8 ' + (tradingAccount.pageFlag === index ? "is-active" : ''), onclick: function () { tradingAccount.setPageFlag(index); } }, m('a', {}, item));
+                })
             ]),
+            // m('ul.tradingAccount_nav ml-5', [
+            //     tradingAccount.navAry.map((item, index) => {
+            //         return m('li', { class: 'cursor-pointer mr-8 ' + (tradingAccount.pageFlag === index ? "has-text-primary" : ''), onclick: function () { tradingAccount.setPageFlag(index); } }, item);
+            //     })
+            // ]),
+            vnode.attrs.idx,
             tradingAccount.switchContent()
         ]);
     }
 };
 module.exports = {
-    view: function () {
-        return m('div', { class: 'views-pages-myassets-tradingAccount' }, [
-            tradingAccount.tradingAccountPage()
+    oninit: function () {
+        tradingAccount.setPageFlag(0);
+        broadcast.onMsg({
+            key: 'tradingAccount',
+            cmd: broadcast.MA_CHANGE_TRADE_PAGE,
+            cb: function (arg) {
+                if (arg !== null) {
+                    tradingAccount.setPageFlag(arg);
+                    tradingAccount.switchContent();
+                }
+            }
+        });
+    },
+    view: function (vnode) {
+        return m('div', { class: 'views-pages-myassets-tradingAccount pt-4' }, [
+            tradingAccount.tradingAccountPage(vnode)
         ]);
+    },
+    onremove: function () {
+        broadcast.offMsg({
+            key: 'tradingAccount',
+            isall: true
+        });
     }
 };

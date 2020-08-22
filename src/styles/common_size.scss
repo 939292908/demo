@@ -34,7 +34,7 @@ body,
 
 /* 文字大小 根据pc和手机的尺寸不同来区分对应类名的字体大小 */
 
-@media screen and (min-width: 769px) {
+@media screen and (max-width: 769px) {
     .title-small {
         font-size: var(--c-fontsz-level6);
         font-weight: var(--c-fontweight-level3);
@@ -85,7 +85,7 @@ body,
     }
 }
 
-@media screen and (max-width: 769px) {
+@media screen and (min-width: 769px) {
     .title-small {
         font-size: var(--c-fontsz-level6);
         font-weight: var(--c-fontweight-level3);

@@ -145,6 +145,13 @@
     color: var(--c-primary-darken) !important;
 }
 
+/* 鼠标移上显示主色调 hover */
+.theme--dark .has-text-primary-hover {
+    &:hover {
+        color: var(--c-primary-darken) !important;
+    }
+}
+
 /* 跌红 */
 .theme--dark .has-text-up {
     color: var(--c-red-darken);
@@ -352,6 +359,13 @@
 /* 主色调 */
 .theme--light .has-text-primary {
     color: var(--c-primary-lighten) !important;
+}
+
+/* 主色调 hover */
+.theme--light .has-text-primary-hover {
+    &:hover {
+        color: var(--c-primary-lighten) !important;
+    }
 }
 
 /* 跌红 */

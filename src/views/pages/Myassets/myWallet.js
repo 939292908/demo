@@ -1,5 +1,6 @@
 const m = require('mithril');
 const table = require('@/views/pages/Myassets/tradeTable');
+const broadcast = require('@/broadcast/broadcast');
 
 module.exports = {
     currency: 'BTC',
@@ -7,9 +8,9 @@ module.exports = {
         this.currency = param;
     },
     oninit: function () {
-        window.gBroadcast.onMsg({
+        broadcast.onMsg({
             key: 'myWallet',
-            cmd: window.gBroadcast.CHANGE_SW_CURRENCY,
+            cmd: broadcast.CHANGE_SW_CURRENCY,
             cb: (arg) => {
                 this.setCurrency(arg);
             }
@@ -21,7 +22,7 @@ module.exports = {
         ]);
     },
     onremove: function () {
-        window.gBroadcast.offMsg({
+        broadcast.offMsg({
             key: 'myWallet',
             isall: true
         });

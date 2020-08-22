@@ -2,6 +2,7 @@ const geeObj = {
     captchaObj: null,
     isloading: false
 };
+const Http = require('@/newApi');
 
 geeObj.initGee = function (readyCallBack) {
     geeObj.isloading = true;
@@ -25,11 +26,11 @@ geeObj.initGee = function (readyCallBack) {
     const onSuccess = function (captchaObj) {
         const result = captchaObj.getValidate();
         geeObj.isloading = false;
-        window.gWebApi.geetestValidate({
+        Http.geetestValidate({
             geetest_challenge: result.geetest_challenge,
             geetest_validate: result.geetest_validate,
             geetest_seccode: result.geetest_seccode
-        }, data => {
+        }).then(data => {
             if (data.status === "success") {
                 window.gBroadcast.emit({ cmd: 'geetestMsg', data: 'success' });
                 // captchaObj.destroy()
@@ -44,13 +45,12 @@ geeObj.initGee = function (readyCallBack) {
                 window.$message({ content: `${data.status || 'Other fail'} 极验验证失败，请稍后重试 (${data.code})`, type: 'danger' });
                 captchaObj.reset();
             }
-        }, () => {
+        }).catch(() => {
             // 提示验证码失败
             window.gBroadcast.emit({ cmd: 'geetestMsg', data: 'fail' });
             window.$message({ content: '网络异常，请稍后重试', type: 'danger' });
             captchaObj.reset();
-        }
-        );
+        });
     };
 
     const onError = function () {
@@ -64,7 +64,7 @@ geeObj.initGee = function (readyCallBack) {
         window.gBroadcast.emit({ cmd: 'geetestMsg', data: 'close' });
     };
 
-    window.gWebApi.geetestRegister({ t: new Date().getTime() }, data => {
+    Http.geetestRegister({ t: new Date().getTime() }).then(data => {
         window.initGeetest({
             gt: data.gt,
             challenge: data.challenge,
@@ -88,9 +88,8 @@ geeObj.initGee = function (readyCallBack) {
                 .onClose(() => {
                     onClose();
                 });
-        }
-        );
-    }, () => {
+        });
+    }).catch(() => {
         geeObj.isloading = false;
         // console.log(API.GEETEST_REGISTER, err);
     });
