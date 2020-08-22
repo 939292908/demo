@@ -1,37 +1,33 @@
+const { getUserInfo, loginCheckV2, loginWebV2 } = require('@/newApi');
 const m = require('mithril');
-const geetest = require('@/libs/oldGeetestTwo');
+const geetest = require('@/models/validate/geetest').default;
 const md5 = require('md5');
+const userInfo = require('@/models/login/userInfo');
+const utils = require('@/util/utils').default;
+const I18n = require('@/languages/I18n').default;
+const broadcast = require('@/broadcast/broadcast');
+const errCode = require('@/util/errCode').default;
+const config = require('@/config');
+const validate = require('@/models/validate/validate').default;
 
 module.exports = {
-    account: '',
-    password: '',
+    account: '233233233',
+    password: 'a123456',
     loginType: 'phone',
     loading: false,
     is2fa: false,
-    /**
-     * 验证码列表
-     * [
-     *      {
-     *          key: window.validate.sms,
-     *          name: '手机验证码',
-     *          code: ''
-     *      },
-     *      ...
-     * ]
-     */
-    // validateCode: [], // 验证码列表
     rulesEmail: {
         required: value => !!value || '该字段不能为空', // 该字段不能为空
         email: value => {
             const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-            return pattern.test(value) || window.gI18n.$t('10668'); // 邮箱格式不正确
+            return pattern.test(value) || I18n.$t('10668'); // 邮箱格式不正确
         }
     },
     rulesPhone: {
         required: value => !!value || '该字段不能为空', // 该字段不能为空
         phone: value => {
             const pattern = /^[1][0-9]{10}$/;
-            return pattern.test(value) || window.gI18n.$t('10669'); // 手机号码不正确
+            return pattern.test(value) || I18n.$t('10669'); // 手机号码不正确
         }
     },
     rulesAll: {
@@ -58,19 +54,19 @@ module.exports = {
         }
     },
     loginFn() {
-        window.gWebApi.loginCheckV2({
+        loginCheckV2({
             loginType: this.loginType,
             loginName: this.account,
             pass: md5(this.password),
-            exChannel: window.exchId
-        }, res => {
+            exChannel: config.exchId
+        }).then(res => {
             if (res.result.code === 0) {
                 // 2fa 设置: email2fa, phone2fa, ga2fa
                 if (!!res.result.phone && !!res.result.googleId) {
                     this.loading = false;
                     // 手机和谷歌
-                    window.validate.activeSmsAndGoogle({
-                        securePhone: window.utils.hideMobileInfo(res.result.phone),
+                    validate.activeSmsAndGoogle({
+                        securePhone: utils.hideMobileInfo(res.result.phone),
                         phoneNum: res.result.phone
                     }, () => {
                         this.loginEnter();
@@ -80,8 +76,8 @@ module.exports = {
                 } else if (res.result.phone) {
                     this.loading = false;
                     // 手机
-                    window.validate.activeSms({
-                        securePhone: window.utils.hideMobileInfo(res.result.phone),
+                    validate.activeSms({
+                        securePhone: utils.hideMobileInfo(res.result.phone),
                         phoneNum: res.result.phone
                     },
                     () => {
@@ -92,7 +88,7 @@ module.exports = {
                 } else if (res.result.googleId) {
                     this.loading = false;
                     // 谷歌
-                    window.validate.activeGoogle(() => {
+                    validate.activeGoogle(() => {
                         this.loginEnter();
                     });
                     this.is2fa = true;
@@ -104,14 +100,14 @@ module.exports = {
             } else {
                 this.loading = false;
                 window.$message({
-                    content: window.errCode.getWebApiErrorCode(res.result.code),
+                    content: errCode.getWebApiErrorCode(res.result.code),
                     type: 'danger'
                 });
             }
-        }, err => {
-            window._console.log('tlh', err);
+        }).catch(err => {
+            window.console.log('tlh', err);
             window.$message({
-                content: window.gI18n.$t('10683') + '(请求异常)',
+                content: I18n.$t('10683') + '(请求异常)',
                 type: 'danger'
             });
             this.loading = false;
@@ -119,22 +115,22 @@ module.exports = {
         });
     },
     loginEnter() {
-        window.gWebApi.loginWebV2({}, res => {
+        loginWebV2({}).then(res => {
             if (res.result.code === 0) {
                 this.checkAccountPwd();
                 this.getUserInfo();
             } else {
                 window.$message({
-                    content: window.gI18n.$t('10683') + `(${res.result.code})`,
+                    content: I18n.$t('10683') + `(${res.result.code})`,
                     type: 'danger'
                 });
                 this.loading = false;
                 m.redraw();
             }
-        }, err => {
-            window._console.log('tlh', err);
+        }).catch(err => {
+            window.console.log('tlh', err);
             window.$message({
-                content: window.gI18n.$t('10683') + '(请求异常)',
+                content: I18n.$t('10683') + '(请求异常)',
                 type: 'danger'
             });
             this.loading = false;
@@ -142,16 +138,16 @@ module.exports = {
         });
     },
     getUserInfo() {
-        window.gWebApi.getUserInfo({}, data => {
-            window.gWebApi.loginState = true;
+        getUserInfo({}).then(data => {
+            userInfo.setLoginState(true);
             self.loading = false;
             if (data.result.code === 0) {
-                window.utils.setItem('userAccount', data.account.accountName);
-                window.utils.setItem('userInfo', data.account);
-                // window.gBroadcast.emit({cmd: 'setShowPhone', data: !!res.account.phone});
-                // window.gBroadcast.emit({cmd: 'setShowGoogle', data: !!res.account.googleId});self.$store.dispatch("setIsLogin", true);
+                utils.setItem('userAccount', data.account.accountName);
+                utils.setItem('userInfo', data.account);
+                // broadcast.emit({cmd: 'setShowPhone', data: !!res.result.account.phone});
+                // broadcast.emit({cmd: 'setShowGoogle', data: !!res.result.account.googleId});self.$store.dispatch("setIsLogin", true);
                 // 获取个人信息成功
-                // window.gBroadcast.emit({cmd: "addAccount", data: data.account});
+                // broadcast.emit({cmd: "addAccount", data: data.account});
 
                 // 发送登录邮件、短信
                 // self.sendloginTip(data.account)
@@ -159,14 +155,14 @@ module.exports = {
                 // if (store.state.httpResCheckCfg.state[10] == 2) {
                 //     this.$set(store.state.httpResCheckCfg.state, 10, 0)
                 // }
-                // window.gBroadcast.emit({cmd: "getDeivceInfo", data: {op: 'login'}});
-                window.gWebApi.loginState = true;
+                // broadcast.emit({cmd: "getDeivceInfo", data: {op: 'login'}});
+                userInfo.setLoginState(true);
                 window.router.push('/home');
             } else if (data.result.code === 1001) {
                 // 获取个人信息不成功
-                // window.gBroadcast.emit({cmd: "setIsLogin", data: false});
+                // broadcast.emit({cmd: "setIsLogin", data: false});
             }
-        }, err => {
+        }).catch(err => {
             window.$message({
                 content: `网络异常，请稍后重试 ${err}`,
                 type: 'danger'
@@ -182,7 +178,7 @@ module.exports = {
     initGeetest() {
         geetest.init(() => {
         });
-        window.gBroadcast.onMsg({
+        broadcast.onMsg({
             key: 'login',
             cmd: 'geetestMsg',
             cb: res => {
@@ -196,19 +192,19 @@ module.exports = {
         });
     },
     oninit() {
-        if (window.gWebApi.loginState && window.utils.getItem('ex-session')) {
+        if (userInfo.getLoginState() && utils.getItem('ex-session')) {
             window.router.push('/home');
             return;
         }
-        if (window.utils.getItem('userAccount')) {
-            this.account = window.utils.getItem('userAccount');
+        if (utils.getItem('userAccount')) {
+            this.account = utils.getItem('userAccount');
         }
         this.initGeetest();
     },
     onremove() {
         this.is2fa = false;
-        window.validate.close();
-        window.gBroadcast.offMsg({
+        validate.close();
+        broadcast.offMsg({
             key: 'login',
             cmd: 'geetestMsg',
             isall: true

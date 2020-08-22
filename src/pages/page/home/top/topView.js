@@ -22,7 +22,7 @@ module.exports = function (props) {
                 ]),
                 // 公告
                 m('div', { class: `mt-6 mb-8` }, [
-                    noticeList.length > 0 ? m(SlideshowNotice, { noticeList, click: this.handleNoticeClick }) : null
+                    noticeList.length > 0 ? m(SlideshowNotice, { noticeList, click: props.handleNoticeClick }) : null
                 ])
             ])
         ])

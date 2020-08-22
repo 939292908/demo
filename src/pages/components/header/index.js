@@ -1,6 +1,4 @@
 const m = require('mithril');
-const utils = require('../../../util/utils');
-const broadcast = require('../../../broadcast/broadcast');
 const titleLogo = require("@/assets/img/logo/title-logo.png").default;
 const I18n = require("../../../languages/I18n").default;
 const Tooltip = require('@/views/components/common/Tooltip');
@@ -108,14 +106,6 @@ module.exports = {
             m('div.navbar-end', {}, [
                 m('div.navbar-item'/* + (window.gWebApi.loginState ? '.is-hidden' : '') */, {}, [
                     m('div.buttons', {}, [
-                        m('div.button', {
-                            onclick: function () {
-                                utils.default.setItem('themeDark', true);
-                                broadcast.default.emit({ cmd: 'setTheme', data: {} });
-                            }
-                        }, [
-                            "切换"
-                        ]),
                         m('div.button', {
                             onclick: function () {
                                 window.router.push('/login');
