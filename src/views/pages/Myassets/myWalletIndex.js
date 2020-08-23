@@ -1,12 +1,11 @@
 const m = require('mithril');
-// const broadcast = require('@/broadcast/broadcast');
 
 require('@/styles/pages/Myassets/myWalletIndex.scss');
 
 const tradingAccount = require('@/views/pages/Myassets/tradingAccount');
 const myWallet = require('@/views/pages/Myassets/myWallet');
 const wlt = require('@/models/wlt/wlt');
-const header = require('@/views/pages/Myassets/header');
+const header = require('@/pages/page/myAssets/header/HeaderIndex');
 const broadcast = require('@/broadcast/broadcast');
 const Http = require('@/newApi/index');
 
@@ -67,7 +66,11 @@ const myWalletIndex = {
         myWalletIndex.contractTotal = param;
     },
     swValue: 0, // 0:我的钱包 1:交易账户 2:其他账户
-    switchChange: function (val) {
+    switchChange: function (val, type) {
+        console.log('type', type);
+        if (type) {
+            this.wltIdx = val;
+        }
         myWalletIndex.swValue = val;
     },
     wltIdx: 0,
@@ -165,10 +168,13 @@ const myWalletIndex = {
         }
     },
     changeTradeAccount: function(param) {
+        console.log('param-------------------------', param);
         // 点击交易账户(...)中则显示对应page
         myWalletIndex.switchChange(1);
         this.wltIdx = param;
-        broadcast.emit({ cmd: broadcast.MA_CHANGE_TRADE_PAGE, data: param });
+        window.event.stopPropagation();
+        myWalletIndex.switchContent();
+        // broadcast.emit({ cmd: broadcast.MA_CHANGE_TRADE_PAGE, data: param });
     },
     assetValuation: function () {
         return m('div', { onclick: function() { myWalletIndex.optionDisplay(event); } }, [
@@ -233,7 +239,7 @@ const myWalletIndex = {
                         ]),
                         m('div.trade border-radius-medium px-7 py-7 mx-5 column', {
                             class: (myWalletIndex.swValue === 1 ? 'has-bg-primary' : 'has-bg-level-2'),
-                            onclick: function() { myWalletIndex.switchChange(1); }
+                            onclick: function() { myWalletIndex.switchChange(1, true); }
                         }, [
                             m('div.left', {}, [
                                 m('div', { class: 'body-5 mb-1 has-text-level-3' }, [
@@ -256,11 +262,11 @@ const myWalletIndex = {
                                     style: { display: 'none' }
                                 }, [
                                     m('span.mb-1', '合约账户'),
-                                    m('a.mb-5 has-text-level-3', { onclick: function () { myWalletIndex.changeTradeAccount(0); } }, myWalletIndex.contractTotal + ' ' + myWalletIndex.currency),
+                                    m('a.mb-5 has-text-level-3', { onclick: function () { myWalletIndex.changeTradeAccount(1); } }, myWalletIndex.contractTotal + ' ' + myWalletIndex.currency),
                                     m('span.mb-1', '币币账户'),
-                                    m('a.mb-5 has-text-level-3', { onclick: function () { myWalletIndex.changeTradeAccount(1); } }, myWalletIndex.coinTotal + ' ' + myWalletIndex.currency),
+                                    m('a.mb-5 has-text-level-3', { onclick: function () { myWalletIndex.changeTradeAccount(2); } }, myWalletIndex.coinTotal + ' ' + myWalletIndex.currency),
                                     m('span.mb-1', '法币账户'),
-                                    m('a.has-text-level-3', { onclick: function () { myWalletIndex.changeTradeAccount(2); } }, myWalletIndex.legalTotal + ' ' + myWalletIndex.currency)
+                                    m('a.has-text-level-3', { onclick: function () { myWalletIndex.changeTradeAccount(4); } }, myWalletIndex.legalTotal + ' ' + myWalletIndex.currency)
                                 ])
                             ])
                         ]),
