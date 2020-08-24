@@ -38,11 +38,11 @@ let obj = {
         // 表头
         this.tableColumns = [
             {
-                title: '时间',
+                title: gDI18n.$t('10103'), //'时间',
                 key: 'sj'
             },
             {
-                title: '合约',
+                title: gDI18n.$t('10053'), //'合约',
                 key: 'hy'
             },
             {
@@ -50,7 +50,7 @@ let obj = {
                 key: 'zj'
             },
             {
-                title: '资金费率',
+                title: gDI18n.$t('10020'), //'资金费率',
                 key: 'fl'
             }
         ]
@@ -64,8 +64,8 @@ let obj = {
             this.allTableData.push({
                 // sj: '2020-01-22 12:20:00',
                 sj: new Date().format('yyyy-MM-dd hh:mm:ss'),
-                hy: 'BTC/USDT 永续',
-                zj: i + '小时',
+                hy: `BTC/USDT ${gDI18n.$t('10422')}`, //永续
+                zj: gDI18n.$t('10556', { value: i }), //i + '小时',
                 fl: i + '%'
             })
         }
@@ -122,7 +122,9 @@ export default {
             m('div', { class: `futureIndex-filter is-flex` }, [
                 // 合约下拉列表
                 m('div', { class: "inf_dropdown" }, [
-                    m('span', { class: "inf_body_span inf_body_font" }, ['合约']),
+                    m('span', { class: "inf_body_span inf_body_font" }, [
+                        gDI18n.$t('10053') //'合约'
+                    ]),
                     m(Dropdown, {
                         activeId: cb => cb(obj, 'contractId'),
                         showMenu: obj.showMenu,

@@ -20,24 +20,7 @@ let obj = {
     tableList:[],
     SymList: ['CI_ETH'],
     // 表头
-    tableColumns: [
-        {
-            title: '交易所',
-            key: 'jys'
-        },
-        {
-            title: '货币对',
-            key: 'hbd'
-        },
-        {
-            title: '当前报价',
-            key: 'dqbj'
-        },
-        {
-            title: '权重',
-            key: 'qz'
-        }
-    ],
+    tableColumns: [],
 
     //初始化全局广播
     initEVBUS: function(){
@@ -199,7 +182,9 @@ export default {
             m('div', { class: `futureIndex-filter is-flex` }, [
                 // 指数下拉列表
                 m('div', { class: "inf_dropdown" }, [
-                    m('span', { class: "inf_body_span inf_body_font" }, ['指数']),
+                    m('span', { class: "inf_body_span inf_body_font" }, [
+                        gDI18n.$t('10413'), //'指数'
+                    ]),
                     m(Dropdown, {
                         activeId: cb => cb(obj, 'exponentId'),
                         showMenu: obj.showMenuExponent,
@@ -220,13 +205,17 @@ export default {
                     obj.exponentList[exponent] ? obj.exponentList[exponent].label :"--"
                 ]),
                 m('div', { class: `inf_body_TD` }, [
-                    (obj.exponentList[exponent] ? obj.exponentList[exponent].vie :"--") + "指数跟踪" + (obj.exponentList[exponent] ? obj.exponentList[exponent].vie :"--") + "/USDT币币价格，该指数代表了标的资产的市场共识价格，其价格源自于多个现货交易所。通过数据可用性验证的参考交易所报价，将经过加权计算后得到最终的指数。具体参考交易所报价的来源和权重，请参考下面的“指数成分分解”。"
+                    // (obj.exponentList[exponent] ? obj.exponentList[exponent].vie :"--") + "指数跟踪" + (obj.exponentList[exponent] ? obj.exponentList[exponent].vie :"--") + "/USDT币币价格，该指数代表了标的资产的市场共识价格，其价格源自于多个现货交易所。通过数据可用性验证的参考交易所报价，将经过加权计算后得到最终的指数。具体参考交易所报价的来源和权重，请参考下面的“指数成分分解”。"
+                    gDI18n.$t('10553', {
+                        value1: obj.exponentList[exponent] ? obj.exponentList[exponent].vie :"--",
+                        value2: (obj.exponentList[exponent] ? obj.exponentList[exponent].vie :"--") + "/USDT"
+                    }),
                 ])
             ]),
             // k线
             m('div', { class: `futureIndex-kline inf_dropdown inf_body_conent` }, [
                 m('div', { class: `inf_body_title_font` }, [
-                    (obj.exponentList[exponent] ? obj.exponentList[exponent].vie :"--") + '指数历史价值'
+                    gDI18n.$t('10554', { value: obj.exponentList[exponent] ? obj.exponentList[exponent].vie :"--" }), //'指数历史价值'
                 ]),
                 m('div', { class: " inf_body_kline kline_border" }, [
                     m(kline)
@@ -235,7 +224,7 @@ export default {
             // 表格
             m('div', { class: `futureIndex-table inf_dropdown inf_body_conent` }, [
                 m('div', { class: `inf_body_title_font` }, [
-                    (obj.exponentList[exponent] ? obj.exponentList[exponent].vie :"--") + '指数成分分解'
+                    gDI18n.$t('10555', { value: obj.exponentList[exponent] ? obj.exponentList[exponent].vie :"--" }), //指数成分分解
                 ]),
                 // table
                 m(Table, {
