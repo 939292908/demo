@@ -7,7 +7,7 @@ module.exports = function (props) {
     return m('div', { class: 'views-pages-myassets-myWalletIndex theme--light' }, [
         m('div', { onclick: function() { myWalletIndex.optionDisplay(event); } }, [
             m('div.top mb-8', { style: { height: '344px', width: '100%', backgroundColor: '#0E1C33' } }, [
-                m('div', { class: 'myWalletIndex-warpper container' }, [
+                m('div', { class: 'myWalletIndex-warpper container', style: { width: '1024px' } }, [
                     // highlightFlag:哪个高亮   0：我的资产  1：资产记录
                     m(Header, { highlightFlag: 0 }),
                     m('div', { class: 'myWalletIndex-head columns-flex mt-7' }, [
@@ -57,7 +57,7 @@ module.exports = function (props) {
                             class: (myWalletIndex.swValue === 0 ? 'has-bg-primary' : 'has-bg-level-2'),
                             onclick: function() { myWalletIndex.switchChange(0); }
                         }, [
-                            m('div', { class: 'body-5 mb-1 has-text-level-3' }, [
+                            m('div', { class: 'body-5 mb-1' }, [
                                 m('span', { }, '我的钱包')
                             ]),
                             m('div', { class: 'title-small ' }, [
@@ -70,7 +70,7 @@ module.exports = function (props) {
                             onclick: function() { myWalletIndex.switchChange(1, true); }
                         }, [
                             m('div.left', {}, [
-                                m('div', { class: 'body-5 mb-1 has-text-level-3' }, [
+                                m('div', { class: 'body-5 mb-1' }, [
                                     m('span', { }, '交易账户')
                                 ]),
                                 m('div', { class: 'title-small ' }, [
@@ -99,7 +99,7 @@ module.exports = function (props) {
                             ])
                         ]),
                         m('div.other border-radius-medium px-7 py-7 column has-bg-level-2', {}, [
-                            m('div', { class: 'body-5 mb-1 has-text-level-3' }, [
+                            m('div', { class: 'body-5 mb-1' }, [
                                 m('span', { }, '其他账户')
                             ]),
                             m('div', { class: 'title-small ' }, [
@@ -110,7 +110,7 @@ module.exports = function (props) {
                     ])
                 ])
             ]),
-            m('div', { class: 'myWalletIndex-table container pb-7' }, [
+            m('div', { class: 'myWalletIndex-table container pb-7', style: { width: '1024px' } }, [
                 myWalletIndex.switchContent()
             ])
         ])

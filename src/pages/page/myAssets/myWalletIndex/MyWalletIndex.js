@@ -1,7 +1,6 @@
 const m = require('mithril');
 const wlt = require('@/models/wlt/wlt');
 const broadcast = require('@/broadcast/broadcast');
-const Http = require('@/newApi/index');
 const MyWalletIndexView = require('@/pages/page/myAssets/myWalletIndex/MyWalletIndexView');
 const TradeAccountIndex = require('@/pages/page/myAssets/tradeAccount/TradeAccountIndex');
 const MyWalletIndex = require('@/pages/page/myAssets/myWallet/MyWalletIndex');
@@ -145,7 +144,7 @@ const myWalletIndex = {
         broadcast.emit({ cmd: broadcast.CHANGE_SW_CURRENCY, data: item });
         item === 'BTC' ? myWalletIndex.setTotalValue(wlt.totalValueForBTC) : myWalletIndex.setTotalValue(wlt.totalValueForUSDT);
         item === 'BTC' ? myWalletIndex.setWalletTotalValue(wlt.walletTotalValueForBTC) : myWalletIndex.setWalletTotalValue(wlt.walletTotalValueForUSDT);
-        item === 'BTC' ? myWalletIndex.setTradeAccountIndexTotalValue(wlt.TradeAccountIndexTotalValueForBTC) : myWalletIndex.setTradeAccountIndexTotalValue(wlt.TradeAccountIndexTotalValueForUSDT);
+        item === 'BTC' ? myWalletIndex.setTradingAccountTotalValue(wlt.tradingAccountTotalValueForBTC) : myWalletIndex.setTradingAccountTotalValue(wlt.tradingAccountTotalValueForUSDT);
     },
     // 点击除button的元素隐藏ul（仿select）
     optionDisplay: function(event) {
@@ -176,7 +175,7 @@ const myWalletIndex = {
     DelayDataAcquisition: function() {
         myWalletIndex.setTotalValue(wlt.totalValueForBTC);
         myWalletIndex.setWalletTotalValue(wlt.walletTotalValueForBTC);
-        myWalletIndex.setTradeAccountIndexTotalValue(wlt.TradeAccountIndexTotalValueForBTC);
+        myWalletIndex.setTradingAccountTotalValue(wlt.tradingAccountTotalValueForBTC);
         myWalletIndex.setLegalTotal(wlt.legalTotalValueForBTC);
         myWalletIndex.setContractTotal(wlt.contractTotalValueForBTC);
         myWalletIndex.setCoinTotal(wlt.coinTotalValueForBTC);
@@ -186,14 +185,14 @@ const myWalletIndex = {
 };
 module.exports = {
     oninit: function() {
-        Http.getWallet({
-            exChannel: 30
-        }).then(function(arg) {
-            console.log(arg, '11111');
-        });
+        // Http.getWallet({
+        //     exChannel: 30
+        // }).then(function(arg) {
+        //     console.log(arg, '11111');
+        // });
     },
     oncreate: function() {
-        // wlt.init();
+        wlt.init();
         setTimeout(myWalletIndex.DelayDataAcquisition, '100');
     },
     data: {
