@@ -31,6 +31,10 @@
     color: var(--c-primary-darken)
 }
 
+/* 白色背景 */
+.has-bg-white {
+    background-color: var(--c-background-lighten1) !important;
+}
 
 /* 背景颜色六级 */
 
@@ -124,7 +128,7 @@
 }
 
 .theme--dark .has-text-title,
-.theme--dark .has-text-title{
+.theme--dark .has-text-title {
     color: var(--c-font-darken);
 }
 
@@ -495,10 +499,12 @@ $primary-lighten: #FF8B00;
 ::-webkit-scrollbar-track-piece {
     background: var(--c-background-lighten1);
 }
+
 ::-webkit-scrollbar {
     width: 6px;
     height: 10px;
 }
+
 ::-webkit-scrollbar-thumb {
     background: var(--c-background-lighten2);
     border-radius: 20px;

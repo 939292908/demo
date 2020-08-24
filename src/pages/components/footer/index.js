@@ -99,16 +99,23 @@ module.exports = {
                     ]),
                     m('div', { class: `bottom-navigation-tab-2` }, [
                         m('p', { class: `has-text-level-4 body-6` }, ["联系我们"]),
-                        m('p', { class: `has-text-white  has-text-primary-hover has-text-level-2` }, m(Tooltip, {
-                            label: "服务邮箱",
-                            content: [
-                                m('div', { class: `is-flex` }, [
-                                    m('div', { class: `` }, ['support@vbit.one'])
-                                ])
-                            ]
-                        })),
+                        // m('p', { class: `has-text-white  has-text-primary-hover has-text-level-2` }, m(Tooltip, {
+                        //     label: "服务邮箱",
+                        //     content: [
+                        //         m('div', { class: `is-flex` }, [
+                        //             // m('div', { class: `` }, ['support@vbit.one'])
+                        //         ])
+                        //     ]
+                        // })),
 
                         // ),
+                        m('a', { class: `has-text-white has-text-primary-hover has-text-level-2` }, [
+                            m('div', {
+                                onclick: function () {
+                                    window.location = `mailto: support@vbit.one`;
+                                }
+                            }, ['服务邮箱'])
+                        ]),
                         m('p', { class: `has-text-white  has-text-primary-hover has-text-level-2` },
                             m(Tooltip, {
                                 label: "加入社群",
@@ -124,7 +131,7 @@ module.exports = {
                             content: [
                                 m('div', { class: `is-flex` }, [
                                     m('div', { class: `` }, [
-                                        m('img', { class: '', src: require("@/assets/img/home/Communitywechat.png").default })
+                                        m('img', { class: '', src: require("@/assets/img/home/QQcustomer_service.png").default })
                                     ])
                                 ])
                             ]

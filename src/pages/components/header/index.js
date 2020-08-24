@@ -173,7 +173,7 @@ module.exports = {
                         window.router.push('/');
                     }
                 }, [
-                    m('a', { class: `navbar-item has-text-primary-hover` }, ["订单"]),
+                    m('a', { class: `navbar-item has-text-primary-hover ` }, ["订单"]),
                     m('div', { class: `navbar-dropdown` }, [
                         m('a', { class: `navbar-item has-text-primary-hover` }, ["合约订单"]),
                         m('a', { class: `navbar-item has-text-primary-hover` }, ["币币订单"]),
@@ -245,10 +245,21 @@ module.exports = {
                 ]),
 
                 // 下载
-                m('div.navbar-item.cursor-pointer', { class: `has-text-primary-hover` }, [
+                m('div.navbar-item.cursor-pointer', { class: `has-text-primary-hover ` }, [
                     m(Tooltip, {
                         label: m('i.iconfont.icon-downLoad'),
-                        content: m('img', { class: 'header-download', src: require("@/assets/img/home/download.png").default })
+                        // class: 'header-download',
+                        width: '254px',
+                        height: '104px',
+                        content: m('div', { class: `is-flex` }, [
+                            m('img', { class: 'ml-3 mt-2', src: require("@/assets/img/home/download.png").default }),
+                            m('div', { class: `is-align-items-center` }, [
+                                m('div', { class: `` }, [
+                                    m('p', { class: `ml-4 mt-2 title-small` }, "扫码下载APP"),
+                                    m('p', { class: `ml-4  title-small` }, "iOS&Android")
+                                ])
+                            ])
+                        ])
                     })
                 ]),
                 // 切换线路

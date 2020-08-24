@@ -18,7 +18,7 @@ module.exports = {
                 vnode.attrs.label
             ]),
             m('div', { class: `dropdown-menu my-tooltip-${vnode.attrs.direction ? vnode.attrs.direction : 'center'} ${vnode.attrs.content ? '' : 'is-hidden'}` }, [
-                m('div', { class: "dropdown-content" }, [
+                m('div', { class: "dropdown-content", style: `${vnode.attrs.width ? 'width:' + vnode.attrs.width : ''};${vnode.attrs.height ? 'height:' + vnode.attrs.height : ''}` }, [
                     m('div', { class: "dropdown-item" }, [
                         vnode.attrs.content
                     ])
