@@ -18,6 +18,11 @@ m.route(document.querySelector('body .route-box'), defaultRoutePath, {
             return import('@/pages/page/login/register/registerView');
         }
     },
+    '/forgetPassword': {
+        onmatch: function () {
+            return import('@/pages/page/login/forgetPassword/forgetPasswordView');
+        }
+    },
     // '/myWalletIndex': {
     //     onmatch: function () {
     //         return import('@/views/pages/Myassets/myWalletIndex');
