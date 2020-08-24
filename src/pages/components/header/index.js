@@ -189,7 +189,7 @@ module.exports = {
                         m('a', { class: `navbar-item has-text-primary-hover` }, ["跟单订单"])
                     ])
                 ]),
-                // 我的
+                // 用户中心
                 m('a.navbar-item'/* + (!window.gWebApi.loginState ? '.is-hidden' : '') */, {
                     class: `has-dropdown is-hoverable`,
                     onclick: function () {
@@ -254,12 +254,10 @@ module.exports = {
 
                 // 下载
                 m('div.navbar-item.cursor-pointer', { class: `has-text-primary-hover` }, [
-                    m('span.icon', {}, [
-                        m(Tooltip, {
-                            label: m('i.iconfont.icon-downLoad'),
-                            content: m('img', { class: '', src: require("@/assets/img/home/QQcustomer_service.png").default })
-                        })
-                    ])
+                    m(Tooltip, {
+                        label: m('i.iconfont.icon-downLoad'),
+                        content: m('img', { class: '', src: require("@/assets/img/home/download.png").default })
+                    })
                 ]),
                 // 切换线路
                 m('a.navbar-item.cursor-pointer'/* + (!window.gWebApi.loginState ? '.is-hidden' : '') */, {
@@ -281,12 +279,12 @@ module.exports = {
                     ])
                 ]),
                 // 语言
-                m('div.navbar-item.has-dropdown.is-hoverable', {}, [
+                m('div.navbar-item.has-dropdown.is-hoverable  has-text-primary-hover', {}, [
                     m('div.navbar-link', {}, [
                         '简体中文/CNY'
                     ]),
                     m('div.navbar-dropdown', {}, [
-                        m('a.navbar-item', {
+                        m('a.navbar-item has-text-primary-hover', {
                             class: "" + (I18n.getLocale() === 'zh' ? ' is-active' : ''),
                             onclick: function () {
                                 I18n.setLocale('zh', res => {
@@ -296,7 +294,7 @@ module.exports = {
                         }, [
                             '简体中文'
                         ]),
-                        m('a.navbar-item', {
+                        m('a.navbar-item  has-text-primary-hover', {
                             class: "" + (I18n.getLocale() === 'en' ? ' is-active' : ''),
                             onclick: function () {
                                 I18n.setLocale('en', res => {
@@ -306,7 +304,7 @@ module.exports = {
                         }, [
                             'English'
                         ]),
-                        m('a.navbar-item', {
+                        m('a.navbar-item  has-text-primary-hover', {
                             class: "" + (I18n.getLocale() === 'tw' ? ' is-active' : ''),
                             onclick: function () {
                                 I18n.setLocale('tw', res => {
