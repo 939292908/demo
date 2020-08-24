@@ -1,9 +1,10 @@
 const m = require('mithril');
 
 require('@/styles/pages/Myassets/header.scss');
-const Header = require('@/pages/page/myAssets/header/HeaderIndex');
+// const Header = require('@/pages/page/myAssets/header/HeaderIndex');
 
-module.exports = function (vnode) {
+module.exports = function (props, vnode) {
+    const { Header } = props;
     // highlightFlag: 哪个高亮  0:我的资产高亮，1:资产记录高亮
     return m('div', { class: 'views-pages-myassets-header pl-3' }, [
         m('div', {

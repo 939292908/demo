@@ -1,8 +1,10 @@
 /**头部*/
-.head-download {
-    /* margin-top: 10px;
-    margin-left: 15px; */
+
+.header-download {
+    width: 64px;
+    height: 64px;
 }
+
 
 .navbar-item {
     margin-left: 10px;
@@ -123,12 +125,12 @@
     height: 74px;
 }
 
-.Android-button{
+.Android-button {
     width: 163px;
     height: 48px;
 }
 
-.IOS-button{
+.IOS-button {
     width: 163px;
     height: 48px;
 }
@@ -148,7 +150,7 @@
     line-height: 27px;
 }
 
-.community{
+.community {
     height: 17px;
 }
 
