@@ -1,5 +1,6 @@
 const m = require('mithril');
-
+const broadcast = require('@/broadcast/broadcast');
+const utils = require('@/util/utils').default;
 require('@/styles/pages/Myassets/assetRecords.scss');
 
 const commonSelectionBox = {
@@ -139,7 +140,7 @@ const commonSelectionBox = {
             m('div', { class: 'mr-6' }, [
                 m('p', { class: 'mb-2' }, ['时间']),
                 m('input[type=date]', {
-                    // value: window.utils.getItem('timeValue') ? window.utils.getItem('timeValue') : commonSelectionBox.typeValue,
+                    // value:utils.getItem('timeValue') ?utils.getItem('timeValue') : commonSelectionBox.typeValue,
                     class: 'has-line-level-1 identicalInput border-radius-small body-2',
                     id: 'fname',
                     required: 'required',
@@ -148,8 +149,8 @@ const commonSelectionBox = {
                             name: this.value,
                             num: 0
                         };
-                        window.gBroadcast.emit({ cmd: 'onAssetRecordsTable', data: data });
-                        window.utils.setItem('timeValue', this.value);
+                        broadcast.emit({ cmd: 'onAssetRecordsTable', data: data });
+                        utils.setItem('timeValue', this.value);
                     }
                 })
             ]),
@@ -162,9 +163,9 @@ const commonSelectionBox = {
                             name: this.value,
                             num: 1
                         };
-                        window.utils.setItem('currencyValue', e.target.selectedOptions[0].attributes.name.value);
+                        utils.setItem('currencyValue', e.target.selectedOptions[0].attributes.name.value);
                         // console.log(e.target.selectedOptions[0].attributes.name.value);
-                        window.gBroadcast.emit({ cmd: 'onAssetRecordsTable', data: data });
+                        broadcast.emit({ cmd: 'onAssetRecordsTable', data: data });
                     }
                 },
                 this.currencyValue.map(item => m('option', {
@@ -181,8 +182,8 @@ const commonSelectionBox = {
                             name: this.value,
                             num: 2
                         };
-                        // window.utils.setItem('typeValue', this.value);
-                        window.gBroadcast.emit({ cmd: 'onAssetRecordsTable', data: data });
+                        // utils.setItem('typeValue', this.value);
+                        broadcast.emit({ cmd: 'onAssetRecordsTable', data: data });
                     }
                 }, this.typeValue.map(item => m('option', {
                     name: item.name

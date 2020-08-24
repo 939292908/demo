@@ -7,7 +7,7 @@ module.exports = function (props) {
     return m('div', { class: 'views-pages-myassets-myWalletIndex theme--light' }, [
         m('div', { onclick: function() { myWalletIndex.optionDisplay(event); } }, [
             m('div.top mb-8', { style: { height: '344px', width: '100%', backgroundColor: '#0E1C33' } }, [
-                m('div', { class: 'myWalletIndex-warpper container', style: { width: '1024px' } }, [
+                m('div', { class: 'myWalletIndex-warpper container content-width' }, [
                     // highlightFlag:哪个高亮   0：我的资产  1：资产记录
                     m(Header, { highlightFlag: 0 }),
                     m('div', { class: 'myWalletIndex-head columns-flex mt-7' }, [
@@ -86,7 +86,7 @@ module.exports = function (props) {
                                 }, [
                                     m('span', { class: 'card1 title-medium' }, '...')
                                 ]),
-                                m('div.tradeCard body-2 border-radius-medium pa-7 has-bg-level-2', {
+                                m('div.tradeCard body-2 border-radius-medium pa-7 has-bg-level-2 box-shadow', {
                                     style: { display: 'none' }
                                 }, [
                                     m('span.mb-1', '合约账户'),
@@ -110,7 +110,7 @@ module.exports = function (props) {
                     ])
                 ])
             ]),
-            m('div', { class: 'myWalletIndex-table container pb-7', style: { width: '1024px' } }, [
+            m('div', { class: 'myWalletIndex-table container pb-7 content-width' }, [
                 myWalletIndex.switchContent()
             ])
         ])

@@ -73,7 +73,7 @@ export default {
             this.emailConfig = { exChannel: config.exchId };
         }
 
-        sendEmailV2(this.emailConfig);
+        return sendEmailV2(this.emailConfig);
     },
     /**
      * 校验google验证码
@@ -136,7 +136,7 @@ export default {
             return;
         }
         emailCheckV2({ code: code }).then(res => {
-            if (res.result === 0) {
+            if (res.result.code === 0) {
                 this.finished();
             } else {
                 window.$message({

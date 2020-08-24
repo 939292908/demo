@@ -8,7 +8,8 @@
  */
 import API from '@/api/request_apis';
 const Http = require('./config').default.Http;
-
+const _axios = require('./config/request').default;
+const axios = new _axios();
 /**
  * @description: 极验初始化
  */
@@ -478,6 +479,9 @@ export function assetRecords (params = {}, options = { withCredentials: true }) 
     return Http.post(API.WALLET_ASSETS_HISTORY_V1, params, options);
 }
 
+export function assetRecordsAll (aData) {
+    return axios.all(aData);
+}
 /**
  * 获取渠道信息
  */

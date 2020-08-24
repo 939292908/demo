@@ -66,7 +66,7 @@ module.exports = function (props, vnode) {
                             })
                         ]);
                     }),
-                    m('tr', { style: { display: 'none', height: '400px' } }, [
+                    m('tr', { style: { display: 'none' } }, [
                         m('td', { colspan: 6, style: { textAlign: 'center' } }, '暂无数据')
                     ])
                 ])

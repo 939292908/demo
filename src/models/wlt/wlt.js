@@ -1,10 +1,12 @@
 // const m = require('mithril');
 const Http = require('@/newApi');
 const broadcast = require('@/broadcast/broadcast');
+const gWebApi = require('@/newApi/config').default.gWebApi;
+const gWsApi = require('@/newApi/config').default.gWsApi;
+const utils = require('@/util/utils').default;
 
 module.exports = {
     name: "modelsForWlt",
-
     wltItemEx: {}, // 资产数据处理中间量
     wallet_obj: {
         '01': {}, // 合约账户
@@ -63,7 +65,6 @@ module.exports = {
             key: this.name,
             cmd: broadcast.MSG_ASSETD_UPD,
             cb: function () {
-                console.log('fasf', '12312');
                 that.initWlt();
             }
         });
@@ -77,34 +78,7 @@ module.exports = {
             isall: true
         });
     },
-    setWallet(data) {
-        const s = this;
-
-        s.wallet['01'] = data.assetLists01; // 合约资产
-        s.wallet['02'] = data.assetLists02; // 现货资产
-        s.wallet['03'] = data.assetLists03; // 主钱包
-        s.wallet['04'] = data.assetLists04; // 法币资产
-
-        for (const item of data.assetLists01) {
-            s.wallet_obj['01'][item.wType] = item;
-        }
-        for (const item of data.assetLists02) {
-            s.wallet_obj['02'][item.wType] = item;
-        }
-        for (const item of data.assetLists03) {
-            s.wallet_obj['03'][item.wType] = item;
-        }
-        for (const item of data.assetLists04) {
-            s.wallet_obj['04'][item.wType] = item;
-        }
-        // console.log('nzm', 'wallet', this.wallet);
-        // console.log('nzm', 'wallet_obj', this.wallet_obj);
-    },
-    initWlt: function (arg) {
-        if (arg.result.code === 0) {
-            this.setWallet(arg);
-        }
-
+    initWlt: function () {
         // 计算之前先将估值归0
         this.totalValueForUSDT = 0;
         this.totalValueForBTC = 0;
@@ -124,7 +98,8 @@ module.exports = {
         this.contractTotalValueForUSDT = 0;
         this.contractTotalValueForBTC = 0;
 
-        const wlt = this.wallet_obj;
+        const wlt = gWebApi.wallet_obj;
+
         for (const type in wlt) {
             this.wallet_obj[type] = this.wallet_obj[type] ? this.wallet_obj[type] : {};
             this.wallet[type] = [];
@@ -189,7 +164,8 @@ module.exports = {
             console.log('ht', 'getWallet success', arg);
             if (arg.result.code === 0) {
                 // 初始化资产数据
-                that.initWlt(arg);
+                gWebApi.setWallet(arg);
+                that.initWlt();
             }
         }).catch(function(err) {
             console.log('ht', 'getWallet error', err);
@@ -202,11 +178,11 @@ module.exports = {
         let NL = 0;
         let valueForUSDT = 0;
         let valueForBTC = 0;
-        const AssetD = window.gWsApi.AssetD;
+        const AssetD = gWsApi.AssetD;
         // console.log('ht', AssetD);
         // 取BTC的价格 start
-        const btcSymName = window.utils.getSpotName(AssetD, 'BTC', 'USDT');
-        const btcInitValue = (window.gWebApi.wallet_obj['03'] && window.gWebApi.wallet_obj['03'].BTC && window.gWebApi.wallet_obj['03'].BTC.initValue) || 0;
+        const btcSymName = utils.getSpotName(AssetD, 'BTC', 'USDT');
+        const btcInitValue = (gWebApi.wallet_obj['03'] && gWebApi.wallet_obj['03'].BTC && gWebApi.wallet_obj['03'].BTC.initValue) || 0;
         const btcPrz = (AssetD[btcSymName] && AssetD[btcSymName].PrzLatest) || btcInitValue;
         // console.log('ht', 'btc prz', btcSymName, btcInitValue, AssetD[btcSymName] && AssetD[btcSymName].PrzLatest, btcPrz);
         // 取BTC的价格 end
@@ -216,71 +192,71 @@ module.exports = {
             // console.log('ht', type, this.wltItemEx);
             TOTAL = Number(this.wltItemEx.Num || 0) + Number(this.wltItemEx.PNL || 0) + Number(this.wltItemEx.PNLISO || 0) + Number(this.wltItemEx.UPNL || 0);
             // 账户权益
-            this.wltItemEx.MgnBal = window.utils.toFixedForFloor(TOTAL, 8);
+            this.wltItemEx.MgnBal = utils.toFixedForFloor(TOTAL, 8);
             // 可用赠金
-            this.wltItemEx.Gift = window.utils.toFixedForFloor(this.wltItemEx.Gift || 0, 8);
+            this.wltItemEx.Gift = utils.toFixedForFloor(this.wltItemEx.Gift || 0, 8);
             // 可用保证金
             NL = Number(this.wltItemEx.NL || 0) + Number(this.wltItemEx.Gift || 0);
-            this.wltItemEx.NL = window.utils.toFixedForFloor(NL, 8);
+            this.wltItemEx.NL = utils.toFixedForFloor(NL, 8);
             // 委托保证金
-            this.wltItemEx.MI = window.utils.toFixedForFloor(this.wltItemEx.MI || 0, 8);
+            this.wltItemEx.MI = utils.toFixedForFloor(this.wltItemEx.MI || 0, 8);
             // 仓位保证金
-            this.wltItemEx.MM = window.utils.toFixedForFloor(this.wltItemEx.MM || 0, 8);
+            this.wltItemEx.MM = utils.toFixedForFloor(this.wltItemEx.MM || 0, 8);
             // 已实现盈亏
-            this.wltItemEx.PNL = window.utils.toFixedForFloor(this.wltItemEx.PNL || 0, 8);
+            this.wltItemEx.PNL = utils.toFixedForFloor(this.wltItemEx.PNL || 0, 8);
             // 未实现盈亏
-            this.wltItemEx.UPNL = window.utils.toFixedForFloor(this.wltItemEx.UPNL || 0, 8);
+            this.wltItemEx.UPNL = utils.toFixedForFloor(this.wltItemEx.UPNL || 0, 8);
             // 账户可提金额，用于资产划转
-            this.wltItemEx.wdrawable = window.utils.toFixedForFloor(this.wltItemEx.wdrawable || 0, 8);
+            this.wltItemEx.wdrawable = utils.toFixedForFloor(this.wltItemEx.wdrawable || 0, 8);
             break;
         case '02':
             // 币币账户
             // console.log('ht', type, this.wltItemEx);
             TOTAL = Number(this.wltItemEx.wdrawable || 0) + Number(this.wltItemEx.Frz || 0);
             // 账户总额
-            this.wltItemEx.TOTAL = window.utils.toFixedForFloor(TOTAL, 8);
+            this.wltItemEx.TOTAL = utils.toFixedForFloor(TOTAL, 8);
             // 冻结金额
-            this.wltItemEx.Frz = window.utils.toFixedForFloor(this.wltItemEx.Gift || 0, 8);
+            this.wltItemEx.Frz = utils.toFixedForFloor(this.wltItemEx.Gift || 0, 8);
             // 可用金额
-            this.wltItemEx.NL = window.utils.toFixedForFloor(this.wltItemEx.wdrawable, 8);
+            this.wltItemEx.NL = utils.toFixedForFloor(this.wltItemEx.wdrawable, 8);
             // 账户可提金额，用于资产划转
-            this.wltItemEx.wdrawable = window.utils.toFixedForFloor(this.wltItemEx.wdrawable, 8);
+            this.wltItemEx.wdrawable = utils.toFixedForFloor(this.wltItemEx.wdrawable, 8);
             break;
         case '03':
             // 主钱包
             // console.log('ht', type, this.wltItemEx);
             TOTAL = Number(this.wltItemEx.mainBal || 0) + Number(this.wltItemEx.financeBal || 0) + Number(this.wltItemEx.mainLock || 0) + Number(this.wltItemEx.depositLock || 0) + Number(this.wltItemEx.pawnBal || 0) + Number(this.wltItemEx.creditNum || 0);
             // 账户总额
-            this.wltItemEx.TOTAL = window.utils.toFixedForFloor(TOTAL, 8);
+            this.wltItemEx.TOTAL = utils.toFixedForFloor(TOTAL, 8);
             // 矿池
-            this.wltItemEx.mainLock = window.utils.toFixedForFloor(this.wltItemEx.mainLock || 0, 8);
+            this.wltItemEx.mainLock = utils.toFixedForFloor(this.wltItemEx.mainLock || 0, 8);
             // 锁定
-            this.wltItemEx.depositLock = window.utils.toFixedForFloor(this.wltItemEx.depositLock || 0, 8);
+            this.wltItemEx.depositLock = utils.toFixedForFloor(this.wltItemEx.depositLock || 0, 8);
             // 理财
-            this.wltItemEx.financeBal = window.utils.toFixedForFloor(this.wltItemEx.financeBal || 0, 8);
+            this.wltItemEx.financeBal = utils.toFixedForFloor(this.wltItemEx.financeBal || 0, 8);
             // 质押
-            this.wltItemEx.pawnBal = window.utils.toFixedForFloor(this.wltItemEx.pawnBal || 0, 8);
+            this.wltItemEx.pawnBal = utils.toFixedForFloor(this.wltItemEx.pawnBal || 0, 8);
             // 可用金额
-            this.wltItemEx.NL = window.utils.toFixedForFloor(this.wltItemEx.mainBal, 8);
+            this.wltItemEx.NL = utils.toFixedForFloor(this.wltItemEx.mainBal, 8);
             // 账户可提金额，用于资产划转以及提现
-            this.wltItemEx.wdrawable = window.utils.toFixedForFloor(this.wltItemEx.mainBal, 8);
+            this.wltItemEx.wdrawable = utils.toFixedForFloor(this.wltItemEx.mainBal, 8);
             break;
         case '04':
             // 法币钱包
             // console.log('ht', type, this.wltItemEx);
             TOTAL = Number(this.wltItemEx.mainBal || 0) + Number(this.wltItemEx.financeBal || 0) + Number(this.wltItemEx.mainLock || 0) + Number(this.wltItemEx.depositLock || 0) + Number(this.wltItemEx.pawnBal || 0) + Number(this.wltItemEx.creditNum || 0);
             // 账户总额
-            this.wltItemEx.TOTAL = window.utils.toFixedForFloor(TOTAL, 8);
+            this.wltItemEx.TOTAL = utils.toFixedForFloor(TOTAL, 8);
             // 锁定(冻结)
-            this.wltItemEx.otcLock = window.utils.toFixedForFloor(this.wltItemEx.otcLock || 0, 8);
+            this.wltItemEx.otcLock = utils.toFixedForFloor(this.wltItemEx.otcLock || 0, 8);
             // 理财
-            this.wltItemEx.financeBal = window.utils.toFixedForFloor(this.wltItemEx.financeBal || 0, 8);
+            this.wltItemEx.financeBal = utils.toFixedForFloor(this.wltItemEx.financeBal || 0, 8);
             // 质押
-            this.wltItemEx.pawnBal = window.utils.toFixedForFloor(this.wltItemEx.pawnBal || 0, 8);
+            this.wltItemEx.pawnBal = utils.toFixedForFloor(this.wltItemEx.pawnBal || 0, 8);
             // 可用金额
-            this.wltItemEx.NL = window.utils.toFixedForFloor(this.wltItemEx.otcBal, 8);
+            this.wltItemEx.NL = utils.toFixedForFloor(this.wltItemEx.otcBal, 8);
             // 账户可提金额，用于资产划转以及提现
-            this.wltItemEx.wdrawable = window.utils.toFixedForFloor(this.wltItemEx.otcBal, 8);
+            this.wltItemEx.wdrawable = utils.toFixedForFloor(this.wltItemEx.otcBal, 8);
             break;
         case '05':
             // 算力钱包
@@ -293,21 +269,21 @@ module.exports = {
         }
         // 当前币种价格 start
         const coinInitValue = Number(this.wltItemEx.initValue || 1);
-        const coinSym = window.utils.getSpotName(AssetD, this.wltItemEx.wType, 'USDT');
+        const coinSym = utils.getSpotName(AssetD, this.wltItemEx.wType, 'USDT');
         const coinPrz = (AssetD[coinSym] && AssetD[coinSym].PrzLatest) || coinInitValue;
         // console.log('ht', 'value', coinInitValue, coinSym, AssetD[coinSym] && AssetD[coinSym].PrzLatest, coinPrz);
         // 当前币种价格 end
         // USDT估值
         valueForUSDT = TOTAL * coinPrz;
         // console.log('ht', 'value', TOTAL, coinPrz, TOTAL * coinPrz);
-        this.wltItemEx.valueForUSDT = window.utils.toFixedForFloor(valueForUSDT, 8);
+        this.wltItemEx.valueForUSDT = utils.toFixedForFloor(valueForUSDT, 8);
         // BTC估值
         valueForBTC = TOTAL * coinPrz / btcPrz;
         // console.log('ht', 'value', TOTAL, coinPrz, btcPrz, TOTAL * coinPrz);
-        this.wltItemEx.valueForBTC = window.utils.toFixedForFloor(valueForBTC, 8);
+        this.wltItemEx.valueForBTC = utils.toFixedForFloor(valueForBTC, 8);
         // console.log('ht', 'value', valueForUSDT, valueForBTC);
         // 图标
-        this.wltItemEx.icon = window.gWebApi.baseUrl + this.wltItemEx.icon;
+        this.wltItemEx.icon = gWebApi.baseUrl + this.wltItemEx.icon;
 
         // !!!
         this.totalCNYValueForBTC = valueForBTC * this.prz;

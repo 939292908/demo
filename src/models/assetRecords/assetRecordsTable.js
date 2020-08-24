@@ -1,33 +1,37 @@
 
 // eslint-disable-next-line no-unused-vars
 const m = require('mithril');
-
+const broadcast = require('@/broadcast/broadcast');
+const Http = require('@/newApi');
+// const Axios = require('@/newApi/config/request').default;
+const utils = require('@/util/utils').default;
+const I18n = require('@/languages/I18n').default;
 module.exports = {
     type: '03',
     readyAlldata: [],
     allType: { // 主钱包类型
         allType: {
-            value: window.gI18n.$t('10131'), // '全部类型',
+            value: I18n.$t('10131'), // '全部类型',
             key: 'allType',
             show: true
         },
         recharge: {
-            value: window.gI18n.$t('10246'), // '钱包充币',
+            value: I18n.$t('10246'), // '钱包充币',
             key: 'recharge',
             show: true
         },
         withdrawa: {
-            value: window.gI18n.$t('10247'), // '钱包提币',
+            value: I18n.$t('10247'), // '钱包提币',
             key: 'withdrawa',
             show: true
         },
         transfer: {
-            value: window.gI18n.$t('10408'), // '资产划转',
+            value: I18n.$t('10408'), // '资产划转',
             key: 'transfer',
             show: true
         },
         paymentTransfer: {
-            value: window.gI18n.$t('10502', {
+            value: I18n.$t('10502', {
                 // value: $params.exchInfo.exchName
                 value: ""
             }), // $params.exchInfo.exchName + '支付',
@@ -35,105 +39,105 @@ module.exports = {
             show: true
         },
         gf: {
-            value: window.gI18n.$t('10249'), // 'GF兑换',
+            value: I18n.$t('10249'), // 'GF兑换',
             key: 'gf',
             show: true
         },
         active: {
-            value: window.gI18n.$t('10132'), // '活动资金',
+            value: I18n.$t('10132'), // '活动资金',
             key: 'active',
             show: true
         },
         exchange: {
-            value: window.gI18n.$t('10821'), // '系统兑换',
+            value: I18n.$t('10821'), // '系统兑换',
             key: 'exchange',
             show: true
         },
         Active: {
-            value: window.gI18n.$t('10822'), // '锁定激活',
+            value: I18n.$t('10822'), // '锁定激活',
             key: 'Active',
             show: true
         },
         ore: {
-            value: window.gI18n.$t('10823'), // '矿池出矿',
+            value: I18n.$t('10823'), // '矿池出矿',
             key: 'ore',
             show: true
         },
         mineTransfer: {
-            value: window.gI18n.$t('10864'), // '矿池划转',
+            value: I18n.$t('10864'), // '矿池划转',
             key: 'mineTransfer',
             show: true
         },
         other: {
-            value: window.gI18n.$t('10824'), // '其他类型',
+            value: I18n.$t('10824'), // '其他类型',
             key: 'other',
             show: true
         }
     },
     hyType: {
         allType: {
-            value: window.gI18n.$t('10131'), // '全部类型',
+            value: I18n.$t('10131'), // '全部类型',
             key: 'allType',
             show: true
         },
         transfer: {
-            value: window.gI18n.$t('10408'), // '资产划转',
+            value: I18n.$t('10408'), // '资产划转',
             key: 'transfer',
             show: true
         },
         gift: {
-            value: window.gI18n.$t('11610'), // 合约赠金
+            value: I18n.$t('11610'), // 合约赠金
             key: 'gift',
             show: true
         }
     },
     bbType: {
         allType: {
-            value: window.gI18n.$t('10131'), // '全部类型',
+            value: I18n.$t('10131'), // '全部类型',
             key: 'allType',
             show: true
         },
         transfer: {
-            value: window.gI18n.$t('10408'), // '资产划转',
+            value: I18n.$t('10408'), // '资产划转',
             key: 'transfer',
             show: true
         },
         other: {
-            value: window.gI18n.$t('10824'), // '其他类型',
+            value: I18n.$t('10824'), // '其他类型',
             key: 'other',
             show: true
         }
     },
     otcType: {
         allType: {
-            value: window.gI18n.$t('10131'), // '全部类型',
+            value: I18n.$t('10131'), // '全部类型',
             key: 'allType',
             show: true
         },
         transfer: {
-            value: window.gI18n.$t('10408'), // '资产划转',
+            value: I18n.$t('10408'), // '资产划转',
             key: 'transfer',
             show: true
         },
         otcSell: {
-            value: window.gI18n.$t('10676'), // '法币交易',
+            value: I18n.$t('10676'), // '法币交易',
             key: 'otcSell',
             show: true
         }
     },
     documentaryType: {
         allType: {
-            value: window.gI18n.$t('10131'), // '全部类型',
+            value: I18n.$t('10131'), // '全部类型',
             key: 'allType',
             show: true
         },
         transfer: {
-            value: window.gI18n.$t('10408'), // '资产划转',
+            value: I18n.$t('10408'), // '资产划转',
             key: 'transfer',
             show: true
         },
         other: {
-            value: window.gI18n.$t('10824'), // '其他类型',
+            value: I18n.$t('10824'), // '其他类型',
             key: 'other',
             show: true
         }
@@ -221,49 +225,47 @@ module.exports = {
         }
     },
     oninit() {
+        const that = this;
         console.log('111111111111111111111111');
-        window.gBroadcast.onMsg({
-            key: 'onAssetRecordsTable',
-            cmd: 'assetRecordsTable',
+        broadcast.onMsg({
+            key: 'assetRecordsTable',
+            cmd: 'onAssetRecordsTable',
             cb: function (arg) {
-                // eslint-disable-next-line no-debugger
-                debugger;
-                console.log('11111111111');
                 if (arg.num === 0) {
-                    this.selectDisplay(arg.name, this.readyAlldata);
+                    that.selectDisplay(arg.name, that.readyAlldata);
                 } else if (arg.num === 1) {
-                    this.currencyValue = arg.name;
-                    if (this.typeValue === '全部类型') {
+                    that.currencyValue = arg.name;
+                    if (that.typeValue === '全部类型') {
                         if (arg.name === '全部') {
-                            this.dataSelect1 = this.dataSelect;
-                            this.grossValue = this.dataSelect1;
+                            that.dataSelect1 = that.dataSelect;
+                            that.grossValue = that.dataSelect1;
                             return;
                         }
-                        this.selectDisplay1(arg.name, this.dataSelect);
+                        that.selectDisplay1(arg.name, that.dataSelect);
                     } else {
                         if (arg.name === '全部') {
-                            this.dataSelect1 = this.dataSelect2;
-                            this.grossValue = this.dataSelect1;
+                            that.dataSelect1 = that.dataSelect2;
+                            that.grossValue = that.dataSelect1;
                             return;
                         }
-                        this.selectDisplay1(arg.name, this.dataSelect2);
+                        that.selectDisplay1(arg.name, that.dataSelect2);
                     }
                 } else if (arg.num === 2) {
-                    this.typeValue = arg.name;
-                    if (this.currencyValue === '全部') {
+                    that.typeValue = arg.name;
+                    if (that.currencyValue === '全部') {
                         if (arg.name === '全部类型') {
-                            this.dataSelect2 = this.dataSelect;
-                            this.grossValue = this.dataSelect2;
+                            that.dataSelect2 = that.dataSelect;
+                            that.grossValue = that.dataSelect2;
                             return;
                         }
-                        this.selectDisplay2(arg.name, this.dataSelect);
+                        that.selectDisplay2(arg.name, that.dataSelect);
                     } else {
                         if (arg.name === '全部类型') {
-                            this.dataSelect2 = this.dataSelect1;
-                            this.grossValue = this.dataSelect2;
+                            that.dataSelect2 = that.dataSelect1;
+                            that.grossValue = that.dataSelect2;
                             return;
                         }
-                        this.selectDisplay2(arg.name, this.dataSelect1);
+                        that.selectDisplay2(arg.name, that.dataSelect1);
                     }
                 }
             }
@@ -271,9 +273,9 @@ module.exports = {
         this.getAllList();
     },
     onremove () {
-        window.gBroadcast.offMsg({
-            cmd: 'onAssetRecordsTable',
+        broadcast.offMsg({
             key: 'assetRecordsTable',
+            cmd: 'onAssetRecordsTable',
             isall: true
         });
     },
@@ -281,26 +283,27 @@ module.exports = {
         // eslint-disable-next-line prefer-const
         let that = this;
         if (that.type === '03') {
-            window.gWebApi.assetRecordsAll([
-                window.gWebApi.assetRecords({ aType: that.type, mhType: 1 }), // 充币
-                window.gWebApi.assetRecords({ aType: that.type, mhType: 2 }), // 提币
-                window.gWebApi.assetRecords({ aType: that.type, mhType: 4 }), // 划转
-                window.gWebApi.assetRecords({ aType: that.type, mhType: 5 }) // 其他
+            Http.assetRecordsAll([
+                Http.assetRecords({ aType: that.type, mhType: 1 }), // 充币
+                Http.assetRecords({ aType: that.type, mhType: 2 }), // 提币
+                Http.assetRecords({ aType: that.type, mhType: 4 }), // 划转
+                Http.assetRecords({ aType: that.type, mhType: 5 }) // 其他
             ]).then(res => {
+                console.log(res);
                 // eslint-disable-next-line prefer-const
                 let walletLog = that.walletLog[that.type];
-                that.walletLog[that.type]['1'] = res[0].data.result.code === 0 ? res[0].data.history : walletLog['1'] ? walletLog['1'] : [];
-                that.walletLog[that.type]['2'] = res[1].data.result.code === 0 ? res[1].data.history : walletLog['2'] ? walletLog['2'] : [];
-                that.walletLog[that.type]['4'] = res[2].data.result.code === 0 ? res[2].data.history : walletLog['4'] ? walletLog['4'] : [];
-                that.walletLog[that.type]['5'] = res[3].data.result.code === 0 ? res[3].data.history : walletLog['5'] ? walletLog['5'] : [];
+                that.walletLog[that.type]['1'] = res[0].result.code === 0 ? res[0].history : walletLog['1'] ? walletLog['1'] : [];
+                that.walletLog[that.type]['2'] = res[1].result.code === 0 ? res[1].history : walletLog['2'] ? walletLog['2'] : [];
+                that.walletLog[that.type]['4'] = res[2].result.code === 0 ? res[2].history : walletLog['4'] ? walletLog['4'] : [];
+                that.walletLog[that.type]['5'] = res[3].result.code === 0 ? res[3].history : walletLog['5'] ? walletLog['5'] : [];
                 console.log(res, '1111111111111111111111111111');
                 that.updateList();
             }).catch(err => {
                 console.log('error ', err);
             });
         } else if (that.type === '01' || that.type === '02') {
-            window.gWebApi.assetRecordsAll([
-                window.gWebApi.assetRecords({ aType: that.type, mhType: 4 }) // 划转
+            Http.assetRecordsAll([
+                Http.assetRecords({ aType: that.type, mhType: 4 }) // 划转
             ]).then(res => {
                 // eslint-disable-next-line prefer-const
                 let walletLog = that.walletLog[that.type];
@@ -310,9 +313,9 @@ module.exports = {
                 console.log('error ', err);
             });
         } else if (that.type === '04') {
-            window.gWebApi.assetRecordsAll([
-                window.gWebApi.assetRecords({ aType: that.type, mhType: 4 }), // 划转
-                window.gWebApi.assetRecords({ aType: that.type, mhType: 5 }) // 其他
+            Http.assetRecordsAll([
+                Http.assetRecords({ aType: that.type, mhType: 4 }), // 划转
+                Http.assetRecords({ aType: that.type, mhType: 5 }) // 其他
             ]).then(res => {
                 // eslint-disable-next-line prefer-const
                 let walletLog = that.walletLog[that.type];
@@ -323,8 +326,8 @@ module.exports = {
                 console.log('error ', err);
             });
         } else if (that.type === '06') {
-            window.gWebApi.assetRecordsAll([
-                window.gWebApi.assetRecords({ aType: '018', mhType: 5 })// 其他
+            Http.assetRecordsAll([
+                Http.assetRecords({ aType: '018', mhType: 5 })// 其他
             ]).then(res => {
                 // eslint-disable-next-line no-undef
                 that.walletLog[that.type]['5'] = res[0].data.result.code === 0 ? res[0].data.history : walletLog['5'] ? walletLog['5'] : [];
@@ -353,12 +356,12 @@ module.exports = {
                     aType: item.aType,
                     addrLink: item.addrLink,
                     txIdLink: item.txIdLink,
-                    num: window.utils.totalNumSub(item.num, 8),
-                    time: window.utils.time(item.timestamp),
+                    num: utils.totalNumSub(item.num, 8),
+                    time: utils.time(item.timestamp),
                     // img: this.wTypeObj[item.wType] ? this.wTypeObj[item.wType] : `${this.$params.baseURL}/coins/icon-${item.wType}.png`,
                     // icon: `${this.$params.baseURL + this.removeGIFT(item.icon)}`, // item.icon,
                     timestamp: item.timestamp,
-                    status: window.utils.getTransferInfo(item.stat),
+                    status: utils.getTransferInfo(item.stat),
                     stat: item.stat,
                     seq: item.seq,
                     des: '充币', // "充币"
@@ -385,12 +388,12 @@ module.exports = {
                     aType: item.aType,
                     addrLink: item.addrLink,
                     txIdLink: item.txIdLink,
-                    num: window.utils.totalNumSub(item.num, 8),
-                    time: window.utils.time(item.timestamp),
+                    num: utils.totalNumSub(item.num, 8),
+                    time: utils.time(item.timestamp),
                     // img: this.wTypeObj[item.wType] ? this.wTypeObj[item.wType] : `${this.$params.baseURL}/coins/icon-${item.wType}.png`,
                     // icon: `${this.$params.baseURL + this.removeGIFT(item.icon)}`, // item.icon,
                     timestamp: item.timestamp,
-                    status: window.utils.getWithdrawArr(item.stat),
+                    status: utils.getWithdrawArr(item.stat),
                     stat: item.stat,
                     seq: item.seq,
                     des: '提币', // "提币"
@@ -449,88 +452,88 @@ module.exports = {
                         // eslint-disable-next-line prefer-const
                         let str = item.addr.split(':');
                         if (item.addr.search("from:") !== -1) {
-                            des = window.gI18n.$t('10800'); // '账户转入'
+                            des = I18n.$t('10800'); // '账户转入'
                         } else if (item.addr.search("to:") !== -1) {
-                            des = window.gI18n.$t('10799'); // '账户转出'
+                            des = I18n.$t('10799'); // '账户转出'
                         }
                         item.accountName = str[1];
                     } else if (item.wType.includes('@GIFT')) {
-                        des = window.gI18n.$t('11610' /**/);// 合约赠金
+                        des = I18n.$t('11610' /**/);// 合约赠金
                     } else if (item.addr.search("tout_16") !== -1) { // 划至法币账户（给法币审核用）
-                        des = window.gI18n.$t('10148', {
-                            value: window.gI18n.$t('10085')
+                        des = I18n.$t('10148', {
+                            value: I18n.$t('10085')
                         });
                     } else if (item.addr.search("otcuc") !== -1) { // 法币账户转入（给法币审核用）用户取消
-                        des = window.gI18n.$t('10147', {
-                            value: window.gI18n.$t('10085')
+                        des = I18n.$t('10147', {
+                            value: I18n.$t('10085')
                         });
                     } else if (item.addr.search("otcaf") !== -1) { // 法币账户转入（给法币审核用）后台审核不通过
-                        des = window.gI18n.$t('10147', {
-                            value: window.gI18n.$t('10085')
+                        des = I18n.$t('10147', {
+                            value: I18n.$t('10085')
                         });
                     } else if (item.addr.search("tin_") !== -1) {
-                        des = window.gI18n.$t('10147', {
+                        des = I18n.$t('10147', {
                             value: this.walletType[item.addr.split("_")[1]]
                         }); // XX账户转入
                     } else if (item.addr.search("tout_") !== -1) {
-                        des = window.gI18n.$t('10148', {
+                        des = I18n.$t('10148', {
                             value: this.walletType[item.addr.split("_")[1]]
                         }); // 划至xx账户
                         console.log(item.addr.split("_")[1], this.walletType[item.addr.split("_")[1]], des);
                     } else if (item.addr.search("gf->btc") !== -1) {
-                        des = "GF" + window.gI18n.$t('10099') + /**/ "BTC";// 兑换
+                        des = "GF" + I18n.$t('10099') + /**/ "BTC";// 兑换
                     } else if (item.addr.search("EVTIN") !== -1) {
-                        des = window.gI18n.$t('10149'); // '活动入金'
+                        des = I18n.$t('10149'); // '活动入金'
                     } else if (item.addr.search("EVTOUT") !== -1) {
-                        des = window.gI18n.$t('10150'); // '活动出金'
+                        des = I18n.$t('10150'); // '活动出金'
                     } else if (item.addr.search("BL/") !== -1) {
-                        des = item.wType === 'GF' ? window.gI18n.$t('11507'/**/) : window.gI18n.$t('10821'/**/);// 百日矿池计划   系统兑换
+                        des = item.wType === 'GF' ? I18n.$t('11507'/**/) : I18n.$t('10821'/**/);// 百日矿池计划   系统兑换
                     } else if (item.addr.search("BDL/") !== -1) {
-                        des = window.gI18n.$t('10822'); // '锁定激活'
+                        des = I18n.$t('10822'); // '锁定激活'
                     } else if (item.addr.search("TASK-IN") !== -1) {
-                        des = window.gI18n.$t('11361');// "活动空投" // '活动空投'
+                        des = I18n.$t('11361');// "活动空投" // '活动空投'
                     } else if (item.addr.search("TASK-OUT") !== -1) {
-                        des = window.gI18n.$t('11613'); // '活动清算'
+                        des = I18n.$t('11613'); // '活动清算'
                     } else if (item.addr.search("TASK-GIFT") !== -1) {
-                        des = window.gI18n.$t('11614'); // '活动奖励'
+                        des = I18n.$t('11614'); // '活动奖励'
                     } else if (item.addr.search("TASK-REG") !== -1) {
-                        des = window.gI18n.$t('11616'); // 注册赠金
+                        des = I18n.$t('11616'); // 注册赠金
                     } else if (item.addr.search("TASK-CHARGE0") !== -1) {
-                        des = window.gI18n.$t('11615'); // 首充赠金
+                        des = I18n.$t('11615'); // 首充赠金
                     } else if (item.addr.search("TASK-TRADE") !== -1) {
-                        des = window.gI18n.$t('11617');// 交易赠金
+                        des = I18n.$t('11617');// 交易赠金
                     } else if (item.addr.search("TASK-INVITE") !== -1) {
-                        des = window.gI18n.$t('11618');// 邀请赠金
+                        des = I18n.$t('11618');// 邀请赠金
                     } else if (item.addr.search("TASK-CS") !== -1) {
-                        des = window.gI18n.$t('11619');// 客服赠金
+                        des = I18n.$t('11619');// 客服赠金
                     } else if (item.addr.search("TASK-SIGN3") !== -1) {
-                        des = window.gI18n.$t('11620');// 特殊签到
+                        des = I18n.$t('11620');// 特殊签到
                     } else if (item.addr.search("TASK-SIGN2") !== -1) {
-                        des = window.gI18n.$t('11621');// 签到暴击
+                        des = I18n.$t('11621');// 签到暴击
                     } else if (item.addr.search("TASK-SIGN1") !== -1) {
-                        des = window.gI18n.$t('11622');// 连续签到
+                        des = I18n.$t('11622');// 连续签到
                     } else if (item.addr.search("TASK-SIGN") !== -1) {
-                        des = window.gI18n.$t('11623');// 签到赠金
+                        des = I18n.$t('11623');// 签到赠金
                     } else {
-                        des = window.utils.getTransferHisStr(item.addr, item.wType);
+                        des = utils.getTransferHisStr(item.addr, item.wType);
                     }
                     // eslint-disable-next-line no-unused-expressions
-                    item.addr.indexOf('M2O') !== -1 ? des = window.gI18n.$t('10147', {
-                        value: window.gI18n.$t('10085')
-                    }) : item.addr.indexOf('O2M') !== -1 ? des = window.gI18n.$t('10148', {
-                        value: window.gI18n.$t('10085')
+                    item.addr.indexOf('M2O') !== -1 ? des = I18n.$t('10147', {
+                        value: I18n.$t('10085')
+                    }) : item.addr.indexOf('O2M') !== -1 ? des = I18n.$t('10148', {
+                        value: I18n.$t('10085')
                     }) : '';
                     list.push({
                         coin: this.removeGIFT(item.wType),
                         wType: this.removeGIFT(item.wType),
                         addr: item.addr,
                         aType: item.aType,
-                        num: window.utils.totalNumSub(item.num, 8),
-                        time: window.utils.time(item.timestamp),
+                        num: utils.totalNumSub(item.num, 8),
+                        time: utils.time(item.timestamp),
                         // img: this.wTypeObj[item.wType] ? this.wTypeObj[item.wType] : `${this.$params.baseURL}/coins/icon-${item.wType}.png`,
                         // icon: `${this.$params.baseURL + this.removeGIFT(item.icon)}`, // item.icon,
                         timestamp: item.timestamp,
-                        status: window.utils.getTransferInfo(item.stat),
+                        status: utils.getTransferInfo(item.stat),
                         stat: item.stat,
                         seq: item.seq,
                         des: des,
@@ -566,15 +569,15 @@ module.exports = {
                     aType: item.aType,
                     addrLink: item.addrLink,
                     txIdLink: item.txIdLink,
-                    num: window.utils.totalNumSub(item.addr === 'from' ? '-' + item.num : item.num, 8),
-                    time: window.utils.time(item.timestamp),
+                    num: utils.totalNumSub(item.addr === 'from' ? '-' + item.num : item.num, 8),
+                    time: utils.time(item.timestamp),
                     // img: this.wTypeObj[item.wType] ? this.wTypeObj[item.wType] : `${this.$params.baseURL}/coins/icon-${item.wType}.png`,
                     icon: `${this.$params.baseURL + this.removeGIFT(item.icon)}`, // item.icon,
                     timestamp: item.timestamp,
-                    status: window.utils.getTransferInfo(item.stat),
+                    status: utils.getTransferInfo(item.stat),
                     stat: item.stat,
                     seq: item.seq,
-                    des: item.addr === 'to' ? window.gI18n.$t('10313') : window.gI18n.$t('10314'), // '买入':"卖出"
+                    des: item.addr === 'to' ? I18n.$t('10313') : I18n.$t('10314'), // '买入':"卖出"
                     otcSell: true
                 });
             }
@@ -596,28 +599,28 @@ module.exports = {
                 let num = 0;
                 if (item.addr.search("tml2dl") !== -1 || item.addr.search("dl2tml") !== -1) {
                     mineTransfer = true;
-                    des = window.gI18n.$t('10864'); // '矿池划转'
+                    des = I18n.$t('10864'); // '矿池划转'
                     // this.allType['mineTransfer'].show = true
                 } else if (item.addr.search("tm") !== -1) {
                     ore = true;
                     if (item.addr.search("tm35") !== -1) {
-                        des = window.gI18n.$t('11624'/**/);// 赠送上级矿池
+                        des = I18n.$t('11624'/**/);// 赠送上级矿池
                     } else if (item.addr.search("tm36") !== -1) {
-                        des = window.gI18n.$t('11625'/**/); // 赠送上上级矿池
+                        des = I18n.$t('11625'/**/); // 赠送上上级矿池
                     } else {
-                        des = window.gI18n.$t('10823'); // '矿池出矿'
+                        des = I18n.$t('10823'); // '矿池出矿'
                     }
                     // this.allType['ore'].show = true
                 } else if (item.addr.search("adm") !== -1) {
                     other = true;
                     // eslint-disable-next-line prefer-const
                     let num = item.addr.split('_')[1];
-                    des = window.utils.getOtherStr(num, item.wType);
+                    des = utils.getOtherStr(num, item.wType);
                     // this.allType['other'].show = true
                 } else if (item.addr.search("VOTE") !== -1) {
                     other = true;
                     // let num = item.addr.split('_')[1];
-                    des = window.gI18n.$t('11626'/**/); // 投票上币
+                    des = I18n.$t('11626'/**/); // 投票上币
                     // this.allType['other'].show = true
                 } else if (item.addr.search("ahp_buy") !== -1) {
                     des = '算力本金锁定';
@@ -631,46 +634,46 @@ module.exports = {
                     des = '兑换消耗';
                 } else if (this.type === '03' && item.addr.search("foltra-1") !== -1) {
                     // des = '跟单账户转入'
-                    des = window.gI18n.$t('10147', { value: window.gI18n.$t('12522'/**/) }); // 跟单账户
+                    des = I18n.$t('10147', { value: I18n.$t('12522'/**/) }); // 跟单账户
                     transfer = true;
                 } else if (this.type === '03' && item.addr.search("foltra") !== -1) {
                     // des = '划至跟单账户'
-                    des = window.gI18n.$t('10148', { value: window.gI18n.$t('12522'/**/) }); // 跟单账户
+                    des = I18n.$t('10148', { value: I18n.$t('12522'/**/) }); // 跟单账户
                     transfer = true;
                 } else if (this.type === '06' && item.addr.search("foltra-1") !== -1) {
                     // des = '划至我的钱包'
-                    des = window.gI18n.$t('10148', { value: window.gI18n.$t('10082'/**/) }); // 我的钱包
+                    des = I18n.$t('10148', { value: I18n.$t('10082'/**/) }); // 我的钱包
                     transfer = true;
                 } else if (this.type === '06' && item.addr.search("foltra") !== -1) {
                     // des = '我的钱包转入'
-                    des = window.gI18n.$t('10147', { value: window.gI18n.$t('10082'/**/) }); // 我的钱包
+                    des = I18n.$t('10147', { value: I18n.$t('10082'/**/) }); // 我的钱包
                     transfer = true;
                 } else if (this.type === '06' && item.addr.search("fw_pnl") !== -1) {
-                    des = window.gI18n.$t('12523'); // 平仓盈利
+                    des = I18n.$t('12523'); // 平仓盈利
                     other = true;
                 } else if (this.type === '06' && item.addr.search("fw_fee") !== -1) {
-                    des = window.gI18n.$t('12524'/**/);// 交易手续费
+                    des = I18n.$t('12524'/**/);// 交易手续费
                     other = true;
                 } else if (this.type === '06' && item.addr.search("fw_cls_MI") !== -1) {
-                    des = window.gI18n.$t('12525'/**/); // '平仓解锁保证金'
+                    des = I18n.$t('12525'/**/); // '平仓解锁保证金'
                     other = true;
                 } else if (this.type === '06' && item.addr.search("fw_open") !== -1) {
-                    des = window.gI18n.$t('12526'/**/); // 开仓锁定保证金
+                    des = I18n.$t('12526'/**/); // 开仓锁定保证金
                     other = true;
                 } else if (this.type === '06' && item.addr.search("fw_repnl") !== -1) {
-                    des = window.gI18n.$t('12527'/**/); // 推荐分红锁定
+                    des = I18n.$t('12527'/**/); // 推荐分红锁定
                     other = true;
                 } else if (this.type === '06' && item.addr.search("fw_ldpnl") !== -1) {
-                    des = window.gI18n.$t('12528'/**/);// 带单分红锁定
+                    des = I18n.$t('12528'/**/);// 带单分红锁定
                     other = true;
                 } else if (this.type === '06' && item.addr.search("fw_res") !== -1) {
-                    des = window.gI18n.$t('12529'/**/); // 盈利释放到可用
+                    des = I18n.$t('12529'/**/); // 盈利释放到可用
                     other = true;
                 } else if (this.type === '06' && item.addr.search("fw_loss") !== -1) {
-                    des = window.gI18n.$t('12530'/**/); // 平仓亏损
+                    des = I18n.$t('12530'/**/); // 平仓亏损
                     other = true;
                 } else {
-                    des = window.utils.getRecordsType5Str(item.addr, item.wType);
+                    // des = utils.getRecordsType5Str(item.addr, item.wType);
                     switch (item.addr) {
                     case 'g103wdrw':
                     case 'g103depo':
@@ -697,12 +700,12 @@ module.exports = {
                     addrLink: item.addrLink,
                     txIdLink: item.txIdLink,
                     // eslint-disable-next-line no-unneeded-ternary
-                    num: window.utils.totalNumSub(num ? num : item.num, 8),
-                    time: window.utils.time(item.timestamp),
+                    num: utils.totalNumSub(num ? num : item.num, 8),
+                    time: utils.time(item.timestamp),
                     // img: this.wTypeObj[item.wType] ? this.wTypeObj[item.wType] : `${this.$params.baseURL}/coins/icon-${item.wType}.png`,
                     // icon: `${this.$params.baseURL + this.removeGIFT(item.icon)}`, // item.icon,
                     timestamp: item.timestamp,
-                    status: window.utils.getTransferInfo(item.stat),
+                    status: utils.getTransferInfo(item.stat),
                     stat: item.stat,
                     seq: item.seq,
                     des: des,
@@ -750,6 +753,7 @@ module.exports = {
         this.allInfo = allHistoryList;
         // this.readyAlldata = allHistoryList.slice(0,this.listNum)
         this.readyAlldata = allHistoryList;
+        this.grossValue = allHistoryList;
         m.redraw();
         console.log(this.readyAlldata, '------------------------------');
         setTimeout(() => {

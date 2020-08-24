@@ -19,9 +19,13 @@ setInterval(function () {
     gWsApi.stately.do(gWsApi);
 }, Interval);
 
+const WebApi = require('@/api/webApi');
+const gWebApi = new WebApi({ baseUrl: api.WebAPI });
+
 export default {
     api,
     Conf,
     Http,
-    gWsApi
+    gWsApi,
+    gWebApi
 };
