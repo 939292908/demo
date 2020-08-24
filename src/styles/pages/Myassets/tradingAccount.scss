@@ -6,4 +6,11 @@
         height: 52px;
         width: 18%;
     }
+    ul{
+        display: flex;
+        height: 52px;
+    }
+    is-checkLi{
+        border-bottom: 1px solid #FF8B00 !important;
+    }
 }
