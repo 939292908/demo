@@ -22,6 +22,11 @@ m.route(document.querySelector('body .route-box'), defaultRoutePath, {
         onmatch: function() {
             return import('@/pages/page/myAssets/myWalletIndex/MyWalletIndex');
         }
+    },
+    '/assetRecords': {
+        onmatch: function () {
+            return import('@/views/pages/Myassets/assetRecords/index');
+        }
     }
 });
 
