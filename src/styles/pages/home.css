@@ -4,6 +4,12 @@
     margin-left: 15px; */
 }
 
+.download {
+    width: 100px;
+    height: 100px;
+}
+
+
 .navbar-item {
     margin-left: 10px;
 }
@@ -123,12 +129,12 @@
     height: 74px;
 }
 
-.Android-button{
+.Android-button {
     width: 163px;
     height: 48px;
 }
 
-.IOS-button{
+.IOS-button {
     width: 163px;
     height: 48px;
 }
@@ -148,7 +154,7 @@
     line-height: 27px;
 }
 
-.community{
+.community {
     height: 17px;
 }
 

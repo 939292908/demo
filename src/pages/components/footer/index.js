@@ -22,18 +22,18 @@ module.exports = {
                     // 社区
                     m('div', { class: `is-flex mt-7 is-between`, style: "width: 300px" }, [
                         m('a', { class: ``, href: "index.html" }, [
-                            m('a', { class: ``, href: "" }, [
-                                m(Tooltip, {
-                                    label: m('img', { style: "height:17px", src: require("@/assets/img/home/wechat.png").default }),
-                                    content: m('img', { class: '', src: require("@/assets/img/home/Communitywechat.png").default })
-                                })
-                            ])
+                            // m('a', { class: ``, href: "" }, [
+                            m(Tooltip, {
+                                label: m('img', { style: "height:17px", src: require("@/assets/img/home/wechat.png").default }),
+                                content: m('img', { class: '', src: require("@/assets/img/home/Communitywechat.png").default })
+                            })
+                            // ])
                         ]),
                         m(Tooltip, {
                             label: m('img', { style: "height:17px", src: require("@/assets/img/home/qq.png").default }),
                             content: m('img', { class: '', src: require("@/assets/img/home/QQcustomer_service.png").default })
                         }),
-                        m('a', { class: ``, href: "https://www.facebook.com/Vbit-107388547588403/" }, [
+                        m('a', { class: `has-text-primary-hover`, href: "https://www.facebook.com/Vbit-107388547588403/" }, [
                             m('img', { class: 'community ', src: require("@/assets/img/home/fb.png").default })
                         ]),
                         m('a', { class: ``, href: "https://twitter.com/VbitOfficial" }, [
