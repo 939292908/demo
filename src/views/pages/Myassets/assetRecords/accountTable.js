@@ -2,6 +2,7 @@ const m = require('mithril');
 const Http = require('@/newApi');
 
 require('@/styles/pages/Myassets/assetRecords.scss');
+const broadcast = require('@/broadcast/broadcast');
 const myWalletTable = {
     dataArrObj: [{
         category: '币种',
@@ -133,9 +134,9 @@ const myWalletTable = {
 
 module.exports = {
     oninit: function () {
-        window.gBroadcast.onMsg({
+        broadcast.onMsg({
             key: 'myWalletTable',
-            cmd: window.gBroadcast.CHANGE_SW_CURRENCY,
+            cmd: broadcast.CHANGE_SW_CURRENCY,
             cb: function (arg) {
                 if (arg.num === 0) {
                     myWalletTable.selectDisplay(arg.name, myWalletTable.dataObj);
@@ -184,7 +185,7 @@ module.exports = {
         ]);
     },
     onremove: function () {
-        window.gBroadcast.offMsg({
+        broadcast.offMsg({
             key: 'myWalletTable',
             isall: true
         });
