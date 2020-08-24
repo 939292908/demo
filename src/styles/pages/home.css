@@ -1,12 +1,8 @@
 /**头部*/
-.head-download {
-    /* margin-top: 10px;
-    margin-left: 15px; */
-}
 
-.download {
-    width: 100px;
-    height: 100px;
+.header-download {
+    width: 64px;
+    height: 64px;
 }
 
 

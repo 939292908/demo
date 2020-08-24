@@ -1,6 +1,7 @@
 import Conf from '@/config';
 import Axios from './request';
 import BaseConf from "@/api/apiConf";
+// import gWsApi from '@/gWApi';
 
 const instConf = new BaseConf(process.env.BUILD_ENV);
 instConf.updateNetLines();
