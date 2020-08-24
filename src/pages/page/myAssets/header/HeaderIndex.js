@@ -1,8 +1,16 @@
 const header = require('@/pages/page/myAssets/header/HeaderView');
 
-module.exports = {
+const h = {
     toPage: function (val) {
         window.location.href = '#!/' + val;
-    },
-    view: header
+    }
+};
+
+module.exports = {
+    view: function (vnode) {
+        const props = {
+            Header: h
+        };
+        return header(props, vnode);
+    }
 };
