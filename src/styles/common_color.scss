@@ -28,6 +28,7 @@
 .theme--dark .navbar-item.has-dropdown:hover .navbar-link,
 .theme--dark .navbar-item.has-dropdown.is-active .navbar-link {
     background-color: var(--c-background-darken2);
+    color: var(--c-primary-darken)
 }
 
 
@@ -250,6 +251,7 @@
 .theme--light .navbar-item.has-dropdown:hover .navbar-link,
 .theme--light .navbar-item.has-dropdown.is-active .navbar-link {
     background-color: var(--c-background-lighten2);
+    color: var(--c-primary-lighten)
 }
 
 /* 背景颜色六级 */

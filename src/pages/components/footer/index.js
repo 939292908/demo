@@ -33,8 +33,8 @@ module.exports = {
                             label: m('img', { style: "height:17px", src: require("@/assets/img/home/qq.png").default }),
                             content: m('img', { class: '', src: require("@/assets/img/home/QQcustomer_service.png").default })
                         }),
-                        m('a', { class: `has-text-primary-hover`, href: "https://www.facebook.com/Vbit-107388547588403/" }, [
-                            m('img', { class: 'community ', src: require("@/assets/img/home/fb.png").default })
+                        m('a', { class: ``, href: "https://www.facebook.com/Vbit-107388547588403/" }, [
+                            m('img', { class: 'community', src: require("@/assets/img/home/fb.png").default })
                         ]),
                         m('a', { class: ``, href: "https://twitter.com/VbitOfficial" }, [
                             m('img', { class: 'community', src: require("@/assets/img/home/tw.png").default })
@@ -124,7 +124,7 @@ module.exports = {
                             content: [
                                 m('div', { class: `is-flex` }, [
                                     m('div', { class: `` }, [
-                                        m('img', { class: '', src: require("@/assets/img/home/QQcustomer_service.png").default })
+                                        m('img', { class: '', src: require("@/assets/img/home/Communitywechat.png").default })
                                     ])
                                 ])
                             ]

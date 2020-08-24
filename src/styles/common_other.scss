@@ -32,6 +32,7 @@
 .skew-left {
     position: relative;
     border: none;
+
     &::before {
         display: block;
         content: "";
@@ -43,10 +44,12 @@
         transform: skewX(-8deg);
     }
 }
+
 // 右 斜切
 .skew-right {
     position: relative;
     border: none;
+
     &::after {
         display: block;
         content: "";
@@ -65,8 +68,10 @@
         // 下边框-虚线
         border-bottom: 1px dashed;
     }
+
     .dropdown-menu {
         padding-top: 6px;
+
         // 三角形
         &::before {
             content: "";
@@ -81,11 +86,13 @@
             border-right: solid 6px transparent !important;
             border-bottom: solid 6px;
         }
+
         // 提示 居中
         &.my-tooltip-center {
             left: 50%;
             right: auto;
             transform: translateX(-50%);
+
             // 三角形
             &::before {
                 left: 50%;
@@ -93,20 +100,24 @@
                 transform: translate(-50%, -50%);
             }
         }
+
         // 提示 居左
         &.my-tooltip-left {
             left: 0;
             right: auto;
+
             // 三角形
             &::before {
                 left: 5%;
                 right: auto;
             }
         }
+
         // 提示 居右
         &.my-tooltip-right {
             right: 0;
             left: auto;
+
             // 三角形
             &::before {
                 right: 5%;
@@ -114,6 +125,10 @@
             }
         }
     }
+}
+
+.navbar-item img {
+    max-height: none;
 }
 
 /* 动画相关 start */
@@ -179,4 +194,3 @@
 }
 
 /* 公共样式 end */
-

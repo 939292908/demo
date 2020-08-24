@@ -248,7 +248,7 @@ module.exports = {
                 m('div.navbar-item.cursor-pointer', { class: `has-text-primary-hover` }, [
                     m(Tooltip, {
                         label: m('i.iconfont.icon-downLoad'),
-                        content: m('img', { class: '', src: require("@/assets/img/home/download.png").default })
+                        content: m('img', { class: 'header-download', src: require("@/assets/img/home/download.png").default })
                     })
                 ]),
                 // 切换线路
