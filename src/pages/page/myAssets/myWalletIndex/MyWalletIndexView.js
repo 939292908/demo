@@ -86,7 +86,7 @@ module.exports = function (props) {
                                 }, [
                                     m('span', { class: 'card1 title-medium' }, '...')
                                 ]),
-                                m('div.tradeCard body-2 border-radius-medium pa-7 has-bg-level-2', {
+                                m('div.tradeCard body-2 border-radius-medium pa-7 has-bg-level-2 box-shadow', {
                                     style: { display: 'none' }
                                 }, [
                                     m('span.mb-1', '合约账户'),
