@@ -82,7 +82,7 @@ class webApi {
                 aOnSuccess(arg);
             }
         }).catch(function (e) {
-            window._console.log('tlh', e);
+            console.log('tlh', e);
             if (aOnError) {
                 aOnError(e);
             }
@@ -109,7 +109,7 @@ class webApi {
                 aOnSuccess(arg);
             }
         }).catch(function (e) {
-            window._console.log('tlh', e);
+            console.log('tlh', e);
             if (aOnError) {
                 aOnError(e);
             }
@@ -136,7 +136,7 @@ class webApi {
                 aOnSuccess(arg);
             }
         }).catch(function (e) {
-            window._console.log('tlh', e);
+            console.log('tlh', e);
             if (aOnError) {
                 aOnError(e);
             }
@@ -163,7 +163,7 @@ class webApi {
                 aOnSuccess(arg);
             }
         }).catch(function (e) {
-            window._console.log('tlh', e);
+            console.log('tlh', e);
             if (aOnError) {
                 aOnError(e);
             }
@@ -190,7 +190,7 @@ class webApi {
                 aOnSuccess(arg);
             }
         }).catch(function (e) {
-            window._console.log('tlh', e);
+            console.log('tlh', e);
             if (aOnError) {
                 aOnError(e);
             }
@@ -217,7 +217,7 @@ class webApi {
                 aOnSuccess(arg);
             }
         }).catch(function (e) {
-            window._console.log('tlh', e);
+            console.log('tlh', e);
             if (aOnError) {
                 aOnError(e);
             }
@@ -244,7 +244,7 @@ class webApi {
                 aOnSuccess(arg);
             }
         }).catch(function (e) {
-            window._console.log('tlh', e);
+            console.log('tlh', e);
             if (aOnError) {
                 aOnError(e);
             }
@@ -271,7 +271,7 @@ class webApi {
                 aOnSuccess(arg);
             }
         }).catch(function (e) {
-            window._console.log('tlh', e);
+            console.log('tlh', e);
             if (aOnError) {
                 aOnError(e);
             }
@@ -298,7 +298,7 @@ class webApi {
                 aOnSuccess(arg);
             }
         }).catch(function (e) {
-            window._console.log('tlh', e);
+            console.log('tlh', e);
             if (aOnError) {
                 aOnError(e);
             }
@@ -325,7 +325,7 @@ class webApi {
                 aOnSuccess(arg);
             }
         }).catch(function (e) {
-            window._console.log('tlh', e);
+            console.log('tlh', e);
             if (aOnError) {
                 aOnError(e);
             }
@@ -813,7 +813,7 @@ class webApi {
             options: {}
         }).then(function (result) {
             if (DBG_REQUEST) {
-                window.window._console.log(DBG_TAG, "ReqUserInfo Rsp", result);
+                console.log(DBG_TAG, "ReqUserInfo Rsp", result);
             }
             /*
             请求参数
@@ -871,7 +871,7 @@ class webApi {
             }
         }).catch(function (e) {
             if (DBG_REQUEST) {
-                window.window._console.log(DBG_TAG, "ReqUserInfo err", e);
+                console.log(DBG_TAG, "ReqUserInfo err", e);
             }
             if (aOnError) {
                 aOnError(e);
@@ -881,6 +881,7 @@ class webApi {
 
     // 获取用户资产
     getWallet(aData, aOnSuccess, aOnError) {
+        console.log('nzm', '1111111111111111111111111asdkds;lkk');
         const s = this;
 
         s.axios.request({
@@ -889,7 +890,7 @@ class webApi {
             data: qs.stringify(aData),
             options: {}
         }).then(function (result) {
-            if (DBG_REQUEST) { window.window._console.log(DBG_TAG, "ReqWallet Rsp", result); }
+            if (DBG_REQUEST) { console.log(DBG_TAG, "ReqWallet Rsp", result); }
             /*
             请求参数
             {
@@ -935,7 +936,7 @@ class webApi {
                 aOnSuccess(arg);
             }
         }).catch(function(e) {
-            if (DBG_REQUEST) { window.window._console.log(DBG_TAG, "ReqWallet err", e); }
+            if (DBG_REQUEST) { console.log(DBG_TAG, "ReqWallet err", e); }
             if (aOnError) {
                 aOnError(e);
             }
@@ -944,6 +945,7 @@ class webApi {
 
     setWallet(data) {
         const s = this;
+
         s.wallet['01'] = data.assetLists01; // 合约资产
         s.wallet['02'] = data.assetLists02; // 现货资产
         s.wallet['03'] = data.assetLists03; // 主钱包
@@ -963,16 +965,24 @@ class webApi {
         }
     }
 
-    assetRecordsAll (aData) {
-        return this.axios.all(aData);
-    }
-
-    assetRecords (aData) {
-        return this.axios.request({
+    assetRecords(aData, aOnSuccess, aOnError) {
+        console.log(aData);
+        const that = this;
+        that.axios.request({
             method: "post",
-            url: this.axios.baseUrl + API.WALLET_ASSETS_HISTORY_V1,
+            url: that.axios.baseUrl + API.WALLET_ASSETS_HISTORY_V1,
             data: qs.stringify(aData),
             options: {}
+        }).then(res => {
+            const arg = res.data;
+            if (aOnSuccess) {
+                aOnSuccess(arg);
+            }
+            console.log(res);
+        }).catch(function(e) {
+            if (aOnError) {
+                aOnError(e);
+            }
         });
     }
 
@@ -996,7 +1006,7 @@ class webApi {
                 aOnSuccess(arg);
             }
         }).catch(function (e) {
-            window._console.log('tlh', e);
+            console.log('tlh', e);
             if (aOnError) {
                 aOnError(e);
             }
@@ -1020,7 +1030,7 @@ class webApi {
                 aOnSuccess(arg);
             }
         }).catch(function (e) {
-            window._console.log('tlh', e);
+            console.log('tlh', e);
             if (aOnError) {
                 aOnError(e);
             }
@@ -1043,7 +1053,7 @@ class webApi {
                 aOnSuccess(arg);
             }
         }).catch(function (e) {
-            window._console.log('tlh', e);
+            console.log('tlh', e);
             if (aOnError) {
                 aOnError(e);
             }

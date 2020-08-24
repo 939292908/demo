@@ -1,6 +1,7 @@
 const Stately = require('stately.js');
 const API_TAG = 'WS';
 const DBG_WSCALL = true;
+const broadcast = require('@/broadcast/broadcast');
 class Mkt {
     Conf = null;
     // websocket
@@ -54,7 +55,7 @@ class Mkt {
         this.stately = Stately.machine({
             IDLE: {
                 do: (aObj) => {
-                    window._console.log(API_TAG, 'IDLE', aObj, arg);
+                    console.log(API_TAG, 'IDLE', aObj, arg);
 
                     if (aObj.Conf && aObj.Conf.baseUrl) {
                         return 'PRECONNECT';
@@ -63,7 +64,7 @@ class Mkt {
             },
             PRECONNECT: {
                 do: (aObj) => {
-                    window._console.log(API_TAG, 'PRECONNECT', aObj);
+                    console.log(API_TAG, 'PRECONNECT', aObj);
 
                     // 清理订阅状态
                     for (var propName in aObj.booking) {
@@ -93,7 +94,7 @@ class Mkt {
             },
             CONNECTING: {
                 do: (aObj) => {
-                    window._console.log(API_TAG, 'CONNECTING', aObj);
+                    console.log(API_TAG, 'CONNECTING', aObj);
                     // return 'AUTHORIZING'
                     switch (aObj.ws.readyState) {
                     case WebSocket.CONNECTING:
@@ -107,7 +108,7 @@ class Mkt {
 
                         switch (aObj.Conf.Typ) {
                         case "mkt":
-                            // window._console.log(API_TAG, 'mkt ws is open')
+                            // console.log(API_TAG, 'mkt ws is open')
                             // aObj.ReqTime(arg => {
                             //     return aObj.stately.AUTHORIZING
                             // })
@@ -126,10 +127,10 @@ class Mkt {
             },
             AUTHORIZING: {
                 do: (aObj) => {
-                    window._console.log(API_TAG, 'AUTHORIZING', aObj);
+                    console.log(API_TAG, 'AUTHORIZING', aObj);
                     switch (aObj.Conf.Typ) {
                     case "mkt":
-                        window._console.log(API_TAG, 'mkt ws is open');
+                        console.log(API_TAG, 'mkt ws is open');
                         aObj.ReqAssetD({ vp: window.exchId });
                         return 'WORKING';
                     case "trd":
@@ -141,7 +142,7 @@ class Mkt {
             },
             WORKING: {
                 do: (aObj) => {
-                    window._console.log(API_TAG, 'WORKING', aObj);
+                    console.log(API_TAG, 'WORKING', aObj);
 
                     if (aObj.CheckAndSendHeartbeat(aObj)) {
                         return 'PRECONNECT';
@@ -191,11 +192,11 @@ class Mkt {
     }
 
     wsOnOpen(aObj, evt) {
-        window._console.log(API_TAG, 'wsOnOpen', evt);
+        console.log(API_TAG, 'wsOnOpen', evt);
     }
 
     wsOnMessage(aObj, evt) {
-        window._console.log(API_TAG, 'wsOnMessage', evt);
+        console.log(API_TAG, 'wsOnMessage', evt);
         // const s = this;
         aObj.lastRecvTm = Date.now();
         try {
@@ -220,7 +221,7 @@ class Mkt {
             const sym = d.data.Sym;
             if (sym) {
                 aObj.lastTick[sym] = d.data;
-                window.gBroadcast.emit({ cmd: window.gBroadcast.MSG_TICK_UPD, data: { Ev: window.gBroadcast.MSG_TICK_UPD, Sym: sym, data: d.data } });
+                broadcast.emit({ cmd: broadcast.MSG_TICK_UPD, data: { Ev: broadcast.MSG_TICK_UPD, Sym: sym, data: d.data } });
             }
             break;
         }
@@ -231,7 +232,7 @@ class Mkt {
             const sym = d.data.Sym;
             if (sym) {
                 aObj.lastTick[sym] = d.data;
-                window.gBroadcast.emit({ cmd: window.gBroadcast.MSG_INDEX_UPD, data: { Ev: window.gBroadcast.MSG_INDEX_UPD, Sym: sym, data: d.data } });
+                broadcast.emit({ cmd: broadcast.MSG_INDEX_UPD, data: { Ev: broadcast.MSG_INDEX_UPD, Sym: sym, data: d.data } });
             }
             break;
         }
@@ -243,7 +244,7 @@ class Mkt {
             const sym = d.data.Sym;
             const typ = d.data.Typ;
             if (sym) {
-                window.gBroadcast.emit({ cmd: window.gBroadcast.MSG_KLINE_UPD, data: { Ev: window.gBroadcast.MSG_KLINE_UPD, Sym: sym, Typ: typ, data: d.data } });
+                broadcast.emit({ cmd: broadcast.MSG_KLINE_UPD, data: { Ev: broadcast.MSG_KLINE_UPD, Sym: sym, Typ: typ, data: d.data } });
             }
             break;
         }
@@ -254,7 +255,7 @@ class Mkt {
             const sym = d.data.Sym;
             if (sym) {
                 aObj.trades[sym] = aObj.utilPushToHead(aObj.trades[sym], d.data, aObj.NumDataLenMax);
-                window.gBroadcast.emit({ cmd: window.gBroadcast.MSG_TRADE_UPD, data: { Ev: window.gBroadcast.MSG_TRADE_UPD, Sym: sym, data: d.data } });
+                broadcast.emit({ cmd: broadcast.MSG_TRADE_UPD, data: { Ev: broadcast.MSG_TRADE_UPD, Sym: sym, data: d.data } });
             }
             break;
         }
@@ -265,7 +266,7 @@ class Mkt {
             const sym = d.data.Sym;
             if (sym) {
                 aObj.order20[sym] = d.data;
-                window.gBroadcast.emit({ cmd: window.gBroadcast.MSG_ORDER20_UPD, data: { Ev: window.gBroadcast.MSG_ORDER20_UPD, Sym: sym, data: d.data } });
+                broadcast.emit({ cmd: broadcast.MSG_ORDER20_UPD, data: { Ev: broadcast.MSG_ORDER20_UPD, Sym: sym, data: d.data } });
             }
             break;
         }
@@ -307,7 +308,7 @@ class Mkt {
 
     WSCallMkt(aCmd, aParam, aFunc) {
         const s = this;
-        if (DBG_WSCALL) { window._console.log(API_TAG, __filename, "WSCallMkt", aCmd, aParam); }
+        if (DBG_WSCALL) { console.log(API_TAG, __filename, "WSCallMkt", aCmd, aParam); }
         const tm = Date.now();
         s.lastSendTm = tm;
 
@@ -321,7 +322,7 @@ class Mkt {
         try {
             s.ws.send(msgStr);
         } catch (e) {
-            window._console(API_TAG, e);
+            console(API_TAG, e);
         }
         msg.cb = aFunc;
         s.Reqs[msg.rid] = msg;
@@ -331,7 +332,7 @@ class Mkt {
         const s = this;
         const now = Date.now();
         s.WSCallMkt("Time", now, (aObj, arg) => {
-            window._console.log(API_TAG, 'Time', arg);
+            console.log(API_TAG, 'Time', arg);
             aObj.netLag = arg.data.time - Date.now();
             aObj.lastRecvTm = Date.now();
             aFunc && aFunc();
@@ -353,7 +354,7 @@ class Mkt {
                 s.displaySym.push(d[i].Sym);
                 s.AssetD[d[i].Sym] = d[i];
             }
-            window.gBroadcast.emit({ cmd: window.gBroadcast.MSG_ASSETD_UPD, data: { Ev: window.gBroadcast.MSG_ASSETD_UPD, data: d } });
+            broadcast.emit({ cmd: broadcast.MSG_ASSETD_UPD, data: { Ev: broadcast.MSG_ASSETD_UPD, data: d } });
         });
         s.WSCallMkt("GetAssetEx", aArg, function (aMkt, aRaw) {
             /*
@@ -365,7 +366,7 @@ class Mkt {
             for (let i = 0; i < d.length; i++) {
                 s.AssetEx[d[i].Sym] = d[i];
             }
-            window.gBroadcast.emit({ cmd: window.gBroadcast.MSG_ASSETEX_UPD, data: { Ev: window.gBroadcast.MSG_ASSETEX_UPD, data: d } });
+            broadcast.emit({ cmd: broadcast.MSG_ASSETEX_UPD, data: { Ev: broadcast.MSG_ASSETEX_UPD, data: d } });
         });
     }
 
