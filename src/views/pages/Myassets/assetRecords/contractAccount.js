@@ -1,10 +1,12 @@
 const m = require('mithril');
 const accountTable = require('./accountTable');
+const commonSelectionBox = require('./commonSelectionBox');
 
 require('@/styles/pages/Myassets/assetRecords.scss');
 const contractAccount = {
     assetValuation: function () {
         return m('div', {}, [
+            m(commonSelectionBox, { num: 1 }),
             m(accountTable)
         ]);
     }

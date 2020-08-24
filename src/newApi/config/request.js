@@ -40,10 +40,11 @@ class _axios {
             if (response.headers['set-exsession']) {
                 utils.setItem("ex-session", response.headers['set-exsession']);
             }
-            if (response.data && response.data.result) {
-                return response.data.result;
-            }
-            return response;
+            // if (response.data && response.data.result) {
+            //     return response.data.result;
+            // }
+            // 不需要另外处理返回数据，因为各种api返回结构不同
+            return response.data;
         }, function (error) {
             return Promise.reject(error);
         });

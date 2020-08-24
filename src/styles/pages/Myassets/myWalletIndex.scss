@@ -7,21 +7,14 @@
     .myWalletIndex-head{
         .myWalletIndex-head-left{
             .myWalletIndex-head-left-total{
-                // select{
-                //     background: none;
-                //     border: none;
-                //     outline: none;
-                // }
                 button{
                     background:none;
                     outline: none;
-                    color: white;
                     border: none;
                     width: 70px;
                 }
                 div{
                     ul{
-                        background-color: white;
                         li{
                             width: 100px;
                             height: 40px;
@@ -46,17 +39,11 @@
                 .tradeCard{
                     display: flex;
                     flex-direction: column;
-                    // 规范未找到单独设置此背景颜色！！！
-                    background-color: white;
                     z-index: 99999;
                     position: absolute;
                     left: 820px;
                     span{
-                        // 规范未找到单独设置此字体颜色！！！
                         color:#9A9EAC;
-                    }
-                    a{
-                        color: black;
                     }
                 }
             }

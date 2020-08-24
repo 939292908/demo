@@ -1,9 +1,9 @@
 const m = require('mithril');
-const utils = require('../../../util/utils');
-const broadcast = require('../../../broadcast/broadcast');
 const titleLogo = require("@/assets/img/logo/title-logo.png").default;
 const I18n = require("../../../languages/I18n").default;
 const Tooltip = require('@/views/components/common/Tooltip');
+const userInfo = require('@/models/login/userInfo');
+const utils = require('@/util/utils').default;
 
 const methods = {
     openNavbarDropdown: false,
@@ -55,7 +55,7 @@ module.exports = {
                     }, [
                         '法币交易'
                     ]),
-                    m('div.navbar-item.cursor-pointer'/* + (!window.gWebApi.loginState ? '.is-hidden' : '') */, {
+                    m('div.navbar-item.cursor-pointer' + (!userInfo.getLoginState() ? '.is-hidden' : ''), {
                         class: `has-dropdown is-hoverable`
                     }, [
                         m('div', { class: `navbar-item has-text-primary-hover ` }, ["合约交易"]),
@@ -117,16 +117,8 @@ module.exports = {
                 ])
             ]),
             m('div.navbar-end', {}, [
-                m('div.navbar-item'/* + (window.gWebApi.loginState ? '.is-hidden' : '') */, {}, [
+                m('div.navbar-item' + (userInfo.getLoginState() ? '.is-hidden' : ''), {}, [
                     m('div.buttons', {}, [
-                        m('div.button', {
-                            onclick: function () {
-                                utils.default.setItem('themeDark', true);
-                                broadcast.default.emit({ cmd: 'setTheme', data: {} });
-                            }
-                        }, [
-                            "切换"
-                        ]),
                         m('div.button', {
                             onclick: function () {
                                 window.router.push('/login');
@@ -144,7 +136,7 @@ module.exports = {
                     ])
                 ]),
                 // 已登录样式
-                m('div.navbar-item.cursor-pointer'/* + (!window.gWebApi.loginState ? '.is-hidden' : '') */, {
+                m('div.navbar-item.cursor-pointer' + (!userInfo.getLoginState() ? '.is-hidden' : ''), {
                     class: `has-dropdown is-hoverable`
                 }, [
                     m('div', { class: `navbar-item has-text-primary-hover` }, ["资产"]),
@@ -175,7 +167,7 @@ module.exports = {
                         }, ["法币账户"])
                     ])
                 ]),
-                m('a.navbar-item.cursor-pointer'/* + (!window.gWebApi.loginState ? '.is-hidden' : '') */, {
+                m('a.navbar-item.cursor-pointer' + (!userInfo.getLoginState() ? '.is-hidden' : ''), {
                     class: `has-dropdown is-hoverable`,
                     onclick: function () {
                         window.router.push('/');
@@ -189,8 +181,8 @@ module.exports = {
                         m('a', { class: `navbar-item has-text-primary-hover` }, ["跟单订单"])
                     ])
                 ]),
-                // 用户中心
-                m('a.navbar-item'/* + (!window.gWebApi.loginState ? '.is-hidden' : '') */, {
+                // 我的
+                m('a.navbar-item' + (!userInfo.getLoginState() ? '.is-hidden' : ''), {
                     class: `has-dropdown is-hoverable`,
                     onclick: function () {
                         // window.router.push('/userCenter');
@@ -241,11 +233,11 @@ module.exports = {
                                     m('i.iconfont.icon-logo')
                                 ]),
                                 m('a', {
-                                    class: `navbar-item has-text-primary-hover`
-                                    // onclick: () => {
-                                    //     window.utils.removeItem("ex-session");
-                                    //     window.gWebApi.loginState = false;
-                                    // }
+                                    class: `navbar-item has-text-primary-hover`,
+                                    onclick: () => {
+                                        utils.removeItem("ex-session");
+                                        userInfo.setLoginState(false);
+                                    }
                                 }, ["退出登录"])
                             ])
                         ])
@@ -260,11 +252,11 @@ module.exports = {
                     })
                 ]),
                 // 切换线路
-                m('a.navbar-item.cursor-pointer'/* + (!window.gWebApi.loginState ? '.is-hidden' : '') */, {
-                    class: `has-dropdown is-hoverable has-text-primary-hover`
-                    // onclick: function () {
-                    //     window.router.push('/');
-                    // }
+                m('a.navbar-item.cursor-pointer' + (!userInfo.getLoginState() ? '.is-hidden' : ''), {
+                    class: `has-dropdown is-hoverable has-text-primary-hover`,
+                    onclick: function () {
+                        window.router.push('/');
+                    }
                 }, [
                     m('div.navbar-item.cursor-pointer', { class: `has-text-primary-hover` }, [
                         m('span.icon', {}, [

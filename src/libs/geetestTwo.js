@@ -74,7 +74,6 @@ geeObj.initGee = function (readyCallBack) {
             lang: lang
         },
         function (captchaObj) {
-            window._console.log('tlh', captchaObj);
             captchaObj
                 .onReady(() => {
                     onReady(captchaObj);

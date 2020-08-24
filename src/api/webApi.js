@@ -944,7 +944,6 @@ class webApi {
 
     setWallet(data) {
         const s = this;
-
         s.wallet['01'] = data.assetLists01; // 合约资产
         s.wallet['02'] = data.assetLists02; // 现货资产
         s.wallet['03'] = data.assetLists03; // 主钱包
@@ -964,24 +963,16 @@ class webApi {
         }
     }
 
-    assetRecords(aData, aOnSuccess, aOnError) {
-        console.log(aData);
-        const that = this;
-        that.axios.request({
+    assetRecordsAll (aData) {
+        return this.axios.all(aData);
+    }
+
+    assetRecords (aData) {
+        return this.axios.request({
             method: "post",
-            url: that.axios.baseUrl + API.WALLET_ASSETS_HISTORY_V1,
+            url: this.axios.baseUrl + API.WALLET_ASSETS_HISTORY_V1,
             data: qs.stringify(aData),
             options: {}
-        }).then(res => {
-            const arg = res.data;
-            if (aOnSuccess) {
-                aOnSuccess(arg);
-            }
-            console.log(res);
-        }).catch(function(e) {
-            if (aOnError) {
-                aOnError(e);
-            }
         });
     }
 

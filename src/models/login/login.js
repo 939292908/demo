@@ -102,6 +102,7 @@ module.exports = {
                 }
                 // this.loginSms = res.result.loginSms;
             } else {
+                this.loading = false;
                 window.$message({
                     content: window.errCode.getWebApiErrorCode(res.result.code),
                     type: 'danger'
