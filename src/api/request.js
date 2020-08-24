@@ -100,7 +100,7 @@ class _axios {
         return axios.spread(callback);
     }
 
-    static all(pool = []) {
+    all(pool = []) {
         return axios.all(pool);
     }
 }
