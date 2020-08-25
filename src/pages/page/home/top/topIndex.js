@@ -32,9 +32,9 @@ module.exports = {
     getBanne () {
         const params = { locale: this.locale, vp: Conf.exchId };
         Http.getBanne(params).then(res => {
-            if (res.code === 0) {
+            if (res.result.code === 0) {
                 var bannList = [];
-                const list = res.data;
+                const list = res.result.data;
                 for (let i = 0; i < list.length && i < 9; i += 3) {
                     bannList.push(list.slice(i, i + 3));
                 }
@@ -45,8 +45,8 @@ module.exports = {
     },
     getnotice () {
         Http.getNotice({ locale: this.locale, vp: Conf.exchId }).then(res => {
-            if (res.code === 0) {
-                this.data.noticeList = res.data;
+            if (res.result.code === 0) {
+                this.data.noticeList = res.result.data;
                 m.redraw();
             }
         });

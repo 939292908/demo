@@ -6,9 +6,6 @@ const picture = require('./picture/pictureIndex');
 const advantage = require('./advantage/advantageIndex');
 const introduce = require('./introduce/introduceIndex');
 module.exports = {
-    oncreate: function () {
-
-    },
     view: function () {
         return m('div.views-pages-home-index', [
             // 顶部+轮播+公告
