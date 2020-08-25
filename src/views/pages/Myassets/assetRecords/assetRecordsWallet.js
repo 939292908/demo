@@ -1,25 +1,76 @@
 const m = require('mithril');
 const commonSelectionBox = require('./commonSelectionBox');
-const fundRecordsSelect = require('@/views/components/fundRecordsSelect');
 const assetRecordsTable = require('@/models/assetRecords/assetRecordsTable');
 
-const assetRecordsWallet = {
-    assetValuation: function () {
-        return m('div', { class: 'views-pages-Myassets-assetRecords-myWallet-wrapper' }, [
-            m(commonSelectionBox, { num: 0 }),
-            m(fundRecordsSelect, { dataArrObj: assetRecordsTable.dataArrObj, grossValue: assetRecordsTable.grossValue })
-        ]);
-    }
-};
 module.exports = {
     oninit () {
+        assetRecordsTable.type = '03';
         assetRecordsTable.oninit();
         console.log(assetRecordsTable.grossValue);
-        // console.log(window.gI18n);
     },
     view () {
         return m('div', { class: 'views-pages-Myassets-assetRecords-assetRecordsWallet' }, [
-            assetRecordsWallet.assetValuation()
+            m(commonSelectionBox, { num: '03' }),
+            m('table', {}, [
+                m('tbody', { class: 'tbody' }, [
+                    assetRecordsTable.dataArrObj.map(items => {
+                        return m('tr', { class: ' pl-2 pb-2 pt-2 columns-flex-justify1  has-text-level-2 border-radius-small body-4' }, [
+                            m('td', {}, [items.category]),
+                            m('td', {}, [items.type]),
+                            m('td', {}, [items.num]),
+                            m('td', {}, [items.ServiceCharge]),
+                            m('td', {}, [items.state]),
+                            m('td', {}, [items.time]),
+                            m('td', { style: 'width:100px' }, [items.remarks])
+                        ]);
+                    })
+                ])
+            ]),
+            m('table', {}, [
+                m('tbody', { class: 'tbody' }, [
+                    assetRecordsTable.grossValue.map((item, index) => {
+                        return m('tr', { class: 'pb-3 pl-2 columns-flex-justify1 body-4' }, [
+                            m('td', {}, [item.wType]),
+                            m('td', {}, [item.status]),
+                            m('td', {}, [item.num]),
+                            m('td', {}, [item.num]),
+                            m('td', {}, [item.stat]),
+                            m('td', {}, [item.time]),
+                            m('td', { class: 'has-text-primary cursor-pointer ', style: 'width:100px' }, [
+                                m('div', { class: 'dropdown is-right is-active' }, [
+                                    m('div', {
+                                        class: 'dropdown-trigger',
+                                        onclick: function () {
+                                            assetRecordsTable.displayEvnet(index);
+                                        }
+                                    }, [
+                                        m('span', { ariaHaspopup: 'true', ariaControls: 'dropdown-menu6' }, ['详情']),
+                                        m('span', { class: 'icon is-small' }, [
+                                            m('i', { class: 'fas fa-angle-down', ariaHidden: 'true' }, [])
+                                        ])
+                                    ]),
+                                    m('div', { class: assetRecordsTable.displayValue === index && assetRecordsTable.noDisplay ? 'dropdown-menu' : 'dropdown-menu1', id: 'dropdown-menu6', role: 'menu' }, [
+                                        m('div', { class: 'dropdown-content' }, [
+                                            m('div', { class: 'dropdown-item' }, [
+                                                m('div', { class: '' }, [
+                                                    m('div', { class: 'mb-3' }, [
+                                                        m('span', { class: 'pr-7' }, ['提币地址:']),
+                                                        m('span', {}, ['链类型:' + item.wType])
+                                                    ]),
+                                                    m('div', {}, [
+                                                        m('span', { class: 'pr-7' }, ['提币地址:']),
+                                                        m('span', {}, ['链类型:' + item.wType])
+                                                    ])
+                                                ])
+                                            ])
+                                        ])
+                                    ])
+                                ])
+                            ])
+                        ]);
+                    })
+                ])
+            ])
         ]);
     }
 };

@@ -5,7 +5,7 @@ require('@/styles/pages/Myassets/assetRecords.scss');
 
 const commonSelectionBox = {
     timeValue: null,
-    changeValue: 0,
+    changeValue: '03',
     typeValue0: [
         {
             value: '全部类型',
@@ -108,14 +108,14 @@ const commonSelectionBox = {
     ],
     typeValue: [],
     dispalySelectEvent: function () {
-        if (this.changeValue === 0) {
+        if (this.changeValue === '03') { // 我的钱包
             this.typeValue = this.typeValue0;
-        } else if (this.changeValue === 1) {
+        } else if (this.changeValue === '01') { // 合约账户
             this.typeValue = this.typeValue1;
-        } else if (this.changeValue === 2) {
+        } else if (this.changeValue === '02') { // 币币账户
             this.typeValue = this.typeValue2;
-        } else {
-            this.typeValue = this.typeValue3;
+        } else if (this.changeValue === '04') {
+            this.typeValue = this.typeValue3; // 法币账户
         }
     },
     timestampToTime: function () {
@@ -136,7 +136,7 @@ const commonSelectionBox = {
         }
     },
     assetValuation: function () {
-        return m('div', { class: 'columns-flex-justify mb-3 body-2' }, [
+        return m('div', { class: 'columns-flex-justify mb-7 body-2' }, [
             m('div', { class: 'mr-6' }, [
                 m('p', { class: 'mb-2' }, ['时间']),
                 m('input[type=date]', {

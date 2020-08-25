@@ -8,8 +8,8 @@ module.exports = {
     },
     view: function () {
         return m('div', { class: 'views-pages-Myassets-assetRecords-LegalCurrencyAccount' }, [
-            m(commonSelectionBox, { num: 3 }),
-            m(accountTable)
+            m(commonSelectionBox, { num: '04' }),
+            m(accountTable, { num: '04' })
         ]);
     }
 };

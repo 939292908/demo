@@ -94,7 +94,7 @@ class Mkt {
             },
             CONNECTING: {
                 do: (aObj) => {
-                    console.log(API_TAG, 'CONNECTING', aObj);
+                    // console.log(API_TAG, 'CONNECTING', aObj);
                     // return 'AUTHORIZING'
                     switch (aObj.ws.readyState) {
                     case WebSocket.CONNECTING:
@@ -127,10 +127,10 @@ class Mkt {
             },
             AUTHORIZING: {
                 do: (aObj) => {
-                    console.log(API_TAG, 'AUTHORIZING', aObj);
+                    // console.log(API_TAG, 'AUTHORIZING', aObj);
                     switch (aObj.Conf.Typ) {
                     case "mkt":
-                        console.log(API_TAG, 'mkt ws is open');
+                        // console.log(API_TAG, 'mkt ws is open');
                         aObj.ReqAssetD({ vp: window.exchId });
                         return 'WORKING';
                     case "trd":
@@ -142,7 +142,7 @@ class Mkt {
             },
             WORKING: {
                 do: (aObj) => {
-                    console.log(API_TAG, 'WORKING', aObj);
+                    // console.log(API_TAG, 'WORKING', aObj);
 
                     if (aObj.CheckAndSendHeartbeat(aObj)) {
                         return 'PRECONNECT';
@@ -196,7 +196,7 @@ class Mkt {
     }
 
     wsOnMessage(aObj, evt) {
-        console.log(API_TAG, 'wsOnMessage', evt);
+        // console.log(API_TAG, 'wsOnMessage', evt);
         // const s = this;
         aObj.lastRecvTm = Date.now();
         try {
@@ -308,7 +308,7 @@ class Mkt {
 
     WSCallMkt(aCmd, aParam, aFunc) {
         const s = this;
-        if (DBG_WSCALL) { console.log(API_TAG, __filename, "WSCallMkt", aCmd, aParam); }
+        if (DBG_WSCALL) { /** console.log(API_TAG, __filename, "WSCallMkt", aCmd, aParam); */ }
         const tm = Date.now();
         s.lastSendTm = tm;
 
@@ -332,7 +332,7 @@ class Mkt {
         const s = this;
         const now = Date.now();
         s.WSCallMkt("Time", now, (aObj, arg) => {
-            console.log(API_TAG, 'Time', arg);
+            // console.log(API_TAG, 'Time', arg);
             aObj.netLag = arg.data.time - Date.now();
             aObj.lastRecvTm = Date.now();
             aFunc && aFunc();

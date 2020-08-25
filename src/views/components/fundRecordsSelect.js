@@ -5,7 +5,7 @@ require('@/styles/pages/Myassets/assetRecords.scss');
 module.exports = {
     oninit (vnode) {
         console.log(vnode.attrs.dataArrObj);
-        console.log(vnode.attrs);
+        console.log(vnode.attrs.num);
     },
     view: function (vnode) {
         return m('div', {}, [
@@ -16,7 +16,7 @@ module.exports = {
                             m('td', {}, [items.category]),
                             m('td', {}, [items.type]),
                             m('td', {}, [items.num]),
-                            m('td', {}, [items.ServiceCharge]),
+                            m('td', { class: !vnode.attrs.num ? 'dropdown-menu2' : 'dropdown-menu1' }, [items.ServiceCharge]),
                             m('td', {}, [items.state]),
                             m('td', {}, [items.time]),
                             m('td', { style: 'width:100px' }, [items.remarks])
@@ -45,7 +45,7 @@ module.exports = {
                                     }, [
                                         m('span', { ariaHaspopup: 'true', ariaControls: 'dropdown-menu6' }, ['详情']),
                                         m('span', { class: 'icon is-small' }, [
-                                            m('i', { class: 'fas fa-angle-down', ariaHidden: 'true' }, [2])
+                                            m('i', { class: 'fas fa-angle-down', ariaHidden: 'true' }, [])
                                         ])
                                     ]),
                                     m('div', { class: 'dropdown-menu1', id: 'dropdown-menu6', role: 'menu' }, [

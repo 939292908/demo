@@ -12,7 +12,6 @@ const tradingAccount = {
     // 01：合约账户，02：币币账户，04：法币账户
     pageFlag: 1,
     setPageFlag: function (param) {
-        console.log(param);
         this.pageFlag = param;
     },
     switchContent: function () {
@@ -28,12 +27,8 @@ const tradingAccount = {
     navAry: [{ idx: 1, val: '合约账户' }, { idx: 2, val: '币币账户' }, { idx: 4, val: '法币账户' }]
 };
 module.exports = {
-    oninit: function (vnode) {
-        if (vnode.attrs.idx !== 0) {
-            tradingAccount.setPageFlag(vnode.attrs.idx);
-        } else {
-            tradingAccount.setPageFlag(1);
-        }
+    oninit: function () {
+        tradingAccount.setPageFlag(1);
     },
     view: function (vnode) {
         const props = {
@@ -42,11 +37,11 @@ module.exports = {
         return TradeAccountView(props, vnode);
     },
     // 一直刷新
-    // onupdate: function (vnode) {
-    //     console.log('update/..nzm');
-    //     tradingAccount.setPageFlag(vnode.attrs.idx);
-    //     m.redraw();
-    // },
+    onupdate: function (vnode) {
+        console.log('nzm', 'update......');
+        tradingAccount.setPageFlag(vnode.attrs.idx);
+        m.redraw();
+    },
     onremove: function () {
         broadcast.offMsg({
             key: 'tradingAccount',

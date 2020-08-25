@@ -181,7 +181,7 @@ module.exports = {
         var date = new Date(timestamp * 1000);// 时间戳为10位需*1000，时间戳为13位的话不需乘1000
         var Y = date.getFullYear() + '-';
         var M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '-';
-        var D = date.getDate();
+        var D = date.getDate() < 10 ? '0' + date.getDate() : date.getDate();
         return Y + M + D;
     },
     selectDisplay (type, val) {
@@ -218,6 +218,7 @@ module.exports = {
     displayEvnet (val) {
         this.displayValue = val;
         this.noDisplay = !this.noDisplay;
+        console.log(val);
     },
     bodydisplayEvnet () {
         if (this.noDisplay) {
@@ -225,8 +226,8 @@ module.exports = {
         }
     },
     oninit() {
+        console.log(this.type, '1111111111111111111111111111');
         const that = this;
-        console.log('111111111111111111111111');
         broadcast.onMsg({
             key: 'assetRecordsTable',
             cmd: 'onAssetRecordsTable',
@@ -307,7 +308,7 @@ module.exports = {
             ]).then(res => {
                 // eslint-disable-next-line prefer-const
                 let walletLog = that.walletLog[that.type];
-                that.walletLog[that.type]['4'] = res[0].data.result.code === 0 ? res[0].data.history : walletLog['4'] ? walletLog['4'] : [];
+                that.walletLog[that.type]['4'] = res[0].result.code === 0 ? res[0].history : walletLog['4'] ? walletLog['4'] : [];
                 that.updateList();
             }).catch(err => {
                 console.log('error ', err);
@@ -319,8 +320,8 @@ module.exports = {
             ]).then(res => {
                 // eslint-disable-next-line prefer-const
                 let walletLog = that.walletLog[that.type];
-                that.walletLog[that.type]['4'] = res[0].data.result.code === 0 ? res[0].data.history : walletLog['4'] ? walletLog['4'] : [];
-                that.walletLog[that.type]['5'] = res[1].data.result.code === 0 ? res[1].data.history : walletLog['5'] ? walletLog['5'] : [];
+                that.walletLog[that.type]['4'] = res[0].result.code === 0 ? res[0].history : walletLog['4'] ? walletLog['4'] : [];
+                that.walletLog[that.type]['5'] = res[1].result.code === 0 ? res[1].history : walletLog['5'] ? walletLog['5'] : [];
                 that.updateList();
             }).catch(err => {
                 console.log('error ', err);
@@ -330,7 +331,7 @@ module.exports = {
                 Http.assetRecords({ aType: '018', mhType: 5 })// 其他
             ]).then(res => {
                 // eslint-disable-next-line no-undef
-                that.walletLog[that.type]['5'] = res[0].data.result.code === 0 ? res[0].data.history : walletLog['5'] ? walletLog['5'] : [];
+                that.walletLog[that.type]['5'] = res[0].result.code === 0 ? res[0].history : walletLog['5'] ? walletLog['5'] : [];
                 that.updateList();
             }).catch(err => {
                 console.log('error ', err);
@@ -754,6 +755,8 @@ module.exports = {
         // this.readyAlldata = allHistoryList.slice(0,this.listNum)
         this.readyAlldata = allHistoryList;
         this.grossValue = allHistoryList;
+        this.dataObj = allHistoryList;
+        this.dataSelect = allHistoryList;
         m.redraw();
         console.log(this.readyAlldata, '------------------------------');
         setTimeout(() => {
