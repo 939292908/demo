@@ -83,7 +83,7 @@ export default {
                     m("a",{class:"", onclick: function(){
                       obj.setTabsActive(0)
                     }},[
-                      pageTradeStatus == 1?gDI18n.$t('10215',{value : (obj.wlt.Coin || '')}) : '币币资产'
+                      pageTradeStatus == 1?gDI18n.$t('10215',{value : (obj.wlt.Coin || '')}) : gDI18n.$t('10608'), //'币币资产'
                       
                       // (obj.wlt.Coin || '')+'合约资产'
                     ])

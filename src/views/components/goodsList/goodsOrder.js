@@ -6,10 +6,10 @@ let obj = {
     posList:[],
     theadList: [
         {
-            title: '操作',
+            title: gDI18n.$t('10590'), //'操作',
             class: ""
         }, {
-            title: '交易对', //'',
+            title: gDI18n.$t('10614'), //'交易对', //'',
             class: ""
         }, {
             title: gDI18n.$t('10055'/*"交易类型"*/), //'',
@@ -117,7 +117,7 @@ let obj = {
                 title: gDI18n.$t('10590'), //'操作',
                 class: ""
             }, {
-                title: '交易对', //'',
+                title: gDI18n.$t('10614'), //'交易对', //'',
                 class: ""
             }, {
                 title: gDI18n.$t('10055'/*"交易类型"*/), //'',

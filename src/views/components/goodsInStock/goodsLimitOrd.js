@@ -441,7 +441,7 @@ export default {
             ]),
             m("div",{class:"pub-bibi-price"},[
                 m('div',{class:"pub-bibi-price-til is-hidden-touch"},[
-                    "价值"
+                    gDI18n.$t('10605'), //"价值"
                 ]),
                 m('div',{class:"pub-bibi-price-inp" + (pageTradeStatus == 1?" pub-bibi-price-inp1" : " pub-bibi-price-inp2")},[
                     m("div",{class:"pub-bibi-price-US"},[
@@ -457,7 +457,7 @@ export default {
             m('.spacer'),
             m("div",{class:"pub-bibi-price"},[
                 m('div',{class:"pub-bibi-price-til is-hidden-touch"},[
-                    "余额"
+                    gDI18n.$t('10606'), //"余额"
                 ]),
                 m('div',{class:"pub-bibi-price-inp" + (pageTradeStatus == 1?" pub-bibi-price-inp1" : " pub-bibi-price-inp2")},[
                     m("div",{class:"pub-balance"},[

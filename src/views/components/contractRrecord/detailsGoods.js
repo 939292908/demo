@@ -79,7 +79,7 @@ module.exports = {
                     ]),
                     m("div",{class : "font-div font-right has-text-2"},[
                         m('div',{class : ""},[
-                            "成交金额"
+                            gDI18n.$t('10616'), //"成交金额"
                         ]),
                         m("p",{class : "font-p has-text-1"},[
                             item.PrzM

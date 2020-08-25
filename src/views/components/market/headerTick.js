@@ -212,7 +212,9 @@ let spotTick = {
                                             dashed: true,
                                             label: gDI18n.$t('10475'),//"指数价格："
                                             content: [
-                                                m('p', "标的资产的价格，这里是BTC/USDT的指数价格。点此了解更多...")
+                                                m('p',
+                                                gDI18n.$t('10603', { value: "BTC/USDT"}), //"标的资产的价格，这里是BTC/USDT的指数价格。点此了解更多..."
+                                                )
                                             ]
                                         }),
                                     ]),
@@ -225,7 +227,8 @@ let spotTick = {
                                         dashed: true,
                                         label: gDI18n.$t('10476'),//"标记价格："
                                         content: [
-                                            m('p', "这是现在的标记价格。点此了解更多...")
+                                            m('p', gDI18n.$t('10604'), //"这是现在的标记价格。点此了解更多..."
+                                            )
                                         ]
                                     }),
                                     m('span.has-text-1',[

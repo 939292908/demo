@@ -123,19 +123,19 @@ let obj = {
         // 表头
         this.tableColumns = [
             {
-                title: '交易所',
+                title: gDI18n.$t('10624'), //'交易所',
                 key: 'jys'
             },
             {
-                title: '货币对',
+                title: gDI18n.$t('10625'), //'货币对',
                 key: 'hbd'
             },
             {
-                title: '当前报价',
+                title: gDI18n.$t('10626'), //'当前报价',
                 key: 'dqbj'
             },
             {
-                title: '权重',
+                title: gDI18n.$t('10627'), //'权重',
                 key: 'qz'
             }
         ]

@@ -46,7 +46,7 @@ let obj = {
                 key: 'hy'
             },
             {
-                title: '资金费率间隔',
+                title: gDI18n.$t('10623'), //'资金费率间隔',
                 key: 'zj'
             },
             {

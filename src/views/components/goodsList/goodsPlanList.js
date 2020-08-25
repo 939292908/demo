@@ -4,10 +4,10 @@ let obj = {
     posList: [],
     theadList: [
         {
-            title: '操作', //'',
+            title: gDI18n.$t('10590'), //'操作', //'',
             class: ""
         }, {
-            title: '交易对', //'',
+            title: gDI18n.$t('10614'), //', //'',
             class: ""
         }, {
             title: gDI18n.$t('10055'/*"交易类型"*/), //'',
@@ -22,7 +22,7 @@ let obj = {
             title: gDI18n.$t('10064'/*'触发条件'*/), //'',
             class: ""
         }, {
-            title: '生成时间', //'',
+            title: gDI18n.$t('10617'), //'生成时间', //'',
             class: ""
         }, 
     ],
@@ -93,7 +93,7 @@ let obj = {
                 title: gDI18n.$t('10590'), //'操作', //'',
                 class: ""
             }, {
-                title: '交易对', //'',
+                title: gDI18n.$t('10614'), //'交易对', //'',
                 class: ""
             }, {
                 title: gDI18n.$t('10055'/*"交易类型"*/), //'',
@@ -108,7 +108,7 @@ let obj = {
                 title: gDI18n.$t('10064'/*'触发条件'*/), //'',
                 class: ""
             }, {
-                title: '生成时间', //'',
+                title: gDI18n.$t('10617'), //'生成时间', //'',
                 class: ""
             },
         ]

@@ -463,14 +463,16 @@ export default {
             ]),
             m("div",{class:"pub-bibi-price"},[
                 m('div',{class:"pub-bibi-price-til is-hidden-touch"},[
-                    "触发"
+                    gDI18n.$t('10607'), //"触发"
                 ]),
                 m('div',{class:"pub-bibi-price-inp" + (pageTradeStatus == 1?" pub-bibi-price-inp1" : " pub-bibi-price-inp2")},[
                     m("div",{class:"pub-bibi-price-US"},[
                         m("div",{class:"pub-bibi-price-text text-background"},[
                             (obj.getLastTick().FromC || gDI18n.$t('10420'/*"币种"*/))
                         ]),
-                        m("input",{class:"input pub-bibi-price-US-input",step: obj.PrzStep,pattern:"\d*",value:obj.form.stopPL,type:"number",placeholder:"触发价格",oninput:function(e){
+                        m("input",{class:"input pub-bibi-price-US-input",step: obj.PrzStep,pattern:"\d*",value:obj.form.stopPL,type:"number",placeholder:
+                        gDI18n.$t('10609') //"触发价格"
+                        ,oninput:function(e){
                             obj.getInputStopPL(e)
                         }}),
                     ]),
@@ -481,7 +483,7 @@ export default {
             ]),
             m("div",{class:"pub-bibi-price"},[
                 m('div',{class:"pub-bibi-price-til is-hidden-touch"},[
-                    "价值"
+                    gDI18n.$t('10605'), //"价值"
                 ]),
                 m('div',{class:"pub-bibi-price-inp" + (pageTradeStatus == 1?" pub-bibi-price-inp1" : " pub-bibi-price-inp2")},[
                     m("div",{class:"pub-bibi-price-US"},[
@@ -497,7 +499,7 @@ export default {
             m('.spacer'),
             m("div",{class:"pub-bibi-price"},[
                 m('div',{class:"pub-bibi-price-til is-hidden-touch"},[
-                    "余额"
+                    gDI18n.$t('10606'), //"余额"
                 ]),
                 m('div',{class:"pub-bibi-price-inp" + (pageTradeStatus == 1?" pub-bibi-price-inp1" : " pub-bibi-price-inp2")},[
                     m("div",{class:"pub-balance"},[

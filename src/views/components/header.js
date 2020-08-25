@@ -11,19 +11,19 @@ let header = {
     orderMenuList: [
         {
             id: 1,
-            label: '合约订单'
+            label: gDI18n.$t('10595'), //'合约订单'
         },
         {
             id: 2,
-            label: '币币订单'
+            label: gDI18n.$t('10596'), //'币币订单'
         },
         {
             id: 3,
-            label: '法币订单'
+            label: gDI18n.$t('10597'), //'法币订单'
         },
         {
             id: 4,
-            label: '跟单订单'
+            label: gDI18n.$t('10598'), //'跟单订单'
         },
     ],
     // 线路切换弹框
@@ -35,7 +35,7 @@ let header = {
         this.assetMenuList = [
             {
                 id: 1,
-                label: `${gDI18n.$t('10219')}（充币&提币）`, //'我的钱包（充币&提币）'
+                label: `${gDI18n.$t('10219')}（${gDI18n.$t('10592')}&${gDI18n.$t('10593')}）`, //'我的钱包（充币&提币）'
             },
             {
                 id: 2,
@@ -133,16 +133,16 @@ let header = {
                         `UID:${this.uid}`
                     ]),
                     m("a", { class: "navbar-item" }, [
-                        '账户安全'
+                        gDI18n.$t('10599'), //'账户安全'
                     ]),
                     m("a", { class: "navbar-item" }, [
-                        '身份认证'
+                        gDI18n.$t('10600'), //'身份认证'
                     ]),
                     m("a", { class: "navbar-item" }, [
-                        'API管理'
+                        gDI18n.$t('10601'), //'API管理'
                     ]),
                     m("a", { class: "navbar-item" }, [
-                        '邀请返佣'
+                        gDI18n.$t('10602'), //'邀请返佣'
                     ]),
                     m("a", { class: "navbar-item", onclick: this.signOut }, [
                         gDI18n.$t('10003'/*'退出'*/)
@@ -441,7 +441,9 @@ let header = {
     // 资产菜单
     getAssetMenu: function () {
         return m("div", { class: "navbar-item has-dropdown is-hoverable" }, [
-            m("a", { class: "navbar-item" }, ["资产"]),
+            m("a", { class: "navbar-item" }, [
+                gDI18n.$t('10591'), //"资产"
+            ]),
             m("div", { class: "navbar-dropdown" },
                 header.assetMenuList.map(item => {
                     return m('a', { class: `navbar-item` }, [item.label])
@@ -452,7 +454,9 @@ let header = {
     // 订单菜单
     getOrderMenu: function () {
         return m("div", { class: "navbar-item has-dropdown is-hoverable" }, [
-            m("a", { class: "navbar-item" }, ["订单"]),
+            m("a", { class: "navbar-item" }, [
+                gDI18n.$t('10594'), //"订单"
+            ]),
             m("div", { class: "navbar-dropdown" },
                 header.orderMenuList.map(item => {
                     return m('a', { class: `navbar-item` }, [item.label])

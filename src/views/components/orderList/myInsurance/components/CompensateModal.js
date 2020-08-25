@@ -50,12 +50,12 @@ export default {
                 m("a", {
                     class: "reset-button button is-primary is-outlined has-text-white", onclick () { vnode.state.close(vnode) }
                 }, [
-                    "取消"
+                    gDI18n.$t('10052'), //"取消"
                 ]),
                 m("a", {
                     class: "reset-button button is-primary is-outlined has-text-white", onclick () { vnode.state.ok(vnode) }
                 }, [
-                    "确定"
+                    gDI18n.$t('10051'), //"确定"
                 ])
             ])
         ]

@@ -113,7 +113,7 @@ let obj = {
             info: '--'
         },
         {
-            name: '标记价格',
+            name: gDI18n.$t('10628'), //'标记价格',
             info: '--'
         },
         {
@@ -186,7 +186,7 @@ let obj = {
         this.contractList[6].name = gDI18n.$t('10116'), //"最小数量变动"
         this.contractList[7].name = gDI18n.$t('10538'), //"杠杆模式"
         this.contractList[8].name = gDI18n.$t('10539'), //"标记方法"
-        this.contractList[9].name = "标记价格"
+        this.contractList[9].name = gDI18n.$t('10628'), //"标记价格"
         this.contractList[10].name = gDI18n.$t('10541'), //"启用自动减仓"
         this.contractList[11].name = gDI18n.$t('10543'), //"委托保证金率"
         this.contractList[12].name = gDI18n.$t('10544'), //"仓位保证金率"
@@ -455,10 +455,10 @@ let obj = {
         this.contractList[12].info = this.spotInfo.MMR
         this.contractList[13].info = this.spotInfo.FeeMkrR
         this.contractList[14].info = this.spotInfo.FeeTkrR
-        this.contractList[15].info = this.spotInfo.MIRm + ("*委托价值+亏损+手续费") //"*委托价值+亏损+手续费"
-        this.contractList[16].info = this.spotInfo.MMRg + ("*仓位价值")
+        this.contractList[15].info = gDI18n.$t('10547', { value: this.spotInfo.MIRm}), //this.spotInfo.MIRm + ("*委托价值+亏损+手续费") //"*委托价值+亏损+手续费"
+        this.contractList[16].info = gDI18n.$t('10548', { value: this.spotInfo.MMRg}), //this.spotInfo.MMRg + ("*仓位价值")
         this.contractList[17].info = this.spotInfo.FundingLongR
-        this.contractList[18].info = "每" +this.spotInfo.Chargein + "小时"
+        this.contractList[18].info = gDI18n.$t('10619', { value: this.spotInfo.Chargein}), //"每" +this.spotInfo.Chargein + "小时"
         this.contractList[19].info = this.spotInfo.FundingNext
         this.contractList[20].info = this.spotInfo.Base
         this.contractList[21].info = this.spotInfo.Step
@@ -537,7 +537,7 @@ let obj = {
 
                 `
                     ${tabelList[dropdownActive] ? tabelList[dropdownActive].label : "--"}
-                    ${gDI18n.$t('10053')}${spotInfo.ExpireStr == 0 ? "没有到期日" : spotInfo.ExpireStr}。每张合约大小${spotInfo.LotSz}。每${spotInfo.Chargein}小时交换资金费用。下一个交换将发生在${spotInfo.FundingNext}。
+                    ${gDI18n.$t('10053')}${spotInfo.ExpireStr == 0 ? gDI18n.$t('10533'/*"没有到期日"*/) : spotInfo.ExpireStr}。${gDI18n.$t('10620'/*"每张合约大小"*/, {value: spotInfo.LotSz})}。${gDI18n.$t('10621'/* 每xx小时交换资金费用 */, {value: spotInfo.Chargein})}。${gDI18n.$t('10622'/*下一个交换将发生在 */, {value: spotInfo.FundingNext})}。
                 `
             ]),
             m('div', { class: " inf_body_TD" }, [

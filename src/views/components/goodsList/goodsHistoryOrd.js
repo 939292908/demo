@@ -17,7 +17,7 @@ let obj = {
     isShowModal: false, // 筛选模态框
     theadList: [
         {
-            title: '交易对',//'',
+            title: gDI18n.$t('10614'), //'交易对',//'',
             class: ""
         }, {
             title: gDI18n.$t('10055'/*"交易类型"*/),//'',
@@ -26,7 +26,7 @@ let obj = {
             title: gDI18n.$t('10056'/*"委托类型"*/),//'',
             class: ""
         }, {
-            title: '委托状态',//'',
+            title: gDI18n.$t('10615'), //'委托状态',//'',
             class: ""
         }, {
             title: gDI18n.$t('10058'/*"委托价格"*/),//'',
@@ -44,7 +44,7 @@ let obj = {
             title: gDI18n.$t('10063'/*'手续费'*/),//'',
             class: ""
         },{
-            title: '成交金额',//'',
+            title: gDI18n.$t('10616'), //'成交金额',//'',
             class: ""
         }, {
             title: gDI18n.$t('10064'/*'触发条件'*/),//'',
@@ -131,7 +131,7 @@ let obj = {
     initLanguage: function () {
         this.theadList = [
             {
-                title: '交易对',//'',
+                title: gDI18n.$t('10614'), //'交易对',//'',
                 class: ""
             }, {
                 title:  gDI18n.$t('10055'/*"交易类型"*/),//'',
@@ -140,7 +140,7 @@ let obj = {
                 title: gDI18n.$t('10056'/*"委托类型"*/),//'',
                 class: ""
             }, {
-                title: '委托状态',//'',
+                title: gDI18n.$t('10615'), //'委托状态',//'',
                 class: ""
             }, {
                 title: gDI18n.$t('10058'/*"委托价格"*/),//'',
@@ -158,7 +158,7 @@ let obj = {
                 title: gDI18n.$t('10063'/*'手续费'*/),//'',
                 class: ""
             },{
-                title: '成交金额',//'',
+                title: gDI18n.$t('10616'), //'成交金额',//'',
                 class: ""
             }, {
                 title: gDI18n.$t('10064'/*'触发条件'*/),//'',

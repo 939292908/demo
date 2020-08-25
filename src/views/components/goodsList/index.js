@@ -155,7 +155,7 @@ export default {
                             },
                             {
                                 id: 2,
-                                label: '显示当前交易'
+                                label: gDI18n.$t('10618'), //'显示当前交易'
                             }
                         ]
                     }

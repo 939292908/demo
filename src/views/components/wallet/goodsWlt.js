@@ -137,12 +137,12 @@ export default {
         return m("div",{class:"pub-wallet"},[
             m('div', {class:"pub-wallet-content"}, [
                 m('div',{class:"pub-wallet-font has-text-1"},[
-                    (obj.getLastTick().ToC || "")+ '资产'
+                    (obj.getLastTick().ToC || "")+ gDI18n.$t('10591'), //'资产'
                     // (obj.wlt.Coin || "") + '资产'
                 ]),
                 m('div', {class: 'level-item'}, [
                     m('div', {class: 'text--secondary has-text-2'}, [
-                        '总额'
+                        gDI18n.$t('10610'), //'总额'
                     ]),
                     m('div', {class: 'has-text-1'}, [
                         obj.wlt.TOTAL?Number(obj.wlt.TOTAL).toFixed2(8): (0).toFixed2(8)
@@ -150,7 +150,7 @@ export default {
                 ]),
                 m('div', {class: 'level-item'}, [
                     m('div', {class: 'text--secondary has-text-2'}, [
-                        '冻结'
+                        gDI18n.$t('10611'), //'冻结'
                     ]),
                     m('div', {class: 'has-text-1 '}, [
                         obj.wlt.Frz?Number(obj.wlt.Frz).toFixed2(8): (0).toFixed2(8)
@@ -158,7 +158,7 @@ export default {
                 ]),
                 m('div', {class: 'level-item'}, [
                     m('div', {class: 'text--secondary has-text-2'}, [
-                        '可用'
+                        gDI18n.$t('10612'), //'可用'
                     ]),
                     m('div', {class: 'has-text-1'}, [
                         obj.wlt.NL?Number(obj.wlt.NL).toFixed2(8): (0).toFixed2(8)
@@ -166,7 +166,7 @@ export default {
                 ]),
                 m('div', {class: 'level-item'}, [
                     m('div', {class: 'text--secondary has-text-2'}, [
-                        'USDT' + '估值'
+                        'USDT' + gDI18n.$t('10613'), //'估值'
                     ]),
                     m('div', {class: 'has-text-1'}, [
                         obj.wlt.Valuation?Number(obj.wlt.Valuation).toFixed2(8): (0).toFixed2(8)
@@ -175,11 +175,11 @@ export default {
             ]),
             m('div', {class:"pub-wallet-content pub-top-border"}, [
                 m('div',{class:"pub-wallet-font has-text-1"},[
-                    (obj.getLastTick().FromC || "")+ '资产'
+                    (obj.getLastTick().FromC || "")+ gDI18n.$t('10591'), //'资产'
                 ]),
                 m('div', {class: 'level-item'}, [
                     m('div', {class: 'text--secondary has-text-2'}, [
-                        '总额'
+                        gDI18n.$t('10610'), //'总额'
                     ]),
                     m('div', {class: 'has-text-1'}, [
                         obj.USDTWlt.TOTAL?Number(obj.USDTWlt.TOTAL).toFixed2(8): (0).toFixed2(8)
@@ -187,7 +187,7 @@ export default {
                 ]),
                 m('div', {class: 'level-item'}, [
                     m('div', {class: 'text--secondary has-text-2'}, [
-                        '冻结'
+                        gDI18n.$t('10611'), //'冻结'
                     ]),
                     m('div', {class: 'has-text-1 '}, [
                         obj.USDTWlt.Frz?Number(obj.USDTWlt.Frz).toFixed2(8): (0).toFixed2(8)
@@ -195,7 +195,7 @@ export default {
                 ]),
                 m('div', {class: 'level-item'}, [
                     m('div', {class: 'text--secondary has-text-2'}, [
-                        '可用'
+                        gDI18n.$t('10612'), //'可用'
                     ]),
                     m('div', {class: 'has-text-1'}, [
                         obj.USDTWlt.NL?Number(obj.USDTWlt.NL).toFixed2(8): (0).toFixed2(8)
@@ -203,7 +203,7 @@ export default {
                 ]),
                 m('div', {class: 'level-item'}, [
                     m('div', {class: 'text--secondary has-text-2'}, [
-                        'USDT' + '估值'
+                        'USDT' + gDI18n.$t('10613'), //'估值'
                     ]),
                     m('div', {class: 'has-text-1'}, [
                         obj.USDTWlt.Wdrawable?Number(obj.USDTWlt.Wdrawable).toFixed2(8): (0).toFixed2(8)
