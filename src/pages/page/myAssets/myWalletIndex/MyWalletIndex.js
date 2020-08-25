@@ -85,7 +85,7 @@ const myWalletIndex = {
         firstNav: [
             {
                 title: '充币',
-                // 跳转至哪个链接 例如：to: 'http://www.baidu.com'
+                // 跳转至哪个链接 例如：to: 'http://www.baidu.com || #!/chargeMoney'
                 to: '#!/chargeMoney'
             },
             {
@@ -106,10 +106,9 @@ const myWalletIndex = {
         ]
     },
     toPage: function (val) {
-        if (val === "") {
-            return;
+        if (val !== "") {
+            window.location.href = val;
         }
-        window.location.href = val;
     },
     switchDisplay: function (param, flag) {
         if (param === 'tradeCard') {
