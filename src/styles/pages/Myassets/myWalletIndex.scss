@@ -36,12 +36,13 @@
             display: flex;
             .right{
                 margin-left: auto;
+                position: relative;
                 .tradeCard{
                     display: flex;
                     flex-direction: column;
                     z-index: 99999;
                     position: absolute;
-                    left: 680px;
+                    left: -70px;
                     span{
                         color:#9A9EAC;
                     }
