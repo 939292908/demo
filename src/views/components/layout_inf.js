@@ -26,34 +26,21 @@ let obj = {
         }
     },
 
-    informationList:[
-        {
-            id:0,
-            name:"合约详解"
-        },
-        {
-            id:1,
-            name:"币币指数"
-        },
-        {
-            id:2,
-            name:"资金费率历史"
-        },
-    ],
+    informationList:[],
 
     initLanguage:function(){
         this.informationList = [
             {
                 id:0,
-                name:"合约详解"
+                name: gDI18n.$t('10529'), //"合约详解"
             },
             {
                 id:1,
-                name:"币币指数"
+                name: gDI18n.$t('10530'), //"币币指数"
             },
             {
                 id:2,
-                name:"资金费率历史"
+                name: gDI18n.$t('10531'), //"资金费率历史"
             },
         ]
     },
@@ -100,7 +87,7 @@ module.exports = {
                 m("div",{class: " inf_body has-text-1 "}, [
                     m('div',{class:" inf_body_information container"},[
                         m('div',{class:"inf_body_title"},[
-                            '合约信息'
+                            gDI18n.$t('10109'), //'合约信息'
                         ]),
                         m('div',{class:"tabs"},[
                             m('ul',{class:"is-flex"},[

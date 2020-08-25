@@ -429,7 +429,7 @@ let symSelect = {
                         symSelect.setTradeStatus(2)
                     }
                 }, [
-                    '币币交易',
+                    gDI18n.$t('10524'), // '币币交易',
                 ])
             case 0:
                 return null

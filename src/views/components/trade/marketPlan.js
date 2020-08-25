@@ -167,15 +167,15 @@ let obj = {
         this.setingList = [
             {
               id:"0",
-              value:"标记价"
+              value: gDI18n.$t('10048'), //"标记价"
             },
             {
               id:"1",
-              value:"最新价"
+              value: gDI18n.$t('10046'), //"最新价"
             },
             {
               id:"2",
-              value:"指数价"
+              value: gDI18n.$t('10070'), //"指数价"
             },
         ]
     },
@@ -1312,7 +1312,7 @@ export default {
             m("div", { class: "pub-place-order-form-trigger-prz-input field" }, [
                 m('div',{},[
                     m('div',{},[
-                        '触发类型'
+                        gDI18n.$t('10589'), //'触发类型'
                     ]),
                     m('div',{class : "control"},[
                         obj.getSettingValue()

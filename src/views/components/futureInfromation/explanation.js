@@ -53,63 +53,63 @@ let obj = {
     ],
     tableColumns : [
         {
-            title: '风险限额档位',
+            title: gDI18n.$t('10585'), //'风险限额档位',
             key: 'fx'
         },
         {
-            title: '张数',
+            title: gDI18n.$t('10586'), //'张数',
             render (params) { // 自定义 列内容
                 return m('div',`${params.zs[0]}-${params.zs[1]}`)
             }
         },
         {
-            title: '仓位保证金率',
+            title: gDI18n.$t('10544'), //'仓位保证金率',
             key: 'cw'
         },
         {
-            title: '委托保证金率',
+            title: gDI18n.$t('10543'), //'委托保证金率',
             key: 'wt'
         },
         {
-            title: '最高可用杠杆',
+            title: gDI18n.$t('10587'), //'最高可用杠杆',
             key: 'zg'
         }
     ],
     contractList : [
         {
-            name: '合约名称',
+            name: gDI18n.$t('10110'), //'合约名称',
             info: '--'
         },
         {
-            name: '到期日期',
+            name: gDI18n.$t('10537'), //'到期日期',
             info: '--'
         },
         {
-            name: '计价货币',
+            name: gDI18n.$t('10112'), //'计价货币',
             info: '--'
         },
         {
-            name: '结算货币',
+            name: gDI18n.$t('10113'), //'结算货币',
             info: '--'
         },
         {
-            name: '合约大小',
+            name: gDI18n.$t('10114'), //'合约大小',
             info: '--'
         },
         {
-            name: '最小价格变动',
+            name: gDI18n.$t('10115'), //'最小价格变动',
             info: '--'
         },
         {
-            name: '最小数量变动',
+            name: gDI18n.$t('10116'), //'最小数量变动',
             info: '--'
         },
         {
-            name: '杠杆模式',
+            name: gDI18n.$t('10538'), //'杠杆模式',
             info: '--'
         },
         {
-            name: '标记方法',
+            name: gDI18n.$t('10539'), //'标记方法',
             info: '--'
         },
         {
@@ -117,59 +117,59 @@ let obj = {
             info: '--'
         },
         {
-            name: '启用自动减仓',
+            name: gDI18n.$t('10541'), //'启用自动减仓',
             info: '--'
         },
         {
-            name: '委托保证金率',
+            name: gDI18n.$t('10543'), //'委托保证金率',
             info: '--'
         },
         {
-            name: '仓位保证金率',
+            name: gDI18n.$t('10544'), //'仓位保证金率',
             info: '--'
         },
         {
-            name: '流动性提供方(Maker)手续费率',
+            name: gDI18n.$t('10545'), //'流动性提供方(Maker)手续费率',
             info: '--'
         },
         {
-            name: '流动性提取方(Taker)手续费率',
+            name: gDI18n.$t('10546'), //'流动性提取方(Taker)手续费率',
             info: '--'
         },
         {
-            name: '委托保证金',
+            name: gDI18n.$t('10167'), //'委托保证金',
             info: '--'
         },
         {
-            name: '仓位保证金',
+            name: gDI18n.$t('10232'), //'仓位保证金',
             info: '--'
         },
         {
-            name: '资金费率',
+            name: gDI18n.$t('10020'), //'资金费率',
             info: '--'
         },
         {
-            name: '资金费用收取间隔',
+            name: gDI18n.$t('10549'), //'资金费用收取间隔',
             info: '--'
         },
         {
-            name: '下一个资金费率',
+            name: gDI18n.$t('10551'), //'下一个资金费率',
             info: '--'
         },
         {
-            name: '风险限额',
+            name: gDI18n.$t('10580'), //'风险限额',
             info: '--'
         },
         {
-            name: '风险限额递增额',
+            name: gDI18n.$t('10581'), //'风险限额递增额',
             info: '--'
         },
         {
-            name: '委托保证金递增值',
+            name: gDI18n.$t('10582'), //'委托保证金递增值',
             info: '--'
         },
         {
-            name: '仓位保证金递增值',
+            name: gDI18n.$t('10583'), //'仓位保证金递增值',
             info: '--'
         },
     ],
@@ -177,52 +177,52 @@ let obj = {
     // 初始化多语言
     initLanguage () {
         // 合约详解列表
-        this.contractList[0].name = "合约名称"
-        this.contractList[1].name = "到期日期"
-        this.contractList[2].name = "计价货币"
-        this.contractList[3].name = "结算货币"
-        this.contractList[4].name = "合约大小"
-        this.contractList[5].name = "最小价格变动"
-        this.contractList[6].name = "最小数量变动"
-        this.contractList[7].name = "杠杆模式"
-        this.contractList[8].name = "标记方法"
+        this.contractList[0].name = gDI18n.$t('10110'), //"合约名称"
+        this.contractList[1].name = gDI18n.$t('10537'), //"到期日期"
+        this.contractList[2].name = gDI18n.$t('10112'), //"计价货币"
+        this.contractList[3].name = gDI18n.$t('10113'), //"结算货币"
+        this.contractList[4].name = gDI18n.$t('10114'), //"合约大小"
+        this.contractList[5].name = gDI18n.$t('10115'), //"最小价格变动"
+        this.contractList[6].name = gDI18n.$t('10116'), //"最小数量变动"
+        this.contractList[7].name = gDI18n.$t('10538'), //"杠杆模式"
+        this.contractList[8].name = gDI18n.$t('10539'), //"标记方法"
         this.contractList[9].name = "标记价格"
-        this.contractList[10].name = "启用自动减仓"
-        this.contractList[11].name = "委托保证金率"
-        this.contractList[12].name = "仓位保证金率"
-        this.contractList[13].name = "流动性提供方(Maker)手续费率"
-        this.contractList[14].name = "流动性提取方(Taker)手续费率"
-        this.contractList[15].name = "委托保证金"
-        this.contractList[16].name = "仓位保证金"
-        this.contractList[17].name = "资金费率"
-        this.contractList[18].name = "资金费用收取间隔"
-        this.contractList[19].name = "下一个资金费率"
-        this.contractList[20].name = "风险限额"
-        this.contractList[21].name = "风险限额递增额"
-        this.contractList[22].name = "委托保证金递增值"
-        this.contractList[23].name = "仓位保证金递增值"
+        this.contractList[10].name = gDI18n.$t('10541'), //"启用自动减仓"
+        this.contractList[11].name = gDI18n.$t('10543'), //"委托保证金率"
+        this.contractList[12].name = gDI18n.$t('10544'), //"仓位保证金率"
+        this.contractList[13].name = gDI18n.$t('10545'), //"流动性提供方(Maker)手续费率"
+        this.contractList[14].name = gDI18n.$t('10546'), //"流动性提取方(Taker)手续费率"
+        this.contractList[15].name = gDI18n.$t('10167'), //"委托保证金"
+        this.contractList[16].name = gDI18n.$t('10232'), //"仓位保证金"
+        this.contractList[17].name = gDI18n.$t('10020'), //"资金费率"
+        this.contractList[18].name = gDI18n.$t('10549'), //"资金费用收取间隔"
+        this.contractList[19].name = gDI18n.$t('10551'), //"下一个资金费率"
+        this.contractList[20].name = gDI18n.$t('10580'), //"风险限额"
+        this.contractList[21].name = gDI18n.$t('10581'), //"风险限额递增额"
+        this.contractList[22].name = gDI18n.$t('10582'), //"委托保证金递增值"
+        this.contractList[23].name = gDI18n.$t('10583'), //"仓位保证金递增值"
         // 表头
         this.tableColumns = [
             {
-                title: '风险限额档位',
+                title: gDI18n.$t('10585'), //'风险限额档位',
                 key: 'fx'
             },
             {
-                title: '张数',
+                title: gDI18n.$t('10586'), //'张数',
                 render (params) { // 自定义 列内容
                     return m('div',`${params.zs[0]}-${params.zs[1]}`)
                 }
             },
             {
-                title: '仓位保证金率',
+                title: gDI18n.$t('10544'), //'仓位保证金率',
                 key: 'cw'
             },
             {
-                title: '委托保证金率',
+                title: gDI18n.$t('10543'), //'委托保证金率',
                 key: 'wt'
             },
             {
-                title: '最高可用杠杆',
+                title: gDI18n.$t('10587'), //'最高可用杠杆',
                 key: 'zg'
             }
         ]
@@ -346,11 +346,11 @@ let obj = {
                 //杠杆模式
                 MIRLve:1/Number(ass.MIR)+"X",
                 //标记方法
-                SIGN:"合理价格",
+                SIGN: gDI18n.$t('10540'), //"合理价格",
                 //标记价格
                 PrzM:Number(ass.PrzM).toFixed2(2,8),
                 //启用自动减仓
-                OpenOrd:"是：通过自动减仓来处理杠杆交易所造成的穿仓损失",
+                OpenOrd: gDI18n.$t('10542'), //"是：通过自动减仓来处理杠杆交易所造成的穿仓损失",
                 //委托保证金率
                 MIR:(ass.MIR * 100).toSubstrFixed(4) + '%',
                 //仓位保证金率
@@ -440,13 +440,14 @@ let obj = {
     //合约详解数据
     getFutureData:function(){
         this.contractList[0].info = this.spotInfo.disSym
-        this.contractList[1].info = this.spotInfo.ExpireStr == 0?"永续":this.spotInfo.ExpireStr
+        this.contractList[1].info = this.spotInfo.ExpireStr == 0 ? gDI18n.$t('10422') : this.spotInfo.ExpireStr //"永续"
         this.contractList[2].info = this.spotInfo.SettleCoin
         this.contractList[3].info = this.spotInfo.QuoteCoin
         this.contractList[4].info = this.spotInfo.LotSz
         this.contractList[5].info = this.spotInfo.PrzMinInc
         this.contractList[6].info = this.spotInfo.Mult
-        this.contractList[7].info = "全仓、逐仓(1-" + this.spotInfo.MIRLve + ")"
+        // this.contractList[7].info = "全仓、逐仓(1-" + this.spotInfo.MIRLve + ")"
+        this.contractList[7].info = `${gDI18n.$t('10425')}、${gDI18n.$t('10426')}(1-${this.spotInfo.MIRLve})`
         this.contractList[8].info = this.spotInfo.SIGN
         this.contractList[9].info = this.spotInfo.PrzM
         this.contractList[10].info = this.spotInfo.OpenOrd
@@ -454,7 +455,7 @@ let obj = {
         this.contractList[12].info = this.spotInfo.MMR
         this.contractList[13].info = this.spotInfo.FeeMkrR
         this.contractList[14].info = this.spotInfo.FeeTkrR
-        this.contractList[15].info = this.spotInfo.MIRm + ("*委托价值+亏损+手续费")
+        this.contractList[15].info = this.spotInfo.MIRm + ("*委托价值+亏损+手续费") //"*委托价值+亏损+手续费"
         this.contractList[16].info = this.spotInfo.MMRg + ("*仓位价值")
         this.contractList[17].info = this.spotInfo.FundingLongR
         this.contractList[18].info = "每" +this.spotInfo.Chargein + "小时"
@@ -528,16 +529,22 @@ let obj = {
 
         return m('div', { class: "inf_dropdown inf_body_conent" }, [
             m('div', { class: "inf_body_title_font" }, [
-                (tabelList[dropdownActive]?tabelList[dropdownActive].label : "--") + ' 合约明细'
+                (tabelList[dropdownActive]?tabelList[dropdownActive].label : "--") +' '+gDI18n.$t('10532'), //' 合约明细'
             ]),
             m('div', { class: "inf_body_TD" }, [
-                (tabelList[dropdownActive]?tabelList[dropdownActive].label : "--") + '合约' + (spotInfo.ExpireStr == 0?"没有到期日":spotInfo.ExpireStr) + '。每张合约大小' + spotInfo.LotSz + '。每' + spotInfo.Chargein + '小时交换资金费用。下一个交换将发生在' + spotInfo.FundingNext + '。'
+                // 合约
+                // (tabelList[dropdownActive]?tabelList[dropdownActive].label : "--") + gDI18n.$t('10053') + (spotInfo.ExpireStr == 0?"没有到期日":spotInfo.ExpireStr) + '。每张合约大小' + spotInfo.LotSz + '。每' + spotInfo.Chargein + '小时交换资金费用。下一个交换将发生在' + spotInfo.FundingNext + '。'
+
+                `
+                    ${tabelList[dropdownActive] ? tabelList[dropdownActive].label : "--"}
+                    ${gDI18n.$t('10053')}${spotInfo.ExpireStr == 0 ? "没有到期日" : spotInfo.ExpireStr}。每张合约大小${spotInfo.LotSz}。每${spotInfo.Chargein}小时交换资金费用。下一个交换将发生在${spotInfo.FundingNext}。
+                `
             ]),
             m('div', { class: " inf_body_TD" }, [
-                window.$config.exchName + '交易平台利用利率与每分钟溢价指数的加权平均值计算出资金费率。',
+                 gDI18n.$t('10534', { value: window.$config.exchName}), //'交易平台利用利率与每分钟溢价指数的加权平均值计算出资金费率。',
                 m('span', { class: "" }, [
                     m('a', { class: "" }, [
-                        '阅读更多...'
+                        gDI18n.$t('10535'), //'阅读更多...'
                     ])
                 ])
             ]),
@@ -551,7 +558,7 @@ let obj = {
         let tabelList = obj.tabelList
         return m('div', { class: "inf_dropdown inf_body_conent" }, [
             m('div', { class: "inf_body_title_font inf_dropdown" }, [
-                (tabelList[dropdownActive]?tabelList[dropdownActive].label : "--") + ' 行情价格'
+                (tabelList[dropdownActive]?tabelList[dropdownActive].label : "--") +' '+ gDI18n.$t('10536'), //' 行情价格'
             ]),
             m('div', { class: " inf_body_kline kline_border" }, [
                 m(kline)
@@ -568,7 +575,7 @@ let obj = {
             // title
             m('div', { class: "inf_body_title_font inf_dropdown" }, [
                 // `${tabelList[dropdownActive]?tabelList[dropdownActive].label : "--"}合约详解`
-                (tabelList[dropdownActive]?tabelList[dropdownActive].label : "--") + ' 合约详解'
+                (tabelList[dropdownActive]?tabelList[dropdownActive].label : "--") +' '+ gDI18n.$t('10529'), //' 合约详解'
             ]),
             // list
             m('div', { class: `` }, obj.contractList.map((item, index) => {
@@ -589,7 +596,7 @@ let obj = {
             // title
             m('div', { class: "inf_body_title_font inf_dropdown" }, [
                 // `${tabelList[dropdownActive]?tabelList[dropdownActive].label : "--"}合约风险限额`
-                (tabelList[dropdownActive]?tabelList[dropdownActive].label : "--") + ' 合约风险限额'
+                (tabelList[dropdownActive]?tabelList[dropdownActive].label : "--") +' '+ gDI18n.$t('10584'), //' 合约风险限额'
             ]),
             // table
             m(Table, {
@@ -619,7 +626,7 @@ export default {
         return m("div", { class: "" }, [
             m('div', { class: "inf_dropdown" }, [
                 m('span', { class: "inf_body_span inf_body_font" }, [
-                    '合约',
+                    gDI18n.$t('10053'), //'合约',
                 ]),
                 //下拉列表
                 obj.getDownloadFuture(vnode),

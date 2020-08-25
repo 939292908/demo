@@ -90,7 +90,7 @@ let obj = {
     initLanguage: function () {
         this.theadList = [
             {
-                title: '操作', //'',
+                title: gDI18n.$t('10590'), //'操作', //'',
                 class: ""
             }, {
                 title: '交易对', //'',

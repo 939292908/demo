@@ -293,7 +293,7 @@ let spotTick = {
                             m('td', {class :"" + (pageTradeStatus == 1? "" : " is-hidden")}, [
                                 m('p', {class:""}, [
                                     m('span', [
-                                        "资金时间"
+                                        gDI18n.$t('10525'), //"
                                     ])
                                 ]),
                                 m('p', {class:"has-text-1-important"}, [
