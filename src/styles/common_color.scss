@@ -31,11 +31,6 @@
     color: var(--c-primary-darken)
 }
 
-/* 白色背景 */
-.has-bg-white {
-    background-color: var(--c-background-lighten1) !important;
-}
-
 /* 背景颜色六级 */
 
 .theme--dark .has-bg-level-1 {
@@ -59,6 +54,22 @@
     background-color: var(--c-primary-darken);
     border-color: var(--c-primary-darken);
     color: var(--c-fontwhite-base);
+}
+
+/* 辅助色 */
+.theme--dark .has-bg-sub-level-1 {
+    background-color: var(--c-sub-darken);
+    border-color: var(--c-sub-darken);
+}
+
+.theme--dark .has-bg-sub-level-2 {
+    background-color: var(--c-sub-darken1);
+    border-color: var(--c-sub-darken1);
+}
+
+.theme--dark .has-bg-sub-level-3 {
+    background-color: var(--c-sub-darken2);
+    border-color: var(--c-sub-darken2);
 }
 
 /* 跌红 */
@@ -283,6 +294,22 @@
     color: var(--c-fontwhite-base);
 }
 
+/* 辅助色 */
+.theme--dark .has-bg-sub-level-1 {
+    background-color: var(--c-sub-darken);
+    border-color: var(--c-sub-darken);
+}
+
+.theme--dark .has-bg-sub-level-2 {
+    background-color: var(--c-sub-darken1);
+    border-color: var(--c-sub-darken1);
+}
+
+.theme--dark .has-bg-sub-level-3 {
+    background-color: var(--c-sub-darken2);
+    border-color: var(--c-sub-darken2);
+}
+
 /* 跌红 */
 .theme--light .has-bg-up {
     background-color: var(--c-red-lighten);
@@ -366,6 +393,23 @@
 .theme--light .has-text-primary {
     color: var(--c-primary-lighten) !important;
 }
+
+/* 辅助色 */
+.theme--dark .has-bg-sub-level-1 {
+    background-color: var(--c-sub-darken);
+    border-color: var(--c-sub-darken);
+}
+
+.theme--dark .has-bg-sub-level-2 {
+    background-color: var(--c-sub-darken1);
+    border-color: var(--c-sub-darken1);
+}
+
+.theme--dark .has-bg-sub-level-3 {
+    background-color: var(--c-sub-darken2);
+    border-color: var(--c-sub-darken2);
+}
+
 
 /* 主色调 hover */
 .theme--light .has-text-primary-hover {
