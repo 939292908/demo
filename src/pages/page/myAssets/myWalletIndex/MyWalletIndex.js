@@ -62,14 +62,14 @@ const myWalletIndex = {
         myWalletIndex.contractTotal = param;
     },
     swValue: 0, // 0:我的钱包 1:交易账户 2:其他账户
+    wltIdx: 0, // 币币，法币，合约
     switchChange: function (val, type) {
-        console.log('type', type);
-        if (type) {
-            this.wltIdx = val;
-        }
         myWalletIndex.swValue = val;
+        if (type !== undefined) {
+            // 点击交易账户则默认显示合约
+            this.wltIdx = 1;
+        }
     },
-    wltIdx: 0,
     switchContent: function () {
         broadcast.emit({ cmd: broadcast.CHANGE_SW_CURRENCY, data: myWalletIndex.currency });
         switch (myWalletIndex.swValue) {
@@ -164,13 +164,13 @@ const myWalletIndex = {
         }
     },
     changeTradeAccount: function(param) {
-        console.log('param-------------------------', param);
         // 点击交易账户(...)中则显示对应page
         myWalletIndex.switchChange(1);
         this.wltIdx = param;
+        // 阻止交易账户冒泡再次赋值
         window.event.stopPropagation();
+        // （我的钱包，交易账户）切换内容
         myWalletIndex.switchContent();
-        // broadcast.emit({ cmd: broadcast.MA_CHANGE_TRADE_PAGE, data: param });
     },
     DelayDataAcquisition: function() {
         myWalletIndex.setTotalValue(wlt.totalValueForBTC);
@@ -184,19 +184,9 @@ const myWalletIndex = {
     }
 };
 module.exports = {
-    oninit: function() {
-        // Http.getWallet({
-        //     exChannel: 30
-        // }).then(function(arg) {
-        //     console.log(arg, '11111');
-        // });
-    },
     oncreate: function() {
         wlt.init();
         setTimeout(myWalletIndex.DelayDataAcquisition, '100');
-    },
-    data: {
-        my: 'nzm'
     },
     view: function () {
         const props = {

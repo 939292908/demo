@@ -67,7 +67,7 @@ module.exports = function (props) {
                         ]),
                         m('div.trade border-radius-medium px-7 py-7 mx-5 column', {
                             class: (myWalletIndex.swValue === 1 ? 'has-bg-primary' : 'has-bg-level-2'),
-                            onclick: function() { myWalletIndex.switchChange(1, true); }
+                            onclick: function() { myWalletIndex.switchChange(1, 'true'); }
                         }, [
                             m('div.left', {}, [
                                 m('div', { class: 'body-5 mb-1' }, [
