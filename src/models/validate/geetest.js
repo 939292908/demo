@@ -1,6 +1,6 @@
 import broadcast from '../../broadcast/broadcast';
 import I18n from '../../languages/I18n';
-import { geetestRegister, geetestValidate } from '../../newApi';
+import { webApi } from '../../newApi2';
 
 const geetest = {
     isLoading: false,
@@ -24,7 +24,7 @@ const geetest = {
     onSuccess() {
         const result = geetest.captchaObj.getValidate();
         geetest.isloading = false;
-        geetestValidate({
+        webApi.geetestValidate({
             geetest_challenge: result.geetest_challenge,
             geetest_validate: result.geetest_validate,
             geetest_seccode: result.geetest_seccode
@@ -107,7 +107,7 @@ const geetest = {
                     ? 'zh-tw'
                     : 'en'
             : 'en';
-        geetestRegister({ t: new Date().getTime() }).then(data => {
+        webApi.geetestRegister({ t: new Date().getTime() }).then(data => {
             window.initGeetest({
                 gt: data.gt,
                 challenge: data.challenge,
