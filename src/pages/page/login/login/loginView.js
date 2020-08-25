@@ -19,8 +19,8 @@ module.exports = {
                 Login.is2fa
                     ? [m(Validate, { is2fa: Login.is2fa })]
                     : [
-                        m('div.title-x-large-1.views-page-login-title.opacity', {}, [config.exchName]),
-                        m('div.mb-8.title-x-large-1.has-text-title', {},
+                        m('div.title-large.views-page-login-title.opacity', {}, [config.exchName]),
+                        m('div.mb-8.title-large.has-text-title', {},
                             [`登录`]),
                         m('div.has-text-level-1.body-3.mb-2', {}, ['手机/邮箱']),
                         m('input.input[type=text].mb-5', {
