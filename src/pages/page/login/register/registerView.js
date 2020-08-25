@@ -27,24 +27,18 @@ module.exports = {
                             m('div.mb-5.title-large.has-text-title', {},
                                 ['注册验证']),
                             m('div.py-0.mb-2.has-text-level-1.body-3', {},
-                                [
-                                    Register.type === 'phone'
-                                        ? '手机验证码'
-                                        : '邮箱验证码']),
+                                [Register.type === 'phone' ? '手机验证码' : '邮箱验证码']),
                             m('div.control.has-icons-right.mb-6', {}, [
                                 m(InputWithComponent, {
                                     options: {
                                         oninput: e => {
-                                            Register.code = e.target.value.replace(
-                                                /[^\d]/g, '');
+                                            Register.code = e.target.value.replace(/[^\d]/g, '');
                                         },
                                         onkeyup: e => {
                                             if (e.keyCode === 13) {
                                                 Register.type === 'phone'
-                                                    ? window.validate.checkSmsCode(
-                                                        Register.code)
-                                                    : window.validate.checkEmailCode(
-                                                        Register.code);
+                                                    ? window.validate.checkSmsCode(Register.code)
+                                                    : window.validate.checkEmailCode(Register.code);
                                             }
                                         },
                                         maxlength: '6',
@@ -54,17 +48,13 @@ module.exports = {
                                         'a.body-1.views-page-login-send-code.px-2',
                                         {
                                             onclick: () => {
-                                                if (Register.smsCd >
-                                                    0) { return; }
+                                                if (Register.smsCd > 0) { return; }
                                                 Register.type === 'phone'
                                                     ? Register.sendSmsCode()
                                                     : Register.sendEmailCode();
                                             }
                                         },
-                                        [
-                                            Register.smsCd > 0
-                                                ? `${Register.smsCd}`
-                                                : I18n.$t('10214')/* '获取验证码' */]
+                                        [Register.smsCd > 0 ? `${Register.smsCd}` : I18n.$t('10214')/* '获取验证码' */]
                                     )
                                 })
                             ]),
@@ -79,24 +69,12 @@ module.exports = {
                                 ['注册']),
                             m('div.tabs.mb-7', {}, [
                                 m('ul', {}, [
-                                    m('li', {
-                                        class: Register.type === 'phone'
-                                            ? 'is-active'
-                                            : ''
-                                    },
-                                    [
-                                        m('a',
-                                            { onclick: () => { Register.type = 'phone'; } },
-                                            ['手机'])]),
-                                    m('li', {
-                                        class: Register.type === 'email'
-                                            ? 'is-active'
-                                            : ''
-                                    },
-                                    [
-                                        m('a',
-                                            { onclick: () => { Register.type = 'email'; } },
-                                            ['邮箱'])])
+                                    m('li', { class: Register.type === 'phone' ? 'is-active' : '' }, [
+                                        m('a', { onclick: () => { Register.type = 'phone'; } }, ['手机'])
+                                    ]),
+                                    m('li', { class: Register.type === 'email' ? 'is-active' : '' }, [
+                                        m('a', { onclick: () => { Register.type = 'email'; } }, ['邮箱'])
+                                    ])
                                 ])
                             ]),
                             m('div.py-0.mb-2.has-text-level-1.body-3', {},
@@ -123,14 +101,12 @@ module.exports = {
                                 }, []),
                             m('div.body-3.mt-2.has-text-tip-error', {}, [
                                 Register.type === 'phone'
-                                    ? Register.rulesPhone.required(
-                                        Register.loginName) ||
-                                    Register.rulesPhone.phone(
-                                        Register.loginName)
-                                    : Register.rulesEmail.required(
-                                        Register.loginName) ||
-                                    Register.rulesEmail.email(
-                                        Register.loginName)
+                                    ? Register.rulesPhone.required(Register.loginName) === true
+                                        ? Register.rulesPhone.phone(Register.loginName)
+                                        : Register.rulesPhone.required(Register.loginName)
+                                    : Register.rulesEmail.required(Register.loginName) === true
+                                        ? Register.rulesEmail.email(Register.loginName)
+                                        : Register.rulesEmail.required(Register.loginName)
                             ]),
                             m('div.py-0.mb-2.has-text-level-1.body-3.mt-5', {},
                                 ['密码']),
@@ -148,8 +124,9 @@ module.exports = {
                                 value: Register.password
                             }, []),
                             m('div.body-3.mt-2.has-text-tip-error', {}, [
-                                Register.rulesPwd.required(Register.password) ||
-                                Register.rulesPwd.password(Register.password)
+                                Register.rulesPwd.required(Register.password) === true
+                                    ? Register.rulesPwd.password(Register.password)
+                                    : Register.rulesPwd.required(Register.password)
                             ]),
                             m('div.py-0.mb-2.has-text-level-1.body-3.mt-5', {},
                                 ['邀请码（选填）']),
@@ -201,13 +178,9 @@ module.exports = {
                             m('button.button.my-3.has-bg-primary.button-medium.is-fullwidth.has-text-white.mb-2',
                                 {
                                     onclick: () => {
-                                        Register.type === 'phone'
-                                            ? Register.submitEmail()
-                                            : Register.submitPhone();
+                                        Register.type === 'phone' ? Register.submitEmail() : Register.submitPhone();
                                     },
-                                    disabled: Register.type === 'phone'
-                                        ? !Register.valid1()
-                                        : !Register.valid(),
+                                    disabled: Register.type === 'phone' ? !Register.valid1() : !Register.valid(),
                                     class: Register.loading ? 'is-loading' : ''
                                 }, ['注册']),
                             m('div.has-text-centered.body-3.has-text-level-2',
