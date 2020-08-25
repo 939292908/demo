@@ -1,9 +1,8 @@
-// const m = require('mithril');
-const Http = require('@/newApi');
+const Http = require('@/newApi2').webApi;
 const broadcast = require('@/broadcast/broadcast');
-const gWebApi = require('@/newApi/config').default.gWebApi;
-const gWsApi = require('@/newApi/config').default.gWsApi;
+const gWsApi = require('@/newApi2').wsApi;
 const utils = require('@/util/utils').default;
+const BaseUrl = require('@/newApi2').BaseUrl;
 
 module.exports = {
     name: "modelsForWlt",
@@ -98,7 +97,7 @@ module.exports = {
         this.contractTotalValueForUSDT = 0;
         this.contractTotalValueForBTC = 0;
 
-        const wlt = gWebApi.wallet_obj;
+        const wlt = this.wallet_obj;
 
         for (const type in wlt) {
             this.wallet_obj[type] = this.wallet_obj[type] ? this.wallet_obj[type] : {};
@@ -164,12 +163,31 @@ module.exports = {
             console.log('ht', 'getWallet success', arg);
             if (arg.result.code === 0) {
                 // 初始化资产数据
-                gWebApi.setWallet(arg);
+                that.setWallet(arg);
                 that.initWlt();
             }
         }).catch(function(err) {
             console.log('ht', 'getWallet error', err);
         });
+    },
+    setWallet(data) {
+        this.wallet['01'] = data.assetLists01; // 合约资产
+        this.wallet['02'] = data.assetLists02; // 现货资产
+        this.wallet['03'] = data.assetLists03; // 主钱包
+        this.wallet['04'] = data.assetLists04; // 法币资产
+
+        for (const item of data.assetLists01) {
+            this.wallet_obj['01'][item.wType] = item;
+        }
+        for (const item of data.assetLists02) {
+            this.wallet_obj['02'][item.wType] = item;
+        }
+        for (const item of data.assetLists03) {
+            this.wallet_obj['03'][item.wType] = item;
+        }
+        for (const item of data.assetLists04) {
+            this.wallet_obj['04'][item.wType] = item;
+        }
     },
     wltHandle: function (type, wlt) {
         this.wltItemEx = {};
@@ -182,7 +200,7 @@ module.exports = {
         // console.log('ht', AssetD);
         // 取BTC的价格 start
         const btcSymName = utils.getSpotName(AssetD, 'BTC', 'USDT');
-        const btcInitValue = (gWebApi.wallet_obj['03'] && gWebApi.wallet_obj['03'].BTC && gWebApi.wallet_obj['03'].BTC.initValue) || 0;
+        const btcInitValue = (this.wallet_obj['03'] && this.wallet_obj['03'].BTC && this.wallet_obj['03'].BTC.initValue) || 0;
         const btcPrz = (AssetD[btcSymName] && AssetD[btcSymName].PrzLatest) || btcInitValue;
         // console.log('ht', 'btc prz', btcSymName, btcInitValue, AssetD[btcSymName] && AssetD[btcSymName].PrzLatest, btcPrz);
         // 取BTC的价格 end
@@ -283,7 +301,7 @@ module.exports = {
         this.wltItemEx.valueForBTC = utils.toFixedForFloor(valueForBTC, 8);
         // console.log('ht', 'value', valueForUSDT, valueForBTC);
         // 图标
-        this.wltItemEx.icon = gWebApi.baseUrl + this.wltItemEx.icon;
+        this.wltItemEx.icon = BaseUrl.WebAPI + this.wltItemEx.icon;
 
         // !!!
         this.totalCNYValueForBTC = valueForBTC * this.prz;
