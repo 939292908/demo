@@ -17,7 +17,7 @@ module.exports = {
         return m('div.is-align-items-center.has-bg-level-1.pa-8.theme--light', {}, [
             m('div.box.has-bg-level-2.views-page-login-box-width.px-7.py-8', {},
                 ForgetPassword.isValidate ? [
-                    m('div.mb-2.title-4.has-text-level-1.title-x-large-1.has-text-title', {},
+                    m('div.mb-2.title-4.has-text-level-1.title-large.has-text-title', {},
                         ['重置密码']),
                     m('p.body-3.has-text-primary.mb-7', {},
                         ['出于安全考虑，修改账户安全项之后，24h内禁止提币、内部转出与卖币操作']),
@@ -46,7 +46,7 @@ module.exports = {
                     }, ['确定'])
                 ] : ForgetPassword.is2fa ? m(Validate, {})
                     : [
-                        m('div.mb-2.title-x-large-1.has-text-title', {},
+                        m('div.mb-2.title-large.has-text-title', {},
                             ['忘记密码']),
                         m('p.body-3.has-text-primary.mb-7', {},
                             ['出于安全考虑，修改账户安全项之后，24h内禁止提币、内部转出与卖币操作']),
