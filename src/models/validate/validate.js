@@ -1,10 +1,4 @@
-import {
-    getSMSCodeV2,
-    emailCheckV2,
-    googleCheck,
-    sendEmailV2,
-    smsVerifyV2
-} from '../../newApi';
+import { webApi } from '../../newApi2';
 
 import I18n from '../../languages/I18n';
 import config from '@/config';
@@ -61,7 +55,7 @@ export default {
                 lang: I18n.getLocale()
             };
         }
-        return getSMSCodeV2(this.smsConfig);
+        return webApi.getSMSCodeV2(this.smsConfig);
     },
     /**
      * 发送邮箱验证码
@@ -73,7 +67,7 @@ export default {
             this.emailConfig = { exChannel: config.exchId };
         }
 
-        return sendEmailV2(this.emailConfig);
+        return webApi.sendEmailV2(this.emailConfig);
     },
     /**
      * 校验google验证码
@@ -87,7 +81,7 @@ export default {
             });
             return;
         }
-        googleCheck({ code: code }).then(res => {
+        webApi.googleCheck({ code: code }).then(res => {
             if (res.result.code === 0) {
                 this.finished();
             } else {
@@ -112,7 +106,7 @@ export default {
             });
             return;
         }
-        smsVerifyV2({ code: code }).then(res => {
+        webApi.smsVerifyV2({ code: code }).then(res => {
             if (res.result === 0) {
                 this.finished();
             } else {
@@ -135,7 +129,7 @@ export default {
             });
             return;
         }
-        emailCheckV2({ code: code }).then(res => {
+        webApi.emailCheckV2({ code: code }).then(res => {
             if (res.result.code === 0) {
                 this.finished();
             } else {

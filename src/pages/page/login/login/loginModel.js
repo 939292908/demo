@@ -1,4 +1,4 @@
-const { getUserInfo, loginCheckV2, loginWebV2 } = require('@/newApi');
+const { getUserInfo, loginCheckV2, loginWebV2 } = require('@/newApi2').webApi;
 const m = require('mithril');
 const geetest = require('@/models/validate/geetest').default;
 const md5 = require('md5');
