@@ -2,7 +2,6 @@ const { getUserInfo, loginCheckV2, loginWebV2 } = require('@/newApi');
 const m = require('mithril');
 const geetest = require('@/models/validate/geetest').default;
 const md5 = require('md5');
-const userInfo = require('@/models/login/userInfo');
 const utils = require('@/util/utils').default;
 const I18n = require('@/languages/I18n').default;
 const broadcast = require('@/broadcast/broadcast');
@@ -139,7 +138,7 @@ module.exports = {
     },
     getUserInfo() {
         getUserInfo({}).then(data => {
-            userInfo.setLoginState(true);
+            utils.setItem('loginState', true);
             self.loading = false;
             if (data.result.code === 0) {
                 utils.setItem('userAccount', data.account.accountName);
@@ -156,7 +155,7 @@ module.exports = {
                 //     this.$set(store.state.httpResCheckCfg.state, 10, 0)
                 // }
                 // broadcast.emit({cmd: "getDeivceInfo", data: {op: 'login'}});
-                userInfo.setLoginState(true);
+                utils.setItem('loginState', true);
                 window.router.push('/home');
             } else if (data.result.code === 1001) {
                 // 获取个人信息不成功
@@ -192,7 +191,7 @@ module.exports = {
         });
     },
     oninit() {
-        if (userInfo.getLoginState() && utils.getItem('ex-session')) {
+        if (utils.getItem('loginState') && utils.getItem('ex-session')) {
             window.router.push('/home');
             return;
         }
