@@ -4,8 +4,6 @@ module.exports = {
     IS_LOGON_SUC_UPD: 'is_login_suc_upd',
     ONRESIZE_UPD: 'ONRESIZE_UPD',
     CHANGE_SW_CURRENCY: 'CHANGE_SW_CURRENCY',
-    // 资产首页（...）
-    MA_CHANGE_TRADE_PAGELL: 'MA_CHANGE_TRADE_PAGE',
 
     // 合约详情
     MSG_ASSETD_UPD: 'MSG_ASSETD_UPD',

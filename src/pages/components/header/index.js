@@ -2,7 +2,6 @@ const m = require('mithril');
 const titleLogo = require("@/assets/img/logo/title-logo.png").default;
 const I18n = require("../../../languages/I18n").default;
 const Tooltip = require('@/views/components/common/Tooltip');
-const userInfo = require('@/models/login/userInfo');
 const utils = require('@/util/utils').default;
 
 const methods = {
@@ -55,7 +54,7 @@ module.exports = {
                     }, [
                         '法币交易'
                     ]),
-                    m('div.navbar-item.cursor-pointer' + (!userInfo.getLoginState() ? '.is-hidden' : ''), {
+                    m('div.navbar-item.cursor-pointer' + (!utils.getItem('loginState') ? '.is-hidden' : ''), {
                         class: `has-dropdown is-hoverable`
                     }, [
                         m('div', { class: `navbar-item has-text-primary-hover ` }, ["合约交易"]),
@@ -117,7 +116,7 @@ module.exports = {
                 ])
             ]),
             m('div.navbar-end', {}, [
-                m('div.navbar-item' + (userInfo.getLoginState() ? '.is-hidden' : ''), {}, [
+                m('div.navbar-item' + (utils.getItem('loginState') ? '.is-hidden' : ''), {}, [
                     m('div.buttons', {}, [
                         m('div.button', {
                             onclick: function () {
@@ -136,7 +135,7 @@ module.exports = {
                     ])
                 ]),
                 // 已登录样式
-                m('div.navbar-item.cursor-pointer' + (!userInfo.getLoginState() ? '.is-hidden' : ''), {
+                m('div.navbar-item.cursor-pointer' + (!utils.getItem('loginState') ? '.is-hidden' : ''), {
                     class: `has-dropdown is-hoverable`
                 }, [
                     m('div', { class: `navbar-item has-text-primary-hover` }, ["资产"]),
@@ -167,13 +166,13 @@ module.exports = {
                         }, ["法币账户"])
                     ])
                 ]),
-                m('a.navbar-item.cursor-pointer' + (!userInfo.getLoginState() ? '.is-hidden' : ''), {
+                m('a.navbar-item.cursor-pointer' + (!utils.getItem('loginState') ? '.is-hidden' : ''), {
                     class: `has-dropdown is-hoverable`,
                     onclick: function () {
                         window.router.push('/');
                     }
                 }, [
-                    m('a', { class: `navbar-item has-text-primary-hover` }, ["订单"]),
+                    m('a', { class: `navbar-item has-text-primary-hover ` }, ["订单"]),
                     m('div', { class: `navbar-dropdown` }, [
                         m('a', { class: `navbar-item has-text-primary-hover` }, ["合约订单"]),
                         m('a', { class: `navbar-item has-text-primary-hover` }, ["币币订单"]),
@@ -182,7 +181,7 @@ module.exports = {
                     ])
                 ]),
                 // 我的
-                m('a.navbar-item' + (!userInfo.getLoginState() ? '.is-hidden' : ''), {
+                m('a.navbar-item' + (!utils.getItem('loginState') ? '.is-hidden' : ''), {
                     class: `has-dropdown is-hoverable`,
                     onclick: function () {
                         // window.router.push('/userCenter');
@@ -236,7 +235,7 @@ module.exports = {
                                     class: `navbar-item has-text-primary-hover`,
                                     onclick: () => {
                                         utils.removeItem("ex-session");
-                                        userInfo.setLoginState(false);
+                                        utils.setItem('loginState', false);
                                     }
                                 }, ["退出登录"])
                             ])
@@ -245,14 +244,25 @@ module.exports = {
                 ]),
 
                 // 下载
-                m('div.navbar-item.cursor-pointer', { class: `has-text-primary-hover` }, [
+                m('div.navbar-item.cursor-pointer', { class: `has-text-primary-hover ` }, [
                     m(Tooltip, {
                         label: m('i.iconfont.icon-downLoad'),
-                        content: m('img', { class: 'header-download', src: require("@/assets/img/home/download.png").default })
+                        // class: 'header-download',
+                        width: '254px',
+                        height: '104px',
+                        content: m('div', { class: `is-flex` }, [
+                            m('img', { class: 'ml-3 mt-2', src: require("@/assets/img/home/download.png").default }),
+                            m('div', { class: `is-align-items-center` }, [
+                                m('div', { class: `` }, [
+                                    m('p', { class: `ml-4 mt-2 title-small` }, "扫码下载APP"),
+                                    m('p', { class: `ml-4  title-small` }, "iOS&Android")
+                                ])
+                            ])
+                        ])
                     })
                 ]),
                 // 切换线路
-                m('a.navbar-item.cursor-pointer' + (!userInfo.getLoginState() ? '.is-hidden' : ''), {
+                m('a.navbar-item.cursor-pointer' + (!utils.getItem('loginState') ? '.is-hidden' : ''), {
                     class: `has-dropdown is-hoverable has-text-primary-hover`,
                     onclick: function () {
                         window.router.push('/');
