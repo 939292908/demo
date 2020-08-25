@@ -16,7 +16,7 @@ module.exports = {
             m('div', { class: `introduce-box ` }, [
                 // 内容
                 m('div', { class: `container pl-8` }, [
-                    m('div', { class: `pt-8 title-x-large-1` }, [
+                    m('div', { class: `pt-8 title-x-large` }, [
                         m('p', { class: `font-weight-regular` }, "世界领先的专业数字资产衍生品交易平台"),
                         m('img', { class: 'mb-7', src: require("@/assets/img/home/rectangle1.png").default })
                     ]),
@@ -25,7 +25,7 @@ module.exports = {
                     m('div', { class: `introduce-div` }, [])
                 ]),
                 // 蒙板
-                m('div', { class: `introduce-box-masking` })
+                m('div', { class: `  has-mode` })
             ]),
             // 2. 交易之旅 模块
             m('div', { class: `introduce-transaction container` }, [
@@ -33,8 +33,8 @@ module.exports = {
                 m('p', { class: `pt-8 has-text-centered font-weight-regular title-x-large-1` }, "开启交易之旅"),
                 // 按钮
                 m('div', { class: `has-text-centered mt-8` }, [
-                    m('a', { class: `button mr-2 has-bg-primary button-register title-medium font-weight-regular skew-right`, href: "http://localhost:8080/#!/login", target: "_blank" }, ['立即注册']),
-                    m('a', { class: `button has-bg-primary button-transaction title-medium font-weight-regular  skew-left ml-3`, onclick: this.toPage, href: "http://localhost:8080/#!/login", target: "_blank" }, ['即可交易'])
+                    m('a', { class: `button mr-2 has-bg-primary button-register title-medium font-weight-regular skew-right`, href: "http://localhost:8080/#!/register", target: "_blank" }, ['立即注册']),
+                    m('a', { class: `button has-bg-primary button-transaction title-medium font-weight-regular  skew-left ml-3`, onclick: this.toPage, href: "http://localhost:8080/#!/register", target: "_blank" }, ['即可交易'])
                 ]),
                 // 橘色 盒子
                 m('div', { class: `home-introduce-Rectangle border-1 container is-align-items-center has-bg-primary` }, [

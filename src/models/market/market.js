@@ -1,6 +1,8 @@
 const m = require('mithril');
 const broadcast = require('@/broadcast/broadcast');
-const utils = require('@/util/utils');
+const utils = require('@/util/utils').default;
+const wsApi = require('@/newApi/config').default.gWsApi;
+const I18n = require('@/languages/I18n').default;
 
 module.exports = {
     //  行情数据
@@ -75,7 +77,7 @@ module.exports = {
 
         for (const key of subArr) {
             this.subList.push(key);
-            window.gWsApi.TpcAdd(key);
+            wsApi.TpcAdd(key);
         }
     },
     //  取消订阅
@@ -85,7 +87,7 @@ module.exports = {
         }
 
         for (const key of subArr) {
-            window.gWsApi.TpcDel(key);
+            wsApi.TpcDel(key);
             const idx = this.subList.findIndex(t => {
                 return t === key;
             });
@@ -112,7 +114,7 @@ module.exports = {
         m.redraw();
     },
     createTickData: function (param) {
-        const AssetD = window.gWsApi.AssetD[param.Sym];
+        const AssetD = wsApi.AssetD[param.Sym];
         if (param.Sym.indexOf('CI_') > -1) {
             let tick = Object.assign({}, this.tickDefault);
             tick = Object.assign(tick, param);
@@ -186,9 +188,9 @@ module.exports = {
         if (ass) {
             if (ass.TrdCls === 3) {
                 if ((ass.Flag & 1) === 1) {
-                    return window.gI18n.$t('10002', { value: ass.ToC });// ass.ToC + ' 永续'
+                    return I18n.$t('10002', { value: ass.ToC });// ass.ToC + ' 永续'
                 } else {
-                    return window.gI18n.$t('10104', { value1: ass.ToC, value2: ass.SettleCoin });// ass.ToC + '/' + ass.SettleCoin + ' 永续'
+                    return I18n.$t('10104', { value1: ass.ToC, value2: ass.SettleCoin });// ass.ToC + '/' + ass.SettleCoin + ' 永续'
                 }
             } else if (ass.TrdCls === 1) {
                 if (Sym && Sym.includes(`@`)) {
@@ -197,7 +199,7 @@ module.exports = {
                     return Sym;
                 }
             } else if (ass.TrdCls === 2) {
-                return window.gI18n.$t('10255', { value1: ass.SettleCoin, value2: new Date(ass.Expire).format('MMdd') });// ass.SettleCoin + ' 季度' + new Date(ass.Expire).format('MMdd')
+                return I18n.$t('10255', { value1: ass.SettleCoin, value2: new Date(ass.Expire).format('MMdd') });// ass.SettleCoin + ' 季度' + new Date(ass.Expire).format('MMdd')
             } else {
                 return Sym;
             }
@@ -209,7 +211,6 @@ module.exports = {
     },
     //  初始化首页需要请阅的行情
     initHomeNeedSub: function () {
-        const displaySym = window.gWsApi.displaySym;
-        this.subTick(this.setSubArrType('tick', [...displaySym]));
+        this.subTick(this.setSubArrType('tick', [...wsApi.displaySym]));
     }
 };

@@ -16,7 +16,8 @@ module.exports = {
     view: function () {
         return m('nav.navbar.is-fixed-top', {
             role: "navigation",
-            "aria-label": "main navigation"
+            "aria-label": "main navigation",
+            class: 'has-bg-sub-level-1'
         }, [
             m('.navbar-brand', {}, [
                 m('a.navbar-item', {
