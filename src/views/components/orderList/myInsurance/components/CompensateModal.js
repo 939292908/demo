@@ -41,7 +41,7 @@ export default {
         // 弹框 body
         let modalBody = [
             m('div', { class: `has-text-2` }, [
-                `您当前正在申请保险订单的赔付，赔付金额为${vnode.attrs.data.compensationAmount} USDT。确认申请赔付？`
+                `${gDI18n.$t('10633', { value: vnode.attrs.data.compensationAmount})}` // `您当前正在申请保险订单的赔付，赔付金额为${vnode.attrs.data.compensationAmount} USDT。确认申请赔付？`
             ])
         ]
         // 弹框 footer
@@ -64,7 +64,7 @@ export default {
             width: '493px',
             onClose: () => vnode.attrs.onClose(), // 关闭事件
             slot: {
-                header: "申请赔付",
+                header: gDI18n.$t('10632'), //",
                 body: modalBody,
                 footer: modalFooter
             }

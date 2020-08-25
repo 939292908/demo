@@ -357,7 +357,7 @@ let spotTick = {
                 spotTick.getProfitLoss()
             }},[
                 m('div',{class:""},[
-                    '未实现盈亏计算',
+                    gDI18n.$t('10631'), //'未实现盈亏计算',
                 ]),
                 m('div',{class:""},[
                     m('span',{class:"has-text-success"},[

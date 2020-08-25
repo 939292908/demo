@@ -13,7 +13,7 @@ let obj = {
       },
       {
         id:"Set_2",
-        value:"最新价格"
+        value: gDI18n.$t('10629'), //"最新价格"
       },
     ],
 
@@ -36,7 +36,7 @@ let obj = {
         },
         {
           id:"Set_2",
-          value:"最新价格"
+          value: gDI18n.$t('10629'), //"最新价格"
         },
       ]
     },
@@ -103,7 +103,7 @@ export default {
           m("div", { class: "modal-card" }, [
             m("header", { class: "pub-stoppl-head modal-card-head" }, [
               m("p", { class: "modal-card-title" }, [
-                '合约设置'
+                gDI18n.$t('10630'), //'合约设置'
               ]),
               m("button", {
                 class: "delete", "aria-label": "close", onclick: function () {
@@ -113,7 +113,7 @@ export default {
             ]),
             m("section", { class: "pub-stoppl-content modal-card-body has-text-2" }, [
               m('div',{class:"control is-between ord-set"},[
-                "未实现盈亏计算",
+                gDI18n.$t('10631'), //"未实现盈亏计算",
                 obj.getSetingOrd()
               ])
             ]),

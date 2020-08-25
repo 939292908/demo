@@ -89,7 +89,7 @@ let obj = {
                 align: 'left',
                 render (params) {
                     let btn = [
-                        m('button', { class: `button is-primary `, style: "width: 96px;" }, params.state == 0 ? "申请赔付" : "审核中")
+                        m('button', { class: `button is-primary `, style: "width: 96px;" }, params.state == 0 ? gDI18n.$t('10632' /*"申请赔付"*/) : "审核中")
                     ]
                     return m('div', {
                         class: `baoxian-hehe`, onclick () {
@@ -101,19 +101,19 @@ let obj = {
                 }
             },
             {
-                title: '合约',
+                title: gDI18n.$t('10053'), //'合约',
                 key: 'sym'
             },
             {
-                title: '方向',
+                title: gDI18n.$t('10172'), //'方向',
                 key: 'direction'
             },
             {
-                title: '杠杆',
+                title: gDI18n.$t('10054'), //'杠杆',
                 key: 'lever'
             },
             {
-                title: '数量',
+                title: gDI18n.$t('10087'), //'数量',
                 key: 'num'
             },
             {
@@ -125,11 +125,11 @@ let obj = {
                 key: 'closePic'
             },
             {
-                title: '平仓盈亏',
+                title: gDI18n.$t('10062'), //'平仓盈亏',
                 key: 'closeProfitAndLoss'
             },
             {
-                title: '手续费',
+                title: gDI18n.$t('10063'), //'手续费',
                 key: 'commissionCharge'
             },
             {
