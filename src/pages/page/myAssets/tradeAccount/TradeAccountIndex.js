@@ -12,7 +12,7 @@ const tradingAccount = {
     // 01：合约账户，02：币币账户，04：法币账户
     pageFlag: 1,
     setPageFlag: function (param) {
-        console.log('nzm', 'setPageFlag......', 'param--', param);
+        // console.log('nzm', 'setPageFlag......', 'param--', param);
         this.pageFlag = param;
     },
     oldValue: 1,
@@ -42,8 +42,7 @@ module.exports = {
         return TradeAccountView(props, vnode);
     },
     onupdate: function (vnode) {
-        // 若false 则通过交易进来
-        // 若true 则导航
+        // false：通过交易tab进来
         if (tradingAccount.oldValue !== vnode.attrs.idx) {
             tradingAccount.setPageFlag(vnode.attrs.idx);
             m.redraw();
