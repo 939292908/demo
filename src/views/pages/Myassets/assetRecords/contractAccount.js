@@ -3,20 +3,14 @@ const accountTable = require('./accountTable');
 const commonSelectionBox = require('./commonSelectionBox');
 
 require('@/styles/pages/Myassets/assetRecords.scss');
-const contractAccount = {
-    assetValuation: function () {
-        return m('div', {}, [
-            m(commonSelectionBox, { num: 1 }),
-            m(accountTable)
-        ]);
-    }
-};
+
 module.exports = {
     oninit: function () {
     },
     view: function () {
         return m('div', { class: 'views-pages-Myassets-assetRecords-contractAccount' }, [
-            contractAccount.assetValuation()
+            m(commonSelectionBox, { num: '01' }),
+            m(accountTable, { num: '01' })
         ]);
     }
 };
