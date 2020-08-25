@@ -12,7 +12,12 @@ const tradingAccount = {
     // 01：合约账户，02：币币账户，04：法币账户
     pageFlag: 1,
     setPageFlag: function (param) {
+        console.log('nzm', 'setPageFlag......', 'param--', param);
         this.pageFlag = param;
+    },
+    oldValue: 1,
+    setOldValue: function (param) {
+        this.oldValue = param;
     },
     switchContent: function () {
         switch (this.pageFlag) {
@@ -36,11 +41,14 @@ module.exports = {
         };
         return TradeAccountView(props, vnode);
     },
-    // 一直刷新
     onupdate: function (vnode) {
-        console.log('nzm', 'update......');
-        tradingAccount.setPageFlag(vnode.attrs.idx);
-        m.redraw();
+        // 若false 则通过交易进来
+        // 若true 则导航
+        if (tradingAccount.oldValue !== vnode.attrs.idx) {
+            tradingAccount.setPageFlag(vnode.attrs.idx);
+            m.redraw();
+        }
+        tradingAccount.setOldValue(vnode.attrs.idx);
     },
     onremove: function () {
         broadcast.offMsg({
