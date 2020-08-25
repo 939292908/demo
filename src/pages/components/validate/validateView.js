@@ -14,7 +14,7 @@ module.exports = {
     },
     view() {
         const validInput = [];
-        validInput.push(m('div.title-x-large-1.has-text-title', {}, ['安全验证']));
+        validInput.push(m('div.title-large.has-text-title', {}, ['安全验证']));
         validInput.push(m('div.py-0.mb-7.body-3.has-text-level-2', {}, ['为了您的账户安全，请完成以下验证']));
         validInput.push(m('div.has-text-level-2.body-3.mb-2', {}, [Validate.selectName]));
         switch (Validate.selectType) {

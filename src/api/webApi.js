@@ -881,7 +881,6 @@ class webApi {
 
     // 获取用户资产
     getWallet(aData, aOnSuccess, aOnError) {
-        console.log('nzm', '1111111111111111111111111asdkds;lkk');
         const s = this;
 
         s.axios.request({

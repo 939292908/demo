@@ -8,6 +8,7 @@ const I18n = require('@/languages/I18n').default;
 const errCode = require('@/util/errCode').default;
 const broadcast = require('@/broadcast/broadcast');
 const validate = require('@/models/validate/validate').default;
+const helpCenter = require('@/util/helpCenter').default;
 
 const register = {
     type: 'phone',
@@ -23,10 +24,32 @@ const register = {
     isvalidate: false,
     waiting: false,
     smsCd: 0, // 激活短信按钮倒计时
-    exchInfo: null, // 渠道信息
+    exchInfo: config.exchInfo, // 渠道信息
+    checkbox: false,
     mustInvited() {
         if (!this.exchInfo) return false;
         return Boolean(parseInt(this.exchInfo.mustInvited));
+    },
+    rulesEmail: {
+        required: value => !!value || '该字段不能为空', // 该字段不能为空
+        email: value => {
+            const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+            return pattern.test(value) || '邮箱格式不正确'; // 邮箱格式不正确
+        }
+    },
+    rulesPhone: {
+        required: value => !!value || '该字段不能为空', // 该字段不能为空
+        phone: value => {
+            const pattern = /^[0-9]{5,11}$/;
+            return pattern.test(value) || '手机号码不正确'; // 手机号码不正确
+        }
+    },
+    rulesPwd: {
+        required: value => !!value || '该字段不能为空', // 该字段不能为空
+        password: value => {
+            const pattern = /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,}$/;
+            return pattern.test(value) || '至少6个字符，必须是字母和数字'; // 至少6个字符，必须是字母和数字
+        }
     },
     valid() {
         const uid = cryptoChar.decrypt(this.refereeId);
@@ -41,7 +64,6 @@ const register = {
                 /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(this.loginName) &&
                 /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,}$/.test(this.password);
         }
-        if (!this.exchInfo) return valid;
         if (this.exchInfo.helpCenter.website && this.exchInfo.helpCenter.termsServiceId && this.exchInfo.helpCenter.privacyPolicyId) {
             return this.checkbox && valid;
         } else {
@@ -59,12 +81,15 @@ const register = {
             valid = this.loginName && this.password &&
                 /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,}$/.test(this.password);
         }
-        if (!this.exchInfo) return valid;
         if (this.exchInfo.helpCenter.website && this.exchInfo.helpCenter.termsServiceId && this.exchInfo.helpCenter.privacyPolicyId) {
             return this.checkbox && valid;
         } else {
             return valid;
         }
+    },
+    // 打开条款
+    toHelpService(id) {
+        helpCenter.openArticle(this.exchInfo.helpCenter[id]);
     },
     // 邮箱注册处理
     submitEmail() {
@@ -250,6 +275,7 @@ const register = {
     oninit() {
         this.initGeetest();
         this.getCountryList();
+        helpCenter.init(this.exchInfo);
         this.getExchInfo();
     },
     onremove() {

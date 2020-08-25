@@ -152,6 +152,7 @@ const myWalletIndex = {
             document.getElementsByTagName('ul')[0].style.display = 'none';
         }
     },
+    // 提币，内部转账，资金划转悬浮样式
     changeBtnSty: function (index, type) {
         if (index !== 0) {
             const ele = document.getElementsByClassName('Operation' + index)[0];
@@ -166,7 +167,7 @@ const myWalletIndex = {
         // 点击交易账户(...)中则显示对应page
         myWalletIndex.switchChange(1);
         this.wltIdx = param;
-        // 阻止交易账户冒泡再次赋值
+        // 阻止交易账户冒泡再次wltIdx赋值
         window.event.stopPropagation();
         // （我的钱包，交易账户）切换内容
         myWalletIndex.switchContent();
