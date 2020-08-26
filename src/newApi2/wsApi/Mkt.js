@@ -55,8 +55,6 @@ class Mkt {
         this.stately = Stately.machine({
             IDLE: {
                 do: (aObj) => {
-                    console.log(API_TAG, 'IDLE', aObj, arg);
-
                     if (aObj.Conf && aObj.Conf.baseUrl) {
                         return 'PRECONNECT';
                     }
@@ -64,8 +62,6 @@ class Mkt {
             },
             PRECONNECT: {
                 do: (aObj) => {
-                    console.log(API_TAG, 'PRECONNECT', aObj);
-
                     // 清理订阅状态
                     for (var propName in aObj.booking) {
                         aObj.booking[propName].done = false;
@@ -108,10 +104,6 @@ class Mkt {
 
                         switch (aObj.Conf.Typ) {
                         case "mkt":
-                            // console.log(API_TAG, 'mkt ws is open')
-                            // aObj.ReqTime(arg => {
-                            //     return aObj.stately.AUTHORIZING
-                            // })
                             return 'AUTHORIZING';
                         case "trd":
 
@@ -127,23 +119,18 @@ class Mkt {
             },
             AUTHORIZING: {
                 do: (aObj) => {
-                    // console.log(API_TAG, 'AUTHORIZING', aObj);
                     switch (aObj.Conf.Typ) {
                     case "mkt":
-                        // console.log(API_TAG, 'mkt ws is open');
                         aObj.ReqAssetD({ vp: window.exchId });
                         return 'WORKING';
                     case "trd":
 
                         break;
                     }
-                    // return 'WORKING'
                 }
             },
             WORKING: {
                 do: (aObj) => {
-                    // console.log(API_TAG, 'WORKING', aObj);
-
                     if (aObj.CheckAndSendHeartbeat(aObj)) {
                         return 'PRECONNECT';
                     }
@@ -196,8 +183,6 @@ class Mkt {
     }
 
     wsOnMessage(aObj, evt) {
-        // console.log(API_TAG, 'wsOnMessage', evt);
-        // const s = this;
         aObj.lastRecvTm = Date.now();
         try {
             var msg = JSON.parse(evt.data);
@@ -211,7 +196,6 @@ class Mkt {
         }
         */
         const d = msg;
-        // const d_data = d.data;
 
         switch (d.subj) {
         case "tick": {
