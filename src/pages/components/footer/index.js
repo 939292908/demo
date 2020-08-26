@@ -1,5 +1,5 @@
 const m = require('mithril');
-const Tooltip = require('@/views/components/common/Tooltip');
+const Tooltip = require('@/pages/components/common/Tooltip');
 
 const methods = {
     openNavbarDropdown: false,
