@@ -3,6 +3,7 @@ const titleLogo = require("@/assets/img/logo/title-logo.png").default;
 const I18n = require("../../../languages/I18n").default;
 const Tooltip = require('@/pages/components/common/Tooltip');
 const utils = require('@/util/utils').default;
+require('@/styles/pages/header');
 
 const methods = {
     openNavbarDropdown: false,
@@ -14,10 +15,10 @@ const methods = {
 
 module.exports = {
     view: function () {
-        return m('nav.navbar.is-fixed-top', {
+        return m('nav.navbar.is-fixed-top.theme--light', {
             role: "navigation",
             "aria-label": "main navigation",
-            class: 'has-bg-sub-level-1'
+            class: "has-bg-sub-level-1"
         }, [
             m('.navbar-brand', {}, [
                 m('a.navbar-item', {
@@ -66,9 +67,10 @@ module.exports = {
                                     window.router.push('/myWalletIndex');
                                 }
                             }, [
+                                m('div', { class: `header-navbar-item-icon has-line-level-3 mr-2` }), // 正方形icon
                                 m('div', { class: `` }, [
-                                    m('p', { class: `` }, "USDT永续合约"),
-                                    m('p', { class: `body-4` }, [" 最高百倍杠杆，交易简单"])
+                                    m('p', { class: `title-small` }, "USDT永续合约"),
+                                    m('p', { class: `body-4 has-text-level-3` }, [" 最高百倍杠杆，交易简单"])
                                 ])
                             ]),
                             m('a', {
@@ -77,12 +79,13 @@ module.exports = {
                                     window.router.push('/myWalletIndex');
                                 }
                             }, [
+                                m('div', { class: `header-navbar-item-icon has-line-level-3 mr-2` }), // 正方形icon
                                 m('div', { class: `` }, [
                                     m('p', { class: `` }, [
-                                        m('span', { class: `` }, "全币种合约"),
-                                        m('span', { class: `px-3 ml-2`, style: `background: orange; border-radius: 10px 10px 10px 0; color:#fff` }, "NEW")
+                                        m('span', { class: `title-small` }, "全币种合约"),
+                                        m('span', { class: `header-new-info has-bg-primary px-3 ml-2` }, ["NEW"])
                                     ]),
-                                    m('p', { class: `body-4` }, [" 小币种开仓，统一价格标的"])
+                                    m('p', { class: `body-4 has-text-level-3` }, [" 小币种开仓，统一价格标的"])
                                 ])
                             ],
                             m('span', { class: `has-text-primary-hover border-radius-small` }, [])
@@ -193,7 +196,7 @@ module.exports = {
                             // onclick: function () {
                             //     window.router.push('/userCenter');
                             // }
-                        }, ['用户中心']),
+                        }, [m('i', { class: "community iconfont icon-Personal " })]),
                         m('div', { class: `navbar-dropdown` }, [
                             m('a', { class: `navbar-item` }, [
                                 m('svg', {
@@ -247,12 +250,12 @@ module.exports = {
                 // 下载
                 m('div.navbar-item.cursor-pointer', { class: `has-text-primary-hover ` }, [
                     m(Tooltip, {
-                        label: m('i.iconfont.icon-downLoad'),
+                        label: m('i.iconfont.icon-xiazai'),
                         // class: 'header-download',
                         width: '254px',
                         height: '104px',
                         content: m('div', { class: `is-flex` }, [
-                            m('img', { class: 'ml-3 mt-2', src: require("@/assets/img/home/download.png").default }),
+                            m('img', { class: 'ml-3 mt-2', src: require("@/assets/img/home/Download-code.png").default }),
                             m('div', { class: `is-align-items-center` }, [
                                 m('div', { class: `` }, [
                                     m('p', { class: `ml-4 mt-2 title-small` }, "扫码下载APP"),

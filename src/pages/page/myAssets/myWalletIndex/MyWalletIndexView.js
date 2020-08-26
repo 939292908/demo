@@ -1,5 +1,6 @@
 const m = require('mithril');
 const Header = require('@/pages/page/myAssets/header/HeaderIndex');
+const Modal = require('@/pages/components/common/Modal');
 require('@/styles/pages/Myassets/MyWalletIndex.scss');
 
 module.exports = function (props) {
@@ -42,7 +43,7 @@ module.exports = function (props) {
                                 myWalletIndex.Nav.firstNav.map((item, index) => {
                                     return m(`button.column button-large mx-3 border-radius-small cursor-pointer Operation${index} has-line-level-2`, {
                                         class: item.title === '充币' ? 'has-bg-primary' : `has-text-primary bgNone`,
-                                        onclick: function () { myWalletIndex.toPage(item.to); },
+                                        onclick: function () { myWalletIndex.handlerClickNavBtn(item); },
                                         onmouseover: function() { myWalletIndex.changeBtnSty(index, 'show'); },
                                         onmouseleave: function() { myWalletIndex.changeBtnSty(index, 'hide'); }
                                     },
@@ -113,6 +114,18 @@ module.exports = function (props) {
             m('div', { class: 'myWalletIndex-table container pb-7 content-width' }, [
                 myWalletIndex.switchContent()
             ])
-        ])
+        ]),
+        m(Modal, {
+            isShow: myWalletIndex.transferModal.isShow, // 显示隐藏
+            onOk: myWalletIndex.transferModal.onOk, // 确认事件 // 使用默认确认按钮
+            onClose: myWalletIndex.transferModal.onClose, // 关闭事件
+            slot: { // 插槽
+                header: m('div', { class: `` }, [
+                    m('p', { class: `` }, "Vbit"),
+                    m('p', { class: `` }, "资金划转")
+                ]),
+                body: m('div', { class: `` }, ["body啊"])
+            }
+        })
     ]);
 };
