@@ -111,7 +111,7 @@ module.exports = {
                 this.totalValueForBTC += Number(this.wallet_obj[type][coin].valueForBTC);
             }
         }
-        console.log('ht', 'initWlt ', this.wallet_obj, this.totalValueForUSDT, this.totalValueForBTC);
+
         for (const type in this.wallet) {
             if (type === '03') {
                 for (const coin in this.wallet[type]) {
