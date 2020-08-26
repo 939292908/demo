@@ -54,5 +54,7 @@ module.exports = {
     // 宣传图
     DESKTOP_BANNER_V2: '/v2/desk/banner',
     // 最新公告
-    ANNOUNCEMENTS_LATEST: '/v2/hc/announcements/latest'
+    ANNOUNCEMENTS_LATEST: '/v2/hc/announcements/latest',
+    // 系统开关配置
+    FUN_LIST_V1: '/v1/users/funList'
 };

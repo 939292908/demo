@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-08-25 16:34:57
- * @LastEditTime: 2020-08-25 19:26:11
+ * @LastEditTime: 2020-08-25 20:20:20
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \website-project\src\newApi2\index.js
@@ -13,6 +13,6 @@ const BaseUrl = require('./config').BaseUrl;
 module.exports = {
     BaseUrl,
     Conf,
-    webApi,
+    webApi, // 页面接口
     wsApi
 };

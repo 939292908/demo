@@ -1,16 +1,16 @@
 /*
  * @Author: your name
  * @Date: 2020-08-17 13:35:47
- * @LastEditTime: 2020-08-19 17:52:15
+ * @LastEditTime: 2020-08-25 20:20:43
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \website-project\src\views\pages\home\top.js
  */
 const m = require('mithril');
-const Http = require('@/newApi');
+const Http = require('@/newApi2').webApi;
 const l180n = require('@/languages/I18n').default;
 const TopView = require('./topView');
-const Conf = require('@/newApi/config').default.Conf;
+const Conf = require('@/newApi2').Conf;
 
 module.exports = {
     data: {
