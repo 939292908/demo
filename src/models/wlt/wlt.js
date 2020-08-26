@@ -1,9 +1,8 @@
-// const m = require('mithril');
-const Http = require('@/newApi');
+const Http = require('@/newApi2').webApi;
 const broadcast = require('@/broadcast/broadcast');
-const gWebApi = require('@/newApi/config').default.gWebApi;
-const gWsApi = require('@/newApi/config').default.gWsApi;
+const gWsApi = require('@/newApi2').wsApi;
 const utils = require('@/util/utils').default;
+const BaseUrl = require('@/newApi2').BaseUrl;
 
 module.exports = {
     name: "modelsForWlt",
@@ -25,10 +24,8 @@ module.exports = {
     // 总BTC估值
     totalValueForBTC: 0,
 
-    // 人民币总BTC估值
-    totalCNYValueForBTC: 0,
-    // 人民币总USDT估值
-    totalCNYValueForUSDT: 0,
+    // 人民币总估值
+    totalCNYValue: 0,
 
     prz: 7,
 
@@ -41,6 +38,11 @@ module.exports = {
     tradingAccountTotalValueForUSDT: 0,
     // 交易账户总BTC估值
     tradingAccountTotalValueForBTC: 0,
+
+    // 交易账户总USDT估值
+    otherAccountTotalValueForUSDT: 0.0000,
+    // 交易账户总BTC估值
+    otherAccountTotalValueForBTC: 0.00000000,
 
     // 币币交易总USDT估值
     coinTotalValueForUSDT: 0,
@@ -98,7 +100,7 @@ module.exports = {
         this.contractTotalValueForUSDT = 0;
         this.contractTotalValueForBTC = 0;
 
-        const wlt = gWebApi.wallet_obj;
+        const wlt = this.wallet_obj;
 
         for (const type in wlt) {
             this.wallet_obj[type] = this.wallet_obj[type] ? this.wallet_obj[type] : {};
@@ -106,13 +108,17 @@ module.exports = {
             for (const coin in wlt[type]) {
                 this.wallet_obj[type][coin] = this.wltHandle(type, wlt[type][coin]);
                 this.wallet[type].push(this.wallet_obj[type][coin]);
+
+                wlt[type][coin].valueForUSDT = utils.toFixedForFloor(wlt[type][coin].valueForUSDT, 4);
+                wlt[type][coin].valueForBTC = utils.toFixedForFloor(wlt[type][coin].valueForBTC, 8);
+
                 // 总USDT估值
                 this.totalValueForUSDT += Number(this.wallet_obj[type][coin].valueForUSDT);
                 // 总BTC估值
                 this.totalValueForBTC += Number(this.wallet_obj[type][coin].valueForBTC);
             }
         }
-        console.log('ht', 'initWlt ', this.wallet_obj, this.totalValueForUSDT, this.totalValueForBTC);
+
         for (const type in this.wallet) {
             if (type === '03') {
                 for (const coin in this.wallet[type]) {
@@ -155,6 +161,42 @@ module.exports = {
         }
         this.tradingAccountTotalValueForBTC = Number(this.legalTotalValueForBTC) + Number(this.contractTotalValueForBTC) + Number(this.coinTotalValueForBTC);
         this.tradingAccountTotalValueForUSDT = Number(this.legalTotalValueForUSDT) + Number(this.contractTotalValueForUSDT) + Number(this.coinTotalValueForUSDT);
+        this.totalCNYValue = this.totalValueForUSDT * this.prz;
+
+        this.totalValueForUSDT = utils.toFixedForFloor(this.totalValueForUSDT, 4);
+        this.totalValueForBTC = utils.toFixedForFloor(this.totalValueForBTC, 8);
+
+        this.walletTotalValueForUSDT = utils.toFixedForFloor(this.walletTotalValueForUSDT, 4);
+        this.walletTotalValueForBTC = utils.toFixedForFloor(this.walletTotalValueForBTC, 8);
+
+        this.tradingAccountTotalValueForUSDT = utils.toFixedForFloor(this.tradingAccountTotalValueForUSDT, 4);
+        this.tradingAccountTotalValueForBTC = utils.toFixedForFloor(this.tradingAccountTotalValueForBTC, 8);
+
+        this.otherAccountTotalValueForUSDT = utils.toFixedForFloor(this.otherAccountTotalValueForUSDT, 4);
+        this.otherAccountTotalValueForBTC = utils.toFixedForFloor(this.otherAccountTotalValueForBTC, 8);
+
+        this.coinTotalValueForUSDT = utils.toFixedForFloor(this.coinTotalValueForUSDT, 4);
+        this.coinTotalValueForBTC = utils.toFixedForFloor(this.coinTotalValueForBTC, 8);
+
+        this.legalTotalValueForUSDT = utils.toFixedForFloor(this.legalTotalValueForUSDT, 4);
+        this.legalTotalValueForBTC = utils.toFixedForFloor(this.legalTotalValueForBTC, 8);
+
+        this.contractTotalValueForUSDT = utils.toFixedForFloor(this.contractTotalValueForUSDT, 4);
+        this.contractTotalValueForBTC = utils.toFixedForFloor(this.contractTotalValueForBTC, 8);
+
+        this.totalCNYValue = utils.toFixedForFloor(this.totalCNYValue, 8);
+
+        // console.log('nzm', 'totalCNYValue', this.totalCNYValue, 'totalValueForUSDT', this.totalValueForUSDT);
+        // console.log('\n');
+        // console.log('nzm', 'tradingAccountTotalValueForBTC', this.tradingAccountTotalValueForBTC, 'tradingAccountTotalValueForUSDT', this.tradingAccountTotalValueForUSDT);
+        // console.log('\n');
+        // console.log('nzm', 'legalTotalValueForBTC', this.legalTotalValueForBTC, 'legalTotalValueForUSDT', this.legalTotalValueForUSDT);
+        // console.log('\n');
+        // console.log('nzm', 'coinTotalValueForBTC', this.coinTotalValueForBTC, 'coinTotalValueForUSDT', this.coinTotalValueForUSDT);
+        // console.log('\n');
+        // console.log('nzm', 'contractTotalValueForBTC', this.contractTotalValueForBTC, 'contractTotalValueForUSDT', this.contractTotalValueForUSDT);
+        // console.log('\n');
+        // console.log('nzm', 'walletTotalValueForBTC', this.walletTotalValueForBTC, 'walletTotalValueForUSDT', this.walletTotalValueForUSDT);
     },
     updWlt: function() {
         const that = this;
@@ -164,12 +206,31 @@ module.exports = {
             console.log('ht', 'getWallet success', arg);
             if (arg.result.code === 0) {
                 // 初始化资产数据
-                gWebApi.setWallet(arg);
+                that.setWallet(arg);
                 that.initWlt();
             }
         }).catch(function(err) {
             console.log('ht', 'getWallet error', err);
         });
+    },
+    setWallet(data) {
+        this.wallet['01'] = data.assetLists01; // 合约资产
+        this.wallet['02'] = data.assetLists02; // 现货资产
+        this.wallet['03'] = data.assetLists03; // 主钱包
+        this.wallet['04'] = data.assetLists04; // 法币资产
+
+        for (const item of data.assetLists01) {
+            this.wallet_obj['01'][item.wType] = item;
+        }
+        for (const item of data.assetLists02) {
+            this.wallet_obj['02'][item.wType] = item;
+        }
+        for (const item of data.assetLists03) {
+            this.wallet_obj['03'][item.wType] = item;
+        }
+        for (const item of data.assetLists04) {
+            this.wallet_obj['04'][item.wType] = item;
+        }
     },
     wltHandle: function (type, wlt) {
         this.wltItemEx = {};
@@ -182,7 +243,7 @@ module.exports = {
         // console.log('ht', AssetD);
         // 取BTC的价格 start
         const btcSymName = utils.getSpotName(AssetD, 'BTC', 'USDT');
-        const btcInitValue = (gWebApi.wallet_obj['03'] && gWebApi.wallet_obj['03'].BTC && gWebApi.wallet_obj['03'].BTC.initValue) || 0;
+        const btcInitValue = (this.wallet_obj['03'] && this.wallet_obj['03'].BTC && this.wallet_obj['03'].BTC.initValue) || 0;
         const btcPrz = (AssetD[btcSymName] && AssetD[btcSymName].PrzLatest) || btcInitValue;
         // console.log('ht', 'btc prz', btcSymName, btcInitValue, AssetD[btcSymName] && AssetD[btcSymName].PrzLatest, btcPrz);
         // 取BTC的价格 end
@@ -283,11 +344,7 @@ module.exports = {
         this.wltItemEx.valueForBTC = utils.toFixedForFloor(valueForBTC, 8);
         // console.log('ht', 'value', valueForUSDT, valueForBTC);
         // 图标
-        this.wltItemEx.icon = gWebApi.baseUrl + this.wltItemEx.icon;
-
-        // !!!
-        this.totalCNYValueForBTC = valueForBTC * this.prz;
-        this.totalCNYValueForUSDT = valueForUSDT * this.prz;
+        this.wltItemEx.icon = BaseUrl.WebAPI + this.wltItemEx.icon;
 
         return this.wltItemEx;
     }

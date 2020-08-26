@@ -1,7 +1,7 @@
-const LOG = window.console.log;
+// const LOG = window.console.log;
 
-const openStr = 'tlh';
+// const openStr = 'lm';
 
-window.console.log = function (str, ...text) {
-    if (!openStr || openStr === str) LOG(text);
-};
+// window.console.log = function (str, ...text) {
+//     if (!openStr || openStr === str) LOG(text);
+// };

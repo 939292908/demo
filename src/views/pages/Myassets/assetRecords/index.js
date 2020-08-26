@@ -20,25 +20,31 @@ const assetRecords = {
     },
     assetValuation: function () {
         return m('div', {}, [
-            m('div', { class: 'mb-3 columns-flex-warp' }, [
-                m(header, { highlightFlag: 1 })
+            m('div', { class: 'columns-flex-warp has-bg-sub-level-1' }, [
+                m('div.container', [
+                    m(header, { highlightFlag: 1 })
+                ])
             ]),
-            m('div', { class: 'columns-flex-warp mb-3' }, [
-                m('div', {
-                    class: "cursor-pointer mr-7" + (assetRecords.switchValue === 0 ? ' has-text-primary' : ''),
-                    onclick: function () {
-                        assetRecords.switchEvnet(0);
-                    }
-                }, ['我的钱包']),
-                m('div', {
-                    class: "cursor-pointer mr-7" + (assetRecords.switchValue === 1 ? ' has-text-primary' : ''),
-                    onclick: function () {
-                        assetRecords.switchEvnet(1);
-                    }
-                }, ['交易账户']),
-                m('div', {}, ['其他账户'])
-            ]),
-            assetRecords.switchContent()
+            m('div.pt-7', { class: ' theme--light' }, [
+                m('div', { class: 'container has-bg-level-2 border-radius-small' }, [
+                    m('div', { class: 'columns-flex-warp views-pages-Myassets-assetRecords-head px-4' }, [
+                        m('div', {
+                            class: "cursor-pointer mr-7" + (assetRecords.switchValue === 0 ? ' has-text-primary header-highlight' : ''),
+                            onclick: function () {
+                                assetRecords.switchEvnet(0);
+                            }
+                        }, ['我的钱包']),
+                        m('div', {
+                            class: "cursor-pointer mr-7" + (assetRecords.switchValue === 1 ? ' has-text-primary header-highlight' : ''),
+                            onclick: function () {
+                                assetRecords.switchEvnet(1);
+                            }
+                        }, ['交易账户']),
+                        m('div', {}, ['其他账户'])
+                    ]),
+                    assetRecords.switchContent()
+                ])
+            ])
         ]);
     }
 };
@@ -47,7 +53,7 @@ module.exports = {
         // assetRecords.initAssetList();
     },
     view: function () {
-        return m('div', { class: 'views-pages-Myassets-assetRecords commonAuto content-width' }, [
+        return m('div', { class: 'views-pages-Myassets-assetRecords' }, [
             assetRecords.assetValuation()
         ]);
     }
