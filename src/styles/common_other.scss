@@ -129,6 +129,9 @@
 
 // modal弹框 组件
 .my-modal {
+    &.theme--light {
+        background-color: initial;
+    }
     .modal-card {
         width: 448px;
     }
