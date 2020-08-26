@@ -1,7 +1,7 @@
 const m = require('mithril');
 const broadcast = require('@/broadcast/broadcast');
 const utils = require('@/util/utils').default;
-const laydate = require("@/../node_modules/layui-laydate/src/laydate");
+const laydate = require("layui-laydate");
 import('@/../node_modules/layui-laydate/src/theme/default/laydate.css');
 
 const commonSelectionBox = {
