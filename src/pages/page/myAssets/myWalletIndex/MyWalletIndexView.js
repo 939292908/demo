@@ -17,7 +17,7 @@ module.exports = function (props) {
                                 m('span', { class: 'body-6', style: 'color:white' }, ['总资产估值']),
                                 m('div', {}, [
                                     m(`button.cursor-pointer`, { onclick: myWalletIndex.setSelectOpFlag, style: { color: `#FF8B00` } }, myWalletIndex.selectOpText + ' ▼'),
-                                    m('ul.border-radius-small ml-3 has-bg-level-2', { style: { display: 'none' } }, [
+                                    m('ul.border-radius-small ml-3 has-bg-level-2 currType', { style: { display: 'none' } }, [
                                         myWalletIndex.selectOp.map(item => {
                                             return m('li.cursor-pointer pl-3', { class: item === myWalletIndex.selectOpText ? 'has-text-primary' : '', onclick: function() { myWalletIndex.selectOpHideUl(item); } }, item);
                                         })
@@ -104,7 +104,7 @@ module.exports = function (props) {
                                 m('span', { }, '其他账户')
                             ]),
                             m('div', { class: 'title-small ' }, [
-                                m('span', {}, '0.00000000 '),
+                                m('span', {}, myWalletIndex.otherTotalValue),
                                 m('span', {}, [' ' + myWalletIndex.currency])
                             ])
                         ])

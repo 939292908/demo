@@ -24,10 +24,8 @@ module.exports = {
     // 总BTC估值
     totalValueForBTC: 0,
 
-    // 人民币总BTC估值
-    totalCNYValueForBTC: 0,
-    // 人民币总USDT估值
-    totalCNYValueForUSDT: 0,
+    // 人民币总估值
+    totalCNYValue: 0,
 
     prz: 7,
 
@@ -40,6 +38,11 @@ module.exports = {
     tradingAccountTotalValueForUSDT: 0,
     // 交易账户总BTC估值
     tradingAccountTotalValueForBTC: 0,
+
+    // 交易账户总USDT估值
+    otherAccountTotalValueForUSDT: 0.0000,
+    // 交易账户总BTC估值
+    otherAccountTotalValueForBTC: 0.00000000,
 
     // 币币交易总USDT估值
     coinTotalValueForUSDT: 0,
@@ -105,6 +108,10 @@ module.exports = {
             for (const coin in wlt[type]) {
                 this.wallet_obj[type][coin] = this.wltHandle(type, wlt[type][coin]);
                 this.wallet[type].push(this.wallet_obj[type][coin]);
+
+                wlt[type][coin].valueForUSDT = utils.toFixedForFloor(wlt[type][coin].valueForUSDT, 4);
+                wlt[type][coin].valueForBTC = utils.toFixedForFloor(wlt[type][coin].valueForBTC, 8);
+
                 // 总USDT估值
                 this.totalValueForUSDT += Number(this.wallet_obj[type][coin].valueForUSDT);
                 // 总BTC估值
@@ -154,6 +161,42 @@ module.exports = {
         }
         this.tradingAccountTotalValueForBTC = Number(this.legalTotalValueForBTC) + Number(this.contractTotalValueForBTC) + Number(this.coinTotalValueForBTC);
         this.tradingAccountTotalValueForUSDT = Number(this.legalTotalValueForUSDT) + Number(this.contractTotalValueForUSDT) + Number(this.coinTotalValueForUSDT);
+        this.totalCNYValue = this.totalValueForUSDT * this.prz;
+
+        this.totalValueForUSDT = utils.toFixedForFloor(this.totalValueForUSDT, 4);
+        this.totalValueForBTC = utils.toFixedForFloor(this.totalValueForBTC, 8);
+
+        this.walletTotalValueForUSDT = utils.toFixedForFloor(this.walletTotalValueForUSDT, 4);
+        this.walletTotalValueForBTC = utils.toFixedForFloor(this.walletTotalValueForBTC, 8);
+
+        this.tradingAccountTotalValueForUSDT = utils.toFixedForFloor(this.tradingAccountTotalValueForUSDT, 4);
+        this.tradingAccountTotalValueForBTC = utils.toFixedForFloor(this.tradingAccountTotalValueForBTC, 8);
+
+        this.otherAccountTotalValueForUSDT = utils.toFixedForFloor(this.otherAccountTotalValueForUSDT, 4);
+        this.otherAccountTotalValueForBTC = utils.toFixedForFloor(this.otherAccountTotalValueForBTC, 8);
+
+        this.coinTotalValueForUSDT = utils.toFixedForFloor(this.coinTotalValueForUSDT, 4);
+        this.coinTotalValueForBTC = utils.toFixedForFloor(this.coinTotalValueForBTC, 8);
+
+        this.legalTotalValueForUSDT = utils.toFixedForFloor(this.legalTotalValueForUSDT, 4);
+        this.legalTotalValueForBTC = utils.toFixedForFloor(this.legalTotalValueForBTC, 8);
+
+        this.contractTotalValueForUSDT = utils.toFixedForFloor(this.contractTotalValueForUSDT, 4);
+        this.contractTotalValueForBTC = utils.toFixedForFloor(this.contractTotalValueForBTC, 8);
+
+        this.totalCNYValue = utils.toFixedForFloor(this.totalCNYValue, 8);
+
+        // console.log('nzm', 'totalCNYValue', this.totalCNYValue, 'totalValueForUSDT', this.totalValueForUSDT);
+        // console.log('\n');
+        // console.log('nzm', 'tradingAccountTotalValueForBTC', this.tradingAccountTotalValueForBTC, 'tradingAccountTotalValueForUSDT', this.tradingAccountTotalValueForUSDT);
+        // console.log('\n');
+        // console.log('nzm', 'legalTotalValueForBTC', this.legalTotalValueForBTC, 'legalTotalValueForUSDT', this.legalTotalValueForUSDT);
+        // console.log('\n');
+        // console.log('nzm', 'coinTotalValueForBTC', this.coinTotalValueForBTC, 'coinTotalValueForUSDT', this.coinTotalValueForUSDT);
+        // console.log('\n');
+        // console.log('nzm', 'contractTotalValueForBTC', this.contractTotalValueForBTC, 'contractTotalValueForUSDT', this.contractTotalValueForUSDT);
+        // console.log('\n');
+        // console.log('nzm', 'walletTotalValueForBTC', this.walletTotalValueForBTC, 'walletTotalValueForUSDT', this.walletTotalValueForUSDT);
     },
     updWlt: function() {
         const that = this;
@@ -302,10 +345,6 @@ module.exports = {
         // console.log('ht', 'value', valueForUSDT, valueForBTC);
         // 图标
         this.wltItemEx.icon = BaseUrl.WebAPI + this.wltItemEx.icon;
-
-        // !!!
-        this.totalCNYValueForBTC = valueForBTC * this.prz;
-        this.totalCNYValueForUSDT = valueForUSDT * this.prz;
 
         return this.wltItemEx;
     }

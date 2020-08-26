@@ -1,7 +1,8 @@
 const m = require('mithril');
 const broadcast = require('@/broadcast/broadcast');
 const utils = require('@/util/utils').default;
-require('@/styles/pages/Myassets/assetRecords.scss');
+const laydate = require("@/../node_modules/layui-laydate/src/laydate");
+import('@/../node_modules/layui-laydate/src/theme/default/laydate.css');
 
 const commonSelectionBox = {
     timeValue: null,
@@ -59,9 +60,6 @@ const commonSelectionBox = {
         {
             name: 5,
             value: "ETH"
-        },
-        {
-            selected: false
         }
     ],
     typeValue1: [
@@ -125,24 +123,24 @@ const commonSelectionBox = {
         var day = myDate.getDate();
         return year + "-" + month + "-" + day;
     },
-    Repaint: function () {
-        if (window.utils.getItem('currencyValue')) {
-            for (var items of this.currencyValue) {
-                if (Number(window.utils.getItem('currencyValue')) === items.name) {
-                    console.log(items.name);
-                    items.selected = true;
-                }
-            }
-        }
-    },
+    // Repaint: function () {
+    //     if (window.utils.getItem('currencyValue')) {
+    //         for (var items of this.currencyValue) {
+    //             if (Number(window.utils.getItem('currencyValue')) === items.name) {
+    //                 console.log(items.name);
+    //                 items.selected = true;
+    //             }
+    //         }
+    //     }
+    // },
     assetValuation: function () {
         return m('div', { class: 'columns-flex-justify mb-7 body-2' }, [
             m('div', { class: 'mr-6' }, [
                 m('p', { class: 'mb-2' }, ['时间']),
-                m('input[type=date]', {
+                m('input[type=text]', {
                     // value:utils.getItem('timeValue') ?utils.getItem('timeValue') : commonSelectionBox.typeValue,
                     class: 'has-line-level-1 identicalInput border-radius-small body-2',
-                    id: 'fname',
+                    id: 'test10',
                     required: 'required',
                     onchange: function (e) {
                         const data = {
@@ -195,6 +193,11 @@ const commonSelectionBox = {
 };
 module.exports = {
     oninit: function (vnode) {
+        laydate.render({
+            elem: '#test10',
+            type: 'datetime',
+            range: true
+        });
         commonSelectionBox.timeValue = commonSelectionBox.timestampToTime();
         // commonSelectionBox.Repaint();
         commonSelectionBox.changeValue = vnode.attrs.num;

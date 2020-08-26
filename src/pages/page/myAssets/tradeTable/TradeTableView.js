@@ -32,7 +32,7 @@ module.exports = function (props, vnode) {
             m('div.account', { style: { display: vnode.attrs.typeData !== 'walletData' ? '' : 'none' } }, [
                 m('span', {}, t.accountTitle),
                 m('span', {}, '  '),
-                m('span', {}, t.accountBanlance)
+                m('span', {}, t.accountBanlance + t.currency)
             ])
         ]),
         m('div.tab', { class: 'pb-7 border-radius-medium' },

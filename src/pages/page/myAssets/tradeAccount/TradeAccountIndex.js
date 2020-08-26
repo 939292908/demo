@@ -1,4 +1,3 @@
-
 // import broadcast from '@/broadcast/broadcast';
 const m = require('mithril');
 const broadcast = require('@/broadcast/broadcast');
@@ -43,7 +42,7 @@ module.exports = {
     },
     onupdate: function (vnode) {
         // false：通过交易tab进来
-        if (tradingAccount.oldValue !== vnode.attrs.idx) {
+        if (tradingAccount.oldValue !== vnode.attrs.idx) { // 作用：不与导航点击冲突
             tradingAccount.setPageFlag(vnode.attrs.idx);
             m.redraw();
         }

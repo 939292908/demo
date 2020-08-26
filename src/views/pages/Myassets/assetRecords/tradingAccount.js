@@ -20,21 +20,21 @@ const tradingAccount = {
     },
     assetValuation: function () {
         return ('div', { class: 'views-pages-Myassets-assetRecords-tradingAccount-wrapper' }, [
-            m('div', { class: 'cursor-pointer  mb-3' }, [
-                m('span', {
-                    class: "cursor-pointer mr-7" + (tradingAccount.switchValue === 0 ? ' has-text-primary' : ''),
+            m('div', { class: 'cursor-pointer mb-7 columns-flex-warp views-pages-Myassets-assetRecords-tradingAccount-wrapper-head ' }, [
+                m('div', {
+                    class: "cursor-pointer mr-7" + (tradingAccount.switchValue === 0 ? ' has-text-primary header-highlight' : ''),
                     onclick: function () {
                         tradingAccount.switchEvnet(0);
                     }
                 }, ['合约账户']),
-                m('span', {
-                    class: "cursor-pointer mr-7" + (tradingAccount.switchValue === 1 ? ' has-text-primary' : ''),
+                m('div', {
+                    class: "cursor-pointer mr-7" + (tradingAccount.switchValue === 1 ? ' has-text-primary header-highlight' : ''),
                     onclick: function () {
                         tradingAccount.switchEvnet(1);
                     }
                 }, ['币币账户']),
-                m('span', {
-                    class: "cursor-pointer" + (tradingAccount.switchValue === 2 ? ' has-text-primary' : ''),
+                m('div', {
+                    class: "cursor-pointer" + (tradingAccount.switchValue === 2 ? ' has-text-primary header-highlight' : ''),
                     onclick: function () {
                         tradingAccount.switchEvnet(2);
                     }
@@ -47,7 +47,7 @@ const tradingAccount = {
 };
 module.exports = {
     view: function () {
-        return m('div', { class: 'views-pages-Myassets-assetRecords-tradingAccount' }, [
+        return m('div', { class: 'views-pages-Myassets-assetRecords-tradingAccount px-4' }, [
             tradingAccount.assetValuation()
         ]);
     }
