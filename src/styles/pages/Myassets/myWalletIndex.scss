@@ -56,11 +56,11 @@
     }
     .myWalletIndex-head-right div{
         button{
-            // outline: none;
+            outline: none;
             // border: none;
+            border: 1px solid #FF8B00;
             &.bgNone{
                 // 边框主色 规范未找到！！！
-                border: 1px solid #FF8B00;
                 background:none;
             }
         }

@@ -178,9 +178,9 @@ const myWalletIndex = {
         if (index !== 0) {
             const ele = document.getElementsByClassName('Operation' + index)[0];
             if (type === 'show') {
-                ele.classList.value = ele.classList.value.replace('bgNone has-text-primary has-line-level-2', 'has-bg-primary');
+                ele.classList.value = ele.classList.value.replace('has-text-primary bgNone', 'has-bg-primary');
             } else {
-                ele.classList.value = ele.classList.value.replace('has-bg-primary', 'bgNone has-text-primary has-line-level-2');
+                ele.classList.value = ele.classList.value.replace('has-bg-primary', 'has-text-primary bgNone has-line-level-2');
             }
         }
     },

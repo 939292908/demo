@@ -42,7 +42,7 @@ module.exports = function (props) {
                             m('div', { class: 'is-between  pt-8' }, [
                                 myWalletIndex.Nav.firstNav.map((item, index) => {
                                     return m(`button.column button-large mx-3 border-radius-small cursor-pointer Operation${index} has-line-level-2`, {
-                                        class: item.title === '充币' ? 'has-bg-primary' : `bgNone has-text-primary has-line-level-2`,
+                                        class: item.title === '充币' ? 'has-bg-primary' : `has-text-primary bgNone`,
                                         onclick: function () { myWalletIndex.handlerClickNavBtn(item); },
                                         onmouseover: function() { myWalletIndex.changeBtnSty(index, 'show'); },
                                         onmouseleave: function() { myWalletIndex.changeBtnSty(index, 'hide'); }
