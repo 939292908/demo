@@ -509,3 +509,7 @@ export function getBanne (params = {}) {
 export function getNotice (params = {}) {
     return Http.get(API.ANNOUNCEMENTS_LATEST, { params });
 }
+
+export function getFunList (params = {}) {
+    return Http.get(API.FUN_LIST_V1, { params });
+}
