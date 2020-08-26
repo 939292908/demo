@@ -475,6 +475,9 @@ export function getWallet (params = {}, options = { withCredentials: true }) {
 
 // TODO setWallet
 
+/**
+ * 我的钱包-资产记录
+ */
 export function assetRecords (params = {}, options = { withCredentials: true }) {
     return Http.post(API.WALLET_ASSETS_HISTORY_V1, params, options);
 }
