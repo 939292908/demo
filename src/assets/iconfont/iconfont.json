@@ -1,16 +1,310 @@
 {
-  "id": "1964083",
-  "name": "website-v1",
+  "id": "2027406",
+  "name": "ex30-pc",
   "font_family": "iconfont",
   "css_prefix_text": "icon-",
   "description": "",
   "glyphs": [
     {
+      "icon_id": "9512491",
+      "name": "安卓",
+      "font_class": "android-fill",
+      "unicode": "e60e",
+      "unicode_decimal": 58894
+    },
+    {
+      "icon_id": "16771557",
+      "name": "qq",
+      "font_class": "qq",
+      "unicode": "e661",
+      "unicode_decimal": 58977
+    },
+    {
+      "icon_id": "16771558",
+      "name": "Aircraft",
+      "font_class": "Aircraft",
+      "unicode": "e662",
+      "unicode_decimal": 58978
+    },
+    {
+      "icon_id": "16771559",
+      "name": "Mmm",
+      "font_class": "Mmm",
+      "unicode": "e664",
+      "unicode_decimal": 58980
+    },
+    {
+      "icon_id": "16771560",
+      "name": "WeChat",
+      "font_class": "WeChat",
+      "unicode": "e665",
+      "unicode_decimal": 58981
+    },
+    {
+      "icon_id": "16771561",
+      "name": "Twitter",
+      "font_class": "Twitter",
+      "unicode": "e666",
+      "unicode_decimal": 58982
+    },
+    {
+      "icon_id": "16771562",
+      "name": "Weibo",
+      "font_class": "Weibo",
+      "unicode": "e667",
+      "unicode_decimal": 58983
+    },
+    {
+      "icon_id": "16771563",
+      "name": "Facebook",
+      "font_class": "Facebook",
+      "unicode": "e668",
+      "unicode_decimal": 58984
+    },
+    {
+      "icon_id": "16771564",
+      "name": "apple",
+      "font_class": "apple",
+      "unicode": "e669",
+      "unicode_decimal": 58985
+    },
+    {
+      "icon_id": "16771537",
+      "name": "Authentication",
+      "font_class": "Authentication",
+      "unicode": "e659",
+      "unicode_decimal": 58969
+    },
+    {
+      "icon_id": "16771538",
+      "name": "GoogleVerification",
+      "font_class": "GoogleVerification",
+      "unicode": "e65a",
+      "unicode_decimal": 58970
+    },
+    {
+      "icon_id": "16771539",
+      "name": "Mailbox",
+      "font_class": "Mailbox",
+      "unicode": "e65b",
+      "unicode_decimal": 58971
+    },
+    {
+      "icon_id": "16771540",
+      "name": "LoginPassword",
+      "font_class": "LoginPassword",
+      "unicode": "e65c",
+      "unicode_decimal": 58972
+    },
+    {
+      "icon_id": "16771541",
+      "name": "PhoneVerification",
+      "font_class": "PhoneVerification",
+      "unicode": "e65d",
+      "unicode_decimal": 58973
+    },
+    {
+      "icon_id": "16771542",
+      "name": "FundPassword",
+      "font_class": "FundPassword",
+      "unicode": "e65e",
+      "unicode_decimal": 58974
+    },
+    {
+      "icon_id": "16771543",
+      "name": "WithdrawalAddress",
+      "font_class": "WithdrawalAddress",
+      "unicode": "e65f",
+      "unicode_decimal": 58975
+    },
+    {
+      "icon_id": "16771544",
+      "name": "AntiFishing",
+      "font_class": "AntiFishing",
+      "unicode": "e660",
+      "unicode_decimal": 58976
+    },
+    {
+      "icon_id": "16771425",
+      "name": "AssetRecord",
+      "font_class": "AssetRecord",
+      "unicode": "e646",
+      "unicode_decimal": 58950
+    },
+    {
+      "icon_id": "16771426",
+      "name": "Analysis",
+      "font_class": "Analysis",
+      "unicode": "e647",
+      "unicode_decimal": 58951
+    },
+    {
+      "icon_id": "16771427",
+      "name": "Cut",
+      "font_class": "Cut",
+      "unicode": "e648",
+      "unicode_decimal": 58952
+    },
+    {
+      "icon_id": "16771428",
+      "name": "Close",
+      "font_class": "Close",
+      "unicode": "e649",
+      "unicode_decimal": 58953
+    },
+    {
+      "icon_id": "16771429",
+      "name": "Calculator",
+      "font_class": "Calculator",
+      "unicode": "e64a",
+      "unicode_decimal": 58954
+    },
+    {
+      "icon_id": "16771430",
+      "name": "CustomerService",
+      "font_class": "CustomerService",
+      "unicode": "e64b",
+      "unicode_decimal": 58955
+    },
+    {
+      "icon_id": "16771431",
+      "name": "Personal",
+      "font_class": "Personal",
+      "unicode": "e64c",
+      "unicode_decimal": 58956
+    },
+    {
+      "icon_id": "16771433",
+      "name": "News",
+      "font_class": "News",
+      "unicode": "e64d",
+      "unicode_decimal": 58957
+    },
+    {
+      "icon_id": "16771434",
+      "name": "Conversion",
+      "font_class": "Conversion",
+      "unicode": "e64e",
+      "unicode_decimal": 58958
+    },
+    {
+      "icon_id": "16771435",
+      "name": "Search",
+      "font_class": "Search",
+      "unicode": "e64f",
+      "unicode_decimal": 58959
+    },
+    {
+      "icon_id": "16771436",
+      "name": "Return",
+      "font_class": "Return",
+      "unicode": "e650",
+      "unicode_decimal": 58960
+    },
+    {
+      "icon_id": "16771437",
+      "name": "TurnOn",
+      "font_class": "TurnOn",
+      "unicode": "e651",
+      "unicode_decimal": 58961
+    },
+    {
+      "icon_id": "16771438",
+      "name": "EquipmentManagement",
+      "font_class": "EquipmentManagement",
+      "unicode": "e652",
+      "unicode_decimal": 58962
+    },
+    {
+      "icon_id": "16771439",
+      "name": "QrCode",
+      "font_class": "QrCode",
+      "unicode": "e653",
+      "unicode_decimal": 58963
+    },
+    {
+      "icon_id": "16771440",
+      "name": "Order",
+      "font_class": "Order",
+      "unicode": "e654",
+      "unicode_decimal": 58964
+    },
+    {
+      "icon_id": "16771441",
+      "name": "Refresh",
+      "font_class": "Refresh",
+      "unicode": "e655",
+      "unicode_decimal": 58965
+    },
+    {
+      "icon_id": "16771442",
+      "name": "TheInternet",
+      "font_class": "TheInternet",
+      "unicode": "e656",
+      "unicode_decimal": 58966
+    },
+    {
+      "icon_id": "16771444",
+      "name": "Screenshot",
+      "font_class": "Screenshot",
+      "unicode": "e657",
+      "unicode_decimal": 58967
+    },
+    {
+      "icon_id": "16771476",
+      "name": "Shrink",
+      "font_class": "Shrink",
+      "unicode": "e658",
+      "unicode_decimal": 58968
+    },
+    {
+      "icon_id": "12255667",
+      "name": "复制",
+      "font_class": "copy",
+      "unicode": "e663",
+      "unicode_decimal": 58979
+    },
+    {
+      "icon_id": "12438342",
+      "name": "关闭全屏",
+      "font_class": "guanbiquanping1",
+      "unicode": "e6a3",
+      "unicode_decimal": 59043
+    },
+    {
+      "icon_id": "13546078",
+      "name": "设置",
+      "font_class": "shezhi",
+      "unicode": "e933",
+      "unicode_decimal": 59699
+    },
+    {
       "icon_id": "13717500",
       "name": "vbit-Homepage",
-      "font_class": "logo",
+      "font_class": "vbit-Homepage",
       "unicode": "e615",
       "unicode_decimal": 58901
+    },
+    {
+      "icon_id": "14395550",
+      "name": "法币交易完成",
+      "font_class": "fabijiaoyiwancheng",
+      "unicode": "e607",
+      "unicode_decimal": 58887
+    },
+    {
+      "icon_id": "14395551",
+      "name": "编辑",
+      "font_class": "etc-editName",
+      "unicode": "e603",
+      "unicode_decimal": 58883
+    },
+    {
+      "icon_id": "14395557",
+      "name": "全屏",
+      "font_class": "fullScreen",
+      "unicode": "e609",
+      "unicode_decimal": 58889
     },
     {
       "icon_id": "14395573",
@@ -20,11 +314,32 @@
       "unicode_decimal": 58905
     },
     {
-      "icon_id": "15101589",
-      "name": "下载",
-      "font_class": "downLoad",
-      "unicode": "e602",
-      "unicode_decimal": 58882
+      "icon_id": "14396180",
+      "name": "更多",
+      "font_class": "arrow-right",
+      "unicode": "e61e",
+      "unicode_decimal": 58910
+    },
+    {
+      "icon_id": "14396187",
+      "name": "下拉",
+      "font_class": "xiala",
+      "unicode": "e625",
+      "unicode_decimal": 58917
+    },
+    {
+      "icon_id": "14396191",
+      "name": "隐藏关闭",
+      "font_class": "zichanzhengyan",
+      "unicode": "e628",
+      "unicode_decimal": 58920
+    },
+    {
+      "icon_id": "14396193",
+      "name": "隐藏",
+      "font_class": "yincang",
+      "unicode": "e62a",
+      "unicode_decimal": 58922
     },
     {
       "icon_id": "14397009",
@@ -39,6 +354,27 @@
       "font_class": "baitian",
       "unicode": "e600",
       "unicode_decimal": 58880
+    },
+    {
+      "icon_id": "15101589",
+      "name": "下载",
+      "font_class": "xiazai",
+      "unicode": "e601",
+      "unicode_decimal": 58881
+    },
+    {
+      "icon_id": "16549483",
+      "name": "Frame",
+      "font_class": "rise",
+      "unicode": "e643",
+      "unicode_decimal": 58947
+    },
+    {
+      "icon_id": "16549484",
+      "name": "Frame-1",
+      "font_class": "fall",
+      "unicode": "e644",
+      "unicode_decimal": 58948
     }
   ]
 }

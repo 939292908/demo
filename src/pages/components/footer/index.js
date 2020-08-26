@@ -13,40 +13,40 @@ module.exports = {
     view: function () {
         return m('div.views-pages-home-footer.container', {}, [
             // 底部
-            m('div', { class: `pub-footer columns pt-7 pb-6` }, [
+            m('div', { class: `pub-footer columns pt-7 pb-6 mt-7` }, [
                 // 左边
                 m('div', { class: `footer-left column is-6` }, [
                     // logo
                     m('img', { class: '', src: "static/img/title-logo.png", style: "width: 112;height:28px;" }),
-                    m('p', { class: `` }, ["全球区块链资产衍生品交易平台"]),
+                    m('p', { class: `has-text-level-2` }, ["全球区块链资产衍生品交易平台"]),
                     // 社区
                     m('div', { class: `is-flex mt-7 is-between`, style: "width: 300px" }, [
                         m('a', { class: ``, href: "index.html" }, [
-                            // m('a', { class: ``, href: "" }, [
                             m(Tooltip, {
-                                label: m('img', { style: "height:17px", src: require("@/assets/img/home/wechat.png").default }),
+                                label: m('i.iconfont.icon-WeChat'),
+                                class: 'has-text-level-2 has-text-primary-hover',
                                 content: m('img', { class: '', src: require("@/assets/img/home/Communitywechat.png").default })
                             })
-                            // ])
                         ]),
                         m(Tooltip, {
-                            label: m('img', { style: "height:17px", src: require("@/assets/img/home/qq.png").default }),
+                            label: m('i.iconfont.icon-qq'),
+                            class: 'has-text-level-2 has-text-primary-hover',
                             content: m('img', { class: '', src: require("@/assets/img/home/QQcustomer_service.png").default })
                         }),
                         m('a', { class: ``, href: "https://www.facebook.com/Vbit-107388547588403/" }, [
-                            m('img', { class: 'community', src: require("@/assets/img/home/fb.png").default })
+                            m('i', { class: "community iconfont icon-Facebook has-text-level-2 has-text-primary-hover" })
                         ]),
                         m('a', { class: ``, href: "https://twitter.com/VbitOfficial" }, [
-                            m('img', { class: 'community', src: require("@/assets/img/home/tw.png").default })
+                            m('i', { class: "community iconfont icon-Twitter has-text-level-2 has-text-primary-hover" })
                         ]),
                         m('a', { class: ``, href: "https://t.me/VbitOfficial" }, [
-                            m('img', { class: 'community', src: require("@/assets/img/home/telegraph.png").default })
+                            m('i', { class: "community iconfont icon-Aircraft has-text-level-2 has-text-primary-hover" })
                         ]),
                         m('a', { class: ``, href: "https://weibo.com/VbitOfficial" }, [
-                            m('img', { class: 'community', src: require("@/assets/img/home/micro-blog.png").default })
+                            m('i', { class: "community iconfont icon-Weibo has-text-level-2 has-text-primary-hover" })
                         ]),
                         m('a', { class: ``, href: "https://www.mytokencap.com/exchange/vbit" }, [
-                            m('img', { class: 'community', src: require("@/assets/img/home/my-token.png").default })
+                            m('i', { class: "community iconfont icon-Mmm has-text-level-2 has-text-primary-hover" })
                         ])
                     ])
                 ]),
@@ -54,8 +54,10 @@ module.exports = {
                 m('div', { class: `footer-right column is-6 is-between ` }, [
                     // 导航栏
                     m('div', { class: `bottom-navigation-tab-1` }, [
-                        m('div', { class: `body-6 ` }, ['平台服务']),
-                        m('a', { class: `has-text-white  has-text-primary-hover has-text-level-2`, href: "https://vbithelp.zendesk.com/hc/zh-cn/sections/360007961613", target: "_blank" }, ["币币交易"]),
+                        m('div', { class: `` }, ['平台服务']),
+                        m('p', { class: `mt-2` },
+                            m('a', { class: `has-text-white  has-text-primary-hover has-text-level-2`, href: "https://vbithelp.zendesk.com/hc/zh-cn/sections/360007961613", target: "_blank" }, ["币币交易"])
+                        ),
                         m('p', { class: `` },
                             m('a', { class: `has-text-white  has-text-primary-hover has-text-level-2`, href: "https://vbithelp.zendesk.com/hc/zh-cn/sections/360007961593", target: "_blank" }, ["法币交易"])
                         ),
@@ -70,8 +72,8 @@ module.exports = {
                         )
                     ]),
                     m('div', { class: `bottom-navigation-tab-2` }, [
-                        m('p', { class: `body-6`, href: "" }, ["平台条款"]),
-                        m('p', { class: `` },
+                        m('p', { class: ``, href: "" }, ["平台条款"]),
+                        m('p', { class: `mt-2` },
                             m('a', { class: `has-text-white  has-text-primary-hover has-text-level-2`, href: "https://vbithelp.zendesk.com/hc/zh-cn/articles/360045404594", target: "_blank" }, ["服务协议"])
                         ),
                         m('a', { class: `has-text-white  has-text-primary-hover has-text-level-2`, href: "https://vbithelp.zendesk.com/hc/zh-cn/articles/360045404554", target: "_blank" }, ["法律声明"]),
@@ -83,8 +85,8 @@ module.exports = {
                         )
                     ]),
                     m('div', { class: `bottom-navigation-tab-2 ` }, [
-                        m('p', { class: `body-6` }, ["服务支持"]),
-                        m('p', { class: `` },
+                        m('p', { class: `` }, ["服务支持"]),
+                        m('p', { class: `mt-2` },
                             m('a', { class: `has-text-white  has-text-primary-hover has-text-level-2`, href: `https://vbithelp.zendesk.com/hc/zh-cn/sections/360007960273`, target: "_blank" }, ["新手帮助"])
                         ),
                         m('p', { class: `` },
@@ -98,24 +100,16 @@ module.exports = {
                         )
                     ]),
                     m('div', { class: `bottom-navigation-tab-2` }, [
-                        m('p', { class: `has-text-level-4 body-6` }, ["联系我们"]),
-                        // m('p', { class: `has-text-white  has-text-primary-hover has-text-level-2` }, m(Tooltip, {
-                        //     label: "服务邮箱",
-                        //     content: [
-                        //         m('div', { class: `is-flex` }, [
-                        //             // m('div', { class: `` }, ['support@vbit.one'])
-                        //         ])
-                        //     ]
-                        // })),
-
-                        // ),
-                        m('a', { class: `has-text-white has-text-primary-hover has-text-level-2` }, [
-                            m('div', {
-                                onclick: function () {
-                                    window.location = `mailto: support@vbit.one`;
-                                }
-                            }, ['服务邮箱'])
-                        ]),
+                        m('p', { class: `has-text-level-4` }, ["联系我们"]),
+                        m('p', { class: `mt-2` },
+                            m('a', { class: `has-text-white has-text-primary-hover has-text-level-2` }, [
+                                m('div', {
+                                    onclick: function () {
+                                        window.location = `mailto: support@vbit.one`;
+                                    }
+                                }, ['服务邮箱'])
+                            ])
+                        ),
                         m('p', { class: `has-text-white  has-text-primary-hover has-text-level-2` },
                             m(Tooltip, {
                                 label: "加入社群",
@@ -141,27 +135,5 @@ module.exports = {
             ]),
             m('p', { class: `bottom-copyright` }, ["© 2019-2020 Vbit 版权所有"])
         ]);
-        // return m('footer.footer', {}, [
-        // m('div.content', {}, [
-        // m('p.has-text-centered', {}, [
-        //     m('strong', {}, [
-        //         'Bulma'
-        //     ]),
-        //     ' by ',
-        //     m('a', {href:""}, [
-        //         'Jeremy Thomas'
-        //     ]),
-        //     '. The source code is licensed',
-        //     m('a', {href:""}, [
-        //         'MIT'
-        //     ]),
-        //     '. The website content is licensed ',
-        //     m('a', {href:""}, [
-        //         'CC BY NC SA 4.0'
-        //     ]),
-        //     '.'
-        // ])
-        // ])
-        // ])
     }
 };
