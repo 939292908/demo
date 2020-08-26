@@ -1,14 +1,20 @@
 .views-pages-myassets-header{
     display: flex;
     height: 52px;
-    // .header-highlight{
-    //     // 后随规范更改！！！
-    //     border-bottom: 2px solid var(--c-primary-lighten);
-    //     color: var(--c-primary-lighten);
-    // }
-    ul{
-        border: none;
+    .header-highlight{
+        // 后随规范更改！！！
+        border-bottom: 2px solid var(--c-primary-lighten);
+        color: var(--c-primary-lighten);
     }
     // 规范未单独设置颜色
     color: #9A9EAC;
 }
+// .views-pages-myassets-header{
+//     display: flex;
+//     height: 52px;
+//     // 规范未单独设置颜色
+//     color: #9A9EAC;
+//     ul{
+//         border: none;
+//     }
+// }
