@@ -6,6 +6,20 @@ const TradeAccountIndex = require('@/pages/page/myAssets/tradeAccount/TradeAccou
 const MyWalletIndex = require('@/pages/page/myAssets/myWallet/MyWalletIndex');
 
 const myWalletIndex = {
+    // 资金划转弹框 模块
+    transferModal: {
+        isShow: false,
+        closeMe() {
+            myWalletIndex.transferModal.isShow = false;
+        },
+        onOk() {
+            myWalletIndex.transferModal.closeMe();
+            console.log('onOk');
+        },
+        onClose() {
+            myWalletIndex.transferModal.closeMe();
+        }
+    },
     currency: 'BTC',
     setCurrency: function (param) {
         myWalletIndex.currency = param;
@@ -84,26 +98,40 @@ const myWalletIndex = {
     Nav: {
         firstNav: [
             {
+                id: 1,
                 title: '充币',
                 // 跳转至哪个链接 例如：to: 'http://www.baidu.com || #!/chargeMoney'
                 to: '#!/chargeMoney'
             },
             {
+                id: 2,
                 title: '提币',
                 // 跳转至哪个链接
                 to: ''
             },
             {
+                id: 3,
                 title: '内部转账',
                 // 跳转至哪个链接
                 to: ''
             },
             {
+                id: 4,
                 title: '资金划转',
                 // 跳转至哪个链接
                 to: ''
             }
         ]
+    },
+    // 按钮事件
+    handlerClickNavBtn (item) {
+        console.log(item);
+        if (item.id === 4) { // 点击资金划转
+            this.transferModal.isShow = true;
+        }
+        // if (item.to !== "") {
+        //     this.toPage(item.to);
+        // }
     },
     toPage: function (val) {
         if (val !== "") {

@@ -1,14 +1,16 @@
-// {
-//     isShow : true, // 显示隐藏
-//     onOk () {}, // 确认事件 // 使用默认确认按钮
-//     onClose () {}, // 关闭事件
-//     slot:{ // 插槽
-//         header,
-//         body,
-//         footer
-//     },
-//     width: '50%' // px 或 %
-// }
+/**
+{
+    isShow : true, // 显示隐藏
+    onOk () {}, // 确认事件 // 使用默认确认按钮
+    onClose () {}, // 关闭事件
+    slot:{ // 插槽
+        header,
+        body,
+        footer
+    },
+    width: '50%' // px 或 %
+}
+*/
 
 var m = require("mithril");
 
