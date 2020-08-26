@@ -8,10 +8,10 @@ module.exports = {
     },
     view: function () {
         return m('div', { class: 'views-pages-Myassets-assetRecords-myWalletTable' }, [
-            m('table', {}, [
+            m('table.mb-4', {}, [
                 m('tbody', { class: 'tbody' }, [
                     assetRecordsTable.dataArrObj.map(items => {
-                        return m('tr', { class: 'pb-2  pt-2 pl-2 mb-3 columns-flex-justify1 bgColor has-text-level-2 border-radius-small' }, [
+                        return m('tr', { class: ' columns-flex-justify1 bgColor has-text-level-2 border-radius-small' }, [
                             m('td', {}, [items.category]),
                             m('td', {}, [items.type]),
                             m('td', {}, [items.num]),
@@ -25,7 +25,7 @@ module.exports = {
             m('table', {}, [
                 m('tbody', { class: 'tbody' }, [
                     assetRecordsTable.grossValue.map((item) => {
-                        return m('tr', { class: 'pb-3 pl-2 columns-flex-justify1' }, [
+                        return m('tr', { class: 'pb-7 columns-flex-justify1' }, [
                             m('td', {}, [item.wType]),
                             m('td', {}, [item.addr]),
                             m('td', {}, [item.num]),

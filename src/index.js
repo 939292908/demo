@@ -1,4 +1,7 @@
 import broadcast from './broadcast/broadcast';
+import { webApi } from './newApi2';
+import config from './config';
+import functionList from './models/functionList';
 import m from 'mithril';
 // 主题颜色
 import("./styles/index");
@@ -25,8 +28,26 @@ window.onresize = function (arg) {
     // window.gBroadcast.emit(window.gBroadcast.ONRESIZE_UPD, { Ev: window.gBroadcast.ONRESIZE_UPD });
 };
 
+function onWebInit() {
+    webApi.getFunList({
+        exchannel: config.exchId
+    }).then(data => {
+        functionList.setFunctions(data.result.items);
+        functionList.setForexRate({
+            rate: data.result.forex.CNY,
+            name: 'CNY',
+            symbol: '￥'
+        });
+    }
+    ).catch(
+        () => {
+        }
+    );
+}
+
 import('./pages/index').then(arg => {
     const root = document.body;
     m.mount(root, arg.default);
     import('@/router/index');
+    onWebInit();
 });

@@ -2,7 +2,7 @@
 // eslint-disable-next-line no-unused-vars
 const m = require('mithril');
 const broadcast = require('@/broadcast/broadcast');
-const Http = require('@/newApi');
+const Http = require('@/newApi2').webApi;
 // const Axios = require('@/newApi/config/request').default;
 const utils = require('@/util/utils').default;
 const I18n = require('@/languages/I18n').default;
@@ -177,6 +177,16 @@ module.exports = {
     timeValue: null,
     currencyValue: '全部',
     typeValue: '全部类型',
+    dataArrObjEvent () {
+        console.log(typeof this.grossValue);
+        if (this.grossValue.length === 0) {
+            console.log(0);
+            return 0;
+        } else {
+            console.log(1);
+            return 1;
+        }
+    },
     timestampToTime1 (timestamp) {
         var date = new Date(timestamp * 1000);// 时间戳为10位需*1000，时间戳为13位的话不需乘1000
         var Y = date.getFullYear() + '-';
@@ -194,6 +204,7 @@ module.exports = {
             }
         }
         this.grossValue = this.dataSelect;
+        this.dataArrObjEvent();
     },
     selectDisplay1 (type, val) {
         this.dataSelect1 = [];
@@ -204,6 +215,7 @@ module.exports = {
             }
         }
         this.grossValue = this.dataSelect1;
+        this.dataArrObjEvent();
     },
     selectDisplay2 (type, val) {
         this.dataSelect2 = [];
@@ -214,6 +226,7 @@ module.exports = {
             }
         }
         this.grossValue = this.dataSelect2;
+        this.dataArrObjEvent();
     },
     displayEvnet (val) {
         this.displayValue = val;
@@ -240,6 +253,7 @@ module.exports = {
                         if (arg.name === '全部') {
                             that.dataSelect1 = that.dataSelect;
                             that.grossValue = that.dataSelect1;
+                            that.dataArrObjEvent();
                             return;
                         }
                         that.selectDisplay1(arg.name, that.dataSelect);
@@ -247,6 +261,7 @@ module.exports = {
                         if (arg.name === '全部') {
                             that.dataSelect1 = that.dataSelect2;
                             that.grossValue = that.dataSelect1;
+                            that.dataArrObjEvent();
                             return;
                         }
                         that.selectDisplay1(arg.name, that.dataSelect2);
@@ -257,6 +272,7 @@ module.exports = {
                         if (arg.name === '全部类型') {
                             that.dataSelect2 = that.dataSelect;
                             that.grossValue = that.dataSelect2;
+                            that.dataArrObjEvent();
                             return;
                         }
                         that.selectDisplay2(arg.name, that.dataSelect);
@@ -264,6 +280,7 @@ module.exports = {
                         if (arg.name === '全部类型') {
                             that.dataSelect2 = that.dataSelect1;
                             that.grossValue = that.dataSelect2;
+                            that.dataArrObjEvent();
                             return;
                         }
                         that.selectDisplay2(arg.name, that.dataSelect1);
@@ -297,7 +314,6 @@ module.exports = {
                 that.walletLog[that.type]['2'] = res[1].result.code === 0 ? res[1].history : walletLog['2'] ? walletLog['2'] : [];
                 that.walletLog[that.type]['4'] = res[2].result.code === 0 ? res[2].history : walletLog['4'] ? walletLog['4'] : [];
                 that.walletLog[that.type]['5'] = res[3].result.code === 0 ? res[3].history : walletLog['5'] ? walletLog['5'] : [];
-                console.log(res, '1111111111111111111111111111');
                 that.updateList();
             }).catch(err => {
                 console.log('error ', err);

@@ -1,6 +1,6 @@
 const m = require('mithril');
 
-const Table = require('@/views/components/common/Table.js');
+const Table = require('@/pages/components/common/Table.js');
 const market = require('@/models/market/market');
 
 const obj = {

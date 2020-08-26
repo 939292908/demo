@@ -475,6 +475,9 @@ export function getWallet (params = {}, options = { withCredentials: true }) {
 
 // TODO setWallet
 
+/**
+ * 我的钱包-资产记录
+ */
 export function assetRecords (params = {}, options = { withCredentials: true }) {
     return Http.post(API.WALLET_ASSETS_HISTORY_V1, params, options);
 }
@@ -508,4 +511,8 @@ export function getBanne (params = {}) {
  */
 export function getNotice (params = {}) {
     return Http.get(API.ANNOUNCEMENTS_LATEST, { params });
+}
+
+export function getFunList (params = {}) {
+    return Http.get(API.FUN_LIST_V1, { params });
 }

@@ -2,7 +2,6 @@ const m = require('mithril');
 const accountTable = require('./accountTable');
 const commonSelectionBox = require('./commonSelectionBox');
 
-require('@/styles/pages/Myassets/assetRecords.scss');
 module.exports = {
     oninit: function () {
     },

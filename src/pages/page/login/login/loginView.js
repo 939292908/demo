@@ -45,21 +45,19 @@ module.exports = {
                                     window.router.push('/forgetPassword');
                                 }
                             }, ['忘记密码？'])]),
-                        m('button.button.my-3.has-bg-primary.button-medium.is-fullwidth.mb-2.has-text-white',
-                            {
-                                onclick: () => { Login.login(); },
-                                disabled: !Login.valid(),
-                                class: Login.loading ? 'is-loading' : ''
-                            }, [I18n.$t('10136')/* '登录' */]),
-                        m('div.has-text-centered.body-3.has-text-level-2',
-                            {}, [
-                                '还没账号？去',
-                                m('a.has-text-primary', {
-                                    onclick: () => {
-                                        window.router.push('/register');
-                                    }
-                                }, ['注册'])
-                            ])
+                        m('button.button.my-3.has-bg-primary.button-medium.is-fullwidth.mb-2.has-text-white', {
+                            onclick: () => { Login.login(); },
+                            disabled: !Login.valid(),
+                            class: Login.loading ? 'is-loading' : ''
+                        }, [I18n.$t('10136')/* '登录' */]),
+                        m('div.has-text-centered.body-3.has-text-level-2', {}, [
+                            '还没账号？去',
+                            m('a.has-text-primary', {
+                                onclick: () => {
+                                    window.router.push('/register');
+                                }
+                            }, ['注册'])
+                        ])
                     ])
         ]);
     }
