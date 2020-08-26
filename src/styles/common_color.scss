@@ -135,7 +135,7 @@
 }
 
 .has-text-white {
-    color: white !important;
+    color: var(--c-fontwhite-base) !important;
 }
 
 .theme--dark .has-text-title,
