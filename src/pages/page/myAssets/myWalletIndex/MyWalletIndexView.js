@@ -16,7 +16,7 @@ module.exports = function (props) {
                                 m('span', { class: 'body-6', style: 'color:white' }, ['总资产估值']),
                                 m('div', {}, [
                                     m(`button.cursor-pointer`, { onclick: myWalletIndex.setSelectOpFlag, style: { color: `#FF8B00` } }, myWalletIndex.selectOpText + ' ▼'),
-                                    m('ul.border-radius-small ml-3 has-bg-level-2', { style: { display: 'none' } }, [
+                                    m('ul.border-radius-small ml-3 has-bg-level-2 currType', { style: { display: 'none' } }, [
                                         myWalletIndex.selectOp.map(item => {
                                             return m('li.cursor-pointer pl-3', { class: item === myWalletIndex.selectOpText ? 'has-text-primary' : '', onclick: function() { myWalletIndex.selectOpHideUl(item); } }, item);
                                         })
@@ -42,6 +42,7 @@ module.exports = function (props) {
                                 myWalletIndex.Nav.firstNav.map((item, index) => {
                                     return m(`button.column button-large mx-3 border-radius-small cursor-pointer Operation${index} has-line-level-2`, {
                                         class: item.title === '充币' ? 'has-bg-primary' : `bgNone has-text-primary has-line-level-2`,
+                                        // class: item.title === '充币' ? 'has-bg-primary' : `bgNone has-text-primary `,
                                         onclick: function () { myWalletIndex.toPage(item.to); },
                                         onmouseover: function() { myWalletIndex.changeBtnSty(index, 'show'); },
                                         onmouseleave: function() { myWalletIndex.changeBtnSty(index, 'hide'); }
@@ -103,7 +104,7 @@ module.exports = function (props) {
                                 m('span', { }, '其他账户')
                             ]),
                             m('div', { class: 'title-small ' }, [
-                                m('span', {}, '0.00000000 '),
+                                m('span', {}, myWalletIndex.otherTotalValue),
                                 m('span', {}, [' ' + myWalletIndex.currency])
                             ])
                         ])
