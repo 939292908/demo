@@ -89,11 +89,17 @@ module.exports = function (props) {
                                 m('div.tradeCard body-2 border-radius-medium pa-7 has-bg-level-2 box-shadow', {
                                     style: { display: `none` }
                                 }, [
-                                    m('span.mb-1', `合约账户`),
+                                    // m('span.mb-1 cursor-pointer', `合约账户`),
+                                    // m('a.mb-5 has-text-level-3', { class: myWalletIndex.wltIdx === 1 ? 'has-text-primary' : '', onclick: function () { myWalletIndex.changeTradeAccount(1); } }, myWalletIndex.contractTotal + ` ` + myWalletIndex.currency),
+                                    // m('span.mb-1 cursor-pointer', `币币账户`),
+                                    // m('a.mb-5 has-text-level-3', { class: myWalletIndex.wltIdx === 2 ? 'has-text-primary' : '', onclick: function () { myWalletIndex.changeTradeAccount(2); } }, myWalletIndex.coinTotal + ` ` + myWalletIndex.currency),
+                                    // m('span.mb-1 cursor-pointer', `法币账户`),
+                                    // m('a.has-text-level-3', { class: myWalletIndex.wltIdx === 4 ? 'has-text-primary' : '', onclick: function () { myWalletIndex.changeTradeAccount(4); } }, myWalletIndex.legalTotal + ` ` + myWalletIndex.currency)
+                                    m('span.mb-1 cursor-pointer', `合约账户`),
                                     m('a.mb-5 has-text-level-3', { onclick: function () { myWalletIndex.changeTradeAccount(1); } }, myWalletIndex.contractTotal + ` ` + myWalletIndex.currency),
-                                    m('span.mb-1', `币币账户`),
+                                    m('span.mb-1 cursor-pointer', `币币账户`),
                                     m('a.mb-5 has-text-level-3', { onclick: function () { myWalletIndex.changeTradeAccount(2); } }, myWalletIndex.coinTotal + ` ` + myWalletIndex.currency),
-                                    m('span.mb-1', `法币账户`),
+                                    m('span.mb-1 cursor-pointer', `法币账户`),
                                     m('a.has-text-level-3', { onclick: function () { myWalletIndex.changeTradeAccount(4); } }, myWalletIndex.legalTotal + ` ` + myWalletIndex.currency)
                                 ])
                             ])
