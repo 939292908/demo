@@ -272,13 +272,13 @@ module.exports = {
             break;
         case '02':
             // 币币账户
-            console.log('ht', type, this.wltItemEx);
+            // console.log('ht', type, this.wltItemEx);
             TOTAL = Number(this.wltItemEx.wdrawable || 0) + Number(this.wltItemEx.Frz || 0);
             // 账户总额
             this.wltItemEx.TOTAL = utils.toFixedForFloor(TOTAL, 8);
 
             // 冻结金额
-            console.log('nzm', 'this.wltItemEx.Gift   ', this.wltItemEx.Gift);
+            // console.log('nzm', 'this.wltItemEx.Gift   ', this.wltItemEx.Gift);
             this.wltItemEx.Frz = utils.toFixedForFloor(this.wltItemEx.Frz || 0, 8);
 
             // 可用金额

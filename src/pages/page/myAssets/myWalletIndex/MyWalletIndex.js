@@ -4,7 +4,6 @@ const broadcast = require('@/broadcast/broadcast');
 const MyWalletIndexView = require('@/pages/page/myAssets/myWalletIndex/MyWalletIndexView');
 const TradeAccountIndex = require('@/pages/page/myAssets/tradeAccount/TradeAccountIndex');
 const MyWalletIndex = require('@/pages/page/myAssets/myWallet/MyWalletIndex');
-let timeOut = null;
 
 const myWalletIndex = {
     // 资金划转弹框 模块
@@ -165,7 +164,7 @@ const myWalletIndex = {
         myWalletIndex.setSelectOpText(item);
         myWalletIndex.setCurrency(item);
         broadcast.emit({ cmd: broadcast.CHANGE_SW_CURRENCY, data: item });
-        myWalletIndex.setAllValue();
+        myWalletIndex.DelayDataAcquisition();
     },
     // 点击除button的元素隐藏ul（仿select）
     optionDisplay: function(event) {
@@ -207,10 +206,10 @@ const myWalletIndex = {
 };
 module.exports = {
     oninit: function() {
+        wlt.init();
     },
     oncreate: function() {
-        wlt.init();
-        timeOut = setTimeout(myWalletIndex.DelayDataAcquisition, '100');
+        setTimeout(myWalletIndex.DelayDataAcquisition, '100');
     },
     view: function () {
         const props = {
@@ -219,7 +218,6 @@ module.exports = {
         return MyWalletIndexView(props);
     },
     onremove: function() {
-        clearTimeout(timeOut);
         wlt.remove();
     }
 };
