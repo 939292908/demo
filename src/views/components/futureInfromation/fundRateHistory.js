@@ -1,6 +1,7 @@
 var m = require("mithril")
 import Dropdown from '../common/Dropdown'
 import Table from '../common/Table'
+import utils from '../../../utils/utils'
 
 
 let obj = {
@@ -13,7 +14,8 @@ let obj = {
     tableColumns: [],
     // 表格
     tableData: [],
-    pageIndex: 0,
+    pageIndex: 1,
+    Chargein : null,
      // 一次性获取所有表格数据
     allTableData: [],
     // 初始化合约列表
@@ -38,58 +40,56 @@ let obj = {
         // 表头
         this.tableColumns = [
             {
-                title: gDI18n.$t('10103'), //'时间',
-                key: 'sj'
+                title: '时间',
+                key: 'Tm'
             },
             {
-                title: gDI18n.$t('10053'), //'合约',
-                key: 'hy'
+                title: '合约',
+                key: 'Sym'
             },
             {
-                title: gDI18n.$t('10623'), //'资金费率间隔',
-                key: 'zj'
+                title: '资金费率间隔',
+                key: 'interval'
             },
             {
-                title: gDI18n.$t('10020'), //'资金费率',
-                key: 'fl'
+                title: '资金费率',
+                key: 'FundingRate'
             }
         ]
     },
     // 获取allTable总数据
     getAllTableData () {
-        this.allTableData = []
-        this.tableData = []
-        this.pageIndex = 0
-        for (var i = 0; i < 500; i++) {
-            this.allTableData.push({
-                // sj: '2020-01-22 12:20:00',
-                sj: new Date().format('yyyy-MM-dd hh:mm:ss'),
-                hy: `BTC/USDT ${gDI18n.$t('10422')}`, //永续
-                zj: gDI18n.$t('10556', { value: i }), //i + '小时',
-                fl: i + '%'
-            })
+        let ass = window.gMkt.AssetD[this.contractId] || null
+        //资金费率时间间隔
+        if(ass && ass.TrdCls != 1){
+            this.Chargein = Number(ass.FundingInterval)/(60 * 60 * 1000)
         }
-        // 把数据切割成分页
-        this.allTableData = utils.splitList(this.allTableData,20)
         let params = {
             collection: 'FundingRateHistory',
             Sym: obj.contractId,
             pageSize: 20,
-            pageNo: 1
+            pageNo: this.pageIndex
         }
         window.gWebAPI.ReqFundRateHistory(params, data => {
-            console.log(data, 6666666);
+            if(typeof data.result.data.msg == "object"){
+                // obj.tableData 
+                let oldTableData = data.result.data.msg
+                let tableData = []
+                oldTableData.map((item,i)=>{
+                    let Tm = item.Tm
+                    let _d = {
+                        Sym : utils.getSymDisplayName(window.gMkt.AssetD, item.Sym) || "--",
+                        Tm : new Date(Tm).format('yyyy-MM-dd hh:mm:ss') || "--",
+                        FundingRate: (Number(utils.getFullNum(item.FundingRate))*100).toFixed2(6,8) + "%" || "--",
+                        interval : this.Chargein
+                    }
+                    tableData.push(_d)
+                })
+                this.tableData = this.tableData.concat(tableData)
+            }
         }, err => {
             console.log(err)
         })
-        // 获取table数据
-        this.getTableDataByPageIndex()
-    },
-    // 从总数据中添加table列表
-    getTableDataByPageIndex () {
-        console.log(this.pageIndex);
-        let newData = this.allTableData[this.pageIndex]
-        if(newData) this.tableData = this.tableData.concat(newData)
     },
     //初始化全局广播
     initEVBUS () {
@@ -122,16 +122,16 @@ export default {
             m('div', { class: `futureIndex-filter is-flex` }, [
                 // 合约下拉列表
                 m('div', { class: "inf_dropdown" }, [
-                    m('span', { class: "inf_body_span inf_body_font" }, [
-                        gDI18n.$t('10053') //'合约'
-                    ]),
+                    m('span', { class: "inf_body_span inf_body_font" }, ['合约']),
                     m(Dropdown, {
                         activeId: cb => cb(obj, 'contractId'),
                         showMenu: obj.showMenu,
                         setShowMenu: type => obj.showMenu = type,
                         placeholder: '--',
                         onClick (itme) {
-                            console.log(itme);
+                            obj.pageIndex = 1
+                            obj.tableData = []
+                            obj.Chargein = null
                             obj.getAllTableData()
                         },
                         getList () {
@@ -149,8 +149,8 @@ export default {
                 height: 580,
                 onscroll (e) {
                     utils.triggerScroll(e, () => {
-                        obj.pageIndex++
-                        obj.getTableDataByPageIndex()
+                        obj.pageIndex ++
+                        obj.getAllTableData()
                         console.log('快到底了!!!!');
                     })
                 }
