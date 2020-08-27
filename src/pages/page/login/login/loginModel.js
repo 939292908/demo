@@ -11,8 +11,8 @@ const validate = require('@/models/validate/validate').default;
 const models = require('@/models');
 
 module.exports = {
-    account: '233233233',
-    password: 'a123456',
+    account: '',
+    password: '',
     loginType: 'phone',
     loading: false,
     is2fa: false,
