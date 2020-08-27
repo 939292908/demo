@@ -6,10 +6,15 @@ const broadcast = require('@/broadcast/broadcast');
 const TradeTableView = require('@/pages/page/myAssets/tradeTable/TradeTableView');
 
 const t = {
+    dataType: 'contract',
+    setDataType: function(param) {
+        t.dataType = param;
+    },
     currency: 'BTC',
     setCurrency: function(param) {
-        this.currency = param;
-        this.initColumnData();
+        t.currency = param;
+        t.initColumnData();
+        t.setAccountBanlance();
     },
     columnData: {
         walletColumnData: [],
@@ -24,13 +29,13 @@ const t = {
         legalData: []
     },
     initTableData: function () {
-        this.tableData.legalData = this.copyAry(wlt.wallet['04']);
-        this.tableData.walletData = this.copyAry(wlt.wallet['03']);
-        this.tableData.contractData = this.copyAry(wlt.wallet['01']);
-        this.tableData.coinData = this.copyAry(wlt.wallet['02']);
+        t.tableData.legalData = t.copyAry(wlt.wallet['04']);
+        t.tableData.walletData = t.copyAry(wlt.wallet['03']);
+        t.tableData.contractData = t.copyAry(wlt.wallet['01']);
+        t.tableData.coinData = t.copyAry(wlt.wallet['02']);
     },
     initColumnData: function () {
-        this.columnData = {
+        t.columnData = {
             walletColumnData: [
                 { col: '币种', val: 'wType' },
                 { col: '总额', val: 'TOTAL' },
@@ -130,13 +135,31 @@ const t = {
     setAccountTitle: function(param) {
         t.accountTitle = param;
     },
-    accountBanlance: 0,
-    setAccountBanlance: function(param) {
-        t.accountBanlance = param;
-    },
     dataLength: 0,
     setDataLength: function (param) {
         t.dataLength = param;
+    },
+    accountBanlance: 0,
+    setAccountBanlance: function() {
+        t.accountBanlance = t.currency === 'BTC' ? wlt[t.dataType + 'TotalValueForBTC'] : wlt[t.dataType + 'TotalValueForUSDT'];
+    },
+    sets: function (vnode) {
+        if (vnode.attrs.type === 'coinColumnData') {
+            t.setDataType('coin');
+            t.setAccountTitle('币币账户');
+            t.setDataLength(t.tableData.coinData.length);
+        } else if (vnode.attrs.type === 'legalColumnData') {
+            t.setDataType('legal');
+            t.setAccountTitle('法币账户');
+            t.setDataLength(t.tableData.legalData.length);
+        } else if (vnode.attrs.type === 'contractColumnData') {
+            t.setDataType('contract');
+            t.setAccountTitle('合约账户');
+            t.setDataLength(t.tableData.contractData.length);
+        } else {
+            t.setDataLength(t.tableData.walletData.length);
+        }
+        t.setAccountBanlance();
     }
 };
 
@@ -155,21 +178,7 @@ module.exports = {
         setTimeout(() => {
             t.initTableData();
             t.initColumnData();
-            if (vnode.attrs.type === 'coinColumnData') {
-                t.setDataLength(t.tableData.coinData.length);
-                t.setAccountTitle('币币账户');
-                t.setAccountBanlance(wlt.coinTotalValueForBTC);
-            } else if (vnode.attrs.type === 'legalColumnData') {
-                t.setDataLength(t.tableData.legalData.length);
-                t.setAccountTitle('法币账户');
-                t.setAccountBanlance(wlt.legalTotalValueForBTC);
-            } else if (vnode.attrs.type === 'contractColumnData') {
-                t.setDataLength(t.tableData.contractData.length);
-                t.setAccountTitle('合约账户');
-                t.setAccountBanlance(wlt.contractTotalValueForBTC);
-            } else {
-                t.setDataLength(t.tableData.walletData.length);
-            }
+            t.sets(vnode);
             if (t.dataLength === 0) {
                 document.getElementsByTagName('table')[0].rows[document.getElementsByTagName('table')[0].rows.length - 1].style.display = '';
             } else {
