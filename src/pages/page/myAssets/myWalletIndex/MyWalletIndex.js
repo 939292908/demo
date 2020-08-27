@@ -4,6 +4,7 @@ const broadcast = require('@/broadcast/broadcast');
 const MyWalletIndexView = require('@/pages/page/myAssets/myWalletIndex/MyWalletIndexView');
 const TradeAccountIndex = require('@/pages/page/myAssets/tradeAccount/TradeAccountIndex');
 const MyWalletIndex = require('@/pages/page/myAssets/myWallet/MyWalletIndex');
+let timeOut = null;
 
 const myWalletIndex = {
     // 资金划转弹框 模块
@@ -80,13 +81,16 @@ const myWalletIndex = {
             this.wltIdx = 1;
         }
     },
+    setNavValue: {
+        name: 'nzm'
+    },
     switchContent: function () {
         broadcast.emit({ cmd: broadcast.CHANGE_SW_CURRENCY, data: myWalletIndex.currency });
         switch (myWalletIndex.swValue) {
         case 0:
             return m(MyWalletIndex);
         case 1:
-            return m(TradeAccountIndex, { idx: this.wltIdx });
+            return m(TradeAccountIndex, { idx: this.wltIdx, fn: this.setNavValue });
         default:
             break;
         }
@@ -209,7 +213,13 @@ module.exports = {
         wlt.init();
     },
     oncreate: function() {
-        setTimeout(myWalletIndex.DelayDataAcquisition, '100');
+        // wlt.init();
+        // console.log('nzm', wlt, '------------');
+        // console.log('nzm', wlt.coinTotalValueForBTC, '------------');
+        // myWalletIndex.DelayDataAcquisition();
+        // m.redraw();
+        timeOut = setTimeout(myWalletIndex.DelayDataAcquisition, '100');
+        m.redraw();
     },
     view: function () {
         const props = {
@@ -218,6 +228,7 @@ module.exports = {
         return MyWalletIndexView(props);
     },
     onremove: function() {
+        clearTimeout(timeOut);
         wlt.remove();
     }
 };

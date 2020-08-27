@@ -2,7 +2,7 @@ const m = require('mithril');
 require('@/styles/pages/Myassets/header.scss');
 
 module.exports = {
-    // highlightFlag: 哪个高亮  0:我的资产高亮，1:资产记录高亮
+    // highlightFlag: 哪个高亮  0:第一个item高亮，1:第二个item高亮
     view: function (vnode) {
         return m('div', { class: 'views-pages-myassets-header pl-3' }, [
             vnode.attrs.navList.map((item, index) => {

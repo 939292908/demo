@@ -1,5 +1,4 @@
 const m = require('mithril');
-// const Header = require('@/pages/page/myAssets/header/HeaderIndex');
 const Header = require('@/pages/components/myAssets/header/index');
 const Modal = require('@/pages/components/common/Modal');
 require('@/styles/pages/Myassets/MyWalletIndex.scss');
@@ -7,6 +6,7 @@ require('@/styles/pages/Myassets/MyWalletIndex.scss');
 module.exports = function (props) {
     const { myWalletIndex } = props;
     return m('div', { class: `views-pages-myassets-myWalletIndex theme--light` }, [
+        // m('div', {}, [myWalletIndex.setNavValue.name]),
         m('div', { onclick: function() { myWalletIndex.optionDisplay(event); } }, [
             m('div.top mb-8', { style: { height: `344px`, width: `100%`, backgroundColor: `#0E1C33` } }, [
                 m('div', { class: `myWalletIndex-warpper container content-width` }, [
