@@ -3,10 +3,10 @@ const TradeAccountIndex = require('@/pages/page/myAssets/tradeAccount/TradeAccou
 require('@/styles/pages/Myassets/tradingAccount.scss');
 
 module.exports = {
-    oninit() {
+    oninit: () => {
         TradeAccountIndex.initFn();
     },
-    view() {
+    view: () => {
         return m('div', { class: 'views-pages-myassets-tradingAccount pt-4' }, [
             m('div.tradingAccount mb-3 tabs', {}, [
                 m('ul.tradingAccount_nav mx-5', [
@@ -18,10 +18,10 @@ module.exports = {
             TradeAccountIndex.switchContent()
         ]);
     },
-    onupdate(vnode) {
+    onupdate: (vnode) => {
         TradeAccountIndex.updateFn(vnode);
     },
-    onremove() {
+    onremove: () => {
         TradeAccountIndex.removeFn();
     }
 };

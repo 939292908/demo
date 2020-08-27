@@ -4,10 +4,10 @@ require('@/styles/pages/Myassets/tradeTable.scss');
 // const nzm = '&#xe646;';
 
 module.exports = {
-    oncreate(vnode) {
+    oncreate: (vnode) => {
         t.createFn(vnode);
     },
-    view(vnode) {
+    view: (vnode) => {
         return m('div', { class: `views-pages-Myassets-Table pt-7 px-5` }, [
             m('div', { class: `nav mb-3 pr-5` }, [
                 m('div.search mr-7', {}, [
@@ -79,7 +79,7 @@ module.exports = {
             )
         ]);
     },
-    onremove() {
+    onremove: () => {
         t.removeFn();
     }
 };

@@ -2,7 +2,7 @@ const m = require('mithril');
 const wlt = require('@/models/wlt/wlt');
 const broadcast = require('@/broadcast/broadcast');
 const TradeAccountView = require('@/pages/page/myAssets/tradeAccount/TradeAccountView');
-const MyWallet = require('@/pages/page/myAssets/myWallet/MyWalletIndex');
+const MyWallet = require('@/pages/page/myAssets/myWallet/MyWalletView');
 let timeOut = null;
 
 module.exports = {
@@ -197,14 +197,13 @@ module.exports = {
         this.currency === 'BTC' ? this.setContractTotal(wlt.contractTotalValueForBTC) : this.setContractTotal(wlt.contractTotalValueForUSDT);
         this.setTotalCNY(wlt.totalCNYValue);
     },
-    createFn: () => {
+    createFn: function() {
         wlt.init();
-        const that = this;
         timeOut = setTimeout(() => {
-            that.DelayDataAcquisition();
+            this.DelayDataAcquisition();
         }, '100');
     },
-    removeFn: () => {
+    removeFn: function() {
         clearTimeout(timeOut);
         wlt.remove();
     }

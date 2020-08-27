@@ -1,9 +1,9 @@
 const m = require('mithril');
 const broadcast = require('@/broadcast/broadcast');
 
-const tradingAccountContract = require('@/pages/page/myAssets/tradingAccountContract/TradingAccountContractIndex');
-const tradingAccountCoin = require('@/pages/page/myAssets/tradingAccountCoin/TradingAccountCoinIndex');
-const tradingAccountLegal = require('@/pages/page/myAssets/tradingAccountLegal/TradingAccountLegalIndex');
+const tradingAccountContract = require('@/pages/page/myAssets/tradingAccountContract/TradingAccountContractView');
+const tradingAccountCoin = require('@/pages/page/myAssets/tradingAccountCoin/TradingAccountCoinView');
+const tradingAccountLegal = require('@/pages/page/myAssets/tradingAccountLegal/TradingAccountLegalView');
 
 module.exports = {
     // 01：合约账户，02：币币账户，04：法币账户

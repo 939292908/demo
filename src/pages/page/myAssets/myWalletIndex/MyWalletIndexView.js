@@ -6,7 +6,7 @@ require('@/styles/pages/Myassets/MyWalletIndex.scss');
 const myWalletIndex = require('@/pages/page/myAssets/myWalletIndex/MyWalletIndex');
 
 module.exports = {
-    view() {
+    view: () => {
         return m('div', { class: `views-pages-myassets-myWalletIndex theme--light` }, [
             m('div', { onclick: () => { myWalletIndex.optionDisplay(event); } }, [
                 m('div.top mb-8', { style: { height: `344px`, width: `100%`, backgroundColor: `#0E1C33` } }, [

@@ -1,13 +1,11 @@
-const m = require('mithril');
 const broadcast = require('@/broadcast/broadcast');
-const table = require('@/pages/page/myAssets/tradeTable/tradeTableView');
 
 module.exports = {
     currency: 'BTC',
     setCurrency: function (param) {
         this.currency = param;
     },
-    oninit: function () {
+    initFn: function () {
         broadcast.onMsg({
             key: 'tradingAccount_coin',
             cmd: broadcast.CHANGE_SW_CURRENCY,
@@ -16,12 +14,7 @@ module.exports = {
             }
         });
     },
-    view: function () {
-        return m('div', {}, [
-            m(table, { type: 'coinColumnData', typeData: 'coinData' })
-        ]);
-    },
-    onremove: function () {
+    removeFn: function () {
         broadcast.offMsg({
             key: 'tradingAccount_coin',
             isall: true
