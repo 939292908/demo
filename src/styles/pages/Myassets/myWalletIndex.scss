@@ -1,3 +1,4 @@
+  
 .views-pages-myassets-myWalletIndex{
     margin: auto;
     .columns-flex{
@@ -36,13 +37,13 @@
             display: flex;
             .right{
                 margin-left: auto;
-                position: relative;
+                position: static;
                 .tradeCard{
                     display: flex;
                     flex-direction: column;
                     z-index: 99999;
                     position: absolute;
-                    left: -70px;
+                    left: 680px;
                     span{
                         color:#9A9EAC;
                     }
@@ -58,9 +59,9 @@
         button{
             outline: none;
             // border: none;
+            border: 1px solid #FF8B00;
             &.bgNone{
                 // 边框主色 规范未找到！！！
-                border: 1px solid #FF8B00;
                 background:none;
             }
         }

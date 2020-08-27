@@ -1,5 +1,5 @@
 const m = require('mithril');
-const Header = require('@/pages/page/myAssets/header/HeaderIndex');
+const Header = require('@/pages/components/myAssets/header/index');
 const Modal = require('@/pages/components/common/Modal');
 const Transfer = require('@/pages/components/transfer');
 require('@/styles/pages/Myassets/MyWalletIndex.scss');
@@ -11,7 +11,10 @@ module.exports = function (props) {
             m('div.top mb-8', { style: { height: `344px`, width: `100%`, backgroundColor: `#0E1C33` } }, [
                 m('div', { class: `myWalletIndex-warpper container content-width` }, [
                     // highlightFlag:哪个高亮   0：我的资产  1：资产记录
-                    m(Header, { highlightFlag: 0 }),
+                    m(Header, {
+                        highlightFlag: 0,
+                        navList: [{ to: '/myWalletIndex', title: '我的资产' }, { to: '/myWalletIndex', title: '资金记录' }]
+                    }),
                     m('div', { class: `myWalletIndex-head columns-flex mt-7` }, [
                         m('div', { class: `myWalletIndex-head-left column` }, [
                             m('div', { class: `myWalletIndex-head-left-total columns pt-3` }, [

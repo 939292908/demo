@@ -5,6 +5,7 @@ const MyWalletIndexView = require('@/pages/page/myAssets/myWalletIndex/MyWalletI
 const TradeAccountIndex = require('@/pages/page/myAssets/tradeAccount/TradeAccountIndex');
 const MyWalletIndex = require('@/pages/page/myAssets/myWallet/MyWalletIndex');
 let timeOut = null;
+
 const myWalletIndex = {
     // 资金划转弹框 模块
     transferModal: {
@@ -211,17 +212,9 @@ const myWalletIndex = {
     }
 };
 module.exports = {
-    // oninit: function() {
-    //     wlt.init();
-    // },
     oncreate: function() {
-        // console.log('nzm', wlt, '------------');
-        // console.log('nzm', wlt.coinTotalValueForBTC, '------------');
-        // myWalletIndex.DelayDataAcquisition();
-        // m.redraw();
         wlt.init();
         timeOut = setTimeout(myWalletIndex.DelayDataAcquisition, '100');
-        m.redraw();
     },
     view: function () {
         const props = {
