@@ -11,6 +11,7 @@ const Http = require('@/newApi2').webApi;
 const l180n = require('@/languages/I18n').default;
 const TopView = require('./topView');
 const Conf = require('@/newApi2').Conf;
+const utils = require('@/util/utils').default;
 
 module.exports = {
     data: {
@@ -18,8 +19,8 @@ module.exports = {
         noticeList: []
     },
     toPage() {
-        if (window.gWebApi.loginState) {
-            window.router.push('/chargeMoney');
+        if (utils.getItem('loginState')) {
+            window.router.push('/myWalletIndex');
         } else {
             window.router.push('/login');
         }
@@ -29,7 +30,7 @@ module.exports = {
         this.getBanne();
         this.getnotice();
     },
-    getBanne () {
+    getBanne() {
         const params = { locale: this.locale, vp: Conf.exchId };
         Http.getBanne(params).then(res => {
             if (res.result.code === 0) {
@@ -43,7 +44,7 @@ module.exports = {
             }
         });
     },
-    getnotice () {
+    getnotice() {
         Http.getNotice({ locale: this.locale, vp: Conf.exchId }).then(res => {
             if (res.result.code === 0) {
                 this.data.noticeList = res.result.data;

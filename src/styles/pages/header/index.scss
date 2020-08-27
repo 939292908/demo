@@ -8,12 +8,12 @@
         .navbar-link {
             color: var(--c-font-darken);
         }
-        &:hover {
-            > .navbar-item,
-            .navbar-link {
-                background-color: var(--c-background-darken2);
-            }
-        }
+        // &:hover {
+        //     > .navbar-item,
+        //     .navbar-link {
+        //         background-color: var(--c-background-darken2);
+        //     }
+        // }
     }
 }
 // new 提示

@@ -72,7 +72,7 @@ const myWalletIndex = {
         myWalletIndex.contractTotal = param;
     },
     swValue: 0, // 0:我的钱包 1:交易账户 2:其他账户
-    wltIdx: 0, // 币币，法币，合约
+    wltIdx: 1, // 币币，法币，合约
     switchChange: function (val, type) {
         myWalletIndex.swValue = val;
         if (type !== undefined) {
@@ -164,7 +164,7 @@ const myWalletIndex = {
         myWalletIndex.setSelectOpText(item);
         myWalletIndex.setCurrency(item);
         broadcast.emit({ cmd: broadcast.CHANGE_SW_CURRENCY, data: item });
-        myWalletIndex.setAllValue();
+        myWalletIndex.DelayDataAcquisition();
     },
     // 点击除button的元素隐藏ul（仿select）
     optionDisplay: function(event) {
@@ -178,9 +178,9 @@ const myWalletIndex = {
         if (index !== 0) {
             const ele = document.getElementsByClassName('Operation' + index)[0];
             if (type === 'show') {
-                ele.classList.value = ele.classList.value.replace('bgNone has-text-primary has-line-level-2', 'has-bg-primary');
+                ele.classList.value = ele.classList.value.replace('has-text-primary bgNone', 'has-bg-primary');
             } else {
-                ele.classList.value = ele.classList.value.replace('has-bg-primary', 'bgNone has-text-primary has-line-level-2');
+                ele.classList.value = ele.classList.value.replace('has-bg-primary', 'has-text-primary bgNone has-line-level-2');
             }
         }
     },
@@ -193,7 +193,7 @@ const myWalletIndex = {
         // （我的钱包，交易账户，其他账户）切换内容
         myWalletIndex.switchContent();
     },
-    setAllValue: function () {
+    DelayDataAcquisition: function () {
         myWalletIndex.currency === 'BTC' ? myWalletIndex.setTotalValue(wlt.totalValueForBTC) : myWalletIndex.setTotalValue(wlt.totalValueForUSDT);
         myWalletIndex.currency === 'BTC' ? myWalletIndex.setWalletTotalValue(wlt.walletTotalValueForBTC) : myWalletIndex.setWalletTotalValue(wlt.walletTotalValueForUSDT);
         myWalletIndex.currency === 'BTC' ? myWalletIndex.setTradingAccountTotalValue(wlt.tradingAccountTotalValueForBTC) : myWalletIndex.setTradingAccountTotalValue(wlt.tradingAccountTotalValueForUSDT);
@@ -202,14 +202,13 @@ const myWalletIndex = {
         myWalletIndex.currency === 'BTC' ? myWalletIndex.setLegalTotal(wlt.legalTotalValueForBTC) : myWalletIndex.setLegalTotal(wlt.legalTotalValueForUSDT);
         myWalletIndex.currency === 'BTC' ? myWalletIndex.setContractTotal(wlt.contractTotalValueForBTC) : myWalletIndex.setContractTotal(wlt.contractTotalValueForUSDT);
         myWalletIndex.setTotalCNY(wlt.totalCNYValue);
-    },
-    DelayDataAcquisition: function() {
-        myWalletIndex.setAllValue();
     }
 };
 module.exports = {
-    oncreate: function() {
+    oninit: function() {
         wlt.init();
+    },
+    oncreate: function() {
         setTimeout(myWalletIndex.DelayDataAcquisition, '100');
     },
     view: function () {

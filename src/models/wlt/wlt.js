@@ -161,7 +161,7 @@ module.exports = {
         }
         this.tradingAccountTotalValueForBTC = Number(this.legalTotalValueForBTC) + Number(this.contractTotalValueForBTC) + Number(this.coinTotalValueForBTC);
         this.tradingAccountTotalValueForUSDT = Number(this.legalTotalValueForUSDT) + Number(this.contractTotalValueForUSDT) + Number(this.coinTotalValueForUSDT);
-        this.totalCNYValue = this.totalValueForUSDT * this.prz;
+        this.totalCNYValue = Number(this.totalValueForUSDT) * this.prz;
 
         this.totalValueForUSDT = utils.toFixedForFloor(this.totalValueForUSDT, 4);
         this.totalValueForBTC = utils.toFixedForFloor(this.totalValueForBTC, 8);
@@ -276,8 +276,11 @@ module.exports = {
             TOTAL = Number(this.wltItemEx.wdrawable || 0) + Number(this.wltItemEx.Frz || 0);
             // 账户总额
             this.wltItemEx.TOTAL = utils.toFixedForFloor(TOTAL, 8);
+
             // 冻结金额
-            this.wltItemEx.Frz = utils.toFixedForFloor(this.wltItemEx.Gift || 0, 8);
+            // console.log('nzm', 'this.wltItemEx.Gift   ', this.wltItemEx.Gift);
+            this.wltItemEx.Frz = utils.toFixedForFloor(this.wltItemEx.Frz || 0, 8);
+
             // 可用金额
             this.wltItemEx.NL = utils.toFixedForFloor(this.wltItemEx.wdrawable, 8);
             // 账户可提金额，用于资产划转
@@ -305,7 +308,7 @@ module.exports = {
         case '04':
             // 法币钱包
             // console.log('ht', type, this.wltItemEx);
-            TOTAL = Number(this.wltItemEx.mainBal || 0) + Number(this.wltItemEx.financeBal || 0) + Number(this.wltItemEx.mainLock || 0) + Number(this.wltItemEx.depositLock || 0) + Number(this.wltItemEx.pawnBal || 0) + Number(this.wltItemEx.creditNum || 0);
+            TOTAL = Number(this.wltItemEx.otcLock || 0) + Number(this.wltItemEx.otcBal || 0);
             // 账户总额
             this.wltItemEx.TOTAL = utils.toFixedForFloor(TOTAL, 8);
             // 锁定(冻结)

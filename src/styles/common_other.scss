@@ -62,7 +62,7 @@
     }
 }
 
-// hover 提示消息
+// hover提示 组件
 .my-tooltip {
     .bdb-dashed {
         // 下边框-虚线
@@ -123,6 +123,31 @@
                 right: 5%;
                 left: auto;
             }
+        }
+    }
+}
+
+// modal弹框 组件
+.my-modal {
+    .modal-card {
+        width: 448px;
+    }
+    .modal-card-head {
+        padding: var(--c-padding-level7);
+        .modal-card-title {
+            .modal-card-title-log {
+                opacity: .12;
+            }
+        }
+    }
+    .modal-card-body {
+        padding: var(--c-padding-level7);
+    }
+    .modal-card-foot {
+        padding: var(--c-padding-level7);
+        border: none;
+        .button {
+            width: 100%;
         }
     }
 }
