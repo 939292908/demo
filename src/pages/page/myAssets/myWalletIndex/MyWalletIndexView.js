@@ -1,6 +1,7 @@
 const m = require('mithril');
 const Header = require('@/pages/page/myAssets/header/HeaderIndex');
 const Modal = require('@/pages/components/common/Modal');
+const Transfer = require('@/pages/components/transfer');
 require('@/styles/pages/Myassets/MyWalletIndex.scss');
 
 module.exports = function (props) {
@@ -123,7 +124,7 @@ module.exports = function (props) {
                 header: m('p', { class: `` }, [
                     "资金划转"
                 ]),
-                body: m('div', { class: `` }, ["body啊"])
+                body: m(Transfer)
             }
         })
     ]);
