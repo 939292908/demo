@@ -54,13 +54,14 @@ module.exports = {
         this.otherTotalValue = param;
     },
     hideValue: function () {
+        const ele = document.getElementsByClassName('changeMoneyImg')[0];
         if (this.hideMoneyFlag) {
-            document.getElementsByClassName('changeMoneyImg')[0].classList.value = 'iconfont icon-zichanzhengyan changeMoneyImg pl-2 cursor-pointer';
+            ele.classList.value = ele.classList.value.replace('yincang', 'zichanzhengyan');
             this.hideMoneyFlag = !this.hideMoneyFlag;
             this.setTotalValue(wlt[this.currency === 'BTC' ? 'totalValueForBTC' : 'totalValueForUSDT']);
             this.setTotalCNY(wlt.totalCNYValue);
         } else {
-            document.getElementsByClassName('changeMoneyImg')[0].classList.value = 'iconfont icon-yincang changeMoneyImg pl-2 cursor-pointer';
+            ele.classList.value = ele.classList.value.replace('zichanzhengyan', 'yincang');
             this.hideMoneyFlag = !this.hideMoneyFlag;
             this.setTotalValue('******');
             this.setTotalCNY('******');
