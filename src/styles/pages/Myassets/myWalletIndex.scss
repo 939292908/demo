@@ -1,4 +1,3 @@
-  
 .views-pages-myassets-myWalletIndex{
     margin: auto;
     .columns-flex{
@@ -8,13 +7,18 @@
     .myWalletIndex-head{
         .myWalletIndex-head-left{
             .myWalletIndex-head-left-total{
-                button{
-                    background:none;
-                    outline: none;
-                    border: none;
-                    width: 70px;
-                }
                 div{
+                    .showSel{
+                        buttoon,i{
+                            vertical-align:middle;
+                        }
+                    }
+                    button{
+                        background:none;
+                        outline: none;
+                        border: none;
+                        width: 35px;
+                    }
                     ul{
                         li{
                             width: 100px;
@@ -30,6 +34,7 @@
     }
     .myWalletIndex-switch{
         .wallet{
+            border-radius: 4px;
             display: flex;
             flex-direction: column;
         }
@@ -53,6 +58,11 @@
         .other{
             display: flex;
             flex-direction: column;
+        }
+        /* 背景模糊 */
+        fuzzy{
+            background: rgba(255, 255, 255, 0.85) !important;
+            backdrop-filter: blur(30px);
         }
     }
     .myWalletIndex-head-right div{

@@ -1,6 +1,6 @@
 const m = require('mithril');
 const broadcast = require('@/broadcast/broadcast');
-const table = require('@/pages/page/myAssets/tradeTable/tradeTableIndex');
+const table = require('@/pages/page/myAssets/tradeTable/tradeTableView');
 
 module.exports = {
     currency: 'BTC',

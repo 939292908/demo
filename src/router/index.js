@@ -25,7 +25,12 @@ m.route(document.querySelector('body .route-box'), defaultRoutePath, {
     },
     '/myWalletIndex': {
         onmatch: function() {
-            return import('@/pages/page/myAssets/myWalletIndex/MyWalletIndex');
+            return import('@/pages/page/myAssets/myWalletIndex/MyWalletIndexView');
+        }
+    },
+    '/table': {
+        onmatch: function() {
+            return import('@/pages/page/myAssets/tradeTable/TradeTableView');
         }
     },
     '/assetRecords': {
