@@ -33,6 +33,7 @@ let msg = {
                 this.delMsg(item.key)
             }
         }
+        m.redraw()
     },
     createMsg: function ({ title, content, type }) {
         let that = this
