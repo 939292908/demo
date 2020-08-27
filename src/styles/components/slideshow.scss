@@ -49,6 +49,7 @@
       height: 198px;
       padding: 24px;
       overflow: hidden;
+      text-align: left;
       border-radius: 16px;
       background: #0E1C33 url("~@/assets/img/home/bgImg.png") no-repeat center bottom;
       box-sizing: border-box;
@@ -56,7 +57,7 @@
 
 
       .marketTitle {
-        margin-bottom: 24px;
+        margin-bottom: 12px;
         display: flex;
         flex-wrap: wrap;
         justify-content: space-between;
@@ -65,15 +66,16 @@
         .marketName {
           height: 34px;
           color: #FFFFFF;
-          //margin-right: 30px;
           font-style: normal;
           line-height: 34px;
         }
 
         .marketGrowth {
-          width: 73px;
-          height: 30px;
-          line-height: 30px;
+          // width: 73px;
+          // height: 30px;
+          // line-height: 30px;
+          padding: 2px 4px 2px 5px;
+          line-height: 20px;
           text-align: center;
           border-radius: 4px;
           margin-bottom: 4px;
@@ -103,13 +105,17 @@
         height: 20px;
         font-style: normal;
         line-height: 20px;
+        margin-bottom: 4px;
         align-items: flex-end;
         color: #9A9EAC;
+      }
+      .marketNumber:last-child() {
+        margin-bottom: 0px;
       }
     }
   }
 }
-// 行情轮播
+// 公告轮播
 .slideshow {
   .button-prev, .button-next {
     position: absolute;
