@@ -1,7 +1,7 @@
 const m = require('mithril');
 const assetRecordsWallet = require('./assetRecordsWallet');
 const tradingAccount = require('./tradingAccount');
-const header = require('@/views/pages/Myassets/header');
+const header = require('@/pages/page/myAssets/header/HeaderView');
 const broadcast = require('@/broadcast/broadcast');
 
 require('@/styles/pages/Myassets/assetRecords.scss');
