@@ -1,11 +1,12 @@
 const m = require('mithril');
+const utils = require('@/util/utils').default;
 
 require('@/styles/pages/home/introduce.scss');
 
 module.exports = {
     toPage() {
-        if (window.gWebApi.loginState) {
-            window.router.push('/chargeMoney');
+        if (utils.getItem('loginState')) {
+            window.router.push('/myWalletIndex');
         } else {
             window.router.push('/login');
         }
@@ -67,9 +68,7 @@ module.exports = {
                     }, ['立即注册']),
                     m('a', {
                         class: `button has-bg-primary button-transaction title-medium font-weight-regular  skew-left ml-3`,
-                        onclick: this.toPage,
-                        href: "http://localhost:8080/#!/register",
-                        target: "_blank"
+                        onclick: this.toPage
                     }, ['即可交易'])
                 ]),
                 // 橘色 盒子
