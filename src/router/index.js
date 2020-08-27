@@ -28,11 +28,11 @@ m.route(document.querySelector('body .route-box'), defaultRoutePath, {
             return import('@/pages/page/myAssets/myWalletIndex/MyWalletIndex');
         }
     },
-    '/assetRecords': {
-        onmatch: function () {
-            return import('@/views/pages/Myassets/assetRecords/index');
-        }
-    },
+    // '/assetRecords': {
+    //     onmatch: function () {
+    //         return import('@/views/pages/Myassets/assetRecords/index');
+    //     }
+    // },
     '/extractCoin': {
         onmatch: () => import('@/pages/page/extractCoin/index')
     }

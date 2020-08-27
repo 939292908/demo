@@ -2,7 +2,7 @@ const geeObj = {
     captchaObj: null,
     isloading: false
 };
-const Http = require('@/newApi');
+const Http = require('@/newApi2').webApi;
 
 geeObj.initGee = function (readyCallBack) {
     geeObj.isloading = true;
