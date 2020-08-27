@@ -6,6 +6,41 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "16783630",
+      "name": "Success",
+      "font_class": "Success",
+      "unicode": "e66b",
+      "unicode_decimal": 58987
+    },
+    {
+      "icon_id": "16783683",
+      "name": "Failure-1",
+      "font_class": "Failure-1",
+      "unicode": "e66c",
+      "unicode_decimal": 58988
+    },
+    {
+      "icon_id": "16783684",
+      "name": "Alert",
+      "font_class": "Alert",
+      "unicode": "e66d",
+      "unicode_decimal": 58989
+    },
+    {
+      "icon_id": "16783685",
+      "name": "Failure",
+      "font_class": "Failure",
+      "unicode": "e66e",
+      "unicode_decimal": 58990
+    },
+    {
+      "icon_id": "16781423",
+      "name": "white-logo",
+      "font_class": "white-logo",
+      "unicode": "e66a",
+      "unicode_decimal": 58986
+    },
+    {
       "icon_id": "9512491",
       "name": "安卓",
       "font_class": "android-fill",

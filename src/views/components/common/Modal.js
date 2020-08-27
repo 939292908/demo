@@ -1,16 +1,14 @@
-/**
-{
-    isShow : true, // 显示隐藏
-    onOk () {}, // 确认事件 // 使用默认确认按钮
-    onClose () {}, // 关闭事件
-    slot:{ // 插槽
-        header,
-        body,
-        footer
-    },
-    width: '50%' // px 或 %
-}
-*/
+// {
+//     isShow : true, // 显示隐藏
+//     onOk () {}, // 确认事件 // 使用默认确认按钮
+//     onClose () {}, // 关闭事件
+//     slot:{ // 插槽
+//         header,
+//         body,
+//         footer
+//     },
+//     width: '50%' // px 或 %
+// }
 
 var m = require("mithril");
 
@@ -23,7 +21,7 @@ module.exports = {
     },
     view (vnode) {
         // return m("div", { class: "modal" + (vnode.attrs.isShow ? " is-active" : '') }, [
-        return m("div", { class: `my-modal modal ${vnode.attrs.class ? vnode.attrs.class : ''} ${vnode.attrs.isShow ? "is-active" : ''}` }, [
+        return m("div", { class: `modal ${vnode.attrs.class ? vnode.attrs.class : ''} ${vnode.attrs.isShow ? "is-active" : ''}` }, [
             m("div", { class: "modal-background" }),
             m("div", { class: "modal-card", style: `width: ${vnode.attrs.width ? vnode.attrs.width : ''}` }, [
                 // 头部
