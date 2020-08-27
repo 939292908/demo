@@ -646,6 +646,7 @@ class CAPI {
                 url: s.CTX.Conf.WebAPI + "/v1/markets/historyData",
                 body: aData,
             }, function (result) {
+                console.log(result,88888888888)
                 if (DBG_REQUEST) {
                     console.debug(DBG_TAG, "ReqGoogleVerify Rsp", result)
                 }
