@@ -1,4 +1,5 @@
-const Http = require('@/newApi2');
+// import geetest from '@/libs/geetestTwo';
+const Http = require('@/newApi');
 
 class Validate {
     constructor() {

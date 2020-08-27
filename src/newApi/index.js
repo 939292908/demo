@@ -6,9 +6,9 @@
  * @Description: In User Settings Edit
  * @FilePath: \website-project\src\newApi\index.js
  */
-const API = require('./middleware').APITEXTLIST;
-const Http = require('./middleware').Http;
-const _axios = require('./request').default;
+import API from '@/api/request_apis';
+const Http = require('./config').default.Http;
+const _axios = require('./config/request').default;
 const axios = new _axios();
 /**
  * @description: 极验初始化
@@ -475,9 +475,6 @@ export function getWallet (params = {}, options = { withCredentials: true }) {
 
 // TODO setWallet
 
-/**
- * 我的钱包-资产记录
- */
 export function assetRecords (params = {}, options = { withCredentials: true }) {
     return Http.post(API.WALLET_ASSETS_HISTORY_V1, params, options);
 }
@@ -511,8 +508,4 @@ export function getBanne (params = {}) {
  */
 export function getNotice (params = {}) {
     return Http.get(API.ANNOUNCEMENTS_LATEST, { params });
-}
-
-export function getFunList (params = {}) {
-    return Http.get(API.FUN_LIST_V1, { params });
 }

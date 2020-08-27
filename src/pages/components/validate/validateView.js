@@ -1,5 +1,5 @@
 const m = require('mithril');
-const InputWithComponent = require('@/pages/components/inputWithComponent/inputWithComponentView');
+const InputWithComponent = require('@/views/components/inputWithComponent');
 const Validate = require('./validateModel');
 const I18n = require('@/languages/I18n').default;
 /**

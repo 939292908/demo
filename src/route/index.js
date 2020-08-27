@@ -1,31 +1,26 @@
-import m from 'mithril';
+const m = require('mithril');
 
 const defaultRoutePath = "/home";
 
 m.route(document.querySelector('body .route-box'), defaultRoutePath, {
     '/home': {
         onmatch: function () {
-            return import('@/pages/page/home/index');
+            return import('@/views/pages/home/index');
         }
     },
-    '/login': {
+    '/userCenter': {
         onmatch: function () {
-            return import('@/pages/page/login/login/loginView');
-        }
-    },
-    '/register': {
-        onmatch: function () {
-            return import('@/pages/page/login/register/registerView');
-        }
-    },
-    '/forgetPassword': {
-        onmatch: function () {
-            return import('@/pages/page/login/forgetPassword/forgetPasswordView');
+            return import('@/views/pages/user/index');
         }
     },
     '/myWalletIndex': {
-        onmatch: function() {
-            return import('@/pages/page/myAssets/myWalletIndex/MyWalletIndex');
+        onmatch: function () {
+            return import('@/views/pages/Myassets/myWalletIndex');
+        }
+    },
+    '/chargeMoney': {
+        onmatch: function () {
+            return import('@/views/pages/Myassets/chargeMoney');
         }
     },
     '/assetRecords': {
@@ -33,8 +28,20 @@ m.route(document.querySelector('body .route-box'), defaultRoutePath, {
             return import('@/views/pages/Myassets/assetRecords/index');
         }
     },
-    '/extractCoin': {
-        onmatch: () => import('@/pages/page/extractCoin/index')
+    '/login': {
+        onmatch: function () {
+            return import('@/views/pages/login/login');
+        }
+    },
+    '/register': {
+        onmatch: function () {
+            return import('@/views/pages/login/register');
+        }
+    },
+    '/forgetPassword': {
+        onmatch: function () {
+            return import('@/views/pages/login/forgetPassword');
+        }
     }
 });
 
