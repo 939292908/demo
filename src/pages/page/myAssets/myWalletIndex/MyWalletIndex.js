@@ -55,12 +55,12 @@ module.exports = {
     },
     hideValue: function () {
         if (this.hideMoneyFlag) {
-            document.getElementsByClassName('changeMoneyImg')[0].classList.value = 'iconfont icon-zichanzhengyan changeMoneyImg pl-2';
+            document.getElementsByClassName('changeMoneyImg')[0].classList.value = 'iconfont icon-zichanzhengyan changeMoneyImg pl-2 cursor-pointer';
             this.hideMoneyFlag = !this.hideMoneyFlag;
             this.setTotalValue(wlt[this.currency === 'BTC' ? 'totalValueForBTC' : 'totalValueForUSDT']);
             this.setTotalCNY(wlt.totalCNYValue);
         } else {
-            document.getElementsByClassName('changeMoneyImg')[0].classList.value = 'iconfont icon-yincang changeMoneyImg pl-2';
+            document.getElementsByClassName('changeMoneyImg')[0].classList.value = 'iconfont icon-yincang changeMoneyImg pl-2 cursor-pointer';
             this.hideMoneyFlag = !this.hideMoneyFlag;
             this.setTotalValue('******');
             this.setTotalCNY('******');
