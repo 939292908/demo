@@ -8,32 +8,31 @@ module.exports = {
     },
     view: function () {
         return m('div', { class: 'views-pages-Myassets-assetRecords-myWalletTable' }, [
-            m('table.mb-4', {}, [
-                m('tbody', { class: 'tbody' }, [
-                    assetRecordsTable.dataArrObj.map(items => {
-                        return m('tr', { class: ' columns-flex-justify1 bgColor has-text-level-2 border-radius-small' }, [
-                            m('td', {}, [items.category]),
-                            m('td', {}, [items.type]),
-                            m('td', {}, [items.num]),
-                            m('td', {}, [items.time]),
-                            m('td', {}, [items.state]),
-                            m('td', { style: 'width:100px' }, [items.remarks])
-                        ]);
-                    })
-                ])
-            ]),
-            m('table', {}, [
-                m('tbody', { class: 'tbody' }, [
-                    assetRecordsTable.grossValue.map((item) => {
-                        return m('tr', { class: 'pb-7 columns-flex-justify1' }, [
-                            m('td', {}, [item.wType]),
-                            m('td', {}, [item.addr]),
-                            m('td', {}, [item.num]),
-                            m('td', {}, [item.time]),
-                            m('td', {}, [item.stat]),
-                            m('td', { class: '', style: 'width:100px' }, ['--'])
-                        ]);
-                    })
+            m('div', {}, [
+                m('table', { style: 'height:436px;width: 100%;' }, [
+                    m('tbody', { class: (assetRecordsTable.datadisplayvalue === 1 ? '' : 'datadisplay ') + 'tbody' }, [
+                        assetRecordsTable.dataArrObj.map(items => {
+                            return m('tr', { class: 'has-text-level-2 body-4 pb-3' }, [
+                                m('td', {}, [items.category]),
+                                m('td.px-8 pb-4', {}, [items.type]),
+                                m('td.px-8 pb-4', {}, [items.num]),
+                                m('td.px-7 pb-4', {}, [items.state]),
+                                m('td.px-8 pb-4', {}, [items.time]),
+                                m('td', { class: 'tbodytd' }, [items.remarks])
+                            ]);
+                        }),
+                        assetRecordsTable.grossValue.map((item) => {
+                            return m('tr', { class: 'body-4' }, [
+                                m('td', {}, [item.wType]),
+                                m('td.px-8 pb-7', {}, [item.status]),
+                                m('td.px-7 pb-7', {}, [item.num]),
+                                m('td.px-7 pb-7', {}, [item.stat]),
+                                m('td.px-8 pb-7', {}, [item.time]),
+                                m('td', { class: 'tbodytd' }, ['--'])
+                            ]);
+                        })
+                    ]),
+                    m('div', { class: (assetRecordsTable.datadisplayvalue === 0 ? 'disdatadisplay' : 'datadisplay') + ' ' }, ['暂无数据'])
                 ])
             ])
         ]);
