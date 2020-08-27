@@ -1,13 +1,5 @@
-/*
- * @Author: your name
- * @Date: 2020-08-25 16:34:57
- * @LastEditTime: 2020-08-26 20:04:12
- * @LastEditors: your name
- * @Description: In User Settings Edit
- * @FilePath: \website-project\src\pages\page\home\picture\pictureIndex.js
- */
 const m = require('mithril');
-const Slideshow = require('@/pages/components/slideshow/leftToRight');
+const Slideshow = require('@/views/components/slideshow/leftToRight');
 const broadcast = require('@/broadcast/broadcast');
 require('@/styles/pages/home.css');
 const market = require('@/models/market/market');

@@ -34,12 +34,12 @@ module.exports = {
             return m('div.swiper-slide', [
                 m('div.imgBox', [
                     m('div.marketTitle', [
-                        m('div.marketName title-small', vnode.attrs.list[item].distSym),
+                        m('div.marketName', { class: 'title-medium' }, vnode.attrs.list[item].distSym),
                         m('div.marketGrowth has-bg-up body-6', { class: '' }, vnode.attrs.list[item].rfpre)
                     ]),
-                    m('div.marketPrice title-x-large', { class: nameList.length > 0 ? 'has-text-down' : '' }, `$${vnode.attrs.list[item].LastPrz}`),
-                    m('div.marketNumber body-6', `24H量 ${vnode.attrs.list[item].Volume24}`),
-                    m('div.marketNumber body-6', `24H额 ${vnode.attrs.list[item].Turnover24}`)
+                    m('div.marketPrice title-x-large', `$${vnode.attrs.list[item].LastPrz}`),
+                    m('div.marketNumber body-5', `24H量 ${vnode.attrs.list[item].Volume24}`),
+                    m('div.marketNumber body-5', `24H额 ${vnode.attrs.list[item].Turnover24}`)
                 ])
             ]);
         });
