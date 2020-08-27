@@ -82,16 +82,17 @@ const myWalletIndex = {
             this.wltIdx = 1;
         }
     },
-    setNavValue: {
-        name: 'nzm'
-    },
+    // setNavValue: {
+    //     name: 'nzm'
+    // },
     switchContent: function () {
         broadcast.emit({ cmd: broadcast.CHANGE_SW_CURRENCY, data: myWalletIndex.currency });
         switch (myWalletIndex.swValue) {
         case 0:
             return m(MyWalletIndex);
         case 1:
-            return m(TradeAccountIndex, { idx: this.wltIdx, fn: this.setNavValue });
+            // return m(TradeAccountIndex, { idx: this.wltIdx, fn: this.setNavValue });
+            return m(TradeAccountIndex, { idx: this.wltIdx });
         default:
             break;
         }
