@@ -202,8 +202,10 @@ module.exports = {
                 m('div.navbar-item.cursor-pointer', { class: `has-text-primary-hover ` }, [
                     m(Tooltip, {
                         label: m('i.iconfont.icon-Personal'),
-                        width: "212px",
                         content: m('div', { class: `` }, [
+                            m('a', { class: `navbar-item` }, [
+                                m('img', { class: 'background-png', src: require("@/assets/img/home/background.png").default })
+                            ]),
                             m('a', { class: `navbar-item` }, [
                                 m('a', { class: `navbar-item` }, ["12"])
                             ]),
