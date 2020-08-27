@@ -48,10 +48,12 @@ const myWalletIndex = {
     hideMoneyFlag: false, // 是否隐藏资产
     hideValue: function () {
         if (myWalletIndex.hideMoneyFlag) {
+            document.getElementsByClassName('changeMoneyImg')[0].src = require('@/assets/img/myAssets/hideMoney.svg').default;
             myWalletIndex.hideMoneyFlag = !myWalletIndex.hideMoneyFlag;
             myWalletIndex.setTotalValue(wlt[myWalletIndex.currency === 'BTC' ? 'totalValueForBTC' : 'totalValueForUSDT']);
             myWalletIndex.setTotalCNY(wlt.totalCNYValue);
         } else {
+            document.getElementsByClassName('changeMoneyImg')[0].src = require('@/assets/img/myAssets/showMoney.svg').default;
             myWalletIndex.hideMoneyFlag = !myWalletIndex.hideMoneyFlag;
             myWalletIndex.setTotalValue('******');
             myWalletIndex.setTotalCNY('******');

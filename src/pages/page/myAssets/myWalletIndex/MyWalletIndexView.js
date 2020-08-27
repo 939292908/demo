@@ -31,9 +31,11 @@ module.exports = function (props) {
                             m('div', { class: `number-hide`, style: `color:white` }, [
                                 m('span', { class: `title-large` }, [myWalletIndex.totalValue]),
                                 m('span', { class: `title-large` }, [` ` + myWalletIndex.currency]),
-                                m('span.cursor-pointer', {
-                                    onclick: myWalletIndex.hideValue
-                                }, [` 图标`]),
+                                m('img.pl-2 changeMoneyImg', {
+                                    onclick: myWalletIndex.hideValue,
+                                    src: require('@/assets/img/myAssets/hideMoney.svg').default,
+                                    style: { width: '18px', height: '11.59px' }
+                                }),
                                 m('br'),
                                 m('span', { style: `color:#9A9EAC` }, [`≈ `]),
                                 m('span', { style: `color:#9A9EAC` }, [myWalletIndex.totalCNY]),

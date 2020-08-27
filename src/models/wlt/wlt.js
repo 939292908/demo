@@ -184,7 +184,7 @@ module.exports = {
         this.contractTotalValueForUSDT = utils.toFixedForFloor(this.contractTotalValueForUSDT, 4);
         this.contractTotalValueForBTC = utils.toFixedForFloor(this.contractTotalValueForBTC, 8);
 
-        this.totalCNYValue = utils.toFixedForFloor(this.totalCNYValue, 8);
+        this.totalCNYValue = utils.toFixedForFloor(this.totalCNYValue, 2);
 
         // console.log('nzm', 'totalCNYValue', this.totalCNYValue, 'totalValueForUSDT', this.totalValueForUSDT);
         // console.log('\n');
