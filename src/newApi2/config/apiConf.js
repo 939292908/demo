@@ -1,4 +1,4 @@
-import _axios from '@/api/request';
+import _axios from '@/newApi2/webApi/request';
 const reqest = new _axios();
 class Conf {
     constructor(aKey) {

@@ -182,26 +182,14 @@ module.exports = {
                     ])
                 ]),
                 // 我的
-                m('a.navbar-item' + (!utils.getItem('loginState') ? '.is-hidden' : ''), {
-                    class: `has-dropdown is-hoverable`,
-                    onclick: function () {
-                        // window.router.push('/userCenter');
-                    }
-                }, [
-                    m('a', { class: 'navbar-item has-text-primary-hover' }, [
-                        m('div', {
-                            // onclick: function () {
-                            //     window.router.push('/userCenter');
-                            // }
-                        }, ['用户中心']),
-                        m('div', { class: `navbar-dropdown` }, [
+                m('div.navbar-item.cursor-pointer', { class: `has-text-primary-hover ` }, [
+                    m(Tooltip, {
+                        label: m('i.iconfont.icon-Personal'),
+                        content: m('div', { class: `` }, [
                             m('a', { class: `navbar-item` }, [
-                                m('svg', {
-                                    class: 'icon',
-                                    "aria-hidden": true
-                                }, [
-                                    m('use', { "xlink:href": '#icon-logo' })
-                                ]),
+                                m('img', { class: 'background-png', src: require("@/assets/img/home/background.png").default })
+                            ]),
+                            m('a', { class: `navbar-item` }, [
                                 m('a', { class: `navbar-item` }, ["12"])
                             ]),
                             m('a', { class: `navbar-item` }, [
@@ -318,7 +306,7 @@ module.exports = {
                             '繁体中文'
                         ])
                     ])
-                ])
+                // ])
             ])
         ]);
     }

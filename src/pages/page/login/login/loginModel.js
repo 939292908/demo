@@ -1,4 +1,4 @@
-const { getUserInfo, loginCheckV2, loginWebV2 } = require('@/newApi2').webApi;
+const webApi = require('@/newApi2').webApi;
 const m = require('mithril');
 const geetest = require('@/models/validate/geetest').default;
 const md5 = require('md5');
@@ -8,6 +8,7 @@ const broadcast = require('@/broadcast/broadcast');
 const errCode = require('@/util/errCode').default;
 const config = require('@/config');
 const validate = require('@/models/validate/validate').default;
+const models = require('@/models');
 
 module.exports = {
     account: '233233233',
@@ -53,7 +54,7 @@ module.exports = {
         }
     },
     loginFn() {
-        loginCheckV2({
+        webApi.loginCheckV2({
             loginType: this.loginType,
             loginName: this.account,
             pass: md5(this.password),
@@ -114,7 +115,7 @@ module.exports = {
         });
     },
     loginEnter() {
-        loginWebV2({}).then(res => {
+        webApi.loginWebV2({}).then(res => {
             if (res.result.code === 0) {
                 this.checkAccountPwd();
                 this.getUserInfo();
@@ -137,38 +138,7 @@ module.exports = {
         });
     },
     getUserInfo() {
-        getUserInfo({}).then(data => {
-            utils.setItem('loginState', true);
-            self.loading = false;
-            if (data.result.code === 0) {
-                utils.setItem('userAccount', data.account.accountName);
-                utils.setItem('userInfo', data.account);
-                // broadcast.emit({cmd: 'setShowPhone', data: !!res.result.account.phone});
-                // broadcast.emit({cmd: 'setShowGoogle', data: !!res.result.account.googleId});self.$store.dispatch("setIsLogin", true);
-                // 获取个人信息成功
-                // broadcast.emit({cmd: "addAccount", data: data.account});
-
-                // 发送登录邮件、短信
-                // self.sendloginTip(data.account)
-
-                // if (store.state.httpResCheckCfg.state[10] == 2) {
-                //     this.$set(store.state.httpResCheckCfg.state, 10, 0)
-                // }
-                // broadcast.emit({cmd: "getDeivceInfo", data: {op: 'login'}});
-                utils.setItem('loginState', true);
-                window.router.push('/home');
-            } else if (data.result.code === 1001) {
-                // 获取个人信息不成功
-                // broadcast.emit({cmd: "setIsLogin", data: false});
-            }
-        }).catch(err => {
-            window.$message({
-                content: `网络异常，请稍后重试 ${err}`,
-                type: 'danger'
-            });
-            this.loading = false;
-            m.redraw();
-        });
+        models.getUserInfo();
     },
     // 判断是否设置资产密码
     checkAccountPwd(self) {
@@ -199,6 +169,20 @@ module.exports = {
             this.account = utils.getItem('userAccount');
         }
         this.initGeetest();
+        broadcast.onMsg({
+            key: 'login',
+            cmd: 'getUserInfo',
+            cb: res => {
+                if (res) {
+                    this.loading = false;
+                    utils.setItem('loginState', true);
+                    window.router.push('/home');
+                } else {
+                    this.loading = false;
+                    m.redraw();
+                }
+            }
+        });
     },
     onremove() {
         this.is2fa = false;
@@ -206,6 +190,11 @@ module.exports = {
         broadcast.offMsg({
             key: 'login',
             cmd: 'geetestMsg',
+            isall: true
+        });
+        broadcast.offMsg({
+            key: 'login',
+            cmd: 'getUserInfo',
             isall: true
         });
     }

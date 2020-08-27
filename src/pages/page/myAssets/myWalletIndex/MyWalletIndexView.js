@@ -1,20 +1,17 @@
 const m = require('mithril');
-const Header = require('@/pages/components/myAssets/header/index');
+const Header = require('@/pages/page/myAssets/header/HeaderIndex');
 const Modal = require('@/pages/components/common/Modal');
+const Transfer = require('@/pages/components/transfer');
 require('@/styles/pages/Myassets/MyWalletIndex.scss');
 
 module.exports = function (props) {
     const { myWalletIndex } = props;
     return m('div', { class: `views-pages-myassets-myWalletIndex theme--light` }, [
-        // m('div', {}, [myWalletIndex.setNavValue.name]),
         m('div', { onclick: function() { myWalletIndex.optionDisplay(event); } }, [
             m('div.top mb-8', { style: { height: `344px`, width: `100%`, backgroundColor: `#0E1C33` } }, [
                 m('div', { class: `myWalletIndex-warpper container content-width` }, [
                     // highlightFlag:哪个高亮   0：我的资产  1：资产记录
-                    m(Header, {
-                        highlightFlag: 0,
-                        navList: [{ to: '/myWalletIndex', title: '我的资产' }, { to: '/myWalletIndex', title: '资金记录' }]
-                    }),
+                    m(Header, { highlightFlag: 0 }),
                     m('div', { class: `myWalletIndex-head columns-flex mt-7` }, [
                         m('div', { class: `myWalletIndex-head-left column` }, [
                             m('div', { class: `myWalletIndex-head-left-total columns pt-3` }, [
@@ -31,9 +28,11 @@ module.exports = function (props) {
                             m('div', { class: `number-hide`, style: `color:white` }, [
                                 m('span', { class: `title-large` }, [myWalletIndex.totalValue]),
                                 m('span', { class: `title-large` }, [` ` + myWalletIndex.currency]),
-                                m('span.cursor-pointer', {
-                                    onclick: myWalletIndex.hideValue
-                                }, [` 图标`]),
+                                m('img.pl-2 changeMoneyImg', {
+                                    onclick: myWalletIndex.hideValue,
+                                    src: require('@/assets/img/myAssets/hideMoney.svg').default,
+                                    style: { width: '18px', height: '11.59px' }
+                                }),
                                 m('br'),
                                 m('span', { style: `color:#9A9EAC` }, [`≈ `]),
                                 m('span', { style: `color:#9A9EAC` }, [myWalletIndex.totalCNY]),
@@ -132,7 +131,7 @@ module.exports = function (props) {
                 header: m('p', { class: `` }, [
                     "资金划转"
                 ]),
-                body: m('div', { class: `` }, ["body啊"])
+                body: m(Transfer)
             }
         })
     ]);

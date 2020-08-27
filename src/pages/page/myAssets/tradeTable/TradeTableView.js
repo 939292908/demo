@@ -22,8 +22,8 @@ module.exports = function (props, vnode) {
                 ])
             ]),
             m('div.fundRecords mr-7', {}, [
-                m('img', { }),
-                m('span', ['资金记录'])
+                m('img', { src: require('@/assets/img/myAssets/assetRecord.svg').default, style: { width: '14px', height: '16px' } }),
+                m('span', [`资金记录`])
             ]),
             m('div.profit', { style: { display: vnode.attrs.typeData === 'contractData' ? '' : 'none' } }, [
                 m('img', {}),

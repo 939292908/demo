@@ -46,7 +46,7 @@ module.exports = {
             tradingAccount.setPageFlag(vnode.attrs.idx);
             m.redraw();
         }
-        vnode.attrs.name = tradingAccount.pageFlag;
+        // vnode.attrs.name = tradingAccount.pageFlag;
         tradingAccount.setOldValue(vnode.attrs.idx);
     },
     onremove: function () {

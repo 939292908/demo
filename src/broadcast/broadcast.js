@@ -21,6 +21,8 @@ module.exports = {
     MSG_ORDER20_UPD: 'MSG_ORDER20_UPD',
     // 全档盘口行情广播
     MSG_ORDERL2_UPD: 'MSG_ORDERL2_UPD',
+    // 点击body广播
+    EV_ClICKBODY: 'EV_ClICKBODY',
     /**
      * 发送广播
      * @param {string} cmd

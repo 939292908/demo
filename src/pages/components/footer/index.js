@@ -9,45 +9,58 @@ const methods = {
     }
 };
 
+const iconList = [
+    {
+        name: "icon-qq",
+        img: require("@/assets/img/home/QQcustomer_service.png").default
+    },
+    {
+        name: "icon-WeChat",
+        img: require("@/assets/img/home/Communitywechat.png").default
+    },
+    {
+        href: "https://www.facebook.com/Vbit-107388547588403/",
+        name: "icon-Facebook"
+    },
+    {
+        href: "https://twitter.com/VbitOfficial",
+        name: "icon-Twitter"
+    },
+    {
+        href: "https://t.me/VbitOfficial",
+        name: "icon-Aircraft"
+    },
+    {
+        href: "https://weibo.com/VbitOfficial",
+        name: "icon-Weibo"
+    },
+    {
+        href: "https://www.mytokencap.com/exchange/vbit",
+        name: "icon-Mmm"
+    }
+];
 module.exports = {
     view: function () {
-        return m('div.views-pages-home-footer.container', {}, [
+        return m('div.views-pages-home-footer.container', {
+        }, [
             // 底部
-            m('div', { class: `pub-footer columns pt-7 pb-6` }, [
-                // 左边
+            m('div', { class: `pub-footer columns pt-7 pb-6 mt-7` }, [
+                // 左边width
                 m('div', { class: `footer-left column is-6` }, [
                     // logo
                     m('img', { class: '', src: "static/img/title-logo.png", style: "width: 112;height:28px;" }),
                     m('p', { class: `` }, ["全球区块链资产衍生品交易平台"]),
                     // 社区
                     m('div', { class: `is-flex mt-7 is-between`, style: "width: 300px" }, [
-                        m('a', { class: ``, href: "index.html" }, [
-                            // m('a', { class: ``, href: "" }, [
-                            m(Tooltip, {
-                                label: m('img', { style: "height:17px", src: require("@/assets/img/home/wechat.png").default }),
-                                content: m('img', { class: '', src: require("@/assets/img/home/Communitywechat.png").default })
-                            })
-                            // ])
-                        ]),
-                        m(Tooltip, {
-                            label: m('img', { style: "height:17px", src: require("@/assets/img/home/qq.png").default }),
-                            content: m('img', { class: '', src: require("@/assets/img/home/QQcustomer_service.png").default })
-                        }),
-                        m('a', { class: ``, href: "https://www.facebook.com/Vbit-107388547588403/" }, [
-                            m('img', { class: 'community', src: require("@/assets/img/home/fb.png").default })
-                        ]),
-                        m('a', { class: ``, href: "https://twitter.com/VbitOfficial" }, [
-                            m('img', { class: 'community', src: require("@/assets/img/home/tw.png").default })
-                        ]),
-                        m('a', { class: ``, href: "https://t.me/VbitOfficial" }, [
-                            m('img', { class: 'community', src: require("@/assets/img/home/telegraph.png").default })
-                        ]),
-                        m('a', { class: ``, href: "https://weibo.com/VbitOfficial" }, [
-                            m('img', { class: 'community', src: require("@/assets/img/home/micro-blog.png").default })
-                        ]),
-                        m('a', { class: ``, href: "https://www.mytokencap.com/exchange/vbit" }, [
-                            m('img', { class: 'community', src: require("@/assets/img/home/my-token.png").default })
-                        ])
+                        iconList.map(item => {
+                            return m('a', { class: ``, target: "_blank", href: item.href }, [
+                                m(Tooltip, {
+                                    label: m('i', { class: `iconfont ${item.name}` }),
+                                    class: 'has-text-level-2 has-text-primary-hover',
+                                    content: item.img ? m('img', { class: '', src: item.img }) : ""
+                                })
+                            ]);
+                        })
                     ])
                 ]),
                 // 右边

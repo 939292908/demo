@@ -154,6 +154,42 @@ module.exports = {
         }
         this.tradingAccountTotalValueForBTC = Number(this.legalTotalValueForBTC) + Number(this.contractTotalValueForBTC) + Number(this.coinTotalValueForBTC);
         this.tradingAccountTotalValueForUSDT = Number(this.legalTotalValueForUSDT) + Number(this.contractTotalValueForUSDT) + Number(this.coinTotalValueForUSDT);
+        this.totalCNYValue = Number(this.totalValueForUSDT) * this.prz;
+
+        this.totalValueForUSDT = utils.toFixedForFloor(this.totalValueForUSDT, 4);
+        this.totalValueForBTC = utils.toFixedForFloor(this.totalValueForBTC, 8);
+
+        this.walletTotalValueForUSDT = utils.toFixedForFloor(this.walletTotalValueForUSDT, 4);
+        this.walletTotalValueForBTC = utils.toFixedForFloor(this.walletTotalValueForBTC, 8);
+
+        this.tradingAccountTotalValueForUSDT = utils.toFixedForFloor(this.tradingAccountTotalValueForUSDT, 4);
+        this.tradingAccountTotalValueForBTC = utils.toFixedForFloor(this.tradingAccountTotalValueForBTC, 8);
+
+        this.otherAccountTotalValueForUSDT = utils.toFixedForFloor(this.otherAccountTotalValueForUSDT, 4);
+        this.otherAccountTotalValueForBTC = utils.toFixedForFloor(this.otherAccountTotalValueForBTC, 8);
+
+        this.coinTotalValueForUSDT = utils.toFixedForFloor(this.coinTotalValueForUSDT, 4);
+        this.coinTotalValueForBTC = utils.toFixedForFloor(this.coinTotalValueForBTC, 8);
+
+        this.legalTotalValueForUSDT = utils.toFixedForFloor(this.legalTotalValueForUSDT, 4);
+        this.legalTotalValueForBTC = utils.toFixedForFloor(this.legalTotalValueForBTC, 8);
+
+        this.contractTotalValueForUSDT = utils.toFixedForFloor(this.contractTotalValueForUSDT, 4);
+        this.contractTotalValueForBTC = utils.toFixedForFloor(this.contractTotalValueForBTC, 8);
+
+        this.totalCNYValue = utils.toFixedForFloor(this.totalCNYValue, 2);
+
+        // console.log('nzm', 'totalCNYValue', this.totalCNYValue, 'totalValueForUSDT', this.totalValueForUSDT);
+        // console.log('\n');
+        // console.log('nzm', 'tradingAccountTotalValueForBTC', this.tradingAccountTotalValueForBTC, 'tradingAccountTotalValueForUSDT', this.tradingAccountTotalValueForUSDT);
+        // console.log('\n');
+        // console.log('nzm', 'legalTotalValueForBTC', this.legalTotalValueForBTC, 'legalTotalValueForUSDT', this.legalTotalValueForUSDT);
+        // console.log('\n');
+        // console.log('nzm', 'coinTotalValueForBTC', this.coinTotalValueForBTC, 'coinTotalValueForUSDT', this.coinTotalValueForUSDT);
+        // console.log('\n');
+        // console.log('nzm', 'contractTotalValueForBTC', this.contractTotalValueForBTC, 'contractTotalValueForUSDT', this.contractTotalValueForUSDT);
+        // console.log('\n');
+        // console.log('nzm', 'walletTotalValueForBTC', this.walletTotalValueForBTC, 'walletTotalValueForUSDT', this.walletTotalValueForUSDT);
     },
     updWlt: function() {
         const that = this;

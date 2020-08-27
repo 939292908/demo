@@ -27,9 +27,10 @@ body,
 /* UI组件样式覆盖 */
 
 .button, .input, .textarea, .select select, .file-cta, .file-name {
+    padding: var(--c-padding-level0) var(--c-padding-level3);
     border-radius: var(--c-radius-level1);
     font-size: var(--c-fontsz-level3);
-    height: var(--c-button-level1);
+    height: var(--c-button-level2);
 }
 
 /* 文字大小 根据pc和手机的尺寸不同来区分对应类名的字体大小 */
@@ -142,6 +143,7 @@ body,
     font-family: "iconfont" !important;
     font-size: var(--c-iconsz-level3) !important;
     font-style: normal;
+    line-height: 1;
 }
 
 .iconfont-min {
