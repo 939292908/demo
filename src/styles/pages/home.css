@@ -1,11 +1,5 @@
 /**头部*/
 
-.header-download .dropdown-menu {
-    width: 224px;
-    height: 104px;
-}
-
-
 .navbar-item {
     margin-left: 10px;
 }
@@ -66,11 +60,6 @@
     text-align: center;
     width: 224px;
     height: 58px;
-}
-
-.select {
-    width: 300px;
-    text-align-last: right;
 }
 
 .rotationtwo-content {

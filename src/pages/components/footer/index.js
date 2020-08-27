@@ -49,9 +49,9 @@ module.exports = {
                 m('div', { class: `footer-left column is-6` }, [
                     // logo
                     m('img', { class: '', src: require("@/assets/img/logo/title-logo.png").default, style: "width: 112;height:28px;" }),
-                    m('p', { class: `` }, ["全球区块链资产衍生品交易平台"]),
+                    m('p', { class: `footer-title` }, ["全球区块链资产衍生品交易平台"]),
                     // 社区
-                    m('div', { class: `is-flex mt-7 is-between`, style: "width: 300px" }, [
+                    m('div', { class: `is-flex mt-7 is-between is-hidden-mobile`, style: "width: 300px" }, [
                         iconList.map(item => {
                             return m('a', { class: ``, target: "_blank", href: item.href }, [
                                 m(Tooltip, {
@@ -152,7 +152,7 @@ module.exports = {
                     ])
                 ])
             ]),
-            m('p', { class: `bottom-copyright` }, ["© 2019-2020 Vbit 版权所有"])
+            m('p', { class: `bottom-copyright is-hidden-mobile` }, ["© 2019-2020 Vbit 版权所有"])
         ]);
         // return m('footer.footer', {}, [
         // m('div.content', {}, [

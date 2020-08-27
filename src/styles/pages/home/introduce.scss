@@ -5,27 +5,87 @@
         background-size: 100%;
         height: 617px;
     }
+
     .introduce-box-masking {
         height: 90px;
         margin-top: 151px;
     }
+
     .introduce-transaction {
         .home-introduce-Rectangle {
             border-radius: 40px 40px 0 0;
             height: 150px;
             position: relative;
             margin-top: 200px;
+
             .home-picture-vbit {
                 position: absolute;
                 bottom: 0;
-                left: 8%;
+                left: 4%;
             }
         }
     }
+
     .button.is-inverted {
         &:hover {
             background-color: transparent !important;
             color: #fff !important;
+        }
+    }
+}
+
+@media screen and (min-width: 320px) and (max-width: 480px) {
+    .views-pages-home-introduce {
+        .introduce-box {
+            // background: url("~@/assets/img/home/layer-14.png") no-repeat center center;
+            background-size: "cover";
+            background-size: 100%;
+            height: 617px;
+        }
+
+        .introduce-box-masking {
+            height: 90px;
+            margin-top: 151px;
+        }
+
+        .introduce-transaction {
+            .home-introduce-Rectangle {
+                border-radius: 0;
+                height: 615px;
+                position: relative;
+                margin-top: 200px;
+
+                .home-picture-vbit {
+                    position: absolute;
+                    bottom: 0;
+                    left: 16%;
+                }
+            }
+        }
+
+        .button.is-inverted {
+            &:hover {
+                background-color: transparent !important;
+                color: #fff !important;
+            }
+        }
+
+        .download-information-title1 {
+            margin-bottom: var(--c-margin-level9);
+            // width: 300px;
+        }
+
+        .download-information-title2{
+            margin-bottom: var(--c-margin-level9);
+            font-size: var(--c-fontsz-level6);
+        }
+
+        .download-Android-button {
+            margin-bottom: var(--c-margin-level4);
+            // margin-left: var(--c-margin-level7);
+        }
+        .download-iOS-button{
+            margin-bottom: var(--c-margin-level7);
         }
     }
 }
