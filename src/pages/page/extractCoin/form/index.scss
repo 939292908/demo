@@ -1,0 +1,34 @@
+.page-extract-coin-from {
+  padding: 32px 64px;
+
+  .form-block {
+    width: 384px;
+
+    .formModule {
+      margin-bottom: 32px;
+
+      .label {
+        line-height: 20px;
+        margin-bottom: 8px;
+      }
+    }
+  }
+
+  .promptText {
+    padding-top: 32px;
+    color: var(--c-font-lighten3);
+
+    .promptTitle {
+      line-height: var(--c-fontsz-level4);
+      margin-bottom: 8px;
+    }
+
+    .rulesText {
+      line-height: 20px;
+      margin-bottom: 4px;
+    }
+    .rulesText:last-child {
+      margin-bottom: 0px;
+    }
+  }
+}
