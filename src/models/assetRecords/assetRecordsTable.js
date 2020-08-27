@@ -176,35 +176,59 @@ module.exports = {
     noDisplay: false,
     timeValue: null,
     currencyValue: '全部',
+    datadisplayvalue: 1,
     typeValue: '全部类型',
     dataArrObjEvent () {
-        console.log(typeof this.grossValue);
         if (this.grossValue.length === 0) {
-            console.log(0);
-            return 0;
+            this.datadisplayvalue = 0;
         } else {
-            console.log(1);
-            return 1;
+            this.datadisplayvalue = 1;
         }
     },
     timestampToTime1 (timestamp) {
-        var date = new Date(timestamp * 1000);// 时间戳为10位需*1000，时间戳为13位的话不需乘1000
+        var date = null;
+        console.log(timestamp.toString().length);
+        if (timestamp.toString().length > 10) {
+            date = new Date(timestamp);
+        } else {
+            date = new Date(timestamp * 1000);// 时间戳为10位需*1000，时间戳为13位的话不需乘1000
+        }
         var Y = date.getFullYear() + '-';
         var M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '-';
         var D = date.getDate() < 10 ? '0' + date.getDate() : date.getDate();
         return Y + M + D;
     },
     selectDisplay (type, val) {
+        // var type1 = type[0].replace(' 00:00:00', '');
+        const dateObj = [];
+        for (var i = 0; i < type.length; i++) {
+            var date = new Date(type[i]);
+            var d = date.getTime(date);
+            if (d.toString().length > 10) {
+                dateObj.push(d.toString().substr(0, 10));
+            }
+        }
+        console.log(dateObj);
         // var type1 = type.split('-').join('');
         this.dataSelect = [];
         for (const items of val) {
-            if (this.timestampToTime1(items.timestamp) === type) {
+            if (Number(dateObj[0]) === Number(dateObj[1])) {
+                console.log(1111111);
+                if (Number(dateObj[0]) === Number(items.timestamp)) {
+                    console.log(222222);
+                    this.dataSelect.push(items);
+                }
+            } else if (Number(dateObj[0]) < Number(items.timestamp) < Number(dateObj[1])) {
+                console.log(33333);
                 this.dataSelect.push(items);
-                // console.log(this.dataSelect);
+            } else {
+                console.log(4444444);
+                this.dataSelect = [];
             }
         }
         this.grossValue = this.dataSelect;
         this.dataArrObjEvent();
+        console.log(this.grossValue);
     },
     selectDisplay1 (type, val) {
         this.dataSelect1 = [];
@@ -246,6 +270,7 @@ module.exports = {
             cmd: 'onAssetRecordsTable',
             cb: function (arg) {
                 if (arg.num === 0) {
+                    console.log(arg);
                     that.selectDisplay(arg.name, that.readyAlldata);
                 } else if (arg.num === 1) {
                     that.currencyValue = arg.name;
@@ -389,6 +414,7 @@ module.exports = {
             allHistoryList.sort(function (a, b) {
                 return b.timestamp - a.timestamp;
             });
+            console.log(list, 1111111111111111111);
         }
         // 提币
         if (walletLog['2'] && walletLog['2'].length > 0) {
@@ -423,7 +449,7 @@ module.exports = {
             allHistoryList.sort(function (a, b) {
                 return b.timestamp - a.timestamp;
             });
-            console.log(allHistoryList, '22222222222222222222222222222');
+            console.log(list, '22222222222222222222222222222');
         }
         // 划转
         if (walletLog['4'] && walletLog['4'].length > 0) {
@@ -570,7 +596,7 @@ module.exports = {
             allHistoryList.sort(function (a, b) {
                 return b.timestamp - a.timestamp;
             });
-            console.log(allHistoryList, '3333333333333333333333333');
+            console.log(list, '3333333333333333333333333');
         }
         // 其他
         if (this.type === '04' && walletLog['5'] && walletLog['5'].length > 0) {
@@ -602,6 +628,7 @@ module.exports = {
             allHistoryList.sort(function (a, b) {
                 return b.timestamp - a.timestamp;
             });
+            console.log(list, 555555555555);
         } else if (walletLog['5'] && walletLog['5'].length > 0) {
             // eslint-disable-next-line prefer-const
             let list = [];
@@ -738,7 +765,7 @@ module.exports = {
             allHistoryList.sort(function (a, b) {
                 return b.timestamp - a.timestamp;
             });
-            console.log(allHistoryList, '444444444444444444444444444');
+            console.log(list, '444444444444444444444444444');
         }
         // eslint-disable-next-line no-empty
         if (this.type === '06' && walletLog['5'] && walletLog['5'].length) {
@@ -773,6 +800,7 @@ module.exports = {
         this.grossValue = allHistoryList;
         this.dataObj = allHistoryList;
         this.dataSelect = allHistoryList;
+        this.dataArrObjEvent();
         m.redraw();
         console.log(this.readyAlldata, '------------------------------');
         setTimeout(() => {

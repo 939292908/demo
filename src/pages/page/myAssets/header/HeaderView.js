@@ -1,6 +1,7 @@
 const m = require('mithril');
 
 require('@/styles/pages/Myassets/header.scss');
+// const Header = require('@/pages/page/myAssets/header/HeaderIndex');
 
 module.exports = function (props, vnode) {
     const { Header } = props;
@@ -17,22 +18,6 @@ module.exports = function (props, vnode) {
             onclick: function () {
                 Header.toPage('assetRecords');
             }
-        }, ['资金记录'])
+        }, ['资产记录'])
     ]);
-    // return m('div', { class: 'views-pages-myassets-header pl-3 tabs' }, [
-    //     m('ul', {}, [
-    //         m('li', {
-    //             class: (vnode.attrs.highlightFlag === 0 ? 'is-active ' : '') + 'header-my pt-3 cursor-pointer',
-    //             onclick: function () {
-    //                 Header.toPage('myWalletIndex');
-    //             }
-    //         }, m('a', {}, '我的资产')),
-    //         m('li', {
-    //             class: (vnode.attrs.highlightFlag === 1 ? 'is-active ' : '') + 'header-record pt-3 cursor-pointer',
-    //             onclick: function () {
-    //                 Header.toPage('assetRecords');
-    //             }
-    //         }, m('a', { style: { color: '#9A9EAC' } }, '资金记录'))
-    //     ])
-    // ]);
 };

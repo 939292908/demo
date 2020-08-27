@@ -23,11 +23,6 @@ m.route(document.querySelector('body .route-box'), defaultRoutePath, {
             return import('@/pages/page/login/forgetPassword/forgetPasswordView');
         }
     },
-    // '/myWalletIndex': {
-    //     onmatch: function () {
-    //         return import('@/views/pages/Myassets/myWalletIndex');
-    //     }
-    // },
     '/myWalletIndex': {
         onmatch: function() {
             return import('@/pages/page/myAssets/myWalletIndex/MyWalletIndex');
@@ -35,8 +30,11 @@ m.route(document.querySelector('body .route-box'), defaultRoutePath, {
     },
     '/assetRecords': {
         onmatch: function () {
-            return import('@/views/pages/Myassets/assetRecords/index');
+            return import('@/pages/page/myAssets/assetRecords/index');
         }
+    },
+    '/extractCoin': {
+        onmatch: () => import('@/pages/page/extractCoin/index')
     }
 });
 

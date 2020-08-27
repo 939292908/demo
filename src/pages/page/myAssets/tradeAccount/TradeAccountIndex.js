@@ -1,4 +1,4 @@
-// import broadcast from '@/broadcast/broadcast';
+
 const m = require('mithril');
 const broadcast = require('@/broadcast/broadcast');
 
@@ -11,7 +11,7 @@ const tradingAccount = {
     // 01：合约账户，02：币币账户，04：法币账户
     pageFlag: 1,
     setPageFlag: function (param) {
-        // console.log('nzm', 'setPageFlag......', 'param--', param);
+        console.log('nzm', 'setPageFlag......', 'param--', param);
         this.pageFlag = param;
     },
     oldValue: 1,
@@ -42,10 +42,11 @@ module.exports = {
     },
     onupdate: function (vnode) {
         // false：通过交易tab进来
-        if (tradingAccount.oldValue !== vnode.attrs.idx) { // 作用：不与导航点击冲突
+        if (tradingAccount.oldValue !== vnode.attrs.idx) {
             tradingAccount.setPageFlag(vnode.attrs.idx);
             m.redraw();
         }
+        // vnode.attrs.name = tradingAccount.pageFlag;
         tradingAccount.setOldValue(vnode.attrs.idx);
     },
     onremove: function () {

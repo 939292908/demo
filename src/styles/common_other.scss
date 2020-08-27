@@ -62,7 +62,7 @@
     }
 }
 
-// hover提示 组件
+// hover 提示消息
 .my-tooltip {
     .bdb-dashed {
         // 下边框-虚线
@@ -129,6 +129,9 @@
 
 // modal弹框 组件
 .my-modal {
+    &.theme--light {
+        background-color: initial;
+    }
     .modal-card {
         width: 448px;
     }
@@ -148,6 +151,48 @@
         border: none;
         .button {
             width: 100%;
+        }
+    }
+}
+
+// 下拉组件
+.my-dropdown {
+    width: 100%;
+    .dropdown-trigger {
+        width: 100%;
+        .button {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+    }
+    .dropdown-menu {
+        width: 100%;
+        // has-hover has-active
+        .dropdown-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            &.has-hover:hover,
+            &.has-active {
+                color: var(--c-primary-lighten);
+            }
+        }
+    }
+}
+
+// 表单样式
+.my-form {
+    .form-item {
+        padding-bottom: var(--c-padding-level6);
+        .form-item-title {
+            font-size: var(--c-fontsz-level4);
+            color: var(--c-font-lighten);
+            padding-bottom: var(--c-padding-level2);
+        }
+        .form-item-content {
+
         }
     }
 }
