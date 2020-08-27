@@ -1,7 +1,8 @@
 const m = require('mithril');
-const InputWithComponent = require('../inputWithComponent/inputWithComponentView');
 const AreaCodeSelect = require('./areaCodeSelectModel');
 const I18n = require('@/languages/I18n').default;
+
+import('./areaCodeSelectModel.css');
 
 module.exports = {
     oninit(vnode) {
@@ -44,7 +45,7 @@ module.exports = {
                 }, [
                     m('span', {}, [`+${vnode.attrs.areaCode}`]),
                     m('span.icon.is-small', {}, [
-                        m('i.fas.fa-angle-down', {
+                        m('i.iconfont.icon-xiala', {
                             'aria-hidden': true
                         }, [])
                     ])
@@ -59,8 +60,12 @@ module.exports = {
             }, [
                 m('div.dropdown-content.pa-0.views-page-login-area-code-select-box', {},
                     m('div.pa-5', {}, [
-                        m(InputWithComponent, {
-                            options: {
+                        m('div.control.has-icons-left', {}, [
+                            m('span.icon.is-left.area-code-select-model-search-icon', {}, [
+                                m('i.iconfont.icon-Search', {}, [])
+                            ]),
+                            m('input.input', {
+                                placeholder: '搜索',
                                 oninput: e => {
                                     AreaCodeSelect.search = e.target.value;
                                     AreaCodeSelect.showList = AreaCodeSelect.showList = vnode.attrs.selectList.filter(
@@ -70,8 +75,8 @@ module.exports = {
                                     );
                                 },
                                 value: AreaCodeSelect.search
-                            }
-                        }, [])
+                            }, [])
+                        ])
                     ]),
                     m('div.views-page-login-area-code-select-content', {}, list)
                 )
