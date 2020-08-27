@@ -22,8 +22,8 @@ module.exports = function (props, vnode) {
                 ])
             ]),
             m('div.fundRecords mr-7', {}, [
-                m('img', { }),
-                m('span', ['资金记录'])
+                m('img', { src: require('@/assets/img/myAssets/assetRecord.svg').default, style: { width: '14px', height: '16px' } }),
+                m('span', [`资金记录`])
             ]),
             m('div.profit', { style: { display: vnode.attrs.typeData === 'contractData' ? '' : 'none' } }, [
                 m('img', {}),
@@ -32,7 +32,7 @@ module.exports = function (props, vnode) {
             m('div.account', { style: { display: vnode.attrs.typeData !== 'walletData' ? '' : 'none' } }, [
                 m('span', {}, t.accountTitle),
                 m('span', {}, '  '),
-                m('span', {}, t.accountBanlance + t.currency)
+                m('span', {}, t.accountBanlance)
             ])
         ]),
         m('div.tab', { class: 'pb-7 border-radius-medium' },
