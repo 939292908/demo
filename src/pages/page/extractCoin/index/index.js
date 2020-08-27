@@ -7,9 +7,15 @@
  * @FilePath: \website-project\src\pages\page\extractCoin\index.js
  */
 const m = require("mithril");
-
+const Header = require('../../myAssets/header/HeaderIndex');
+require('./index.scss');
 module.exports = {
     view: function () {
-        return m('div', 'woqbdqwkwdnq');
+        return m('div', { class: `page-extract-Coin-index content-width` }, [
+            m(Header),
+            m('div.theme--light', [
+                m('div')
+            ])
+        ]);
     }
 };

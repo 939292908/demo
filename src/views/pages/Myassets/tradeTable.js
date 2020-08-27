@@ -137,6 +137,31 @@ const t = {
     setDataLength: function (param) {
         t.dataLength = param;
     }
+    // DelayDataAcquisition: function(vnode) {
+    //     t.initTableData();
+    //     t.initColumnData();
+    //     if (vnode.attrs.type === 'coinColumnData') {
+    //         t.setDataLength(t.tableData.coinData.length);
+    //         t.setAccountTitle('币币账户');
+    //         t.setAccountBanlance(wlt.coinTotalValueForBTC);
+    //     } else if (vnode.attrs.type === 'legalColumnData') {
+    //         t.setDataLength(t.tableData.legalData.length);
+    //         t.setAccountTitle('法币账户');
+    //         t.setAccountBanlance(wlt.legalTotalValueForBTC);
+    //     } else if (vnode.attrs.type === 'contractColumnData') {
+    //         t.setDataLength(t.tableData.contractData.length);
+    //         t.setAccountTitle('合约账户');
+    //         t.setAccountBanlance(wlt.contractTotalValueForBTC);
+    //     } else {
+    //         t.setDataLength(t.tableData.walletData.length);
+    //     }
+    //     if (t.dataLength === 0) {
+    //         document.getElementsByTagName('table')[0].rows[document.getElementsByTagName('table')[0].rows.length - 1].style.display = '';
+    //     } else {
+    //         document.getElementsByTagName('table')[0].rows[document.getElementsByTagName('table')[0].rows.length - 1].style.display = 'none';
+    //     }
+    //     m.redraw();
+    // }
 };
 
 module.exports = {
@@ -151,6 +176,8 @@ module.exports = {
         t.hideZeroFlag = false;
     },
     oncreate(vnode) {
+        // ！！！！
+        // wlt.init();
         setTimeout(() => {
             t.initTableData();
             t.initColumnData();
@@ -250,6 +277,7 @@ module.exports = {
         ]);
     },
     onremove: function () {
+        // wlt.remove();
         broadcast.offMsg({
             key: 'view-pages-Myassets-TablegB',
             isall: true

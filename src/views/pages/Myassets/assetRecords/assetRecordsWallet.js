@@ -7,50 +7,34 @@ module.exports = {
         assetRecordsTable.type = '03';
         assetRecordsTable.oninit();
         console.log('lm', assetRecordsTable.grossValue);
-        // assetRecordsTable.dataArrObjEvent();
-        console.log('lm', assetRecordsTable.dataArrObjEvent());
+        console.log(assetRecordsTable.datadisplayvalue);
     },
     view () {
         return m('div', { class: 'views-pages-Myassets-assetRecords-assetRecordsWallet mt-7 px-4' }, [
             m(commonSelectionBox, { num: '03' }),
             m('div', {}, [
-                // m('table', { class: 'mb-4' }, [
-                //     m('tbody', { class: 'tbody' }, [
-                //         assetRecordsTable.dataArrObj.map(items => {
-                //             return m('tr', { class: 'has-text-level-2 border-radius-small body-4' }, [
-                //                 m('td', {}, [items.category]),
-                //                 m('td', {}, [items.type]),
-                //                 m('td', {}, [items.num]),
-                //                 m('td', {}, [items.ServiceCharge]),
-                //                 m('td', {}, [items.state]),
-                //                 m('td', {}, [items.time]),
-                //                 m('td', { style: 'width:100px' }, [items.remarks])
-                //             ]);
-                //         })
-                //     ])
-                // ]),
-                m('table', {}, [
-                    m('tbody', { class: 'tbody' }, [
+                m('table', { style: 'height:436px;width: 100%;' }, [
+                    m('tbody', { class: (assetRecordsTable.datadisplayvalue === 1 ? '' : 'datadisplay') + ' tbody' }, [
                         assetRecordsTable.dataArrObj.map(items => {
-                            return m('tr', { class: 'has-text-level-2 border-radius-small body-4' }, [
+                            return m('tr', { class: 'has-text-level-2 body-4 pb-3' }, [
                                 m('td', {}, [items.category]),
-                                m('td', {}, [items.type]),
-                                m('td', {}, [items.num]),
-                                m('td', {}, [items.ServiceCharge]),
-                                m('td', {}, [items.state]),
-                                m('td', {}, [items.time]),
-                                m('td', { style: 'width:100px' }, [items.remarks])
+                                m('td.px-8 pb-4', {}, [items.type]),
+                                m('td.px-8 pb-4', {}, [items.num]),
+                                m('td.px-7 pb-4', {}, [items.ServiceCharge]),
+                                m('td.px-7 pb-4', {}, [items.state]),
+                                m('td.px-8 pb-4', {}, [items.time]),
+                                m('td', { class: 'tbodytd' }, [items.remarks])
                             ]);
                         }),
                         assetRecordsTable.grossValue.map((item, index) => {
-                            return m('tr', { class: 'pb-7 body-4' }, [
+                            return m('tr', { class: 'body-4' }, [
                                 m('td', {}, [item.wType]),
-                                m('td', {}, [item.status]),
-                                m('td', {}, [item.num]),
-                                m('td', {}, [item.num]),
-                                m('td', {}, [item.stat]),
-                                m('td', {}, [item.time]),
-                                m('td', { class: 'has-text-primary cursor-pointer ', style: 'width:100px;' }, [
+                                m('td.px-8 pb-7', {}, [item.status]),
+                                m('td.px-8 pb-7', {}, [item.num]),
+                                m('td.px-7 pb-7', {}, [item.num]),
+                                m('td.px-7 pb-7', {}, [item.stat]),
+                                m('td.px-8 pb-7', {}, [item.time]),
+                                m('td', { class: 'has-text-primary cursor-pointer tbodytd' }, [
                                     m('div', { class: 'dropdown is-right is-active' }, [
                                         m('div', {
                                             class: 'dropdown-trigger',
@@ -59,12 +43,12 @@ module.exports = {
                                             }
                                         }, [
                                             m('span', { ariaHaspopup: 'true', ariaControls: 'dropdown-menu6' }, ['详情']),
-                                            m('span', { class: 'icon is-small' }, [
-                                                m('i', { class: 'fas fa-angle-down', ariaHidden: 'true' }, [])
+                                            m('span', { class: '' }, [
+                                                m('i', { class: 'iconfont ' + (assetRecordsTable.displayValue === index && assetRecordsTable.noDisplay ? 'icon-xiala' : 'icon-xiala'), ariaHidden: 'true' })
                                             ])
                                         ]),
                                         m('div', { class: assetRecordsTable.displayValue === index && assetRecordsTable.noDisplay ? 'dropdown-menu' : 'dropdown-menu1', id: 'dropdown-menu6', role: 'menu' }, [
-                                            m('div', { class: 'dropdown-content' }, [
+                                            m('div', { class: 'dropdown-content', style: 'width:1170px' }, [
                                                 m('div', { class: 'dropdown-item' }, [
                                                     m('div', { class: '' }, [
                                                         m('div', { class: 'mb-3' }, [
@@ -83,7 +67,8 @@ module.exports = {
                                 ])
                             ]);
                         })
-                    ])
+                    ]),
+                    m('div', { class: assetRecordsTable.datadisplayvalue === 0 ? 'disdatadisplay' : 'datadisplay' + ' ' }, ['暂无数据'])
                 ])
             ])
         ]);
