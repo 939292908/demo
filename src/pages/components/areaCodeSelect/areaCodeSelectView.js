@@ -2,7 +2,7 @@ const m = require('mithril');
 const AreaCodeSelect = require('./areaCodeSelectModel');
 const I18n = require('@/languages/I18n').default;
 
-import('./areaCodeSelectModel.css');
+import('./areaCodeSelect.css');
 
 module.exports = {
     oninit(vnode) {
@@ -61,7 +61,7 @@ module.exports = {
                 m('div.dropdown-content.pa-0.views-page-login-area-code-select-box', {},
                     m('div.pa-5', {}, [
                         m('div.control.has-icons-left', {}, [
-                            m('span.icon.is-left.area-code-select-model-search-icon', {}, [
+                            m('span.icon.is-left.area-code-select-search-icon', {}, [
                                 m('i.iconfont.icon-Search', {}, [])
                             ]),
                             m('input.input', {

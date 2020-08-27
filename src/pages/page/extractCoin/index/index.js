@@ -7,7 +7,7 @@
  * @FilePath: \website-project\src\pages\page\extractCoin\index.js
  */
 const m = require("mithril");
-const Header = require('../../myAssets/header/HeaderIndex');
+const Header = require('../../myAssets/header/HeaderView');
 require('./index.scss');
 module.exports = {
     view: function () {
