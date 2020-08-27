@@ -1,5 +1,6 @@
 let functions = {};
 let forexRate = {};
+let account = {};
 module.exports = {
     getFunctions() {
         return functions;
@@ -12,5 +13,11 @@ module.exports = {
     },
     setForexRate(val) {
         forexRate = val;
+    },
+    getAccount() {
+        return account;
+    },
+    setAccount(val) {
+        account = val;
     }
 };
