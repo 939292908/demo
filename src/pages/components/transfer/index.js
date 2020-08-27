@@ -1,4 +1,5 @@
 var m = require("mithril");
+require('./style.scss');
 // const I18n = require('@/languages/I18n').default;
 // const Modal = require('@/pages/components/common/Modal');
 const Dropdown = require('@/pages/components/common/Dropdown');
@@ -303,56 +304,113 @@ const Dropdown = require('@/pages/components/common/Dropdown');
 //         // });
 //     }
 // };
-const { model, oninit, oncreate, onremove, onupdate } = require('./model');
+// const { data, methods, oninit, oncreate, onremove, onupdate } = require('./model');
+const model = require('./model');
 
 module.exports = {
-    oninit,
-    oncreate,
-    onremove,
-    onupdate,
+    oninit: vnode => model.oninit(vnode),
+    oncreate: vnode => model.oncreate(vnode),
+    onremove: vnode => model.onremove(vnode),
+    onupdate: vnode => model.onupdate(vnode),
     view () {
-        return m('div', { class: `my-form` }, [
+        return m('div', { class: `my-form my-transfer` }, [
+            // 币种
             m('div', { class: `form-item` }, [
                 m('div', { class: `form-item-title` }, [
                     '币种'
                 ]),
                 m('div', { class: `form-item-content` }, [
                     m(Dropdown, {
-                        activeId: cb => cb(model, 'dropdownActive'),
-                        showMenu: model.showMenu,
-                        setShowMenu: type => (model.showMenu = type),
+                        evenKey: `myDropdown${Math.floor(Math.random() * 10000)}`,
+                        activeId: cb => cb(model.form, 'coin'),
+                        showMenu: model.showMenuCurrency,
+                        setShowMenu: type => {
+                            model.showMenuCurrency = type;
+                        },
                         onClick (itme) {
-                            console.log(itme, model.dropdownActive);
+                            console.log(itme, model.form.coin);
                         },
                         getList () {
-                            return [
-                                {
-                                    id: 1,
-                                    label: "11"
-                                },
-                                {
-                                    id: 2,
-                                    label: "22"
-                                },
-                                {
-                                    id: 3,
-                                    label: "33"
-                                }
-                            ];
+                            return model.canTransferCoin;
                         }
                     })
                 ])
             ]),
+            // 钱包
+            m('div', { class: `columns` }, [
+                // 从
+                m('div', { class: `form-item column is-5` }, [
+                    m('div', { class: `form-item-title has-text-level-4` }, [
+                        '从'
+                    ]),
+                    m('div', { class: `form-item-content` }, [
+                        m(Dropdown, {
+                            evenKey: `myDropdown${Math.floor(Math.random() * 10000)}`,
+                            activeId: cb => cb(model.form, 'transferFrom'),
+                            showMenu: model.showMenuFrom,
+                            setShowMenu: type => {
+                                model.showMenuFrom = type;
+                            },
+                            onClick (itme) {
+                                console.log(itme, model.form.transferFrom);
+                                model.initFromAndToWalletListByValue(); // 初始化 2个钱包下拉列表 （依赖钱包value）
+                            },
+                            getList () {
+                                return model.fromWltList;
+                            }
+                        })
+                    ])
+                ]),
+                // 切换
+                m('div', { class: `column is-align-items-center` }, [
+                    m('span', {
+                        class: `has-text-level-4 cursor-pointer`,
+                        onclick() {
+                            model.handlerSwitchClick();
+                        }
+                    }, "切换")
+                ]),
+                // 到
+                m('div', { class: `form-item column is-5` }, [
+                    m('div', { class: `form-item-title has-text-level-4` }, [
+                        '到'
+                    ]),
+                    m('div', { class: `form-item-content` }, [
+                        m(Dropdown, {
+                            evenKey: `myDropdown${Math.floor(Math.random() * 10000)}`,
+                            activeId: cb => cb(model.form, 'transferTo'),
+                            showMenu: model.showMenuTo,
+                            setShowMenu: type => {
+                                model.showMenuTo = type;
+                            },
+                            onClick (itme) {
+                                console.log(itme, model.form.transferTo);
+                                model.initFromAndToWalletListByValue(); // 初始化 2个钱包下拉列表 （依赖钱包value）
+                            },
+                            getList () {
+                                return model.toWltList;
+                            }
+                        })
+                    ])
+                ])
+            ]),
+            // 数量
             m('div', { class: `form-item` }, [
                 m('div', { class: `form-item-title` }, [
                     '数量'
                 ]),
-                m('div', { class: `form-item-content` }, [
-                    m('input', { class: `input` })
+                m('div', { class: `form-item-content form-item-content-btns` }, [
+                    m('input', { class: `input`, placeholder: '请输入划转数量' }),
+                    m('div', { class: `btns-box pr-3` }, [
+                        m('span', { class: `pr-2` }, 'BTC'),
+                        m('span', { class: `cursor-pointer has-text-primary` }, '全部')
+                    ])
+                ]),
+                m('div', { class: `has-text-level-4 pt-2` }, [
+                    '可用: 0 BTC'
                 ])
             ])
             // m('div', { class: `` }, JSON.stringify(model.wallet)),
-
         ]);
     }
 };
