@@ -15,7 +15,7 @@ module.exports = function (props) {
             m('div', { class: `has-text-centered mt-4` }, [
                 m('a', { class: `has-text-level-2`, href: "http://localhost:8080/#!/register", target: "_blank" }, ['还没账号？立即前往账号注册 →'])
             ]),
-            m('div', { class: `top-bottom-box mt-8 container` }, [
+            m('div', { class: `top-bottom-box mt-8 container is-hidden-mobile` }, [
                 // 轮播
                 m('div', { class: `top-banner` }, [
                     banneList.length > 0 ? m(Slideshow, { banneList }) : null

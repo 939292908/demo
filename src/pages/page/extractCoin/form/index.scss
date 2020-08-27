@@ -1,0 +1,87 @@
+.page-extract-coin-from {
+  padding: 32px 64px;
+
+  .form-block {
+    width: 384px;
+
+    .formModule {
+      margin-bottom: 32px;
+
+      .label {
+        line-height: 20px;
+        margin-bottom: 8px;
+      }
+      .select select{ // 币中选择
+        border-radius: 2px;
+        color: var(--c-font-lighten1);
+        font-size: 14px;
+      }
+
+      .line-label input.input { // 标签 名
+        border-radius: 2px;
+        color: var(--c-font-lighten3);
+      }
+
+      .dis-flex { // 链名称
+        display: flex;
+
+        .butItem {
+          padding: 4px 12px;
+          color: #FF8B00;
+          border-radius: 4px;
+          border: 1px solid #FF8B00;
+          margin-right: 20px;
+
+          div {
+            height: 20px;
+            line-height: 20px;
+          }
+        }
+        .butItem.butItemActive {
+          background-color: #FF8B00;
+          color: #ffffff;
+        }
+      }
+      .item-space {
+        justify-content: space-between;
+      }
+
+      .address input.input { // 提币地址
+        color: #1E2846;
+      }
+
+      .extract-num { // 提取数量
+        margin-bottom: 4px;
+      }
+
+      .charge { //  手续费
+        color: #9A9EAC;
+        height: 17px;
+        line-height: 17px;
+      }
+
+      .errorToTal { // 错误提示
+        color: #F33309;
+        padding-top: 8px;
+      }
+    }
+  }
+
+  .promptText {
+    padding-top: 32px;
+    color: var(--c-font-lighten3);
+
+    .promptTitle {
+      line-height: var(--c-fontsz-level4);
+      margin-bottom: 8px;
+    }
+
+    .rulesText {
+      line-height: 20px;
+      margin-bottom: 4px;
+    }
+    .rulesText:last-child {
+      margin-bottom: 0px;
+    }
+  }
+}

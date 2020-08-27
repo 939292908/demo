@@ -13,7 +13,9 @@ module.exports = {
     view: function () {
         return m('div', { class: 'views-pages-home-introduce ' }, [
             // 1. 平台介绍 模块
-            m('div', { class: `introduce-box ` }, [
+            // m('div', { class: `introduce-box ` }, [
+            m('div', { class: ` `, style: `background: url(${require("@/assets/img/home/layer_14.png").default}) no-repeat center center / 100% 100%;` }, [
+                // m('div', { class: `introduce-box `, style: `background: url(${require("@/assets/vimg/home/vector.png").default}) no-repeat center center / 100% 100%;` }, [
                 // 内容
                 m('div', { class: `container pl-8` }, [
                     m('div', { class: `pt-8 title-x-large` }, [
@@ -25,7 +27,7 @@ module.exports = {
                     m('div', { class: `introduce-div` }, [])
                 ]),
                 // 蒙板
-                m('div', { class: `  has-mode` })
+                m('div', { class: ` introduce-box-masking  has-mode` })
             ]),
             // 2. 交易之旅 模块
             m('div', { class: `introduce-transaction container` }, [
@@ -50,12 +52,12 @@ module.exports = {
                     m('div', { class: `pl-8` }, [
                         // Android 按钮
                         m('a', { class: `Android-button button is-info is-inverted is-outlined download-ios mr-4 ml-7 `, target: "_blank", href: "https://vbit.me/m#/downloadApp" }, [
-                            m('img', { class: 'pr-2', src: require("@/assets/img/home/Android.png").default }),
+                            m('i', { class: "iconfont icon-android-fill mr-2" }),
                             m('span', { class: `title-small font-weight-regular` }, "Android")
                         ]),
                         // iOS 按钮
                         m('a', { class: `IOS-button button is-info is-inverted is-outlined download-iOS`, target: "_blank", href: "https://vbit.me/m#/downloadApp" }, [
-                            m('img', { class: 'pr-2', src: require("@/assets/img/home/iOS.png").default }),
+                            m('i', { class: "iconfont icon-apple mr-2" }),
                             m('span', { class: `title-small font-weight-regular` }, 'IOS')
                         ])
                     ])

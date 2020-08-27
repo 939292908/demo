@@ -20,8 +20,8 @@ module.exports = {
         return m('div.views-pages-home-picture', {
         }, [
             // 大图
-            m('div', { class: `home-picture container` }, [
-                m('img', { class: 'picture-layer', src: require("@/assets/img/home/layer-4.png").default }),
+            m('div', { class: `home-picture container is-hidden-mobile` }, [
+                m('img', { class: 'picture-layer ', src: require("@/assets/img/home/layer-4.png").default }),
                 // 轮播2
                 m('div', { class: `rotationtwo-content container mt-7` }, [
                     Object.keys(market.tickData).length > 0 ? m(Slideshow, { list: market.tickData }) : null
