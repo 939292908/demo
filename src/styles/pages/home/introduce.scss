@@ -37,10 +37,6 @@
 
 @media screen and (min-width: 320px) and (max-width: 480px) {
     .views-pages-home-introduce {
-        .introduce-box {}
-
-        .introduce-box-masking {}
-
         .introduce-transaction {
             .home-introduce-Rectangle {
                 border-radius: 0;
@@ -49,41 +45,9 @@
                 display: flex;
                 flex-direction: column;
                 justify-content: start;
-
-                .download-title-1 {
-                    padding-top: var(--c-padding-level10) !important;
-                    padding-right: var(--c-padding-level0) !important;
-                }
-
                 .home-picture-vbit {
                     left: 16%;
                 }
-            }
-        }
-
-
-        .download-information-title1 {
-            margin: var(--c-margin-level0) !important;
-            // width: 300px;
-        }
-
-        .download-information-title2 {
-            margin-bottom: var(--c-margin-level6);
-            font-size: var(--c-fontsz-level6);
-        }
-
-        .download-btns-box {
-            display: flex;
-            flex-direction: column;
-            padding-left: var(--c-padding-level0) !important;
-
-            .download-Android-button {
-                margin-bottom: var(--c-margin-level7);
-                // margin-left: var(--c-margin-level7);
-            }
-
-            .download-iOS-button {
-                margin-bottom: var(--c-margin-level7);
             }
         }
     }

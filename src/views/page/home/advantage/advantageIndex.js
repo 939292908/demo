@@ -9,8 +9,8 @@ require('@/styles/pages/home.css');
 module.exports = {
     view: function () {
         return m('div.views-pages-home-advantage.theme--light advantage-div mt-7', {}, [
-            m('div', { class: `container introduce-item has-bg-level-2` }, [
-                m('div', { class: `mt-7 w container py-8 border-1 columns` }, [
+            m('div', { class: `container introduce-item` }, [
+                m('div', { class: `mt-7 w container py-8 border-1 columns ${utils.isMobile() ? 'has-bg-level-2' : ''}` }, [
                     // 平台优势
                     // 1
                     m('div', { class: `introduce-item column is-3 mt-7` }, [
