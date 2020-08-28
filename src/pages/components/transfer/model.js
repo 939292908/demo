@@ -1,5 +1,6 @@
 const wlt = require('@/models/wlt/wlt');
 const I18n = require('@/languages/I18n').default;
+const Http = require('@/api').webApi;
 
 const model = {
     showCurrencyMenu: false, // show币种菜单
@@ -194,7 +195,6 @@ const model = {
         } else {
             this.form.maxTransfer = "--";
         }
-        console.log(666);
     },
     // 提交
     submit () {
@@ -210,7 +210,24 @@ const model = {
         }
         model.setMaxTransfer(); // 设置 最大划转
         // api
-        console.log("我提交了", this.form, 666);
+        Http.postTransfer(model.form).then(res => {
+            if (res.result.code === 0) {
+                window.$message({ content: I18n.$t('10224'/* '划转成功！' */), type: 'success' });
+                model.form.num = '';
+                model.initFromAndToValueByAuthWalletList(); // 2. 钱包value  初始化
+            } else {
+                // 往法币划转
+                if (Number(res.result.code) === 9040) {
+                    // 提示弹框
+                    window.$message({ title: I18n.$t('10037'/* "提示" */), content: "法币划转提示", type: 'danger' });
+                    // obj.isShowModal = true
+                }
+                window.$message({ title: I18n.$t('10037'/* "提示" */), content: res.result.msg, type: 'danger' });
+            }
+        }).catch(err => {
+            console.log(err);
+        });
+        // console.log("我提交了", this.form, 666);
     },
     // 币种 菜单配置
     getCurrencyMenuOption() {
