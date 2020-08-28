@@ -1,6 +1,6 @@
 const m = require('mithril');
 const broadcast = require('@/broadcast/broadcast');
-const TradeAccountChildrenView = require('@/pages/page/myAssets/myWalletIndex/children/tradeAccountChildren/TradeAccountChildrenView');
+const TradeAccountChildrenView = require('@/Views/page/myAssets/myWalletIndex/children/tradeAccountChildren/TradeAccountChildrenView');
 
 module.exports = {
     // 01：合约账户，02：币币账户，04：法币账户

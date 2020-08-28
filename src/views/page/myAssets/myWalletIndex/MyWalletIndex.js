@@ -1,15 +1,15 @@
 const m = require('mithril');
 const wlt = require('@/models/wlt/wlt');
 const broadcast = require('@/broadcast/broadcast');
-const TradeAccountView = require('@/pages/page/myAssets/myWalletIndex/children/tradeAccount/TradeAccountView');
-const TradeAccountChildrenView = require('@/pages/page/myAssets/myWalletIndex/children/tradeAccountChildren/TradeAccountChildrenView');
+const TradeAccountView = require('@/Views/page/myAssets/myWalletIndex/children/tradeAccount/TradeAccountView');
+const TradeAccountChildrenView = require('@/Views/page/myAssets/myWalletIndex/children/tradeAccountChildren/TradeAccountChildrenView');
 let timeOut = null;
 
 module.exports = {
     // 资金划转弹框 模块
     transferModal: {
         // 弹窗状态
-        isShow: true,
+        isShow: false,
         // 关闭弹窗
         closeMe() {
             this.transferModal.isShow = false;

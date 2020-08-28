@@ -1,6 +1,6 @@
 const m = require('mithril');
-const t = require('@/pages/page/myAssets/myWalletIndex/children/tradeTable/TradeTableIndex');
-require('@/styles/pages/Myassets/tradeTable.scss');
+const t = require('@/views/page/myAssets/myWalletIndex/children/tradeTable/TradeTableIndex');
+require('@/views/page/myAssets/myWalletIndex/children/tradeTable/TradeTable.scss');
 
 module.exports = {
     oncreate: (vnode) => {

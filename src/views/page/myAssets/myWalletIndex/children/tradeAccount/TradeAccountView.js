@@ -1,6 +1,6 @@
 const m = require('mithril');
-const TradeAccountIndex = require('@/pages/page/myAssets/myWalletIndex/children/tradeAccount/TradeAccountIndex');
-require('@/styles/pages/Myassets/tradingAccount.scss');
+const TradeAccountIndex = require('@/Views/page/myAssets/myWalletIndex/children/tradeAccount/TradeAccountIndex');
+require('@/Views/page/myAssets/myWalletIndex/children/tradeAccount/TradingAccount.scss');
 
 module.exports = {
     oninit: () => {

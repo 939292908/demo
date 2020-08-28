@@ -1,0 +1,79 @@
+.views-pages-myassets-myWalletIndex{
+    margin: auto;
+    .columns-flex{
+        display: flex;
+        flex-wrap: wrap;
+    }
+    .myWalletIndex-head{
+        .myWalletIndex-head-left{
+            .myWalletIndex-head-left-total{
+                div{
+                    .showSel{
+                        buttoon,i{
+                            vertical-align:middle;
+                        }
+                    }
+                    button{
+                        background:none;
+                        outline: none;
+                        border: none;
+                        width: 35px;
+                    }
+                    ul{
+                        li{
+                            width: 100px;
+                            height: 40px;
+                            line-height: 40px;
+                        }
+                        z-index: 999;
+                        position: fixed;
+                    }
+                }
+            }
+        }
+    }
+    .myWalletIndex-switch{
+        .wallet{
+            border-radius: 4px;
+            display: flex;
+            flex-direction: column;
+        }
+        .trade{
+            display: flex;
+            .right{
+                margin-left: auto;
+                position: static;
+                .tradeCard{
+                    display: flex;
+                    flex-direction: column;
+                    z-index: 9999;
+                    position: absolute;
+                    left: 680px;
+                    span{
+                        color:#9A9EAC;
+                    }
+                }
+            }
+        }
+        .other{
+            display: flex;
+            flex-direction: column;
+        }
+        /* 背景模糊 */
+        .fuzzy{
+            background-color: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(30px);
+        }
+    }
+    .myWalletIndex-head-right div{
+        button{
+            outline: none;
+            // border: none;
+            border: 1px solid #FF8B00;
+            &.bgNone{
+                // 边框主色 规范未找到！！！
+                background:none;
+            }
+        }
+    }
+}
