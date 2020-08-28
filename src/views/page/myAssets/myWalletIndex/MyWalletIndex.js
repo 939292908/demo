@@ -2,7 +2,7 @@ const m = require('mithril');
 const wlt = require('@/models/wlt/wlt');
 const broadcast = require('@/broadcast/broadcast');
 const TradeAccountView = require('@/Views/page/myAssets/myWalletIndex/children/tradeAccount/TradeAccountView');
-const TradeAccountChildrenView = require('@/Views/page/myAssets/myWalletIndex/children/tradeAccountChildren/TradeAccountChildrenView');
+const TradeAccountChildrenView = require('@/Views/page/myAssets/myWalletIndex/tradeAccountChildren/TradeAccountChildrenView');
 let timeOut = null;
 
 module.exports = {
