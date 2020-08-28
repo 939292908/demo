@@ -3,7 +3,7 @@
 const m = require('mithril');
 const broadcast = require('@/broadcast/broadcast');
 const Http = require('@/api').webApi;
-// const Axios = require('@/newApi/config/request').default;
+// const Axios = require('@/api/config/request').default;
 const utils = require('@/util/utils').default;
 const I18n = require('@/languages/I18n').default;
 module.exports = {
