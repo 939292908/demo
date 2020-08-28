@@ -32,7 +32,7 @@ module.exports = {
                                         ])
                                     ])
                                 ]),
-                                m('div', { class: `number-hide`, style: `color:white` }, [
+                                m('div', { class: `number-hide`, style: `color:white;` }, [
                                     m('span', { class: `title-large` }, [myWalletIndex.totalValue]),
                                     m('span', { class: `title-large` }, [` ` + myWalletIndex.currency]),
                                     m('i', { class: 'iconfont icon-zichanzhengyan changeMoneyImg pl-2 cursor-pointer', onclick: () => { myWalletIndex.hideValue(); }, style: { color: '#585E71' } }),
@@ -60,7 +60,7 @@ module.exports = {
                         // 我的钱包  交易账户  其他账户
                         m('div', { class: `myWalletIndex-switch columns-flex mt-7 is-between` }, [
                             m('div.wallet border-radius-medium px-7 py-7 column cursor-pointer', {
-                                class: (myWalletIndex.swValue === 0 ? `has-bg-primary` : `has-bg-level-2`),
+                                class: (myWalletIndex.swValue === 0 ? `has-bg-primary` : `fuzzy`),
                                 onclick: () => { myWalletIndex.switchChange(0); }
                             }, [
                                 m('div', { class: `body-5 mb-1` }, [
@@ -72,7 +72,7 @@ module.exports = {
                                 ])
                             ]),
                             m('div.trade border-radius-medium px-7 py-7 mx-5 column cursor-pointer', {
-                                class: (myWalletIndex.swValue === 1 ? `has-bg-primary` : `has-bg-level-2`),
+                                class: (myWalletIndex.swValue === 1 ? `has-bg-primary` : `fuzzy`),
                                 onclick: () => { myWalletIndex.switchChange(1, `true`); }
                             }, [
                                 m('div.left', {}, [
@@ -110,7 +110,7 @@ module.exports = {
                                     ])
                                 ])
                             ]),
-                            m('div.other border-radius-medium px-7 py-7 column cursor-pointer has-bg-level-2', {}, [
+                            m('div.other border-radius-medium px-7 py-7 column cursor-pointer fuzzy', {}, [
                                 m('div', { class: `body-5 mb-1` }, [
                                     m('span', { }, `其他账户`)
                                 ]),

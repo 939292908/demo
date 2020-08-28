@@ -60,8 +60,8 @@
             flex-direction: column;
         }
         /* 背景模糊 */
-        fuzzy{
-            background: rgba(255, 255, 255, 0.85) !important;
+        .fuzzy{
+            background-color: rgba(255, 255, 255, 0.85);
             backdrop-filter: blur(30px);
         }
     }
