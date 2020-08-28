@@ -1,4 +1,4 @@
-import { webApi } from '../../newApi2';
+import { webApi } from '../../api';
 
 import I18n from '../../languages/I18n';
 import config from '@/config';

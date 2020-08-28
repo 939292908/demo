@@ -1,4 +1,4 @@
-const webApi = require('../newApi2/webApi');
+const webApi = require('../api/webApi');
 const globalModels = require('./globalModels');
 const config = require('../config');
 const broadcast = require('../broadcast/broadcast');
@@ -28,7 +28,7 @@ module.exports = {
             // 获取个人信息成功
                 broadcast.emit({ cmd: 'getUserInfo', data: data.account });
                 globalModels.setAccount(data.account);
-                window.router.push('/home');
+                // window.router.push('/home');
             } else {
                 window.$message({
                     content: errCode.getWebApiErrorCode(data.result.code),

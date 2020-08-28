@@ -128,10 +128,8 @@ module.exports = function (props) {
             onOk: myWalletIndex.transferModal.onOk, // 确认事件 // 使用默认确认按钮
             onClose: myWalletIndex.transferModal.onClose, // 关闭事件
             slot: { // 插槽
-                header: m('p', { class: `` }, [
-                    "资金划转"
-                ]),
-                body: m(Transfer)
+                header: "资金划转",
+                body: myWalletIndex.transferModal.isShow ? m(Transfer) : []
             }
         })
     ]);

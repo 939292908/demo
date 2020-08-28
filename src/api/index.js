@@ -4,7 +4,7 @@
  * @LastEditTime: 2020-08-25 20:20:20
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
- * @FilePath: \website-project\src\newApi2\index.js
+ * @FilePath: \website-project\src\api\index.js
  */
 const Conf = require('@/config');
 const webApi = require('./webApi');

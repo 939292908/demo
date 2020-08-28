@@ -4,7 +4,7 @@
  * @LastEditTime: 2020-08-19 18:00:31
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
- * @FilePath: \website-project\src\newApi\index.js
+ * @FilePath: \website-project\src\api\index.js
  */
 const API = require('./middleware').APITEXTLIST;
 const Http = require('./middleware').Http;

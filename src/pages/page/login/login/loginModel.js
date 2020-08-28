@@ -1,4 +1,4 @@
-const webApi = require('@/newApi2').webApi;
+const webApi = require('@/api').webApi;
 const m = require('mithril');
 const geetest = require('@/models/validate/geetest').default;
 const md5 = require('md5');
