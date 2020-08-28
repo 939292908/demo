@@ -682,3 +682,9 @@ $primary-lighten: #FF8B00;
     background: var(--c-background-lighten2);
     border-radius: 20px;
 }
+// 透明度
+@for $i from 0 through 9 {
+    .opacity-#{$i}{
+        opacity: var(--c-opacity-level#{$i}) !important;
+    }
+}

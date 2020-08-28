@@ -182,6 +182,19 @@ const fontweight = {
     level3: 600
 };
 
+const opacity = {
+    level0: 0,
+    level1: 0.1,
+    level2: 0.2,
+    level3: 0.3,
+    level4: 0.4,
+    level5: 0.5,
+    level6: 0.6,
+    level7: 0.7,
+    level8: 0.8,
+    level9: 0.9,
+};
+
 const styles = {
     fontsz,
     iconsz,
@@ -189,7 +202,8 @@ const styles = {
     margin,
     radius,
     fontweight,
-    button
+    button,
+    opacity
 };
 
 export default { styles, theme };
