@@ -118,7 +118,7 @@ const myWalletIndex = {
     },
     // 按钮事件
     handlerClickNavBtn (item) {
-        console.log(item);
+        console.log(item, 99999);
         if (item.id === 4) { // 点击资金划转
             this.transferModal.isShow = true;
         }
