@@ -24,8 +24,9 @@ module.exports = {
                         Register.isvalidate ? [
                             m('div.title-large.views-page-login-title.opacity',
                                 {}, [config.exchName]),
-                            m('div.mb-5.title-large.has-text-title', {},
+                            m('div.title-large.has-text-title', {},
                                 ['注册验证']),
+                            m('div.py-0.mb-7.body-3.has-text-level-3', {}, ['您正在注册账户，请完成以下验证']),
                             m('div.py-0.mb-2.has-text-level-1.body-3', {},
                                 [Register.type === 'phone' ? '手机验证码' : '邮箱验证码']),
                             m('div.control.has-icons-right.mb-6', {}, [
