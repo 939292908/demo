@@ -1,8 +1,9 @@
 const wlt = require('@/models/wlt/wlt');
+const I18n = require('@/languages/I18n').default;
 
-module.exports = {
-    showMenuCurrency: false, // show币种菜单
-    showMenuFrom: false, // show from菜单
+const model = {
+    showCurrencyMenu: false, // show币种菜单
+    showFromMenu: false, // show from菜单
     showMenuTo: false, // show to菜单
     wallets: wlt.wallet, // all数据
     form: {
@@ -40,6 +41,7 @@ module.exports = {
             label: "r"
         }
     ], // 钱包列表 到xx
+    // 初始化语言
     initLanguage () {
         this.baseWltList = [
             {
@@ -59,10 +61,6 @@ module.exports = {
                 label: '法币账户'
             }
         ];
-    },
-    // 切换按钮事件
-    handlerSwitchClick() {
-        this.initTransferInfo();
     },
     // 初始化 划转信息
     initTransferInfo () {
@@ -112,7 +110,7 @@ module.exports = {
 
         this.initWalletListByWTypeAndValue(this.form.coin); // 初始化钱包 list 和 value
 
-        // this.setMaxTransfer(); // 设置 最大划转
+        this.setMaxTransfer(); // 设置 最大划转
     },
     // 初始化钱包 list 和 value
     initWalletListByWTypeAndValue (wType) {
@@ -163,19 +161,133 @@ module.exports = {
         this.toWltList = this.authWltList.filter(item => item.id !== this.form.transferFrom);
         console.log("this.authWltList", this.authWltList, "this.fromWltList", this.fromWltList, "this.toWltList", this.toWltList);
     },
-    oninit(vnode) {
+    // 切换按钮click handler
+    handlerSwitchBtnClick () {
+        this.form.num = '';
+        this.switchTransfer(); // 2个钱包value切换
+        this.initFromAndToWalletListByValue(); // 2个钱包列表 初始化 （依赖钱包value）
+        this.setMaxTransfer(); // 设置 最大划转
+    },
+    // 数量输入框input handler
+    handlerNumOnInput (e) {
+        // console.log(e.target.value);
+        // value最小为0
+        this.form.num = Number(e.target.value) < 0 ? 0 : e.target.value;
+    },
+    // 划转全部数量click handler
+    handlerSetAllNumClick() {
+        this.form.num = this.form.maxTransfer;
+    },
+    // 钱包value切换
+    switchTransfer () {
+        [this.form.transferFrom, this.form.transferTo] = [this.form.transferTo, this.form.transferFrom];
+    },
+    // 设置 最大划转
+    setMaxTransfer () {
+        if (wlt.wallet && this.form.transferFrom) { // 所有钱包 和 从xx钱包id 都存在
+            const wallet = wlt.wallet[this.form.transferFrom]; // 对应钱包
+            for (const item of wallet) {
+                if (item.wType === this.form.coin) { // 找到对应币种
+                    this.form.maxTransfer = item.wdrawable || 0; // 设置最大可以金额
+                }
+            }
+        } else {
+            this.form.maxTransfer = "--";
+        }
+        console.log(666);
+    },
+    // 提交
+    submit () {
+        // 校验
+        if (this.form.num === '0') {
+            return window.$message({ title: I18n.$t('10037'/* "提示" */), content: I18n.$t('10221'/* '划转数量不能为0' */), type: 'danger' });
+        } else if (!this.form.num) {
+            return window.$message({ title: I18n.$t('10037'/* "提示" */), content: I18n.$t('10222'/* '划转数量不能为空' */), type: 'danger' });
+        } else if (Number(this.form.num) === 0) {
+            return window.$message({ title: I18n.$t('10037'/* "提示" */), content: I18n.$t('10221'/* '划转数量不能为0' */), type: 'danger' });
+        } else if (Number(this.form.num) > Number(this.form.maxTransfer)) {
+            return window.$message({ title: I18n.$t('10037'/* "提示" */), content: I18n.$t('10223'/* '划转数量不能大于最大可划' */), type: 'danger' });
+        }
+        // api
+        console.log("我提交了", this.form, 666);
+    },
+    // 币种 菜单配置
+    getCurrencyMenuOption() {
+        return {
+            evenKey: `myDropdown${Math.floor(Math.random() * 10000)}`,
+            activeId: cb => cb(model.form, 'coin'),
+            showMenu: model.showCurrencyMenu,
+            setShowMenu: type => {
+                model.showCurrencyMenu = type;
+            },
+            onClick (itme) {
+                // console.log(itme, model.form.coin);
+                model.setMaxTransfer(); // 设置 最大划转
+            },
+            getList () {
+                return model.canTransferCoin;
+            }
+        };
+    },
+    // 从xx钱包 菜单配置
+    getFromMenuOption() {
+        return {
+            evenKey: `myDropdown${Math.floor(Math.random() * 10000)}`,
+            activeId: cb => cb(model.form, 'transferFrom'),
+            showMenu: model.showFromMenu,
+            setShowMenu: type => {
+                model.showFromMenu = type;
+            },
+            onClick (itme) {
+                console.log(itme, model.form.transferFrom);
+                model.initFromAndToWalletListByValue(); // 初始化 2个钱包下拉列表 （依赖钱包value）
+                model.setMaxTransfer(); // 设置 最大划转
+            },
+            getList () {
+                return model.fromWltList;
+            }
+        };
+    },
+    // 到xx钱包 菜单配置
+    getToMenuOption() {
+        return {
+            evenKey: `myDropdown${Math.floor(Math.random() * 10000)}`,
+            activeId: cb => cb(model.form, 'transferTo'),
+            showMenu: model.showMenuTo,
+            setShowMenu: type => {
+                model.showMenuTo = type;
+            },
+            onClick (itme) {
+                console.log(itme, model.form.transferTo);
+                model.initFromAndToWalletListByValue(); // 初始化 2个钱包下拉列表 （依赖钱包value）
+                model.setMaxTransfer(); // 设置 最大划转
+            },
+            getList () {
+                return model.toWltList;
+            }
+        };
+    },
+    initEVBUS () {
+    },
+    rmEVBUS () {
+    },
+    oninit (vnode) {
         wlt.init();
         this.initTransferInfo();
         this.initLanguage();
     },
-    oncreate(vnode) {
+    oncreate (vnode) {
+        this.initEVBUS();
         this.initTransferInfo();
     },
-    onupdate(vnode) {
-        // console.log(this.wallets);
+    onupdate (vnode) {
+        // console.log(wlt);
         // console.log("this.authWltList", this.authWltList, "this.fromWltList", this.fromWltList, "this.toWltList", this.toWltList);
     },
-    onremove(vnode) {
+    onremove (vnode) {
         wlt.remove();
+        this.rmEVBUS();
     }
 };
+
+module.exports = model;
