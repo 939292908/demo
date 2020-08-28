@@ -516,3 +516,11 @@ export function getNotice (params = {}) {
 export function getFunList (params = {}) {
     return Http.get(API.FUN_LIST_V1, { params });
 }
+
+/**
+ * 钱包充值地址
+ * @param {*} params
+ */
+export function GetRechargeAddr (params = {}, options = { withCredentials: true }) {
+    return Http.post(API.WALLET_RECHARGE_ADDR_V1, params, options);
+}

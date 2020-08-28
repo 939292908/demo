@@ -85,6 +85,7 @@ module.exports = {
         if (type !== undefined) {
             this.wltIdx = 1;// 点击交易账户则默认显示合约
         }
+        this.sets();
     },
     switchContent: function () {
         broadcast.emit({ cmd: broadcast.CHANGE_SW_CURRENCY, data: this.currency });
@@ -103,7 +104,7 @@ module.exports = {
                 id: 1,
                 title: '充币',
                 // 跳转至哪个链接 例如：to: 'http://www.baidu.com || /chargeMoney'
-                to: '/chargeMoney'
+                to: '/recharge'
             },
             {
                 id: 2,
@@ -163,7 +164,7 @@ module.exports = {
         this.setSelectOpText(item);
         this.setCurrency(item);
         broadcast.emit({ cmd: broadcast.CHANGE_SW_CURRENCY, data: item });
-        this.DelayDataAcquisition();
+        this.sets();
     },
     // 点击除button的元素隐藏币种列表
     optionDisplay: function(event) {
@@ -192,7 +193,7 @@ module.exports = {
         // （我的钱包，交易账户，其他账户）切换内容
         this.switchContent();
     },
-    DelayDataAcquisition: function () {
+    sets: function () {
         this.currency === 'BTC' ? this.setTotalValue(wlt.totalValueForBTC) : this.setTotalValue(wlt.totalValueForUSDT);
         this.currency === 'BTC' ? this.setWalletTotalValue(wlt.walletTotalValueForBTC) : this.setWalletTotalValue(wlt.walletTotalValueForUSDT);
         this.currency === 'BTC' ? this.setTradingAccountTotalValue(wlt.tradingAccountTotalValueForBTC) : this.setTradingAccountTotalValue(wlt.tradingAccountTotalValueForUSDT);
@@ -205,7 +206,7 @@ module.exports = {
     createFn: function() {
         wlt.init();
         timeOut = setTimeout(() => {
-            this.DelayDataAcquisition();
+            this.sets();
         }, '100');
     },
     removeFn: function() {
