@@ -7,7 +7,7 @@ module.exports = {
     },
     initFn: function () {
         broadcast.onMsg({
-            key: 'tradingAccount_legal',
+            key: 'tradeAccountChildren',
             cmd: broadcast.CHANGE_SW_CURRENCY,
             cb: (arg) => {
                 this.setCurrency(arg);
@@ -16,7 +16,7 @@ module.exports = {
     },
     removeFn: function () {
         broadcast.offMsg({
-            key: 'tradingAccount_legal',
+            key: 'tradeAccountChildren',
             isall: true
         });
     }

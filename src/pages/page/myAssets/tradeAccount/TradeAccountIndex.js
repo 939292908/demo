@@ -1,16 +1,13 @@
 const m = require('mithril');
 const broadcast = require('@/broadcast/broadcast');
 
-const tradingAccountContract = require('@/pages/page/myAssets/tradingAccountContract/TradingAccountContractView');
-const tradingAccountCoin = require('@/pages/page/myAssets/tradingAccountCoin/TradingAccountCoinView');
-const tradingAccountLegal = require('@/pages/page/myAssets/tradingAccountLegal/TradingAccountLegalView');
+const TradeAccountChildrenView = require('@/pages/page/myAssets/tradeAccountChildren/TradeAccountChildrenView');
 
 module.exports = {
     // 01：合约账户，02：币币账户，04：法币账户
     pageFlag: 1,
     oldValue: 1,
     setPageFlag: function (param) {
-        // console.log('nzm', 'setPageFlag......', 'param--', param);
         this.pageFlag = param;
     },
     setOldValue: function (param) {
@@ -19,11 +16,13 @@ module.exports = {
     switchContent: function () {
         switch (this.pageFlag) {
         case 1:
-            return m(tradingAccountContract);
+            return m(TradeAccountChildrenView, { tableType: 'contractColumnData', tableTypeData: 'contractData' });
         case 2:
-            return m(tradingAccountCoin);
+            return m(TradeAccountChildrenView, { tableType: 'coinColumnData', tableTypeData: 'coinData' });
         case 4:
-            return m(tradingAccountLegal);
+            return m(TradeAccountChildrenView, { tableType: 'legalColumnData', tableTypeData: 'legalData' });
+        default:
+            break;
         }
     },
     navAry: [{ idx: 1, val: '合约账户' }, { idx: 2, val: '币币账户' }, { idx: 4, val: '法币账户' }],

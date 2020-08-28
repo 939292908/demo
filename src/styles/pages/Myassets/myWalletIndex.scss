@@ -25,7 +25,7 @@
                             height: 40px;
                             line-height: 40px;
                         }
-                        z-index: 999999;
+                        z-index: 999;
                         position: fixed;
                     }
                 }
@@ -46,7 +46,7 @@
                 .tradeCard{
                     display: flex;
                     flex-direction: column;
-                    z-index: 99999;
+                    z-index: 9999;
                     position: absolute;
                     left: 680px;
                     span{
