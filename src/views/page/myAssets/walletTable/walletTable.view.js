@@ -1,11 +1,11 @@
 const m = require('mithril');
-const commonSelectionBox = require('./commonSelectionBox');
-const assetRecordsTable = require('@/models/assetRecords/assetRecordsTable');
+const commonSelectionBox = require('../commonSelectionBox/commonSelectionBox.view');
+const assetRecordsTable = require('../assetTableList/assetTableList.model');
 
 module.exports = {
     oninit () {
         assetRecordsTable.type = '03';
-        assetRecordsTable.oninit();
+        assetRecordsTable.onupdate();
         console.log('lm', assetRecordsTable.grossValue);
         console.log(assetRecordsTable.datadisplayvalue);
     },

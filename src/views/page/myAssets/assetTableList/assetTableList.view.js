@@ -1,12 +1,11 @@
 const m = require('mithril');
-const assetRecordsTable = require('@/models/assetRecords/assetRecordsTable');
+const assetRecordsTable = require('./assetTableList.model');
 module.exports = {
-    oninit: function (vnode) {
+    onupdate: function(vnode) {
         assetRecordsTable.type = vnode.attrs.num;
-        console.log(assetRecordsTable.type, vnode.attrs.num);
-        assetRecordsTable.oninit();
+        assetRecordsTable.onupdate();
     },
-    view: function () {
+    view: function (vnode) {
         return m('div', { class: 'views-pages-Myassets-assetRecords-myWalletTable' }, [
             m('div', {}, [
                 m('table', { style: 'height:436px;width: 100%;' }, [

@@ -1,5 +1,3 @@
-
-// eslint-disable-next-line no-unused-vars
 const m = require('mithril');
 const broadcast = require('@/broadcast/broadcast');
 const Http = require('@/api').webApi;
@@ -262,7 +260,7 @@ module.exports = {
             this.noDisplay = false;
         }
     },
-    oninit() {
+    onupdate() {
         console.log(this.type, '1111111111111111111111111111');
         const that = this;
         broadcast.onMsg({

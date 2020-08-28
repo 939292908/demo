@@ -1,40 +1,36 @@
 const m = require('mithril');
-const accountTable = require('../assetRecords/accountTable');
-const commonSelectionBox = require('../assetRecords/commonSelectionBox');
-const assetTable = require('./assetTable.model');
+const assetTableList = require('../assetTableList/assetTableList.view');
+const commonSelectionBox = require('../commonSelectionBox/commonSelectionBox.view');
 
 module.exports = {
-    view: function () {
+    view: function (vnode) {
         return m('div', { class: 'views-pages-Myassets-assetRecords-assetTableView px-4' }, [
             m('div', { class: 'views-pages-Myassets-assetRecords-contractAccount' }, [
                 m('div', { class: 'views-pages-Myassets-assetRecords-assetTableView-wrapper' }, [
                     m('div', { class: 'cursor-pointer mb-7 columns-flex-warp views-pages-Myassets-assetRecords-assetTableView-wrapper-head ' }, [
                         m('div', {
-                            class: "cursor-pointer mr-7" + (assetTable.switchValue === '01' ? ' has-text-primary header-highlight' : ''),
+                            class: "cursor-pointer mr-7" + (vnode.attrs.switchValue === '01' ? ' has-text-primary header-highlight' : ''),
                             onclick: function () {
-                                assetTable.switchValue = '01';
-                                m.redraw();
+                                vnode.attrs.onSwitchValue('01');
                             }
                         }, ['合约账户']),
                         m('div', {
-                            class: "cursor-pointer mr-7" + (assetTable.switchValue === '02' ? ' has-text-primary header-highlight' : ''),
+                            class: "cursor-pointer mr-7" + (vnode.attrs.switchValue === '02' ? ' has-text-primary header-highlight' : ''),
                             onclick: function () {
-                                assetTable.switchValue = '02';
-                                m.redraw();
+                                vnode.attrs.onSwitchValue('02');
                             }
                         }, ['币币账户']),
                         m('div', {
-                            class: "cursor-pointer" + (assetTable.switchValue === '04' ? ' has-text-primary header-highlight' : ''),
+                            class: "cursor-pointer" + (vnode.attrs.switchValue === '04' ? ' has-text-primary header-highlight' : ''),
                             onclick: function () {
-                                assetTable.switchValue = '04';
-                                m.redraw();
+                                vnode.attrs.onSwitchValue('04');
                             }
                         }, ['法币账户'])
                     ]),
                     // m(commonSelectionBox),
                     m('div', { class: 'views-pages-Myassets-assetRecords-contractAccount' }, [
-                        m(commonSelectionBox, { num: assetTable.switchValue }),
-                        m(accountTable, { num: assetTable.switchValue })
+                        m(commonSelectionBox, { num: vnode.attrs.switchValue }),
+                        m(assetTableList, { num: vnode.attrs.switchValue })
                     ])
                 ])
             ])

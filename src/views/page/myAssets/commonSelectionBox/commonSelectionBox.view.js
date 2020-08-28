@@ -4,7 +4,7 @@ const utils = require('@/util/utils').default;
 const laydate = require("@/../node_modules/layui-laydate/src/laydate");
 import('@/../node_modules/layui-laydate/src/theme/default/laydate.css');
 
-const commonSelectionBox = {
+const commonSelectionBoxView = {
     timeValue: null,
     changeValue: '03',
     displaySelect: false,
@@ -174,7 +174,7 @@ const commonSelectionBox = {
                             ariaHaspopup: 'true',
                             ariaControls: "dropdown-menu",
                             onclick: function() {
-                                commonSelectionBox.dispalySelectEvent1();
+                                commonSelectionBoxView.dispalySelectEvent1();
                             }
                         }, [
                             m('span', { class: '' }, [utils.getItem('currencyValue') ? utils.getItem('currencyValue') : this.currencyValueChange]),
@@ -187,7 +187,7 @@ const commonSelectionBox = {
                                 return m('div.dropdown-item.has-text-primary-hover has-text-primary-hover1', {
                                     class: utils.getItem('currencyValue') ? 'has-text-primary-hover1' : '',
                                     onclick: function () {
-                                        commonSelectionBox.currencyValueEvent(item.value);
+                                        commonSelectionBoxView.currencyValueEvent(item.value);
                                         const data = {
                                             name: item.value,
                                             num: 1
@@ -211,7 +211,7 @@ const commonSelectionBox = {
                             ariaHaspopup: 'true',
                             ariaControls: "dropdown-menu",
                             onclick: function() {
-                                commonSelectionBox.dispalySelectEvent2();
+                                commonSelectionBoxView.dispalySelectEvent2();
                             }
                         }, [
                             m('span', { class: '' }, [utils.getItem('typeValue') ? utils.getItem('typeValue') : this.typeValueChange]),
@@ -223,7 +223,7 @@ const commonSelectionBox = {
                             this.typeValue.map(item => {
                                 return m('div.dropdown-item.has-text-primary-hover has-text-primary-hover1', {
                                     onclick: function () {
-                                        commonSelectionBox.typeValueEvent(item.value);
+                                        commonSelectionBoxView.typeValueEvent(item.value);
                                         const data = {
                                             name: item.value,
                                             num: 2
@@ -262,32 +262,32 @@ module.exports = {
                 broadcast.emit({ cmd: 'onAssetRecordsTable', data: data });
             }
         });
-        commonSelectionBox.timeValue = commonSelectionBox.timestampToTime();
-        // commonSelectionBox.Repaint();
-        commonSelectionBox.changeValue = vnode.attrs.num;
-        commonSelectionBox.dispalySelectEvent();
+        commonSelectionBoxView.timeValue = commonSelectionBoxView.timestampToTime();
+        // commonSelectionBoxView.Repaint();
+        commonSelectionBoxView.changeValue = vnode.attrs.num;
+        commonSelectionBoxView.dispalySelectEvent();
         broadcast.onMsg({
-            key: 'commonSelectionBox',
+            key: 'commonSelectionBoxView',
             cmd: 'displaySelect',
             cb: function (arg) {
                 if (arg === 1) {
-                    if (commonSelectionBox.displaySelect) {
-                        commonSelectionBox.dispalySelectEvent1();
-                    } else if (commonSelectionBox.displaySelect2) {
-                        commonSelectionBox.dispalySelectEvent2();
+                    if (commonSelectionBoxView.displaySelect) {
+                        commonSelectionBoxView.dispalySelectEvent1();
+                    } else if (commonSelectionBoxView.displaySelect2) {
+                        commonSelectionBoxView.dispalySelectEvent2();
                     }
                 }
             }
         });
     },
     view: function () {
-        return m('div', { class: 'views-pages-Myassets-assetRecords-commonSelectionBox' }, [
-            commonSelectionBox.assetValuation()
+        return m('div', { class: 'views-pages-Myassets-assetRecords-commonSelectionBoxView' }, [
+            commonSelectionBoxView.assetValuation()
         ]);
     },
     onremove () {
         broadcast.offMsg({
-            key: 'commonSelectionBox',
+            key: 'commonSelectionBoxView',
             cmd: 'displaySelect',
             isall: true
         });
