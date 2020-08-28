@@ -18,6 +18,11 @@ export default {
             }
         });
     },
+    oncreate() {
+        document.querySelector('body').onclick = () => {
+            broadcast.emit({ cmd: broadcast.EV_ClICKBODY });
+        };
+    },
     onremove() {
         broadcast.offMsg({ key: 'index', cmd: 'setTheme', isall: true });
     },

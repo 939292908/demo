@@ -1,5 +1,6 @@
 // 传递参数说明
 // getList() {return [{ id:xxx, label:xxx,... }, { id:xxx, label:xxx,... }]} 菜单数据 (id, label必须项) (必填)
+// evenKey body事件key (必填)
 
 // onClick(item) {} 点击事件 可获取item (选填)
 // activeId 默认选中id (选填)
@@ -51,7 +52,7 @@ module.exports = {
     initEVBUS (vnode) {
         // 订阅 body点击事件广播
         broadcast.onMsg({
-            key: "myDropdown",
+            key: vnode.attrs.evenKey,
             cmd: broadcast.EV_ClICKBODY,
             cb: function () {
                 vnode.attrs.setShowMenu(false);
@@ -63,9 +64,9 @@ module.exports = {
         // })
     },
     // 删除全局广播
-    rmEVBUS () {
+    rmEVBUS (vnode) {
         broadcast.offMsg({
-            key: "myDropdown",
+            key: vnode.attrs.evenKey,
             isall: true
         }); // 删除 body点击事件广播
     },
@@ -123,6 +124,6 @@ module.exports = {
         ]);
     },
     onremove: function (vnode) {
-        this.rmEVBUS();
+        this.rmEVBUS(vnode);
     }
 };
