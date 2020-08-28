@@ -21,7 +21,7 @@ class _axios {
     // axios请求拦截
     interceptorsRequest() {
         this.service.interceptors.request.use(config => {
-            if (config.method === 'post') console.log(config);
+            // if (config.method === 'post') console.log(config);
             if (utils.getItem("ex-session")) {
                 config.headers['ex-session'] = utils.getItem("ex-session");
             }

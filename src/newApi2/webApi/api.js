@@ -516,3 +516,34 @@ export function getNotice (params = {}) {
 export function getFunList (params = {}) {
     return Http.get(API.FUN_LIST_V1, { params });
 }
+
+/**
+ *@param locale: 语言类型
+ * @param vp： 渠道
+ * */
+
+export function getCoinInfo(params = {}) {
+    return Http.get(API.COIN_INFO, { params });
+}
+
+/**
+ *@param params: {} 无参数
+ * */
+
+export function getCoinFees(params = {}, options = { withCredentials: true }) {
+    return Http.post(API.COIN_FEES, { params }, options);
+}
+
+/**
+ * @param params: {token, wType, money, aid, addr, op}
+ * @param token: 登录token
+ * @param wType: coin
+ * @param money: 提币数
+ * @param aid: uid + '06'
+ * @param add: 提币地址
+ * @param op: 0
+ */
+
+export function withdrawDeposit (params = {}, options = { withCredentials: true }) {
+    return Http.post(API.WITHDRAW, { params }, options);
+}

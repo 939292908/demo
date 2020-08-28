@@ -1,69 +1,99 @@
 const m = require('mithril');
 require('./index.scss');
-const Data = require('./formData');
-console.log(Data);
+const FromDataMode = require('./formData');
+const ICON = require('./Tooltip.png').default;
 
 module.exports = {
+    oninit () {
+        FromDataMode.oninit();
+    },
+    oncreate() {
+    },
+    handleSelectChange: function (e) {
+        FromDataMode.currentSelect = FromDataMode.selectList[e.target.selectedIndex];
+        FromDataMode.getlinkButtonListData();
+    },
+    handleLabelVal: function (e) {
+        FromDataMode.extractCoin.linkName = e.target.value;
+    },
+    handleLinNameButClick: function (e) {
+        FromDataMode.currenLinkBut = e.name;
+        console.log(FromDataMode);
+    },
+    handleAddressVal: function (e) {
+        FromDataMode.extractCoin.address = e.target.value;
+    },
+    handleExtractCoinNameVal: function (e) {
+        FromDataMode.extractCoin.coinNum = e.target.value;
+        if (e.target.value < FromDataMode.currentFees.withdrawMin || e.target.value > FromDataMode.currentExtractableNum) {
+            FromDataMode.errorShow.unmber = true;
+        } else {
+            FromDataMode.errorShow.unmber = false;
+        }
+    },
+    handleClickAll: function () {
+        FromDataMode.extractCoin.coinNum = FromDataMode.currentExtractableNum;
+    },
     view: function () {
         return m('div.page-extract-coin-from has-bg-level-2', [
             m('div.form-block', [
                 m('div.formModule', [
                     m('div.label has-text-title body-5', '币种'),
                     m('div.control has-icons-right', [
-                        m('div.select is-fullwidth', m('select', [
-                            m('option', { selected: true }, 'Country1'),
-                            m('option', { selected: false }, 'Country2'),
-                            m('option', { selected: false }, 'Country3')
-                        ])),
-                        m('span.icon is-small is-right', 'wefw')
+                        // { selected: true }
+                        m('div.select is-fullwidth', m('select', { onchange: this.handleSelectChange }, [
+                            FromDataMode.selectList && FromDataMode.selectList.map(item => m('option', item.wType))
+                        ]))
                     ])
                 ]),
-                m('div.formModule', [
+                FromDataMode.currentSelect.Setting && FromDataMode.currentSelect.Setting.memo ? m('div.formModule', [
                     m('div.label has-text-title body-5', [
                         m('span', '标签'),
-                        m('i.iconfont.icon-Personal')
+                        m('img', { src: ICON })
                     ]),
                     m('div.control line-label', [
-                        m('input.input body-5', { type: 'text', placeholder: 'Normal input', value: '121' })
+                        m('input.input body-5', { type: 'text', placeholder: '1234562', onchange: this.handleLabelVal })
                     ])
-                ]),
-                m('div.formModule', [
+                ]) : null,
+                FromDataMode.linkButtonList.length > 0 ? m('div.formModule', [
                     m('div.label has-text-title body-5', [
                         m('span', '链名称'),
-                        m('i.iconfont.icon-Personal')
+                        m('img', { src: ICON })
                     ]),
                     m('div.control dis-flex', [
-                        m('div.butItem', m('div', 'JOGGUU')),
-                        m('div.butItem butItemActive', m('div', 'JOGGUU')),
-                        m('div.butItem', m('div', 'JOGGUU'))
+                        FromDataMode.linkButtonList.map(item => m(`div.butItem`, { class: item.name === FromDataMode.currenLinkBut ? 'butItemActive' : '', onclick: this.handleLinNameButClick.bind(this, item) }, m('div', item.name)))
                     ])
-                ]),
+                ]) : null,
                 m('div.formModule', [
                     m('div.label has-text-title body-5', '提币地址'),
                     m('div.control address', [
-                        m('input.input body-5', { type: 'text', placeholder: 'Normal input', value: '90909090' })
+                        m('input.input body-5', { type: 'text', placeholder: '', onchange: this.handleAddressVal })
                     ]),
-                    m('div.errorToTal body-4', '地址错误')
+                    FromDataMode.errorShow.address ? m('div.errorToTal body-4', '地址错误') : null
                 ]),
                 m('div.formModule', [
                     m('div.label has-text-title body-5', [
                         m('span', '数量'),
-                        m('i')
+                        m('img', { src: ICON })
                     ]),
                     m('div.control extract-num', [
-                        m('input.input body-5', { type: 'number', placeholder: 'Normal input' })
+                        m('input.input body-5', { type: 'number', placeholder: `最小提币量：${FromDataMode.currentFees.withdrawMin}`, onchange: this.handleExtractCoinNameVal, value: FromDataMode.extractCoin.coinNum }),
+                        m('div.icon-right-all', [
+                            m('span', FromDataMode.currentSelect.wType),
+                            m('span.clickAll', { onclick: this.handleClickAll }, '全部')
+                        ])
                     ]),
+                    FromDataMode.errorShow.unmber ? m('div.errorToTal body-4', '数量错误') : null,
                     m('div.dis-flex item-space charge body-4', [
-                        m('div', `可提：0BTC`),
-                        m('div', `手续费：0.001BTC`)
-                    ]),
-                    m('div.errorToTal body-4', '数量错误')
+                        m('div', `可提：${FromDataMode.currentExtractableNum}${FromDataMode.currentSelect.wType}`),
+                        m('div', `手续费：${FromDataMode.currentFees.withdrawFee}${FromDataMode.currentSelect.wType}`)
+                    ])
                 ]),
-                m('button.button is-info is-fullwidth', '确定')
+                m('button.button is-info is-fullwidth', { onclick: () => { FromDataMode.handleSubmit(); } }, '确定')
             ]),
             m('div.promptText', [
                 m('div.promptTitle body-5', '温馨提示'),
-                Data.promptText.split('*').map(item => m('div.rulesText body-4', '*' + item))
+                FromDataMode.promptText.split('*').map(item => m('div.rulesText body-4', '*' + item))
             ])
         ]);
     }

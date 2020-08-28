@@ -23,6 +23,9 @@ module.exports = {
     MSG_ORDERL2_UPD: 'MSG_ORDERL2_UPD',
     // 点击body广播
     EV_ClICKBODY: 'EV_ClICKBODY',
+
+    // 资产获取完成
+    MSG_WLT_READY: 'MSG_WLT_READY',
     /**
      * 发送广播
      * @param {string} cmd
