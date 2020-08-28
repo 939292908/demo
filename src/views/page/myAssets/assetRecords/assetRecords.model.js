@@ -1,7 +1,7 @@
 const m = require('mithril');
 const broadcast = require('@/broadcast/broadcast');
 const assetRecordsWallet = require('./assetRecordsWallet');
-const tradingAccount = require('./tradingAccount');
+const tradingAccount = require('../assetTable/assetTable.view');
 
 module.exports = {
     switchValue: 0,

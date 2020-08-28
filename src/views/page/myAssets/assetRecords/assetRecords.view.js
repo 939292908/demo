@@ -1,8 +1,8 @@
 const m = require('mithril');
-const header = require('@/pages/page/myAssets/header/HeaderView');
-const AssetRecords = require('./assetRecordsModel');
+const header = require('../header/header.view');
+const AssetRecords = require('./assetRecords.model');
 
-require('@/styles/pages/Myassets/assetRecords.scss');
+require('./assetRecords.scss');
 
 module.exports = {
     oninit: function () {

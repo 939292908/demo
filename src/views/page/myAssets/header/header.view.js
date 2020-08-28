@@ -1,5 +1,5 @@
 const m = require('mithril');
-const Header = require('./HeaderModel');
+const Header = require('./header.model');
 
 require('@/styles/pages/Myassets/header.scss');
 

@@ -30,7 +30,7 @@ m.route(document.querySelector('body .route-box'), defaultRoutePath, {
     },
     '/assetRecords': {
         onmatch: function () {
-            return import('@/views/page/myAssets/assetRecords/index');
+            return import('@/views/page/myAssets/assetRecords/assetRecords.view');
         }
     },
     '/extractCoin': {
