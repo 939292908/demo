@@ -11,6 +11,7 @@ const Http = require('@/newApi2').webApi;
 const l180n = require('@/languages/I18n').default;
 const TopView = require('./topView');
 const Conf = require('@/newApi2').Conf;
+const utils = require('@/util/utils').default;
 
 module.exports = {
     data: {
@@ -18,7 +19,7 @@ module.exports = {
         noticeList: []
     },
     toPage() {
-        if (window.gWebApi.loginState) {
+        if (utils.getItem('loginState')) {
             window.router.push('/chargeMoney');
         } else {
             window.router.push('/login');
