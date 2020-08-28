@@ -7,10 +7,11 @@
  * @FilePath: \website-project\src\views\pages\home\top.js
  */
 const m = require('mithril');
-const Http = require('@/api').webApi;
+const { Http, Conf } = require('@/api');
 const l180n = require('@/languages/I18n').default;
 const TopView = require('./topView');
-const Conf = require('@/api').Conf;
+// const Conf = require('@/api').Conf;
+const utils = require('@/util/utils').default;
 
 module.exports = {
     data: {
@@ -18,7 +19,7 @@ module.exports = {
         noticeList: []
     },
     toPage() {
-        if (window.gWebApi.loginState) {
+        if (utils.getItem('loginState')) {
             window.router.push('/chargeMoney');
         } else {
             window.router.push('/login');
@@ -29,7 +30,7 @@ module.exports = {
         this.getBanne();
         this.getnotice();
     },
-    getBanne () {
+    getBanne() {
         const params = { locale: this.locale, vp: Conf.exchId };
         Http.getBanne(params).then(res => {
             if (res.result.code === 0) {
@@ -43,7 +44,7 @@ module.exports = {
             }
         });
     },
-    getnotice () {
+    getnotice() {
         Http.getNotice({ locale: this.locale, vp: Conf.exchId }).then(res => {
             if (res.result.code === 0) {
                 this.data.noticeList = res.result.data;

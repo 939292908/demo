@@ -111,7 +111,7 @@ module.exports = {
                         )
                     ]),
                     m('div', { class: `bottom-navigation-tab-2` }, [
-                        m('p', { class: `has-text-level-4 body-6` }, ["联系我们"]),
+                        m('p', { class: `body-6` }, ["联系我们"]),
                         // m('p', { class: `has-text-white  has-text-primary-hover has-text-level-2` }, m(Tooltip, {
                         //     label: "服务邮箱",
                         //     content: [
