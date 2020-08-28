@@ -208,6 +208,7 @@ const model = {
         } else if (Number(this.form.num) > Number(this.form.maxTransfer)) {
             return window.$message({ title: I18n.$t('10037'/* "提示" */), content: I18n.$t('10223'/* '划转数量不能大于最大可划' */), type: 'danger' });
         }
+        model.setMaxTransfer(); // 设置 最大划转
         // api
         console.log("我提交了", this.form, 666);
     },
