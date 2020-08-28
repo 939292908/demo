@@ -1,8 +1,8 @@
-const Http = require('@/newApi2').webApi;
+const Http = require('@/api').webApi;
 const broadcast = require('@/broadcast/broadcast');
-const gWsApi = require('@/newApi2').wsApi;
+const gWsApi = require('@/api').wsApi;
 const utils = require('@/util/utils').default;
-const BaseUrl = require('@/newApi2').BaseUrl;
+const BaseUrl = require('@/api').BaseUrl;
 
 module.exports = {
     name: "modelsForWlt",

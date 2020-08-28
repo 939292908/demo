@@ -5,41 +5,36 @@ const defaultRoutePath = "/home";
 m.route(document.querySelector('body .route-box'), defaultRoutePath, {
     '/home': {
         onmatch: function () {
-            return import('@/pages/page/home/index');
+            return import('@/views/page/home/index');
         }
     },
     '/login': {
         onmatch: function () {
-            return import('@/pages/page/login/login/loginView');
+            return import('@/views/page/user/login/login/loginView');
         }
     },
     '/register': {
         onmatch: function () {
-            return import('@/pages/page/login/register/registerView');
+            return import('@/views/page/user/login/register/registerView');
         }
     },
     '/forgetPassword': {
         onmatch: function () {
-            return import('@/pages/page/login/forgetPassword/forgetPasswordView');
+            return import('@/views/page/user/login/forgetPassword/forgetPasswordView');
         }
     },
     '/myWalletIndex': {
         onmatch: function() {
-            return import('@/pages/page/myAssets/myWalletIndex/MyWalletIndexView');
-        }
-    },
-    '/table': {
-        onmatch: function() {
-            return import('@/pages/page/myAssets/tradeTable/TradeTableView');
+            return import('@/views/page/myAssets/myWalletIndex/MyWalletIndex');
         }
     },
     '/assetRecords': {
         onmatch: function () {
-            return import('@/pages/page/myAssets/assetRecords/index');
+            return import('@/views/page/myAssets/assetRecords/index');
         }
     },
     '/extractCoin': {
-        onmatch: () => import('@/pages/page/extractCoin/index')
+        onmatch: () => import('@/views/page/extractCoin/index')
     }
 });
 

@@ -1,0 +1,38 @@
+// 导航头
+.navbar {
+    .navbar-brand,
+    .navbar-start,
+    .navbar-end,
+    .navbar-item.has-dropdown {
+        > .navbar-item,
+        .navbar-link {
+            color: var(--c-font-darken);
+        }
+        > .navbar-item:hover,
+        .navbar-link:hover {
+            background-color: var(--c-sub-darken);
+        }
+    }
+}
+// new 提示
+.header-new-info {
+    border-radius: 10px 10px 10px 0;
+}
+
+// 下拉菜单中左边的icon
+.header-navbar-item-icon {
+    width: 12px;
+    height: 12px;
+    border: 1px solid;
+}
+.header-my-tooltip {
+    .dropdown-content {
+        padding-top: 0;
+        .dropdown-item {
+            padding: 0;
+            .header-my-tooltip-top:hover {
+                background-color: rgba(0, 0, 0, 0);
+            }
+        }
+    }
+}

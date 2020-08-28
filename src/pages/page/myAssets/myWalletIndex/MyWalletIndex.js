@@ -8,14 +8,18 @@ let timeOut = null;
 module.exports = {
     // 资金划转弹框 模块
     transferModal: {
-        isShow: false,
+        // 弹窗状态
+        isShow: true,
+        // 关闭弹窗
         closeMe() {
             this.transferModal.isShow = false;
         },
+        // ok事件
         onOk() {
             this.transferModal.closeMe();
             console.log('onOk');
         },
+        // 关闭事件
         onClose() {
             this.transferModal.closeMe();
         }

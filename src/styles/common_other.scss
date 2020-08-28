@@ -28,6 +28,10 @@
     align-items: end;
 }
 
+.column {
+    padding: 0;
+}
+
 // 左 斜切
 .skew-left {
     position: relative;
@@ -62,7 +66,7 @@
     }
 }
 
-// hover 提示消息
+// hover提示 组件
 .my-tooltip {
     .bdb-dashed {
         // 下边框-虚线
@@ -169,7 +173,7 @@
     }
     .dropdown-menu {
         width: 100%;
-        // has-hover has-active
+        min-width: 10rem;
         .dropdown-item {
             display: flex;
             justify-content: space-between;

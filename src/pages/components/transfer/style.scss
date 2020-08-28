@@ -1,0 +1,11 @@
+.my-transfer {
+    .form-item-content-btns {
+        position: relative;
+        .btns-box {
+            position: absolute;
+            right: 0;
+            top: 0;
+            transform: translateY(50%);
+        }
+    }
+}

@@ -135,7 +135,7 @@
 }
 
 .has-text-white {
-    color: white !important;
+    color: var(--c-fontwhite-base) !important;
 }
 
 .theme--dark .has-text-title,
@@ -154,6 +154,10 @@
 
 .theme--dark .has-text-level-3 {
     color: var(--c-font-darken2) !important;
+}
+
+.theme--dark .has-text-level-4 {
+    color: var(--c-font-darken3) !important;
 }
 
 /* 主色调 */
@@ -387,6 +391,10 @@
 
 .theme--light .has-text-level-3 {
     color: var(--c-font-lighten2) !important;
+}
+
+.theme--light .has-text-level-4 {
+    color: var(--c-font-lighten3) !important;
 }
 
 /* 主色调 */
