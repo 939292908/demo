@@ -110,19 +110,27 @@ module.exports = {
                             ]),
                             m('div.py-0.mb-2.has-text-level-1.body-3.mt-5', {},
                                 ['密码']),
-                            m('input.input[type=password]', {
-                                oninput: e => {
-                                    Register.password = e.target.value;
+                            m(InputWithComponent, {
+                                hiddenLine: true,
+                                options: {
+                                    type: Register.showPassword ? 'text' : 'password',
+                                    oninput: e => {
+                                        Register.password = e.target.value;
+                                    },
+                                    onkeyup: e => {
+                                        if (e.keyCode === 13) {
+                                            Register.type === 'phone'
+                                                ? Register.submitEmail()
+                                                : Register.submitPhone();
+                                        }
+                                    },
+                                    value: Register.password
                                 },
-                                onkeyup: e => {
-                                    if (e.keyCode === 13) {
-                                        Register.type === 'phone'
-                                            ? Register.submitEmail()
-                                            : Register.submitPhone();
-                                    }
-                                },
-                                value: Register.password
-                            }, []),
+                                rightComponents: m('i.iconfont.mx-2', {
+                                    onclick: () => { Register.showPassword = !Register.showPassword; },
+                                    class: Register.showPassword ? 'icon-yincang' : 'icon-zichanzhengyan'
+                                })
+                            }),
                             m('div.body-3.mt-2.has-text-tip-error', {}, [
                                 Register.rulesPwd.required(Register.password) === true
                                     ? Register.rulesPwd.password(Register.password)

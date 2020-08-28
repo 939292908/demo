@@ -1,5 +1,6 @@
 const m = require('mithril');
 const Validate = require('../../../components/validate/validateView');
+const InputWithComponent = require('../../../components/inputWithComponent/inputWithComponentView');
 const Login = require('./loginModel');
 const config = require('@/config');
 const I18n = require('@/languages/I18n').default;
@@ -30,15 +31,23 @@ module.exports = {
                             value: Login.account
                         }, []),
                         m('div.body-3.has-text-level-1.mb-2', {}, ['密码']),
-                        m('input.input[type=password].mb-2', {
-                            oninput: e => {
-                                Login.password = e.target.value;
+                        m(InputWithComponent, {
+                            hiddenLine: true,
+                            options: {
+                                type: Login.showPassword ? 'text' : 'password',
+                                oninput: e => {
+                                    Login.password = e.target.value;
+                                },
+                                onkeyup: e => {
+                                    if (e.keyCode === 13) { Login.login(); }
+                                },
+                                value: Login.password
                             },
-                            onkeyup: e => {
-                                if (e.keyCode === 13) { Login.login(); }
-                            },
-                            value: Login.password
-                        }, []),
+                            rightComponents: m('i.iconfont.mx-2', {
+                                onclick: () => { Login.showPassword = !Login.showPassword; },
+                                class: Login.showPassword ? 'icon-yincang' : 'icon-zichanzhengyan'
+                            })
+                        }),
                         m('div.mb-5.has-text-right', {}, [
                             m('a.has-text-primary', {
                                 onclick: () => {

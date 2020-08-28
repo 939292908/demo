@@ -18,11 +18,11 @@ module.exports = {
         const inside = [];
         if (vnode.attrs.leftComponents) {
             inside.push(vnode.attrs.leftComponents);
-            inside.push(m('span.line', {}, []));
+            if (!vnode.attrs.hiddenLine) { inside.push(m('span.line', {}, [])); }
         }
         inside.push(m('input.input.without-border.in-input', vnode.attrs.options, []));
         if (vnode.attrs.rightComponents) {
-            inside.push(m('span.line', {}, []));
+            if (!vnode.attrs.hiddenLine) { inside.push(m('span.line', {}, [])); }
             inside.push(vnode.attrs.rightComponents);
         }
 

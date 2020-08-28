@@ -15,6 +15,7 @@ module.exports = {
     password: '',
     loginType: 'phone',
     loading: false,
+    showPassword: false,
     is2fa: false,
     rulesEmail: {
         required: value => !!value || '该字段不能为空', // 该字段不能为空
@@ -186,6 +187,7 @@ module.exports = {
     },
     onremove() {
         this.is2fa = false;
+        this.showPassword = false;
         validate.close();
         broadcast.offMsg({
             key: 'login',

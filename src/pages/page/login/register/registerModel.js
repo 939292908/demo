@@ -17,6 +17,7 @@ const register = {
     password: '',
     code: '',
     areaCode: '86',
+    showPassword: false,
     selectList: [{ cn_name: '中国', code: '86', support: '1', us_name: 'China' }],
     refereeType: '',
     prom: '',
@@ -280,6 +281,7 @@ const register = {
     },
     onremove() {
         this.isvalidate = false;
+        this.showPassword = false;
         broadcast.offMsg({
             key: 'register',
             cmd: 'geetestMsg',
