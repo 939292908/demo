@@ -18,14 +18,7 @@ module.exports = {
         const list = [];
         for (const item of AreaCodeSelect.showList) {
             list.push(m('div.dropdown-item.columns.px-5.py-2', {
-                onclick: e => {
-                    if (item.support === '0') {
-                        window.$message({ content: '当前国家/地区不支持手机', type: 'danger' });
-                    } else {
-                        vnode.attrs.onSelect(item.code);
-                        AreaCodeSelect.show = false;
-                    }
-                }
+                onclick: e => { AreaCodeSelect.itemClick(vnode, item); }
             }, [
                 m('div.column.pa-0', {}, [I18n.getLocale() === "zh" ||
                 I18n.getLocale() === "tw" ? item.cn_name : item.us_name]),
