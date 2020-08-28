@@ -1,13 +1,11 @@
 const m = require('mithril');
-const Register = require('./registerModel');
-const InputWithComponent = require(
-    '@/views/components/inputWithComponent/inputWithComponentView');
-const AreaCodeSelect = require(
-    '@/views/components/areaCodeSelect/areaCodeSelectView');
+const Register = require('./register.model');
+const InputWithComponent = require('../../../../components/inputWithComponent/inputWithComponent.view');
+const AreaCodeSelect = require('../areaCodeSelect/areaCodeSelect.view');
 const config = require('@/config');
 const I18n = require('@/languages/I18n').default;
 
-import('@/styles/pages/login/login.css');
+import('../login.css');
 
 module.exports = {
     oninit() {
@@ -24,8 +22,9 @@ module.exports = {
                         Register.isvalidate ? [
                             m('div.title-large.views-page-login-title.opacity',
                                 {}, [config.exchName]),
-                            m('div.mb-5.title-large.has-text-title', {},
+                            m('div.title-large.has-text-title', {},
                                 ['注册验证']),
+                            m('div.py-0.mb-7.body-3.has-text-level-3', {}, ['您正在注册账户，请完成以下验证']),
                             m('div.py-0.mb-2.has-text-level-1.body-3', {},
                                 [Register.type === 'phone' ? '手机验证码' : '邮箱验证码']),
                             m('div.control.has-icons-right.mb-6', {}, [
@@ -110,19 +109,27 @@ module.exports = {
                             ]),
                             m('div.py-0.mb-2.has-text-level-1.body-3.mt-5', {},
                                 ['密码']),
-                            m('input.input[type=password]', {
-                                oninput: e => {
-                                    Register.password = e.target.value;
+                            m(InputWithComponent, {
+                                hiddenLine: true,
+                                options: {
+                                    type: Register.showPassword ? 'text' : 'password',
+                                    oninput: e => {
+                                        Register.password = e.target.value;
+                                    },
+                                    onkeyup: e => {
+                                        if (e.keyCode === 13) {
+                                            Register.type === 'phone'
+                                                ? Register.submitEmail()
+                                                : Register.submitPhone();
+                                        }
+                                    },
+                                    value: Register.password
                                 },
-                                onkeyup: e => {
-                                    if (e.keyCode === 13) {
-                                        Register.type === 'phone'
-                                            ? Register.submitEmail()
-                                            : Register.submitPhone();
-                                    }
-                                },
-                                value: Register.password
-                            }, []),
+                                rightComponents: m('i.iconfont.mx-2', {
+                                    onclick: () => { Register.showPassword = !Register.showPassword; },
+                                    class: Register.showPassword ? 'icon-yincang' : 'icon-zichanzhengyan'
+                                })
+                            }),
                             m('div.body-3.mt-2.has-text-tip-error', {}, [
                                 Register.rulesPwd.required(Register.password) === true
                                     ? Register.rulesPwd.password(Register.password)

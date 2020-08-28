@@ -3,7 +3,7 @@
     color: var(--c-primary-lighten);
 }
 
-.register-national-select {
+.views-page-login-national-select {
     top: 2px !important;
     height: calc(100% - 4px) !important;
 }

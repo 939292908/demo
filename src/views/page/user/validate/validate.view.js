@@ -1,6 +1,6 @@
 const m = require('mithril');
-const InputWithComponent = require('@/pages/components/inputWithComponent/inputWithComponentView');
-const Validate = require('./validateModel');
+const InputWithComponent = require('../../../components/inputWithComponent/inputWithComponent.view');
+const Validate = require('./validate.model');
 const I18n = require('@/languages/I18n').default;
 /**
  * 验证码

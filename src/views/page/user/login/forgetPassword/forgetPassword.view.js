@@ -1,10 +1,10 @@
 const m = require('mithril');
-const Validate = require('../../validate/validateView');
-const InputWithComponent = require('@/views/components/inputWithComponent/inputWithComponentView');
-const ForgetPassword = require('./forgetPasswordModel');
-const AreaCodeSelect = require('@/views/components/areaCodeSelect/areaCodeSelectView');
+const Validate = require('../../validate/validate.view');
+const InputWithComponent = require('../../../../components/inputWithComponent/inputWithComponent.view');
+const ForgetPassword = require('./forgetPassword.model');
+const AreaCodeSelect = require('../areaCodeSelect/areaCodeSelect.view');
 
-import('@/styles/pages/login/login.css');
+import('../login.css');
 
 module.exports = {
     oninit() {

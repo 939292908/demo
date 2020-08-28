@@ -1,5 +1,5 @@
 const m = require('mithril');
-const AreaCodeSelect = require('./areaCodeSelectModel');
+const AreaCodeSelect = require('./areaCodeSelect.model');
 const I18n = require('@/languages/I18n').default;
 
 import('./areaCodeSelect.css');
@@ -27,7 +27,7 @@ module.exports = {
         }
         return m('div.dropdown', { class: AreaCodeSelect.show ? 'is-active' : '' }, [
             m('div.dropdown-trigger', {}, [
-                m('button.button.without-border.register-national-select', {
+                m('button.button.without-border.views-page-login-national-select', {
                     'aria-haspopup': true,
                     'aria-controls': 'views-pages-register-area-code-dropdown-menu',
                     id: 'views-pages-register-area-code-dropdown-button',

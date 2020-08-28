@@ -10,17 +10,17 @@ m.route(document.querySelector('body .route-box'), defaultRoutePath, {
     },
     '/login': {
         onmatch: function () {
-            return import('@/views/page/user/login/login/loginView');
+            return import('@/views/page/user/login/login/login.view');
         }
     },
     '/register': {
         onmatch: function () {
-            return import('@/views/page/user/login/register/registerView');
+            return import('@/views/page/user/login/register/register.view');
         }
     },
     '/forgetPassword': {
         onmatch: function () {
-            return import('@/views/page/user/login/forgetPassword/forgetPasswordView');
+            return import('@/views/page/user/login/forgetPassword/forgetPassword.view');
         }
     },
     '/myWalletIndex': {
