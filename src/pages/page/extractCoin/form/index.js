@@ -7,8 +7,6 @@ module.exports = {
     oninit () {
         FromDataMode.oninit();
     },
-    oncreate() {
-    },
     handleSelectChange: function (e) {
         FromDataMode.currentSelect = FromDataMode.selectList[e.target.selectedIndex];
         FromDataMode.getlinkButtonListData();
@@ -39,7 +37,7 @@ module.exports = {
             m('div.form-block', [
                 m('div.formModule', [
                     m('div.label has-text-title body-5', '币种'),
-                    m('div.control has-icons-right', [
+                    m('div.control', [
                         // { selected: true }
                         m('div.select is-fullwidth', m('select', { onchange: this.handleSelectChange }, [
                             FromDataMode.selectList && FromDataMode.selectList.map(item => m('option', item.wType))

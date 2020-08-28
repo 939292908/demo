@@ -3,6 +3,7 @@ const { Conf, webApi, wsApi } = require('@/newApi2');
 const UserInfo = require('@/models/globalModels');
 const wlt = require('@/models/wlt/wlt');
 const broadcast = require('@/broadcast/broadcast');
+const geetest = require('@/models/validate/geetest').default;
 console.log(wsApi, wlt);
 const extract = {
     name: 'FROM_DATA',
@@ -121,12 +122,14 @@ const extract = {
         webApi.withdrawDeposit(params).then(res => {
             console.log(res);
         }).catch(e => {
+            geetest.verify();
             console.log(e, '提币确定');
         });
     },
     oninit: function () {
         const self = this;
         wlt.init();
+        this.initGeetest();
         self.getCurrentCoinFees();
         if (!wlt.wallet['01'].toString()) {
             broadcast.onMsg({
@@ -138,9 +141,29 @@ const extract = {
             self.getCoinInfo();
         }
     },
+    initGeetest() {
+        geetest.init();
+        broadcast.onMsg({
+            key: this.name,
+            cmd: 'geetestMsg',
+            cb: res => {
+                if (res === 'success') {
+                    console.log(1);
+                } else {
+                    console.log(2);
+                }
+            }
+        });
+    },
     onremove: function () {
         broadcast.offMsg({
             key: this.name,
+            cmd: broadcast.MSG_WLT_READY,
+            isall: true
+        });
+        broadcast.offMsg({
+            key: this.name,
+            cmd: 'getUserInfo',
             isall: true
         });
     }
