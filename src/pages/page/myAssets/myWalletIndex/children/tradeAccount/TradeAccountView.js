@@ -1,5 +1,5 @@
 const m = require('mithril');
-const TradeAccountIndex = require('@/pages/page/myAssets/tradeAccount/TradeAccountIndex');
+const TradeAccountIndex = require('@/pages/page/myAssets/myWalletIndex/children/tradeAccount/TradeAccountIndex');
 require('@/styles/pages/Myassets/tradingAccount.scss');
 
 module.exports = {

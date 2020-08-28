@@ -1,7 +1,6 @@
 const m = require('mithril');
-const t = require('./TradeTableIndex');
+const t = require('@/pages/page/myAssets/myWalletIndex/children/tradeTable/TradeTableIndex');
 require('@/styles/pages/Myassets/tradeTable.scss');
-// const nzm = '&#xe646;';
 
 module.exports = {
     oncreate: (vnode) => {

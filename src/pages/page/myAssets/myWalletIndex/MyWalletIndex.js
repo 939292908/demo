@@ -1,15 +1,15 @@
 const m = require('mithril');
 const wlt = require('@/models/wlt/wlt');
 const broadcast = require('@/broadcast/broadcast');
-const TradeAccountView = require('@/pages/page/myAssets/tradeAccount/TradeAccountView');
-const MyWallet = require('@/pages/page/myAssets/myWallet/MyWalletView');
+const TradeAccountView = require('@/pages/page/myAssets/myWalletIndex/children/tradeAccount/TradeAccountView');
+const TradeAccountChildrenView = require('@/pages/page/myAssets/myWalletIndex/children/tradeAccountChildren/TradeAccountChildrenView');
 let timeOut = null;
 
 module.exports = {
     // 资金划转弹框 模块
     transferModal: {
         // 弹窗状态
-        isShow: true,
+        isShow: false,
         // 关闭弹窗
         closeMe() {
             this.transferModal.isShow = false;
@@ -90,7 +90,7 @@ module.exports = {
         broadcast.emit({ cmd: broadcast.CHANGE_SW_CURRENCY, data: this.currency });
         switch (this.swValue) {
         case 0:
-            return m(MyWallet);
+            return m(TradeAccountChildrenView, { tableType: 'walletColumnData', tableTypeData: 'walletData' });
         case 1:
             return m(TradeAccountView, { idx: this.wltIdx });
         default:
