@@ -7,10 +7,10 @@
  * @FilePath: \website-project\src\views\pages\home\top.js
  */
 const m = require('mithril');
-const Http = require('@/newApi2').webApi;
+const {Http,Conf} = require('@/api');
 const l180n = require('@/languages/I18n').default;
 const TopView = require('./topView');
-const Conf = require('@/newApi2').Conf;
+// const Conf = require('@/api').Conf;
 const utils = require('@/util/utils').default;
 
 module.exports = {

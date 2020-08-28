@@ -1,7 +1,7 @@
 const m = require('mithril');
 const broadcast = require('@/broadcast/broadcast');
 const utils = require('@/util/utils').default;
-const wsApi = require('@/newApi2').wsApi;
+const wsApi = require('@/api').wsApi;
 const I18n = require('@/languages/I18n').default;
 
 module.exports = {

@@ -1,6 +1,6 @@
 import broadcast from '../../broadcast/broadcast';
 import I18n from '../../languages/I18n';
-import { webApi } from '../../newApi2';
+import { webApi } from '../../api';
 
 const geetest = {
     isLoading: false,
