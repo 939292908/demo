@@ -1,6 +1,5 @@
 const m = require('mithril');
 const header = require('../header/header.view');
-const AssetRecords = require('./assetRecords.model');
 const assetTable = require('../assetTable/assetTable.view');
 const walletTable = require('../walletTable/walletTable.view');
 const accountSelect = require('@/models/asset/accountSelect');
@@ -31,7 +30,7 @@ module.exports = {
                                 }
                             }, ['我的钱包']),
                             m('div', {
-                                class: "cursor-pointer mr-7" + (AssetRecords.tradeAccount.includes(accountSelect.getAccount()) ? ' has-text-primary header-highlight' : ''),
+                                class: "cursor-pointer mr-7" + (accountSelect.tradeAccount.includes(accountSelect.getAccount()) ? ' has-text-primary header-highlight' : ''),
                                 onclick: function () {
                                     accountSelect.setAccount('01');
                                     AssetsRecords.getAllList();
