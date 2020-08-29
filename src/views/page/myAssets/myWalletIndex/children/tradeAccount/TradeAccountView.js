@@ -11,13 +11,13 @@ module.exports = {
     },
     view: () => {
         return m('div', { class: 'views-pages-myassets-tradingAccount pt-4' }, [
-            m('div.tradingAccount mb-3 tabs', {}, [
-                m('ul.tradingAccount_nav mx-5', [
-                    TradeAccountIndex.navAry.map((item) => {
-                        return m('li', { class: '' + (TradeAccountIndex.pageFlag === item.idx ? "is-active" : ''), onclick: () => { TradeAccountIndex.setPageFlag(item.idx); } }, m('a', {}, item.val));
-                    })
-                ])
-            ]),
+            // m('div.tradingAccount mb-3 tabs', {}, [
+            //     m('ul.tradingAccount_nav mx-5', [
+            //         TradeAccountIndex.navAry.map((item) => {
+            //             return m('li', { class: '' + (TradeAccountIndex.pageFlag === item.idx ? "is-active" : ''), onclick: () => { TradeAccountIndex.setPageFlag(item.idx); } }, m('a', {}, item.val));
+            //         })
+            //     ])
+            // ]),
             TradeAccountIndex.pageFlag === '01' ? m(table, {
                 tableData: wlt.wallet['01'],
                 tableType: 'contract',

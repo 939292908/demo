@@ -1,13 +1,25 @@
 const broadcast = require('@/broadcast/broadcast');
+const myWalletIndex = require('../MyWalletIndex');
+console.log('myWalletIndex', myWalletIndex.default);
+
 module.exports = {
+    vnode: {},
     currency: 'BTC',
     hideZeroFlag: false, // 是否隐藏0资产 默认为false
     dataLength: 0, // 暂无数据
+    pageFlag: '01', // 01：合约账户，02：币币账户，04：法币账户
     columnData: { // 表格列
         wallet: [],
         coin: [],
         contract: [],
         legal: []
+    },
+    navAry: [{ idx: '01', val: '合约账户' }, { idx: '02', val: '币币账户' }, { idx: '04', val: '法币账户' }],
+    setPageFlag: function (param) {
+        this.pageFlag = param;
+        this.vnode.attrs.setIdx(param);
+        // if (param === '01') {
+        // }
     },
     setCurrency: function(param) {
         this.currency = param;
@@ -54,6 +66,15 @@ module.exports = {
                 { col: '操作', val: [{ operation: '划转', to: '地址' }, { operation: '去交易', to: '地址' }] }
             ]
         };
+    },
+    test(row, type) {
+        if (type === '划转') {
+            console.log('test...', row, '---------', this.vnode.attrs.setTransferModalOption);
+            this.vnode.attrs.setTransferModalOption({
+                isShow: true,
+                coin: row.wType // 币种 默认选中
+            });
+        }
     },
     copyAry: function (ary) {
         const res = [];
@@ -134,6 +155,9 @@ module.exports = {
                 document.getElementsByTagName('table')[0].rows[document.getElementsByTagName('table')[0].rows.length - 1].style.display = 'none';
             }
         }, '100');
+    },
+    initFn: function (vnode) {
+        this.vnode = vnode;
     },
     removeFn: function () {
         broadcast.offMsg({

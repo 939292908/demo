@@ -1,7 +1,7 @@
 const m = require('mithril');
 const wlt = require('@/models/wlt/wlt');
 const broadcast = require('@/broadcast/broadcast');
-const TradeAccountView = require('@/Views/page/myAssets/myWalletIndex/children/tradeAccount/TradeAccountView');
+// const TradeAccountView = require('@/Views/page/myAssets/myWalletIndex/children/tradeAccount/TradeAccountView');
 const table = require('@/views/page/myAssets/myWalletIndex/tradeTable/tradeTableView');
 let timeOut = null;
 
@@ -17,9 +17,9 @@ const model = {
             //     transferFrom: '03', // from钱包默认选中
             //     coin: 'USDT' // 币种 默认选中
             // }
-            this.isShow = option.isShow;
-            if (option.transferFrom) this.transferFrom = option.transferFrom;
-            if (option.coin) this.coin = option.coin;
+            model.transferModalOption.isShow = option.isShow;
+            if (option.transferFrom) model.transferModalOption.transferFrom = option.transferFrom;
+            if (option.coin) model.transferModalOption.coin = option.coin;
         }
     },
     currency: 'BTC',
@@ -97,11 +97,12 @@ const model = {
     },
     switchContent: function () {
         broadcast.emit({ cmd: broadcast.CHANGE_SW_CURRENCY, data: this.currency });
-        if (this.swValue === '03') {
-            return m(table, { tableData: wlt.wallet['03'], tableType: 'wallet', hideZeroFlag: false });
-        } else if (this.swValue === '01' || this.swValue === '02' || this.swValue === '04') {
-            return m(TradeAccountView, { idx: this.swValue, setIdx: this.setSwValue });
-        }
+        // if (this.swValue === '03') {
+        //     return m(table, { tableData: wlt.wallet['03'], tableType: 'wallet', hideZeroFlag: false, swValue: this.swValue });
+        // } else if (this.swValue === '01' || this.swValue === '02' || this.swValue === '04') {
+        //     return m(TradeAccountView, { swValue: this.swValue, setIdx: this.setSwValue });
+        // }
+        return m(table, { tableData: wlt.wallet['03'], tableType: 'wallet', hideZeroFlag: false, swValue: this.swValue, setIdx: this.setSwValue, setTransferModalOption: this.transferModalOption.setTransferModalOption });
     },
     Nav: {
         firstNav: [
@@ -212,3 +213,4 @@ const model = {
     }
 };
 module.exports = model;
+// export default model;

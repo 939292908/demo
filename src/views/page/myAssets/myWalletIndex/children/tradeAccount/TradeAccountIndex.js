@@ -46,11 +46,11 @@ module.exports = {
     },
     updateFn: function (vnode) {
         // false：通过交易tab进来
-        if (this.oldValue !== vnode.attrs.idx) { // 作用：不与导航点击冲突
-            this.setPageFlag(vnode.attrs.idx);
+        if (this.oldValue !== vnode.attrs.swValue) { // 作用：不与导航点击冲突
+            this.setPageFlag(vnode.attrs.swValue);
             m.redraw();
         }
-        this.setOldValue(vnode.attrs.idx);
+        this.setOldValue(vnode.attrs.swValue);
         this.setAccountBanlanceAndTitle();
     },
     removeFn: function () {

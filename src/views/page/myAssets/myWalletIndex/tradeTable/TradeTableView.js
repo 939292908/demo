@@ -1,14 +1,28 @@
 const m = require('mithril');
 const t = require('@/views/page/myAssets/myWalletIndex/tradeTable/TradeTableIndex');
 require('@/views/page/myAssets/myWalletIndex/tradeTable/TradeTable.scss');
+// const myWalletIndex = require('../MyWalletIndex').default;
+// console.log('myWalletIndex', myWalletIndex);
 
 module.exports = {
+    oninit: (vnode) => {
+        t.initFn(vnode);
+    },
     oncreate: (vnode) => {
         t.createFn(vnode);
         m.redraw();
     },
     view: (vnode) => {
         return m('div', { class: `views-pages-Myassets-Table pt-7 px-5` }, [
+            // myWalletIndex.swValue,
+            vnode.attrs.swValue + '-------',
+            m('div.tradingAccount mb-3 tabs', { style: { display: vnode.attrs.swValue === '01' || vnode.attrs.swValue === '02' || vnode.attrs.swValue === '04' ? '' : 'none' } }, [
+                m('ul.tradingAccount_nav mx-5', { }, [
+                    t.navAry.map((item) => {
+                        return m('li', { class: '' + (t.pageFlag === item.idx ? "is-active" : ''), onclick: () => { t.setPageFlag(item.idx); } }, m('a', {}, item.val));
+                    })
+                ])
+            ]),
             m('div', { class: `nav mb-3 pr-5` }, [
                 m('div.search mr-7', {}, [
                     m('input', {
@@ -59,7 +73,7 @@ module.exports = {
                                         // 操作列
                                         return m('td.pt-7 has-text-level-1', {}, [
                                             item.val.map(aHref => {
-                                                return m('a.mr-4 has-text-primary', {}, aHref.operation);
+                                                return m('a.mr-4 has-text-primary', { onclick: () => { t.test(row, aHref.operation); } }, aHref.operation);
                                             })
                                         ]);
                                     } else if (i === t.columnData[vnode.attrs.tableType].length - 2) {
