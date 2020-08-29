@@ -22,26 +22,8 @@ const model = {
     legalTenderList: [], // 法币账户
     baseWltList: [], // 钱包列表 所有
     authWltList: [], // 钱包列表 当前币种有权限
-    fromWltList: [
-        {
-            id: 1,
-            label: "q"
-        },
-        {
-            id: 2,
-            label: "w"
-        }
-    ], // 钱包列表 从xx  （from与to钱包 不能同一种类型相互划转）
-    toWltList: [
-        {
-            id: 1,
-            label: "e"
-        },
-        {
-            id: 2,
-            label: "r"
-        }
-    ], // 钱包列表 到xx
+    fromWltList: [], // 钱包列表 从xx  （from与to钱包 不能同一种类型相互划转）
+    toWltList: [], // 钱包列表 到xx
     // 初始化语言
     initLanguage () {
         this.baseWltList = [
@@ -134,13 +116,6 @@ const model = {
     },
     // 2个钱包value 初始化
     initFromAndToValueByAuthWalletList () {
-        const pageMap = {
-            1: '01',
-            2: '02',
-            3: '03',
-            4: '04'
-        };
-
         // 校验钱包value是否有权限 如果没权限默认选中第一个
         const verifyWalletValueByValue = (value) => {
             if (this.authWltList.some(item => item.id === value)) {
@@ -151,10 +126,9 @@ const model = {
         };
 
         // 从xx钱包
-        this.form.transferFrom = verifyWalletValueByValue(pageMap[3]);
-
+        this.form.transferFrom = verifyWalletValueByValue('03');
         // 到xx钱包
-        this.form.transferTo = verifyWalletValueByValue(pageMap[1]);
+        this.form.transferTo = verifyWalletValueByValue('01');
     },
     // 2个钱包list 初始化 （依赖钱包value）
     initFromAndToWalletListByValue () {
@@ -183,7 +157,7 @@ const model = {
     switchTransfer () {
         [this.form.transferFrom, this.form.transferTo] = [this.form.transferTo, this.form.transferFrom];
     },
-    // 设置 最大划转
+    // 设置 最大划转 (依赖钱包名称, 币种)
     setMaxTransfer () {
         if (wlt.wallet && this.form.transferFrom) { // 所有钱包 和 从xx钱包id 都存在
             const wallet = wlt.wallet[this.form.transferFrom]; // 对应钱包
@@ -239,7 +213,6 @@ const model = {
                 model.showCurrencyMenu = type;
             },
             onClick (itme) {
-                // console.log(itme, model.form.coin);
                 model.setMaxTransfer(); // 设置 最大划转
             },
             getList () {
