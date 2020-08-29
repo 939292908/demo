@@ -9,11 +9,18 @@ const model = {
     // 资金划转弹框 配置
     transferModalOption: {
         isShow: false, // 弹窗状态
-        setShow(type) { // 设置显示隐藏
-            this.isShow = type;
-        },
         transferFrom: '03', // from钱包默认选中
-        coin: 'USDT' // 币种 默认选中
+        coin: 'USDT', // 币种 默认选中
+        setTransferModalOption(option) { // 设置配置
+            // option: {
+            //     isShow: false, // 弹窗显示隐藏
+            //     transferFrom: '03', // from钱包默认选中
+            //     coin: 'USDT' // 币种 默认选中
+            // }
+            this.isShow = option.isShow;
+            if (option.transferFrom) this.transferFrom = option.transferFrom;
+            if (option.coin) this.coin = option.coin;
+        }
     },
     currency: 'BTC',
     totalValue: 0, // 总资产
@@ -28,7 +35,10 @@ const model = {
     swValue: '03', // 03:我的钱包 01:交易账户(01币币，02法币，04合约) 2:其他账户
     setSwValue(value) {
         model.swValue = value;
-        model.transferModalOption.transferFrom = model.swValue;
+        // model.transferModalOption.transferFrom = model.swValue;
+        model.transferModalOption.setTransferModalOption({
+            transferFrom: model.swValue // from钱包默认选中
+        });
     },
     selectOpFlag: false, // 是否显示币种列表
     selectOpText: 'BTC', // 默认币种BTC
@@ -76,7 +86,9 @@ const model = {
     },
     switchChange: function (val) {
         this.swValue = val;
-        this.transferModalOption.transferFrom = this.swValue; // 资金划转弹框 默认选中from钱包(下拉)value
+        this.transferModalOption.setTransferModalOption({
+            transferFrom: val // from钱包默认选中
+        });
         console.log(this.swValue, '-----====', this.transferModalOption.transferFrom);
         // 防止被交易账户01覆盖交易账户悬浮卡片的值
         window.event.stopPropagation();
