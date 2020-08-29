@@ -35,7 +35,7 @@ module.exports = {
         FromDataMode.errorShow.unmber = false;
     },
     handleCloseDialog: function () {
-        FromDataMode.pupShow = false;
+        FromDataMode.popUpData.show = false;
     },
     view: function () {
         return m('div.page-extract-coin-from has-bg-level-2', [
@@ -92,9 +92,9 @@ module.exports = {
                         m('div', `手续费：${FromDataMode.currentFees.withdrawFee}${FromDataMode.currentSelect.wType}`)
                     ])
                 ]),
-                m('button.button is-info is-fullwidth', { onclick: () => { FromDataMode.handleSubmit(); } }, '确定' + FromDataMode.pupShow)
+                m('button.button is-info is-fullwidth', { onclick: () => { FromDataMode.handleSubmit(); } }, '确定')
             ]),
-            FromDataMode.pupShow ? m(VerifyView, { close: this.handleCloseDialog }) : null,
+            FromDataMode.popUpData.show ? m(VerifyView, { close: this.handleCloseDialog, ...FromDataMode.popUpData }) : null,
             m('div.promptText', [
                 m('div.promptTitle body-5', '温馨提示'),
                 FromDataMode.promptText.split('*').map(item => m('div.rulesText body-4', '*' + item))
