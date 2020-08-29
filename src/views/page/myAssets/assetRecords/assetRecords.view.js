@@ -44,7 +44,10 @@ module.exports = {
                                 dataArrObj: AssetsRecords.dataArrObj,
                                 grossValue: AssetsRecords.grossValue,
                                 displayValue: AssetsRecords.displayValue,
-                                displayEvnet: AssetsRecords.displayEvnet
+                                noDisplay: AssetsRecords.noDisplay,
+                                displayEvnet: (val) => {
+                                    AssetsRecords.displayEvnet(val);
+                                }
                             })
                             : m(assetTable, {
                                 datadisplayvalue: AssetsRecords.datadisplayvalue,
