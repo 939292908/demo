@@ -1,11 +1,10 @@
+const rechargeIndex = require('@/views/page/myAssets/myWalletIndex/children/recharge/index');
 const m = require('mithril');
 require('@/views/page/myAssets/myWalletIndex/children/recharge/recharge.scss');
-const rechargeIndex = require('@/views/page/myAssets/myWalletIndex/children/recharge/index');
 
 module.exports = {
     oninit: () => {
         rechargeIndex.initFn();
-        console.log(rechargeIndex);
     },
     oncreate: () => {
     },
@@ -22,7 +21,7 @@ module.exports = {
                     ]),
                     m('div', { class: `currencySel border-radius-medium mt-2 mb-7` }, [
                         m('div.select is-fullwidth',
-                            rechargeIndex.selData,
+                            rechargeIndex,
                             m('select', [
                                 m('option', { selected: true }, 'Country1'),
                                 m('option', { selected: false }, 'Country2'),

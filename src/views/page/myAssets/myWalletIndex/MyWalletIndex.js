@@ -34,8 +34,7 @@ module.exports = {
     coinTotal: 0, // 币币
     legalTotal: 0, // 法币
     contractTotal: 0, // 合约
-    swValue: 0, // 0:我的钱包 1:交易账户 2:其他账户
-    wltIdx: 1, // 币币，法币，合约
+    swValue: '03', // 03:我的钱包 01:交易账户(01币币，02法币，04合约) 2:其他账户
     selectOpFlag: false, // 是否显示币种列表
     selectOpText: 'BTC', // 默认币种BTC
     selectOp: ['BTC', 'USDT'], // 币种列表
@@ -82,18 +81,15 @@ module.exports = {
     },
     switchChange: function (val, type) {
         this.swValue = val;
-        if (type !== undefined) {
-            this.wltIdx = 1;// 点击交易账户则默认显示合约
-        }
         this.sets();
     },
     switchContent: function () {
         broadcast.emit({ cmd: broadcast.CHANGE_SW_CURRENCY, data: this.currency });
         switch (this.swValue) {
-        case 0:
+        case '03':
             return m(TradeAccountChildrenView, { tableType: 'walletColumnData', tableTypeData: 'walletData' });
-        case 1:
-            return m(TradeAccountView, { idx: this.wltIdx });
+        case '01':
+            return m(TradeAccountView, { idx: this.swValue });
         default:
             break;
         }
@@ -183,15 +179,6 @@ module.exports = {
                 ele.classList.value = ele.classList.value.replace('has-bg-primary', 'has-text-primary bgNone has-line-level-2');
             }
         }
-    },
-    changeTradeAccount: function(param) {
-        // 点击交易账户(...)中则显示对应page
-        this.switchChange(1);
-        this.wltIdx = param;
-        // 阻止交易账户冒泡再次wltIdx赋值
-        window.event.stopPropagation();
-        // （我的钱包，交易账户，其他账户）切换内容
-        this.switchContent();
     },
     sets: function () {
         this.currency === 'BTC' ? this.setTotalValue(wlt.totalValueForBTC) : this.setTotalValue(wlt.totalValueForUSDT);
