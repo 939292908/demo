@@ -55,6 +55,13 @@
           top: 50%;
           right: 10px;
           transform: translateY(-50%);
+
+          div {
+            color: #FF8B00;
+            padding: 0px 12px;
+            cursor: pointer;
+            border-left: 1px solid rgba(30, 40, 70, 0.12);;
+          }
         }
 
       }

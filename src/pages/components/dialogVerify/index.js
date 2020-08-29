@@ -4,12 +4,25 @@ const close = require('./Failure.png').default;
 const InputWithComponent = require('@/pages/components/inputWithComponent/inputWithComponentView');
 const Validate = require('./validateModel');
 const I18n = require('@/languages/I18n').default;
+
+/**
+ * @param: props: {
+ *   close: [function] 关闭组件函数
+ *   isHandleVerify: [boolean] 显示 [true]安全验证组件 或[false]提示弹框组件
+*     title: [string] 弹框首部title --- 默认为 温馨提示
+*     content: [string] 弹框内容 --- isHandleVerify: false 存在
+*     buttonText: [string] 确认按钮文字 ---- 默认为 确定
+ *
+ * }
+ */
+
 module.exports = {
-    oninit() {
-        Validate.oninit();
+    oninit(vNode) {
+        console.log(vNode);
+        vNode.attrs.isHandleVerify && Validate.oninit();
     },
-    onremove() {
-        Validate.onremove();
+    onremove(vNode) {
+        vNode.attrs.isHandleVerify && Validate.onremove();
     },
     handlecloseDialog: function () {
         this.props.close();
@@ -18,7 +31,7 @@ module.exports = {
         return m('div.headerPrompt dis-flex', [
             m('div.title-medium', [
                 m('div.logotext', 'Vbit'),
-                m('div.promptTitle', '温馨提示')
+                m('div.promptTitle', this.props.promptConfig?.title || '温馨提示')
             ]),
             m('div', { onclick: this.handlecloseDialog.bind(this) }, m('img', { src: close }))
         ]);
@@ -26,7 +39,7 @@ module.exports = {
     promptText: function () {
         return m('div.mainPrompt', [
             m('div.promptText', '已提交提币申请，请前往邮件进行提币确认，邮件确认 后才能进入出金环节。'),
-            m('div.butBox', { onclick: this.handlecloseDialog.bind(this) }, m('button.button is-info is-fullwidth', '知道了'))
+            m('div.butBox', { onclick: this.handlecloseDialog.bind(this) }, m('button.button is-info is-fullwidth', this.props.promptConfig?.buttonText || '知道了'))
         ]);
     },
     verifyContentTitle: function () { // 验证 title
@@ -47,7 +60,7 @@ module.exports = {
                 maxlength: '6',
                 value: Validate.code
             }),
-            m('.right-click-but', { onclick: () => { Validate.smsCd <= 0 && Validate.sendSmsCode(); } }, Validate.smsCd > 0 ? `${Validate.smsCd}` : I18n.$t('10214')/* '获取验证码' */)
+            m('.right-click-but', { onclick: () => { Validate.smsCd <= 0 && Validate.sendSmsCode(); } }, m('div', Validate.smsCd > 0 ? `${Validate.smsCd}` : I18n.$t('10214')/* '获取验证码' */))
         ]);
     },
     verifyVnode: function () {
@@ -92,7 +105,7 @@ module.exports = {
             break;
         }
 
-        validInput.push(m('div.butBox', { onclick: () => { Validate.check(); } }, m('button.button is-info is-fullwidth', '确定')));
+        validInput.push(m('div.butBox', { onclick: () => { Validate.check(); } }, m('button.button is-info is-fullwidth', this.props.promptConfig?.buttonText || '确定')));
         return m('div.mainPrompt', validInput);
     },
     view: function (vNode) {
@@ -100,8 +113,7 @@ module.exports = {
         return m('div.components-dialog-verify', [
             m('div.dialog-content warmPrompt', m('div', [
                 this.headerVnode(),
-                // this.promptText(),
-                this.verifyVnode()
+                vNode.attrs.isHandleVerify ? this.verifyVnode() : this.promptText()
             ]))
         ]);
     }
