@@ -11,28 +11,35 @@ const validate = require('@/models/validate/validate').default;
 const helpCenter = require('@/util/helpCenter').default;
 
 const register = {
-    type: 'phone',
-    refereeId: '',
-    loginName: '',
-    password: '',
-    code: '',
-    areaCode: '86',
-    showPassword: false,
-    showPasswordValidate: false,
-    showLoginNameValidate: false,
-    selectList: [{ cn_name: '中国', code: '86', support: '1', us_name: 'China' }],
-    refereeType: '',
+    type: 'phone', // 账号类型 phone 手机，email 邮箱
+    refereeId: '', // 邀请码
+    loginName: '', // 账号
+    password: '', // 密码
+    code: '', // 验证码
+    areaCode: '86', // 区号，默认86
+    showPassword: false, // 显示密码
+    showPasswordValidate: false, // 显示密码字段验证提示
+    showLoginNameValidate: false, // 显示登陆字段验证提示
+    selectList: [{ cn_name: '中国', code: '86', support: '1', us_name: 'China' }], // 区号选择列表
+    refereeType: '', // 邀请类型
     prom: '',
-    os: '',
-    isvalidate: false,
-    waiting: false,
+    os: '', // 系统
+    isvalidate: false, // 验证状态
+    waiting: false, // 等待状态
     smsCd: 0, // 激活短信按钮倒计时
     exchInfo: config.exchInfo, // 渠道信息
-    checkbox: false,
+    checkbox: false, // 条款同意
+    /**
+     * 必须填写验证码
+     * @returns {boolean}
+     */
     mustInvited() {
         if (!this.exchInfo) return false;
         return Boolean(parseInt(this.exchInfo.mustInvited));
     },
+    /**
+     * 邮箱验证
+     */
     rulesEmail: {
         required: value => !!value || '该字段不能为空', // 该字段不能为空
         email: value => {
@@ -40,6 +47,9 @@ const register = {
             return pattern.test(value) || '邮箱格式不正确'; // 邮箱格式不正确
         }
     },
+    /**
+     * 手机号验证
+     */
     rulesPhone: {
         required: value => !!value || '该字段不能为空', // 该字段不能为空
         phone: value => {
@@ -47,6 +57,9 @@ const register = {
             return pattern.test(value) || '手机号码不正确'; // 手机号码不正确
         }
     },
+    /**
+     * 密码验证
+     */
     rulesPwd: {
         required: value => !!value || '该字段不能为空', // 该字段不能为空
         password: value => {
@@ -54,6 +67,10 @@ const register = {
             return pattern.test(value) || '至少6个字符，必须是字母和数字'; // 至少6个字符，必须是字母和数字
         }
     },
+    /**
+     * 注册验证
+     * @returns {boolean|boolean}
+     */
     valid() {
         const uid = cryptoChar.decrypt(this.refereeId);
         let valid = false;
@@ -73,6 +90,10 @@ const register = {
             return valid;
         }
     },
+    /**
+     * 注册验证
+     * @returns {string|boolean|boolean}
+     */
     valid1() {
         const uid = cryptoChar.decrypt(this.refereeId);
         let valid = false;
@@ -90,7 +111,10 @@ const register = {
             return valid;
         }
     },
-    // 打开条款
+    /**
+     * 打开条款
+     * @param id 方法名
+     */
     toHelpService(id) {
         helpCenter.openArticle(this.exchInfo.helpCenter[id]);
     },
@@ -162,6 +186,9 @@ const register = {
             m.redraw();
         });
     },
+    /**
+     * 最终注册接口
+     */
     register() {
         Http.usersRegister({
             loginType: register.type,
@@ -186,6 +213,9 @@ const register = {
             window.$message({ content: '网络异常，请稍后重试', type: 'danger' });
         });
     },
+    /**
+     * 发送短信验证码
+     */
     sendSmsCode() {
         this.waiting = true;
         validate.sendSmsCode().then(res => {
@@ -204,6 +234,9 @@ const register = {
             this.waiting = false;
         });
     },
+    /**
+     * 发送邮箱验证码
+     */
     sendEmailCode() {
         this.waiting = true;
         validate.sendEmailCode().then(res => {
@@ -222,6 +255,9 @@ const register = {
             this.waiting = false;
         });
     },
+    /**
+     * 设置验证码发送冷却
+     */
     setSmsCd() {
         this.smsCd = 60;
         m.redraw();
@@ -235,7 +271,9 @@ const register = {
             }
         }, 1000);
     },
-
+    /**
+     * 获取区号列表
+     */
     getCountryList() {
         Http.getCountryList({}).then(res => {
             if (res.result.code === 0) {
@@ -244,7 +282,9 @@ const register = {
             }
         });
     },
-
+    /**
+     * 获取渠道信息
+     */
     getExchInfo() {
         Http.getExchInfo({ exchannel: config.exchId }).then(res => {
             if (res.result.code === 0) {
@@ -258,6 +298,9 @@ const register = {
             ? validate.checkSmsCode(this.code)
             : validate.checkEmailCode(this.code);
     },
+    /**
+     * 加载极验
+     */
     initGeetest() {
         const self = this;
         geetest.init(() => {
