@@ -4,6 +4,8 @@ const UserInfo = require('@/models/globalModels');
 const wlt = require('@/models/wlt/wlt');
 const broadcast = require('@/broadcast/broadcast');
 const geetest = require('@/models/validate/geetest').default;
+const Verification = require('@/pages/components/validate/validateView').default;
+console.log(Verification);
 console.log(wsApi, wlt);
 const extract = {
     name: 'FROM_DATA',
@@ -105,26 +107,31 @@ const extract = {
         }
     },
     handleSubmit: function () {
-        console.log(UserInfo.getAccount());
+        geetest.verify();
         if (this.errorShow.unmber || this.errorShow.address) return false;
+        // const user = UserInfo.getAccount();
+        // const params = {
+        //     token: user.token,
+        //     wType: this.currentSelect.wType,
+        //     money: this.extractCoin.coinNum,
+        //     aid: user.uid + '06',
+        //     addr: this.extractCoin.address,
+        //     op: 0
+        // };
+        // if (this.currentSelect.wType === 'XRP' || this.currentSelect.wType === 'EOS') {
+        //     params.addr = this.extractCoin.address + ',' + this.extractCoin.linkName;
+        // }
+        // webApi.withdrawDeposit(params).then(res => {
+        //     console.log(res);
+        // }).catch(e => {
+        //     console.log(e, '提币确定');
+        // });
+    },
+    readyStartSafetyVerify: function (start) {
+        if (start !== 'success') return;
+        // 开始手机验证
         const user = UserInfo.getAccount();
-        const params = {
-            token: user.token,
-            wType: this.currentSelect.wType,
-            money: this.extractCoin.coinNum,
-            aid: user.uid + '06',
-            addr: this.extractCoin.address,
-            op: 0
-        };
-        if (this.currentSelect.wType === 'XRP' || this.currentSelect.wType === 'EOS') {
-            params.addr = this.extractCoin.address + ',' + this.extractCoin.linkName;
-        }
-        webApi.withdrawDeposit(params).then(res => {
-            console.log(res);
-        }).catch(e => {
-            geetest.verify();
-            console.log(e, '提币确定');
-        });
+        console.log(user);
     },
     oninit: function () {
         const self = this;
@@ -146,13 +153,7 @@ const extract = {
         broadcast.onMsg({
             key: this.name,
             cmd: 'geetestMsg',
-            cb: res => {
-                if (res === 'success') {
-                    console.log(1);
-                } else {
-                    console.log(2);
-                }
-            }
+            cb: this.readyStartSafetyVerify
         });
     },
     onremove: function () {

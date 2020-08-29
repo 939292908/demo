@@ -31,6 +31,7 @@ module.exports = {
     },
     handleClickAll: function () {
         FromDataMode.extractCoin.coinNum = FromDataMode.currentExtractableNum;
+        FromDataMode.errorShow.unmber = false;
     },
     view: function () {
         return m('div.page-extract-coin-from has-bg-level-2', [
