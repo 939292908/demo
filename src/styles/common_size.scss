@@ -10,6 +10,10 @@ body,
     height: 100%;
     overflow: auto;
     font-size: var(--c-fontsz-level4);
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-tap-highlight-color: rgba(0,0,0,0);
 }
 
 /* 内容宽度 */
