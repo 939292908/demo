@@ -1,8 +1,15 @@
+/**
+ * 可传参数
+ * transferTo: 默认选中 到xx钱包 ('01': 合约账户, '02': 币币账户, '03': 我的钱包, '04': 法币账户)
+ * transferFrom: 默认选中 从xx钱包 ('01': 合约账户, '02': 币币账户, '03': 我的钱包, '04': 法币账户)
+ * coin: 默认选中 币种 (USDT)
+ */
 const wlt = require('@/models/wlt/wlt');
 const I18n = require('@/languages/I18n').default;
 const Http = require('@/api').webApi;
 
 const model = {
+    vnode: {},
     showCurrencyMenu: false, // show币种菜单
     showFromMenu: false, // show from菜单
     showMenuTo: false, // show to菜单
@@ -89,13 +96,13 @@ const model = {
         console.log("币种下拉", this.canTransferCoin, this.allWalletList);
 
         // if (this.canTransferCoin[0]) this.form.coin = this.canTransferCoin[0].wType  // 合约下拉列表 默认选中第一个
-        if (this.canTransferCoin[0]) this.form.coin = this.canTransferCoin[0].wType; // 合约下拉列表 默认选中第一个
+        this.initCoinValue();// 初始化 币种value
 
         this.initWalletListByWTypeAndValue(this.form.coin); // 初始化钱包 list 和 value
 
         this.setMaxTransfer(); // 设置 最大划转
     },
-    // 初始化钱包 list 和 value
+    // 初始化 钱包list和value
     initWalletListByWTypeAndValue (wType) {
         this.initAuthWalletListByWType(wType);// 1. 有权限的钱包list 初始化
         this.initFromAndToValueByAuthWalletList(); // 2. 钱包value  初始化
@@ -114,7 +121,17 @@ const model = {
         });
         this.authWltList = this.authWltList.filter(item => item); // 钱包列表 去空
     },
-    // 2个钱包value 初始化
+    // 初始化 币种value
+    initCoinValue() {
+        if (this.canTransferCoin[0]) { // 有币种下拉
+            if (this.canTransferCoin.some(item => item.wType === this.vnode.attrs.coin)) { // 有传value
+                this.form.coin = this.vnode.attrs.coin;
+            } else { // 没传
+                this.form.coin = this.canTransferCoin[0].wType; // 默认选中第1个
+            }
+        }
+    },
+    // 初始化 2个钱包value
     initFromAndToValueByAuthWalletList () {
         // 校验钱包value是否有权限 如果没权限默认选中第一个
         const verifyWalletValueByValue = (value) => {
@@ -126,9 +143,9 @@ const model = {
         };
 
         // 从xx钱包
-        this.form.transferFrom = verifyWalletValueByValue('03');
+        this.form.transferFrom = verifyWalletValueByValue(this.vnode.attrs.transferFrom || '03');
         // 到xx钱包
-        this.form.transferTo = verifyWalletValueByValue('01');
+        this.form.transferTo = verifyWalletValueByValue(this.vnode.attrs.transferTo || '01');
     },
     // 2个钱包list 初始化 （依赖钱包value）
     initFromAndToWalletListByValue () {
@@ -263,6 +280,7 @@ const model = {
     rmEVBUS () {
     },
     oninit (vnode) {
+        this.vnode = vnode;
         wlt.init();
         this.initTransferInfo();
         this.initLanguage();

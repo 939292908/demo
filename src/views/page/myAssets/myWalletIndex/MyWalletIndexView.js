@@ -126,13 +126,7 @@ module.exports = {
                 ])
             ]),
             // 资金划转组件
-            myWalletIndex.transferModal.isShow ? m(Transfer, {
-                isShow: myWalletIndex.transferModal.isShow, // 显示隐藏
-                // 设置显示隐藏
-                setShow(type) {
-                    myWalletIndex.transferModal.isShow = type;
-                }
-            }) : []
+            myWalletIndex.transferModalOption.isShow ? m(Transfer, myWalletIndex.transferModalOption) : []
         ]);
     },
     oncreate: () => {
