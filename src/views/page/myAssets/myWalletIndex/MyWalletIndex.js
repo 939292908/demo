@@ -9,20 +9,7 @@ const myWalletIndex = {
     // 资金划转弹框 模块
     transferModal: {
         // 弹窗状态
-        isShow: true,
-        // 关闭弹窗
-        closeMe() {
-            myWalletIndex.transferModal.isShow = false;
-        },
-        // ok事件
-        onOk() {
-            myWalletIndex.transferModal.closeMe();
-            console.log('onOk');
-        },
-        // 关闭事件
-        onClose() {
-            myWalletIndex.transferModal.closeMe();
-        }
+        isShow: false
     },
     currency: 'BTC',
     setCurrency: function (param) {

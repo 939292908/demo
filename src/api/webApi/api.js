@@ -516,3 +516,17 @@ export function getNotice (params = {}) {
 export function getFunList (params = {}) {
     return Http.get(API.FUN_LIST_V1, { params });
 }
+
+/**
+ * @description: 资产划转接口
+ * @param params: {
+ *      coin: "USDT", // 合约下拉列表 value
+ *      transferFrom: '03', // 从xx钱包 value
+ *      transferTo: '01', // 到xx钱包 value
+ *      num: '', // 划转数量
+ *      maxTransfer: 0 // 最大划转
+ * }
+ */
+export function postTransfer (params = {}) {
+    return Http.post(API.TRANSFER_POST, params);
+}
