@@ -1,89 +1,98 @@
 const m = require('mithril');
 const wlt = require('@/models/wlt/wlt');
 const broadcast = require('@/broadcast/broadcast');
-const MyWalletIndexView = require('@/pages/page/myAssets/myWalletIndex/MyWalletIndexView');
-const TradeAccountIndex = require('@/pages/page/myAssets/tradeAccount/TradeAccountIndex');
-const MyWalletIndex = require('@/pages/page/myAssets/myWallet/MyWalletIndex');
+const TradeAccountView = require('@/pages/page/myAssets/myWalletIndex/children/tradeAccount/TradeAccountView');
+const TradeAccountChildrenView = require('@/pages/page/myAssets/myWalletIndex/children/tradeAccountChildren/TradeAccountChildrenView');
 let timeOut = null;
-const myWalletIndex = {
+
+module.exports = {
     // 资金划转弹框 模块
     transferModal: {
         // 弹窗状态
-        isShow: false
+        isShow: false,
+        // 关闭弹窗
+        closeMe() {
+            this.transferModal.isShow = false;
+        },
+        // ok事件
+        onOk() {
+            this.transferModal.closeMe();
+            console.log('onOk');
+        },
+        // 关闭事件
+        onClose() {
+            this.transferModal.closeMe();
+        }
     },
     currency: 'BTC',
-    setCurrency: function (param) {
-        myWalletIndex.currency = param;
-    },
     totalValue: 0, // 总资产
-    setTotalValue: function (param) {
-        myWalletIndex.totalValue = param;
-    },
     totalCNY: 0, // 人民币
-    setTotalCNY: function (param) {
-        myWalletIndex.totalCNY = param;
-    },
     walletTotalValue: 0, // 我的钱包总资产
-    setWalletTotalValue: function (param) {
-        myWalletIndex.walletTotalValue = param;
-    },
     tradingAccountTotalValue: 0, // 交易账户总资产
-    setTradingAccountTotalValue: function (param) {
-        myWalletIndex.tradingAccountTotalValue = param;
-    },
     otherTotalValue: 0, // 其他账户
-    setOtherTotalValue: function (param) {
-        myWalletIndex.otherTotalValue = param;
-    },
     hideMoneyFlag: false, // 是否隐藏资产
-    hideValue: function () {
-        if (myWalletIndex.hideMoneyFlag) {
-            document.getElementsByClassName('changeMoneyImg')[0].src = require('@/assets/img/myAssets/hideMoney.svg').default;
-            myWalletIndex.hideMoneyFlag = !myWalletIndex.hideMoneyFlag;
-            myWalletIndex.setTotalValue(wlt[myWalletIndex.currency === 'BTC' ? 'totalValueForBTC' : 'totalValueForUSDT']);
-            myWalletIndex.setTotalCNY(wlt.totalCNYValue);
-        } else {
-            document.getElementsByClassName('changeMoneyImg')[0].src = require('@/assets/img/myAssets/showMoney.svg').default;
-            myWalletIndex.hideMoneyFlag = !myWalletIndex.hideMoneyFlag;
-            myWalletIndex.setTotalValue('******');
-            myWalletIndex.setTotalCNY('******');
-        }
-    },
-    // 币币
-    coinTotal: 0,
-    setCoinTotal: function (param) {
-        myWalletIndex.coinTotal = param;
-    },
-    // 法币
-    legalTotal: 0,
-    setLegalTotal: function (param) {
-        myWalletIndex.legalTotal = param;
-    },
-    // 合约
-    contractTotal: 0,
-    setContractTotal: function (param) {
-        myWalletIndex.contractTotal = param;
-    },
+    coinTotal: 0, // 币币
+    legalTotal: 0, // 法币
+    contractTotal: 0, // 合约
     swValue: 0, // 0:我的钱包 1:交易账户 2:其他账户
     wltIdx: 1, // 币币，法币，合约
-    switchChange: function (val, type) {
-        myWalletIndex.swValue = val;
-        if (type !== undefined) {
-            // 点击交易账户则默认显示合约
-            this.wltIdx = 1;
+    selectOpFlag: false, // 是否显示币种列表
+    selectOpText: 'BTC', // 默认币种BTC
+    selectOp: ['BTC', 'USDT'], // 币种列表
+    setCurrency: function (param) {
+        this.currency = param;
+    },
+    setTotalValue: function (param) {
+        this.totalValue = param;
+    },
+    setTotalCNY: function (param) {
+        this.totalCNY = param;
+    },
+    setWalletTotalValue: function (param) {
+        this.walletTotalValue = param;
+    },
+    setTradingAccountTotalValue: function (param) {
+        this.tradingAccountTotalValue = param;
+    },
+    setOtherTotalValue: function (param) {
+        this.otherTotalValue = param;
+    },
+    hideValue: function () {
+        const ele = document.getElementsByClassName('changeMoneyImg')[0];
+        if (this.hideMoneyFlag) {
+            ele.classList.value = ele.classList.value.replace('yincang', 'zichanzhengyan');
+            this.hideMoneyFlag = !this.hideMoneyFlag;
+            this.setTotalValue(wlt[this.currency === 'BTC' ? 'totalValueForBTC' : 'totalValueForUSDT']);
+            this.setTotalCNY(wlt.totalCNYValue);
+        } else {
+            ele.classList.value = ele.classList.value.replace('zichanzhengyan', 'yincang');
+            this.hideMoneyFlag = !this.hideMoneyFlag;
+            this.setTotalValue('******');
+            this.setTotalCNY('******');
         }
     },
-    // setNavValue: {
-    //     name: 'nzm'
-    // },
+    setCoinTotal: function (param) {
+        this.coinTotal = param;
+    },
+    setLegalTotal: function (param) {
+        this.legalTotal = param;
+    },
+    setContractTotal: function (param) {
+        this.contractTotal = param;
+    },
+    switchChange: function (val, type) {
+        this.swValue = val;
+        if (type !== undefined) {
+            this.wltIdx = 1;// 点击交易账户则默认显示合约
+        }
+    },
     switchContent: function () {
-        broadcast.emit({ cmd: broadcast.CHANGE_SW_CURRENCY, data: myWalletIndex.currency });
-        switch (myWalletIndex.swValue) {
+        broadcast.emit({ cmd: broadcast.CHANGE_SW_CURRENCY, data: this.currency });
+        switch (this.swValue) {
         case 0:
-            return m(MyWalletIndex);
+            return m(TradeAccountChildrenView, { tableType: 'walletColumnData', tableTypeData: 'walletData' });
         case 1:
-            // return m(TradeAccountIndex, { idx: this.wltIdx, fn: this.setNavValue });
-            return m(TradeAccountIndex, { idx: this.wltIdx });
+            return m(TradeAccountView, { idx: this.wltIdx });
         default:
             break;
         }
@@ -93,8 +102,8 @@ const myWalletIndex = {
             {
                 id: 1,
                 title: '充币',
-                // 跳转至哪个链接 例如：to: 'http://www.baidu.com || #!/chargeMoney'
-                to: '#!/chargeMoney'
+                // 跳转至哪个链接 例如：to: 'http://www.baidu.com || /chargeMoney'
+                to: '/chargeMoney'
             },
             {
                 id: 2,
@@ -122,13 +131,9 @@ const myWalletIndex = {
         if (item.id === 4) { // 点击资金划转
             this.transferModal.isShow = true;
         }
-        // if (item.to !== "") {
-        //     this.toPage(item.to);
-        // }
-    },
-    toPage: function (val) {
-        if (val !== "") {
-            window.location.href = val;
+        // 弹框↑
+        if (item.to !== "") { // 跳转
+            m.route.set(item.to);
         }
     },
     switchDisplay: function (param, flag) {
@@ -140,33 +145,30 @@ const myWalletIndex = {
             }
         }
     },
-    selectOpFlag: false,
-    selectOpText: 'BTC',
-    selectOp: ['BTC', 'USDT'],
-    // 切换ul（select）的显示隐藏
+    // 切换币种列表的显示隐藏
     setSelectOpFlag: function() {
-        myWalletIndex.selectOpFlag = !myWalletIndex.selectOpFlag;
-        if (myWalletIndex.selectOpFlag) {
+        this.selectOpFlag = !this.selectOpFlag;
+        if (this.selectOpFlag) {
             document.getElementsByClassName('currType')[0].style.display = '';
         } else {
             document.getElementsByClassName('currType')[0].style.display = 'none';
         }
     },
     setSelectOpText: function(param) {
-        myWalletIndex.selectOpText = param;
+        this.selectOpText = param;
     },
     // 设置button（option）显示的值     切换currency
     selectOpHideUl: function(item) {
         document.getElementsByClassName('currType')[0].style.display = 'none';
-        myWalletIndex.setSelectOpText(item);
-        myWalletIndex.setCurrency(item);
+        this.setSelectOpText(item);
+        this.setCurrency(item);
         broadcast.emit({ cmd: broadcast.CHANGE_SW_CURRENCY, data: item });
-        myWalletIndex.DelayDataAcquisition();
+        this.DelayDataAcquisition();
     },
-    // 点击除button的元素隐藏ul（仿select）
+    // 点击除button的元素隐藏币种列表
     optionDisplay: function(event) {
-        if (event.target.tagName !== 'BUTTON') {
-            myWalletIndex.selectOpFlag = false;
+        if (event.target.classList.value.indexOf('showSelI') < 0 && event.target.classList.value.indexOf('showSelBtn') < 0) {
+            this.selectOpFlag = false;
             document.getElementsByClassName('currType')[0].style.display = 'none';
         }
     },
@@ -183,44 +185,30 @@ const myWalletIndex = {
     },
     changeTradeAccount: function(param) {
         // 点击交易账户(...)中则显示对应page
-        myWalletIndex.switchChange(1);
+        this.switchChange(1);
         this.wltIdx = param;
         // 阻止交易账户冒泡再次wltIdx赋值
         window.event.stopPropagation();
         // （我的钱包，交易账户，其他账户）切换内容
-        myWalletIndex.switchContent();
+        this.switchContent();
     },
     DelayDataAcquisition: function () {
-        myWalletIndex.currency === 'BTC' ? myWalletIndex.setTotalValue(wlt.totalValueForBTC) : myWalletIndex.setTotalValue(wlt.totalValueForUSDT);
-        myWalletIndex.currency === 'BTC' ? myWalletIndex.setWalletTotalValue(wlt.walletTotalValueForBTC) : myWalletIndex.setWalletTotalValue(wlt.walletTotalValueForUSDT);
-        myWalletIndex.currency === 'BTC' ? myWalletIndex.setTradingAccountTotalValue(wlt.tradingAccountTotalValueForBTC) : myWalletIndex.setTradingAccountTotalValue(wlt.tradingAccountTotalValueForUSDT);
-        myWalletIndex.currency === 'BTC' ? myWalletIndex.setOtherTotalValue(wlt.otherAccountTotalValueForBTC) : myWalletIndex.setOtherTotalValue(wlt.otherAccountTotalValueForUSDT);
-        myWalletIndex.currency === 'BTC' ? myWalletIndex.setCoinTotal(wlt.coinTotalValueForBTC) : myWalletIndex.setCoinTotal(wlt.coinTotalValueForUSDT);
-        myWalletIndex.currency === 'BTC' ? myWalletIndex.setLegalTotal(wlt.legalTotalValueForBTC) : myWalletIndex.setLegalTotal(wlt.legalTotalValueForUSDT);
-        myWalletIndex.currency === 'BTC' ? myWalletIndex.setContractTotal(wlt.contractTotalValueForBTC) : myWalletIndex.setContractTotal(wlt.contractTotalValueForUSDT);
-        myWalletIndex.setTotalCNY(wlt.totalCNYValue);
-    }
-};
-module.exports = {
-    // oninit: function() {
-    //     wlt.init();
-    // },
-    oncreate: function() {
-        // console.log('nzm', wlt, '------------');
-        // console.log('nzm', wlt.coinTotalValueForBTC, '------------');
-        // myWalletIndex.DelayDataAcquisition();
-        // m.redraw();
+        this.currency === 'BTC' ? this.setTotalValue(wlt.totalValueForBTC) : this.setTotalValue(wlt.totalValueForUSDT);
+        this.currency === 'BTC' ? this.setWalletTotalValue(wlt.walletTotalValueForBTC) : this.setWalletTotalValue(wlt.walletTotalValueForUSDT);
+        this.currency === 'BTC' ? this.setTradingAccountTotalValue(wlt.tradingAccountTotalValueForBTC) : this.setTradingAccountTotalValue(wlt.tradingAccountTotalValueForUSDT);
+        this.currency === 'BTC' ? this.setOtherTotalValue(wlt.otherAccountTotalValueForBTC) : this.setOtherTotalValue(wlt.otherAccountTotalValueForUSDT);
+        this.currency === 'BTC' ? this.setCoinTotal(wlt.coinTotalValueForBTC) : this.setCoinTotal(wlt.coinTotalValueForUSDT);
+        this.currency === 'BTC' ? this.setLegalTotal(wlt.legalTotalValueForBTC) : this.setLegalTotal(wlt.legalTotalValueForUSDT);
+        this.currency === 'BTC' ? this.setContractTotal(wlt.contractTotalValueForBTC) : this.setContractTotal(wlt.contractTotalValueForUSDT);
+        this.setTotalCNY(wlt.totalCNYValue);
+    },
+    createFn: function() {
         wlt.init();
-        timeOut = setTimeout(myWalletIndex.DelayDataAcquisition, '100');
-        m.redraw();
+        timeOut = setTimeout(() => {
+            this.DelayDataAcquisition();
+        }, '100');
     },
-    view: function () {
-        const props = {
-            myWalletIndex: myWalletIndex
-        };
-        return MyWalletIndexView(props);
-    },
-    onremove: function() {
+    removeFn: function() {
         clearTimeout(timeOut);
         wlt.remove();
     }

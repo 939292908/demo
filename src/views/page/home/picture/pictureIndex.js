@@ -1,5 +1,5 @@
 const m = require('mithril');
-const Slideshow = require('@/pages/components/slideshow/leftToRight');
+const Slideshow = require('@/views/components/slideshow/leftToRight');
 const broadcast = require('@/broadcast/broadcast');
 require('@/styles/pages/home.css');
 const market = require('@/models/market/market');

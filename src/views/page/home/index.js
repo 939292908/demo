@@ -7,7 +7,7 @@ const advantage = require('./advantage/advantageIndex');
 const introduce = require('./introduce/introduceIndex');
 module.exports = {
     view: function () {
-        return m('div.views-pages-home-index', [
+        return m('div.views-home-index', [
             // 顶部+轮播+公告
             m(top),
             // // 大图+轮播2

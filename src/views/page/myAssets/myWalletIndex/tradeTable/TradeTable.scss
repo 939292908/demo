@@ -1,0 +1,72 @@
+.views-pages-Myassets-Table{
+    background-color: white;
+    .nav{
+        display: flex;
+        flex-direction: row;
+        .search{
+            input{
+                width: 128px;
+                background-image: url('../../../../../assets/img/myAssets/search.svg');
+                background-repeat: no-repeat;
+                background-position: 105px center;
+                outline:none;
+                // theme--dark 下未找到！！！
+                border: 1px solid rgba(30, 40, 70, 0.12);
+            }
+            // 修改placeholder字体颜色 start
+            input::-webkit-input-placeholder{
+                /* WebKit browsers */
+                color: #9A9EAC;
+            }
+            /* Mozilla Firefox 4 to 18 */ /* Mozilla Firefox 19+ */
+            input:-moz-placeholder,input::-moz-placeholder{
+                color: #9A9EAC;
+            }
+            input:-ms-input-placeholder{
+                /* Internet Explorer 10+ */
+                color: #9A9EAC;
+            }
+            // 修改placeholder字体颜色 end
+        }
+        .hideZeroAsset{
+            margin: auto 0px;
+            label{
+                clear: both;
+                input{
+                    width: 18px;
+                    height: 18px;
+                    float: left;
+                }
+            }
+        }
+        .fundRecords{
+            i,span{
+                vertical-align:middle;
+            }
+            margin: auto 0px;
+        }
+        .profit{
+            i,span{
+                vertical-align:middle;
+            }
+            margin: auto 0px;
+            clear: both;
+        }
+        .account{
+            margin: auto 0px;
+            margin-left: auto;
+        }
+    }
+    .tab{
+        min-height: 598px;
+        table{
+            thead{
+                // 规范未找到单独设置颜色！！！
+                color: rgba(83, 83, 83, 0.555);
+            }
+            td{
+                width: 5%;
+            }
+        }
+    }
+}
