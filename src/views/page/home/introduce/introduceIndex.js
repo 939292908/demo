@@ -20,7 +20,7 @@ module.exports = {
                 m('div', { class: `container ` }, [
                     m('div', { class: `pt-8 title-x-large` }, [
                         m('p', { class: `font-weight-regular ${utils.isMobile() ? 'ml-7 title-small ' : ''}` }, "世界领先的专业数字资产衍生品交易平台"),
-                        m('img', { class: 'mb-5 ml-2', src: require("@/assets/img/home/rectangle1.png").default })
+                        m('img', { class: `mb-5 ml-2 ${utils.isMobile() ? 'ml-7 ' : 'ml-2'}`, src: require("@/assets/img/home/rectangle1.png").default })
                     ]),
                     m('div', { class: `has-text-level-2 body-6 ${utils.isMobile() ? 'ml-7 mr-7' : 'pt-8'}` }, ["Vbit平台金融量化团队均来自JP摩根、摩根士丹利、OKCoin、Binance等知名金融机构。Vbit平台由国际化各领域专家团队研发运营,确保平台拥有最前沿的技术，用户享有最极致的产品体验。"]),
                     m('div', { class: `mt-7 has-text-level-2 body-6  ${utils.isMobile() ? 'ml-7 mr-7' : 'pc才有的类名xx'}` }, [" Vbit秉承用户至上的服务理念，坚持公平、公正、公开的交易原则，致力于为全球投资者提供安全、快捷的数字货币衍生品交易服务。"])
