@@ -1,12 +1,15 @@
 const m = require('mithril');
-const { Conf, webApi, wsApi } = require('@/newApi2');
+const { Conf, webApi } = require('@/newApi2');
 const UserInfo = require('@/models/globalModels');
 const wlt = require('@/models/wlt/wlt');
 const broadcast = require('@/broadcast/broadcast');
 const geetest = require('@/models/validate/geetest').default;
+const errCode = require('@/util/errCode').default;
+const utils = require('@/util/utils').default;
 const Verification = require('@/pages/components/validate/validateView').default;
+const validate = require('@/models/validate/validate').default;
 console.log(Verification);
-console.log(wsApi, wlt);
+
 const extract = {
     name: 'FROM_DATA',
     promptText: '*如果您希望将本地数字资产提出至某地址，则该地址及为您的提币地址。 *某些地址可能需要您提供地址的标签，请务必填写，否则有丢失币的风险 *填写错误可能导致资产损失，请仔细核对 *完成LV3身份认证后，24h提币额度提升至100BTC，如需更多请联系客服',
@@ -18,6 +21,7 @@ const extract = {
     currentFees: {}, // 最小值 手续费
     coinInfo: {},
     feesList: [],
+    pupShow: false,
     errorShow: {
         address: false,
         unmber: false
@@ -32,8 +36,9 @@ const extract = {
         webApi.getCoinInfo(params).then(res => {
             if (res.result.code === 0) {
                 extract.coinInfo = res.result.data;
-                extract.getSelectListData();
+                return extract.getSelectListData();
             }
+            window.$message({ content: errCode.getWebApiErrorCode(res.result.code), type: 'danger' });
         });
     },
     getCurrentCoinFees: function () {
@@ -41,7 +46,9 @@ const extract = {
         webApi.getCoinFees().then(res => {
             if (res.result.code === 0) {
                 self.feesList = res.feeList;
+                return false;
             }
+            window.$message({ content: errCode.getWebApiErrorCode(res.result.code), type: 'danger' });
         });
     },
     getSelectListData: function () {
@@ -53,6 +60,7 @@ const extract = {
     getlinkButtonListData: function () {
         this.getCurrentFeesChange();
         this.getExtractableCoinToBTCNum();
+        this.currenLinkBut = '';
         if (this.currentSelect.wType !== 'USDT') {
             this.linkButtonList = [];
             return;
@@ -68,7 +76,7 @@ const extract = {
         this.linkButtonList = this.coinInfo[this.currentSelect.wType].chains.filter(item => {
             return canWithdrawChains[`${'canWithdraw' + item.attr}`];
         });
-        if (this.linkButtonList.length > 0) this.currenLinkBut = this.linkButtonList[0].name;
+        if (this.linkButtonList.length > 0) this.currenLinkBut = this.linkButtonList[0].attr;
     },
     getCurrentFeesChange: function () {
         this.currentFees = this.feesList.find(item => item.wType === this.currentSelect.wType);
@@ -106,32 +114,67 @@ const extract = {
             this.currentExtractableNum = this.getBTCToCoin(2);
         }
     },
+    sendExtractCoin: function () {
+        const user = UserInfo.getAccount();
+        const params = {
+            token: user.token,
+            wType: this.currenLinkBut || this.currentSelect.wType,
+            money: this.extractCoin.coinNum,
+            aid: user.uid + '06',
+            addr: this.extractCoin.address,
+            op: 0
+        };
+        if (this.currentSelect.wType === 'XRP' || this.currentSelect.wType === 'EOS') {
+            params.addr = this.extractCoin.address + ',' + this.extractCoin.linkName;
+        }
+        webApi.withdrawDeposit(params).then(res => {
+            if (res.result.code === 0) return extract.readrSendEmail(params, user, res.seq);
+            window.$message({ content: errCode.getWebApiErrorCode(res.result.code), type: 'danger' });
+        }).catch(e => {
+            console.log(e, '提币确定');
+        });
+    },
     handleSubmit: function () {
-        geetest.verify();
         if (this.errorShow.unmber || this.errorShow.address) return false;
-        // const user = UserInfo.getAccount();
-        // const params = {
-        //     token: user.token,
-        //     wType: this.currentSelect.wType,
-        //     money: this.extractCoin.coinNum,
-        //     aid: user.uid + '06',
-        //     addr: this.extractCoin.address,
-        //     op: 0
-        // };
-        // if (this.currentSelect.wType === 'XRP' || this.currentSelect.wType === 'EOS') {
-        //     params.addr = this.extractCoin.address + ',' + this.extractCoin.linkName;
-        // }
-        // webApi.withdrawDeposit(params).then(res => {
-        //     console.log(res);
-        // }).catch(e => {
-        //     console.log(e, '提币确定');
-        // });
+        geetest.verify();
+    },
+    readrSendEmail: function (params, user, seq) {
+        const emailParms = {
+            seq,
+            email: user.email,
+            host: '/m/#/accounts', // TODO 参数获取
+            fn: 'wda',
+            lang: 'zh',
+            fishCode: '', // TODO 参数获取
+            token: encodeURIComponent(user.token),
+            checkCode: new Date().valueOf().toString(32),
+            wType: params.wType,
+            aid: params.aid,
+            money: params.money,
+            addr: params.addr,
+            fee: extract.currentFees.withdrawFee,
+            exChannel: Conf.exchId
+        };
+        webApi.sendEmailV2(emailParms).then(res => {
+            if (res.result.code === 0) return extract.handleChangeShow();
+            window.$message({ content: errCode.getWebApiErrorCode(res.result.code), type: 'danger' });
+        });
     },
     readyStartSafetyVerify: function (start) {
         if (start !== 'success') return;
-        // 开始手机验证
         const user = UserInfo.getAccount();
-        console.log(user);
+        validate.activeSmsAndGoogle({
+            securePhone: utils.hideMobileInfo(user.phone),
+            phoneNum: user.phone
+        }, res => {
+            extract.sendExtractCoin();
+            extract.handleChangeShow();
+        });
+        extract.handleChangeShow();
+    },
+    handleChangeShow: function () {
+        extract.pupShow = !extract.pupShow;
+        m.redraw();
     },
     oninit: function () {
         const self = this;

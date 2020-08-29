@@ -2,6 +2,8 @@ const m = require('mithril');
 require('./index.scss');
 const FromDataMode = require('./formData');
 const ICON = require('./Tooltip.png').default;
+const VerifyView = require('@/pages/components/dialogVerify');
+// const VerifyView = require('@/pages/components/validate/validateView');
 
 module.exports = {
     oninit () {
@@ -15,8 +17,7 @@ module.exports = {
         FromDataMode.extractCoin.linkName = e.target.value;
     },
     handleLinNameButClick: function (e) {
-        FromDataMode.currenLinkBut = e.name;
-        console.log(FromDataMode);
+        FromDataMode.currenLinkBut = e.attr;
     },
     handleAddressVal: function (e) {
         FromDataMode.extractCoin.address = e.target.value;
@@ -32,6 +33,9 @@ module.exports = {
     handleClickAll: function () {
         FromDataMode.extractCoin.coinNum = FromDataMode.currentExtractableNum;
         FromDataMode.errorShow.unmber = false;
+    },
+    handleCloseDialog: function () {
+        FromDataMode.pupShow = false;
     },
     view: function () {
         return m('div.page-extract-coin-from has-bg-level-2', [
@@ -60,7 +64,7 @@ module.exports = {
                         m('img', { src: ICON })
                     ]),
                     m('div.control dis-flex', [
-                        FromDataMode.linkButtonList.map(item => m(`div.butItem`, { class: item.name === FromDataMode.currenLinkBut ? 'butItemActive' : '', onclick: this.handleLinNameButClick.bind(this, item) }, m('div', item.name)))
+                        FromDataMode.linkButtonList.map(item => m(`div.butItem`, { class: item.attr === FromDataMode.currenLinkBut ? 'butItemActive' : '', onclick: this.handleLinNameButClick.bind(this, item) }, m('div', item.name)))
                     ])
                 ]) : null,
                 m('div.formModule', [
@@ -88,8 +92,9 @@ module.exports = {
                         m('div', `手续费：${FromDataMode.currentFees.withdrawFee}${FromDataMode.currentSelect.wType}`)
                     ])
                 ]),
-                m('button.button is-info is-fullwidth', { onclick: () => { FromDataMode.handleSubmit(); } }, '确定')
+                m('button.button is-info is-fullwidth', { onclick: () => { FromDataMode.handleSubmit(); } }, '确定' + FromDataMode.pupShow)
             ]),
+            FromDataMode.pupShow ? m(VerifyView, { close: this.handleCloseDialog }) : null,
             m('div.promptText', [
                 m('div.promptTitle body-5', '温馨提示'),
                 FromDataMode.promptText.split('*').map(item => m('div.rulesText body-4', '*' + item))
