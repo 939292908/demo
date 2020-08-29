@@ -1,8 +1,10 @@
-const rechargeIndex = require('@/views/page/myAssets/myWalletIndex/children/recharge/index');
 const m = require('mithril');
+const rechargeIndex = require('@/views/page/myAssets/myWalletIndex/children/recharge/index');
 require('@/views/page/myAssets/myWalletIndex/children/recharge/recharge.scss');
 
 module.exports = {
+    pageData: [],
+    tips: '*您只能向此地址充值BTC，其他资产充入BTC地址将无法找回 *使用BTC地址充值需要1个网络确认才能到账 *默认充入我的钱包，您可以通过“资金划转”将资金转至交易账户或者其他账户',
     oninit: () => {
         rechargeIndex.initFn();
     },
@@ -14,18 +16,17 @@ module.exports = {
                 m('i', { class: `iconfont icon-Return has-text-title` }),
                 m('span', { class: `has-text-title my-4 ml-4 title-medium` }, '充币')
             ]),
-            m('div', { class: `bottom content-width` }, [
+            m('div', { class: `bottom content-width mb-9` }, [
                 m('div', { class: `bottom-upper has-bg-level-2 pl-8 pt-7` }, [
                     m('div', { class: `` }, [
                         m('span', { class: `body-5` }, '币种')
                     ]),
                     m('div', { class: `currencySel border-radius-medium mt-2 mb-7` }, [
                         m('div.select is-fullwidth',
-                            rechargeIndex,
                             m('select', [
-                                m('option', { selected: true }, 'Country1'),
-                                m('option', { selected: false }, 'Country2'),
-                                m('option', { selected: false }, 'Country3')
+                                rechargeIndex.pageData.map(item => {
+                                    return m('option', { onchange: () => { } }, item.wType + '   |   ' + item.zh);
+                                })
                             ])
                         )
                     ]),
@@ -34,10 +35,10 @@ module.exports = {
                     ]),
                     m('div', { class: `currencyAddr border-radius-medium mt-2 mb-7` }, [
                         m('div', { class: `currencyAddr-text ml-3` }, [
-                            m('span', {}, '128')
+                            m('input', { class: `addrText`, type: 'text', readOnly: `readOnly`, value: `1323232` })
                         ]),
                         m('div', { class: `currencyAddr-Operation ml-3` }, [
-                            m('i', { class: `iconfont icon-copy has-text-primary` }),
+                            m('i', { class: `iconfont icon-copy has-text-primary cursor-pointer`, onclick: () => { rechargeIndex.copyText(); } }),
                             m('i', { class: `iconfont icon-QrCode has-text-primary` })
                         ])
                     ]),

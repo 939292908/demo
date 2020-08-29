@@ -14,7 +14,7 @@
     .bottom{
         margin: 0 auto;
         .bottom-upper{
-            height: 361px;
+            height: 480px;
             .currencySel{
                 width: 384px;
                 height: 44px;
@@ -28,8 +28,11 @@
                 .currencyAddr-text{
                     width: 336px;
                     height: 44px;
-                    span{
-                        line-height: 44px;
+                    input{
+                        height: 96%;
+                        width: 340px;
+                        outline: none;
+                        border: none;
                     }
                 }
                 .currencyAddr-Operation{
