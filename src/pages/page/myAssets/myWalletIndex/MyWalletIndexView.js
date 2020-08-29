@@ -1,7 +1,7 @@
 const m = require('mithril');
-const Header = require('@/views/components/myAssets/header/index');
-const Modal = require('@/views/components/common/Modal');
-const Transfer = require('@/views/myAssets/transfer/');
+const Header = require('@/views/page/myAssets/header/header.view');
+const Modal = require('@/pages/components/common/Modal');
+const Transfer = require('@/pages/components/transfer');
 require('@/styles/pages/Myassets/MyWalletIndex.scss');
 const myWalletIndex = require('@/views/page/myAssets/myWalletIndex/MyWalletIndex');
 
