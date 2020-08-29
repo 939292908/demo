@@ -4,8 +4,8 @@ const TradeAccountChildrenView = require('@/views/page/myAssets/myWalletIndex/tr
 
 module.exports = {
     // 01：合约账户，02：币币账户，04：法币账户
-    pageFlag: 1,
-    oldValue: 1,
+    pageFlag: '01',
+    oldValue: '01',
     setPageFlag: function (param) {
         this.pageFlag = param;
     },
@@ -14,19 +14,19 @@ module.exports = {
     },
     switchContent: function () {
         switch (this.pageFlag) {
-        case 1:
+        case '01':
             return m(TradeAccountChildrenView, { tableType: 'contractColumnData', tableTypeData: 'contractData' });
-        case 2:
+        case '02':
             return m(TradeAccountChildrenView, { tableType: 'coinColumnData', tableTypeData: 'coinData' });
-        case 4:
+        case '04':
             return m(TradeAccountChildrenView, { tableType: 'legalColumnData', tableTypeData: 'legalData' });
         default:
             break;
         }
     },
-    navAry: [{ idx: 1, val: '合约账户' }, { idx: 2, val: '币币账户' }, { idx: 4, val: '法币账户' }],
+    navAry: [{ idx: '01', val: '合约账户' }, { idx: '02', val: '币币账户' }, { idx: '04', val: '法币账户' }],
     initFn: function () {
-        this.setPageFlag(1);
+        this.setPageFlag('01');
     },
     updateFn: function (vnode) {
         // false：通过交易tab进来
