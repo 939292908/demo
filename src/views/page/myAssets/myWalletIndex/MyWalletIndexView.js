@@ -1,6 +1,5 @@
 const m = require('mithril');
 const Header = require('@/views/components/myAssets/header/index');
-const Modal = require('@/views/components/common/Modal');
 const Transfer = require('@/views/page/myAssets/transfer/transfer.view.js');
 const myWalletIndex = require('@/views/page/myAssets/myWalletIndex/MyWalletIndex');
 require('@/views/page/myAssets/myWalletIndex/MyWalletIndex.scss');
@@ -128,16 +127,16 @@ module.exports = {
             ]),
             m('div', { class: `myWalletIndex-table container pb-7 content-width` }, [
                 myWalletIndex.switchContent()
-            ])
-        ]),
-        // 资金划转组件
-        myWalletIndex.transferModal.isShow ? m(Transfer, {
-            isShow: myWalletIndex.transferModal.isShow, // 显示隐藏
-            // 设置显示隐藏
-            setShow(type) {
-                myWalletIndex.transferModal.isShow = type;
-            }
-        }) : []
+            ]),
+            // 资金划转组件
+            myWalletIndex.transferModal.isShow ? m(Transfer, {
+                isShow: myWalletIndex.transferModal.isShow, // 显示隐藏
+                // 设置显示隐藏
+                setShow(type) {
+                    myWalletIndex.transferModal.isShow = type;
+                }
+            }) : []
+        ]);
     },
     oncreate: () => {
         myWalletIndex.createFn();
