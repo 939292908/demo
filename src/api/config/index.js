@@ -8,5 +8,6 @@ const BaseUrl = instConf.GetActive();
 
 module.exports = {
     APITEXTLIST,
-    BaseUrl
+    BaseUrl,
+    instConf
 };

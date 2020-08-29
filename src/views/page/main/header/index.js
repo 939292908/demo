@@ -3,8 +3,9 @@ const titleLogo = require("@/assets/img/logo/title-logo.png").default;
 const I18n = require("../../../../languages/I18n").default;
 const Tooltip = require('@/pages/components/common/Tooltip');
 const utils = require('@/util/utils').default;
+const apiLines = require('@/models/network/lines.js');
 require('@/styles/pages/header');
-
+console.log('lines', apiLines, apiLines.getActive());
 const methods = {
     openNavbarDropdown: false,
 
@@ -14,6 +15,12 @@ const methods = {
 };
 
 module.exports = {
+    oncreate: function() {
+        // 更新线路
+        apiLines.updateLines();
+        // 初始化线路数据
+        apiLines.initLines();
+    },
     view: function () {
         return m('nav.navbar.is-fixed-top.theme--light', {
             role: "navigation",
@@ -253,10 +260,21 @@ module.exports = {
                             content: m('div', { class: `` }, [
                                 m('div', { class: `is-align-items-center` }, [
                                     m('div', { class: `` }, [
-                                        m('p', { class: `navbar-item has-text-primary-hover` }, ["线路切换(10)"]),
-                                        m('a', { class: `navbar-item has-text-primary-hover` }, ["币币订单"]),
-                                        m('a', { class: `navbar-item has-text-primary-hover` }, ["法币订单"]),
-                                        m('a', { class: `navbar-item has-text-primary-hover` }, ["跟单订单"])
+                                        apiLines.netLines.map((item, i) => {
+                                            return m('a', {
+                                                class: `navbar-item columns has-text-primary-hover min-width-200 ${item.Id === apiLines.activeLine.Id ? 'is-active' : ''}`,
+                                                onclick: function() {
+                                                    apiLines.setLinesActive(item.Id);
+                                                }
+                                            }, [
+                                                m('span.column', {}, [
+                                                    item.Name
+                                                ]),
+                                                m('span.column', {}, [
+                                                    '延迟 ' + apiLines.apiResponseSpeed[i] + 'ms'
+                                                ])
+                                            ]);
+                                        })
                                     ])
                                 ])
                             ])
