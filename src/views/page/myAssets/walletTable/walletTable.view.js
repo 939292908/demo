@@ -9,26 +9,26 @@ module.exports = {
                 m('table', { style: 'height:436px;width: 100%;' }, [
                     m('tbody', { class: (vnode.attrs.datadisplayvalue === 1 ? '' : 'datadisplay') + ' tbody' }, [
                         vnode.attrs.dataArrObj.map(items => {
-                            return m('tr', { class: 'has-text-level-2 body-4 pb-3' }, [
-                                m('td.py-4', {}, [items.category]),
-                                m('td.px-8.py-4', {}, [items.type]),
-                                m('td.px-8.py-4', {}, [items.num]),
-                                m('td.px-8.py-4', {}, [items.ServiceCharge]),
-                                m('td.px-8.py-4', {}, [items.state]),
-                                m('td.px-8.py-4', {}, [items.time]),
-                                m('td.pl-8.py-4', { class: 'tbodytd' }, [items.remarks])
+                            return m('div.columns.has-text-level-3.py-4.body-4', {}, [
+                                m('div.column.is-1', {}, [items.category]),
+                                m('div.column.is-1', {}, [items.type]),
+                                m('div.column.is-2', {}, [items.num]),
+                                m('div.column.is-2', {}, [items.ServiceCharge]),
+                                m('div.column.is-3', {}, [items.state]),
+                                m('div.column.is-2', {}, [items.time]),
+                                m('div.column.is-1.is-one-fifth', { class: 'tbodytd' }, [items.remarks])
                             ]);
                         }),
                         vnode.attrs.grossValue.map((item, index) => {
                             return [
-                                m('tr', { class: 'body-4' }, [
-                                    m('td.py-4', {}, [item.wType]),
-                                    m('td.px-8.py-4', {}, [item.status]),
-                                    m('td.px-8.py-4', {}, [item.num]),
-                                    m('td.px-7.py-4', {}, [item.num]),
-                                    m('td.px-7.py-4', {}, [item.stat]),
-                                    m('td.px-8.py-4', {}, [item.time]),
-                                    m('td.pl-8.py-4.has-text-primary', {
+                                m('div.columns.py-4.body-4', {}, [
+                                    m('div.column.is-1', {}, [item.wType]),
+                                    m('div.column.is-1', {}, [item.des]),
+                                    m('div.column.is-2', {}, [item.num]),
+                                    m('div.column.is-2', {}, [item.num]),
+                                    m('div.column.is-3', {}, [item.status]),
+                                    m('div.column.is-2', {}, [item.time]),
+                                    m('div.column.is-1.has-text-primary', {
                                         onclick: function() {
                                             vnode.attrs.displayEvnet(index);
                                         }
