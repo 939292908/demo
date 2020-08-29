@@ -518,9 +518,52 @@ export function getFunList (params = {}) {
 }
 
 /**
+ * @description: 资产划转接口
+ * @param params: {
+ *      coin: "USDT", // 合约下拉列表 value
+ *      transferFrom: '03', // 从xx钱包 value
+ *      transferTo: '01', // 到xx钱包 value
+ *      num: '', // 划转数量
+ *      maxTransfer: 0 // 最大划转
+ * }
+ */
+export function postTransfer (params = {}) {
+    return Http.post(API.TRANSFER_POST, params);
+}
+/**
  * 钱包充值地址
  * @param {*} params
  */
 export function GetRechargeAddr (params = {}, options = { withCredentials: true }) {
     return Http.post(API.WALLET_RECHARGE_ADDR_V1, params, options);
+}
+/**
+ *@param locale: 语言类型
+ * @param vp： 渠道
+ * */
+
+export function getCoinInfo(params = {}) {
+    return Http.get(API.COIN_INFO, { params });
+}
+
+/**
+ *@param params: {} 无参数
+ * */
+
+export function getCoinFees(params = {}, options = { withCredentials: true }) {
+    return Http.post(API.COIN_FEES, { params }, options);
+}
+
+/**
+ * @param params: {token, wType, money, aid, addr, op}
+ * @param token: 登录token
+ * @param wType: coin
+ * @param money: 提币数
+ * @param aid: uid + '06'
+ * @param add: 提币地址
+ * @param op: 0
+ */
+
+export function withdrawDeposit (params = {}, options = { withCredentials: true }) {
+    return Http.post(API.WITHDRAW, { params }, options);
 }

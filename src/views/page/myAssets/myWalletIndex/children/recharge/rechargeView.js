@@ -45,9 +45,7 @@ module.exports = {
                     m('div', {}, [
                         m('span', {}, '温馨提示'),
                         m('br'),
-                        rechargeIndex.tips.split('*').map(item => {
-                            return m('span', {}, item);
-                        })
+                        rechargeIndex.tips.split('*').map(item => m('span', {}, '*' + item))
                     ])
                 ]),
                 m('div', { class: `bottom-tab has-bg-level-2 mt-5 pt-3` }, [

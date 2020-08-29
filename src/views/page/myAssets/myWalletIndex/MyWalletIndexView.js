@@ -1,7 +1,6 @@
 const m = require('mithril');
 const Header = require('@/views/components/myAssets/header/index');
-const Modal = require('@/pages/components/common/Modal');
-const Transfer = require('@/pages/components/transfer');
+const Transfer = require('@/views/page/myAssets/transfer/transfer.view.js');
 const myWalletIndex = require('@/views/page/myAssets/myWalletIndex/MyWalletIndex');
 require('@/views/page/myAssets/myWalletIndex/MyWalletIndex.scss');
 
@@ -126,17 +125,17 @@ module.exports = {
                     myWalletIndex.switchContent()
                 ])
             ]),
-            m(Modal, {
+            m('div', { class: `myWalletIndex-table container pb-7 content-width` }, [
+                myWalletIndex.switchContent()
+            ]),
+            // 资金划转组件
+            myWalletIndex.transferModal.isShow ? m(Transfer, {
                 isShow: myWalletIndex.transferModal.isShow, // 显示隐藏
-                onOk: myWalletIndex.transferModal.onOk, // 确认事件 // 使用默认确认按钮
-                onClose: myWalletIndex.transferModal.onClose, // 关闭事件
-                slot: { // 插槽
-                    header: m('p', { class: `` }, [
-                        "资金划转"
-                    ]),
-                    body: m(Transfer)
+                // 设置显示隐藏
+                setShow(type) {
+                    myWalletIndex.transferModal.isShow = type;
                 }
-            })
+            }) : []
         ]);
     },
     oncreate: () => {
