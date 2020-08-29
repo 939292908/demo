@@ -1,0 +1,23 @@
+.pub-footer {
+    .footer-content {
+        .footer-menu-item {
+            cursor: pointer;
+        }
+    }
+}
+
+@media screen and (min-width: 320px) and (max-width: 480px) {
+    .pub-footer {
+        .footer-content {
+            .footer-menu-item {
+                cursor: pointer;
+            }
+        }
+    }
+    .footer-title{
+        margin-left: var(--c-margin-level5);
+    }
+    // .footer-right-navigation-tab{
+    //     margin-right: var(--c-margin-level5);
+    // }
+}
