@@ -89,7 +89,6 @@ const model = {
         this.transferModalOption.setTransferModalOption({
             transferFrom: val // from钱包默认选中
         });
-        console.log(this.swValue, '-----====', this.transferModalOption.transferFrom);
         // 防止被交易账户01覆盖交易账户悬浮卡片的值
         window.event.stopPropagation();
         this.sets();
@@ -97,11 +96,7 @@ const model = {
     },
     switchContent: function () {
         broadcast.emit({ cmd: broadcast.CHANGE_SW_CURRENCY, data: this.currency });
-        // if (this.swValue === '03') {
-        //     return m(table, { tableData: wlt.wallet['03'], tableType: 'wallet', hideZeroFlag: false, swValue: this.swValue });
-        // } else if (this.swValue === '01' || this.swValue === '02' || this.swValue === '04') {
-        //     return m(TradeAccountView, { swValue: this.swValue, setIdx: this.setSwValue });
-        // }
+        console.log('nzm', this.swValue);
         return m(table, { tableData: wlt.wallet['03'], tableType: 'wallet', hideZeroFlag: false, swValue: this.swValue, setIdx: this.setSwValue, setTransferModalOption: this.transferModalOption.setTransferModalOption });
     },
     Nav: {

@@ -1,5 +1,14 @@
 .views-pages-Myassets-Table{
     background-color: white;
+    .tradingAccount_nav{
+        display: flex;
+        flex-direction: row;
+        height: 52px;
+        width: 25%;
+    }
+    ul{
+        border: none;
+    }
     .nav{
         display: flex;
         flex-direction: row;
