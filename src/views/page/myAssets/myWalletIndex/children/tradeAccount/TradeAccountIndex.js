@@ -1,44 +1,59 @@
 const m = require('mithril');
 const broadcast = require('@/broadcast/broadcast');
-const TradeAccountChildrenView = require('@/views/page/myAssets/myWalletIndex/tradeAccountChildren/TradeAccountChildrenView');
+const wlt = require('@/models/wlt/wlt');
 
 module.exports = {
-    // 01：合约账户，02：币币账户，04：法币账户
-    pageFlag: '01',
+    currency: 'BTC',
+    pageFlag: '01', // 01：合约账户，02：币币账户，04：法币账户
     oldValue: '01',
+    accountBanlance: 0, // 交易账户中表格右上角的币种总额
+    accountTitle: '', // 交易账户中表格右上角的币种
     setPageFlag: function (param) {
         this.pageFlag = param;
+    },
+    setCurrency: function (param) {
+        this.currency = param;
     },
     setOldValue: function (param) {
         this.oldValue = param;
     },
-    switchContent: function () {
-        switch (this.pageFlag) {
-        case '01':
-            return m(TradeAccountChildrenView, { tableType: 'contractColumnData', tableTypeData: 'contractData' });
-        case '02':
-            return m(TradeAccountChildrenView, { tableType: 'coinColumnData', tableTypeData: 'coinData' });
-        case '04':
-            return m(TradeAccountChildrenView, { tableType: 'legalColumnData', tableTypeData: 'legalData' });
-        default:
-            break;
-        }
-    },
     navAry: [{ idx: '01', val: '合约账户' }, { idx: '02', val: '币币账户' }, { idx: '04', val: '法币账户' }],
+    setAccountBanlanceAndTitle: function() {
+        if (this.pageFlag === '01') {
+            this.accountTitle = '合约账户';
+            this.accountBanlance = this.currency === 'BTC' ? wlt.contractTotalValueForBTC : wlt.contractTotalValueForUSDT;
+        } else if (this.pageFlag === '02') {
+            this.accountTitle = '币币账户';
+            this.accountBanlance = this.currency === 'BTC' ? wlt.coinTotalValueForBTC : wlt.coinTotalValueForUSDT;
+        } else if (this.pageFlag === '04') {
+            this.accountTitle = '法币账户';
+            this.accountBanlance = this.currency === 'BTC' ? wlt.legalTotalValueForBTC : wlt.legalTotalValueForUSDT;
+        }
+        console.log(this.accountTitle, this.accountBanlance);
+    },
     initFn: function () {
         this.setPageFlag('01');
+        broadcast.onMsg({
+            key: 'tradeAccountIndex',
+            cmd: broadcast.CHANGE_SW_CURRENCY,
+            cb: (arg) => {
+                this.setCurrency(arg);
+            }
+        });
     },
     updateFn: function (vnode) {
+        wlt.init();
         // false：通过交易tab进来
         if (this.oldValue !== vnode.attrs.idx) { // 作用：不与导航点击冲突
             this.setPageFlag(vnode.attrs.idx);
             m.redraw();
         }
         this.setOldValue(vnode.attrs.idx);
+        this.setAccountBanlanceAndTitle();
     },
     removeFn: function () {
         broadcast.offMsg({
-            key: 'this',
+            key: 'tradeAccountIndex',
             isall: true
         });
     }

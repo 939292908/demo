@@ -2,7 +2,7 @@ const m = require('mithril');
 const wlt = require('@/models/wlt/wlt');
 const broadcast = require('@/broadcast/broadcast');
 const TradeAccountView = require('@/Views/page/myAssets/myWalletIndex/children/tradeAccount/TradeAccountView');
-const TradeAccountChildrenView = require('@/Views/page/myAssets/myWalletIndex/tradeAccountChildren/TradeAccountChildrenView');
+const table = require('@/views/page/myAssets/myWalletIndex/tradeTable/tradeTableView');
 let timeOut = null;
 
 module.exports = {
@@ -35,7 +35,6 @@ module.exports = {
     legalTotal: 0, // 法币
     contractTotal: 0, // 合约
     swValue: '03', // 03:我的钱包 01:交易账户(01币币，02法币，04合约) 2:其他账户
-    wlIdx: '01',
     selectOpFlag: false, // 是否显示币种列表
     selectOpText: 'BTC', // 默认币种BTC
     selectOp: ['BTC', 'USDT'], // 币种列表
@@ -59,12 +58,12 @@ module.exports = {
     },
     hideValue: function () {
         const ele = document.getElementsByClassName('changeMoneyImg')[0];
-        if (this.hideMoneyFlag) {
+        if (this.hideMoneyFlag) { // 显示
             ele.classList.value = ele.classList.value.replace('yincang', 'zichanzhengyan');
             this.hideMoneyFlag = !this.hideMoneyFlag;
             this.setTotalValue(wlt[this.currency === 'BTC' ? 'totalValueForBTC' : 'totalValueForUSDT']);
             this.setTotalCNY(wlt.totalCNYValue);
-        } else {
+        } else { // 隐藏
             ele.classList.value = ele.classList.value.replace('zichanzhengyan', 'yincang');
             this.hideMoneyFlag = !this.hideMoneyFlag;
             this.setTotalValue('******');
@@ -90,7 +89,7 @@ module.exports = {
     switchContent: function () {
         broadcast.emit({ cmd: broadcast.CHANGE_SW_CURRENCY, data: this.currency });
         if (this.swValue === '03') {
-            return m(TradeAccountChildrenView, { tableType: 'walletColumnData', tableTypeData: 'walletData' });
+            return m(table, { tableData: wlt.wallet['03'], tableType: 'wallet', hideZeroFlag: false });
         } else if (this.swValue === '01' || this.swValue === '02' || this.swValue === '04') {
             return m(TradeAccountView, { idx: this.swValue });
         }
@@ -196,6 +195,7 @@ module.exports = {
         timeOut = setTimeout(() => {
             this.sets();
         }, '100');
+        m.redraw();
     },
     removeFn: function() {
         clearTimeout(timeOut);
