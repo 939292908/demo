@@ -71,8 +71,8 @@ module.exports = {
                                 ])
                             ]),
                             m('div.trade border-radius-medium px-7 py-7 mx-5 column cursor-pointer', {
-                                class: (myWalletIndex.swValue === '01' ? `has-bg-primary` : `has-bg-level-2`),
-                                onclick: () => { myWalletIndex.switchChange('01', `true`); }
+                                class: (myWalletIndex.swValue === '01' || myWalletIndex.swValue === '02' || myWalletIndex.swValue === '04' ? `has-bg-primary` : `has-bg-level-2`),
+                                onclick: () => { myWalletIndex.switchChange('01'); }
                             }, [
                                 m('div.left', {}, [
                                     m('div', { class: `body-5 mb-1` }, [
@@ -101,11 +101,11 @@ module.exports = {
                                         // m('span.mb-1 cursor-pointer', `法币账户`),
                                         // m('a.has-text-level-3', { class: myWalletIndex.wltIdx === 4 ? 'has-text-primary' : '', onclick: function () { myWalletIndex.changeTradeAccount(4); } }, myWalletIndex.legalTotal + ` ` + myWalletIndex.currency)
                                         m('span.mb-1 cursor-pointer', `合约账户`),
-                                        m('a.mb-5 has-text-level-3', { onclick: () => { myWalletIndex.switchContent('01'); } }, myWalletIndex.contractTotal + ` ` + myWalletIndex.currency),
+                                        m('a.mb-5 has-text-level-3', { onclick: () => { myWalletIndex.switchChange('01'); } }, myWalletIndex.contractTotal + ` ` + myWalletIndex.currency),
                                         m('span.mb-1 cursor-pointer', `币币账户`),
-                                        m('a.mb-5 has-text-level-3', { onclick: () => { myWalletIndex.switchContent('02'); } }, myWalletIndex.coinTotal + ` ` + myWalletIndex.currency),
+                                        m('a.mb-5 has-text-level-3', { onclick: () => { myWalletIndex.switchChange('02'); } }, myWalletIndex.coinTotal + ` ` + myWalletIndex.currency),
                                         m('span.mb-1 cursor-pointer', `法币账户`),
-                                        m('a.has-text-level-3', { onclick: () => { myWalletIndex.switchContent('04'); } }, myWalletIndex.legalTotal + ` ` + myWalletIndex.currency)
+                                        m('a.has-text-level-3', { onclick: () => { myWalletIndex.switchChange('04'); } }, myWalletIndex.legalTotal + ` ` + myWalletIndex.currency)
                                     ])
                                 ])
                             ]),
