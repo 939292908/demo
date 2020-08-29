@@ -1,14 +1,12 @@
 const m = require('mithril');
-const { Conf, webApi } = require('@/newApi2');
+const { Conf, webApi } = require('@/api');
 const UserInfo = require('@/models/globalModels');
 const wlt = require('@/models/wlt/wlt');
 const broadcast = require('@/broadcast/broadcast');
 const geetest = require('@/models/validate/geetest').default;
 const errCode = require('@/util/errCode').default;
 const utils = require('@/util/utils').default;
-const Verification = require('@/pages/components/validate/validateView').default;
 const validate = require('@/models/validate/validate').default;
-console.log(Verification);
 
 const extract = {
     name: 'FROM_DATA',

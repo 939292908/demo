@@ -2,8 +2,7 @@ const m = require('mithril');
 require('./index.scss');
 const FromDataMode = require('./formData');
 const ICON = require('./Tooltip.png').default;
-const VerifyView = require('@/pages/components/dialogVerify');
-// const VerifyView = require('@/pages/components/validate/validateView');
+const VerifyView = require('../../../../components/dialogVerify/index');
 
 module.exports = {
     oninit () {
