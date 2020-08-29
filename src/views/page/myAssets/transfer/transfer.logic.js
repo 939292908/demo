@@ -183,7 +183,7 @@ const model = {
     switchTransfer () {
         [this.form.transferFrom, this.form.transferTo] = [this.form.transferTo, this.form.transferFrom];
     },
-    // 设置 最大划转
+    // 设置 最大划转 (依赖钱包名称, 币种)
     setMaxTransfer () {
         if (wlt.wallet && this.form.transferFrom) { // 所有钱包 和 从xx钱包id 都存在
             const wallet = wlt.wallet[this.form.transferFrom]; // 对应钱包
