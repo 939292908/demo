@@ -58,5 +58,9 @@ module.exports = {
     // 系统开关配置
     FUN_LIST_V1: '/v1/users/funList',
     // 资产划转
-    TRANSFER_POST: '/users/Transfer'
+    TRANSFER_POST: '/users/Transfer',
+    // 币种简介
+    COIN_INFO: '/markets/currencies/intro',
+    // 手续费 最小值
+    COIN_FEES: 'v1/exch/fees'
 };
