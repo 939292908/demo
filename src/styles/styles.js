@@ -192,7 +192,7 @@ const opacity = {
     level6: 0.6,
     level7: 0.7,
     level8: 0.8,
-    level9: 0.9,
+    level9: 0.9
 };
 
 const styles = {
