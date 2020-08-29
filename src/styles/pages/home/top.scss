@@ -6,7 +6,6 @@
 
     .top-bottom-box {
         padding-bottom: 100px;
-
         .top-banner {
             height: 200px;
         }
@@ -18,62 +17,17 @@
         height: 450px;
     }
 
-    .pages-home-advantage {
-        // background: var(--c-background-darken1);
-    }
-
-    // .platform-advantages-1 {
-    //     // background: var(--c-background-lighten2);
-    //     // width: 311px;
-    //     height: 310px;
-    //     margin: auto;
-    //     margin-top: var(--c-margin-level7);
-    // }
-
-    // .platform-advantages-img {
-    //     margin-top: var(--c-margin-level7);
-    // }
-
-    // .platform-advantages-words {
-    //     margin-left: var(--c-margin-level7);
-    //     margin-right: var(--c-margin-level7);
-    // }
-
-    // .views-pages-home-introduce-img {
-    //     // width: 376px;
-    //     height: 433px;
-    // }
-
-    // .introduction-platform-title {
-    //     font-size: var(--c-fontsz-level6);
-    //     margin-left: var(--c-margin-level7);
-    // }
-
-    // .introduction-platform-img {
-    //     margin-top: var(--c-margin-level4);
-    //     margin-left: var(--c-margin-level7);
-    // }
-
-    // .introduction-platform-title1 {
-    //     margin-left: var(--c-margin-level7);
-    //     margin-right: var(--c-margin-level7);
-    //     padding-top: var(--c-padding-level0) !important;
-    // }
-
-    // .introduction-platform-title2 {
-    //     margin-left: var(--c-margin-level7);
-    //     margin-right: var(--c-margin-level7);
-    // }
-
     .introduce-transaction-button1 {
         width: 104px;
         height: 36px;
-        // font-size: var(--c-fontsz-level4);
     }
 
     .introduce-transaction-button2 {
         width: 104px;
         height: 36px;
-        // font-size: var(--c-fontsz-level4);
+    }
+    .topView-transaction-button{
+        width: 150px;
+        
     }
 }

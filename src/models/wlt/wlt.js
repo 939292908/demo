@@ -208,6 +208,7 @@ module.exports = {
                 // 初始化资产数据
                 that.setWallet(arg);
                 that.initWlt();
+                broadcast.emit({ cmd: broadcast.MSG_WLT_READY, data: null });
             }
         }).catch(function(err) {
             console.log('ht', 'getWallet error', err);
@@ -239,12 +240,12 @@ module.exports = {
         let NL = 0;
         let valueForUSDT = 0;
         let valueForBTC = 0;
-        const AssetD = gWsApi.AssetD;
         // console.log('ht', AssetD);
         // 取BTC的价格 start
-        const btcSymName = utils.getSpotName(AssetD, 'BTC', 'USDT');
-        const btcInitValue = (this.wallet_obj['03'] && this.wallet_obj['03'].BTC && this.wallet_obj['03'].BTC.initValue) || 0;
-        const btcPrz = (AssetD[btcSymName] && AssetD[btcSymName].PrzLatest) || btcInitValue;
+        // const btcSymName = utils.getSpotName(AssetD, 'BTC', 'USDT');
+        // const btcInitValue = (this.wallet_obj['03'] && this.wallet_obj['03'].BTC && this.wallet_obj['03'].BTC.initValue) || 0;
+        // const btcPrz = (AssetD[btcSymName] && AssetD[btcSymName].PrzLatest) || btcInitValue;
+        const btcPrz = this.getPrz('BTC');
         // console.log('ht', 'btc prz', btcSymName, btcInitValue, AssetD[btcSymName] && AssetD[btcSymName].PrzLatest, btcPrz);
         // 取BTC的价格 end
         switch (type) {
@@ -332,9 +333,10 @@ module.exports = {
             break;
         }
         // 当前币种价格 start
-        const coinInitValue = Number(this.wltItemEx.initValue || 1);
-        const coinSym = utils.getSpotName(AssetD, this.wltItemEx.wType, 'USDT');
-        const coinPrz = (AssetD[coinSym] && AssetD[coinSym].PrzLatest) || coinInitValue;
+        // const coinInitValue = Number(this.wltItemEx.initValue || 1);
+        // const coinSym = utils.getSpotName(AssetD, this.wltItemEx.wType, 'USDT');
+        // const coinPrz = (AssetD[coinSym] && AssetD[coinSym].PrzLatest) || coinInitValue;
+        const coinPrz = this.getPrz(this.wltItemEx.wType);
         // console.log('ht', 'value', coinInitValue, coinSym, AssetD[coinSym] && AssetD[coinSym].PrzLatest, coinPrz);
         // 当前币种价格 end
         // USDT估值
@@ -350,5 +352,17 @@ module.exports = {
         this.wltItemEx.icon = BaseUrl.WebAPI + this.wltItemEx.icon;
 
         return this.wltItemEx;
+    },
+    /**
+     * 获取币种的价值
+     * @param {*|string} coin 需要获取价值的币种
+     * @returns {*|number}
+     */
+    getPrz(coin) {
+        const AssetD = gWsApi.AssetD;
+        const SymName = utils.getSpotName(AssetD, coin, 'USDT');
+        const InitValue = (this.wallet_obj['03'] && this.wallet_obj['03'].BTC && this.wallet_obj['03'].BTC.initValue) || 0;
+        const Prz = (AssetD[SymName] && AssetD[SymName].PrzLatest) || InitValue;
+        return Prz;
     }
 };

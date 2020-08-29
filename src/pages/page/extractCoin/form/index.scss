@@ -10,12 +10,29 @@
       .label {
         line-height: 20px;
         margin-bottom: 8px;
+
+        span {
+          vertical-align: middle;
+        }
+        img {
+          width: 16px;
+          vertical-align: middle;
+          cursor: pointer;
+        }
       }
 
       .select select{ // 币中选择
         border-radius: 2px;
         color: var(--c-font-lighten1);
         font-size: 14px;
+
+        option {
+          font-size: 18px;
+          line-height: 20px;
+        }
+      }
+      .select:not(.is-multiple) {
+        height: 100%;
       }
 
       .line-label input.input { // 标签 名
@@ -32,6 +49,7 @@
           border-radius: 4px;
           border: 1px solid #FF8B00;
           margin-right: 20px;
+          cursor: pointer;
 
           div {
             height: 20px;
@@ -52,13 +70,31 @@
       }
 
       .extract-num { // 提取数量
-        margin-bottom: 4px;
+        //margin-bottom: 4px;
+
+        .input {
+          padding-right: 80px;
+        }
+
+        .icon-right-all {
+          position: absolute;
+          top: 50%;
+          transform: translateY(-50%);
+          right: 12px;
+
+          .clickAll {
+            margin-left: 12px;
+            color: #FF8B00;
+            cursor: pointer;
+          }
+        }
       }
 
       .charge { //  手续费
         color: #9A9EAC;
         height: 17px;
         line-height: 17px;
+        padding-top: 4px;
       }
 
       .errorToTal { // 错误提示

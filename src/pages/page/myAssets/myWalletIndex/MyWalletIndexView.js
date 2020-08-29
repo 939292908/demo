@@ -1,9 +1,9 @@
 const m = require('mithril');
-const Header = require('@/pages/components/myAssets/header/index');
-const Modal = require('@/pages/components/common/Modal');
-const Transfer = require('@/pages/components/transfer');
+const Header = require('@/views/components/myAssets/header/index');
+const Modal = require('@/views/components/common/Modal');
+const Transfer = require('@/views/myAssets/transfer/');
 require('@/styles/pages/Myassets/MyWalletIndex.scss');
-const myWalletIndex = require('@/pages/page/myAssets/myWalletIndex/MyWalletIndex');
+const myWalletIndex = require('@/views/page/myAssets/myWalletIndex/MyWalletIndex');
 
 module.exports = {
     view: () => {
