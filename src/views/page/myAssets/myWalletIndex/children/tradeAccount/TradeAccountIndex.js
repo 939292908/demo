@@ -3,6 +3,7 @@ const broadcast = require('@/broadcast/broadcast');
 const wlt = require('@/models/wlt/wlt');
 
 module.exports = {
+    vnode: {},
     currency: 'BTC',
     pageFlag: '01', // 01：合约账户，02：币币账户，04：法币账户
     oldValue: '01',
@@ -10,6 +11,7 @@ module.exports = {
     accountTitle: '', // 交易账户中表格右上角的币种
     setPageFlag: function (param) {
         this.pageFlag = param;
+        this.vnode.attrs.setIdx(param);
     },
     setCurrency: function (param) {
         this.currency = param;
@@ -31,7 +33,8 @@ module.exports = {
         }
         console.log(this.accountTitle, this.accountBanlance);
     },
-    initFn: function () {
+    initFn: function (vnode) {
+        this.vnode = vnode;
         this.setPageFlag('01');
         broadcast.onMsg({
             key: 'tradeAccountIndex',

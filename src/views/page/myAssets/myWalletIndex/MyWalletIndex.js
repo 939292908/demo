@@ -26,6 +26,9 @@ module.exports = {
     legalTotal: 0, // 法币
     contractTotal: 0, // 合约
     swValue: '03', // 03:我的钱包 01:交易账户(01币币，02法币，04合约) 2:其他账户
+    setSwValue(value) {
+        this.swValue = value;
+    },
     selectOpFlag: false, // 是否显示币种列表
     selectOpText: 'BTC', // 默认币种BTC
     selectOp: ['BTC', 'USDT'], // 币种列表
@@ -73,6 +76,7 @@ module.exports = {
     switchChange: function (val) {
         this.swValue = val;
         this.transferModalOption.transferFrom = this.swValue; // 资金划转弹框 默认选中from钱包(下拉)value
+        console.log(this.swValue, '-----====', this.transferModalOption.transferFrom);
         // 防止被交易账户01覆盖交易账户悬浮卡片的值
         window.event.stopPropagation();
         this.sets();
@@ -83,7 +87,7 @@ module.exports = {
         if (this.swValue === '03') {
             return m(table, { tableData: wlt.wallet['03'], tableType: 'wallet', hideZeroFlag: false });
         } else if (this.swValue === '01' || this.swValue === '02' || this.swValue === '04') {
-            return m(TradeAccountView, { idx: this.swValue });
+            return m(TradeAccountView, { idx: this.swValue, setIdx: this.setSwValue });
         }
     },
     Nav: {

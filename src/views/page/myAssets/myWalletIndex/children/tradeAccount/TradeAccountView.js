@@ -5,9 +5,9 @@ const table = require('@/views/page/myAssets/myWalletIndex/tradeTable/tradeTable
 const wlt = require('@/models/wlt/wlt');
 
 module.exports = {
-    oninit: () => {
+    oninit: vnode => {
         wlt.init();
-        TradeAccountIndex.initFn();
+        TradeAccountIndex.initFn(vnode);
     },
     view: () => {
         return m('div', { class: 'views-pages-myassets-tradingAccount pt-4' }, [
