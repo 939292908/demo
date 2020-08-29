@@ -31,9 +31,9 @@ module.exports = {
             this.accountTitle = '法币账户';
             this.accountBanlance = this.currency === 'BTC' ? wlt.legalTotalValueForBTC : wlt.legalTotalValueForUSDT;
         }
-        console.log(this.accountTitle, this.accountBanlance);
     },
     initFn: function (vnode) {
+        wlt.init();
         this.vnode = vnode;
         this.setPageFlag('01');
         broadcast.onMsg({
@@ -45,7 +45,6 @@ module.exports = {
         });
     },
     updateFn: function (vnode) {
-        wlt.init();
         // false：通过交易tab进来
         if (this.oldValue !== vnode.attrs.idx) { // 作用：不与导航点击冲突
             this.setPageFlag(vnode.attrs.idx);
