@@ -3,20 +3,16 @@ const header = require('../header/header.view');
 const AssetRecords = require('./assetRecords.model');
 const assetTable = require('../assetTable/assetTable.view');
 const walletTable = require('../walletTable/walletTable.view');
+const accountSelect = require('@/models/asset/accountSelect');
+const AssetsRecords = require('../../../../models/asset/assetsRecords');
 
 require('./assetRecords.scss');
 
 module.exports = {
     oninit: function () {
-        // AssetRecords.initAssetList();
+        AssetsRecords.oninit();
     },
     view: function () {
-        const table = AssetRecords.switchValue === '03'
-            ? m(walletTable)
-            : m(assetTable, {
-                switchValue: AssetRecords.switchValue,
-                onSwitchValue: val => { AssetRecords.switchValue = val; }
-            });
         return m('div', { class: 'views-pages-Myassets-assetRecords' }, [
             m('div', { class: 'columns-flex-warp has-bg-sub-level-1' }, [
                 m('div.container', [
@@ -28,24 +24,44 @@ module.exports = {
                     m('div', { class: 'has-bg-level-2 border-radius-small' }, [
                         m('div', { class: 'columns-flex-warp views-pages-Myassets-assetRecords-head px-4' }, [
                             m('div', {
-                                class: "cursor-pointer mr-7" + (AssetRecords.switchValue === '03' ? ' has-text-primary header-highlight' : ''),
+                                class: "cursor-pointer mr-7" + (accountSelect.getAccount() === '03' ? ' has-text-primary header-highlight' : ''),
                                 onclick: function () {
-                                    AssetRecords.setSwitchValue('03');
+                                    accountSelect.setAccount('03');
+                                    AssetsRecords.getAllList();
                                 }
                             }, ['我的钱包']),
                             m('div', {
-                                class: "cursor-pointer mr-7" + (AssetRecords.tradeAccount.includes(AssetRecords.switchValue) ? ' has-text-primary header-highlight' : ''),
+                                class: "cursor-pointer mr-7" + (AssetRecords.tradeAccount.includes(accountSelect.getAccount()) ? ' has-text-primary header-highlight' : ''),
                                 onclick: function () {
-                                    AssetRecords.setSwitchValue('01');
+                                    accountSelect.setAccount('01');
+                                    AssetsRecords.getAllList();
                                 }
                             }, ['交易账户']),
                             m('div', {}, ['其他账户'])
                         ]),
-                        table
+                        accountSelect.getAccount() === '03'
+                            ? m(walletTable, {
+                                datadisplayvalue: AssetsRecords.datadisplayvalue,
+                                dataArrObj: AssetsRecords.dataArrObj,
+                                grossValue: AssetsRecords.grossValue,
+                                displayValue: AssetsRecords.displayValue,
+                                displayEvnet: AssetsRecords.displayEvnet
+                            })
+                            : m(assetTable, {
+                                datadisplayvalue: AssetsRecords.datadisplayvalue,
+                                dataArrObj: AssetsRecords.dataArrObj,
+                                grossValue: AssetsRecords.grossValue,
+                                changeSelect: () => {
+                                    AssetsRecords.getAllList();
+                                }
+                            })
                     ])
                 ])
             ])
 
         ]);
+    },
+    onremove: function () {
+        AssetsRecords.onremove();
     }
 };

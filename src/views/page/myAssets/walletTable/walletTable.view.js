@@ -1,21 +1,14 @@
 const m = require('mithril');
 const commonSelectionBox = require('../commonSelectionBox/commonSelectionBox.view');
-const assetRecordsTable = require('../assetTableList/assetTableList.model');
 
 module.exports = {
-    oninit () {
-        assetRecordsTable.type = '03';
-        assetRecordsTable.onupdate();
-        console.log('lm', assetRecordsTable.grossValue);
-        console.log(assetRecordsTable.datadisplayvalue);
-    },
-    view () {
+    view (vnode) {
         return m('div', { class: 'views-pages-Myassets-assetRecords-assetRecordsWallet mt-7 px-4' }, [
             m(commonSelectionBox, { num: '03' }),
             m('div', {}, [
                 m('table', { style: 'height:436px;width: 100%;' }, [
-                    m('tbody', { class: (assetRecordsTable.datadisplayvalue === 1 ? '' : 'datadisplay') + ' tbody' }, [
-                        assetRecordsTable.dataArrObj.map(items => {
+                    m('tbody', { class: (vnode.attrs.datadisplayvalue === 1 ? '' : 'datadisplay') + ' tbody' }, [
+                        vnode.attrs.dataArrObj.map(items => {
                             return m('tr', { class: 'has-text-level-2 body-4 pb-3' }, [
                                 m('td', {}, [items.category]),
                                 m('td.px-8 pb-4', {}, [items.type]),
@@ -26,7 +19,7 @@ module.exports = {
                                 m('td', { class: 'tbodytd' }, [items.remarks])
                             ]);
                         }),
-                        assetRecordsTable.grossValue.map((item, index) => {
+                        vnode.attrs.grossValue.map((item, index) => {
                             return m('tr', { class: 'body-4' }, [
                                 m('td', {}, [item.wType]),
                                 m('td.px-8 pb-7', {}, [item.status]),
@@ -39,15 +32,15 @@ module.exports = {
                                         m('div', {
                                             class: 'dropdown-trigger',
                                             onclick: function () {
-                                                assetRecordsTable.displayEvnet(index);
+                                                vnode.attrs.displayEvnet(index);
                                             }
                                         }, [
                                             m('span', { ariaHaspopup: 'true', ariaControls: 'dropdown-menu6' }, ['详情']),
                                             m('span', { class: '' }, [
-                                                m('i', { class: 'iconfont ' + (assetRecordsTable.displayValue === index && assetRecordsTable.noDisplay ? 'icon-xiala' : 'icon-xiala'), ariaHidden: 'true' })
+                                                m('i', { class: 'iconfont ' + (vnode.attrs.displayValue === index && vnode.attrs.noDisplay ? 'icon-xiala' : 'icon-xiala'), ariaHidden: 'true' })
                                             ])
                                         ]),
-                                        m('div', { class: assetRecordsTable.displayValue === index && assetRecordsTable.noDisplay ? 'dropdown-menu' : 'dropdown-menu1', id: 'dropdown-menu6', role: 'menu' }, [
+                                        m('div', { class: vnode.attrs.displayValue === index && vnode.attrs.noDisplay ? 'dropdown-menu' : 'dropdown-menu1', id: 'dropdown-menu6', role: 'menu' }, [
                                             m('div', { class: 'dropdown-content', style: 'width:1170px' }, [
                                                 m('div', { class: 'dropdown-item' }, [
                                                     m('div', { class: '' }, [
@@ -68,7 +61,7 @@ module.exports = {
                             ]);
                         })
                     ]),
-                    m('div', { class: assetRecordsTable.datadisplayvalue === 0 ? 'disdatadisplay' : 'datadisplay' + ' ' }, ['暂无数据'])
+                    m('div', { class: vnode.attrs.datadisplayvalue === 0 ? 'disdatadisplay' : 'datadisplay' + ' ' }, ['暂无数据'])
                 ])
             ])
         ]);

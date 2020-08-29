@@ -4,8 +4,8 @@ const Http = require('@/api').webApi;
 // const Axios = require('@/api/config/request').default;
 const utils = require('@/util/utils').default;
 const I18n = require('@/languages/I18n').default;
+const accountSelect = require('@/models/asset/accountSelect');
 module.exports = {
-    type: '03',
     readyAlldata: [],
     allType: { // 主钱包类型
         allType: {
@@ -260,8 +260,7 @@ module.exports = {
             this.noDisplay = false;
         }
     },
-    onupdate() {
-        console.log(this.type, '1111111111111111111111111111');
+    oninit() {
         const that = this;
         broadcast.onMsg({
             key: 'assetRecordsTable',
@@ -321,56 +320,55 @@ module.exports = {
         });
     },
     getAllList() {
-        // eslint-disable-next-line prefer-const
-        let that = this;
-        if (that.type === '03') {
+        const that = this;
+        if (accountSelect.getAccount() === '03') {
             Http.assetRecordsAll([
-                Http.assetRecords({ aType: that.type, mhType: 1 }), // 充币
-                Http.assetRecords({ aType: that.type, mhType: 2 }), // 提币
-                Http.assetRecords({ aType: that.type, mhType: 4 }), // 划转
-                Http.assetRecords({ aType: that.type, mhType: 5 }) // 其他
+                Http.assetRecords({ aType: accountSelect.getAccount(), mhType: 1 }), // 充币
+                Http.assetRecords({ aType: accountSelect.getAccount(), mhType: 2 }), // 提币
+                Http.assetRecords({ aType: accountSelect.getAccount(), mhType: 4 }), // 划转
+                Http.assetRecords({ aType: accountSelect.getAccount(), mhType: 5 }) // 其他
             ]).then(res => {
                 console.log(res);
                 // eslint-disable-next-line prefer-const
-                let walletLog = that.walletLog[that.type];
-                that.walletLog[that.type]['1'] = res[0].result.code === 0 ? res[0].history : walletLog['1'] ? walletLog['1'] : [];
-                that.walletLog[that.type]['2'] = res[1].result.code === 0 ? res[1].history : walletLog['2'] ? walletLog['2'] : [];
-                that.walletLog[that.type]['4'] = res[2].result.code === 0 ? res[2].history : walletLog['4'] ? walletLog['4'] : [];
-                that.walletLog[that.type]['5'] = res[3].result.code === 0 ? res[3].history : walletLog['5'] ? walletLog['5'] : [];
+                let walletLog = that.walletLog[accountSelect.getAccount()];
+                that.walletLog[accountSelect.getAccount()]['1'] = res[0].result.code === 0 ? res[0].history : walletLog['1'] ? walletLog['1'] : [];
+                that.walletLog[accountSelect.getAccount()]['2'] = res[1].result.code === 0 ? res[1].history : walletLog['2'] ? walletLog['2'] : [];
+                that.walletLog[accountSelect.getAccount()]['4'] = res[2].result.code === 0 ? res[2].history : walletLog['4'] ? walletLog['4'] : [];
+                that.walletLog[accountSelect.getAccount()]['5'] = res[3].result.code === 0 ? res[3].history : walletLog['5'] ? walletLog['5'] : [];
                 that.updateList();
             }).catch(err => {
                 console.log('error ', err);
             });
-        } else if (that.type === '01' || that.type === '02') {
+        } else if (accountSelect.getAccount() === '01' || accountSelect.getAccount() === '02') {
             Http.assetRecordsAll([
-                Http.assetRecords({ aType: that.type, mhType: 4 }) // 划转
+                Http.assetRecords({ aType: accountSelect.getAccount(), mhType: 4 }) // 划转
             ]).then(res => {
                 // eslint-disable-next-line prefer-const
-                let walletLog = that.walletLog[that.type];
-                that.walletLog[that.type]['4'] = res[0].result.code === 0 ? res[0].history : walletLog['4'] ? walletLog['4'] : [];
+                let walletLog = that.walletLog[accountSelect.getAccount()];
+                that.walletLog[accountSelect.getAccount()]['4'] = res[0].result.code === 0 ? res[0].history : walletLog['4'] ? walletLog['4'] : [];
                 that.updateList();
             }).catch(err => {
                 console.log('error ', err);
             });
-        } else if (that.type === '04') {
+        } else if (accountSelect.getAccount() === '04') {
             Http.assetRecordsAll([
-                Http.assetRecords({ aType: that.type, mhType: 4 }), // 划转
-                Http.assetRecords({ aType: that.type, mhType: 5 }) // 其他
+                Http.assetRecords({ aType: accountSelect.getAccount(), mhType: 4 }), // 划转
+                Http.assetRecords({ aType: accountSelect.getAccount(), mhType: 5 }) // 其他
             ]).then(res => {
                 // eslint-disable-next-line prefer-const
-                let walletLog = that.walletLog[that.type];
-                that.walletLog[that.type]['4'] = res[0].result.code === 0 ? res[0].history : walletLog['4'] ? walletLog['4'] : [];
-                that.walletLog[that.type]['5'] = res[1].result.code === 0 ? res[1].history : walletLog['5'] ? walletLog['5'] : [];
+                let walletLog = that.walletLog[accountSelect.getAccount()];
+                that.walletLog[accountSelect.getAccount()]['4'] = res[0].result.code === 0 ? res[0].history : walletLog['4'] ? walletLog['4'] : [];
+                that.walletLog[accountSelect.getAccount()]['5'] = res[1].result.code === 0 ? res[1].history : walletLog['5'] ? walletLog['5'] : [];
                 that.updateList();
             }).catch(err => {
                 console.log('error ', err);
             });
-        } else if (that.type === '06') {
+        } else if (accountSelect.getAccount() === '06') {
             Http.assetRecordsAll([
                 Http.assetRecords({ aType: '018', mhType: 5 })// 其他
             ]).then(res => {
                 // eslint-disable-next-line no-undef
-                that.walletLog[that.type]['5'] = res[0].result.code === 0 ? res[0].history : walletLog['5'] ? walletLog['5'] : [];
+                that.walletLog[accountSelect.getAccount()]['5'] = res[0].result.code === 0 ? res[0].history : walletLog['5'] ? walletLog['5'] : [];
                 that.updateList();
             }).catch(err => {
                 console.log('error ', err);
@@ -381,7 +379,7 @@ module.exports = {
         // eslint-disable-next-line prefer-const
         let that = this;
         // eslint-disable-next-line prefer-const
-        let walletLog = that.walletLog[this.type];
+        let walletLog = that.walletLog[accountSelect.getAccount()];
         let allHistoryList = [];
         // 充币
         if (walletLog['1'] && walletLog['1'].length > 0) {
@@ -597,7 +595,7 @@ module.exports = {
             console.log(list, '3333333333333333333333333');
         }
         // 其他
-        if (this.type === '04' && walletLog['5'] && walletLog['5'].length > 0) {
+        if (accountSelect.getAccount() === '04' && walletLog['5'] && walletLog['5'].length > 0) {
             // eslint-disable-next-line prefer-const
             let list = [];
             // eslint-disable-next-line prefer-const
@@ -674,44 +672,44 @@ module.exports = {
                     des = '兑换获得';
                 } else if (item.addr.search("ce_out") !== -1) {
                     des = '兑换消耗';
-                } else if (this.type === '03' && item.addr.search("foltra-1") !== -1) {
+                } else if (accountSelect.getAccount() === '03' && item.addr.search("foltra-1") !== -1) {
                     // des = '跟单账户转入'
                     des = I18n.$t('10147', { value: I18n.$t('12522'/**/) }); // 跟单账户
                     transfer = true;
-                } else if (this.type === '03' && item.addr.search("foltra") !== -1) {
+                } else if (accountSelect.getAccount() === '03' && item.addr.search("foltra") !== -1) {
                     // des = '划至跟单账户'
                     des = I18n.$t('10148', { value: I18n.$t('12522'/**/) }); // 跟单账户
                     transfer = true;
-                } else if (this.type === '06' && item.addr.search("foltra-1") !== -1) {
+                } else if (accountSelect.getAccount() === '06' && item.addr.search("foltra-1") !== -1) {
                     // des = '划至我的钱包'
                     des = I18n.$t('10148', { value: I18n.$t('10082'/**/) }); // 我的钱包
                     transfer = true;
-                } else if (this.type === '06' && item.addr.search("foltra") !== -1) {
+                } else if (accountSelect.getAccount() === '06' && item.addr.search("foltra") !== -1) {
                     // des = '我的钱包转入'
                     des = I18n.$t('10147', { value: I18n.$t('10082'/**/) }); // 我的钱包
                     transfer = true;
-                } else if (this.type === '06' && item.addr.search("fw_pnl") !== -1) {
+                } else if (accountSelect.getAccount() === '06' && item.addr.search("fw_pnl") !== -1) {
                     des = I18n.$t('12523'); // 平仓盈利
                     other = true;
-                } else if (this.type === '06' && item.addr.search("fw_fee") !== -1) {
+                } else if (accountSelect.getAccount() === '06' && item.addr.search("fw_fee") !== -1) {
                     des = I18n.$t('12524'/**/);// 交易手续费
                     other = true;
-                } else if (this.type === '06' && item.addr.search("fw_cls_MI") !== -1) {
+                } else if (accountSelect.getAccount() === '06' && item.addr.search("fw_cls_MI") !== -1) {
                     des = I18n.$t('12525'/**/); // '平仓解锁保证金'
                     other = true;
-                } else if (this.type === '06' && item.addr.search("fw_open") !== -1) {
+                } else if (accountSelect.getAccount() === '06' && item.addr.search("fw_open") !== -1) {
                     des = I18n.$t('12526'/**/); // 开仓锁定保证金
                     other = true;
-                } else if (this.type === '06' && item.addr.search("fw_repnl") !== -1) {
+                } else if (accountSelect.getAccount() === '06' && item.addr.search("fw_repnl") !== -1) {
                     des = I18n.$t('12527'/**/); // 推荐分红锁定
                     other = true;
-                } else if (this.type === '06' && item.addr.search("fw_ldpnl") !== -1) {
+                } else if (accountSelect.getAccount() === '06' && item.addr.search("fw_ldpnl") !== -1) {
                     des = I18n.$t('12528'/**/);// 带单分红锁定
                     other = true;
-                } else if (this.type === '06' && item.addr.search("fw_res") !== -1) {
+                } else if (accountSelect.getAccount() === '06' && item.addr.search("fw_res") !== -1) {
                     des = I18n.$t('12529'/**/); // 盈利释放到可用
                     other = true;
-                } else if (this.type === '06' && item.addr.search("fw_loss") !== -1) {
+                } else if (accountSelect.getAccount() === '06' && item.addr.search("fw_loss") !== -1) {
                     des = I18n.$t('12530'/**/); // 平仓亏损
                     other = true;
                 } else {
@@ -766,7 +764,7 @@ module.exports = {
             console.log(list, '444444444444444444444444444');
         }
         // eslint-disable-next-line no-empty
-        if (this.type === '06' && walletLog['5'] && walletLog['5'].length) {
+        if (accountSelect.getAccount() === '06' && walletLog['5'] && walletLog['5'].length) {
 
         }
         // eslint-disable-next-line prefer-const
@@ -777,14 +775,14 @@ module.exports = {
         //     '04': '4',
         //     '06': '6'
         // };
-        // that.Wallet[obj[this.type]].map(item => {
+        // that.Wallet[obj[accountSelect.getAccount()]].map(item => {
         //     this.allCoin[this.removeGIFT(item.wType)] = {
         //         wType: this.removeGIFT(item.wType),
         //         key: this.removeGIFT(item.wType),
         //         icon: item.url
         //     };
         // });
-        // console.log('this.allCoin', that.Wallet[obj[this.type]], this.allCoin);
+        // console.log('this.allCoin', that.Wallet[obj[accountSelect.getAccount()]], this.allCoin);
         // console.log(allHistoryList);
 
         allHistoryList.sort(function (a, b) {
