@@ -83,8 +83,9 @@ module.exports = {
                                 }, [
                                     m('div', { class: `header-navbar-item-icon has-line-level-3 mr-2` }), // 正方形icon
                                     m('div', { class: `` }, [
-                                        m('p', { class: `title-small` }, "USDT永续合约"),
-                                        m('p', { class: `body-4 has-text-level-3` }, [" 最高百倍杠杆，交易简单"])
+                                        m('p', { class: `title-small` }, "全币种合约"),
+                                        m('span', { class: `header-new-info has-bg-primary px-3 ml-2` }, ["NEW"]),
+                                        m('p', { class: `body-4 has-text-level-3` }, [" 小币种开仓，统一价格标的"])
                                     ])
                                 ]),
                                 m('a', { class: `navbar-item` }, [m('div', { class: `navbar-dropdown` }, [
