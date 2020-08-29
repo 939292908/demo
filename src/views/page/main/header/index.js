@@ -1,6 +1,6 @@
 const m = require('mithril');
 const titleLogo = require("@/assets/img/logo/title-logo.png").default;
-const I18n = require("../../../languages/I18n").default;
+const I18n = require("../../../../languages/I18n").default;
 const Tooltip = require('@/pages/components/common/Tooltip');
 const utils = require('@/util/utils').default;
 require('@/styles/pages/header');
