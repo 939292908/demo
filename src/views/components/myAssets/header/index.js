@@ -1,5 +1,5 @@
 const m = require('mithril');
-require('@/styles/pages/Myassets/header.scss');
+require('@/views/components/myAssets/header/header.scss');
 
 module.exports = {
     // highlightFlag: 哪个高亮  0:第一个item高亮，1:第二个item高亮

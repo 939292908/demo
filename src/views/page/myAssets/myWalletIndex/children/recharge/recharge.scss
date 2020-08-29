@@ -1,0 +1,44 @@
+.views-page-myAssets-myWalletIndex-childer-recharge{
+    .top{
+        width: 1920px;
+        height: 66px;
+        i{
+            width: 17.98px;
+            height: 16px;
+            margin-left: 361.02px;
+        }
+        span{
+            display: inline-block;
+        }
+    }
+    .bottom{
+        margin: 0 auto;
+        .bottom-upper{
+            height: 361px;
+            .currencySel{
+                width: 384px;
+                height: 44px;
+            }
+            .currencyAddr{
+                width: 420px;
+                height: 44px;
+                border: 1px solid red;
+                display: flex;
+                flex-direction: row;
+                .currencyAddr-text{
+                    width: 336px;
+                    height: 44px;
+                    span{
+                        line-height: 44px;
+                    }
+                }
+                .currencyAddr-Operation{
+                    margin: auto 0;
+                }
+            }
+        }
+        .bottom-tab{
+            height: 309px;
+        }
+    }
+}
