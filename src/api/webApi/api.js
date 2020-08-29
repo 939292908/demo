@@ -530,3 +530,10 @@ export function getFunList (params = {}) {
 export function postTransfer (params = {}) {
     return Http.post(API.TRANSFER_POST, params);
 }
+/**
+ * 钱包充值地址
+ * @param {*} params
+ */
+export function GetRechargeAddr (params = {}, options = { withCredentials: true }) {
+    return Http.post(API.WALLET_RECHARGE_ADDR_V1, params, options);
+}

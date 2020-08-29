@@ -26,7 +26,12 @@ body,
 
 /* UI组件样式覆盖 */
 
-.button, .input, .textarea, .select select, .file-cta, .file-name {
+.button,
+.input,
+.textarea,
+.select select,
+.file-cta,
+.file-name {
     padding: var(--c-padding-level0) var(--c-padding-level3);
     border-radius: var(--c-radius-level1);
     font-size: var(--c-fontsz-level4);
@@ -69,18 +74,23 @@ body,
     .body-1 {
         font-size: var(--c-fontsz-level0);
     }
+
     .body-2 {
         font-size: var(--c-fontsz-level1);
     }
+
     .body-3 {
         font-size: var(--c-fontsz-level2);
     }
+
     .body-4 {
         font-size: var(--c-fontsz-level3);
     }
+
     .body-5 {
         font-size: var(--c-fontsz-level4);
     }
+
     .body-6 {
         font-size: var(--c-fontsz-level5);
     }
@@ -120,18 +130,23 @@ body,
     .body-1 {
         font-size: var(--c-fontsz-level3);
     }
+
     .body-2 {
         font-size: var(--c-fontsz-level3);
     }
+
     .body-3 {
         font-size: var(--c-fontsz-level3);
     }
+
     .body-4 {
         font-size: var(--c-fontsz-level3);
     }
+
     .body-5 {
         font-size: var(--c-fontsz-level4);
     }
+
     .body-6 {
         font-size: var(--c-fontsz-level5);
     }
@@ -413,12 +428,12 @@ body,
 
 @media screen and (min-width: 720px) {
     .container {
-      max-width: 1204px; 
+        max-width: 1204px;
     }
 }
 
 @media screen and (max-width: 1024px) {
     .container {
-      min-width: 300px; 
+        min-width: 300px;
     }
 }

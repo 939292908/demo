@@ -1,5 +1,6 @@
 const m = require('mithril');
 const Tooltip = require('@/pages/components/common/Tooltip');
+const utils = require('@/util/utils').default;
 
 const methods = {
     openNavbarDropdown: false,
@@ -49,9 +50,9 @@ module.exports = {
                 m('div', { class: `footer-left column is-6` }, [
                     // logo
                     m('img', { class: '', src: require("@/assets/img/logo/title-logo.png").default, style: "width: 112;height:28px;" }),
-                    m('p', { class: `` }, ["全球区块链资产衍生品交易平台"]),
+                    m('p', { class: `footer-title ${utils.isMobile() ? 'ml-6' : 'pc才有的类名xx'}` }, ["全球区块链资产衍生品交易平台"]),
                     // 社区
-                    m('div', { class: `is-flex mt-7 is-between`, style: "width: 300px" }, [
+                    m('div', { class: `is-flex mt-7 is-between is-hidden-mobile`, style: "width: 300px" }, [
                         iconList.map(item => {
                             return m('a', { class: ``, target: "_blank", href: item.href }, [
                                 m(Tooltip, {
@@ -64,9 +65,9 @@ module.exports = {
                     ])
                 ]),
                 // 右边
-                m('div', { class: `footer-right column is-6 is-between ` }, [
+                m('div', { class: `footer-right column columns is-6` }, [
                     // 导航栏
-                    m('div', { class: `bottom-navigation-tab-1` }, [
+                    m('div', { class: `column bottom-navigation-tab-1  ${utils.isMobile() ? 'ml-6' : 'pc才有的类名xx'}` }, [
                         m('div', { class: `body-6 ` }, ['平台服务']),
                         m('a', { class: `has-text-white  has-text-primary-hover has-text-level-2`, href: "https://vbithelp.zendesk.com/hc/zh-cn/sections/360007961613", target: "_blank" }, ["币币交易"]),
                         m('p', { class: `` },
@@ -82,8 +83,8 @@ module.exports = {
                             m('a', { class: `has-text-white  has-text-primary-hover has-text-level-2`, href: "https://vbithelp.zendesk.com/hc/zh-cn/categories/360003442694", target: "_blank" }, ["全币种合约"])
                         )
                     ]),
-                    m('div', { class: `bottom-navigation-tab-2` }, [
-                        m('p', { class: `body-6`, href: "" }, ["平台条款"]),
+                    m('div', { class: `column bottom-navigation-tab-2 ${utils.isMobile() ? 'ml-6' : 'pc才有的类名xx'}` }, [
+                        m('p', { class: `body-6` }, ["平台条款"]),
                         m('p', { class: `` },
                             m('a', { class: `has-text-white  has-text-primary-hover has-text-level-2`, href: "https://vbithelp.zendesk.com/hc/zh-cn/articles/360045404594", target: "_blank" }, ["服务协议"])
                         ),
@@ -95,7 +96,7 @@ module.exports = {
                             m('a', { class: `has-text-white has-text-primary-hover has-text-level-2`, href: "https://vbithelp.zendesk.com/hc/zh-cn/articles/360048389153", target: "_blank" }, ["合约牌照"])
                         )
                     ]),
-                    m('div', { class: `bottom-navigation-tab-2 ` }, [
+                    m('div', { class: `column bottom-navigation-tab-2 ${utils.isMobile() ? 'ml-6' : 'pc才有的类名xx'}` }, [
                         m('p', { class: `body-6` }, ["服务支持"]),
                         m('p', { class: `` },
                             m('a', { class: `has-text-white  has-text-primary-hover has-text-level-2`, href: `https://vbithelp.zendesk.com/hc/zh-cn/sections/360007960273`, target: "_blank" }, ["新手帮助"])
@@ -110,18 +111,8 @@ module.exports = {
                             m('a', { class: `has-text-white has-text-primary-hover has-text-level-2`, href: `https://vbithelp.zendesk.com/hc/zh-cn/sections/360007979093`, target: "_blank" }, ["相关费率"])
                         )
                     ]),
-                    m('div', { class: `bottom-navigation-tab-2` }, [
-                        m('p', { class: `has-text-level-4 body-6` }, ["联系我们"]),
-                        // m('p', { class: `has-text-white  has-text-primary-hover has-text-level-2` }, m(Tooltip, {
-                        //     label: "服务邮箱",
-                        //     content: [
-                        //         m('div', { class: `is-flex` }, [
-                        //             // m('div', { class: `` }, ['support@vbit.one'])
-                        //         ])
-                        //     ]
-                        // })),
-
-                        // ),
+                    m('div', { class: `column bottom-navigation-tab-2 ${utils.isMobile() ? 'ml-6' : 'pc才有的类名xx'}` }, [
+                        m('p', { class: ` body-6` }, ["联系我们"]),
                         m('a', { class: `has-text-white has-text-primary-hover has-text-level-2` }, [
                             m('div', {
                                 onclick: function () {
@@ -152,29 +143,7 @@ module.exports = {
                     ])
                 ])
             ]),
-            m('p', { class: `bottom-copyright` }, ["© 2019-2020 Vbit 版权所有"])
+            m('p', { class: `bottom-copyright is-hidden-mobile` }, ["© 2019-2020 Vbit 版权所有"])
         ]);
-        // return m('footer.footer', {}, [
-        // m('div.content', {}, [
-        // m('p.has-text-centered', {}, [
-        //     m('strong', {}, [
-        //         'Bulma'
-        //     ]),
-        //     ' by ',
-        //     m('a', {href:""}, [
-        //         'Jeremy Thomas'
-        //     ]),
-        //     '. The source code is licensed',
-        //     m('a', {href:""}, [
-        //         'MIT'
-        //     ]),
-        //     '. The website content is licensed ',
-        //     m('a', {href:""}, [
-        //         'CC BY NC SA 4.0'
-        //     ]),
-        //     '.'
-        // ])
-        // ])
-        // ])
     }
 };
