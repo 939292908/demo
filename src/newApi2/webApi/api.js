@@ -531,7 +531,7 @@ export function getCoinInfo(params = {}) {
  * */
 
 export function getCoinFees(params = {}, options = { withCredentials: true }) {
-    return Http.post(API.COIN_FEES, { params }, options);
+    return Http.post(API.COIN_FEES, params, options);
 }
 
 /**
@@ -544,6 +544,6 @@ export function getCoinFees(params = {}, options = { withCredentials: true }) {
  * @param op: 0
  */
 
-export function withdrawDeposit (params = {}, options = { withCredentials: true }) {
-    return Http.post(API.WITHDRAW, { params }, options);
+export function withdrawDeposit (params = {}, options = { withCredentials: false }) {
+    return Http.post(API.WITHDRAW, params, options);
 }
