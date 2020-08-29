@@ -35,26 +35,26 @@ module.exports = {
                         m(commonSelectionBox, { num: accountSelect.getAccount() }),
                         m('div', { class: 'views-pages-Myassets-assetRecords-myWalletTable' }, [
                             m('div', {}, [
-                                m('table', { style: 'height:436px;width: 100%;' }, [
+                                m('table', { style: 'width: 100%;' }, [
                                     m('tbody', { class: (vnode.attrs.datadisplayvalue === 1 ? '' : 'datadisplay ') + 'tbody' }, [
                                         vnode.attrs.dataArrObj.map(items => {
-                                            return m('tr', { class: 'has-text-level-2 body-4 pb-3' }, [
-                                                m('td', {}, [items.category]),
-                                                m('td.px-8 pb-4', {}, [items.type]),
-                                                m('td.px-8 pb-4', {}, [items.num]),
-                                                m('td.px-7 pb-4', {}, [items.state]),
-                                                m('td.px-8 pb-4', {}, [items.time]),
-                                                m('td', { class: 'tbodytd' }, [items.remarks])
+                                            return m('tr.has-text-level-2.body-4', {}, [
+                                                m('td.py-4', {}, [items.category]),
+                                                m('td.px-8.py-4', {}, [items.type]),
+                                                m('td.px-8.py-4', {}, [items.num]),
+                                                m('td.px-8.py-4', {}, [items.state]),
+                                                m('td.px-8.py-4', {}, [items.time]),
+                                                m('td.pl-8.py-4.', { class: 'tbodytd' }, [items.remarks])
                                             ]);
                                         }),
                                         vnode.attrs.grossValue.map((item) => {
                                             return m('tr', { class: 'body-4' }, [
-                                                m('td', {}, [item.wType]),
-                                                m('td.px-8 pb-7', {}, [item.status]),
-                                                m('td.px-7 pb-7', {}, [item.num]),
-                                                m('td.px-7 pb-7', {}, [item.stat]),
-                                                m('td.px-8 pb-7', {}, [item.time]),
-                                                m('td', { class: 'tbodytd' }, ['--'])
+                                                m('td.py-4', {}, [item.wType]),
+                                                m('td.px-8.py-4', {}, [item.status]),
+                                                m('td.px-8.py-4', {}, [item.num]),
+                                                m('td.px-8.py-4', {}, [item.stat]),
+                                                m('td.px-8.py-4', {}, [item.time]),
+                                                m('td.pl-8.py-4.', { class: 'tbodytd' }, ['--'])
                                             ]);
                                         })
                                     ]),
