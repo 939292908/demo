@@ -133,19 +133,32 @@ const model = {
     },
     // 初始化 2个钱包value
     initFromAndToValueByAuthWalletList () {
-        // 校验钱包value是否有权限 如果没权限默认选中第一个
-        const verifyWalletValueByValue = (value) => {
+        // form钱包value
+        const buildFromWalletValue = (value) => {
+            // 有权限
             if (this.authWltList.some(item => item.id === value)) {
                 return value;
             } else {
+                // 无权限
                 return this.authWltList[0] && this.authWltList[0].id;
+            }
+        };
+        // to钱包value
+        const buildToWalletValue = (value) => {
+            // 有权限 且 不等于from钱包value
+            if (this.authWltList.some(item => item.id === value) && value !== this.form.transferFrom) {
+                return value;
+            } else {
+                // 无权限 默认除不能和from钱包value相同的第1条
+                const toWlt = this.authWltList.filter(item => item.id !== this.form.transferFrom);
+                return toWlt[0] && toWlt[0].id;
             }
         };
 
         // 从xx钱包
-        this.form.transferFrom = verifyWalletValueByValue(this.vnode.attrs.transferFrom || '03');
+        this.form.transferFrom = buildFromWalletValue(this.vnode.attrs.transferFrom || '03');
         // 到xx钱包
-        this.form.transferTo = verifyWalletValueByValue(this.vnode.attrs.transferTo || '01');
+        this.form.transferTo = buildToWalletValue(this.vnode.attrs.transferTo);
     },
     // 2个钱包list 初始化 （依赖钱包value）
     initFromAndToWalletListByValue () {

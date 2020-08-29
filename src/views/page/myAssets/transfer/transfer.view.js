@@ -87,11 +87,15 @@ module.exports = {
             // 弹框确认
             onOk() {
                 model.submit(); // 提交
-                vnode.attrs.setShow(false); // 弹框隐藏
+                vnode.attrs.setTransferModalOption({
+                    isShow: false // 弹框隐藏
+                });
             },
             // 弹框关闭
             onClose () {
-                vnode.attrs.setShow(false); // 弹框隐藏
+                vnode.attrs.setTransferModalOption({
+                    isShow: false // 弹框隐藏
+                }); // 弹框隐藏
             },
             // 插槽
             slot: {
