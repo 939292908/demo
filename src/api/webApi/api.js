@@ -51,6 +51,22 @@ export function sendEmail (params = {}) {
 
 /**
  * @description: 发送邮箱验证码V2
+ * @params: params：{
+ *    email
+      host: this.$params.webSite + '/m/#/accounts',
+      fn: 'wda',
+      lang: this.$i18n.locale,
+      fishCode: this.$store.state.account.antiFishCode,
+      token: encodeURIComponent(this.$store.state.account.token),
+      checkCode: new Date().valueOf().toString(32),
+      wType: wTypeName?wTypeName:wType,
+      aid: aid,
+      money: this.numVal,
+      addr: this.addressVal,
+      fee: this.fee,
+      seq: data.data.seq,
+      exChannel: window.$params.exchId
+ * }
  */
 
 export function sendEmailV2 (params = {}) {
@@ -551,7 +567,7 @@ export function getCoinInfo(params = {}) {
  * */
 
 export function getCoinFees(params = {}, options = { withCredentials: true }) {
-    return Http.post(API.COIN_FEES, { params }, options);
+    return Http.post(API.COIN_FEES, params, options);
 }
 
 /**
@@ -564,6 +580,6 @@ export function getCoinFees(params = {}, options = { withCredentials: true }) {
  * @param op: 0
  */
 
-export function withdrawDeposit (params = {}, options = { withCredentials: true }) {
-    return Http.post(API.WITHDRAW, { params }, options);
+export function withdrawDeposit (params = {}, options = { withCredentials: false }) {
+    return Http.post(API.WITHDRAW, params, options);
 }
