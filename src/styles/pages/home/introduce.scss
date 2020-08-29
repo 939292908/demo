@@ -5,27 +5,50 @@
         background-size: 100%;
         height: 617px;
     }
+
     .introduce-box-masking {
         height: 90px;
         margin-top: 151px;
     }
+
     .introduce-transaction {
         .home-introduce-Rectangle {
             border-radius: 40px 40px 0 0;
             height: 150px;
             position: relative;
             margin-top: 200px;
+            padding-top: var(--c-padding-level8) !important;
+
             .home-picture-vbit {
                 position: absolute;
                 bottom: 0;
-                left: 8%;
+                left: 4%;
             }
         }
     }
+
     .button.is-inverted {
         &:hover {
             background-color: transparent !important;
             color: #fff !important;
+        }
+    }
+}
+
+@media screen and (min-width: 320px) and (max-width: 480px) {
+    .views-pages-home-introduce {
+        .introduce-transaction {
+            .home-introduce-Rectangle {
+                border-radius: 0;
+                height: 615px;
+                margin-top: 150px;
+                display: flex;
+                flex-direction: column;
+                justify-content: start;
+                .home-picture-vbit {
+                    left: 16%;
+                }
+            }
         }
     }
 }

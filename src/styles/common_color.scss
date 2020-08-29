@@ -156,13 +156,22 @@
     color: var(--c-font-darken2) !important;
 }
 
-.theme--dark .has-text-level-4 {
-    color: var(--c-font-darken3) !important;
-}
-
 /* 主色调 */
 .theme--dark .has-text-primary {
     color: var(--c-primary-darken) !important;
+}
+
+/* 辅助色 */
+.theme--dark .has-text-sub-level-1 {
+    color: var(--c-sub-darken) !important;
+}
+
+.theme--dark .has-text-sub-level-2 {
+    color: var(--c-sub-darken1) !important;
+}
+
+.theme--dark .has-text-sub-level-3 {
+    color: var(--c-sub-darken2) !important;
 }
 
 /* 鼠标移上显示主色调 hover */
@@ -219,6 +228,35 @@
     border-color: var(--c-line-darken1);
 }
 
+/* 主色调 */
+.theme--dark .has-line-primary {
+    border-color: var(--c-primary-darken) !important;
+}
+
+/* 辅助色 */
+.theme--dark .has-line-sub-level-1 {
+    border-color: var(--c-sub-darken) !important;
+}
+
+.theme--dark .has-line-sub-level-2 {
+    border-color: var(--c-sub-darken1) !important;
+}
+
+.theme--dark .has-line-sub-level-3 {
+    border-color: var(--c-sub-darken2) !important;
+}
+
+/* 跌红 */
+.theme--dark .has-line-up {
+    color: var(--c-red-darken);
+}
+
+/* 涨绿 */
+.theme--dark .has-line-down {
+    color: var(--c-green-darken);
+}
+
+/* 线颜色四级 */
 .theme--dark .has-line-level-1 {
     border-color: var(--c-line-darken);
 }
@@ -233,6 +271,32 @@
 
 .theme--dark .has-line-level-4 {
     border-color: var(--c-line-darken3);
+}
+
+/* 提示颜色 */
+.theme--dark .has-line-tip-error {
+    border-color: var(--c-tip-errordarken);
+}
+
+.theme--dark .has-line-tip-warning {
+    border-color: var(--c-tip-warningdarken);
+}
+
+.theme--dark .has-line-tip-success {
+    border-color: var(--c-tip-successdarken);
+}
+
+.theme--dark .has-line-tip-fail {
+    border-color: var(--c-tip-faildarken);
+}
+
+/* 标记文字颜色 */
+.theme--dark .has-line-sign-1 {
+    border-color: var(--c-sign-darken);
+}
+
+.theme--dark .has-line-sign-2 {
+    border-color: var(--c-sign-darken1);
 }
 
 /* 线颜色 end */
@@ -393,30 +457,24 @@
     color: var(--c-font-lighten2) !important;
 }
 
-.theme--light .has-text-level-4 {
-    color: var(--c-font-lighten3) !important;
-}
-
 /* 主色调 */
 .theme--light .has-text-primary {
     color: var(--c-primary-lighten) !important;
 }
 
 /* 辅助色 */
-.theme--dark .has-bg-sub-level-1 {
-    background-color: var(--c-sub-darken);
-    border-color: var(--c-sub-darken);
+.theme--light .has-text-sub-level-1 {
+    color: var(--c-sub-lighten) !important;
 }
 
-.theme--dark .has-bg-sub-level-2 {
-    background-color: var(--c-sub-darken1);
-    border-color: var(--c-sub-darken1);
+.theme--light .has-text-sub-level-2 {
+    color: var(--c-sub-lighten1) !important;
 }
 
-.theme--dark .has-bg-sub-level-3 {
-    background-color: var(--c-sub-darken2);
-    border-color: var(--c-sub-darken2);
+.theme--light .has-text-sub-level-3 {
+    color: var(--c-sub-lighten2) !important;
 }
+
 
 
 /* 主色调 hover */
@@ -473,6 +531,35 @@
     border-color: var(--c-line-lighten1);
 }
 
+/* 主色调 */
+.theme--light .has-line-primary {
+    border-color: var(--c-primary-lighten) !important;
+}
+
+/* 辅助色 */
+.theme--light .has-line-sub-level-1 {
+    border-color: var(--c-sub-lighten) !important;
+}
+
+.theme--light .has-line-sub-level-2 {
+    border-color: var(--c-sub-lighten1) !important;
+}
+
+.theme--light .has-line-sub-level-3 {
+    border-color: var(--c-sub-lighten2) !important;
+}
+
+/* 跌红 */
+.theme--light .has-line-up {
+    color: var(--c-red-lighten);
+}
+
+/* 涨绿 */
+.theme--light .has-line-down {
+    color: var(--c-green-lighten);
+}
+
+/* 线颜色四级 */
 .theme--light .has-line-level-1 {
     border-color: var(--c-line-lighten);
 }
@@ -487,6 +574,32 @@
 
 .theme--light .has-line-level-4 {
     border-color: var(--c-line-lighten3);
+}
+
+/* 提示颜色 */
+.theme--light .has-line-tip-error {
+    border-color: var(--c-tip-errorlighten);
+}
+
+.theme--light .has-line-tip-warning {
+    border-color: var(--c-tip-warninglighten);
+}
+
+.theme--light .has-line-tip-success {
+    border-color: var(--c-tip-successlighten);
+}
+
+.theme--light .has-line-tip-fail {
+    border-color: var(--c-tip-faillighten);
+}
+
+/* 标记文字颜色 */
+.theme--light .has-line-sign-1 {
+    border-color: var(--c-sign-lighten);
+}
+
+.theme--light .has-line-sign-2 {
+    border-color: var(--c-sign-lighten1);
 }
 
 /* 线颜色 end */
@@ -560,4 +673,10 @@ $primary-lighten: #FF8B00;
 ::-webkit-scrollbar-thumb {
     background: var(--c-background-lighten2);
     border-radius: 20px;
+}
+// 透明度
+@for $i from 0 through 9 {
+    .opacity-#{$i}{
+        opacity: var(--c-opacity-level#{$i}) !important;
+    }
 }

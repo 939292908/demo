@@ -3,7 +3,7 @@
     overflow: hidden;
     // height: 1113px;
     height: 913px;
-    
+
     .top-bottom-box {
         padding-bottom: 100px;
         .top-banner {
@@ -11,15 +11,23 @@
         }
     }
 }
-@media screen and (min-width: 320px) and (max-width: 480px){
-    .views-pages-home-top{
-        height: 480px;
+
+@media screen and (min-width: 320px) and (max-width: 480px) {
+    .views-pages-home-top {
+        height: 450px;
     }
-    // .pages-home-advantage{
-    //     background: var(--c-background-darken2);
-    // }
-    .platform-advantages-1{
-        background: var(--c-background-lighten2);
-        width: 311px;
+
+    .introduce-transaction-button1 {
+        width: 104px;
+        height: 36px;
+    }
+
+    .introduce-transaction-button2 {
+        width: 104px;
+        height: 36px;
+    }
+    .topView-transaction-button{
+        width: 150px;
+        
     }
 }

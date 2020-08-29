@@ -196,7 +196,7 @@ module.exports = {
                         })
                     ]),
                     // 我的
-                    m('div.navbar-item.cursor-pointer', { class: `has-text-primary-hover ` }, [
+                    m('div.navbar-item.cursor-pointer', { class: `has-text-primary-hover ${utils.getItem('loginState') ? "" : "is-hidden"}` }, [
                         m(Tooltip, {
                             label: m('i.iconfont.icon-Personal'),
                             class: "header-my-tooltip",
@@ -235,10 +235,11 @@ module.exports = {
                             width: '254px',
                             height: '104px',
                             content: m('div', { class: `is-flex` }, [
+                                m('img', { class: 'mt-2 ml-2', src: require("@/assets/img/home/Rectangle_530.png").default }),
                                 m('div', { class: `is-align-items-center` }, [
                                     m('div', { class: `` }, [
-                                        m('p', { class: `ml-4 mt-2 title-small` }, "扫码下载APP"),
-                                        m('p', { class: `ml-4  title-small` }, "iOS&Android")
+                                        m('p', { class: `ml-6 mt-2 title-small` }, "扫码下载APP"),
+                                        m('p', { class: `ml-6  title-small` }, "iOS&Android")
                                     ])
                                 ])
                             ])

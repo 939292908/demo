@@ -1,0 +1,36 @@
+@import "@/styles/common_color.scss";
+
+.input-with-components {
+    .without-border {
+        border: none;
+        box-shadow: 0 0 0 0 !important;
+        border-radius: 0;
+    }
+
+    input.in-input {
+        padding: var(--c-padding-level2) !important;
+    }
+
+    input.without-border {
+        height: calc(100% - 4px);
+    }
+
+    input.without-border:focus {
+        box-shadow: initial !important;
+        border-color: initial !important;
+    }
+
+     .input:focus-within {
+         @extend .input:focus
+     }
+
+    .line {
+        width: 1px;
+        height: 100%;
+        padding-left: 2px;
+    }
+
+    .line {
+        background: var(--c-line-lighten1);
+    }
+}

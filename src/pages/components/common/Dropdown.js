@@ -104,7 +104,7 @@ module.exports = {
                 m('div', { class: "dropdown-content", style: "max-height: 400px; overflow: auto;" },
                     vnode.attrs.getList().map((item, index) => {
                         return m('a', {
-                            class: `dropdown-item has-hover ${vnode.state.activeId === item.id ? 'has-active' : ''}`,
+                            class: `dropdown-item has-hover px-3 ${vnode.state.activeId === item.id ? 'has-active' : ''}`,
                             key: item.label + index,
                             onclick () {
                                 vnode.state.btnText = item.label; // 同步显示文字

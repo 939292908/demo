@@ -1,4 +1,4 @@
-const webApi = require('../newApi2/webApi');
+const webApi = require('../api/webApi');
 const globalModels = require('./globalModels');
 const config = require('../config');
 const broadcast = require('../broadcast/broadcast');

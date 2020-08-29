@@ -1,8 +1,8 @@
-const Http = require('@/newApi2').webApi;
+const Http = require('@/api').webApi;
 const broadcast = require('@/broadcast/broadcast');
-const gWsApi = require('@/newApi2').wsApi;
+const gWsApi = require('@/api').wsApi;
 const utils = require('@/util/utils').default;
-const BaseUrl = require('@/newApi2').BaseUrl;
+const BaseUrl = require('@/api').BaseUrl;
 
 module.exports = {
     name: "modelsForWlt",
@@ -24,10 +24,8 @@ module.exports = {
     // 总BTC估值
     totalValueForBTC: 0,
 
-    // 人民币总BTC估值
-    totalCNYValueForBTC: 0,
-    // 人民币总USDT估值
-    totalCNYValueForUSDT: 0,
+    // 人民币总估值
+    totalCNYValue: 0,
 
     prz: 7,
 
@@ -40,6 +38,11 @@ module.exports = {
     tradingAccountTotalValueForUSDT: 0,
     // 交易账户总BTC估值
     tradingAccountTotalValueForBTC: 0,
+
+    // 交易账户总USDT估值
+    otherAccountTotalValueForUSDT: 0.0000,
+    // 交易账户总BTC估值
+    otherAccountTotalValueForBTC: 0.00000000,
 
     // 币币交易总USDT估值
     coinTotalValueForUSDT: 0,
@@ -105,6 +108,10 @@ module.exports = {
             for (const coin in wlt[type]) {
                 this.wallet_obj[type][coin] = this.wltHandle(type, wlt[type][coin]);
                 this.wallet[type].push(this.wallet_obj[type][coin]);
+
+                wlt[type][coin].valueForUSDT = utils.toFixedForFloor(wlt[type][coin].valueForUSDT, 4);
+                wlt[type][coin].valueForBTC = utils.toFixedForFloor(wlt[type][coin].valueForBTC, 8);
+
                 // 总USDT估值
                 this.totalValueForUSDT += Number(this.wallet_obj[type][coin].valueForUSDT);
                 // 总BTC估值
@@ -270,8 +277,11 @@ module.exports = {
             TOTAL = Number(this.wltItemEx.wdrawable || 0) + Number(this.wltItemEx.Frz || 0);
             // 账户总额
             this.wltItemEx.TOTAL = utils.toFixedForFloor(TOTAL, 8);
+
             // 冻结金额
-            this.wltItemEx.Frz = utils.toFixedForFloor(this.wltItemEx.Gift || 0, 8);
+            // console.log('nzm', 'this.wltItemEx.Gift   ', this.wltItemEx.Gift);
+            this.wltItemEx.Frz = utils.toFixedForFloor(this.wltItemEx.Frz || 0, 8);
+
             // 可用金额
             this.wltItemEx.NL = utils.toFixedForFloor(this.wltItemEx.wdrawable, 8);
             // 账户可提金额，用于资产划转
@@ -299,7 +309,7 @@ module.exports = {
         case '04':
             // 法币钱包
             // console.log('ht', type, this.wltItemEx);
-            TOTAL = Number(this.wltItemEx.mainBal || 0) + Number(this.wltItemEx.financeBal || 0) + Number(this.wltItemEx.mainLock || 0) + Number(this.wltItemEx.depositLock || 0) + Number(this.wltItemEx.pawnBal || 0) + Number(this.wltItemEx.creditNum || 0);
+            TOTAL = Number(this.wltItemEx.otcLock || 0) + Number(this.wltItemEx.otcBal || 0);
             // 账户总额
             this.wltItemEx.TOTAL = utils.toFixedForFloor(TOTAL, 8);
             // 锁定(冻结)
@@ -340,10 +350,6 @@ module.exports = {
         // console.log('ht', 'value', valueForUSDT, valueForBTC);
         // 图标
         this.wltItemEx.icon = BaseUrl.WebAPI + this.wltItemEx.icon;
-
-        // !!!
-        this.totalCNYValueForBTC = valueForBTC * this.prz;
-        this.totalCNYValueForUSDT = valueForUSDT * this.prz;
 
         return this.wltItemEx;
     },

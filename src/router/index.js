@@ -5,36 +5,41 @@ const defaultRoutePath = "/home";
 m.route(document.querySelector('body .route-box'), defaultRoutePath, {
     '/home': {
         onmatch: function () {
-            return import('@/pages/page/home/index');
+            return import('@/views/page/home/index');
         }
     },
     '/login': {
         onmatch: function () {
-            return import('@/pages/page/login/login/loginView');
+            return import('@/views/page/user/login/login/login.view');
         }
     },
     '/register': {
         onmatch: function () {
-            return import('@/pages/page/login/register/registerView');
+            return import('@/views/page/user/login/register/register.view');
         }
     },
     '/forgetPassword': {
         onmatch: function () {
-            return import('@/pages/page/login/forgetPassword/forgetPasswordView');
+            return import('@/views/page/user/login/forgetPassword/forgetPassword.view');
         }
     },
     '/myWalletIndex': {
-        onmatch: function() {
-            return import('@/pages/page/myAssets/myWalletIndex/MyWalletIndex');
+        onmatch: function () {
+            return import('@/views/page/myAssets/myWalletIndex/MyWalletIndexView');
+        }
+    },
+    '/recharge': {
+        onmatch: function () {
+            return import('@/views/page/myAssets/myWalletIndex/children/recharge/rechargeView');
         }
     },
     '/assetRecords': {
         onmatch: function () {
-            return import('@/pages/page/myAssets/assetRecords/index');
+            return import('@/views/page/myAssets/assetRecords/assetRecords.view');
         }
     },
     '/extractCoin': {
-        onmatch: () => import('@/pages/page/extractCoin/index')
+        onmatch: () => import('@/views/page/extractCoin/index')
     }
 });
 
