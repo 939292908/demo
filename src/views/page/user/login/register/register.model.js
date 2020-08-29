@@ -18,6 +18,8 @@ const register = {
     code: '',
     areaCode: '86',
     showPassword: false,
+    showPasswordValidate: false,
+    showLoginNameValidate: false,
     selectList: [{ cn_name: '中国', code: '86', support: '1', us_name: 'China' }],
     refereeType: '',
     prom: '',
@@ -280,6 +282,10 @@ const register = {
         this.getExchInfo();
     },
     onremove() {
+        this.password = '';
+        this.loginName = '';
+        this.showPasswordValidate = false;
+        this.showLoginNameValidate = false;
         this.isvalidate = false;
         this.showPassword = false;
         broadcast.offMsg({
