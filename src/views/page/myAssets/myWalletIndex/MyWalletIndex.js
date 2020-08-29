@@ -5,7 +5,7 @@ const TradeAccountView = require('@/Views/page/myAssets/myWalletIndex/children/t
 const table = require('@/views/page/myAssets/myWalletIndex/tradeTable/tradeTableView');
 let timeOut = null;
 
-module.exports = {
+const model = {
     // 资金划转弹框 配置
     transferModalOption: {
         isShow: false, // 弹窗状态
@@ -27,7 +27,8 @@ module.exports = {
     contractTotal: 0, // 合约
     swValue: '03', // 03:我的钱包 01:交易账户(01币币，02法币，04合约) 2:其他账户
     setSwValue(value) {
-        this.swValue = value;
+        model.swValue = value;
+        model.transferModalOption.transferFrom = model.swValue;
     },
     selectOpFlag: false, // 是否显示币种列表
     selectOpText: 'BTC', // 默认币种BTC
@@ -198,3 +199,4 @@ module.exports = {
         wlt.remove();
     }
 };
+module.exports = model;
