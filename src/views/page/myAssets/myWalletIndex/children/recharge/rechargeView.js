@@ -23,9 +23,9 @@ module.exports = {
                     ]),
                     m('div', { class: `currencySel border-radius-medium mt-2 mb-7` }, [
                         m('div.select is-fullwidth',
-                            m('select', [
+                            m('select', { class: `coinSel`, onchange: () => { rechargeIndex.modifySelect(); } }, [
                                 rechargeIndex.pageData.map(item => {
-                                    return m('option', { onchange: () => { } }, item.wType + '   |   ' + item.zh);
+                                    return m('option', { }, item.wType);
                                 })
                             ])
                         )

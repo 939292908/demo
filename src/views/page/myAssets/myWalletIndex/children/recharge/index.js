@@ -6,17 +6,19 @@ const broadcast = require('@/broadcast/broadcast');
 const rechargeIndex = {
     pageData: [],
     tips: '*您只能向此地址充值BTC，其他资产充入BTC地址将无法找回 *使用BTC地址充值需要1个网络确认才能到账 *默认充入我的钱包，您可以通过“资金划转”将资金转至交易账户或者其他账户',
-    selectCheck: 'this.pageData[0].wType,',
+    selectCheck: '',
     setWalletData() {
         this.pageData = []; // 初始化
         for (const i in wlt.wallet['03']) {
             if (wlt.wallet['03'][i].Setting.canRecharge) {
                 const item = {};
                 const walletI = wlt.wallet['03'][i];
+                if (this.pageData.length === 0) {
+                    this.selectCheck = walletI.wType;
+                }
                 item.wType = walletI.wType; // 币种
                 item.canRecharge = walletI.Setting.canRecharge; // 能否充值
                 item.memo = walletI.Setting.memo; // 是否显示标签
-                console.log(walletI.wType);
                 Http.GetRechargeAddr({
                     wType: walletI.wType
                 }).then(function(arg) {
@@ -25,9 +27,6 @@ const rechargeIndex = {
                     item.zh = arg.trade.fullName.zh; // 中文
                     item.en = arg.trade.fullName.en; // 英文
                     item.networkNum = arg.trade.networkNum; // 网络数
-                    const walletI = wlt.wallet['03'][i];
-                    item.canRecharge = walletI.Setting.canRecharge; // 能否充值
-                    item.memo = walletI.Setting.memo; // 是否显示标签
                     rechargeIndex.pageData.push(item);
                     m.redraw();
                 }).catch(function(err) {
@@ -37,6 +36,9 @@ const rechargeIndex = {
         }
     },
     modifySelect() {
+        var myselect = document.getElementsByClassName('coinSel')[0];
+        var day = myselect.options[myselect.selectedIndex].value;
+        console.log(day);
     },
     copyText() {
         const ele = document.getElementsByClassName('addrText')[0];
