@@ -56,7 +56,7 @@ module.exports = {
             m('div#navbarBasicExample.navbar-menu', { class: 'is-hidden-mobile' + (methods.openNavbarDropdown ? " is-active" : "") }, [
                 m('div.navbar-start', {}, [
                     m('', {
-                        class: "navbar-item has-text-primary-hover",
+                        class: "navbar-item has-text-primary-hover cursor-pointer ",
                         onclick: function () {
                             window.router.push('/');
                         }
@@ -119,7 +119,7 @@ module.exports = {
                         })
                     ]),
                     m('', {
-                        class: "navbar-item has-text-primary-hover",
+                        class: "navbar-item has-text-primary-hover cursor-pointer ",
                         onclick: function () {
                             window.router.push('/');
                         }
@@ -127,7 +127,7 @@ module.exports = {
                         '币币交易'
                     ]),
                     m('', {
-                        class: "navbar-item has-text-primary-hover",
+                        class: "navbar-item has-text-primary-hover cursor-pointer ",
                         onclick: function () {
                             window.router.push('/');
                         }
@@ -135,7 +135,7 @@ module.exports = {
                         'ETF专区'
                     ]),
                     m('', {
-                        class: "navbar-item has-text-primary-hover",
+                        class: "navbar-item has-text-primary-hover cursor-pointer ",
                         onclick: function () {
                             window.router.push('/');
                         }
@@ -153,7 +153,7 @@ module.exports = {
                             }, [
                                 I18n.$t('10136')
                             ]),
-                            m('div.button.has-bg-primary', {
+                            m('div.button.has-bg-primary.is-small', {
                                 onclick: function () {
                                     window.router.push('/register');
                                 }
@@ -260,10 +260,21 @@ module.exports = {
                             content: m('div', { class: `` }, [
                                 m('div', { class: `is-align-items-center` }, [
                                     m('div', { class: `` }, [
-                                        m('p', { class: `navbar-item has-text-primary-hover` }, ["线路切换(10)"]),
-                                        m('a', { class: `navbar-item has-text-primary-hover` }, ["币币订单"]),
-                                        m('a', { class: `navbar-item has-text-primary-hover` }, ["法币订单"]),
-                                        m('a', { class: `navbar-item has-text-primary-hover` }, ["跟单订单"])
+                                        apiLines.netLines.map((item, i) => {
+                                            return m('a', {
+                                                class: `navbar-item columns has-text-primary-hover min-width-200 ${item.Id === apiLines.activeLine.Id ? 'is-active' : ''}`,
+                                                onclick: function() {
+                                                    apiLines.setLinesActive(item.Id);
+                                                }
+                                            }, [
+                                                m('span.column', {}, [
+                                                    item.Name
+                                                ]),
+                                                m('span.column', {}, [
+                                                    '延迟 ' + apiLines.apiResponseSpeed[i] + 'ms'
+                                                ])
+                                            ]);
+                                        })
                                     ])
                                 ])
                             ])
@@ -510,33 +521,6 @@ module.exports = {
                                     m('div', { class: `` }, [
                                         m('p', { class: `ml-6 mt-2 title-small` }, "扫码下载APP"),
                                         m('p', { class: `ml-6  title-small` }, "iOS&Android")
-                                    ])
-                                ])
-                            ])
-                        })
-                    ]),
-                    // 线路切换
-                    m('div.navbar-item.cursor-pointer', { class: `has-text-primary-hover ` }, [
-                        m(Tooltip, {
-                            label: m('i.iconfont.icon-signal'),
-                            content: m('div', { class: `` }, [
-                                m('div', { class: `is-align-items-center` }, [
-                                    m('div', { class: `` }, [
-                                        apiLines.netLines.map((item, i) => {
-                                            return m('a', {
-                                                class: `navbar-item columns has-text-primary-hover min-width-200 ${item.Id === apiLines.activeLine.Id ? 'is-active' : ''}`,
-                                                onclick: function() {
-                                                    apiLines.setLinesActive(item.Id);
-                                                }
-                                            }, [
-                                                m('span.column', {}, [
-                                                    item.Name
-                                                ]),
-                                                m('span.column', {}, [
-                                                    '延迟 ' + apiLines.apiResponseSpeed[i] + 'ms'
-                                                ])
-                                            ]);
-                                        })
                                     ])
                                 ])
                             ])

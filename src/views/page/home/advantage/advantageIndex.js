@@ -9,9 +9,10 @@ require('@/styles/pages/home/advantage.scss');
 
 module.exports = {
     view: function () {
-        return m('div.views-pages-home-advantage theme--light advantage-div mt-7', {}, [
-            m('div', { class: `container` }, [
+        return m('div.views-pages-home-advantage theme--light', {}, [
+            m('div', { class: `container advantage-div ` }, [
                 m('div', { class: `mt-7 w container py-8 border-1 columns ${utils.isMobile() ? 'has-bg-level-2' : ''}` }, [
+                    // m('div', { class: `advantage-div` }, [
                     // 平台优势
                     // 1
                     m('div', { class: `introduce-item column is-3 mt-6` }, [
@@ -36,6 +37,7 @@ module.exports = {
                         m('img', { class: '', src: require("@/assets/img/home/Object4.png").default }),
                         m('div', { class: ` mt-4 has-text-primary title-large font-weight-regular` }, ["尊享服务"]),
                         m('p', { class: `pt-6 ${utils.isMobile() ? 'ml-8 mr-8' : 'ml-7 mr-7'}` }, ["7*24全天候专业客服团队守候，快速反馈，第一时间得到极致的体验 与帮助！"])
+                        // ])
                     ])
                 ])
             ])

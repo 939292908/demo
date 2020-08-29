@@ -8,7 +8,7 @@ const methods = {
     clickNavbarOpenBtn: () => {
         methods.openNavbarDropdown = !methods.openNavbarDropdown;
     },
-    handlerMenuClick: function(item) {
+    handlerMenuClick: function (item) {
         console.log(item);
         if (item.link) {
             window.open(item.link);
@@ -49,6 +49,7 @@ const methods = {
     menuList: [
         {
             id: 1,
+            class: 'body-3',
             label: "平台服务",
             list: [
                 {
@@ -122,11 +123,12 @@ const methods = {
             label: "联系我们",
             list: [
                 {
+                    class: 'body-4',
                     label: "服务邮箱",
                     email: "support@vbit.one"
                 },
                 {
-                    render () {
+                    render() {
                         return m(Tooltip, {
                             label: "加入社群",
                             triggerClass: "has-text-primary-hover",
@@ -139,12 +141,12 @@ const methods = {
                     }
                 },
                 {
-                    render () {
+                    render() {
                         return m(Tooltip, {
                             label: "联系客服",
                             triggerClass: "has-text-primary-hover",
                             content: [
-                                m('div', { class: `has-text-centered ${utils.isMobile() ? 'ml-7' : 'pc才有的类名xx'}` }, [
+                                m('div', { class: `body-4 has-text-centered ${utils.isMobile() ? 'ml-7' : 'pc才有的类名xx'}` }, [
                                     m('img', { class: ``, src: require("@/assets/img/home/QQcustomer_service.png").default })
                                 ])
                             ]
@@ -158,7 +160,7 @@ const methods = {
 };
 
 module.exports = {
-    view () {
+    view() {
         return m('div.views-pages-home-footer.container', {
         }, [
             // 底部
@@ -186,7 +188,7 @@ module.exports = {
                     methods.menuList.map((item, index) => {
                         return m('div', { class: `column bottom-navigation-tab-1  ${utils.isMobile() ? 'ml-6' : ''}`, key: 'item' + index }, [
                             // 菜单标题
-                            m('div', { class: `body-6 is-between ${utils.isMobile() ? 'mt-7' : 'pc才有的类名xx'}` }, [
+                            m('div', { class: `body-4 is-between ${utils.isMobile() ? 'mt-7' : 'pc才有的类名xx'}` }, [
                                 m('span', { class: `` }, item.label),
                                 m('span', {
                                     class: `pr-5 ${utils.isMobile() ? '' : 'is-hidden'}`,
@@ -203,7 +205,7 @@ module.exports = {
                             ]),
                             // 子菜单
                             m('ul', { class: `${methods.openMenuIdList.some(id => id === item.id) || !utils.isMobile() ? '' : 'is-hidden'}` }, item.list.map((item1, index1) => {
-                                return m('li', { class: `has-text-white  has-text-primary-hover has-text-level-2`, onclick: () => methods.handlerMenuClick(item1), key: 'item1' + index1 }, [
+                                return m('li', { class: `body-4 has-text-white  has-text-primary-hover has-text-level-2`, onclick: () => methods.handlerMenuClick(item1), key: 'item1' + index1 }, [
                                     (item1.render && item1.render()) || item1.label
                                 ]);
                             }))
