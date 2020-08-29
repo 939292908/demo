@@ -6,23 +6,14 @@ const table = require('@/views/page/myAssets/myWalletIndex/tradeTable/tradeTable
 let timeOut = null;
 
 module.exports = {
-    // 资金划转弹框 模块
-    transferModal: {
-        // 弹窗状态
-        isShow: false,
-        // 关闭弹窗
-        closeMe() {
-            this.transferModal.isShow = false;
+    // 资金划转弹框 配置
+    transferModalOption: {
+        isShow: false, // 弹窗状态
+        setShow(type) { // 设置显示隐藏
+            this.isShow = type;
         },
-        // ok事件
-        onOk() {
-            this.transferModal.closeMe();
-            console.log('onOk');
-        },
-        // 关闭事件
-        onClose() {
-            this.transferModal.closeMe();
-        }
+        transferFrom: '03', // from钱包默认选中
+        coin: 'USDT' // 币种 默认选中
     },
     currency: 'BTC',
     totalValue: 0, // 总资产
@@ -81,6 +72,7 @@ module.exports = {
     },
     switchChange: function (val) {
         this.swValue = val;
+        this.transferModalOption.transferFrom = this.swValue; // 资金划转弹框 默认选中from钱包(下拉)value
         // 防止被交易账户01覆盖交易账户悬浮卡片的值
         window.event.stopPropagation();
         this.sets();
@@ -126,7 +118,7 @@ module.exports = {
     handlerClickNavBtn (item) {
         console.log(item);
         if (item.id === 4) { // 点击资金划转
-            this.transferModal.isShow = true;
+            this.transferModalOption.isShow = true;
         }
         // 弹框↑
         if (item.to !== "") { // 跳转

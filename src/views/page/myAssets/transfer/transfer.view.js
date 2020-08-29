@@ -96,7 +96,7 @@ module.exports = {
             // 插槽
             slot: {
                 header: "资金划转",
-                body: body
+                body
             }
         });
     }
