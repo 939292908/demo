@@ -1,5 +1,5 @@
 const m = require('mithril');
-const Header = require('@/views/components/myAssets/header/index');
+const Header = require('../header/header.view.js');
 const Transfer = require('@/views/page/myAssets/transfer/transfer.view.js');
 const myWalletIndex = require('@/views/page/myAssets/myWalletIndex/MyWalletIndex');
 require('@/views/page/myAssets/myWalletIndex/MyWalletIndex.scss');

@@ -6,6 +6,20 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "16823722",
+      "name": "Tooltip",
+      "font_class": "Tooltip",
+      "unicode": "e712",
+      "unicode_decimal": 59154
+    },
+    {
+      "icon_id": "16801916",
+      "name": "Add",
+      "font_class": "Add",
+      "unicode": "e66f",
+      "unicode_decimal": 58991
+    },
+    {
       "icon_id": "16783630",
       "name": "Success",
       "font_class": "Success",

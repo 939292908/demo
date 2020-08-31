@@ -2,6 +2,7 @@ const m = require('mithril');
 const InputWithComponent = require('../../../components/inputWithComponent/inputWithComponent.view');
 const Validate = require('./validate.model');
 const I18n = require('@/languages/I18n').default;
+console.log(Validate);
 /**
  * 验证码
  */

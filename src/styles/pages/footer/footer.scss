@@ -1,13 +1,22 @@
-
 .views-pages-home-footer {
-    .pub-footer {
-        .footer-content {
-            .footer-menu-item {
-                cursor: pointer;
-            }
-        }
+
+    // .pub-footer {
+    // .footer-content {
+    //     .footer-menu-item {
+    //         cursor: pointer;
+    //     }
+    // }
+    .bottom-navigation-tab-1 {
+        text-align-last: left;
+        line-height: 27px;
+        // }
+    }
+
+    .bottom-copyright {
+        text-align: center;
     }
 }
+
 @media screen and (min-width: 320px) and (max-width: 480px) {
     .views-pages-home-footer {
         .pub-footer {
@@ -17,9 +26,11 @@
                 }
             }
         }
-        .footer-title{
+
+        .footer-title {
             margin-left: var(--c-margin-level5);
         }
+
         // .footer-right-navigation-tab{
         //     margin-right: var(--c-margin-level5);
         // }
@@ -30,11 +41,13 @@
                 }
             }
         }
-        .footer-title{
+
+        .footer-title {
             margin-left: var(--c-margin-level5);
         }
     }
 }
+
 .pub-footer {
     .footer-content {
         .footer-menu-item {

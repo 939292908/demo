@@ -1,7 +1,9 @@
 const m = require('mithril');
 const Slideshow = require('@/views/components/slideshow/leftToRight');
 const broadcast = require('@/broadcast/broadcast');
-require('@/styles/pages/home.css');
+// require('@/styles/pages/home.css');
+require('@/styles/pages/home/picture.scss');
+
 const market = require('@/models/market/market');
 
 module.exports = {
@@ -13,7 +15,7 @@ module.exports = {
             cb: this.assetDCallBack
         });
     },
-    assetDCallBack: function(arg) {
+    assetDCallBack: function (arg) {
         market.initHomeNeedSub();
     },
     view: function () {
@@ -29,7 +31,7 @@ module.exports = {
             ])
         ]);
     },
-    onremove: function() {
+    onremove: function () {
         market.remove();
         broadcast.onMsg({
             key: "picture",

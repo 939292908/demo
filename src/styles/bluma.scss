@@ -41,3 +41,8 @@ $dark: #171A21;
 @import "@/../node_modules/bulma/sass/grid/_all.sass";
 
 @import "@/../node_modules/bulma/sass/helpers/_all.sass";
+
+
+@import "./common_color.scss";
+@import "./common_size.scss";
+@import "./common_other.scss";

@@ -10,6 +10,10 @@ body,
     height: 100%;
     overflow: auto;
     font-size: var(--c-fontsz-level4);
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-tap-highlight-color: rgba(0,0,0,0);
 }
 
 /* 内容宽度 */
@@ -156,7 +160,7 @@ body,
 
 .iconfont {
     font-family: "iconfont" !important;
-    font-size: var(--c-iconsz-level3) !important;
+    font-size: var(--c-iconsz-level3);
     font-style: normal;
     line-height: 1;
 }
@@ -436,4 +440,20 @@ body,
     .container {
         min-width: 300px;
     }
+}
+
+.min-width-50 {
+    min-width: 50px;
+}
+
+.min-width-100 {
+    min-width: 100px;
+}
+
+.min-width-150 {
+    min-width: 150px;
+}
+
+.min-width-200 {
+    min-width: 200px;
 }

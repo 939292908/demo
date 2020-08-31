@@ -110,7 +110,7 @@ const model = {
                 id: 2,
                 title: '提币',
                 // 跳转至哪个链接
-                to: ''
+                to: '/extractCoin'
             },
             {
                 id: 3,
@@ -134,7 +134,7 @@ const model = {
         }
         // 弹框↑
         if (item.to !== "") { // 跳转
-            m.route.set(item.to);
+            window.router.push(item.to);
         }
     },
     switchDisplay: function (param, flag) {
