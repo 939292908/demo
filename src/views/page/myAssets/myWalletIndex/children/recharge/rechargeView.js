@@ -1,11 +1,13 @@
 const m = require('mithril');
 const rechargeIndex = require('@/views/page/myAssets/myWalletIndex/children/recharge/index');
+const AssetRecords = require('@/models/asset/assetsRecords');
+const assetTable = require('../../../assetTable/assetTable.view');
 require('@/views/page/myAssets/myWalletIndex/children/recharge/recharge.scss');
 
 module.exports = {
     oninit: () => {
         rechargeIndex.initFn();
-        m.redraw();
+        AssetRecords.init('03', 'recharge');
     },
     oncreate: () => {
     },
@@ -73,12 +75,13 @@ module.exports = {
                         rechargeIndex.tips.split('*').map(item => m('span', {}, '*' + item))
                     ])
                 ]),
-                m('div', { class: `bottom-tab has-bg-level-2 mt-5 pt-3` }, [
-                    m('div', { class: `pl-5` }, [
-                        m('span', { class: `title-small` }, '近期充币记录'),
-                        m('i', { class: `iconfont icon-Tooltip` })
+                m('div.bottom-tab.has-bg-level-2.mt-5.pt-3', {}, [
+                    m('div.pa-5', {}, [
+                        m('span.title-small', {}, ['近期提币记录']),
+                        m('i.iconfont.icon-Tooltip', {}, [])
                     ]),
-                    m('hr')
+                    m('hr.ma-0'),
+                    m(assetTable, { class: 'pa-5', list: AssetRecords.showList })
                 ])
             ])
         ]);

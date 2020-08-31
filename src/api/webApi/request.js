@@ -1,6 +1,7 @@
 import axios from 'axios';
 import utils from '@/util/utils';
 import qs from 'qs';
+import globalModels from '@/models/globalModels';
 class _axios {
     constructor(baseURL) {
         this.service = null;
@@ -39,6 +40,12 @@ class _axios {
         this.service.interceptors.response.use(function (response) {
             if (response.headers['set-exsession']) {
                 utils.setItem("ex-session", response.headers['set-exsession']);
+            }
+            if (response.data.result ? response.data.result.code === 9003 : false) {
+                utils.removeItem("ex-session");
+                utils.setItem('loginState', false);
+                globalModels.setAccount({});
+                window.router.push('/login');
             }
             return response.data;
         }, function (error) {

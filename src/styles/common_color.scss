@@ -475,6 +475,17 @@
     color: var(--c-sub-lighten2) !important;
 }
 
+.theme--light .has-bg-sub-level-1 {
+    background: var(--c-sub-lighten) !important;
+}
+
+.theme--light .has-bg-sub-level-2 {
+    background: var(--c-sub-lighten1) !important;
+}
+
+.theme--light .has-bg-sub-level-3 {
+    background: var(--c-sub-lighten2) !important;
+}
 
 
 /* 主色调 hover */
