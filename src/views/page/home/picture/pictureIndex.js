@@ -2,7 +2,7 @@ const m = require('mithril');
 const Slideshow = require('@/views/components/slideshow/leftToRight');
 const broadcast = require('@/broadcast/broadcast');
 // require('@/styles/pages/home.css');
-require('@/styles/pages/home/picture.scss');
+require('@/views/page/home/picture/picture.scss');
 
 const market = require('@/models/market/market');
 
