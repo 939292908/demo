@@ -74,8 +74,9 @@ module.exports = {
     },
     coin: 'all',
     type: 'all',
-    init(aType) {
+    init(aType, type = 'all') {
         this.aType = aType;
+        this.type = type;
         this.getCoinList();
         this.getATypeRecords();
     },

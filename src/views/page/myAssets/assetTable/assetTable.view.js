@@ -3,9 +3,7 @@ module.exports = {
     view(vnode) {
         const table = [];
         table.push(
-            m('div.columns.body-4.has-text-level-3', {
-                class: vnode.attrs.class
-            }, [
+            m('div.columns.body-4.has-text-level-3', {}, [
                 m('div.column.is-1', {}, ['币种']),
                 m('div.column.is-2', {}, ['类型']),
                 m('div.column.is-2', {}, ['数量']),
@@ -49,6 +47,6 @@ module.exports = {
                 }, infoList));
             }
         }
-        return table;
+        return m('div', { class: vnode.attrs.class }, table);
     }
 };
