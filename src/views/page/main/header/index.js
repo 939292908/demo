@@ -188,16 +188,36 @@ module.exports = {
                         m(Tooltip, {
                             label: "资产",
                             content: m('div', { class: `` }, [
-                                m('a', { class: `navbar-item` }, [
+                                m('a', {
+                                    class: `navbar-item`,
+                                    onclick: function () {
+                                        window.router.push('/myWalletIndex');
+                                    }
+                                }, [
                                     m('a', { class: `navbar-item` }, ["我的钱包"])
                                 ]),
-                                m('a', { class: `navbar-item` }, [
+                                m('a', {
+                                    class: `navbar-item`,
+                                    onclick: function () {
+                                        window.router.push('/myWalletIndex');
+                                    }
+                                }, [
                                     m('a', { class: `navbar-item has-text-primary-hover` }, ["合约账户"])
                                 ]),
-                                m('a', { class: `navbar-item` }, [
+                                m('a', {
+                                    class: `navbar-item`,
+                                    onclick: function () {
+                                        window.router.push('/myWalletIndex');
+                                    }
+                                }, [
                                     m('a', { class: `navbar-item has-text-primary-hover` }, ["币币账号"])
                                 ]),
-                                m('a', { class: `navbar-item` }, [
+                                m('a', {
+                                    class: `navbar-item`,
+                                    onclick: function () {
+                                        window.router.push('/myWalletIndex');
+                                    }
+                                }, [
                                     m('a', { class: `navbar-item has-text-primary-hover` }, ["法币账户"])
                                 ])
                             ])
@@ -346,7 +366,7 @@ module.exports = {
                                 m('div', {
                                     class: `navbar-item has-text-primary-hover body-6 `,
                                     onclick: function () {
-                                        window.router.push('/myWalletIndex');
+                                        // window.router.push('/myWalletIndex');
                                     }
                                 }, [
                                     m('div', { class: `header-navbar-item-icon has-line-level-3 mr-2` }), // 正方形icon
@@ -358,7 +378,7 @@ module.exports = {
                                 m('div', {
                                     class: `navbar-item has-text-primary-hover body-6 `,
                                     onclick: function () {
-                                        window.router.push('/myWalletIndex');
+                                        // window.router.push('/myWalletIndex');
                                     }
                                 }, [
                                     m('div', { class: `header-navbar-item-icon has-line-level-3 mr-2` }), // 正方形icon
@@ -372,7 +392,7 @@ module.exports = {
                                     m('a', {
                                         class: `navbar-item has-text-primary-hover body-6 `,
                                         onclick: function () {
-                                            window.router.push('/myWalletIndex');
+                                            // window.router.push('/myWalletIndex');
                                         }
                                     }, [
                                         m('div', { class: `header-navbar-item-icon has-line-level-3 mr-2` }), // 正方形icon
@@ -461,16 +481,36 @@ module.exports = {
                         m(Tooltip, {
                             label: "资产",
                             content: m('div', { class: `` }, [
-                                m('a', { class: `navbar-item` }, [
+                                m('a', {
+                                    class: `navbar-item`,
+                                    onclick: function () {
+                                        window.router.push('/myWalletIndex');
+                                    }
+                                }, [
                                     m('a', { class: `navbar-item` }, ["我的钱包"])
                                 ]),
-                                m('a', { class: `navbar-item` }, [
+                                m('a', {
+                                    class: `navbar-item`,
+                                    onclick: function () {
+                                        window.router.push('/myWalletIndex');
+                                    }
+                                }, [
                                     m('a', { class: `navbar-item has-text-primary-hover` }, ["合约账户"])
                                 ]),
-                                m('a', { class: `navbar-item` }, [
+                                m('a', {
+                                    class: `navbar-item`,
+                                    onclick: function () {
+                                        window.router.push('/myWalletIndex');
+                                    }
+                                }, [
                                     m('a', { class: `navbar-item has-text-primary-hover` }, ["币币账号"])
                                 ]),
-                                m('a', { class: `navbar-item` }, [
+                                m('a', {
+                                    class: `navbar-item`,
+                                    onclick: function () {
+                                        window.router.push('/myWalletIndex');
+                                    }
+                                }, [
                                     m('a', { class: `navbar-item has-text-primary-hover` }, ["法币账户"])
                                 ])
                             ])
