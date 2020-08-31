@@ -3,31 +3,16 @@ const Axios = require('axios');
 const config = require('../config');
 
 const { ActiveLine, APITEXTLIST } = config;
+console.log(require('@/models/globalModels'));
+const { globalModels } = require('@/models/globalModels');
 
-const { globalModels } = require('@/models/globalModels').default;
-
-const utils = require('@/util/utils');
+const utils = require('@/util/utils').default;
 const qs = require('qs');
 
 const Http = Axios.create({
     baseURL: ActiveLine.WebAPI,
     timeout: 30000
 });
-
-/**
- * 竞赛方式请求
- * @param params
- * @returns {Promise<any>}
- */
-const raceRequest = function(params) {
-    const pool = [];
-    for (const url of params) {
-        pool.push(Http.get(url + '?timestamp=' + (new Date()).getTime()));
-    }
-    if (pool.length > 0) {
-        return Promise.race(pool);
-    }
-};
 
 // axios请求拦截
 Http.interceptors.request.use(config => {
@@ -60,6 +45,5 @@ Http.interceptors.response.use(function (response) {
 
 module.exports = {
     Http,
-    API: APITEXTLIST,
-    raceRequest
+    API: APITEXTLIST
 };
