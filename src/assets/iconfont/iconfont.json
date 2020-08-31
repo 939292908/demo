@@ -6,6 +6,13 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "16883479",
+      "name": "TurnOff",
+      "font_class": "TurnOff",
+      "unicode": "e71e",
+      "unicode_decimal": 59166
+    },
+    {
       "icon_id": "16823722",
       "name": "Tooltip",
       "font_class": "Tooltip",

@@ -14,8 +14,7 @@
         span {
           vertical-align: middle;
         }
-        img {
-          width: 16px;
+        i {
           vertical-align: middle;
           cursor: pointer;
         }
@@ -88,6 +87,15 @@
             cursor: pointer;
           }
         }
+
+        //input[type=number]::-webkit-inner-spin-button,
+        //input[type=number]::-webkit-outer-spin-button {
+        //  -webkit-appearance: none;
+        //  margin: 0;
+        //}
+        //input[type=number] {
+        //  -moz-appearance:textfield;
+        //}
       }
 
       .charge { //  手续费

@@ -2,10 +2,6 @@
     width: 100%;
     height: 100%;
 
-    .boder { //临时元素属性
-        border: 1px solid red;
-    }
-
     .marg-auto {
         margin: auto;
     }
@@ -17,12 +13,6 @@
             padding-top: 32px;
             margin-bottom: 20px;
         }
-    }
-
-    .log-sheet {
-        width: 100%;
-        height: 260px;
-        border: 1px solid #9A9EAC;
     }
 
 }
