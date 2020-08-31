@@ -34,8 +34,8 @@ module.exports = {
                     })
                 ]),
                 m('div.column.is-3', {}, [
-                    m('div.select', {}, [
-                        m('select', {
+                    m('div.select.w100', {}, [
+                        m('select.w100', {
                             onchange: e => {
                                 vnode.attrs.onSelectCoin(e.target.value);
                             },
@@ -44,8 +44,8 @@ module.exports = {
                     ])
                 ]),
                 m('div.column.is-3', {}, [
-                    m('div.select', {}, [
-                        m('select', {
+                    m('div.select.w100', {}, [
+                        m('select.w100', {
                             onchange: e => {
                                 vnode.attrs.onSelectType(e.target.value);
                             },

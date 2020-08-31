@@ -97,14 +97,6 @@ export function googleCheck (params = {}) {
 }
 
 /**
- * @description: 校验邮箱验证码
- */
-
-export function emailCheck (params = {}) {
-    return Http.post(API.EMAIL_VERIFY_V1, params);
-}
-
-/**
  * @description: 校验邮箱验证码V2
  */
 
@@ -161,33 +153,31 @@ export function loginWeb (params = {}, options = { withCredentials: true }) {
 export function loginWebV2 (params = {}, options = { withCredentials: true }) {
     return Http.post(API.LOGIN_WEB_V2, params, options);
 }
+
 /**
  * 查询用户简介
- * @param aData
- * {
- *      "loginType": "email",       //  登录类型
- *      "loginName": "loginName",   //  登录账号
- *      "nationNo": "0086"            //  区号
- *      "exChannel": 30             //  渠道号
- * }
- * @param aOnSuccess (result)
- * {
- *   "result": {
- *       "code": 0,
- *       "msg": ""
- *   },
- *   "exists": 1,
- *   "uid": "11137737",
- *   "aType": "Normal",
- *   "phone": "0086-00000000",
- *   "email": "",
- *   "ga": ""
- * }
- * @param aOnError (e)
+ * @param {Object} params {
+        loginType: 'phone' // 账户类型
+        loginName: '1111' // 用户名
+        nationNo: '0086' // 电话号码区号
+        exChannel: 30 // 渠道号
+    }
+ * @param {Object} options axios请求配置
+ * @returns {Object} {
+        "result":{
+            "code":0 // code为0则是成功，其他失败
+        },
+        aType: "Normal", // 用户类型 "Normal":普通用户，"Business"：商户
+        email: "",
+        exists: 2, //用户是否存在 1:用户已存在， 2: 用户不存在
+        ga: "",
+        phone: "",
+        setting2fa: 0,
+        uid: "" // 用户唯一id
+    }
  */
-
 export function queryUserInfo (params = {}, options = { withCredentials: true }) {
-    return Http.post(API.QUERY_USER_INFO_V1, params, options);
+    return Http.post(API.QUERY_USER_INFO_V2, params, options);
 }
 /**
  * 重置密码
@@ -582,4 +572,128 @@ export function getCoinFees(params = {}, options = { withCredentials: true }) {
 
 export function withdrawDeposit (params = {}, options = { withCredentials: false }) {
     return Http.post(API.WITHDRAW, params, options);
+}
+
+/**
+ * 获取秘钥（用于绑定google验证）
+ * @param {Object} params {}
+ * @param {Object} options axios请求配置
+ * @returns {Object} {
+        "result":{
+            "code":0 // code为0则是成功，其他失败
+        },
+        "qrcode_url":"***", // 密钥二维码地址
+        "secret":"LJFWKVCCKJMHWKSB" // 密钥
+    }
+ */
+export function getGoogleSecret (params = {}, options = { withCredentials: false }) {
+    return Http.post(API.AUTH_SECRET_V1, params, options);
+}
+
+/**
+ * 绑定google请求
+ * @param {Object} params {
+        opInfo: 'LJFWKVCCKJMHWKSB', // 密钥
+        password: '5bacd9f25613659b2fbd2f3a58822e5c' // 用户密码
+        code: '401233' // google验证码
+    }
+ * @param {Object} options axios请求配置
+ * @returns {Object} {
+        "result":{
+            "code":0 // code为0则是成功，其他失败
+        }
+    }
+ */
+export function bindGoogleAuth (params = {}, options = { withCredentials: false }) {
+    return Http.post(API.AUTH_BIND_GOOGLE_AUTH_V1, params, options);
+}
+
+/**
+ * 关闭google验证
+ * @param {Object} params {
+        password: '5bacd9f25613659b2fbd2f3a58822e5c' // 用户密码
+        code: '401233' // google验证码
+    }
+ * @param {Object} options axios请求配置
+ * @returns {Object} {
+        "result":{
+            "code":0 // code为0则是成功，其他失败
+        }
+    }
+ */
+export function relieveGoogleAuth (params = {}, options = { withCredentials: false }) {
+    return Http.post(API.AUTH_RELIEVE_GOOGLE_AUTH_V1, params, options);
+}
+
+/**
+ * 修改密码
+ * @param {Object} params {
+        password: '5bacd9f25613659b2fbd2f3a58822e5c' // 用户老密码
+        Passwd1:'fa22fb87b07ae7407f5ceda208a47996' // 新密码
+        Passwd2:'fa22fb87b07ae7407f5ceda208a47996' // 确认密码
+    }
+ * @param {Object} options axios请求配置
+ * @returns {Object} {
+        "result":{
+            "code":0 // code为0则是成功，其他失败
+        }
+    }
+ */
+export function changePasswd (params = {}, options = { withCredentials: false }) {
+    return Http.post(API.MODIFY_PASSWD, params, options);
+}
+
+/**
+ * 更新语言
+ * @param {Object} params {
+        settingValue: 'en' // 语言
+    }
+ * @param {Object} options axios请求配置
+ * @returns {Object} {
+        "result":{
+            "code":0 // code为0则是成功，其他失败
+        },
+        settingKey: ""
+        settingValue: ""
+    }
+ */
+export function updateLanguage (params = {}, options = { withCredentials: false }) {
+    return Http.post(API.UPDATE_LANGUAGE_V2, params, options);
+}
+
+/**
+ * 绑定手机请求
+ * @param {Object} params {
+        opCode: 1 // 绑定类型，固定填1
+        opInfo: '1111' // 手机号
+        password: '9cbf8a4dcb8e30682b927f352d6559a0' // 用户密码
+        phoneNation: '0086' // 区号
+    }
+ * @param {Object} options axios请求配置
+ * @returns {Object} {
+        "result":{
+            "code":0 // code为0则是成功，其他失败
+        }
+    }
+ */
+export function bindPhoneAuth (params = {}, options = { withCredentials: false }) {
+    return Http.post(API.SET_2FA_V2, params, options);
+}
+
+/**
+ * 绑定邮箱请求
+ * @param {Object} params {
+        opCode: 5 // 绑定类型，固定填5
+        opInfo: '354625@qq.com' // 邮箱
+        password: '9cbf8a4dcb8e30682b927f352d6559a0' // 用户密码
+    }
+ * @param {Object} options axios请求配置
+ * @returns {Object} {
+        "result":{
+            "code":0 // code为0则是成功，其他失败
+        }
+    }
+ */
+export function bindEmailAuth (params = {}, options = { withCredentials: false }) {
+    return Http.post(API.SET_2FA_V2, params, options);
 }

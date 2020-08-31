@@ -8,10 +8,16 @@
  */
 const m = require("mithril");
 const LeveL3 = require('../nav');
-const Header = require('../../../../components/myAssets/header');
 const From = require('../form/form.view');
+const Header = require('../../../../components/indexHeader/indexHeader.view');
+const AssetRecords = require('@/models/asset/assetsRecords');
+const assetTable = require('../../assetTable/assetTable.view');
+
 require('./index.scss');
 module.exports = {
+    oninit() {
+        AssetRecords.init('03', 'withdraw');
+    },
     view: function () {
         return m('div', { class: `page-extract-Coin-index` }, [
             m('nav', m('div.content-width marg-auto', m(Header, {
@@ -22,7 +28,14 @@ module.exports = {
                 m(LeveL3),
                 m('div.content-width marg-auto', [
                     m('div.extract-coin-from', m(From)),
-                    m('div.log-sheet ', '提币记录')
+                    m('div.w100.has-bg-level-2', {}, [
+                        m('div.pa-5', {}, [
+                            m('span.title-small', {}, ['近期提币记录']),
+                            m('i.iconfont.icon-Tooltip', {}, [])
+                        ]),
+                        m('hr.ma-0'),
+                        m(assetTable, { class: 'pa-5', list: AssetRecords.showList })
+                    ])
                 ])
             ])
         ]);

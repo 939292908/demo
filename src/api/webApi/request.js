@@ -1,6 +1,7 @@
 import axios from 'axios';
 import utils from '@/util/utils';
 import qs from 'qs';
+import globalModels from '@/models/globalModels';
 class _axios {
     constructor(baseURL) {
         this.service = null;
@@ -40,6 +41,12 @@ class _axios {
             if (response.headers['set-exsession']) {
                 utils.setItem("ex-session", response.headers['set-exsession']);
             }
+            if (response.data.result ? response.data.result.code === 9003 : false) {
+                utils.removeItem("ex-session");
+                utils.setItem('loginState', false);
+                globalModels.setAccount({});
+                window.router.push('/login');
+            }
             return response.data;
         }, function (error) {
             return Promise.reject(error);
@@ -48,7 +55,6 @@ class _axios {
 
     // 执行请求
     request({ method, url, data, options = {} }) {
-        console.log(data);
         const config = Object.assign({
             url: url,
             method: method
@@ -97,7 +103,6 @@ class _axios {
 
     // get请求
     static get(url, data, options = {}) {
-        console.log(data);
         return this.instance.request('get', url, data, options);
     }
 

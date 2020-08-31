@@ -4,6 +4,7 @@ const I18n = require("../../../../languages/I18n").default;
 const Tooltip = require('@/pages/components/common/Tooltip');
 const utils = require('@/util/utils').default;
 const apiLines = require('@/models/network/lines.js');
+const globalModels = require('@/models/globalModels');
 require('@/styles/pages/header');
 console.log('lines', apiLines, apiLines.getActive());
 const methods = {
@@ -16,8 +17,6 @@ const methods = {
 
 module.exports = {
     oncreate: function() {
-        // 更新线路
-        apiLines.updateLines();
         // 初始化线路数据
         apiLines.initLines();
     },
@@ -250,6 +249,7 @@ module.exports = {
                                         onclick: () => {
                                             utils.removeItem("ex-session");
                                             utils.setItem('loginState', false);
+                                            globalModels.setAccount({});
                                         }
                                     }, ["退出登录"])
                                 ])
@@ -543,6 +543,7 @@ module.exports = {
                                         onclick: () => {
                                             utils.removeItem("ex-session");
                                             utils.setItem('loginState', false);
+                                            globalModels.setAccount({});
                                         }
                                     }, ["退出登录"])
                                 ])
