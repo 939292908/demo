@@ -40,6 +40,9 @@ m.route(document.querySelector('body .route-box'), defaultRoutePath, {
     },
     '/extractCoin': {
         onmatch: () => import('@/views/page/myAssets/extractCoin/index')
+    },
+    '/openGoogleVerify': {
+        onmatch: () => import('@/views/page/bindGoogle/open/openGoogleVerify.view')
     }
 });
 

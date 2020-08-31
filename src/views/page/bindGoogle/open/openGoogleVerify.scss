@@ -1,0 +1,124 @@
+.views-page-accountSecurity-bindGoogle-open{
+    .operation{
+        width: 1920px;
+        height: 66px;
+        i{
+            width: 17.98px;
+            height: 16px;
+            margin-left: 361.02px;
+        }
+        span{
+            display: inline-block;
+        }
+    }
+    .center{
+        background-color: white;
+        margin: 0 auto;
+        .center-top{
+            display: flex;
+            flex-direction: row;
+            div{
+                display: flex;
+                flex-direction: column;
+                text-align: center;
+            }
+            .is-active{
+                color: #FF8B00;
+                border-bottom: 2px solid #FF8B00;
+            }
+        }
+        .center-center{
+            .stepOne{
+                height: 350px;
+                text-align: center;
+                .qrcode{
+                    display: flex;
+                    justify-content: center;
+                    flex-direction: row;
+                    .qrcode-left,.qrcode-right{
+                        width: 120px;
+                        height: 150px;
+                        border: 1px solid blue;
+                    }
+                }
+            }
+            .stepTwo{
+                height: 360px;
+                text-align: center;
+                .qrcode{
+                    width: 120px;
+                    height: 120px;
+                    border: 1px solid blue;
+                    margin: 0 auto;
+                }
+                .desc2{
+                    color: #919EAC;
+                }
+                .key{
+                    input{
+                        outline: none;
+                        border: none;
+                    }
+                    i{
+                        color: #FF8B00;
+                    }
+                }
+            }   
+            .stepThree{
+                height: 220px;
+                text-align: center;
+                .key{
+                    input{
+                        outline: none;
+                        border: none;
+                    }
+                    i{
+                        color: #FF8B00;
+                    }
+                }
+            }
+            .stepFour{
+                height: 450px;
+                .desc1{
+                    text-align: center;
+                }
+                .pwd,.code{
+                    width: 385px;
+                    margin: 0 auto;
+                }
+                input{
+                    width: 384px;
+                    height: 44px;
+                    border: 1px solid rgba(30, 40, 70, 0.12);
+                }
+                .btn{
+                    margin: 0 auto;
+                    width: 385px;
+                    button{
+                        width: 384px;
+                        height: 44px;
+                        border: none;
+                        outline: none;
+                    }
+                }
+            }
+        }
+        .center-btn{
+            height: 102px;
+            border-top: 1px solid rgba(10, 13, 22, 0.04);
+            .prev{
+                border: 1px solid #FF8B00;
+                background-color: white;
+                float: left;
+            }
+            button{
+                border: none;
+                width: 68px;
+                height: 36px;
+                outline: none;
+                float: right;
+            }
+            clear: both;
+        }
+    }
+}

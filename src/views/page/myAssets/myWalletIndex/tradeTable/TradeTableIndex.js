@@ -1,7 +1,7 @@
 const broadcast = require('@/broadcast/broadcast');
 const wlt = require('@/models/wlt/wlt');
 const m = require('mithril');
-require('@/views/page/myAssets/myWalletIndex/tradeTable/tradeTableView');
+const tradeTableView = require('@/views/page/myAssets/myWalletIndex/tradeTable/tradeTableView');
 const transferLogic = require('@/views/page/myAssets/transfer/transfer.logic.js'); // 划转模块逻辑
 
 module.exports = {
@@ -12,28 +12,40 @@ module.exports = {
     accountBanlance: 0, // 交易账户中表格右上角的币种总额
     navAry: [{ idx: '01', val: '合约账户' }, { idx: '02', val: '币币账户' }, { idx: '04', val: '法币账户' }],
     coinType: 'wallet',
-    tableDateList: 'walletData',
+    tableDataList: 'walletData',
+    name: 'nzm',
     setPageFlag: function (param) {
-        console.log(param, '---param---', this.vnode.attrs.swValue);
-        this.vnode.attrs.setIdx(param);
+        // if (JSON.stringify(this.vnode) !== '{}') {
+        //     console.log(param, '---param---', this.vnode.attrs.swValue);
+        //     this.vnode.attrs.setIdx(param);
+        // }
+        console.log(param);
         if (param === '01') {
+            this.name = 'qwe';
             this.coinType = 'contract';
-            this.tableDateList = 'contractData';
+            this.tableDataList = 'contractData';
             this.accountTitle = '合约账户';
+            m.redraw();
         } else if (param === '02') {
             this.coinType = 'coin';
-            this.tableDateList = 'coinData';
+            this.tableDataList = 'coinData';
             this.accountTitle = '币币账户';
+            m.redraw();
         } else if (param === '04') {
             this.coinType = 'legal';
-            this.tableDateList = 'legalData';
+            this.tableDataList = 'legalData';
             this.accountTitle = '法币账户';
+            m.redraw();
         } else if (param === '03') {
             this.coinType = 'wallet';
-            this.tableDateList = 'walletData';
+            this.tableDataList = 'walletData';
+            m.redraw();
         }
         this.setAccountBanlance();
-        this.setDataLength(this.tableData[this.tableDateList].length);
+        this.setDataLength(this.tableData[this.tableDataList].length);
+        console.log(this.coinType, '==');
+        console.log(this.tableDataList, '==');
+        console.log(tradeTableView, '-----');
     },
     setAccountBanlance: function() {
         this.accountBanlance = this.currency === 'BTC' ? wlt[this.coinType + 'TotalValueForBTC'] : wlt[this.coinType + 'TotalValueForUSDT'];
