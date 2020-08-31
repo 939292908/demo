@@ -1,8 +1,10 @@
 const m = require('mithril');
 require('@/views/page/bindGoogle/open/openGoogleVerify.scss');
+const openGLogic = require('@/views/page/bindGoogle/open/openGoogleVerify.logic');
 
 const openGView = {
-    nav: [ // 上方导航（下载App，扫描二维码，备份密钥，开启谷歌验证）
+    // 上方导航（下载App，扫描二维码，备份密钥，开启谷歌验证）
+    nav: [
         {
             id: 1,
             title: '下载App'
@@ -20,10 +22,13 @@ const openGView = {
             title: '开启谷歌验证'
         }
     ],
-    checkFlag: 4, // 当前选中哪个步骤
-    modifyCheckFlag(type) { // 上一步 下一步
+    // 当前选中哪个步骤
+    checkFlag: 4,
+    // 上一步 下一步
+    modifyCheckFlag(type) {
         type === 'prev' ? this.checkFlag = this.checkFlag - 1 : this.checkFlag = this.checkFlag + 1;
     },
+    // 复制文字
     copyText(type) {
         let ele;
         if (type === 'one') {
@@ -31,11 +36,13 @@ const openGView = {
         } else if (type === 'two') {
             ele = document.getElementsByClassName('keyText')[1];
         }
-        ele.select(); // 选择对象
+        // 选择对象
+        ele.select();
         document.execCommand("copy", false, null);
         alert('复制成功');
     },
     oninit: () => {
+        openGLogic.initFn();
     },
     view: () => {
         return m('div', { class: `views-page-accountSecurity-bindGoogle-open theme--light` }, [
@@ -56,23 +63,23 @@ const openGView = {
                     m('div', { class: `stepOne pt-7`, style: { display: (openGView.checkFlag === 1 ? '' : 'none') } }, [
                         m('div', { class: `desc1 body-5 mb-3` }, '下载谷歌验证器'),
                         m('div', { class: `desc2 body-5` }, '扫码下载或者在应用商店中搜索“Google Authentication”应用'),
-                        m('div', { class: `qrcode mt-6` }, [
-                            m('div', { class: `qrcode-left mr-8` }, [
-                                m('div', {}),
+                        m('div', { class: `stepOne-qrcode mt-6` }, [
+                            m('div', { class: `stepOne-qrcode-left mr-8` }, [
+                                m('div', { class: `qrcodeIOS mb-3` }),
                                 m('span', {}, 'IOS')
                             ]),
-                            m('div', { class: `qrcode-right` }, [
-                                m('div', {}),
+                            m('div', { class: `stepOne-qrcode-right` }, [
+                                m('div', { class: `qrcodeAndroid mb-3` }),
                                 m('span', {}, 'Android')
                             ])
                         ])
                     ]),
                     m('div', { class: `stepTwo pt-7`, style: { display: (openGView.checkFlag === 2 ? '' : 'none') } }, [
                         m('div', { class: `desc1 body-5` }, '用谷歌验证App扫描以下二维码'),
-                        m('div', { class: `qrcode my-7` }),
+                        m('div', { class: `stepTwo-qrcode my-7` }),
                         m('div', { class: `desc2 body-5 mb-3` }, '如果您无法扫描这个二维码，请在App中手动输入这串字符'),
                         m('div', { class: `key` }, [
-                            m('input', { class: `keyText title-small`, type: 'text', readOnly: `readOnly`, value: 'P6IQFDD4XT7Q314W' }),
+                            m('input', { class: `keyText title-small`, type: 'text', readOnly: `readOnly`, value: openGLogic.secret }),
                             m('i', { class: `iconfont icon-copy`, onclick: () => { openGView.copyText('one'); } })
                         ])
                     ]),
@@ -80,7 +87,7 @@ const openGView = {
                         m('div', { class: `mb-1` }, '请妥善保管好该密钥，以免丢失!'),
                         m('div', { class: `mb-7` }, '如果该密钥丢失，需要联系客服处理，这通常需要一定的时间'),
                         m('div', { class: `key` }, [
-                            m('input', { class: `keyText title-small`, type: 'text', readOnly: `readOnly`, value: 'P6IQFDD4XT7Q314W' }),
+                            m('input', { class: `keyText title-small`, type: 'text', readOnly: `readOnly`, value: openGLogic.secret }),
                             m('i', { class: `iconfont icon-copy`, onclick: () => { openGView.copyText('two'); } })
                         ])
                     ]),
@@ -97,7 +104,7 @@ const openGView = {
                             m('input', { class: `border-radius-small mt-2`, type: `text` })
                         ]),
                         m('div', { class: `btn mt-8` }, [
-                            m('button', { class: `has-bg-primary` }, '确定')
+                            m('button', { class: `has-bg-primary`, onclick: () => { openGLogic.bind(); } }, '确定')
                         ])
                     ])
                 ]),

@@ -31,24 +31,26 @@
             .stepOne{
                 height: 350px;
                 text-align: center;
-                .qrcode{
+                .stepOne-qrcode{
                     display: flex;
                     justify-content: center;
                     flex-direction: row;
-                    .qrcode-left,.qrcode-right{
+                    .stepOne-qrcode-left,.stepOne-qrcode-right{
+                        div{
+                            width: 120px;
+                            height: 120px;
+                        }
                         width: 120px;
                         height: 150px;
-                        border: 1px solid blue;
                     }
                 }
             }
             .stepTwo{
                 height: 360px;
                 text-align: center;
-                .qrcode{
+                .stepTwo-qrcode{
                     width: 120px;
                     height: 120px;
-                    border: 1px solid blue;
                     margin: 0 auto;
                 }
                 .desc2{
