@@ -25,8 +25,9 @@ module.exports = {
         legalData: []
     },
     navAry: [{ idx: '01', val: '合约账户' }, { idx: '02', val: '币币账户' }, { idx: '04', val: '法币账户' }],
+    coinType: 'wallet',
+    tableDateList: 'walletData',
     setPageFlag: function (param) {
-        console.log(param, '-------------------------------1111');
         this.pageFlag = param;
         this.vnode.attrs.setIdx(param);
         if (param === '01') {
@@ -46,14 +47,11 @@ module.exports = {
             this.tableDateList = 'walletData';
         }
         this.setAccountBanlance();
-        console.log(this.tableData[this.tableDateList]);
         this.setDataLength(this.tableData[this.tableDateList].length);
     },
     setAccountBanlance: function() {
         this.accountBanlance = this.currency === 'BTC' ? wlt[this.coinType + 'TotalValueForBTC'] : wlt[this.coinType + 'TotalValueForUSDT'];
     },
-    coinType: 'wallet',
-    tableDateList: 'walletData',
     setCurrency: function(param) {
         this.currency = param;
         this.initColumnData();
@@ -172,7 +170,6 @@ module.exports = {
         }
     },
     createFn: function (vnode) {
-        console.log(vnode.attrs.hideZeroFlag, 'create.....');
         this.hideZeroFlag = vnode.attrs.hideZeroFlag;
         wlt.init();
         broadcast.onMsg({
@@ -185,6 +182,8 @@ module.exports = {
         setTimeout(() => {
             this.initColumnData();
             this.initTableData();
+            this.setPageFlag('03');
+            this.setAccountBanlance();
             if (this.dataLength === 0) {
                 document.getElementsByTagName('table')[0].rows[document.getElementsByTagName('table')[0].rows.length - 1].style.display = '';
             } else {
@@ -194,10 +193,10 @@ module.exports = {
     },
     initFn: function (vnode) {
         this.vnode = vnode;
-        this.setAccountBanlance();
-        this.setPageFlag('03');
-        console.log(this.coinType, 'type');
-        console.log(this.tableDateList, 'list');
+    },
+    updateFn(vnode) {
+        this.setPageFlag(vnode.attrs.swValue);
+        // console.log(vnode.attrs.swValue, 'table update.....');
     },
     removeFn: function () {
         broadcast.offMsg({

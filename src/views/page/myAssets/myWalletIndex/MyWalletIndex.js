@@ -1,10 +1,10 @@
 const m = require('mithril');
 const wlt = require('@/models/wlt/wlt');
 const broadcast = require('@/broadcast/broadcast');
-// const TradeAccountView = require('@/Views/page/myAssets/myWalletIndex/children/tradeAccount/TradeAccountView');
 const table = require('@/views/page/myAssets/myWalletIndex/tradeTable/tradeTableView');
-let timeOut = null;
 const transferLogic = require('@/views/page/myAssets/transfer/transfer.logic.js'); // 划转模块逻辑
+let timeOut = null;
+
 const model = {
     currency: 'BTC',
     totalValue: 0, // 总资产
@@ -19,8 +19,6 @@ const model = {
     swValue: '03', // 03:我的钱包 01:交易账户(01币币，02法币，04合约) 2:其他账户
     setSwValue(value) {
         model.swValue = value;
-        console.log(value, '-----------------------====');
-        console.log(model.swValue, '-----------------------====');
         // model.transferModalOption.transferFrom = model.swValue;
         transferLogic.transferModalOption.setTransferModalOption({
             transferFrom: model.swValue // from钱包默认选中
@@ -71,13 +69,11 @@ const model = {
         this.contractTotal = param;
     },
     switchChange: function (val) {
+        console.log(val, '--------val-------');
         this.swValue = val;
         transferLogic.transferModalOption.setTransferModalOption({
             transferFrom: val // from钱包默认选中
         });
-        // console.log(this.swValue, '-----====', transferLogic.transferModalOption.transferFrom);
-        // 防止被交易账户01覆盖交易账户悬浮卡片的值
-        window.event.stopPropagation();
         this.sets();
         this.switchContent();
     },
@@ -183,8 +179,6 @@ const model = {
         this.setTotalCNY(wlt.totalCNYValue);
     },
     initFn: function() {
-        console.log(this);
-        console.log(this.swValue, '------');
         m.redraw();
     },
     createFn: function() {

@@ -8,7 +8,6 @@ module.exports = {
     },
     oncreate: (vnode) => {
         t.createFn(vnode);
-        m.redraw();
     },
     view: (vnode) => {
         return m('div', { class: `views-pages-Myassets-Table pt-7 px-5` }, [
@@ -88,6 +87,9 @@ module.exports = {
                 ])
             )
         ]);
+    },
+    onupdate: (vnode) => {
+        t.updateFn(vnode);
     },
     onremove: () => {
         t.removeFn();
