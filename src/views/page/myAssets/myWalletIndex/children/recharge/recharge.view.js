@@ -1,5 +1,5 @@
 const m = require('mithril');
-const rechargeIndex = require('@/views/page/myAssets/myWalletIndex/children/recharge/index');
+const rechargeIndex = require('@/views/page/myAssets/myWalletIndex/children/recharge/recharge.logic');
 require('@/views/page/myAssets/myWalletIndex/children/recharge/recharge.scss');
 const Tooltip = require('@/pages/components/common/Tooltip');
 

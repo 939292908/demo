@@ -30,7 +30,7 @@ m.route(document.querySelector('body .route-box'), defaultRoutePath, {
     },
     '/recharge': {
         onmatch: function () {
-            return import('@/views/page/myAssets/myWalletIndex/children/recharge/rechargeView');
+            return import('@/views/page/myAssets/myWalletIndex/children/recharge/recharge.view');
         }
     },
     '/assetRecords': {
