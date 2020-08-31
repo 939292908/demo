@@ -40,6 +40,12 @@ m.route(document.querySelector('body .route-box'), defaultRoutePath, {
     },
     '/extractCoin': {
         onmatch: () => import('@/views/page/myAssets/extractCoin/index')
+    },
+    '/bindEmail': {
+        onmatch: () => import('@/views/page/user/bind/bindEmail/bindEmail.view')
+    },
+    '/bindPhone': {
+        onmatch: () => import('@/views/page/user/bind/bindEmail/bindEmail.view')
     }
 });
 
