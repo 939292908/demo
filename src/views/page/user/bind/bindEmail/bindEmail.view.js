@@ -33,7 +33,7 @@ module.exports = {
                                 m('input', {
                                     class: `input`,
                                     placeholder: '请输入登录密码',
-                                    value: model.form.passworld,
+                                    value: model.form.password,
                                     oninput(e) {
                                         model.onInputPassword(e);
                                     }
@@ -60,6 +60,7 @@ module.exports = {
                         m("button", {
                             class: "button bind-save-btn is-primary font-size-2 has-text-white button-large mt-8",
                             onclick () {
+                                model.saveClick();
                             }
                         }, [
                             "确定"
