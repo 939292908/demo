@@ -1,27 +1,25 @@
 const m = require('mithril');
 const wlt = require('@/models/wlt/wlt');
 const broadcast = require('@/broadcast/broadcast');
-const TradeAccountView = require('@/Views/page/myAssets/myWalletIndex/children/tradeAccount/TradeAccountView');
-const TradeAccountChildrenView = require('@/Views/page/myAssets/myWalletIndex/tradeAccountChildren/TradeAccountChildrenView');
+// const TradeAccountView = require('@/Views/page/myAssets/myWalletIndex/children/tradeAccount/TradeAccountView');
+const table = require('@/views/page/myAssets/myWalletIndex/tradeTable/tradeTableView');
 let timeOut = null;
 
-module.exports = {
-    // 资金划转弹框 模块
-    transferModal: {
-        // 弹窗状态
-        isShow: false,
-        // 关闭弹窗
-        closeMe() {
-            this.transferModal.isShow = false;
-        },
-        // ok事件
-        onOk() {
-            this.transferModal.closeMe();
-            console.log('onOk');
-        },
-        // 关闭事件
-        onClose() {
-            this.transferModal.closeMe();
+const model = {
+    // 资金划转弹框 配置
+    transferModalOption: {
+        isShow: false, // 弹窗状态
+        transferFrom: '03', // from钱包默认选中
+        coin: 'USDT', // 币种 默认选中
+        setTransferModalOption(option) { // 设置配置
+            // option: {
+            //     isShow: false, // 弹窗显示隐藏
+            //     transferFrom: '03', // from钱包默认选中
+            //     coin: 'USDT' // 币种 默认选中
+            // }
+            model.transferModalOption.isShow = option.isShow;
+            if (option.transferFrom) model.transferModalOption.transferFrom = option.transferFrom;
+            if (option.coin) model.transferModalOption.coin = option.coin;
         }
     },
     currency: 'BTC',
@@ -34,8 +32,14 @@ module.exports = {
     coinTotal: 0, // 币币
     legalTotal: 0, // 法币
     contractTotal: 0, // 合约
-    swValue: 0, // 0:我的钱包 1:交易账户 2:其他账户
-    wltIdx: 1, // 币币，法币，合约
+    swValue: '03', // 03:我的钱包 01:交易账户(01币币，02法币，04合约) 2:其他账户
+    setSwValue(value) {
+        model.swValue = value;
+        // model.transferModalOption.transferFrom = model.swValue;
+        model.transferModalOption.setTransferModalOption({
+            transferFrom: model.swValue // from钱包默认选中
+        });
+    },
     selectOpFlag: false, // 是否显示币种列表
     selectOpText: 'BTC', // 默认币种BTC
     selectOp: ['BTC', 'USDT'], // 币种列表
@@ -59,12 +63,12 @@ module.exports = {
     },
     hideValue: function () {
         const ele = document.getElementsByClassName('changeMoneyImg')[0];
-        if (this.hideMoneyFlag) {
+        if (this.hideMoneyFlag) { // 显示
             ele.classList.value = ele.classList.value.replace('yincang', 'zichanzhengyan');
             this.hideMoneyFlag = !this.hideMoneyFlag;
             this.setTotalValue(wlt[this.currency === 'BTC' ? 'totalValueForBTC' : 'totalValueForUSDT']);
             this.setTotalCNY(wlt.totalCNYValue);
-        } else {
+        } else { // 隐藏
             ele.classList.value = ele.classList.value.replace('zichanzhengyan', 'yincang');
             this.hideMoneyFlag = !this.hideMoneyFlag;
             this.setTotalValue('******');
@@ -80,23 +84,20 @@ module.exports = {
     setContractTotal: function (param) {
         this.contractTotal = param;
     },
-    switchChange: function (val, type) {
+    switchChange: function (val) {
         this.swValue = val;
-        if (type !== undefined) {
-            this.wltIdx = 1;// 点击交易账户则默认显示合约
-        }
+        this.transferModalOption.setTransferModalOption({
+            transferFrom: val // from钱包默认选中
+        });
+        // 防止被交易账户01覆盖交易账户悬浮卡片的值
+        window.event.stopPropagation();
         this.sets();
+        this.switchContent();
     },
     switchContent: function () {
         broadcast.emit({ cmd: broadcast.CHANGE_SW_CURRENCY, data: this.currency });
-        switch (this.swValue) {
-        case 0:
-            return m(TradeAccountChildrenView, { tableType: 'walletColumnData', tableTypeData: 'walletData' });
-        case 1:
-            return m(TradeAccountView, { idx: this.wltIdx });
-        default:
-            break;
-        }
+        console.log('nzm', this.swValue);
+        return m(table, { tableData: wlt.wallet['03'], tableType: 'wallet', hideZeroFlag: false, swValue: this.swValue, setIdx: this.setSwValue, setTransferModalOption: this.transferModalOption.setTransferModalOption });
     },
     Nav: {
         firstNav: [
@@ -130,7 +131,7 @@ module.exports = {
     handlerClickNavBtn (item) {
         console.log(item);
         if (item.id === 4) { // 点击资金划转
-            this.transferModal.isShow = true;
+            this.transferModalOption.isShow = true;
         }
         // 弹框↑
         if (item.to !== "") { // 跳转
@@ -184,15 +185,6 @@ module.exports = {
             }
         }
     },
-    changeTradeAccount: function(param) {
-        // 点击交易账户(...)中则显示对应page
-        this.switchChange(1);
-        this.wltIdx = param;
-        // 阻止交易账户冒泡再次wltIdx赋值
-        window.event.stopPropagation();
-        // （我的钱包，交易账户，其他账户）切换内容
-        this.switchContent();
-    },
     sets: function () {
         this.currency === 'BTC' ? this.setTotalValue(wlt.totalValueForBTC) : this.setTotalValue(wlt.totalValueForUSDT);
         this.currency === 'BTC' ? this.setWalletTotalValue(wlt.walletTotalValueForBTC) : this.setWalletTotalValue(wlt.walletTotalValueForUSDT);
@@ -208,9 +200,12 @@ module.exports = {
         timeOut = setTimeout(() => {
             this.sets();
         }, '100');
+        m.redraw();
     },
     removeFn: function() {
         clearTimeout(timeOut);
         wlt.remove();
     }
 };
+module.exports = model;
+// export default model;

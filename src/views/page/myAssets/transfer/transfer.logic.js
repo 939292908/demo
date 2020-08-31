@@ -1,8 +1,15 @@
+/**
+ * 可传参数
+ * transferTo: 默认选中 到xx钱包 ('01': 合约账户, '02': 币币账户, '03': 我的钱包, '04': 法币账户)
+ * transferFrom: 默认选中 从xx钱包 ('01': 合约账户, '02': 币币账户, '03': 我的钱包, '04': 法币账户)
+ * coin: 默认选中 币种 (USDT)
+ */
 const wlt = require('@/models/wlt/wlt');
 const I18n = require('@/languages/I18n').default;
 const Http = require('@/api').webApi;
 
 const model = {
+    vnode: {},
     showCurrencyMenu: false, // show币种菜单
     showFromMenu: false, // show from菜单
     showMenuTo: false, // show to菜单
@@ -22,26 +29,8 @@ const model = {
     legalTenderList: [], // 法币账户
     baseWltList: [], // 钱包列表 所有
     authWltList: [], // 钱包列表 当前币种有权限
-    fromWltList: [
-        {
-            id: 1,
-            label: "q"
-        },
-        {
-            id: 2,
-            label: "w"
-        }
-    ], // 钱包列表 从xx  （from与to钱包 不能同一种类型相互划转）
-    toWltList: [
-        {
-            id: 1,
-            label: "e"
-        },
-        {
-            id: 2,
-            label: "r"
-        }
-    ], // 钱包列表 到xx
+    fromWltList: [], // 钱包列表 从xx  （from与to钱包 不能同一种类型相互划转）
+    toWltList: [], // 钱包列表 到xx
     // 初始化语言
     initLanguage () {
         this.baseWltList = [
@@ -107,13 +96,13 @@ const model = {
         console.log("币种下拉", this.canTransferCoin, this.allWalletList);
 
         // if (this.canTransferCoin[0]) this.form.coin = this.canTransferCoin[0].wType  // 合约下拉列表 默认选中第一个
-        if (this.canTransferCoin[0]) this.form.coin = this.canTransferCoin[0].wType; // 合约下拉列表 默认选中第一个
+        this.initCoinValue();// 初始化 币种value
 
         this.initWalletListByWTypeAndValue(this.form.coin); // 初始化钱包 list 和 value
 
         this.setMaxTransfer(); // 设置 最大划转
     },
-    // 初始化钱包 list 和 value
+    // 初始化 钱包list和value
     initWalletListByWTypeAndValue (wType) {
         this.initAuthWalletListByWType(wType);// 1. 有权限的钱包list 初始化
         this.initFromAndToValueByAuthWalletList(); // 2. 钱包value  初始化
@@ -132,29 +121,44 @@ const model = {
         });
         this.authWltList = this.authWltList.filter(item => item); // 钱包列表 去空
     },
-    // 2个钱包value 初始化
+    // 初始化 币种value
+    initCoinValue() {
+        if (this.canTransferCoin[0]) { // 有币种下拉
+            if (this.canTransferCoin.some(item => item.wType === this.vnode.attrs.coin)) { // 有传value
+                this.form.coin = this.vnode.attrs.coin;
+            } else { // 没传
+                this.form.coin = this.canTransferCoin[0].wType; // 默认选中第1个
+            }
+        }
+    },
+    // 初始化 2个钱包value
     initFromAndToValueByAuthWalletList () {
-        const pageMap = {
-            1: '01',
-            2: '02',
-            3: '03',
-            4: '04'
-        };
-
-        // 校验钱包value是否有权限 如果没权限默认选中第一个
-        const verifyWalletValueByValue = (value) => {
+        // form钱包value
+        const buildFromWalletValue = (value) => {
+            // 有权限
             if (this.authWltList.some(item => item.id === value)) {
                 return value;
             } else {
+                // 无权限
                 return this.authWltList[0] && this.authWltList[0].id;
+            }
+        };
+        // to钱包value
+        const buildToWalletValue = (value) => {
+            // 有权限 且 不等于from钱包value
+            if (this.authWltList.some(item => item.id === value) && value !== this.form.transferFrom) {
+                return value;
+            } else {
+                // 无权限 默认除不能和from钱包value相同的第1条
+                const toWlt = this.authWltList.filter(item => item.id !== this.form.transferFrom);
+                return toWlt[0] && toWlt[0].id;
             }
         };
 
         // 从xx钱包
-        this.form.transferFrom = verifyWalletValueByValue(pageMap[3]);
-
+        this.form.transferFrom = buildFromWalletValue(this.vnode.attrs.transferFrom || '03');
         // 到xx钱包
-        this.form.transferTo = verifyWalletValueByValue(pageMap[1]);
+        this.form.transferTo = buildToWalletValue(this.vnode.attrs.transferTo);
     },
     // 2个钱包list 初始化 （依赖钱包value）
     initFromAndToWalletListByValue () {
@@ -183,7 +187,7 @@ const model = {
     switchTransfer () {
         [this.form.transferFrom, this.form.transferTo] = [this.form.transferTo, this.form.transferFrom];
     },
-    // 设置 最大划转
+    // 设置 最大划转 (依赖钱包名称, 币种)
     setMaxTransfer () {
         if (wlt.wallet && this.form.transferFrom) { // 所有钱包 和 从xx钱包id 都存在
             const wallet = wlt.wallet[this.form.transferFrom]; // 对应钱包
@@ -239,7 +243,6 @@ const model = {
                 model.showCurrencyMenu = type;
             },
             onClick (itme) {
-                // console.log(itme, model.form.coin);
                 model.setMaxTransfer(); // 设置 最大划转
             },
             getList () {
@@ -290,6 +293,7 @@ const model = {
     rmEVBUS () {
     },
     oninit (vnode) {
+        this.vnode = vnode;
         wlt.init();
         this.initTransferInfo();
         this.initLanguage();

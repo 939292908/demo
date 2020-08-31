@@ -62,6 +62,7 @@ module.exports = {
             exChannel: config.exchId
         }).then(res => {
             if (res.result.code === 0) {
+                console.log(res, '[][][][][]');
                 // 2fa 设置: email2fa, phone2fa, ga2fa
                 if (!!res.result.phone && !!res.result.googleId) {
                     this.loading = false;
