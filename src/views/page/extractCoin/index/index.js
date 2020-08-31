@@ -8,7 +8,7 @@
  */
 const m = require("mithril");
 const LeveL3 = require('../nav');
-const Header = require('../../myAssets/header/header.view');
+const Header = require('../../../components/indexHeader/indexHeader.view');
 const From = require('../form');
 require('./index.scss');
 module.exports = {
