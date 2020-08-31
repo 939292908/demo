@@ -69,9 +69,8 @@ const model = {
         this.contractTotal = param;
     },
     switchChange: function (val) {
-        console.log(val, '--------val-------');
         this.swValue = val;
-        console.log(this.swValue);
+        console.log(this.swValue, '--this.swValue');
         transferLogic.transferModalOption.setTransferModalOption({
             transferFrom: val // from钱包默认选中
         });
