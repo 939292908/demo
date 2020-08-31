@@ -1,5 +1,5 @@
 const m = require('mithril');
-const { Conf, webApi } = require('@/api');
+const { Conf, webApi, BaseUrl } = require('@/api');
 const UserInfo = require('@/models/globalModels');
 const wlt = require('@/models/wlt/wlt');
 const broadcast = require('@/broadcast/broadcast');
@@ -161,7 +161,7 @@ const extract = {
         const emailParms = {
             seq,
             email: user.email,
-            host: '/m/#/accounts', // TODO 参数获取
+            host: BaseUrl.WebAPI + '/m/#/accounts', // TODO 参数获取
             fn: 'wda',
             lang: 'zh',
             fishCode: user.antiFishCode,
