@@ -15,8 +15,6 @@ module.exports = {
     // 登陆验证
     LOGIN_CHECK_V1: '/v1/users/loginCheck',
     LOGIN_CHECK_V2: '/v2/users/loginCheck',
-    // 查询用户简介
-    QUERY_USER_INFO_V1: '/v1/users/queryUserInfo',
     // 极验注册
     GEETEST_REGISTER: '/geetest/register',
     // 极验验证
@@ -27,7 +25,6 @@ module.exports = {
     // 重置密码
     RESET_PASSWD_V1: '/v1/users/ResetPasswd',
     // 邮箱验证
-    EMAIL_VERIFY_V1: '/v1/emails/emailCheck',
     EMAIL_VERIFY_V2: '/v2/emails/emailCheck',
     // 钱包子账户资产
     SUB_ASSETS_V1: '/v1/users/subAssets',
@@ -62,5 +59,19 @@ module.exports = {
     // 币种简介
     COIN_INFO: '/markets/currencies/intro',
     // 手续费 最小值
-    COIN_FEES: 'v1/exch/fees'
+    COIN_FEES: 'v1/exch/fees',
+    // 获取秘钥（用于绑定google验证）
+    AUTH_SECRET_V1: '/v1/g_auth/getSecret',
+    // 绑定google请求
+    AUTH_BIND_GOOGLE_AUTH_V1: '/v1/g_auth/bindGoogleAuth',
+    // 关闭google验证
+    AUTH_RELIEVE_GOOGLE_AUTH_V1: '/v1/g_auth/relieveGoogleAuth',
+    // 修改密码
+    MODIFY_PASSWD: '/users/ChangePasswd',
+    // 更新语言
+    UPDATE_LANGUAGE_V2: '/v2/users/updateLanguage',
+    // 查询用户简介
+    QUERY_USER_INFO_V2: '/v2/users/queryUserInfo',
+    // 2FA验证
+    SET_2FA_V2: '/v2/users/Set2FA'
 };
