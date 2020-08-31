@@ -203,11 +203,6 @@ const model = {
     },
     // 提交
     submit () {
-        model.vnode.attrs.setTransferModalOption({
-            isShow: false // 划转弹框隐藏
-        });
-        // 法币弹框显示
-        model.showlegalTenderModal = true;
         // 校验
         if (this.form.num === '0') {
             return window.$message({ title: I18n.$t('10037'/* "提示" */), content: I18n.$t('10221'/* '划转数量不能为0' */), type: 'danger' });
@@ -230,7 +225,7 @@ const model = {
                 if (Number(res.result.code) === 9040) {
                     // 提示弹框
                     // window.$message({ title: I18n.$t('10037'/* "提示" */), content: "法币划转提示", type: 'danger' });
-                    model.vnode.attrs.setTransferModalOption({
+                    model.transferModalOption.setTransferModalOption({
                         isShow: false // 划转弹框隐藏
                     });
                     // 法币弹框显示
@@ -242,6 +237,22 @@ const model = {
             console.log(err);
         });
         // console.log("我提交了", this.form, 666);
+    },
+    // 资金划转弹框 配置
+    transferModalOption: {
+        isShow: false, // 弹窗状态
+        transferFrom: '03', // from钱包默认选中
+        coin: 'USDT', // 币种 默认选中
+        setTransferModalOption(option) { // 设置配置
+            // option: {
+            //     isShow: false, // 弹窗显示隐藏
+            //     transferFrom: '03', // from钱包默认选中
+            //     coin: 'USDT' // 币种 默认选中
+            // }
+            model.transferModalOption.isShow = option.isShow;
+            if (option.transferFrom) model.transferModalOption.transferFrom = option.transferFrom;
+            if (option.coin) model.transferModalOption.coin = option.coin;
+        }
     },
     // 币种 菜单配置
     getCurrencyMenuOption() {

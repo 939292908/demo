@@ -67,7 +67,7 @@ module.exports = {
                         }
                     }),
                     m('div', { class: `btns-box pr-3` }, [
-                        m('span', { class: `pr-2` }, 'BTC'),
+                        m('span', { class: `pr-2` }, model.form.coin),
                         m('span', {
                             class: `cursor-pointer has-text-primary`,
                             onclick() {
@@ -84,17 +84,17 @@ module.exports = {
         return [
             // 资金划转 弹框
             m(Modal, {
-                isShow: vnode.attrs.isShow, // 弹框显示/隐藏
+                isShow: model.transferModalOption.isShow, // 弹框显示/隐藏
                 // 弹框确认
                 onOk() {
                     model.submit(); // 提交
-                    vnode.attrs.setTransferModalOption({
+                    model.transferModalOption.setTransferModalOption({
                         isShow: false // 弹框隐藏
                     });
                 },
                 // 弹框关闭
                 onClose () {
-                    vnode.attrs.setTransferModalOption({
+                    model.transferModalOption.setTransferModalOption({
                         isShow: false // 弹框隐藏
                     }); // 弹框隐藏
                 },

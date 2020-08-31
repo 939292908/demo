@@ -4,24 +4,8 @@ const broadcast = require('@/broadcast/broadcast');
 // const TradeAccountView = require('@/Views/page/myAssets/myWalletIndex/children/tradeAccount/TradeAccountView');
 const table = require('@/views/page/myAssets/myWalletIndex/tradeTable/tradeTableView');
 let timeOut = null;
-const TransferLogic = require('@/views/page/myAssets/transfer/transfer.logic.js');
+const transferLogic = require('@/views/page/myAssets/transfer/transfer.logic.js'); // 划转模块逻辑
 const model = {
-    // 资金划转弹框 配置
-    transferModalOption: {
-        isShow: false, // 弹窗状态
-        transferFrom: '03', // from钱包默认选中
-        coin: 'USDT', // 币种 默认选中
-        setTransferModalOption(option) { // 设置配置
-            // option: {
-            //     isShow: false, // 弹窗显示隐藏
-            //     transferFrom: '03', // from钱包默认选中
-            //     coin: 'USDT' // 币种 默认选中
-            // }
-            model.transferModalOption.isShow = option.isShow;
-            if (option.transferFrom) model.transferModalOption.transferFrom = option.transferFrom;
-            if (option.coin) model.transferModalOption.coin = option.coin;
-        }
-    },
     currency: 'BTC',
     totalValue: 0, // 总资产
     totalCNY: 0, // 人民币
@@ -36,7 +20,7 @@ const model = {
     setSwValue(value) {
         model.swValue = value;
         // model.transferModalOption.transferFrom = model.swValue;
-        model.transferModalOption.setTransferModalOption({
+        transferLogic.transferModalOption.setTransferModalOption({
             transferFrom: model.swValue // from钱包默认选中
         });
     },
@@ -86,10 +70,10 @@ const model = {
     },
     switchChange: function (val) {
         this.swValue = val;
-        this.transferModalOption.setTransferModalOption({
+        transferLogic.transferModalOption.setTransferModalOption({
             transferFrom: val // from钱包默认选中
         });
-        console.log(this.swValue, '-----====', this.transferModalOption.transferFrom);
+        console.log(this.swValue, '-----====', transferLogic.transferModalOption.transferFrom);
         // 防止被交易账户01覆盖交易账户悬浮卡片的值
         window.event.stopPropagation();
         this.sets();
@@ -102,7 +86,7 @@ const model = {
         // } else if (this.swValue === '01' || this.swValue === '02' || this.swValue === '04') {
         //     return m(TradeAccountView, { swValue: this.swValue, setIdx: this.setSwValue });
         // }
-        return m(table, { tableData: wlt.wallet['03'], tableType: 'wallet', hideZeroFlag: false, swValue: this.swValue, setIdx: this.setSwValue, setTransferModalOption: this.transferModalOption.setTransferModalOption });
+        return m(table, { tableData: wlt.wallet['03'], tableType: 'wallet', hideZeroFlag: false, swValue: this.swValue, setIdx: this.setSwValue, setTransferModalOption: transferLogic.transferModalOption.setTransferModalOption });
     },
     Nav: {
         firstNav: [
@@ -136,8 +120,8 @@ const model = {
     handlerClickNavBtn (item) {
         console.log(item);
         if (item.id === 4) { // 点击资金划转
-            TransferLogic.initTransferInfo(); // 初始化弹框
-            this.transferModalOption.isShow = true;
+            transferLogic.initTransferInfo(); // 初始化弹框
+            transferLogic.transferModalOption.isShow = true;
         }
         // 弹框↑
         if (item.to !== "") { // 跳转
