@@ -4,7 +4,7 @@ const broadcast = require('@/broadcast/broadcast');
 // const TradeAccountView = require('@/Views/page/myAssets/myWalletIndex/children/tradeAccount/TradeAccountView');
 const table = require('@/views/page/myAssets/myWalletIndex/tradeTable/tradeTableView');
 let timeOut = null;
-
+const TransferLogic = require('@/views/page/myAssets/transfer/transfer.logic.js');
 const model = {
     // 资金划转弹框 配置
     transferModalOption: {
@@ -136,6 +136,7 @@ const model = {
     handlerClickNavBtn (item) {
         console.log(item);
         if (item.id === 4) { // 点击资金划转
+            TransferLogic.initTransferInfo(); // 初始化弹框
             this.transferModalOption.isShow = true;
         }
         // 弹框↑

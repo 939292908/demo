@@ -13,6 +13,7 @@ const model = {
     showCurrencyMenu: false, // show币种菜单
     showFromMenu: false, // show from菜单
     showMenuTo: false, // show to菜单
+    showlegalTenderModal: false, // show 法币提示弹框
     wallets: wlt.wallet, // all数据
     form: {
         coin: "USDT", // 合约下拉列表 value
@@ -202,6 +203,11 @@ const model = {
     },
     // 提交
     submit () {
+        model.vnode.attrs.setTransferModalOption({
+            isShow: false // 划转弹框隐藏
+        });
+        // 法币弹框显示
+        model.showlegalTenderModal = true;
         // 校验
         if (this.form.num === '0') {
             return window.$message({ title: I18n.$t('10037'/* "提示" */), content: I18n.$t('10221'/* '划转数量不能为0' */), type: 'danger' });
@@ -223,8 +229,12 @@ const model = {
                 // 往法币划转
                 if (Number(res.result.code) === 9040) {
                     // 提示弹框
-                    window.$message({ title: I18n.$t('10037'/* "提示" */), content: "法币划转提示", type: 'danger' });
-                    // obj.isShowModal = true
+                    // window.$message({ title: I18n.$t('10037'/* "提示" */), content: "法币划转提示", type: 'danger' });
+                    model.vnode.attrs.setTransferModalOption({
+                        isShow: false // 划转弹框隐藏
+                    });
+                    // 法币弹框显示
+                    model.showlegalTenderModal = true;
                 }
                 window.$message({ title: I18n.$t('10037'/* "提示" */), content: res.result.msg, type: 'danger' });
             }
@@ -303,12 +313,13 @@ const model = {
         this.initTransferInfo();
     },
     onupdate (vnode) {
-        // console.log(wlt);
-        // console.log("this.authWltList", this.authWltList, "this.fromWltList", this.fromWltList, "this.toWltList", this.toWltList);
     },
     onremove (vnode) {
         wlt.remove();
         this.rmEVBUS();
+    },
+    showlog() {
+        alert(999);
     }
 };
 
