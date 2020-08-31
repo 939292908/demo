@@ -48,7 +48,6 @@ class _axios {
 
     // 执行请求
     request({ method, url, data, options = {} }) {
-        console.log(data);
         const config = Object.assign({
             url: url,
             method: method
@@ -97,7 +96,6 @@ class _axios {
 
     // get请求
     static get(url, data, options = {}) {
-        console.log(data);
         return this.instance.request('get', url, data, options);
     }
 

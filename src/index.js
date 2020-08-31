@@ -23,8 +23,7 @@ import('./libs/gt');
 // require('@/util/log');
 window.onresize = function (arg) {
     // 判断是否是移动端
-    broadcast.emit({ cmd: 'ONRESIZE_UPD', data: { Ev: 'ONRESIZE_UPD' } });
-    // window.gBroadcast.emit(window.gBroadcast.ONRESIZE_UPD, { Ev: window.gBroadcast.ONRESIZE_UPD });
+    broadcast.emit({ cmd: broadcast.ONRESIZE_UPD, data: { Ev: broadcast.ONRESIZE_UPD } });
 };
 
 import('./views/index').then(arg => {

@@ -16,8 +16,6 @@ const methods = {
 
 module.exports = {
     oncreate: function() {
-        // 更新线路
-        apiLines.updateLines();
         // 初始化线路数据
         apiLines.initLines();
     },

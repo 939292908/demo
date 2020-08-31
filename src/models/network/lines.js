@@ -2,7 +2,7 @@ const m = require('mithril');
 const { apiLines } = require('@/api/index.js');
 const TradeNetSpeed = require('./TradeNetSpeed').default;
 const HttpNetSpeed = require('./HttpNetSpeed').default;
-module.exports = {
+const lines = {
     // 线路
     netLines: [],
     activeLine: null,
@@ -13,18 +13,17 @@ module.exports = {
     // 测速开始时间
     testStartTime: 0,
     initLines: function () {
-        this.netLines = apiLines.GetLines().netLines;
-        this.activeLine = apiLines.GetActive();
-        this.apiResponseSpeed = [];
-        this.wsResponseSpeed = [];
-        this.testTick();
+        lines.netLines = apiLines.GetLines().netLines;
+        lines.activeLine = apiLines.GetActive();
+        lines.apiResponseSpeed = [];
+        lines.wsResponseSpeed = [];
+        lines.testTick();
         m.redraw();
     },
     updateLines: function () {
         apiLines.updateNetLines(this.initLines);
     },
     setLinesActive(id) {
-        window.console.log('setLinesActive', id);
         apiLines.SetActive(id);
         this.activeLine = apiLines.GetActive();
         m.redraw();
@@ -55,11 +54,11 @@ module.exports = {
                 // vm.$set(this.wsResponseSpeed, i, net.duration);
                 that.wsResponseSpeed[i] = net.duration;
                 m.redraw();
-                console.log('----------ws test ok speeds----------: ', net.duration, net.name, that.wsResponseSpeed);
+                // console.log('----------ws test ok speeds----------: ', net.duration, net.name, that.wsResponseSpeed);
             }).catch(net => {
                 that.wsResponseSpeed[i] = '--';
                 m.redraw();
-                console.log('----------ws test CANCEL speeds----------: ', net.duration, net.name, that.wsResponseSpeed);
+                // console.log('----------ws test CANCEL speeds----------: ', net.duration, net.name, that.wsResponseSpeed);
             });
             testWsList.push(testItem);
         }
@@ -80,12 +79,14 @@ module.exports = {
                 // vm.$set(this.apiResponseSpeed, i, net.duration);
                 that.apiResponseSpeed[i] = net.duration;
                 m.redraw();
-                console.log('**********api test ok speeds*********: ', net.duration, net.name, i, that.apiResponseSpeed);
+                // console.log('**********api test ok speeds*********: ', net.duration, net.name, i, that.apiResponseSpeed);
             }).catch(net => {
                 that.apiResponseSpeed[i] = '--';
                 m.redraw();
-                console.log('**********api test CANCEL speeds*********: ', net.duration, net.name, i, that.apiResponseSpeed);
+                // console.log('**********api test CANCEL speeds*********: ', net.duration, net.name, i, that.apiResponseSpeed);
             });
         }
     }
 };
+
+module.exports = lines;
