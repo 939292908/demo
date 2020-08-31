@@ -6,11 +6,11 @@ const I18n = require('@/languages/I18n').default;
 
 /**
  * @param: props: {
- *   close: [function] 关闭组件函数
- *   isHandleVerify: [boolean] 显示 [true]安全验证组件 或[false]提示弹框组件
-*    title: [object] { 弹框首部title --- 默认为 温馨提示
+ *   close: [function|必传] 关闭组件函数
+ *   isHandleVerify: [boolean|必传] 显示 [true]安全验证组件 或[false]提示弹框组件
+*    title: [object|必传] { 弹框首部title
  *       logo: [string] Vbit,
- *       text: [text]
+ *       text: [text|必传]
  *     }
  *   buttonText: [string] 确认按钮文字 ---- 默认为 确定
  *   buttonClick: [function] 按钮确认事件 默认关闭弹框

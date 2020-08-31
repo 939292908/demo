@@ -69,7 +69,7 @@ const extract = {
         });
     },
     getSelectListData: function () {
-        this.handleUserCanAction(); // TODO 临时
+        console.log(wlt.wallet);
         this.selectList = [...wlt.wallet['03']];
         this.currentSelect = this.selectList[0];
         this.getlinkButtonListData();

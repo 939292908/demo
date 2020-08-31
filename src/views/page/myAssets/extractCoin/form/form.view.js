@@ -47,8 +47,8 @@ module.exports = {
                 m('div.formModule', [
                     m('div.label has-text-title body-5', '币种'),
                     m('div.control', [
-                        m('div.select is-fullwidth', m('select', { onchange: this.handleSelectChange }, [
-                            FromDataMode.selectList && FromDataMode.selectList.map(item => m('option', item.wType))
+                        m('div.select is-fullwidth', m('select.border-radius-small body-5', { onchange: this.handleSelectChange }, [
+                            FromDataMode.selectList && FromDataMode.selectList.map(item => m('option.title-small', item.wType))
                         ]))
                     ])
                 ]),
@@ -58,7 +58,7 @@ module.exports = {
                         m(Tooltip, { label: m('i.iconfont icon-Tooltip'), content: '填写错误可能导致资产丢失，请仔细核对' })
                     ]),
                     m('div.control line-label', [
-                        m('input.input body-5', { type: 'text', placeholder: '1234562', onchange: this.handleLabelVal })
+                        m('input.input body-5 border-radius-small', { type: 'text', placeholder: '1234562', onchange: this.handleLabelVal })
                     ])
                 ]) : null,
                 FromDataMode.linkButtonList.length > 0 ? m('div.formModule', [
