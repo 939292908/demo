@@ -179,20 +179,33 @@ module.exports = {
             for (const item of log) {
                 this.recordObj[aType].recharge.push({
                     coin: item.wType,
-                    wType: item.wType,
-                    addr: item.addr,
+                    // wType: item.wType,
+                    // addr: item.addr,
                     aType: item.aType,
-                    addrLink: item.addrLink,
-                    txIdLink: item.txIdLink,
+                    // addrLink: item.addrLink,
+                    // txIdLink: item.txIdLink,
                     num: utils.totalNumSub(item.num, 8),
                     time: utils.time(item.timestamp),
                     // img: this.wTypeObj[item.wType] ? this.wTypeObj[item.wType] : `${this.$params.baseURL}/coins/icon-${item.wType}.png`,
                     // icon: `${this.$params.baseURL + this.removeGIFT(item.icon)}`,//item.icon,
                     timestamp: item.timestamp,
                     status: utils.getTransferInfo(item.stat),
-                    stat: item.stat,
-                    seq: item.seq,
+                    // stat: item.stat,
+                    // seq: item.seq,
                     des: '充币',
+                    info: [
+                        {
+                            key: '区块链交易ID',
+                            value: item.txId
+                        }, {
+                            key: '链类型',
+                            value: item.wType.includes('USDT') ? (item.wType.split('USDT')[1] || 'Omni') : item.wType
+                        }
+                        // {
+                        //     key: '标签',
+                        //     value: item.addr
+                        // }
+                    ],
                     recharge: true
                 });
             }
@@ -203,21 +216,37 @@ module.exports = {
                 const wType = item.wType.includes('USDT') ? 'USDT' : item.wType;
                 this.recordObj[aType].withdraw.push({
                     coin: wType,
-                    wType: wType,
-                    addr: item.addr,
+                    // wType: wType,
+                    // addr: item.addr,
                     aType: item.aType,
-                    addrLink: item.addrLink,
-                    txIdLink: item.txIdLink,
+                    // addrLink: item.addrLink,
+                    // txIdLink: item.txIdLink,
                     num: utils.totalNumSub(item.num, 8),
                     time: utils.time(item.timestamp),
                     // img: this.wTypeObj[item.wType] ? this.wTypeObj[item.wType] : `${this.$params.baseURL}/coins/icon-${item.wType}.png`,
                     // icon: `${this.$params.baseURL + this.removeGIFT(item.icon)}`,//item.icon,
                     timestamp: item.timestamp,
                     status: utils.getWithdrawArr(item.stat),
-                    stat: item.stat,
-                    seq: item.seq,
+                    // stat: item.stat,
+                    // seq: item.seq,
                     des: '提币',
-                    chainType: item.wType.includes('USDT') ? (item.wType.split('USDT')[1] || 'Omni') : ''
+                    info: [
+                        {
+                            key: '提币地址',
+                            value: item.addr
+                        }, {
+                            key: '链类型',
+                            value: item.wType.includes('USDT') ? (item.wType.split('USDT')[1] || 'Omni') : item.wType
+                        }, {
+                            key: '区块链交易ID',
+                            value: item.txId
+                        }
+                        // {
+                        //     key: '标签',
+                        //     value: item.addr
+                        // }
+                    ]
+                    // chainType: item.wType.includes('USDT') ? (item.wType.split('USDT')[1] || 'Omni') : ''
                 });
             }
             break;
@@ -234,15 +263,26 @@ module.exports = {
             }
             for (const item of log) {
                 let des = '';
+                const info = [];
                 const aTypeArr = item.aType.indexOf('_') > -1 ? item.aType.split('_') : [];
                 if (!(item.aType.indexOf('_') > -1 && aTypeArr.length === 2 && aTypeArr[0] === aTypeArr[1])) {
                     if (item.seq.search("UOUT") !== -1) {
                         const str = item.addr.split(':');
                         if (item.addr.search("from:") !== -1) {
                             des = '账户转入';
+                            const index = item.addr.indexOf("from:");
+                            info.account = [{
+                                key: '账户名',
+                                value: item.addr.substring(index + 1, item.addr.length)
+                            }];
                             // des = I18n.$t('10800'); // '账户转入'
                         } else if (item.addr.search("to:") !== -1) {
                             des = '账户转出';
+                            const index = item.addr.indexOf("to:");
+                            info.account = [{
+                                key: '账户名',
+                                value: item.addr.substring(index + 1, item.addr.length)
+                            }];
                             // des = I18n.$t('10799'); // '账户转出'
                         }
                         item.accountName = str[1];
@@ -328,11 +368,15 @@ module.exports = {
                     } else {
                         des = utils.getTransferHisStr(item.addr, item.wType);
                     }
-                    des = item.addr.indexOf('M2O') !== -1 ? '法币账户转入' : item.addr.indexOf('O2M') !== -1 ? '划至法币账户' : '';
+                    if (item.addr.indexOf('M2O') !== -1) {
+                        des = '法币账户转入';
+                    } else if (item.addr.indexOf('O2M') !== -1) {
+                        des = '划至法币账户';
+                    }
                     const newLog = {
                         coin: this.removeGIFT(item.wType),
-                        wType: this.removeGIFT(item.wType),
-                        addr: item.addr,
+                        // wType: this.removeGIFT(item.wType),
+                        // addr: item.addr,
                         aType: item.aType,
                         num: utils.totalNumSub(item.num, 8),
                         time: utils.time(item.timestamp),
@@ -340,11 +384,12 @@ module.exports = {
                         // icon: `${this.$params.baseURL + this.removeGIFT(item.icon)}`, // item.icon,
                         timestamp: item.timestamp,
                         status: utils.getTransferInfo(item.stat),
-                        stat: item.stat,
-                        seq: item.seq,
+                        // stat: item.stat,
+                        // seq: item.seq,
                         des: des,
-                        addrLink: item.addrLink,
-                        txIdLink: item.txIdLink
+                        info: info
+                        // addrLink: item.addrLink,
+                        // txIdLink: item.txIdLink
                     };
                     if (item.wType.includes('@GIFT')) { // 合约赠金
                         this.recordObj[aType].gift.push(newLog);
@@ -370,19 +415,19 @@ module.exports = {
                 for (const item of log) {
                     this.recordObj[aType].otcSell.push({
                         coin: item.wType,
-                        wType: item.wType,
-                        addr: item.addr,
+                        // wType: item.wType,
+                        // addr: item.addr,
                         aType: item.aType,
-                        addrLink: item.addrLink,
-                        txIdLink: item.txIdLink,
+                        // addrLink: item.addrLink,
+                        // txIdLink: item.txIdLink,
                         num: utils.totalNumSub(item.addr === 'from' ? '-' + item.num : item.num, 8),
                         time: utils.time(item.timestamp),
                         // img: this.wTypeObj[item.wType] ? this.wTypeObj[item.wType] : `${this.$params.baseURL}/coins/icon-${item.wType}.png`,
                         // icon: `${this.$params.baseURL + this.removeGIFT(item.icon)}`,//item.icon,
                         timestamp: item.timestamp,
                         status: utils.getTransferInfo(item.stat),
-                        stat: item.stat,
-                        seq: item.seq,
+                        // stat: item.stat,
+                        // seq: item.seq,
                         des: item.addr === 'to' ? '买入' : '卖出'
                     });
                 }
@@ -510,11 +555,11 @@ module.exports = {
                 }
                 const newLog = {
                     coin: item.wType,
-                    wType: item.wType,
-                    addr: item.addr,
+                    // wType: item.wType,
+                    // addr: item.addr,
                     aType: item.aType,
-                    addrLink: item.addrLink,
-                    txIdLink: item.txIdLink,
+                    // addrLink: item.addrLink,
+                    // txIdLink: item.txIdLink,
                     // eslint-disable-next-line no-unneeded-ternary
                     num: utils.totalNumSub(num ? num : item.num, 8),
                     time: utils.time(item.timestamp),
@@ -522,8 +567,8 @@ module.exports = {
                     // icon: `${this.$params.baseURL + this.removeGIFT(item.icon)}`, // item.icon,
                     timestamp: item.timestamp,
                     status: utils.getTransferInfo(item.stat),
-                    stat: item.stat,
-                    seq: item.seq,
+                    // stat: item.stat,
+                    // seq: item.seq,
                     des: des,
                     fee: item.fee
                 };
