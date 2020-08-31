@@ -1,5 +1,7 @@
 const broadcast = require('@/broadcast/broadcast');
+const wlt = require('@/models/wlt/wlt');
 const myWalletIndex = require('../MyWalletIndex');
+
 console.log('myWalletIndex', myWalletIndex.default);
 
 module.exports = {
@@ -8,28 +10,62 @@ module.exports = {
     hideZeroFlag: false, // 是否隐藏0资产 默认为false
     dataLength: 0, // 暂无数据
     pageFlag: '01', // 01：合约账户，02：币币账户，04：法币账户
+    accountTitle: '', // 交易账户中表格右上角的币种
+    accountBanlance: 0, // 交易账户中表格右上角的币种总额
     columnData: { // 表格列
         wallet: [],
         coin: [],
         contract: [],
         legal: []
     },
+    tableData: { // 表格数据
+        walletData: [],
+        coinData: [],
+        contractData: [],
+        legalData: []
+    },
     navAry: [{ idx: '01', val: '合约账户' }, { idx: '02', val: '币币账户' }, { idx: '04', val: '法币账户' }],
     setPageFlag: function (param) {
+        console.log(param);
         this.pageFlag = param;
         this.vnode.attrs.setIdx(param);
-        // if (param === '01') {
-        // }
+        if (param === '01') {
+            this.coinType = 'contract';
+            this.tableDateList = 'contractData';
+            this.accountTitle = '合约账户';
+        } else if (param === '02') {
+            this.coinType = 'coin';
+            this.tableDateList = 'coinData';
+            this.accountTitle = '币币账户';
+        } else if (param === '04') {
+            this.coinType = 'legal';
+            this.tableDateList = 'legalData';
+            this.accountTitle = '法币账户';
+        } else if (param === '03') {
+            this.coinType = 'wallet';
+            this.tableDateList = 'walletData';
+        }
+        this.setAccountBanlance();
+        console.log(this.tableData[this.tableDateList]);
+        this.setDataLength(this.tableData[this.tableDateList].length);
     },
+    setAccountBanlance: function() {
+        this.accountBanlance = this.currency === 'BTC' ? wlt[this.coinType + 'TotalValueForBTC'] : wlt[this.coinType + 'TotalValueForUSDT'];
+    },
+    coinType: 'wallet',
+    tableDateList: 'walletData',
     setCurrency: function(param) {
         this.currency = param;
         this.initColumnData();
     },
-    setDataType: function(param) {
-        this.dataType = param;
-    },
     setDataLength: function (param) {
         this.dataLength = param;
+    },
+    initTableData: function () {
+        this.tableData.legalData = this.copyAry(wlt.wallet['04']);
+        this.tableData.walletData = this.copyAry(wlt.wallet['03']);
+        this.tableData.contractData = this.copyAry(wlt.wallet['01']);
+        this.tableData.coinData = this.copyAry(wlt.wallet['02']);
     },
     initColumnData: function () {
         this.columnData = {
@@ -69,7 +105,6 @@ module.exports = {
     },
     test(row, type) {
         if (type === '划转') {
-            console.log('test...', row, '---------', this.vnode.attrs.setTransferModalOption);
             this.vnode.attrs.setTransferModalOption({
                 isShow: true,
                 coin: row.wType // 币种 默认选中
@@ -139,6 +174,7 @@ module.exports = {
     createFn: function (vnode) {
         console.log(vnode.attrs.hideZeroFlag, 'create.....');
         this.hideZeroFlag = vnode.attrs.hideZeroFlag;
+        wlt.init();
         broadcast.onMsg({
             key: 'view-pages-Myassets-TablegB',
             cmd: broadcast.CHANGE_SW_CURRENCY,
@@ -148,7 +184,7 @@ module.exports = {
         });
         setTimeout(() => {
             this.initColumnData();
-            this.setDataLength(vnode.attrs.tableData.length);
+            this.initTableData();
             if (this.dataLength === 0) {
                 document.getElementsByTagName('table')[0].rows[document.getElementsByTagName('table')[0].rows.length - 1].style.display = '';
             } else {
@@ -158,6 +194,10 @@ module.exports = {
     },
     initFn: function (vnode) {
         this.vnode = vnode;
+        this.setAccountBanlance();
+        this.setPageFlag();
+        console.log(this.coinType, 'type');
+        console.log(this.tableDateList, 'list');
     },
     removeFn: function () {
         broadcast.offMsg({

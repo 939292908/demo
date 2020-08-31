@@ -73,7 +73,6 @@ const model = {
         transferLogic.transferModalOption.setTransferModalOption({
             transferFrom: val // from钱包默认选中
         });
-        console.log(this.swValue, '-----====', transferLogic.transferModalOption.transferFrom);
         // 防止被交易账户01覆盖交易账户悬浮卡片的值
         window.event.stopPropagation();
         this.sets();
@@ -81,12 +80,7 @@ const model = {
     },
     switchContent: function () {
         broadcast.emit({ cmd: broadcast.CHANGE_SW_CURRENCY, data: this.currency });
-        // if (this.swValue === '03') {
-        //     return m(table, { tableData: wlt.wallet['03'], tableType: 'wallet', hideZeroFlag: false, swValue: this.swValue });
-        // } else if (this.swValue === '01' || this.swValue === '02' || this.swValue === '04') {
-        //     return m(TradeAccountView, { swValue: this.swValue, setIdx: this.setSwValue });
-        // }
-        return m(table, { tableData: wlt.wallet['03'], tableType: 'wallet', hideZeroFlag: false, swValue: this.swValue, setIdx: this.setSwValue, setTransferModalOption: transferLogic.transferModalOption.setTransferModalOption });
+        return m(table, { tableType: 'wallet', swValue: this.swValue, setIdx: this.setSwValue });
     },
     Nav: {
         firstNav: [
@@ -100,7 +94,7 @@ const model = {
                 id: 2,
                 title: '提币',
                 // 跳转至哪个链接
-                to: ''
+                to: '/extractCoin'
             },
             {
                 id: 3,
@@ -125,7 +119,7 @@ const model = {
         }
         // 弹框↑
         if (item.to !== "") { // 跳转
-            m.route.set(item.to);
+            window.router.push(item.to);
         }
     },
     switchDisplay: function (param, flag) {
@@ -184,6 +178,11 @@ const model = {
         this.currency === 'BTC' ? this.setLegalTotal(wlt.legalTotalValueForBTC) : this.setLegalTotal(wlt.legalTotalValueForUSDT);
         this.currency === 'BTC' ? this.setContractTotal(wlt.contractTotalValueForBTC) : this.setContractTotal(wlt.contractTotalValueForUSDT);
         this.setTotalCNY(wlt.totalCNYValue);
+    },
+    initFn: function() {
+        console.log(this);
+        console.log(this.swValue);
+        m.redraw();
     },
     createFn: function() {
         wlt.init();

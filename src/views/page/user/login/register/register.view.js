@@ -88,6 +88,10 @@ module.exports = {
                                     options: {
                                         oninput: e => {
                                             Register.loginName = e.target.value;
+                                            Register.showLoginNameValidate = true;
+                                        },
+                                        onblur: e => {
+                                            Register.showLoginNameValidate = true;
                                         },
                                         value: Register.loginName
                                     }
@@ -98,7 +102,9 @@ module.exports = {
                                     },
                                     value: Register.loginName
                                 }, []),
-                            m('div.body-3.mt-2.has-text-tip-error', {}, [
+                            m('div.body-3.mt-2.has-text-tip-error', {
+                                hidden: !Register.showLoginNameValidate
+                            }, [
                                 Register.type === 'phone'
                                     ? Register.rulesPhone.required(Register.loginName) === true
                                         ? Register.rulesPhone.phone(Register.loginName)
@@ -117,11 +123,15 @@ module.exports = {
                                         Register.password = e.target.value;
                                     },
                                     onkeyup: e => {
+                                        Register.showPasswordValidate = true;
                                         if (e.keyCode === 13) {
                                             Register.type === 'phone'
                                                 ? Register.submitEmail()
                                                 : Register.submitPhone();
                                         }
+                                    },
+                                    onblur: e => {
+                                        Register.showPasswordValidate = true;
                                     },
                                     value: Register.password
                                 },
@@ -130,7 +140,9 @@ module.exports = {
                                     class: Register.showPassword ? 'icon-yincang' : 'icon-zichanzhengyan'
                                 })
                             }),
-                            m('div.body-3.mt-2.has-text-tip-error', {}, [
+                            m('div.body-3.mt-2.has-text-tip-error', {
+                                hidden: !Register.showPasswordValidate
+                            }, [
                                 Register.rulesPwd.required(Register.password) === true
                                     ? Register.rulesPwd.password(Register.password)
                                     : Register.rulesPwd.required(Register.password)

@@ -491,68 +491,93 @@ module.exports = {
                         // eslint-disable-next-line prefer-const
                         let str = item.addr.split(':');
                         if (item.addr.search("from:") !== -1) {
-                            des = I18n.$t('10800'); // '账户转入'
+                            des = '账户转入';
+                            // des = I18n.$t('10800'); // '账户转入'
                         } else if (item.addr.search("to:") !== -1) {
-                            des = I18n.$t('10799'); // '账户转出'
+                            des = '账户转出';
+                            // des = I18n.$t('10799'); // '账户转出'
                         }
                         item.accountName = str[1];
                     } else if (item.wType.includes('@GIFT')) {
-                        des = I18n.$t('11610' /**/);// 合约赠金
+                        des = '合约赠金';
+                        // des = I18n.$t('11610' /**/);// 合约赠金
                     } else if (item.addr.search("tout_16") !== -1) { // 划至法币账户（给法币审核用）
-                        des = I18n.$t('10148', {
-                            value: I18n.$t('10085')
-                        });
+                        des = '划至法币账户（给法币审核用）';
+                        // des = I18n.$t('10148', {
+                        //     value: I18n.$t('10085')
+                        // });
                     } else if (item.addr.search("otcuc") !== -1) { // 法币账户转入（给法币审核用）用户取消
-                        des = I18n.$t('10147', {
-                            value: I18n.$t('10085')
-                        });
+                        des = '法币账户转入（给法币审核用）用户取消';
+                        // des = I18n.$t('10147', {
+                        //     value: I18n.$t('10085')
+                        // });
                     } else if (item.addr.search("otcaf") !== -1) { // 法币账户转入（给法币审核用）后台审核不通过
-                        des = I18n.$t('10147', {
-                            value: I18n.$t('10085')
-                        });
+                        des = '法币账户转入（给法币审核用）后台审核不通过';
+                        // des = I18n.$t('10147', {
+                        //     value: I18n.$t('10085')
+                        // });
                     } else if (item.addr.search("tin_") !== -1) {
-                        des = I18n.$t('10147', {
-                            value: this.walletType[item.addr.split("_")[1]]
-                        }); // XX账户转入
+                        des = this.walletType[item.addr.split("_")[1]] + '转入';
+                        // des = I18n.$t('10147', {
+                        //     value: this.walletType[item.addr.split("_")[1]]
+                        // }); // XX账户转入
                     } else if (item.addr.search("tout_") !== -1) {
-                        des = I18n.$t('10148', {
-                            value: this.walletType[item.addr.split("_")[1]]
-                        }); // 划至xx账户
+                        des = '划至' + this.walletType[item.addr.split("_")[1]];
+                        // des = I18n.$t('10148', {
+                        //     value: this.walletType[item.addr.split("_")[1]]
+                        // }); // 划至xx账户
                         console.log(item.addr.split("_")[1], this.walletType[item.addr.split("_")[1]], des);
                     } else if (item.addr.search("gf->btc") !== -1) {
-                        des = "GF" + I18n.$t('10099') + /**/ "BTC";// 兑换
+                        des = 'GF兑换BTC';
+                        // des = "GF" + I18n.$t('10099') + /**/ "BTC";// 兑换
                     } else if (item.addr.search("EVTIN") !== -1) {
-                        des = I18n.$t('10149'); // '活动入金'
+                        des = '活动入金';
+                        // des = I18n.$t('10149'); // '活动入金'
                     } else if (item.addr.search("EVTOUT") !== -1) {
-                        des = I18n.$t('10150'); // '活动出金'
+                        des = '活动出金';
+                        // des = I18n.$t('10150'); // '活动出金'
                     } else if (item.addr.search("BL/") !== -1) {
-                        des = item.wType === 'GF' ? I18n.$t('11507'/**/) : I18n.$t('10821'/**/);// 百日矿池计划   系统兑换
+                        des = '百日矿池计划';
+                        // des = item.wType === 'GF' ? I18n.$t('11507'/**/) : I18n.$t('10821'/**/);// 百日矿池计划   系统兑换
                     } else if (item.addr.search("BDL/") !== -1) {
-                        des = I18n.$t('10822'); // '锁定激活'
+                        des = '锁定激活';
+                        // des = I18n.$t('10822'); // '锁定激活'
                     } else if (item.addr.search("TASK-IN") !== -1) {
-                        des = I18n.$t('11361');// "活动空投" // '活动空投'
+                        des = '活动空投';
+                        // des = I18n.$t('11361');// "活动空投" // '活动空投'
                     } else if (item.addr.search("TASK-OUT") !== -1) {
-                        des = I18n.$t('11613'); // '活动清算'
+                        des = '活动清算';
+                        // des = I18n.$t('11613'); // '活动清算'
                     } else if (item.addr.search("TASK-GIFT") !== -1) {
-                        des = I18n.$t('11614'); // '活动奖励'
+                        des = '活动奖励';
+                        // des = I18n.$t('11614'); // '活动奖励'
                     } else if (item.addr.search("TASK-REG") !== -1) {
-                        des = I18n.$t('11616'); // 注册赠金
+                        des = '注册赠金';
+                        // des = I18n.$t('11616'); // 注册赠金
                     } else if (item.addr.search("TASK-CHARGE0") !== -1) {
-                        des = I18n.$t('11615'); // 首充赠金
+                        des = '首充赠金';
+                        // des = I18n.$t('11615'); // 首充赠金
                     } else if (item.addr.search("TASK-TRADE") !== -1) {
-                        des = I18n.$t('11617');// 交易赠金
+                        des = '交易赠金';
+                        // des = I18n.$t('11617');// 交易赠金
                     } else if (item.addr.search("TASK-INVITE") !== -1) {
-                        des = I18n.$t('11618');// 邀请赠金
+                        des = '邀请赠金';
+                        // des = I18n.$t('11618');// 邀请赠金
                     } else if (item.addr.search("TASK-CS") !== -1) {
-                        des = I18n.$t('11619');// 客服赠金
+                        des = '客服赠金';
+                        // des = I18n.$t('11619');// 客服赠金
                     } else if (item.addr.search("TASK-SIGN3") !== -1) {
-                        des = I18n.$t('11620');// 特殊签到
+                        des = '特殊签到';
+                        // des = I18n.$t('11620');// 特殊签到
                     } else if (item.addr.search("TASK-SIGN2") !== -1) {
-                        des = I18n.$t('11621');// 签到暴击
+                        des = '签到暴击';
+                        // des = I18n.$t('11621');// 签到暴击
                     } else if (item.addr.search("TASK-SIGN1") !== -1) {
-                        des = I18n.$t('11622');// 连续签到
+                        des = '连续签到';
+                        // des = I18n.$t('11622');// 连续签到
                     } else if (item.addr.search("TASK-SIGN") !== -1) {
-                        des = I18n.$t('11623');// 签到赠金
+                        des = '签到赠金';
+                        // des = I18n.$t('11623');// 签到赠金
                     } else {
                         des = utils.getTransferHisStr(item.addr, item.wType);
                     }
@@ -673,44 +698,52 @@ module.exports = {
                 } else if (item.addr.search("ce_out") !== -1) {
                     des = '兑换消耗';
                 } else if (accountSelect.getAccount() === '03' && item.addr.search("foltra-1") !== -1) {
-                    // des = '跟单账户转入'
-                    des = I18n.$t('10147', { value: I18n.$t('12522'/**/) }); // 跟单账户
+                    des = '跟单账户转入';
+                    // des = I18n.$t('10147', { value: I18n.$t('12522'/**/) }); // 跟单账户
                     transfer = true;
                 } else if (accountSelect.getAccount() === '03' && item.addr.search("foltra") !== -1) {
-                    // des = '划至跟单账户'
-                    des = I18n.$t('10148', { value: I18n.$t('12522'/**/) }); // 跟单账户
+                    des = '划至跟单账户';
+                    // des = I18n.$t('10148', { value: I18n.$t('12522'/**/) }); // 跟单账户
                     transfer = true;
                 } else if (accountSelect.getAccount() === '06' && item.addr.search("foltra-1") !== -1) {
-                    // des = '划至我的钱包'
-                    des = I18n.$t('10148', { value: I18n.$t('10082'/**/) }); // 我的钱包
+                    des = '划至我的钱包';
+                    // des = I18n.$t('10148', { value: I18n.$t('10082'/**/) }); // 我的钱包
                     transfer = true;
                 } else if (accountSelect.getAccount() === '06' && item.addr.search("foltra") !== -1) {
-                    // des = '我的钱包转入'
-                    des = I18n.$t('10147', { value: I18n.$t('10082'/**/) }); // 我的钱包
+                    des = '我的钱包转入';
+                    // des = I18n.$t('10147', { value: I18n.$t('10082'/**/) }); // 我的钱包
                     transfer = true;
                 } else if (accountSelect.getAccount() === '06' && item.addr.search("fw_pnl") !== -1) {
+                    des = '平仓盈利';
                     des = I18n.$t('12523'); // 平仓盈利
                     other = true;
                 } else if (accountSelect.getAccount() === '06' && item.addr.search("fw_fee") !== -1) {
-                    des = I18n.$t('12524'/**/);// 交易手续费
+                    des = '交易手续费';
+                    // des = I18n.$t('12524'/**/);// 交易手续费
                     other = true;
                 } else if (accountSelect.getAccount() === '06' && item.addr.search("fw_cls_MI") !== -1) {
-                    des = I18n.$t('12525'/**/); // '平仓解锁保证金'
+                    des = '平仓解锁保证金';
+                    // des = I18n.$t('12525'/**/); // '平仓解锁保证金'
                     other = true;
                 } else if (accountSelect.getAccount() === '06' && item.addr.search("fw_open") !== -1) {
-                    des = I18n.$t('12526'/**/); // 开仓锁定保证金
+                    des = '开仓锁定保证金';
+                    // des = I18n.$t('12526'/**/); // 开仓锁定保证金
                     other = true;
                 } else if (accountSelect.getAccount() === '06' && item.addr.search("fw_repnl") !== -1) {
-                    des = I18n.$t('12527'/**/); // 推荐分红锁定
+                    des = '推荐分红锁定';
+                    // des = I18n.$t('12527'/**/); // 推荐分红锁定
                     other = true;
                 } else if (accountSelect.getAccount() === '06' && item.addr.search("fw_ldpnl") !== -1) {
-                    des = I18n.$t('12528'/**/);// 带单分红锁定
+                    des = '带单分红锁定';
+                    // des = I18n.$t('12528'/**/);// 带单分红锁定
                     other = true;
                 } else if (accountSelect.getAccount() === '06' && item.addr.search("fw_res") !== -1) {
-                    des = I18n.$t('12529'/**/); // 盈利释放到可用
+                    des = '盈利释放到可用';
+                    // des = I18n.$t('12529'/**/); // 盈利释放到可用
                     other = true;
                 } else if (accountSelect.getAccount() === '06' && item.addr.search("fw_loss") !== -1) {
-                    des = I18n.$t('12530'/**/); // 平仓亏损
+                    des = '平仓亏损';
+                    // des = I18n.$t('12530'/**/); // 平仓亏损
                     other = true;
                 } else {
                     // des = utils.getRecordsType5Str(item.addr, item.wType);

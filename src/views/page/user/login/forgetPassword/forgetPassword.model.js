@@ -9,23 +9,33 @@ const broadcast = require('@/broadcast/broadcast');
 const validate = require('@/models/validate/validate').default;
 
 module.exports = {
-    loginType: 'phone',
-    loginName: '',
-    selectList: [{ cn_name: '中国', code: '86', support: '1', us_name: 'China' }],
-    validateCode: [],
-    areaCode: '86',
-    isValidate: false,
-    password1: '',
-    password2: '',
-    is2fa: false,
+    loginType: 'phone', // 账号类型 phone 手机，email 邮箱
+    loginName: '', // 账号
+    selectList: [{ cn_name: '中国', code: '86', support: '1', us_name: 'China' }], // 区号列表
+    areaCode: '86', // 区号 默认86
+    isValidate: false, // 验证状态
+    password1: '', // 新密码
+    password2: '', // 第二次输入密码
+    is2fa: false, // 2fa状态
+    /**
+     * 账号字段验证
+     * @returns {boolean}
+     */
     valid() {
         return !!(this.loginName &&
             /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
                 this.loginName));
     },
+    /**
+     * 账号空验证
+     * @returns {boolean}
+     */
     valid1() {
         return !!this.loginName;
     },
+    /**
+     * 重置密码接口
+     */
     submitReset() {
         this.loading = true;
         m.redraw();
@@ -54,6 +64,9 @@ module.exports = {
             m.redraw();
         });
     },
+    /**
+     * 打开邮箱验证
+     */
     submitEmail() {
         const that = this;
         if (this.valid) {
@@ -61,6 +74,9 @@ module.exports = {
             geetest.verify(() => { that.loading = false; });
         }
     },
+    /**
+     * 打开手机验证
+     */
     submitPhone() {
         const that = this;
         if (this.valid1) {
@@ -195,6 +211,9 @@ module.exports = {
         });
         broadcast.emit({ cmd: 'redrawValidate', data: '' });
     },
+    /**
+     * 获取区号列表
+     */
     getCountryList () {
         Http.getCountryList({}).then(res => {
             if (res.result.code === 0) {
@@ -203,6 +222,9 @@ module.exports = {
             }
         });
     },
+    /**
+     * 加载极验
+     */
     initGeetest() {
         const self = this;
         geetest.init(() => {});

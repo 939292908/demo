@@ -2,4 +2,14 @@
     .home-picture-banner {
         height: 200px;
     }
+
+    .home-picture {
+        background: url("~@/assets/img/home/layer-1.png") no-repeat center center;
+        text-align: center;
+
+    }
+
+    .picture-layer {
+        margin-top: -200px;
+    }
 }

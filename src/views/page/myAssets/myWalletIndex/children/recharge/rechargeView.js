@@ -1,12 +1,12 @@
 const m = require('mithril');
 const rechargeIndex = require('@/views/page/myAssets/myWalletIndex/children/recharge/index');
 require('@/views/page/myAssets/myWalletIndex/children/recharge/recharge.scss');
+const Tooltip = require('@/pages/components/common/Tooltip');
 
 module.exports = {
-    pageData: [],
-    tips: '*您只能向此地址充值BTC，其他资产充入BTC地址将无法找回 *使用BTC地址充值需要1个网络确认才能到账 *默认充入我的钱包，您可以通过“资金划转”将资金转至交易账户或者其他账户',
     oninit: () => {
         rechargeIndex.initFn();
+        m.redraw();
     },
     oncreate: () => {
     },
@@ -23,29 +23,73 @@ module.exports = {
                     ]),
                     m('div', { class: `currencySel border-radius-medium mt-2 mb-7` }, [
                         m('div.select is-fullwidth',
-                            m('select', [
+                            m('select', { class: `coinSel`, onchange: () => { rechargeIndex.modifySelect(); } }, [
                                 rechargeIndex.pageData.map(item => {
-                                    return m('option', { onchange: () => { } }, item.wType + '   |   ' + item.zh);
+                                    return m('option', { }, item.wType + '  |  ' + item.en);
                                 })
                             ])
                         )
+                    ]),
+                    m('div', { class: `xrpLable mb-7`, style: { display: rechargeIndex.memo ? (rechargeIndex.selectCheck === 'XRP' ? '' : 'none') : 'none' } }, [
+                        m('div', { class: `labeltip` }, [
+                            m('span', {}, '标签'),
+                            m('div.navbar-item.cursor-pointer', { class: `has-text-primary-hover` }, [
+                                m(Tooltip, {
+                                    label: m('i', { class: `iconfont icon-Tooltip` }),
+                                    content: rechargeIndex.labelTips,
+                                    hiddenArrows: false
+                                })
+                            ])
+                        ]),
+                        m('div', { class: `mt-2 px-2 has-text-primary border-radius-small uid` }, rechargeIndex.uId)
+                    ]),
+                    m('div', { class: `usdtLable mb-7`, style: { display: rechargeIndex.memo ? (rechargeIndex.selectCheck === 'USDT' ? '' : 'none') : 'none' } }, [
+                        m('div', { class: `labeltip` }, [
+                            m('span', {}, '链名称'),
+                            m('div.navbar-item.cursor-pointer', { class: `has-text-primary-hover` }, [
+                                m(Tooltip, {
+                                    label: m('i', { class: `iconfont icon-Tooltip` }),
+                                    content: rechargeIndex.labelTips,
+                                    hiddenArrows: false
+                                })
+                            ])
+                        ]),
+                        m('div', { class: `mt-2` }, [
+                            rechargeIndex.USDTLabel.map((item, index) => {
+                                return m('button', {
+                                    class: `mr-6 cursor-pointer ` + (rechargeIndex.btnCheckFlag === index ? `has-bg-primary` : `noneBG`),
+                                    onclick: () => { rechargeIndex.changeBtnflag(index, item.title); }
+                                }, item.title);
+                            })
+                        ])
                     ]),
                     m('div', {}, [
                         m('span', { class: `body-5` }, '充币地址')
                     ]),
                     m('div', { class: `currencyAddr border-radius-medium mt-2 mb-7` }, [
                         m('div', { class: `currencyAddr-text ml-3` }, [
-                            m('input', { class: `addrText`, type: 'text', readOnly: `readOnly`, value: `1323232` })
+                            m('input', { class: `addrText`, type: 'text', readOnly: `readOnly`, value: rechargeIndex.rechargeAddr })
                         ]),
                         m('div', { class: `currencyAddr-Operation ml-3` }, [
-                            m('i', { class: `iconfont icon-copy has-text-primary cursor-pointer`, onclick: () => { rechargeIndex.copyText(); } }),
-                            m('i', { class: `iconfont icon-QrCode has-text-primary` })
+                            m('div', { class: `iImg mt-2` }, [
+                                m('i', { class: `iconfont icon-copy has-text-primary cursor-pointer`, onclick: () => { rechargeIndex.copyText(); } }),
+                                m('i', {
+                                    class: `iconfont icon-QrCode has-text-primary cursor-pointer`,
+                                    onmouseover: () => {
+                                        rechargeIndex.changeQrcodeDisplay('show');
+                                    },
+                                    onmouseout: () => {
+                                        rechargeIndex.changeQrcodeDisplay('hide');
+                                    }
+                                })
+                            ]),
+                            m('div', { class: `QrCodeImg`, style: { display: rechargeIndex.qrcodeDisplayFlag ? '' : 'none' } })
                         ])
                     ]),
-                    m('div', {}, [
+                    m('div', { class: `tips` }, [
                         m('span', {}, '温馨提示'),
                         m('br'),
-                        rechargeIndex.tips.split('*').map(item => m('span', {}, '*' + item))
+                        rechargeIndex.tips.split('*').map((item, index) => m('span', { class: index === 0 ? 'has-text-primary' : '' }, '*' + item))
                     ])
                 ]),
                 m('div', { class: `bottom-tab has-bg-level-2 mt-5 pt-3` }, [
@@ -55,7 +99,6 @@ module.exports = {
                     ]),
                     m('hr')
                 ])
-
             ])
         ]);
     },

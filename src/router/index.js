@@ -35,11 +35,11 @@ m.route(document.querySelector('body .route-box'), defaultRoutePath, {
     },
     '/assetRecords': {
         onmatch: function () {
-            return import('@/views/page/myAssets/assetRecords/assetRecords.view');
+            return import('@/views/page/myAssets/assetRecordsNew/assetRecords.view');
         }
     },
     '/extractCoin': {
-        onmatch: () => import('@/views/page/extractCoin/index')
+        onmatch: () => import('@/views/page/myAssets/extractCoin/index')
     }
 });
 
