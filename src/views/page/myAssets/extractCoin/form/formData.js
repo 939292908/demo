@@ -1,17 +1,16 @@
 const m = require('mithril');
-const { Conf, webApi } = require('@/newApi2');
+const { Conf, webApi } = require('@/api');
 const UserInfo = require('@/models/globalModels');
 const wlt = require('@/models/wlt/wlt');
 const broadcast = require('@/broadcast/broadcast');
 const geetest = require('@/models/validate/geetest').default;
 const errCode = require('@/util/errCode').default;
 const utils = require('@/util/utils').default;
-const Verification = require('@/pages/components/validate/validateView').default;
 const validate = require('@/models/validate/validate').default;
-console.log(Verification);
 
 const extract = {
     name: 'FROM_DATA',
+    // TODO
     promptText: '*如果您希望将本地数字资产提出至某地址，则该地址及为您的提币地址。 *某些地址可能需要您提供地址的标签，请务必填写，否则有丢失币的风险 *填写错误可能导致资产损失，请仔细核对 *完成LV3身份认证后，24h提币额度提升至100BTC，如需更多请联系客服',
     selectList: [],
     linkButtonList: [],
@@ -21,7 +20,13 @@ const extract = {
     currentFees: {}, // 最小值 手续费
     coinInfo: {},
     feesList: [],
-    pupShow: false,
+    popUpData: { // 弹框【验证，提示】 数据
+        show: false,
+        isHandleVerify: false,
+        title: '',
+        content: '',
+        buttonText: ''
+    },
     errorShow: {
         address: false,
         unmber: false
@@ -136,6 +141,7 @@ const extract = {
     },
     handleSubmit: function () {
         if (this.errorShow.unmber || this.errorShow.address) return false;
+        this.extractCoin.coinNum - 0 && window.$message({ content: '输入值不能为0', type: 'danger' });
         geetest.verify();
     },
     readrSendEmail: function (params, user, seq) {
@@ -156,7 +162,7 @@ const extract = {
             exChannel: Conf.exchId
         };
         webApi.sendEmailV2(emailParms).then(res => {
-            if (res.result.code === 0) return extract.handleChangeShow();
+            if (res.result.code === 0) return extract.handleChangeShow(false);
             window.$message({ content: errCode.getWebApiErrorCode(res.result.code), type: 'danger' });
         });
     },
@@ -170,10 +176,11 @@ const extract = {
             extract.sendExtractCoin();
             extract.handleChangeShow();
         });
-        extract.handleChangeShow();
+        extract.handleChangeShow(true);
     },
-    handleChangeShow: function () {
-        extract.pupShow = !extract.pupShow;
+    handleChangeShow: function (judge) {
+        extract.popUpData.show = !extract.popUpData.show;
+        extract.popUpData.isHandleVerify = judge;
         m.redraw();
     },
     oninit: function () {

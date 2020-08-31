@@ -7,9 +7,9 @@ import("./styles/index");
 // UI库
 import('./styles/bluma.scss');
 // 公用样式
-import('./styles/common_size.scss');
-import('./styles/common_color.scss');
-import('./styles/common_other.scss');
+// import('./styles/common_size.scss');
+// import('./styles/common_color.scss');
+// import('./styles/common_other.scss');
 
 // iconfont
 import('./assets/iconfont/iconfont.js');
@@ -27,7 +27,7 @@ window.onresize = function (arg) {
     // window.gBroadcast.emit(window.gBroadcast.ONRESIZE_UPD, { Ev: window.gBroadcast.ONRESIZE_UPD });
 };
 
-import('./pages/index').then(arg => {
+import('./views/index').then(arg => {
     const root = document.body;
     m.mount(root, arg.default);
     import('@/router/index');

@@ -25,7 +25,7 @@ export default {
     },
     swiperVnode: function (vnode) {
         const { noticeList, click } = vnode.attrs;
-        return m('div', { class: 'swiper-container', id: "slideShowNotice" }, m('div.swiper-wrapper', [
+        return m('div', { class: 'swiper-container border-radius-small', id: "slideShowNotice" }, m('div.swiper-wrapper', [
             noticeList.map(item => m('div.swiper-slide', { onclick: click.bind(this, item) }, m('div.noticeText', item.title)))
         ]));
     },

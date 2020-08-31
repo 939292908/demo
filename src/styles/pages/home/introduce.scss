@@ -1,14 +1,24 @@
 .views-pages-home-introduce {
-    .introduce-box {
-        // background: url("~@/assets/img/home/layer-14.png") no-repeat center center;
-        background-size: "cover";
-        background-size: 100%;
-        height: 617px;
-    }
+    // .introduce-box {
+    //     // background: url("~@/assets/img/home/layer-14.png") no-repeat center center;
+    //     background-size: "cover";
+    //     background-size: 100%;
+    //     height: 617px;
+    // }
 
     .introduce-box-masking {
         height: 90px;
         margin-top: 151px;
+    }
+
+    .button-register {
+        width: 170px;
+        height: 58px;
+    }
+
+    .button-transaction {
+        width: 170px;
+        height: 58px;
     }
 
     .introduce-transaction {
@@ -27,17 +37,37 @@
         }
     }
 
-    .button.is-inverted {
-        &:hover {
-            background-color: transparent !important;
-            color: #fff !important;
-        }
+    .Android-button {
+        width: 163px;
+        height: 48px;
     }
+
+    .IOS-button {
+        width: 163px;
+        height: 48px;
+    }
+
+    // .button.is-inverted {
+    //     &:hover {
+    //         background-color: transparent !important;
+    //         color: #fff !important;
+    //     }
+    // }
 }
 
 @media screen and (min-width: 320px) and (max-width: 480px) {
     .views-pages-home-introduce {
         .introduce-transaction {
+            .button-register {
+                width: 104px;
+                height: 36px;
+            }
+
+            .button-transaction {
+                width: 104px;
+                height: 36px;
+            }
+
             .home-introduce-Rectangle {
                 border-radius: 0;
                 height: 615px;
@@ -45,6 +75,7 @@
                 display: flex;
                 flex-direction: column;
                 justify-content: start;
+
                 .home-picture-vbit {
                     left: 16%;
                 }

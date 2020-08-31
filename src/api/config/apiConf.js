@@ -96,7 +96,7 @@ class Conf {
         }
     }
 
-    updateNetLines() {
+    updateNetLines(CallBack) {
         const s = this;
         reqest.racerequest(s.GetLines().data).then((arg) => {
             window._console.log('ht', 'reqest.racerequest', arg);
@@ -116,7 +116,7 @@ class Conf {
                     s.M[s.BUILD_ENV].netLines = lines;
                     window.localStorage.setItem('net_lines_config', JSON.stringify(lines));
                 }
-                window.gBroadcast.emit(window.gBroadcast.EV_NET_LINES_UPD, { Ev: window.gBroadcast.EV_NET_LINES_UPD, lines: lines });
+                CallBack && CallBack();
             }
         }).catch((err) => {
             window._console.log('ht', 'reqest.racerequest err', err);

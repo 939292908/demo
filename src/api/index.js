@@ -9,10 +9,11 @@
 const Conf = require('@/config');
 const webApi = require('./webApi');
 const wsApi = require('./wsApi').gWsApi;
-const BaseUrl = require('./config').BaseUrl;
+const { instConf, BaseUrl } = require('./config');
 module.exports = {
     BaseUrl,
     Conf,
     webApi, // 页面接口
-    wsApi
+    wsApi,
+    apiLines: instConf
 };

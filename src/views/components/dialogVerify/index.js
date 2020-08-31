@@ -1,7 +1,7 @@
 const m = require('mithril');
 require('./index.scss');
 const close = require('./Failure.png').default;
-const InputWithComponent = require('@/pages/components/inputWithComponent/inputWithComponentView');
+const InputWithComponent = require('../inputWithComponent/inputWithComponent.view.js');
 const Validate = require('./validateModel');
 const I18n = require('@/languages/I18n').default;
 
