@@ -96,8 +96,7 @@ const model = {
     },
     switchContent: function () {
         broadcast.emit({ cmd: broadcast.CHANGE_SW_CURRENCY, data: this.currency });
-        console.log('nzm', this.swValue);
-        return m(table, { tableData: wlt.wallet['03'], tableType: 'wallet', hideZeroFlag: false, swValue: this.swValue, setIdx: this.setSwValue, setTransferModalOption: this.transferModalOption.setTransferModalOption });
+        return m(table, { tableType: 'wallet', swValue: this.swValue, setIdx: this.setSwValue, setTransferModalOption: this.transferModalOption.setTransferModalOption });
     },
     Nav: {
         firstNav: [
@@ -194,6 +193,11 @@ const model = {
         this.currency === 'BTC' ? this.setLegalTotal(wlt.legalTotalValueForBTC) : this.setLegalTotal(wlt.legalTotalValueForUSDT);
         this.currency === 'BTC' ? this.setContractTotal(wlt.contractTotalValueForBTC) : this.setContractTotal(wlt.contractTotalValueForUSDT);
         this.setTotalCNY(wlt.totalCNYValue);
+    },
+    initFn: function() {
+        console.log(this);
+        console.log(this.swValue);
+        m.redraw();
     },
     createFn: function() {
         wlt.init();

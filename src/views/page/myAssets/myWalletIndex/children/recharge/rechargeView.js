@@ -29,11 +29,11 @@ module.exports = {
                             ])
                         )
                     ]),
-                    m('div', { class: `xrpLable mb-7`, style: { display: rechargeIndex.selectCheck === 'XRP' ? '' : 'none' } }, [
+                    m('div', { class: `xrpLable mb-7`, style: { display: rechargeIndex.memo ? (rechargeIndex.selectCheck === 'XRP' ? '' : 'none') : 'none' } }, [
                         m('span', {}, '标签'),
                         m('div', { class: `mt-2 px-2 has-text-primary border-radius-small` }, rechargeIndex.uId)
                     ]),
-                    m('div', { class: `usdtLable mb-7`, style: { display: rechargeIndex.selectCheck === 'USDT' ? '' : 'none' } }, [
+                    m('div', { class: `usdtLable mb-7`, style: { display: rechargeIndex.memo ? (rechargeIndex.selectCheck === 'USDT' ? '' : 'none') : 'none' } }, [
                         m('span', {}, '标签'),
                         m('div', { class: `mt-2` }, [
                             rechargeIndex.USDTLabel.map((item, index) => {
@@ -70,7 +70,7 @@ module.exports = {
                     m('div', { class: `tips` }, [
                         m('span', {}, '温馨提示'),
                         m('br'),
-                        rechargeIndex.tips.split('*').map(item => m('span', {}, '*' + item))
+                        rechargeIndex.tips.split('*').map((item, index) => m('span', { class: index === 0 ? 'has-text-primary' : '' }, '*' + item))
                     ])
                 ]),
                 m('div', { class: `bottom-tab has-bg-level-2 mt-5 pt-3` }, [

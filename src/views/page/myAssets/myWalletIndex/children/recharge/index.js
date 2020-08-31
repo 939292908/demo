@@ -22,7 +22,6 @@ module.exports = {
                 const item = {};
                 const walletI = wlt.wallet['03'][i];
                 item.canRecharge = walletI.Setting.canRecharge; // 能否充值
-                // usdt 标签
                 if (walletI.wType === 'USDT') {
                     for (const i in walletI.Setting) {
                         if (i.search('-') !== -1) {

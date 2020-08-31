@@ -4,8 +4,10 @@ const Transfer = require('@/views/page/myAssets/transfer/transfer.view.js');
 const myWalletIndex = require('@/views/page/myAssets/myWalletIndex/MyWalletIndex');
 require('@/views/page/myAssets/myWalletIndex/MyWalletIndex.scss');
 
-console.log('myWalletIndex', myWalletIndex);
 module.exports = {
+    oninit: () => {
+        myWalletIndex.initFn();
+    },
     view: () => {
         return m('div', { class: `views-pages-myassets-myWalletIndex theme--light` }, [
             m('div', { onclick: () => { myWalletIndex.optionDisplay(event); } }, [
