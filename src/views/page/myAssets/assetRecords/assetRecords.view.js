@@ -10,11 +10,13 @@ module.exports = {
     },
     view() {
         return m('div', {}, [
-            m('div.mx-3.has-bg-sub-level-1', {}, [
-                m(header, {
-                    highlightFlag: 1,
-                    navList: [{ to: '/myWalletIndex', title: '我的资产' }, { to: '/assetRecords', title: '资金记录' }]
-                })
+            m('div.px-3.has-bg-sub-level-1.is-align-items-center', {}, [
+                m('div.content-width', {}, [
+                    m(header, {
+                        highlightFlag: 1,
+                        navList: [{ to: '/myWalletIndex', title: '我的资产' }, { to: '/assetRecords', title: '资金记录' }]
+                    })
+                ])
             ]),
             m('div.theme--light.page-myAssets-assetRecord', {}, [
                 m('div.has-bg-level-1.is-align-items-center.py-7', {}, [
