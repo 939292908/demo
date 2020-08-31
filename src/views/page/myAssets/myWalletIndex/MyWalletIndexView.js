@@ -129,7 +129,7 @@ module.exports = {
                 ])
             ]),
             // 资金划转组件
-            myWalletIndex.transferModalOption.isShow ? m(Transfer, myWalletIndex.transferModalOption) : []
+            m(Transfer, myWalletIndex.transferModalOption)
         ]);
     },
     oncreate: () => {
