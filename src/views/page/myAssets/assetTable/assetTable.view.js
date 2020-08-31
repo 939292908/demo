@@ -1,70 +1,33 @@
 const m = require('mithril');
-const commonSelectionBox = require('../commonSelectionBox/commonSelectionBox.view');
-const accountSelect = require('@/models/asset/accountSelect');
-
 module.exports = {
-    view: function (vnode) {
-        return m('div', { class: 'views-pages-Myassets-assetRecords-assetTableView px-4' }, [
-            m('div', { class: 'views-pages-Myassets-assetRecords-contractAccount' }, [
-                m('div', { class: 'views-pages-Myassets-assetRecords-assetTableView-wrapper' }, [
-                    m('div', { class: 'cursor-pointer mb-7 columns-flex-warp views-pages-Myassets-assetRecords-assetTableView-wrapper-head ' }, [
-                        m('div', {
-                            class: "cursor-pointer mr-7" + (accountSelect.getAccount() === '01' ? ' has-text-primary header-highlight' : ''),
-                            onclick: function () {
-                                accountSelect.setAccount('01');
-                                vnode.attrs.changeSelect();
-                            }
-                        }, ['合约账户']),
-                        m('div', {
-                            class: "cursor-pointer mr-7" + (accountSelect.getAccount() === '02' ? ' has-text-primary header-highlight' : ''),
-                            onclick: function () {
-                                accountSelect.setAccount('02');
-                                vnode.attrs.changeSelect();
-                            }
-                        }, ['币币账户']),
-                        m('div', {
-                            class: "cursor-pointer" + (accountSelect.getAccount() === '04' ? ' has-text-primary header-highlight' : ''),
-                            onclick: function () {
-                                accountSelect.setAccount('04');
-                                vnode.attrs.changeSelect();
-                            }
-                        }, ['法币账户'])
-                    ]),
-                    // m(commonSelectionBox),
-                    m('div', { class: 'views-pages-Myassets-assetRecords-contractAccount' }, [
-                        m(commonSelectionBox, { num: accountSelect.getAccount() }),
-                        m('div', { class: 'views-pages-Myassets-assetRecords-myWalletTable' }, [
-                            m('div', {}, [
-                                m('table', { style: 'width: 100%;' }, [
-                                    m('tbody', { class: (vnode.attrs.datadisplayvalue === 1 ? '' : 'datadisplay ') + 'tbody' }, [
-                                        vnode.attrs.dataArrObj.map(items => {
-                                            return m('tr.has-text-level-2.body-4', {}, [
-                                                m('td.py-4', {}, [items.category]),
-                                                m('td.px-8.py-4', {}, [items.type]),
-                                                m('td.px-8.py-4', {}, [items.num]),
-                                                m('td.px-8.py-4', {}, [items.state]),
-                                                m('td.px-8.py-4', {}, [items.time]),
-                                                m('td.pl-8.py-4.', { class: 'tbodytd' }, [items.remarks])
-                                            ]);
-                                        }),
-                                        vnode.attrs.grossValue.map((item) => {
-                                            return m('tr', { class: 'body-4' }, [
-                                                m('td.py-4', {}, [item.wType]),
-                                                m('td.px-8.py-4', {}, [item.status]),
-                                                m('td.px-8.py-4', {}, [item.num]),
-                                                m('td.px-8.py-4', {}, [item.stat]),
-                                                m('td.px-8.py-4', {}, [item.time]),
-                                                m('td.pl-8.py-4.', { class: 'tbodytd' }, ['--'])
-                                            ]);
-                                        })
-                                    ]),
-                                    m('div', { class: (vnode.attrs.datadisplayvalue === 0 ? 'disdatadisplay' : 'datadisplay') + ' ' }, ['暂无数据'])
-                                ])
-                            ])
-                        ])
-                    ])
-                ])
+    view(vnode) {
+        const table = [];
+        table.push(
+            m('div.columns.body-4.has-text-level-3', {
+                class: vnode.attrs.class
+            }, [
+                m('div.column.is-1', {}, ['币种']),
+                m('div.column.is-2', {}, ['类型']),
+                m('div.column.is-2', {}, ['数量']),
+                m('div.column.is-2', {}, ['手续费']),
+                m('div.column.is-2', {}, ['状态']),
+                m('div.column.is-2', {}, ['时间']),
+                m('div.column.is-1.has-text-right', {}, ['备注'])
             ])
-        ]);
+        );
+        for (const item of vnode.attrs.list) {
+            table.push(
+                m('div.columns.body-4.has-text-level-3.my-7', {}, [
+                    m('div.column.is-1', {}, [item.coin]),
+                    m('div.column.is-2', {}, [item.des]),
+                    m('div.column.is-2', {}, [item.num]),
+                    m('div.column.is-2', {}, [item.num]),
+                    m('div.column.is-2', {}, [item.status]),
+                    m('div.column.is-2', {}, [item.time]),
+                    m('div.column.is-1.has-text-right', {}, ['--'])
+                ])
+            );
+        }
+        return table;
     }
 };
