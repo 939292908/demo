@@ -45,7 +45,7 @@ m.route(document.querySelector('body .route-box'), defaultRoutePath, {
         onmatch: () => import('@/views/page/user/bind/bindEmail/bindEmail.view')
     },
     '/bindPhone': {
-        onmatch: () => import('@/views/page/user/bind/bindEmail/bindEmail.view')
+        onmatch: () => import('@/views/page/user/bind/bindPhone/bindPhone.view')
     }
 });
 
