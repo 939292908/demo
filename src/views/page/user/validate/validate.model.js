@@ -4,14 +4,17 @@ const validate = require('@/models/validate/validate').default;
 const broadcast = require('@/broadcast/broadcast');
 
 module.exports = {
-    smsCd: 0,
-    emailCd: 0,
-    geetestCallBackType: '',
-    selectType: '',
-    anotherType: '',
-    selectName: '',
-    anotherName: '',
-    code: '',
+    smsCd: 0, // 短信冷却时间
+    emailCd: 0, // 邮箱冷却时间
+    geetestCallBackType: '', // 极验回调类型 用于判断是邮箱还是短信的回调
+    selectType: '', // 当前验证类型
+    anotherType: '', // 另一种验证类型
+    selectName: '', // 选择验证类型的显示文字
+    anotherName: '', // 切换选择验证类型显示的文字
+    code: '', // 验证码
+    /**
+     * 发送验证码
+     */
     sendSmsCode() {
         validate.sendSmsCode().then(res => {
             if (res.result.code === 0) {
@@ -32,6 +35,9 @@ module.exports = {
             this.waiting = false;
         });
     },
+    /**
+     * 发送邮箱验证码
+     */
     sendEmailCode() {
         validate.sendEmailCode().then(res => {
             if (res.result.code === 0) {
@@ -52,6 +58,9 @@ module.exports = {
             this.waiting = false;
         });
     },
+    /**
+     * 设置发送短信冷却
+     */
     setSmsCd() {
         this.smsCd = 60;
         m.redraw();
@@ -65,6 +74,9 @@ module.exports = {
             }
         }, 1000);
     },
+    /**
+     * 设置发送邮箱冷却
+     */
     setEmailCd() {
         this.emailCd = 60;
         m.redraw();
@@ -78,7 +90,9 @@ module.exports = {
             }
         }, 1000);
     },
-
+    /**
+     * 加载极验
+     */
     initGeetest() {
         const self = this;
         geetest.init(() => {
@@ -102,7 +116,9 @@ module.exports = {
             }
         });
     },
-
+    /**
+     * 检查验证码
+     */
     check() {
         switch (this.selectType) {
         case 'sms':
@@ -116,7 +132,6 @@ module.exports = {
             break;
         }
     },
-
     /**
      * 设置显示的文字
      */
