@@ -1,8 +1,8 @@
 const broadcast = require('@/broadcast/broadcast');
 const wlt = require('@/models/wlt/wlt');
-const myWalletIndex = require('../MyWalletIndex');
-
-console.log('myWalletIndex', myWalletIndex.default);
+// const myWalletIndex = require('../MyWalletIndex');
+const transferLogic = require('@/views/page/myAssets/transfer/transfer.logic.js'); // 划转模块逻辑
+// console.log('myWalletIndex', myWalletIndex.default);
 
 module.exports = {
     vnode: {},
@@ -26,7 +26,7 @@ module.exports = {
     },
     navAry: [{ idx: '01', val: '合约账户' }, { idx: '02', val: '币币账户' }, { idx: '04', val: '法币账户' }],
     setPageFlag: function (param) {
-        console.log(param);
+        console.log(param, '-------------------------------1111');
         this.pageFlag = param;
         this.vnode.attrs.setIdx(param);
         if (param === '01') {
@@ -105,7 +105,7 @@ module.exports = {
     },
     test(row, type) {
         if (type === '划转') {
-            this.vnode.attrs.setTransferModalOption({
+            transferLogic.transferModalOption.setTransferModalOption({
                 isShow: true,
                 coin: row.wType // 币种 默认选中
             });
@@ -195,7 +195,7 @@ module.exports = {
     initFn: function (vnode) {
         this.vnode = vnode;
         this.setAccountBanlance();
-        this.setPageFlag();
+        this.setPageFlag('03');
         console.log(this.coinType, 'type');
         console.log(this.tableDateList, 'list');
     },

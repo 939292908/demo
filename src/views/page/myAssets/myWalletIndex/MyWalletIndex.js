@@ -19,6 +19,8 @@ const model = {
     swValue: '03', // 03:我的钱包 01:交易账户(01币币，02法币，04合约) 2:其他账户
     setSwValue(value) {
         model.swValue = value;
+        console.log(value, '-----------------------====');
+        console.log(model.swValue, '-----------------------====');
         // model.transferModalOption.transferFrom = model.swValue;
         transferLogic.transferModalOption.setTransferModalOption({
             transferFrom: model.swValue // from钱包默认选中
@@ -81,7 +83,7 @@ const model = {
     },
     switchContent: function () {
         broadcast.emit({ cmd: broadcast.CHANGE_SW_CURRENCY, data: this.currency });
-        return m(table, { tableType: 'wallet', swValue: this.swValue, setIdx: this.setSwValue, setTransferModalOption: this.transferModalOption.setTransferModalOption });
+        return m(table, { tableType: 'wallet', swValue: this.swValue, setIdx: this.setSwValue });
     },
     Nav: {
         firstNav: [
@@ -182,7 +184,7 @@ const model = {
     },
     initFn: function() {
         console.log(this);
-        console.log(this.swValue);
+        console.log(this.swValue, '------');
         m.redraw();
     },
     createFn: function() {
