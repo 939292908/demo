@@ -42,7 +42,7 @@ m.route(document.querySelector('body .route-box'), defaultRoutePath, {
         onmatch: () => import('@/views/page/myAssets/extractCoin/index')
     },
     '/accountSecurity': {
-        onmatch: () => import('@/views/page/accountSecurity/modifyLoginPassword/changePassword')
+        onmatch: () => import('@/views/page/accountSecurity/modifyLoginPassword/changePassword.view')
     }
 });
 

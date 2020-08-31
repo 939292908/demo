@@ -1,9 +1,12 @@
 const m = require('mithril');
-require('@/styles/pages/header');
-
+const model = require('./changePassword.logic.js');
 require('@/views/page/accountSecurity/modifyLoginPassword/changePassword.scss');
 
 module.exports = {
+    oninit: vnode => model.oninit(vnode),
+    oncreate: vnode => model.oncreate(vnode),
+    onremove: vnode => model.onremove(vnode),
+    onupdate: vnode => model.onupdate(vnode),
     view: function () {
         return m('div.views-page-accountsecurity-modifyLoginPassword-changePassword ', {}, [
             m('', { class: 'is-hidden-mobile has-bg-sub-level-1 ' + ("") }, [
@@ -55,8 +58,8 @@ module.exports = {
             m('div', { class: `container` }, [
                 m('div', { class: `iconfont icon-Return mt-4 has-text-primary title-large font-weight-regular ` }, ["您正在修改登录密码"])
             ]),
-            m('div', { class: `changePassword-background has-bg-level-2 container` }, [
-                m('div', { class: `` }, [
+            m('div', { class: `changePassword_background has-bg-level-2 container` }, [
+                m('div', { class: `changePassword_Input container` }, [
                     m('div', { class: `has-text-level-1 body-3 mb-2 container` }, ["原密码"]),
                     m('input', { class: `mb-5`, type: "text" }, []),
                     m('div', { class: `has-text-level-1 body-3 mb-2 container` }, ["新密码"]),
