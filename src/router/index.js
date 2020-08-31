@@ -43,6 +43,12 @@ m.route(document.querySelector('body .route-box'), defaultRoutePath, {
     },
     '/accountSecurity': {
         onmatch: () => import('@/views/page/accountSecurity/modifyLoginPassword/changePassword.view')
+    },
+    '/bindEmail': {
+        onmatch: () => import('@/views/page/user/bind/bindEmail/bindEmail.view')
+    },
+    '/bindPhone': {
+        onmatch: () => import('@/views/page/user/bind/bindEmail/bindEmail.view')
     }
 });
 
