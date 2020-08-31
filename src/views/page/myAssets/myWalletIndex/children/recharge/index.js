@@ -13,6 +13,7 @@ module.exports = {
     rechargeAddr: '', // 充币地址
     qrcodeDisplayFlag: false,
     btnCheckFlag: 0, // 默认选中第一个
+    labelTips: '', // 标签提示
     setWalletData() {
         const that = this;
         this.pageData = []; // 初始化
@@ -31,12 +32,17 @@ module.exports = {
                             this.USDTLabel.push(value);
                         }
                     }
-                    // for (let i = 0; i < this.USDTLabel.length; i++) {
-                    //     if (this.USDTLabel[i].title === this.USDTLabel[i + 1].title) {
-                    //         this.USDTLabel[i].pop();
-                    //     }
-                    // }
-                    // console.log(this.USDTLabel);
+
+                    // 数组去重
+                    const tempJson = {};
+                    const res = [];
+                    for (let i = 0; i < this.USDTLabel.length; i++) {
+                        tempJson[JSON.stringify(this.USDTLabel[i])] = true; // 取出每一个对象当做key
+                    }
+                    for (let j = 0; j < Object.keys(tempJson).length; j++) {
+                        res.push(JSON.parse(Object.keys(tempJson)[j]));
+                    }
+                    this.USDTLabel = res;
                 }
                 item.promptRecharge = walletI.promptRecharge; // 充值提示
                 item.wType = walletI.wType; // 币种
@@ -44,7 +50,7 @@ module.exports = {
                 Http.GetRechargeAddr({
                     wType: walletI.wType
                 }).then(function(arg) {
-                    // console.log('nzm', 'GetRechargeAddr success', arg);
+                    console.log('nzm', 'GetRechargeAddr success', arg);
                     item.rechargeAddr = arg.rechargeAddr; // 充币地址
                     item.zh = arg.trade.fullName.zh; // 中文
                     item.en = arg.trade.fullName.en; // 英文
@@ -72,13 +78,17 @@ module.exports = {
                 }
                 this.rechargeAddr = this.pageData[i].rechargeAddr;
                 this.setQrCodeImg();
+                this.setLabelTips();
             }
         }
+    },
+    setLabelTips() {
+        this.labelTips = '充值' + this.selectCheck + '同时需要一个充币地址和' + this.selectCheck + '标签；警告：如果未遵守正确的' + this.selectCheck + '充币步骤，币会有丢失风险！';
     },
     // 币种发生变化切换充币地址
     modifySelect() {
         var myselect = document.getElementsByClassName('coinSel')[0];
-        var value = myselect.options[myselect.selectedIndex].value;
+        var value = myselect.options[myselect.selectedIndex].value.split('|')[0].trim();
         this.selectCheck = value;
         this.setTipsAndAddrAndCode();
         this.setQrCodeImg();
@@ -105,8 +115,21 @@ module.exports = {
         document.execCommand("copy", false, null);
         alert('复制成功');
     },
-    changeBtnflag(index) {
+    changeBtnflag(index, title) {
         this.btnCheckFlag = index;
+        let wType = 'USDT';
+        if (title !== 'Omni') {
+            wType = wType + title;
+        }
+        Http.GetRechargeAddr({
+            wType: wType
+        }).then(function(arg) {
+            // console.log('nzm', 'GetRechargeAddr success', arg);
+            this.rechargeAddr = arg.rechargeAddr;
+            m.redraw();
+        }).catch(function(err) {
+            console.log('nzm', 'GetRechargeAddr error', err);
+        });
     },
     initFn: function () {
         wlt.init();

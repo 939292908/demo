@@ -1,6 +1,7 @@
 const m = require('mithril');
 const rechargeIndex = require('@/views/page/myAssets/myWalletIndex/children/recharge/index');
 require('@/views/page/myAssets/myWalletIndex/children/recharge/recharge.scss');
+const Tooltip = require('@/pages/components/common/Tooltip');
 
 module.exports = {
     oninit: () => {
@@ -24,22 +25,40 @@ module.exports = {
                         m('div.select is-fullwidth',
                             m('select', { class: `coinSel`, onchange: () => { rechargeIndex.modifySelect(); } }, [
                                 rechargeIndex.pageData.map(item => {
-                                    return m('option', { }, item.wType);
+                                    return m('option', { }, item.wType + '  |  ' + item.en);
                                 })
                             ])
                         )
                     ]),
                     m('div', { class: `xrpLable mb-7`, style: { display: rechargeIndex.memo ? (rechargeIndex.selectCheck === 'XRP' ? '' : 'none') : 'none' } }, [
-                        m('span', {}, '标签'),
-                        m('div', { class: `mt-2 px-2 has-text-primary border-radius-small` }, rechargeIndex.uId)
+                        m('div', { class: `labeltip` }, [
+                            m('span', {}, '标签'),
+                            m('div.navbar-item.cursor-pointer', { class: `has-text-primary-hover` }, [
+                                m(Tooltip, {
+                                    label: m('i', { class: `iconfont icon-Tooltip` }),
+                                    content: rechargeIndex.labelTips,
+                                    hiddenArrows: false
+                                })
+                            ])
+                        ]),
+                        m('div', { class: `mt-2 px-2 has-text-primary border-radius-small uid` }, rechargeIndex.uId)
                     ]),
                     m('div', { class: `usdtLable mb-7`, style: { display: rechargeIndex.memo ? (rechargeIndex.selectCheck === 'USDT' ? '' : 'none') : 'none' } }, [
-                        m('span', {}, '标签'),
+                        m('div', { class: `labeltip` }, [
+                            m('span', {}, '链名称'),
+                            m('div.navbar-item.cursor-pointer', { class: `has-text-primary-hover` }, [
+                                m(Tooltip, {
+                                    label: m('i', { class: `iconfont icon-Tooltip` }),
+                                    content: rechargeIndex.labelTips,
+                                    hiddenArrows: false
+                                })
+                            ])
+                        ]),
                         m('div', { class: `mt-2` }, [
                             rechargeIndex.USDTLabel.map((item, index) => {
                                 return m('button', {
                                     class: `mr-6 cursor-pointer ` + (rechargeIndex.btnCheckFlag === index ? `has-bg-primary` : `noneBG`),
-                                    onclick: () => { rechargeIndex.changeBtnflag(index); }
+                                    onclick: () => { rechargeIndex.changeBtnflag(index, item.title); }
                                 }, item.title);
                             })
                         ])
