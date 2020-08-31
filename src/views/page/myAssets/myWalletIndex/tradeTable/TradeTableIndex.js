@@ -1,34 +1,20 @@
 const broadcast = require('@/broadcast/broadcast');
 const wlt = require('@/models/wlt/wlt');
-// const myWalletIndex = require('../MyWalletIndex');
+const m = require('mithril');
+require('@/views/page/myAssets/myWalletIndex/tradeTable/tradeTableView');
 const transferLogic = require('@/views/page/myAssets/transfer/transfer.logic.js'); // 划转模块逻辑
-// console.log('myWalletIndex', myWalletIndex.default);
 
 module.exports = {
     vnode: {},
     currency: 'BTC',
     hideZeroFlag: false, // 是否隐藏0资产 默认为false
-    dataLength: 0, // 暂无数据
-    pageFlag: '01', // 01：合约账户，02：币币账户，04：法币账户
     accountTitle: '', // 交易账户中表格右上角的币种
     accountBanlance: 0, // 交易账户中表格右上角的币种总额
-    columnData: { // 表格列
-        wallet: [],
-        coin: [],
-        contract: [],
-        legal: []
-    },
-    tableData: { // 表格数据
-        walletData: [],
-        coinData: [],
-        contractData: [],
-        legalData: []
-    },
     navAry: [{ idx: '01', val: '合约账户' }, { idx: '02', val: '币币账户' }, { idx: '04', val: '法币账户' }],
     coinType: 'wallet',
     tableDateList: 'walletData',
     setPageFlag: function (param) {
-        this.pageFlag = param;
+        console.log(param, '---param---', this.vnode.attrs.swValue);
         this.vnode.attrs.setIdx(param);
         if (param === '01') {
             this.coinType = 'contract';
@@ -56,8 +42,21 @@ module.exports = {
         this.currency = param;
         this.initColumnData();
     },
+    dataLength: 0, // 暂无数据
     setDataLength: function (param) {
         this.dataLength = param;
+    },
+    columnData: { // 表格列
+        wallet: [],
+        coin: [],
+        contract: [],
+        legal: []
+    },
+    tableData: { // 表格数据
+        walletData: [],
+        coinData: [],
+        contractData: [],
+        legalData: []
     },
     initTableData: function () {
         this.tableData.legalData = this.copyAry(wlt.wallet['04']);
@@ -105,7 +104,8 @@ module.exports = {
         if (type === '划转') {
             transferLogic.transferModalOption.setTransferModalOption({
                 isShow: true,
-                coin: row.wType // 币种 默认选中
+                coin: row.wType, // 币种 默认选中
+                transferFrom: this.vnode.attrs.swValue
             });
         }
     },
@@ -179,24 +179,19 @@ module.exports = {
                 this.setCurrency(arg);
             }
         });
-        setTimeout(() => {
-            this.initColumnData();
-            this.initTableData();
-            this.setPageFlag('03');
-            this.setAccountBanlance();
-            if (this.dataLength === 0) {
-                document.getElementsByTagName('table')[0].rows[document.getElementsByTagName('table')[0].rows.length - 1].style.display = '';
-            } else {
-                document.getElementsByTagName('table')[0].rows[document.getElementsByTagName('table')[0].rows.length - 1].style.display = 'none';
-            }
-        }, '100');
+        this.initColumnData();
+        this.initTableData();
+        this.setPageFlag('03');
+        this.setAccountBanlance();
+        if (this.dataLength === 0) {
+            document.getElementsByTagName('table')[0].rows[document.getElementsByTagName('table')[0].rows.length - 1].style.display = '';
+        } else {
+            document.getElementsByTagName('table')[0].rows[document.getElementsByTagName('table')[0].rows.length - 1].style.display = 'none';
+        }
+        m.redraw();
     },
     initFn: function (vnode) {
         this.vnode = vnode;
-    },
-    updateFn(vnode) {
-        this.setPageFlag(vnode.attrs.swValue);
-        // console.log(vnode.attrs.swValue, 'table update.....');
     },
     removeFn: function () {
         broadcast.offMsg({

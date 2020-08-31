@@ -71,6 +71,7 @@ const model = {
     switchChange: function (val) {
         console.log(val, '--------val-------');
         this.swValue = val;
+        console.log(this.swValue);
         transferLogic.transferModalOption.setTransferModalOption({
             transferFrom: val // from钱包默认选中
         });
