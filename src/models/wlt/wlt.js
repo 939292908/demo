@@ -2,7 +2,7 @@ const Http = require('@/api').webApi;
 const broadcast = require('@/broadcast/broadcast');
 const gWsApi = require('@/api').wsApi;
 const utils = require('@/util/utils').default;
-const BaseUrl = require('@/api').BaseUrl;
+const ActiveLine = require('@/api').ActiveLine;
 
 module.exports = {
     name: "modelsForWlt",
@@ -349,7 +349,7 @@ module.exports = {
         this.wltItemEx.valueForBTC = utils.toFixedForFloor(valueForBTC, 8);
         // console.log('ht', 'value', valueForUSDT, valueForBTC);
         // 图标
-        this.wltItemEx.icon = BaseUrl.WebAPI + this.wltItemEx.icon;
+        this.wltItemEx.icon = ActiveLine.WebAPI + this.wltItemEx.icon;
 
         return this.wltItemEx;
     },

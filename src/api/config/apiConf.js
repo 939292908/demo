@@ -46,7 +46,7 @@ class Conf {
             },
             prod: {
                 data: [
-                    // "https://exsoss.oss-cn-hongkong.aliyuncs.com/svrs/vbit_lines_conf.json",
+                    "https://exsoss.oss-cn-hongkong.aliyuncs.com/svrs/vbit_lines_conf.json",
                     "https://np-oss-web.oss-cn-shanghai.aliyuncs.com/svrs/vbit_lines_conf.json"
                 ],
                 netLines: [
