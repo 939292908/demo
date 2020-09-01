@@ -84,17 +84,17 @@ module.exports = {
         return [
             // 资金划转 弹框
             m(Modal, {
-                isShow: model.transferModalOption.isShow, // 弹框显示/隐藏
+                isShow: model.isShowTransferModal, // 弹框显示/隐藏
                 // 弹框确认
                 onOk() {
                     model.submit(); // 提交
-                    model.transferModalOption.setTransferModalOption({
+                    model.setTransferModalOption({
                         isShow: false // 弹框隐藏
                     });
                 },
                 // 弹框关闭
                 onClose () {
-                    model.transferModalOption.setTransferModalOption({
+                    model.setTransferModalOption({
                         isShow: false // 弹框隐藏
                     }); // 弹框隐藏
                 },

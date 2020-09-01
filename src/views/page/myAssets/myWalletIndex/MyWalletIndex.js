@@ -22,8 +22,8 @@ const model = {
     // 切换我的钱包。交易账户
     setSwValue(value) {
         model.swValue = value;
-        // model.transferModalOption.transferFrom = model.swValue;
-        transferLogic.transferModalOption.setTransferModalOption({
+        // model.transferFrom = model.swValue;
+        transferLogic.setTransferModalOption({
             transferFrom: model.swValue // from钱包默认选中
         });
     },
@@ -81,7 +81,7 @@ const model = {
     switchChange: function (val) {
         console.log(val, '--------val-------');
         this.swValue = val;
-        transferLogic.transferModalOption.setTransferModalOption({
+        transferLogic.setTransferModalOption({
             transferFrom: val // from钱包默认选中
         });
         this.sets();
@@ -125,7 +125,12 @@ const model = {
         console.log(item);
         if (item.id === 4) { // 点击资金划转
             transferLogic.initTransferInfo(); // 初始化弹框
-            transferLogic.transferModalOption.isShow = true;
+            // transferLogic.isShow = true;
+            transferLogic.setTransferModalOption({
+                isShow: true,
+                transferFrom: "04",
+                coin: "HT"
+            });
         }
         // 弹框↑
         if (item.to !== "") { // 跳转

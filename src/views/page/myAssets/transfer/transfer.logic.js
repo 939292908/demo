@@ -10,6 +10,7 @@ const Http = require('@/api').webApi;
 
 const model = {
     vnode: {},
+    isShowTransferModal: false, // 划转弹框 显示/隐藏
     showCurrencyMenu: false, // show币种菜单
     showFromMenu: false, // show from菜单
     showMenuTo: false, // show to菜单
@@ -32,6 +33,17 @@ const model = {
     authWltList: [], // 钱包列表 当前币种有权限
     fromWltList: [], // 钱包列表 从xx  （from与to钱包 不能同一种类型相互划转）
     toWltList: [], // 钱包列表 到xx
+    // 设置 资金划转弹框
+    setTransferModalOption(option) {
+        // option: {
+        //     isShow: false, // 弹窗显示隐藏
+        //     transferFrom: '03', // from钱包默认选中
+        //     coin: 'USDT' // 币种 默认选中
+        // }
+        model.isShowTransferModal = option.isShow;
+        if (option.transferFrom) model.form.transferFrom = option.transferFrom;
+        if (option.coin) model.form.coin = option.coin;
+    },
     // 初始化语言
     initLanguage () {
         this.baseWltList = [
@@ -97,7 +109,7 @@ const model = {
         console.log("币种下拉", this.canTransferCoin, this.allWalletList);
 
         // if (this.canTransferCoin[0]) this.form.coin = this.canTransferCoin[0].wType  // 合约下拉列表 默认选中第一个
-        this.initCoinValue();// 初始化 币种value
+        // this.initCoinValue();// 初始化 币种value
 
         this.initWalletListByWTypeAndValue(this.form.coin); // 初始化钱包 list 和 value
 
@@ -123,15 +135,15 @@ const model = {
         this.authWltList = this.authWltList.filter(item => item); // 钱包列表 去空
     },
     // 初始化 币种value
-    initCoinValue() {
-        if (this.canTransferCoin[0]) { // 有币种下拉
-            if (this.canTransferCoin.some(item => item.wType === this.vnode.attrs.coin)) { // 有传value
-                this.form.coin = this.vnode.attrs.coin;
-            } else { // 没传
-                this.form.coin = this.canTransferCoin[0].wType; // 默认选中第1个
-            }
-        }
-    },
+    // initCoinValue() {
+    //     if (this.canTransferCoin[0]) { // 有币种下拉
+    //         if (this.canTransferCoin.some(item => item.wType === this.vnode.attrs.coin)) { // 有传value
+    //             this.form.coin = this.vnode.attrs.coin;
+    //         } else { // 没传
+    //             this.form.coin = this.canTransferCoin[0].wType; // 默认选中第1个
+    //         }
+    //     }
+    // },
     // 初始化 2个钱包value
     initFromAndToValueByAuthWalletList () {
         // form钱包value
@@ -157,9 +169,11 @@ const model = {
         };
 
         // 从xx钱包
-        this.form.transferFrom = buildFromWalletValue(this.vnode.attrs.transferFrom || '03');
+        // this.form.transferFrom = buildFromWalletValue(this.vnode.attrs.transferFrom || '03');
+        this.form.transferFrom = buildFromWalletValue(this.form.transferFrom || '03');
         // 到xx钱包
-        this.form.transferTo = buildToWalletValue(this.vnode.attrs.transferTo);
+        // this.form.transferTo = buildToWalletValue(this.vnode.attrs.transferTo);
+        this.form.transferTo = buildToWalletValue(this.form.transferTo);
     },
     // 2个钱包list 初始化 （依赖钱包value）
     initFromAndToWalletListByValue () {
@@ -225,7 +239,7 @@ const model = {
                 if (Number(res.result.code) === 9040) {
                     // 提示弹框
                     // window.$message({ title: I18n.$t('10037'/* "提示" */), content: "法币划转提示", type: 'danger' });
-                    model.transferModalOption.setTransferModalOption({
+                    model.setTransferModalOption({
                         isShow: false // 划转弹框隐藏
                     });
                     // 法币弹框显示
@@ -237,23 +251,6 @@ const model = {
             console.log(err);
         });
         // console.log("我提交了", this.form, 666);
-    },
-    // 资金划转弹框 配置
-    transferModalOption: {
-        isShow: false, // 弹窗状态
-        transferFrom: '03', // from钱包默认选中
-        coin: 'USDT', // 币种 默认选中
-        setTransferModalOption(option) { // 设置配置
-            // option: {
-            //     isShow: false, // 弹窗显示隐藏
-            //     transferFrom: '03', // from钱包默认选中
-            //     coin: 'USDT' // 币种 默认选中
-            // }
-            console.log(option, 8888);
-            model.transferModalOption.isShow = option.isShow;
-            if (option.transferFrom) model.transferModalOption.transferFrom = option.transferFrom;
-            if (option.coin) model.transferModalOption.coin = option.coin;
-        }
     },
     // 币种 菜单配置
     getCurrencyMenuOption() {

@@ -105,7 +105,7 @@ module.exports = {
         console.log(that.pageFlag, 'this.pageFlag---');
         transferLogic.initTransferInfo(); // 初始化弹框
         if (type === '划转') {
-            transferLogic.transferModalOption.setTransferModalOption({
+            transferLogic.setTransferModalOption({
                 isShow: true,
                 coin: row.wType, // 币种 默认选中
                 transferFrom: that.pageFlag

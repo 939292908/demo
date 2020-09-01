@@ -1,8 +1,10 @@
 const m = require('mithril');
-const model = require('./bindEmail.logic.js');
+const model = require('./bindPhone.logic.js');
 const VerifyView = require('@/views/components/dialogVerify/dialogVerify.view');
+const InputWithComponent = require('@/views/components/inputWithComponent/inputWithComponent.view');
+const AreaCodeSelect = require('@/views/page/user/login/areaCodeSelect/areaCodeSelect.view');
 require('@/views/page/user/bind/bind.scss');
-require('./bindEmail.scss');
+require('./bindPhone.scss');
 // const Modal = require('@/views/components/common/Modal');
 // const I18n = require('@/languages/I18n').default;
 
@@ -19,7 +21,7 @@ module.exports = {
                     m('p', { class: `container title-small has-text-level-1 ` }, [
                         m('span', { class: `mr-7` }, "←"),
                         m('span', { class: `` }, [
-                            "您正在绑定邮箱验证"
+                            "您正在绑定手机验证"
                         ])
                     ])
                 ]),
@@ -43,18 +45,25 @@ module.exports = {
                                 })
                             ])
                         ]),
-                        // 邮箱号
+                        // 手机号
                         m('div', { class: `form-item pb-0` }, [
                             m('div', { class: `form-item-title` }, [
-                                "邮箱号"
+                                "手机号"
                             ]),
                             m('div', { class: `form-item-content` }, [
-                                m('input', {
-                                    class: `input`,
-                                    placeholder: '请输入邮箱号',
-                                    value: model.form.email,
-                                    oninput(e) {
-                                        model.onInputEmail(e);
+                                m(InputWithComponent, {
+                                    leftComponents: m(AreaCodeSelect, {
+                                        selectList: model.selectList, //
+                                        areaCode: model.form.areaCode, //
+                                        onSelect: areaCode => { model.form.areaCode = areaCode; } //
+                                    }),
+                                    options: {
+                                        oninput: e => {
+                                            model.onInputPhone(e);
+                                        },
+                                        onblur: e => {
+                                        },
+                                        value: model.phone
                                     }
                                 })
                             ])
