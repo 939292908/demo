@@ -1,9 +1,9 @@
-const BaseUrl = require('../config').BaseUrl;
+const ActiveLine = require('../config').ActiveLine;
 const WSApi = require('./Mkt');
 
 const Interval = 1000;
 const gWsApi = new WSApi({
-    baseUrl: BaseUrl.WSMKT,
+    baseUrl: ActiveLine.WSMKT,
     Typ: 'mkt'
 });
 setInterval(function () {

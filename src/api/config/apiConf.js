@@ -1,9 +1,7 @@
-import _axios from '@/api/webApi/request';
-const reqest = new _axios();
+import axios from 'axios';
 class Conf {
     constructor(aKey) {
         this.BUILD_ENV = aKey;
-
         this.Active = {};
         this.M = {
             dev: {
@@ -46,7 +44,7 @@ class Conf {
             },
             prod: {
                 data: [
-                    // "https://exsoss.oss-cn-hongkong.aliyuncs.com/svrs/vbit_lines_conf.json",
+                    "https://exsoss.oss-cn-hongkong.aliyuncs.com/svrs/vbit_lines_conf.json",
                     "https://np-oss-web.oss-cn-shanghai.aliyuncs.com/svrs/vbit_lines_conf.json"
                 ],
                 netLines: [
@@ -121,10 +119,16 @@ class Conf {
 
     updateNetLines(CallBack) {
         const s = this;
-        reqest.racerequest(s.GetLines().data).then((arg) => {
-            if (arg) {
+        const pool = [];
+        for (const url of s.GetLines().data) {
+            pool.push(axios.get(url + '?timestamp=' + (new Date()).getTime()));
+        }
+        Promise.race(pool).then((arg) => {
+            console.log(arg);
+            const data = arg.data;
+            if (data) {
                 const lines = [];
-                for (const item of arg.lines) {
+                for (const item of data.lines) {
                     const obj = {
                         Id: item.id,
                         Name: item.name,
