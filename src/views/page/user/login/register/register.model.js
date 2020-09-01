@@ -10,6 +10,7 @@ const broadcast = require('@/broadcast/broadcast');
 const validate = require('@/models/validate/validate').default;
 const helpCenter = require('@/util/helpCenter').default;
 const regExp = require('@/models/validate/regExp');
+const utils = require('@/util/utils').default;
 
 const register = {
     type: 'phone', // 账号类型 phone 手机，email 邮箱
@@ -85,6 +86,7 @@ const register = {
     registerPhoneFn() {
         validate.activeSms({
             phoneNum: '00' + this.areaCode + '-' + this.loginName,
+            securePhone: utils.hideMobileInfo('00' + this.areaCode + '-' + this.loginName),
             mustCheckFn: 'register'
         }, this.register);
     },
