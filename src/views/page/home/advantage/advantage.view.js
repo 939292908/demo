@@ -15,7 +15,7 @@ module.exports = {
                         // 1
                         m('div', { class: `introduce-item column is-3 mt-6` }, [
                             m('img', { class: '', src: require("@/assets/img/home/Object1.png").default }),
-                            m('div', { class: `has-text-primary title-large font-weight-regular is-12` }, ["安全保障"]),
+                            m('div', { class: `has-text-primary title-large font-weight-regular is-12 ${utils.isMobile() ? 'ml-8 mr-8' : 'ml-7 mr-7'}` }, ["安全保障"]),
                             m('p', { class: `pt-5 ${utils.isMobile() ? 'ml-8 mr-8' : 'ml-7 mr-7'}` }, ["世界顶级安全团队打造，主动安全 防御系统，银行级加密，冷热钱包 分层体系，保障用户资金安全！"])
                         ]),
                         // 2
