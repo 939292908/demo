@@ -1,5 +1,5 @@
 const m = require('mithril');
-const rechargeIndex = require('@/views/page/myAssets/myWalletIndex/children/recharge/index');
+const rechargeIndex = require('@/views/page/myAssets/myWalletIndex/children/recharge/recharge.logic');
 const AssetRecords = require('@/models/asset/assetsRecords');
 const assetTable = require('../../../assetTable/assetTable.view');
 require('@/views/page/myAssets/myWalletIndex/children/recharge/recharge.scss');

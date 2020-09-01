@@ -3,6 +3,8 @@ const geetest = require('@/models/validate/geetest').default;
 const broadcast = require('@/broadcast/broadcast');
 const Http = require('@/api').webApi;
 const config = require('@/config');
+const errCode = require('@/util/errCode');
+const I18n = require('@/languages/I18n');
 
 const model = {
     form: {
