@@ -69,7 +69,6 @@ const extract = {
         });
     },
     getSelectListData: function () {
-        console.log(wlt.wallet);
         this.selectList = [...wlt.wallet['03']];
         this.currentSelect = this.selectList[0];
         this.getlinkButtonListData();
