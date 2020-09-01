@@ -4,6 +4,7 @@ const InputWithComponent = require('../../../../components/inputWithComponent/in
 const Login = require('./login.model');
 const config = require('@/config');
 const I18n = require('@/languages/I18n').default;
+const regExp = require('@/models/validate/regExp');
 
 import('../login.css');
 
@@ -24,23 +25,30 @@ module.exports = {
                         m('div.mb-8.title-large.has-text-title', {},
                             [`登录`]),
                         m('div.has-text-level-1.body-3.mb-2', {}, ['手机/邮箱']),
-                        m('input.input[type=text].mb-5', {
+                        m('input.input[type=text]', {
                             oninput: e => {
                                 Login.account = e.target.value;
+                                Login.showValidAccount = true;
                             },
+                            onblur: e => { Login.showValidAccount = true; },
                             value: Login.account
                         }, []),
-                        m('div.body-3.has-text-level-1.mb-2', {}, ['密码']),
+                        m('div.body-3.mt-2.has-text-tip-error', {
+                            hidden: !Login.showValidAccount
+                        }, [regExp.validAccount(Login.loginType, Login.account)]),
+                        m('div.body-3.has-text-level-1.mb-2.mt-5', {}, ['密码']),
                         m(InputWithComponent, {
                             hiddenLine: true,
                             options: {
                                 type: Login.showPassword ? 'text' : 'password',
                                 oninput: e => {
                                     Login.password = e.target.value;
+                                    Login.showValidPassword = true;
                                 },
                                 onkeyup: e => {
                                     if (e.keyCode === 13) { Login.login(); }
                                 },
+                                onblur: e => { Login.showValidPassword = true; },
                                 value: Login.password
                             },
                             rightComponents: m('i.iconfont.mx-2', {
@@ -48,6 +56,9 @@ module.exports = {
                                 class: Login.showPassword ? 'icon-yincang' : 'icon-zichanzhengyan'
                             })
                         }),
+                        m('div.body-3.mt-2.has-text-tip-error', {
+                            hidden: !Login.showValidPassword
+                        }, [regExp.validPassword(Login.password)]),
                         m('div.mb-5.has-text-right', {}, [
                             m('a.has-text-primary', {
                                 onclick: () => {
@@ -56,7 +67,7 @@ module.exports = {
                             }, ['忘记密码？'])]),
                         m('button.button.my-3.has-bg-primary.button-medium.is-fullwidth.mb-2.has-text-white', {
                             onclick: () => { Login.login(); },
-                            disabled: !Login.valid(),
+                            disabled: regExp.validAccount(Login.loginType, Login.account) || regExp.validPassword(Login.password),
                             class: Login.loading ? 'is-loading' : ''
                         }, [I18n.$t('10136')/* '登录' */]),
                         m('div.has-text-centered.body-3.has-text-level-2', {}, [

@@ -7,36 +7,27 @@ const I18n = require('@/languages/I18n').default;
 const errCode = require('@/util/errCode').default;
 const broadcast = require('@/broadcast/broadcast');
 const validate = require('@/models/validate/validate').default;
+const regExp = require('@/models/validate/regExp');
 
 module.exports = {
     loginType: 'phone', // 账号类型 phone 手机，email 邮箱
     loginName: '', // 账号
     selectList: [{ cn_name: '中国', code: '86', support: '1', us_name: 'China' }], // 区号列表
     areaCode: '86', // 区号 默认86
-    isValidate: false, // 验证状态
+    isValidate: true, // 验证状态
     password1: '', // 新密码
     password2: '', // 第二次输入密码
     is2fa: false, // 2fa状态
-    /**
-     * 账号字段验证
-     * @returns {boolean}
-     */
-    valid() {
-        return !!(this.loginName &&
-            /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
-                this.loginName));
-    },
-    /**
-     * 账号空验证
-     * @returns {boolean}
-     */
-    valid1() {
-        return !!this.loginName;
-    },
+    showPassword1Validate: false,
+    showPassword2Validate: false,
+    showAccountValidate: false,
     /**
      * 重置密码接口
      */
     submitReset() {
+        if (regExp.validPassword(this.password1) || regExp.validTwoPassword(this.password1, this.password2)) {
+            return;
+        }
         this.loading = true;
         m.redraw();
         Http.resetPassword({
@@ -65,21 +56,11 @@ module.exports = {
         });
     },
     /**
-     * 打开邮箱验证
+     * 打开验证
      */
-    submitEmail() {
+    submit() {
         const that = this;
-        if (this.valid) {
-            this.loading = true;
-            geetest.verify(() => { that.loading = false; });
-        }
-    },
-    /**
-     * 打开手机验证
-     */
-    submitPhone() {
-        const that = this;
-        if (this.valid1) {
+        if (!regExp.validAccount(this.loginType, this.loginName)) {
             this.loading = true;
             geetest.verify(() => { that.loading = false; });
         }
@@ -245,11 +226,18 @@ module.exports = {
         this.initGeetest();
         this.getCountryList();
     },
-    onremove() {
-        this.isValidate = false;
-        this.is2fa = false;
+    cleanUp() {
+        this.loginName = '';
         this.password1 = '';
         this.password2 = '';
+        this.is2fa = false;
+        this.isValidate = false;
+        this.showPassword1Validate = false;
+        this.showPassword2Validate = false;
+        this.showAccountValidate = false;
+    },
+    onremove() {
+        this.cleanUp();
         validate.close();
         broadcast.offMsg({
             key: 'forgetPassword',
