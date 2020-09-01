@@ -14,6 +14,7 @@ module.exports = {
     qrcodeDisplayFlag: false,
     btnCheckFlag: 0, // 默认选中第一个
     labelTips: '', // 标签提示
+    memo: null, // 是否显示标签
     setWalletData() {
         const that = this;
         this.pageData = []; // 初始化
@@ -22,6 +23,7 @@ module.exports = {
             if (wlt.wallet['03'][i].Setting.canRecharge) { // 能否充值
                 const item = {};
                 const walletI = wlt.wallet['03'][i];
+                that.uId = this.uId || walletI.uid;
                 item.canRecharge = walletI.Setting.canRecharge; // 能否充值
                 if (walletI.wType === 'USDT') {
                     for (const i in walletI.Setting) {
@@ -32,7 +34,6 @@ module.exports = {
                             this.USDTLabel.push(value);
                         }
                     }
-
                     // 数组去重
                     const tempJson = {};
                     const res = [];
@@ -55,7 +56,6 @@ module.exports = {
                     item.zh = arg.trade.fullName.zh; // 中文
                     item.en = arg.trade.fullName.en; // 英文
                     item.networkNum = arg.trade.networkNum; // 网络数
-                    that.uId = walletI.uid; // 用户uId
                     that.pageData.push(item);
                     that.selectCheck = that.pageData[0].wType;
                     that.setTipsAndAddrAndCode();
@@ -67,7 +67,6 @@ module.exports = {
         }
     },
     setTipsAndAddrAndCode() {
-        m.redraw();
         for (const i in this.pageData) {
             if (this.pageData[i].wType === this.selectCheck) {
                 const networkNum = this.pageData[i].networkNum;
@@ -76,11 +75,13 @@ module.exports = {
                 } else {
                     this.tips = '您只能向此地址充值' + this.selectCheck + '，其他资产充入' + this.selectCheck + '地址将无法找回 *使用' + this.selectCheck + '地址充值需要' + networkNum + '个网络确认才能到账 *默认充入我的钱包，您可以通过“资金划转”将资金转至交易账户或者其他账户';
                 }
+                this.memo = this.pageData[i].memo;
                 this.rechargeAddr = this.pageData[i].rechargeAddr;
                 this.setQrCodeImg();
                 this.setLabelTips();
             }
         }
+        m.redraw();
     },
     setLabelTips() {
         this.labelTips = '充值' + this.selectCheck + '同时需要一个充币地址和' + this.selectCheck + '标签；警告：如果未遵守正确的' + this.selectCheck + '充币步骤，币会有丢失风险！';

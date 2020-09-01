@@ -1,9 +1,9 @@
 const m = require('mithril');
-const rechargeIndex = require('@/views/page/myAssets/myWalletIndex/children/recharge/index');
+const rechargeIndex = require('@/views/page/myAssets/myWalletIndex/children/recharge/recharge.logic');
 const AssetRecords = require('@/models/asset/assetsRecords');
 const assetTable = require('../../../assetTable/assetTable.view');
 require('@/views/page/myAssets/myWalletIndex/children/recharge/recharge.scss');
-const Tooltip = require('@/pages/components/common/Tooltip');
+const Tooltip = require('@/views/components/common/Tooltip');
 
 module.exports = {
     oninit: () => {
@@ -15,7 +15,7 @@ module.exports = {
     view: () => {
         return m('div', { class: `views-page-myAssets-myWalletIndex-childer-recharge theme--light` }, [
             m('div', { class: `top mb-7 has-bg-level-2 ` }, [
-                m('i', { class: `iconfont icon-Return has-text-title` }),
+                m('i', { class: `iconfont icon-Return has-text-title`, onclick: () => { m.route.set('/myWalletIndex'); } }),
                 m('span', { class: `has-text-title my-4 ml-4 title-medium` }, '充币')
             ]),
             m('div', { class: `bottom content-width mb-9` }, [
@@ -27,12 +27,12 @@ module.exports = {
                         m('div.select is-fullwidth',
                             m('select', { class: `coinSel`, onchange: () => { rechargeIndex.modifySelect(); } }, [
                                 rechargeIndex.pageData.map(item => {
-                                    return m('option', { }, item.wType + '  |  ' + item.en);
+                                    return m('option', { }, item.wType + '  |  ' + item.zh);
                                 })
                             ])
                         )
                     ]),
-                    m('div', { class: `xrpLable mb-7`, style: { display: rechargeIndex.memo ? (rechargeIndex.selectCheck === 'XRP' ? '' : 'none') : 'none' } }, [
+                    m('div', { class: `xrpLable mb-7`, style: { display: rechargeIndex.memo ? (rechargeIndex.selectCheck === 'XRP' || rechargeIndex.selectCheck === 'EOS' ? '' : 'none') : 'none' } }, [
                         m('div', { class: `labeltip` }, [
                             m('span', {}, '标签'),
                             m('div.navbar-item.cursor-pointer', { class: `has-text-primary-hover` }, [

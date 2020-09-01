@@ -1,7 +1,5 @@
 const listenerObj = {};
 module.exports = {
-    // 登录成功
-    IS_LOGON_SUC_UPD: 'is_login_suc_upd',
     // 获取系统开关
     GET_FUNLIST_READY: 'get_funlist_ready',
     // 获取用户信息

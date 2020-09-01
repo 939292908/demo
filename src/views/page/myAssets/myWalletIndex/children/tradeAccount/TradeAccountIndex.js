@@ -12,7 +12,6 @@ module.exports = {
     setPageFlag: function (param) {
         this.pageFlag = param;
         this.vnode.attrs.setIdx(param);
-        console.log('1111111111111111111111111');
         this.setAccountBanlanceAndTitle();
     },
     setCurrency: function (param) {
@@ -54,7 +53,6 @@ module.exports = {
         }
         this.setOldValue(vnode.attrs.swValue);
         this.setAccountBanlanceAndTitle();
-        console.log(vnode.attrs.swValue, '2222222222222222222222222');
     },
     removeFn: function () {
         broadcast.offMsg({
