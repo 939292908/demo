@@ -1,6 +1,7 @@
 const broadcast = require('@/broadcast/broadcast');
 const wlt = require('@/models/wlt/wlt');
 const transferLogic = require('@/views/page/myAssets/transfer/transfer.logic.js'); // 划转模块逻辑
+const m = require('mithril');
 
 module.exports = {
     vnode: {},
@@ -47,6 +48,9 @@ module.exports = {
         }
         this.setAccountBanlance();
         this.setDataLength(this.tableData[this.tableDateList].length);
+        console.log('this.coinType', this.coinType);
+        console.log('this.dataLength', this.dataLength);
+        this.tableAction(``, `hideZero`);
     },
     setAccountBanlance: function() {
         this.accountBanlance = this.currency === 'BTC' ? wlt[this.coinType + 'TotalValueForBTC'] : wlt[this.coinType + 'TotalValueForUSDT'];
@@ -100,7 +104,7 @@ module.exports = {
             ]
         };
     },
-    test(row, type) {
+    jump(row, type) {
         const that = this;
         console.log(that.pageFlag, 'this.pageFlag---');
         transferLogic.initTransferInfo(); // 初始化弹框
@@ -119,61 +123,79 @@ module.exports = {
         }
         return res;
     },
+    setHideZeroFlag: function () {
+        this.hideZeroFlag = !this.hideZeroFlag;
+        this.tableAction(``, `hideZero`);
+    },
     tableAction: function (searchContent, type) {
-        const table = document.getElementsByTagName('table')[0];
-        const rowsLength = table.rows.length;
         if (type === 'search') {
-            let count = 1;
-            if (searchContent !== "") {
-                for (let i = 1; i < rowsLength; i++) {
-                    const searchText = table.rows[i].cells[0].innerHTML;
-                    if (searchText.toUpperCase().indexOf(searchContent.toUpperCase()) !== -1) {
-                        // 显示行操作
-                        table.rows[i].style.display = '';
-                    } else {
-                        // 隐藏行操作
-                        table.rows[i].style.display = 'none';
-                        count = count + 1;
-                    }
-                }
-                if (count === rowsLength) {
-                    table.rows[rowsLength - 1].style.display = '';
-                }
-            } else if (searchContent === "") {
-                table.rows[rowsLength - 1].style.display = 'none';
-                for (let j = 1; j < rowsLength - 1; j++) {
-                    table.rows[j].style.display = '';
-                }
-            }
+            this.searchTableData(searchContent);
         } else if (type === 'hideZero') {
-            this.hideZeroFlag = !this.hideZeroFlag;
-            let count = 1;
+            this.showTableData();
             if (this.hideZeroFlag) {
-                for (let i = 1; i < rowsLength - 1; i++) {
-                    const value = table.rows[i].cells[1].innerHTML;
-                    if (value !== '0.00000000') {
-                        // 显示行操作
-                        table.rows[i].style.display = '';
-                    } else {
-                        // 隐藏行操作
-                        table.rows[i].style.display = 'none';
-                        count = count + 1;
-                    }
-                }
-                if (count === rowsLength - 1) {
-                    table.rows[rowsLength - 1].style.display = '';
-                }
+                this.hideTableData();
             } else {
-                table.rows[rowsLength - 1].style.display = 'none';
-                for (let i = 1; i < rowsLength - 1; i++) {
-                    // 显示行操作
-                    table.rows[i].style.display = '';
-                }
+                this.showTableData();
             }
         }
     },
+    searchTableData: function (searchContent) {
+        const table = document.getElementsByTagName('table')[0];
+        const rowsLength = table.rows.length;
+        let count = 1;
+        if (searchContent !== "") {
+            for (let i = 1; i < rowsLength; i++) {
+                const searchText = table.rows[i].cells[0].innerHTML;
+                if (searchText.toUpperCase().indexOf(searchContent.toUpperCase()) !== -1) {
+                    // 显示行操作
+                    table.rows[i].style.display = '';
+                } else {
+                    // 隐藏行操作
+                    table.rows[i].style.display = 'none';
+                    count = count + 1;
+                }
+            }
+            if (count === rowsLength) {
+                table.rows[rowsLength - 1].style.display = '';
+            }
+        } else if (searchContent === "") {
+            table.rows[rowsLength - 1].style.display = 'none';
+            for (let j = 1; j < rowsLength - 1; j++) {
+                table.rows[j].style.display = '';
+            }
+        }
+    },
+    showTableData: function () {
+        const table = document.getElementsByTagName('table')[0];
+        const rowsLength = table.rows.length;
+        console.log('rowsLength--', table.rows);
+        console.log('rowsLength--', rowsLength);
+        table.rows[rowsLength - 1].style.display = 'none';
+        for (let i = 1; i < rowsLength - 1; i++) {
+            // 显示行操作
+            table.rows[i].style.display = '';
+        }
+    },
+    hideTableData: function () {
+        const table = document.getElementsByTagName('table')[0];
+        let count = 1;
+        const rowsLength = table.rows.length;
+        for (let i = 1; i < rowsLength - 1; i++) {
+            const value = table.rows[i].cells[1].innerHTML;
+            if (value !== '0.00000000') {
+                // 显示行操作
+                table.rows[i].style.display = '';
+            } else {
+                // 隐藏行操作
+                table.rows[i].style.display = 'none';
+                count = count + 1;
+            }
+        }
+        if (count === rowsLength - 1) {
+            table.rows[rowsLength - 1].style.display = '';
+        }
+    },
     createFn: function (vnode) {
-        this.hideZeroFlag = vnode.attrs.hideZeroFlag;
         wlt.init();
         broadcast.onMsg({
             key: 'view-pages-Myassets-TablegB',

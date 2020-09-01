@@ -17,8 +17,6 @@ const model = {
     legalTotal: 0, // 法币
     contractTotal: 0, // 合约
     swValue: '03', // 03:我的钱包 01:交易账户(01币币，02法币，04合约) 2:其他账户
-    coinType: 'wallet', // 当前 table thead是哪个类型的数据
-    tableDataList: 'walletData', // 当前 table tbody 是哪个类型的数据
     // 切换我的钱包。交易账户
     setSwValue(value) {
         model.swValue = value;
@@ -91,7 +89,7 @@ const model = {
     // 切换表格内容
     switchContent: function () {
         broadcast.emit({ cmd: broadcast.CHANGE_SW_CURRENCY, data: this.currency });
-        return m(table, { tableType: 'wallet', swValue: this.swValue, setIdx: this.setSwValue });
+        return m(table, { swValue: this.swValue, setIdx: this.setSwValue });
     },
     Nav: {
         firstNav: [
