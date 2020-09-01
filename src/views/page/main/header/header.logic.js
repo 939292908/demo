@@ -5,6 +5,11 @@ const broadcast = require('@/broadcast/broadcast');
 const m = require('mithril');
 
 const header = {
+    openNavbarDropdown: false,
+
+    clickNavbarOpenBtn: () => {
+        header.openNavbarDropdown = !header.openNavbarDropdown;
+    },
     loginOut: function () {
         logOut().then(res => {
             utils.removeItem("ex-session");

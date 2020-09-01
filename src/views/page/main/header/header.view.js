@@ -5,15 +5,8 @@ const Tooltip = require('@/views/components/common/Tooltip');
 const utils = require('@/util/utils').default;
 const apiLines = require('@/models/network/lines.js');
 const header = require('./header.logic.js');
+const globalModels = require('@/models/globalModels');
 require('@/styles/pages/header');
-
-const methods = {
-    openNavbarDropdown: false,
-
-    clickNavbarOpenBtn: () => {
-        methods.openNavbarDropdown = !methods.openNavbarDropdown;
-    }
-};
 
 module.exports = {
     oncreate: function() {
@@ -39,12 +32,12 @@ module.exports = {
                     })
                 ]),
                 m('a.navbar-burger.burger', {
-                    class: "" + (methods.openNavbarDropdown ? " is-active" : ""),
+                    class: "" + (header.openNavbarDropdown ? " is-active" : ""),
                     role: "button",
                     "aria-label": "menu",
                     "aria-expanded": false,
                     "data-target": "navbarBasicExample",
-                    onclick: methods.clickNavbarOpenBtn
+                    onclick: header.clickNavbarOpenBtn
                 }, [
                     m('span', { "aria-hidden": true }),
                     m('span', { "aria-hidden": true }),
@@ -52,7 +45,7 @@ module.exports = {
                 ])
             ]),
             // 未登录样式  pc
-            m('div#navbarBasicExample.navbar-menu', { class: 'is-hidden-mobile' + (methods.openNavbarDropdown ? " is-active" : "") }, [
+            m('div#navbarBasicExample.navbar-menu', { class: 'is-hidden-mobile' + (header.openNavbarDropdown ? " is-active" : "") }, [
                 m('div.navbar-start', {}, [
                     m('', {
                         class: "navbar-item has-text-primary-hover cursor-pointer ",
@@ -229,7 +222,9 @@ module.exports = {
                             class: "header-my-tooltip",
                             content: m('div', { class: `` }, [
                                 m('div', { class: ``, style: `background: url(${require("@/assets/img/home/background.png").default}) no-repeat center center / 100% 100%; width:"200px"` }, [
-                                    m('a', { class: `navbar-item py-5 header-my-tooltip-top` }, ["12"])
+                                    m('a', { class: `navbar-item py-5 header-my-tooltip-top` }, [
+                                        globalModels.getAccount().accountName
+                                    ])
                                 ]),
                                 m('a', { class: `` }, [
                                     m('a', { class: `navbar-item has-text-primary-hover` }, ["账户安全"])
@@ -344,7 +339,7 @@ module.exports = {
                 ])
             ]),
             // 未登录样式  移动端
-            m('div#navbarBasicExample.navbar-menu', { class: "is-hidden-widescreen" + (methods.openNavbarDropdown ? " is-active" : "") }, [
+            m('div#navbarBasicExample.navbar-menu', { class: "is-hidden-widescreen" + (header.openNavbarDropdown ? " is-active" : "") }, [
                 m('div.navbar-start', {}, [
                     m('', {
                         class: "navbar-item has-text-primary-hover",
@@ -501,7 +496,7 @@ module.exports = {
                                         window.router.push('/myWalletIndex');
                                     }
                                 }, [
-                                    m('a', { class: `navbar-item has-text-primary-hover` }, ["币币账号"])
+                                    m('a', { class: `navbar-item has-text-primary-hover` }, ["币币账户"])
                                 ]),
                                 m('a', {
                                     class: `navbar-item`,
