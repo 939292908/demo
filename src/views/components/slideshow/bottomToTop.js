@@ -8,6 +8,7 @@ const vertical = {
     loop: true,
     speed: 300,
     spaceBetween: 10,
+    // preventClicks: false,
     autoplay: {
         delay: 3000,
         disableOnInteraction: false
@@ -26,12 +27,12 @@ module.exports = {
         this.mySwiper = new Swiper('#slideShowBTT', vertical);
     },
     bottomToTop: function (vnode) {
-        const { banneList } = vnode.attrs;
+        const { banneList, click } = vnode.attrs;
         return banneList.map(item => {
             return m('div.swiper-slide', [
                 item.map(item => {
                     const srcUrl = item.image.indexOf('http') === 0 ? item.image : BaseUrl.WebAPI + item.image;
-                    return m('div', { class: "imgBox" }, m('img', { class: "border-radius-medium", src: srcUrl }));
+                    return m('div', { class: "imgBox", onclick: click.bind(this, item) }, m('img', { class: "border-radius-medium", src: srcUrl }));
                 })
             ]);
         });
