@@ -2,7 +2,6 @@ const m = require('mithril');
 const wlt = require('@/models/wlt/wlt');
 const broadcast = require('@/broadcast/broadcast');
 const table = require('@/views/page/myAssets/myWalletIndex/tradeTable/tradeTableView');
-const tableIndex = require('@/views/page/myAssets/myWalletIndex/tradeTable/tradeTableIndex');
 const transferLogic = require('@/views/page/myAssets/transfer/transfer.logic.js'); // 划转模块逻辑
 let timeOut = null;
 
@@ -18,10 +17,12 @@ const model = {
     legalTotal: 0, // 法币
     contractTotal: 0, // 合约
     swValue: '03', // 03:我的钱包 01:交易账户(01币币，02法币，04合约) 2:其他账户
+    coinType: 'wallet', // 当前 table thead是哪个类型的数据
+    tableDataList: 'walletData', // 当前 table tbody 是哪个类型的数据
     setSwValue(value) {
         model.swValue = value;
-        // model.transferModalOption.transferFrom = model.swValue;
-        transferLogic.transferModalOption.setTransferModalOption({
+        // model.transferFrom = model.swValue;
+        transferLogic.setTransferModalOption({
             transferFrom: model.swValue // from钱包默认选中
         });
     },
@@ -70,16 +71,13 @@ const model = {
         this.contractTotal = param;
     },
     switchChange: function (val) {
+        console.log(val, '--------val-------');
         this.swValue = val;
-        tableIndex.setPageFlag(val);
-        console.log(this.swValue, '--this.swValue');
-        transferLogic.transferModalOption.setTransferModalOption({
+        transferLogic.setTransferModalOption({
             transferFrom: val // from钱包默认选中
         });
         this.sets();
         this.switchContent();
-        // 防止被交易账户01覆盖交易账户悬浮卡片的值
-        window.event.stopPropagation();
     },
     switchContent: function () {
         broadcast.emit({ cmd: broadcast.CHANGE_SW_CURRENCY, data: this.currency });
@@ -117,14 +115,19 @@ const model = {
     handlerClickNavBtn (item) {
         console.log(item);
         if (item.id === 4) { // 点击资金划转
-            transferLogic.initTransferInfo(); // 初始化弹框
-            transferLogic.transferModalOption.isShow = true;
+            // transferLogic.isShow = true;
+            transferLogic.setTransferModalOption({
+                isShow: true,
+                transferFrom: model.swValue,
+                coin: ""
+            });
         }
         // 弹框↑
         if (item.to !== "") { // 跳转
             window.router.push(item.to);
         }
     },
+    // 交易账户（...）显示与隐藏切换
     switchDisplay: function (param, flag) {
         if (param === 'tradeCard') {
             if (flag === 'show') {

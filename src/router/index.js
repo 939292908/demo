@@ -51,6 +51,10 @@ class Router {
             requireAuth: true,
             onmatch: () => import('@/views/page/myAssets/extractCoin/index')
         },
+        '/closeGoogleVerify': {
+            requireAuth: true,
+            onmatch: () => import('@/views/page/bindGoogle/close/closeGoogleVerify.view')
+        },
         '/accountSecurity': {
             requireAuth: true,
             onmatch: () => import('@/views/page/accountSecurity/modifyLoginPassword/changePassword.view')

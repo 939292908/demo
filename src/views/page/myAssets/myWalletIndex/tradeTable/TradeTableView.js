@@ -11,14 +11,10 @@ module.exports = {
     },
     view: (vnode) => {
         return m('div', { class: `views-pages-Myassets-Table pt-7 px-5` }, [
-            // vnode.attrs.swValue,
-            // t.coinType + '   0',
-            // '0   ' + t.tableDataList,
-            // t.name,
             m('div.tradingAccount mb-8 tabs', { style: { display: vnode.attrs.swValue === '01' || vnode.attrs.swValue === '02' || vnode.attrs.swValue === '04' ? '' : 'none' } }, [
                 m('ul.tradingAccount_nav mx-5', { }, [
                     t.navAry.map((item) => {
-                        return m('li', { class: '' + (vnode.attrs.swValue === item.idx ? "is-active" : ''), onclick: () => { t.setPageFlag(item.idx); } }, m('a', {}, item.val));
+                        return m('li', { class: '' + (t.pageFlag === item.idx ? "is-active" : ''), onclick: () => { t.setPageFlag(item.idx); } }, m('a', {}, item.val));
                     })
                 ])
             ]),
@@ -43,7 +39,7 @@ module.exports = {
                     // m('i', { class: 'iconfont', value: `${nzm}` }),
                     m('span', [`资金记录`])
                 ]),
-                m('div.profit', { style: { display: t.coinType === `contract` ? `` : `none` } }, [
+                m('div.profit', { style: { display: t.coinType === `contract` ? `none` : `none` } }, [
                     m('i', { class: 'iconfont icon-Analysis' }),
                     m('span', [`盈亏分析`])
                 ]),
@@ -65,7 +61,7 @@ module.exports = {
                     ]),
                     m('tbody', {}, [
                         // 循环表身
-                        t.tableData[t.tableDataList].map((row) => {
+                        t.tableData[t.tableDateList].map((row) => {
                             return m('tr', {}, [
                                 t.columnData[t.coinType].map((item, i) => {
                                     if (i === t.columnData[t.coinType].length - 1) {
@@ -85,12 +81,17 @@ module.exports = {
                             ]);
                         }),
                         m('tr', { style: { display: `none` } }, [
-                            m('td', { colspan: 6, style: { textAlign: `center` } }, `暂无数据`)
+                            m('td', { colspan: 6, style: { textAlign: `center` } }, [
+                                m('img', { class: `mt-8`, src: require(`@/assets/img/myAssets/noneData.png`).default, style: { height: `120px`, width: `88px` } })
+                            ])
                         ])
                     ])
                 ])
             )
         ]);
+    },
+    onupdate: (vnode) => {
+        t.updateFn(vnode);
     },
     onremove: () => {
         t.removeFn();

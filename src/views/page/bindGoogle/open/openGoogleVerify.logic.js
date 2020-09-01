@@ -1,6 +1,7 @@
 const Http = require('@/api').webApi;
 const m = require('mithril');
 const Qrcode = require('qrcode');
+const geetest = require('@/models/validate/geetest').default;
 
 module.exports = {
     // 密钥
@@ -38,11 +39,33 @@ module.exports = {
             console.log(err);
         });
     },
+    // 绑定谷歌验证
     bind: function() {
-        Http.bindGoogleAuth().then(function(arg) {
+        this.initGeetest();
+        // 密钥
+        const opInfo = this.secret;
+        // 用户密码
+        const password = document.getElementsByClassName('pwd')[0].value;
+        // google验证码
+        const code = document.getElementsByClassName('code')[0].value;
+        Http.bindGoogleAuth({
+            opInfo: opInfo,
+            password: password,
+            code: code
+        }).then(function(arg) {
             console.log('nzm', 'bindGoogleAuth success', arg);
+            if (arg.result.code === 0) {
+                console.log('success');
+            }
         }).catch(function(err) {
             console.log('nzm', 'bindGoogleAuth error', err);
+        });
+    },
+    /**
+     * 加载极验
+     */
+    initGeetest() {
+        geetest.init(() => {
         });
     },
     removeFn: function() {
