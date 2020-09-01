@@ -1,4 +1,5 @@
 const Http = require('@/api').webApi;
+const { Conf, webApi } = require('@/api');
 const m = require('mithril');
 const wlt = require('@/models/wlt/wlt');
 const broadcast = require('@/broadcast/broadcast');
@@ -15,39 +16,29 @@ module.exports = {
     btnCheckFlag: 0, // 默认选中第一个
     labelTips: '', // 标签提示
     memo: null, // 是否显示标签
+    coinInfo: {},
     setWalletData() {
         const that = this;
         this.pageData = []; // 初始化
-        this.USDTLabel = []; // 初始化
+        this.setUSDTLabel();
         for (const i in wlt.wallet['03']) {
             if (wlt.wallet['03'][i].Setting.canRecharge) { // 能否充值
                 const item = {};
                 const walletI = wlt.wallet['03'][i];
                 that.uId = this.uId || walletI.uid;
                 item.canRecharge = walletI.Setting.canRecharge; // 能否充值
-                if (walletI.wType === 'USDT') {
-                    for (const i in walletI.Setting) {
-                        if (i.search('-') !== -1) {
-                            const value = {};
-                            value.title = i.split('-')[1];
-                            value.flag = walletI.Setting[i];
-                            this.USDTLabel.push(value);
-                        }
-                    }
-                    // 数组去重
-                    const tempJson = {};
-                    const res = [];
-                    for (let i = 0; i < this.USDTLabel.length; i++) {
-                        tempJson[JSON.stringify(this.USDTLabel[i])] = true; // 取出每一个对象当做key
-                    }
-                    for (let j = 0; j < Object.keys(tempJson).length; j++) {
-                        res.push(JSON.parse(Object.keys(tempJson)[j]));
-                    }
-                    this.USDTLabel = res;
-                }
                 item.promptRecharge = walletI.promptRecharge; // 充值提示
                 item.wType = walletI.wType; // 币种
                 item.memo = walletI.Setting.memo; // 是否显示标签
+                if (walletI.wType === 'USDT') {
+                    for (const i in walletI.Setting) {
+                        if (i.search('-') !== -1) {
+                            if (!walletI.Setting[i]) {
+                                this.USDTLabel.pop(i.split('-')[1]);
+                            }
+                        }
+                    }
+                }
                 Http.GetRechargeAddr({
                     wType: walletI.wType
                 }).then(function(arg) {
@@ -65,6 +56,20 @@ module.exports = {
                 });
             }
         }
+    },
+    setUSDTLabel() {
+        const params = { locale: 'zh', vp: Conf.exchId };
+        webApi.getCoinInfo(params).then(res => {
+            if (res.result.code === 0) {
+                this.USDTLabel = Array.from(res.result.data.USDT.chains);
+                const ary = [];
+                for (let i = 0; i < this.USDTLabel.length; i++) {
+                    ary.push(this.USDTLabel[i].name);
+                }
+                this.USDTLabel = ary;
+                console.log(this.USDTLabel);
+            }
+        });
     },
     setTipsAndAddrAndCode() {
         for (const i in this.pageData) {

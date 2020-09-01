@@ -11,6 +11,7 @@ module.exports = {
     accountTitle: '', // 交易账户中表格右上角的币种
     accountBanlance: 0, // 交易账户中表格右上角的币种总额
     oldValue: null, // 优化一直执行update
+    oldHideMoneyFlag: null, // 优化一直执行update
     columnData: { // 表格列
         wallet: [],
         coin: [],
@@ -105,7 +106,6 @@ module.exports = {
     },
     jump(row, type) {
         const that = this;
-        console.log(that.pageFlag, 'this.pageFlag---');
         transferLogic.initTransferInfo(); // 初始化弹框
         if (type === '划转') {
             transferLogic.setTransferModalOption({
@@ -130,6 +130,15 @@ module.exports = {
         if (type === 'search') {
             this.searchTableData(searchContent);
         } else if (type === 'hideZero') {
+            // if (this.oldHideMoneyFlag) {
+            //     this.oldHideMoneyFlag = false;
+            //     if (this.hideZeroFlag) {
+            //         this.hideTableData();
+            //     } else {
+            //         this.showTableData();
+            //     }
+            //     this.oldHideMoneyFlag = true;
+            // }
             if (this.hideZeroFlag) {
                 this.hideTableData();
             } else {
@@ -165,7 +174,6 @@ module.exports = {
     },
     showTableData: function () {
         const tbody = document.getElementsByTagName('table')[0].childNodes[1];
-        console.log(tbody.rows);
         const rowsLength = tbody.rows.length - 1; // tbody.rows.length - 1：最后一行是暂无数据
         tbody.rows[rowsLength].style.display = 'none';
         for (let i = 1; i < rowsLength; i++) {
@@ -190,7 +198,7 @@ module.exports = {
             tbody.rows[rowsLength].style.display = '';
         }
     },
-    createFn: function (vnode) {
+    createFn: function () {
         wlt.init();
         broadcast.onMsg({
             key: 'view-pages-Myassets-TablegB',
@@ -213,12 +221,17 @@ module.exports = {
     },
     initFn: function (vnode) {
         this.vnode = vnode;
+        this.oldHideMoneyFlag = vnode.attrs.hideMoneyFlag;
     },
     updateFn(vnode) {
         if (this.oldValue !== vnode.attrs.swValue) {
             this.setPageFlag(vnode.attrs.swValue);
         }
+        if (this.oldHideMoneyFlag !== vnode.attrs.hideMoneyFlag) {
+            this.oldHideMoneyFlag = vnode.attrs.hideMoneyFlag;
+        }
         this.oldValue = vnode.attrs.swValue;
+        this.oldHideMoneyFlag = vnode.attrs.hideMoneyFlag;
     },
     removeFn: function () {
         broadcast.offMsg({

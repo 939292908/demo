@@ -12,7 +12,7 @@ const model = {
     walletTotalValue: 0, // 我的钱包总资产
     tradingAccountTotalValue: 0, // 交易账户总资产
     otherTotalValue: 0, // 其他账户
-    hideMoneyFlag: false, // 是否隐藏资产
+    hideMoneyFlag: false, // 是否隐藏资产 默认false不隐藏
     coinTotal: 0, // 币币
     legalTotal: 0, // 法币
     contractTotal: 0, // 合约
@@ -89,7 +89,7 @@ const model = {
     // 切换表格内容
     switchContent: function () {
         broadcast.emit({ cmd: broadcast.CHANGE_SW_CURRENCY, data: this.currency });
-        return m(table, { swValue: this.swValue, setIdx: this.setSwValue });
+        return m(table, { swValue: this.swValue, setIdx: this.setSwValue, hideMoneyFlag: this.hideMoneyFlag });
     },
     Nav: {
         firstNav: [

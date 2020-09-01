@@ -47,7 +47,7 @@ module.exports = {
                 m('div.account', { style: { display: t.coinType !== `wallet` ? `` : `none` } }, [
                     m('span', {}, t.accountTitle),
                     m('span', {}, `  `),
-                    m('span', {}, t.accountBanlance + t.currency)
+                    m('span', {}, t.oldHideMoneyFlag ? '******' : t.accountBanlance + t.currency)
                 ])
             ]),
             m('div.tab', { class: `pb-7 border-radius-medium` },
@@ -72,11 +72,12 @@ module.exports = {
                                                 return m('a.mr-4 has-text-primary', { onclick: () => { t.jump(row, aHref.operation); } }, aHref.operation);
                                             })
                                         ]);
-                                    } else if (i === t.columnData[t.coinType].length - 2) {
-                                        // 估值列
-                                        return m('td.pt-7 has-text-level-1', {}, row[item.val] + ` ` + t.currency);
-                                    } else {
+                                    } else if (i === t.columnData[t.coinType].length - 2) { // 估值列
+                                        return m('td.pt-7 has-text-level-1', {}, t.oldHideMoneyFlag ? '******' : row[item.val] + ` ` + t.currency);
+                                    } else if (i === 0) { // 第一列币种不需要隐藏
                                         return m('td.pt-7 has-text-level-1', {}, row[item.val]);
+                                    } else {
+                                        return m('td.pt-7 has-text-level-1', {}, t.oldHideMoneyFlag ? '******' : row[item.val]);
                                     }
                                 })
                             ]);

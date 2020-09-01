@@ -14,8 +14,9 @@ module.exports = {
     },
     view: () => {
         return m('div', { class: `views-page-myAssets-myWalletIndex-childer-recharge theme--light` }, [
+            // rechargeIndex.USDTLabel,
             m('div', { class: `top mb-7 has-bg-level-2 ` }, [
-                m('i', { class: `iconfont icon-Return has-text-title`, onclick: () => { m.route.set('/myWalletIndex'); } }),
+                m('i', { class: `iconfont icon-Return has-text-title`, onclick: () => { window.router.go(-1); } }),
                 m('span', { class: `has-text-title my-4 ml-4 title-medium` }, '充币')
             ]),
             m('div', { class: `bottom content-width mb-9` }, [
@@ -60,8 +61,8 @@ module.exports = {
                             rechargeIndex.USDTLabel.map((item, index) => {
                                 return m('button', {
                                     class: `mr-6 cursor-pointer ` + (rechargeIndex.btnCheckFlag === index ? `has-bg-primary` : `noneBG`),
-                                    onclick: () => { rechargeIndex.changeBtnflag(index, item.title); }
-                                }, item.title);
+                                    onclick: () => { rechargeIndex.changeBtnflag(index, item); }
+                                }, item);
                             })
                         ])
                     ]),
