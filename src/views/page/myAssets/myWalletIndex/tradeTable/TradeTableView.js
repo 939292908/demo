@@ -8,14 +8,17 @@ module.exports = {
     },
     oncreate: (vnode) => {
         t.createFn(vnode);
-        m.redraw();
     },
     view: (vnode) => {
         return m('div', { class: `views-pages-Myassets-Table pt-7 px-5` }, [
+            vnode.attrs.swValue,
+            t.coinType + '   0',
+            '0   ' + t.tableDataList,
+            t.name,
             m('div.tradingAccount mb-8 tabs', { style: { display: vnode.attrs.swValue === '01' || vnode.attrs.swValue === '02' || vnode.attrs.swValue === '04' ? '' : 'none' } }, [
                 m('ul.tradingAccount_nav mx-5', { }, [
                     t.navAry.map((item) => {
-                        return m('li', { class: '' + (t.pageFlag === item.idx ? "is-active" : ''), onclick: () => { t.setPageFlag(item.idx); } }, m('a', {}, item.val));
+                        return m('li', { class: '' + (vnode.attrs.swValue === item.idx ? "is-active" : ''), onclick: () => { t.setPageFlag(item.idx); } }, m('a', {}, item.val));
                     })
                 ])
             ]),
@@ -62,7 +65,7 @@ module.exports = {
                     ]),
                     m('tbody', {}, [
                         // 循环表身
-                        t.tableData[t.tableDateList].map((row) => {
+                        t.tableData[t.tableDataList].map((row) => {
                             return m('tr', {}, [
                                 t.columnData[t.coinType].map((item, i) => {
                                     if (i === t.columnData[t.coinType].length - 1) {

@@ -30,7 +30,7 @@ m.route(document.querySelector('body .route-box'), defaultRoutePath, {
     },
     '/recharge': {
         onmatch: function () {
-            return import('@/views/page/myAssets/myWalletIndex/children/recharge/rechargeView');
+            return import('@/views/page/myAssets/myWalletIndex/children/recharge/recharge.view');
         }
     },
     '/assetRecords': {
@@ -49,6 +49,9 @@ m.route(document.querySelector('body .route-box'), defaultRoutePath, {
     },
     '/bindPhone': {
         onmatch: () => import('@/views/page/user/bind/bindEmail/bindEmail.view')
+    },
+    '/openGoogleVerify': {
+        onmatch: () => import('@/views/page/bindGoogle/open/openGoogleVerify.view')
     }
 });
 

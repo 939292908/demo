@@ -1,10 +1,11 @@
 const m = require('mithril');
 const wlt = require('@/models/wlt/wlt');
 const broadcast = require('@/broadcast/broadcast');
-// const TradeAccountView = require('@/Views/page/myAssets/myWalletIndex/children/tradeAccount/TradeAccountView');
 const table = require('@/views/page/myAssets/myWalletIndex/tradeTable/tradeTableView');
-let timeOut = null;
+const tableIndex = require('@/views/page/myAssets/myWalletIndex/tradeTable/tradeTableIndex');
 const transferLogic = require('@/views/page/myAssets/transfer/transfer.logic.js'); // 划转模块逻辑
+let timeOut = null;
+
 const model = {
     currency: 'BTC',
     totalValue: 0, // 总资产
@@ -70,13 +71,15 @@ const model = {
     },
     switchChange: function (val) {
         this.swValue = val;
+        tableIndex.setPageFlag(val);
+        console.log(this.swValue, '--this.swValue');
         transferLogic.transferModalOption.setTransferModalOption({
             transferFrom: val // from钱包默认选中
         });
-        // 防止被交易账户01覆盖交易账户悬浮卡片的值
-        window.event.stopPropagation();
         this.sets();
         this.switchContent();
+        // 防止被交易账户01覆盖交易账户悬浮卡片的值
+        window.event.stopPropagation();
     },
     switchContent: function () {
         broadcast.emit({ cmd: broadcast.CHANGE_SW_CURRENCY, data: this.currency });
@@ -180,8 +183,6 @@ const model = {
         this.setTotalCNY(wlt.totalCNYValue);
     },
     initFn: function() {
-        console.log(this);
-        console.log(this.swValue);
         m.redraw();
     },
     createFn: function() {
