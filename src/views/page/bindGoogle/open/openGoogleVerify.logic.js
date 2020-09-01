@@ -1,6 +1,7 @@
 const Http = require('@/api').webApi;
 const m = require('mithril');
 const Qrcode = require('qrcode');
+const geetest = require('@/models/validate/geetest').default;
 
 module.exports = {
     // 密钥
@@ -40,6 +41,7 @@ module.exports = {
     },
     // 绑定谷歌验证
     bind: function() {
+        this.initGeetest();
         // 密钥
         const opInfo = this.secret;
         // 用户密码
@@ -57,6 +59,13 @@ module.exports = {
             }
         }).catch(function(err) {
             console.log('nzm', 'bindGoogleAuth error', err);
+        });
+    },
+    /**
+     * 加载极验
+     */
+    initGeetest() {
+        geetest.init(() => {
         });
     },
     removeFn: function() {

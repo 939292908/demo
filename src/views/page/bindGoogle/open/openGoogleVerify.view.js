@@ -47,7 +47,7 @@ const openGView = {
     view: () => {
         return m('div', { class: `views-page-accountSecurity-bindGoogle-open theme--light` }, [
             m('div', { class: `operation mb-7 has-bg-level-2` }, [
-                m('i', { class: `iconfont icon-Return has-text-title` }),
+                m('i', { class: `iconfont icon-Return has-text-title mr-7` }),
                 m('span', { class: `has-text-title my-4 ml-4 title-medium` }, '您正在绑定谷歌验证')
             ]),
             m('div', { class: `center content-width` }, [
