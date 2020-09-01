@@ -1,5 +1,6 @@
 const m = require('mithril');
 const t = require('@/views/page/myAssets/myWalletIndex/tradeTable/TradeTableIndex');
+console.log(t);
 require('@/views/page/myAssets/myWalletIndex/tradeTable/TradeTable.scss');
 
 module.exports = {
@@ -29,8 +30,8 @@ module.exports = {
                     })
                 ]),
                 m('div.hideZeroAsset mr-7', {}, [
-                    m('label.checkbox', { onclick: function () { t.tableAction(``, `hideZero`); } }, [
-                        m('input[type=checkbox].mr-1', { checked: t.hideZeroFlag }),
+                    m('label.checkbox', {}, [
+                        m('input[type=checkbox].mr-1', { checked: t.hideZeroFlag, onchange: () => { t.setHideZeroFlag(); } }),
                         `隐藏0资产`
                     ])
                 ]),
@@ -46,7 +47,7 @@ module.exports = {
                 m('div.account', { style: { display: t.coinType !== `wallet` ? `` : `none` } }, [
                     m('span', {}, t.accountTitle),
                     m('span', {}, `  `),
-                    m('span', {}, t.accountBanlance + t.currency)
+                    m('span', {}, t.oldHideMoneyFlag ? '******' : t.accountBanlance + t.currency)
                 ])
             ]),
             m('div.tab', { class: `pb-7 border-radius-medium` },
@@ -68,14 +69,15 @@ module.exports = {
                                         // 操作列
                                         return m('td.pt-7 has-text-level-1', {}, [
                                             item.val.map(aHref => {
-                                                return m('a.mr-4 has-text-primary', { onclick: () => { t.test(row, aHref.operation); } }, aHref.operation);
+                                                return m('a.mr-4 has-text-primary', { onclick: () => { t.jump(row, aHref.operation); } }, aHref.operation);
                                             })
                                         ]);
-                                    } else if (i === t.columnData[t.coinType].length - 2) {
-                                        // 估值列
-                                        return m('td.pt-7 has-text-level-1', {}, row[item.val] + ` ` + t.currency);
-                                    } else {
+                                    } else if (i === t.columnData[t.coinType].length - 2) { // 估值列
+                                        return m('td.pt-7 has-text-level-1', {}, t.oldHideMoneyFlag ? '******' : row[item.val] + ` ` + t.currency);
+                                    } else if (i === 0) { // 第一列币种不需要隐藏
                                         return m('td.pt-7 has-text-level-1', {}, row[item.val]);
+                                    } else {
+                                        return m('td.pt-7 has-text-level-1', {}, t.oldHideMoneyFlag ? '******' : row[item.val]);
                                     }
                                 })
                             ]);

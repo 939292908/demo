@@ -11,6 +11,7 @@ module.exports = {
     accountTitle: '', // 交易账户中表格右上角的币种
     accountBanlance: 0, // 交易账户中表格右上角的币种总额
     oldValue: null, // 优化一直执行update
+    oldHideMoneyFlag: null, // 优化一直执行update
     columnData: { // 表格列
         wallet: [],
         coin: [],
@@ -47,6 +48,9 @@ module.exports = {
         }
         this.setAccountBanlance();
         this.setDataLength(this.tableData[this.tableDateList].length);
+        setTimeout(() => {
+            this.tableAction(``, `hideZero`);
+        }, 150);
     },
     setAccountBanlance: function() {
         this.accountBanlance = this.currency === 'BTC' ? wlt[this.coinType + 'TotalValueForBTC'] : wlt[this.coinType + 'TotalValueForUSDT'];
@@ -100,9 +104,9 @@ module.exports = {
             ]
         };
     },
-    test(row, type) {
+    jump(row, type) {
         const that = this;
-        console.log(that.pageFlag, 'this.pageFlag---');
+        transferLogic.initTransferInfo(); // 初始化弹框
         if (type === '划转') {
             transferLogic.setTransferModalOption({
                 isShow: true,
@@ -118,61 +122,83 @@ module.exports = {
         }
         return res;
     },
+    setHideZeroFlag: function () {
+        this.hideZeroFlag = !this.hideZeroFlag;
+        this.tableAction(``, `hideZero`);
+    },
     tableAction: function (searchContent, type) {
-        const table = document.getElementsByTagName('table')[0];
-        const rowsLength = table.rows.length;
         if (type === 'search') {
-            let count = 1;
-            if (searchContent !== "") {
-                for (let i = 1; i < rowsLength; i++) {
-                    const searchText = table.rows[i].cells[0].innerHTML;
-                    if (searchText.toUpperCase().indexOf(searchContent.toUpperCase()) !== -1) {
-                        // 显示行操作
-                        table.rows[i].style.display = '';
-                    } else {
-                        // 隐藏行操作
-                        table.rows[i].style.display = 'none';
-                        count = count + 1;
-                    }
-                }
-                if (count === rowsLength) {
-                    table.rows[rowsLength - 1].style.display = '';
-                }
-            } else if (searchContent === "") {
-                table.rows[rowsLength - 1].style.display = 'none';
-                for (let j = 1; j < rowsLength - 1; j++) {
-                    table.rows[j].style.display = '';
-                }
-            }
+            this.searchTableData(searchContent);
         } else if (type === 'hideZero') {
-            this.hideZeroFlag = !this.hideZeroFlag;
-            let count = 1;
+            // if (this.oldHideMoneyFlag) {
+            //     this.oldHideMoneyFlag = false;
+            //     if (this.hideZeroFlag) {
+            //         this.hideTableData();
+            //     } else {
+            //         this.showTableData();
+            //     }
+            //     this.oldHideMoneyFlag = true;
+            // }
             if (this.hideZeroFlag) {
-                for (let i = 1; i < rowsLength - 1; i++) {
-                    const value = table.rows[i].cells[1].innerHTML;
-                    if (value !== '0.00000000') {
-                        // 显示行操作
-                        table.rows[i].style.display = '';
-                    } else {
-                        // 隐藏行操作
-                        table.rows[i].style.display = 'none';
-                        count = count + 1;
-                    }
-                }
-                if (count === rowsLength - 1) {
-                    table.rows[rowsLength - 1].style.display = '';
-                }
+                this.hideTableData();
             } else {
-                table.rows[rowsLength - 1].style.display = 'none';
-                for (let i = 1; i < rowsLength - 1; i++) {
-                    // 显示行操作
-                    table.rows[i].style.display = '';
-                }
+                this.showTableData();
             }
         }
     },
-    createFn: function (vnode) {
-        this.hideZeroFlag = vnode.attrs.hideZeroFlag;
+    searchTableData: function (searchContent) {
+        const table = document.getElementsByTagName('table')[0];
+        const rowsLength = table.rows.length;
+        let count = 1;
+        if (searchContent !== "") {
+            for (let i = 1; i < rowsLength; i++) {
+                const searchText = table.rows[i].cells[0].innerHTML;
+                if (searchText.toUpperCase().indexOf(searchContent.toUpperCase()) !== -1) {
+                    // 显示行操作
+                    table.rows[i].style.display = '';
+                } else {
+                    // 隐藏行操作
+                    table.rows[i].style.display = 'none';
+                    count = count + 1;
+                }
+            }
+            if (count === rowsLength) {
+                table.rows[rowsLength - 1].style.display = '';
+            }
+        } else if (searchContent === "") {
+            table.rows[rowsLength - 1].style.display = 'none';
+            for (let j = 1; j < rowsLength - 1; j++) {
+                table.rows[j].style.display = '';
+            }
+        }
+    },
+    showTableData: function () {
+        const tbody = document.getElementsByTagName('table')[0].childNodes[1];
+        const rowsLength = tbody.rows.length - 1; // tbody.rows.length - 1：最后一行是暂无数据
+        tbody.rows[rowsLength].style.display = 'none';
+        for (let i = 1; i < rowsLength; i++) {
+            // 显示行操作
+            tbody.rows[i].style.display = '';
+        }
+    },
+    hideTableData: function () {
+        let count = 0;
+        const tbody = document.getElementsByTagName('table')[0].childNodes[1];
+        const rowsLength = tbody.rows.length - 1; // tbody.rows.length - 1：最后一行是暂无数据
+        for (let i = 0; i < rowsLength; i++) {
+            const text = tbody.rows[i].cells[1].innerHTML;
+            if (text === '0.00000000' || text === '0.0000') {
+                count = count + 1;
+                tbody.rows[i].style.display = 'none';
+            } else {
+                tbody.rows[i].style.display = '';
+            }
+        }
+        if (count === rowsLength) {
+            tbody.rows[rowsLength].style.display = '';
+        }
+    },
+    createFn: function () {
         wlt.init();
         broadcast.onMsg({
             key: 'view-pages-Myassets-TablegB',
@@ -195,12 +221,17 @@ module.exports = {
     },
     initFn: function (vnode) {
         this.vnode = vnode;
+        this.oldHideMoneyFlag = vnode.attrs.hideMoneyFlag;
     },
     updateFn(vnode) {
         if (this.oldValue !== vnode.attrs.swValue) {
             this.setPageFlag(vnode.attrs.swValue);
         }
+        if (this.oldHideMoneyFlag !== vnode.attrs.hideMoneyFlag) {
+            this.oldHideMoneyFlag = vnode.attrs.hideMoneyFlag;
+        }
         this.oldValue = vnode.attrs.swValue;
+        this.oldHideMoneyFlag = vnode.attrs.hideMoneyFlag;
     },
     removeFn: function () {
         broadcast.offMsg({
