@@ -1,7 +1,7 @@
 const m = require('mithril');
 const Header = require('../../../components/indexHeader/indexHeader.view');
 const Transfer = require('@/views/page/myAssets/transfer/transfer.view.js');
-const myWalletIndex = require('@/pages/page/myAssets/myWalletIndex/MyWalletIndex');
+const myWalletIndex = require('@/views/page/myAssets/myWalletIndex/MyWalletIndex');
 require('@/views/page/myAssets/myWalletIndex/MyWalletIndex.scss');
 
 module.exports = {
@@ -128,9 +128,6 @@ module.exports = {
                 m('div', { class: `myWalletIndex-table container pb-7 content-width` }, [
                     myWalletIndex.switchContent()
                 ])
-            ]),
-            m('div', { class: `myWalletIndex-table container pb-7 content-width` }, [
-                myWalletIndex.switchContent()
             ]),
             // 资金划转组件
             m(Transfer, myWalletIndex.transferModalOption)
