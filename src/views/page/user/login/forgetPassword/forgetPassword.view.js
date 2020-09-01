@@ -78,7 +78,7 @@ module.exports = {
                                 }
                             }, ['邮箱'])
                         ]),
-                        m('div.has-text-level-1.body-3.mb-2', {}, [ForgetPassword.loginType === 'phone' ? '手机号' : '邮箱']),
+                        m('div.has-text-level-1.body-3.mb-2', {}, [ForgetPassword.loginType === 'phone' ? '手机号' : '邮箱号']),
                         ForgetPassword.loginType === 'phone'
                             ? m(InputWithComponent, {
                                 leftComponents: m(AreaCodeSelect, {
