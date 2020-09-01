@@ -1,6 +1,6 @@
 const utils = {};
 const DBG_TAG = "UTILS";
-const I18n = require('@/languages/I18n').default;
+// const I18n = require('@/languages/I18n').default;
 utils.setItem = function (key, val) {
     try {
         window.localStorage.setItem(key, JSON.stringify(val));
@@ -210,40 +210,32 @@ utils.getTransferInfo = function (p) {
 };
 utils.getWithdrawArr = function (p) {
     const obj = {
-        // eslint-disable-next-line quote-props
-        '11': I18n.$t('10141'), // '邮件确认中', // 待确认(未验证)
-        // eslint-disable-next-line quote-props
-        '12': I18n.$t("10146"), // 已取消(取消)
-        // eslint-disable-next-line quote-props
-        '13': I18n.$t('10142'), // '待审核', //待审核(已确认，待锁定资产)
-        // eslint-disable-next-line quote-props
-        '14': I18n.$t('10146'), // '已取消', //已取消(未确认而且已超时)
-        // eslint-disable-next-line quote-props
-        '18': I18n.$t("10134"), // 失败(确认后，出金操作失败（余额不足）【结束】)
-        // eslint-disable-next-line quote-props
-        '19': I18n.$t("10134"), // 失败(确认后，出金操作失败（tks宕机，网络不通）【结束】)
-        // eslint-disable-next-line quote-props
-        '24': I18n.$t('10142'), // '待审核', //待审核(锁定资产成功（交易核心出金成功）)
-        // eslint-disable-next-line quote-props
-        '25': I18n.$t("10146"), // 已取消(用户撤销 【对冲账单，还钱】【结束】)
-        // eslint-disable-next-line quote-props
-        '26': I18n.$t("10143"), // 审核中(开始后台审核，用户不可撤销（后台回调通知ucs）)
-        // eslint-disable-next-line quote-props
-        '30': I18n.$t("10134"), // 失败(后台审核不通过【对冲账单，还钱】【结束】)
-        // eslint-disable-next-line quote-props
-        '35': I18n.$t("10134"), // 失败(调用外部钱包打款失败 【可补发调外部钱包】)
-        // eslint-disable-next-line quote-props
-        '36': I18n.$t('10133'), // '成功', //区块确认中(调用外部钱包打款成功 【把冻结资产的状态设置为不可对冲】)
-        // eslint-disable-next-line quote-props
-        '41': I18n.$t("10133"), // 成功(区块链成功回调 （暂无）)
-        // eslint-disable-next-line quote-props
-        '42': I18n.$t('10144'), // '处理中', //处理中(区块链失败回调 （暂无）【24小时后，人工介入???】)
-        // eslint-disable-next-line quote-props
-        '50': I18n.$t('10144'), // '处理中', //处理中(提币失败后，已申请对冲)
-        // eslint-disable-next-line quote-props
-        '51': I18n.$t("10134"), // 失败(提币失败后，对冲成功，退回资产到帐)
-        // eslint-disable-next-line quote-props
-        '52': I18n.$t('10144') // '处理中', //处理中(提币失败后，对冲失败，后台可再次审批)
+        1: '确认中',
+        2: '失败',
+        3: '成功',
+        11: '邮件确认中', // 待确认(未验证)
+        12: '已取消(取消)',
+        13: '待审核(已确认，待锁定资产)',
+        14: '已取消(未确认而且已超时)',
+        18: '失败(确认后，出金操作失败（余额不足）【结束】)',
+        19: '失败(确认后，出金操作失败（tks宕机，网络不通）【结束】)',
+        24: '待审核(锁定资产成功（交易核心出金成功）)',
+        25: '已取消(用户撤销 【对冲账单，还钱】【结束】)',
+        26: '审核中(开始后台审核，用户不可撤销（后台回调通知ucs）)',
+        30: '失败(后台审核不通过【对冲账单，还钱】【结束】)',
+        35: '失败(调用外部钱包打款失败 【可补发调外部钱包】)',
+        36: '审核已通过(调用外部钱包打款成功 【把冻结资产的状态设置为不可对冲】)',
+        41: '成功(区块链成功回调 （暂无）)',
+        42: '处理中(区块链失败回调 （暂无）【24小时后，人工介入???】)',
+        50: '处理中(提币失败后，已申请对冲)',
+        51: '失败(提币失败后，对冲成功，退回资产到帐)',
+        52: '处理中(提币失败后，对冲失败，后台可再次审批)',
+        101: '处理中(提币失败后，对冲失败，后台可再次审批)',
+        102: '处理中(提币失败后，对冲失败，后台可再次审批)',
+        110: '待审核', // 待审核
+        111: '审核失败', // 审核失败
+        112: '已撤销', // 已撤销
+        113: '审核成功' // 审核成功
     };
     return obj[p] || '';
 };

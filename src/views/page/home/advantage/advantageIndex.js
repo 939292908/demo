@@ -2,10 +2,7 @@ const m = require('mithril');
 // const m = require('swiper')
 const utils = require('@/util/utils').default;
 
-// require('@/styles/pages/home.css');
-require('@/styles/pages/home/advantage.scss');
-
-// const marketList = require('./marketList');
+require('@/views/page/home/advantage/advantage.scss');
 
 module.exports = {
     view: function () {

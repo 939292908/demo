@@ -19,7 +19,7 @@ const horizontal = {
         prevEl: '.button-prev'
     }
 };
-
+// window.open('/w/trd/#!/future');
 module.exports = {
     data: {
         list: [],

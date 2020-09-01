@@ -35,7 +35,7 @@ m.route(document.querySelector('body .route-box'), defaultRoutePath, {
     },
     '/assetRecords': {
         onmatch: function () {
-            return import('@/views/page/myAssets/assetRecordsNew/assetRecords.view');
+            return import('@/views/page/myAssets/assetRecords/assetRecords.view');
         }
     },
     '/extractCoin': {
@@ -43,6 +43,18 @@ m.route(document.querySelector('body .route-box'), defaultRoutePath, {
     },
     '/closeGoogleVerify': {
         onmatch: () => import('@/views/page/bindGoogle/close/closeGoogleVerify.view')
+    },
+    '/accountSecurity': {
+        onmatch: () => import('@/views/page/accountSecurity/modifyLoginPassword/changePassword.view')
+    },
+    '/bindEmail': {
+        onmatch: () => import('@/views/page/user/bind/bindEmail/bindEmail.view')
+    },
+    '/bindPhone': {
+        onmatch: () => import('@/views/page/user/bind/bindEmail/bindEmail.view')
+    },
+    '/openGoogleVerify': {
+        onmatch: () => import('@/views/page/bindGoogle/open/openGoogleVerify.view')
     }
 });
 
@@ -68,15 +80,15 @@ class Router {
     }
      * 详细： http://www.mithriljs.net/route.html#mrouteset
      */
-    push(param, replace = true) {
+    push(param, replace = false) {
         if (typeof param === 'string') {
-            if (replace && this.path && this.path !== param) {
+            if (!replace && this.path && this.path !== param) {
                 this.historyRouteList.unshift({ path: this.path, data: this.params });
             }
             this.path = param;
             this.route.set(param);
         } else {
-            if (replace && this.path && this.path !== param.path) {
+            if (!replace && this.path && this.path !== param.path) {
                 this.historyRouteList.unshift({ path: this.path, data: this.params });
             }
             this.path = param.path;

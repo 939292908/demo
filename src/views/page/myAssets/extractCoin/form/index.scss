@@ -14,20 +14,18 @@
         span {
           vertical-align: middle;
         }
-        img {
-          width: 16px;
+        i {
           vertical-align: middle;
           cursor: pointer;
         }
       }
 
       .select select{ // 币中选择
-        border-radius: 2px;
         color: var(--c-font-lighten1);
-        font-size: 14px;
+        //font-size: 14px;
 
         option {
-          font-size: 18px;
+          //font-size: 18px;
           line-height: 20px;
         }
       }
@@ -36,7 +34,7 @@
       }
 
       .line-label input.input { // 标签 名
-        border-radius: 2px;
+        //border-radius: 2px;
         color: var(--c-font-lighten3);
       }
 
@@ -45,9 +43,9 @@
 
         .butItem {
           padding: 4px 12px;
-          color: #FF8B00;
+          color: var(--c-primary-lighten);
           border-radius: 4px;
-          border: 1px solid #FF8B00;
+          border: 1px solid var(--c-primary-lighten);
           margin-right: 20px;
           cursor: pointer;
 
@@ -57,7 +55,7 @@
           }
         }
         .butItem.butItemActive {
-          background-color: #FF8B00;
+          background-color: var(--c-primary-lighten);
           color: #ffffff;
         }
       }
@@ -84,21 +82,30 @@
 
           .clickAll {
             margin-left: 12px;
-            color: #FF8B00;
+            color: var(--c-primary-lighten);
             cursor: pointer;
           }
         }
+
+        //input[type=number]::-webkit-inner-spin-button,
+        //input[type=number]::-webkit-outer-spin-button {
+        //  -webkit-appearance: none;
+        //  margin: 0;
+        //}
+        //input[type=number] {
+        //  -moz-appearance:textfield;
+        //}
       }
 
       .charge { //  手续费
-        color: #9A9EAC;
+        color: var(--c-font-lighten3);
         height: 17px;
         line-height: 17px;
         padding-top: 4px;
       }
 
       .errorToTal { // 错误提示
-        color: #F33309;
+        color: var(--c-red-darken);
         padding-top: 8px;
       }
     }

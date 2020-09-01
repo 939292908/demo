@@ -82,6 +82,9 @@ const model = {
             transferFrom: val // from钱包默认选中
         });
         this.sets();
+        // this.switchContent();
+        // // 防止被交易账户01覆盖交易账户悬浮卡片的值
+        // window.event.stopPropagation();
     },
     switchContent: function () {
         broadcast.emit({ cmd: broadcast.CHANGE_SW_CURRENCY, data: this.currency });

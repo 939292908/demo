@@ -328,9 +328,6 @@ const model = {
     onremove (vnode) {
         wlt.remove();
         this.rmEVBUS();
-    },
-    showlog() {
-        alert(999);
     }
 };
 

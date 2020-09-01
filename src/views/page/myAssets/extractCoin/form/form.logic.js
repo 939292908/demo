@@ -1,5 +1,5 @@
 const m = require('mithril');
-const { Conf, webApi } = require('@/api');
+const { Conf, webApi, BaseUrl } = require('@/api');
 const UserInfo = require('@/models/globalModels');
 const wlt = require('@/models/wlt/wlt');
 const broadcast = require('@/broadcast/broadcast');
@@ -10,8 +10,8 @@ const validate = require('@/models/validate/validate').default;
 
 const extract = {
     name: 'FROM_DATA',
-    // TODO
-    promptText: '*如果您希望将本地数字资产提出至某地址，则该地址及为您的提币地址。 *某些地址可能需要您提供地址的标签，请务必填写，否则有丢失币的风险 *填写错误可能导致资产损失，请仔细核对 *完成LV3身份认证后，24h提币额度提升至100BTC，如需更多请联系客服',
+    promptText: '如果您希望将本地数字资产提出至某地址，则该地址及为您的提币地址。 *某些地址可能需要您提供地址的标签，请务必填写，否则有丢失币的风险 *填写错误可能导致资产损失，请仔细核对 *完成LV3身份认证后，24h提币额度提升至100BTC，如需更多请联系客服',
+    UserInfo: {},
     selectList: [],
     linkButtonList: [],
     currentExtractableNum: '0', // 可提
@@ -22,14 +22,26 @@ const extract = {
     feesList: [],
     popUpData: { // 弹框【验证，提示】 数据
         show: false,
+        doubleButton: false,
         isHandleVerify: false,
-        title: '',
+        title: {
+            logo: '',
+            text: ''
+        },
         content: '',
-        buttonText: ''
+        buttonText: '',
+        buttonClick: null,
+        doubleButtonCof: []
     },
     errorShow: {
-        address: false,
-        unmber: false
+        address: {
+            show: false,
+            text: ''
+        },
+        unmber: {
+            show: false,
+            text: ''
+        }
     },
     extractCoin: {
         coinNum: '',
@@ -57,6 +69,7 @@ const extract = {
         });
     },
     getSelectListData: function () {
+        console.log(wlt.wallet);
         this.selectList = [...wlt.wallet['03']];
         this.currentSelect = this.selectList[0];
         this.getlinkButtonListData();
@@ -112,15 +125,14 @@ const extract = {
         return Number(BTCNum * btcPrice / price).toFixed(8);
     },
     getExtractableNum: function (BTCNum) {
-        const userInfo = UserInfo.getAccount();
-        if (this.currentSelect?.Setting?.idcardVerifyWithdraw && userInfo.iStatus === 9) {
+        if (this.currentSelect?.Setting?.idcardVerifyWithdraw && this.UserInfo.iStatus === 9) {
             this.currentExtractableNum = this.getBTCToCoin(BTCNum > 100 ? 100 : BTCNum);
         } else {
             this.currentExtractableNum = this.getBTCToCoin(2);
         }
     },
     sendExtractCoin: function () {
-        const user = UserInfo.getAccount();
+        const user = this.UserInfo;
         const params = {
             token: user.token,
             wType: this.currenLinkBut || this.currentSelect.wType,
@@ -140,18 +152,19 @@ const extract = {
         });
     },
     handleSubmit: function () {
-        if (this.errorShow.unmber || this.errorShow.address) return false;
-        this.extractCoin.coinNum - 0 && window.$message({ content: '输入值不能为0', type: 'danger' });
+        if (this.errorShow.unmber.show || this.errorShow.address.show) return false;
+        if (!this.extractCoin.address) return window.$message({ content: '提币地址不能为空', type: 'danger' });
+        if (this.extractCoin.coinNum <= 0) return window.$message({ content: '输入值不能为0', type: 'danger' });
         geetest.verify();
     },
     readrSendEmail: function (params, user, seq) {
         const emailParms = {
             seq,
             email: user.email,
-            host: '/m/#/accounts', // TODO 参数获取
+            host: BaseUrl.WebAPI + '/m/#/accounts', // TODO 参数获取
             fn: 'wda',
             lang: 'zh',
-            fishCode: '', // TODO 参数获取
+            fishCode: user.antiFishCode,
             token: encodeURIComponent(user.token),
             checkCode: new Date().valueOf().toString(32),
             wType: params.wType,
@@ -162,32 +175,64 @@ const extract = {
             exChannel: Conf.exchId
         };
         webApi.sendEmailV2(emailParms).then(res => {
-            if (res.result.code === 0) return extract.handleChangeShow(false);
+            if (res.result.code === 0) return extract.handleChangeShow(false); // 打开 b
             window.$message({ content: errCode.getWebApiErrorCode(res.result.code), type: 'danger' });
         });
     },
     readyStartSafetyVerify: function (start) {
         if (start !== 'success') return;
-        const user = UserInfo.getAccount();
         validate.activeSmsAndGoogle({
-            securePhone: utils.hideMobileInfo(user.phone),
-            phoneNum: user.phone
+            securePhone: utils.hideMobileInfo(extract.UserInfo.phone),
+            phoneNum: extract.UserInfo.phone
         }, res => {
             extract.sendExtractCoin();
-            extract.handleChangeShow();
+            extract.handleChangeShow(); // 关闭 a
         });
-        extract.handleChangeShow(true);
+        extract.handleChangeShow(true); // 打开 a
     },
-    handleChangeShow: function (judge) {
-        extract.popUpData.show = !extract.popUpData.show;
-        extract.popUpData.isHandleVerify = judge;
+    handleChangeShow: function (isHandleVerify) {
+        extract.popUpData = {
+            show: !extract.popUpData.show,
+            isHandleVerify,
+            title: { text: isHandleVerify ? '安全验证' : '温馨提示' }
+        };
         m.redraw();
+    },
+    handleTotalShow: function ({ content, buttonText, buttonClick, doubleButtonCof, doubleButton }) {
+        extract.popUpData = {
+            show: !extract.popUpData.show,
+            isHandleVerify: false,
+            content,
+            buttonText,
+            buttonClick,
+            doubleButtonCof,
+            doubleButton,
+            title: { text: '温馨提示' }
+        };
+        m.redraw();
+    },
+    handleUserCanAction: function () {
+        if (!this.UserInfo.setting2fa.email) return this.handleTotalShow({ content: '提币需邮件确认，请先绑定邮箱', buttonText: '邮箱验证', buttonClick: () => { m.route.set("/my"); } });
+        const doubleButtonCof = [
+            { text: '谷歌验证', click: () => { m.route.set("/my"); } },
+            { text: '手机验证', click: () => { m.route.set("/my"); } }
+        ];
+        if (!this.UserInfo.setting2fa.google && !this.UserInfo.setting2fa.phone) return this.handleTotalShow({ content: '为了您的账户安全，请先绑定手机或谷歌', doubleButton: true, doubleButtonCof });
     },
     oninit: function () {
         const self = this;
         wlt.init();
         this.initGeetest();
+
         self.getCurrentCoinFees();
+        self.UserInfo = UserInfo.getAccount();
+        if (!Object.keys(self.UserInfo).length) {
+            broadcast.onMsg({
+                key: this.name,
+                cmd: broadcast.GET_USER_INFO_READY,
+                cb: (data) => { self.UserInfo = data; }
+            });
+        }
         if (!wlt.wallet['01'].toString()) {
             broadcast.onMsg({
                 key: this.name,
@@ -207,6 +252,11 @@ const extract = {
         });
     },
     onremove: function () {
+        broadcast.offMsg({
+            key: this.name,
+            cmd: broadcast.GET_USER_INFO_READY,
+            isall: true
+        });
         broadcast.offMsg({
             key: this.name,
             cmd: broadcast.MSG_WLT_READY,
