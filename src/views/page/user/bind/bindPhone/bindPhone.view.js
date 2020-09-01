@@ -37,6 +37,7 @@ module.exports = {
                                 m('input', {
                                     class: `input`,
                                     placeholder: '请输入登录密码',
+                                    type: 'password',
                                     value: model.form.password,
                                     oninput(e) {
                                         model.onInputPassword(e);
@@ -50,14 +51,6 @@ module.exports = {
                                 "手机号"
                             ]),
                             m('div', { class: `form-item-content` }, [
-                                // m('input', {
-                                //     class: `input`,
-                                //     placeholder: '请输入手机号',
-                                //     value: model.form.email,
-                                //     oninput(e) {
-                                //         model.onInputEmail(e);
-                                //     }
-                                // })
                                 m(InputWithComponent, {
                                     leftComponents: m(AreaCodeSelect, {
                                         selectList: model.selectList, //
@@ -66,11 +59,9 @@ module.exports = {
                                     }),
                                     options: {
                                         oninput: e => {
-                                            model.phone = e.target.value;
-                                            // model.showLoginNameValidate = true;
+                                            model.onInputPhone(e);
                                         },
                                         onblur: e => {
-                                            // model.showLoginNameValidate = true;
                                         },
                                         value: model.phone
                                     }
@@ -90,7 +81,7 @@ module.exports = {
                 ])
             ]),
             model.isShowVerifyView ? m(VerifyView, {
-                close: () => model.setVerifyViewModal(false),
+                close: () => model.switchSafetyVerifyModal(false),
                 isHandleVerify: true,
                 title: {
                     logo: "Vbit",

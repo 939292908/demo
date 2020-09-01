@@ -35,6 +35,7 @@ module.exports = {
                                 m('input', {
                                     class: `input`,
                                     placeholder: '请输入登录密码',
+                                    type: 'password',
                                     value: model.form.password,
                                     oninput(e) {
                                         model.onInputPassword(e);
@@ -71,7 +72,7 @@ module.exports = {
                 ])
             ]),
             model.isShowVerifyView ? m(VerifyView, {
-                close: () => model.setVerifyViewModal(false),
+                close: () => model.switchSafetyVerifyModal(false),
                 isHandleVerify: true,
                 title: {
                     logo: "Vbit",
