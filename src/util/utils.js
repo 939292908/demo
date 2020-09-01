@@ -326,4 +326,20 @@ utils.formatDate = function (time = new Date(), format = 'yyyy-MM-dd hh:mm:ss') 
     return format;
 };
 
+/**
+ * 获取浏览器地址栏参数
+ * @param key
+ * @returns {string}
+ */
+utils.queryParams = function (key) {
+    const pos = window.location.href.indexOf('?');
+    const queryString = window.location.href.substr(pos + 1);
+    const reg = new RegExp('(^|&)' + key + '=([^&]*)(&|$)', 'i');
+    const r = queryString.match(reg);
+    if (r != null) {
+        return decodeURI(r[2]);
+    }
+    return null;
+};
+
 export default utils;
