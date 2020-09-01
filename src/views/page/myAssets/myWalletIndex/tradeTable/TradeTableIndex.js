@@ -1,59 +1,15 @@
 const broadcast = require('@/broadcast/broadcast');
 const wlt = require('@/models/wlt/wlt');
-const m = require('mithril');
 const transferLogic = require('@/views/page/myAssets/transfer/transfer.logic.js'); // 划转模块逻辑
 
-const model = {
+module.exports = {
     vnode: {},
     currency: 'BTC',
     hideZeroFlag: false, // 是否隐藏0资产 默认为false
+    dataLength: 0, // 暂无数据
+    pageFlag: '01', // 01：合约账户，02：币币账户，04：法币账户
     accountTitle: '', // 交易账户中表格右上角的币种
     accountBanlance: 0, // 交易账户中表格右上角的币种总额
-    navAry: [{ idx: '01', val: '合约账户' }, { idx: '02', val: '币币账户' }, { idx: '04', val: '法币账户' }],
-    coinType: 'wallet',
-    tableDataList: 'walletData',
-    setPageFlag: function (param) {
-        // if (JSON.stringify(this.vnode) !== '{}') {
-        //     console.log(param, '---param---', this.vnode.attrs.swValue);
-        // }
-        this.vnode.attrs.setIdx(param);
-        this.setAccountBanlance();
-        this.setDataLength(this.tableData[this.tableDataList].length);
-        this.setPageContent(param);
-    },
-    setPageContent: function(param) {
-        if (param === '01') {
-            model.coinType = 'contract';
-            model.tableDataList = 'contractData';
-            model.accountTitle = '合约账户';
-        } else if (param === '02') {
-            model.coinType = 'coin';
-            model.tableDataList = 'coinData';
-            model.accountTitle = '币币账户';
-        } else if (param === '04') {
-            model.coinType = 'legal';
-            model.tableDataList = 'legalData';
-            model.accountTitle = '法币账户';
-        } else if (param === '03') {
-            model.coinType = 'wallet';
-            model.tableDataList = 'walletData';
-        }
-        console.log(param, '  -tradeTableIndex param...');
-        console.log(model.coinType, '  -tradeTableIndex coinType...');
-        console.log(model.tableDataList, '  -tradeTableIndex tableDataList...');
-        m.redraw();
-    },
-    setAccountBanlance: function() {
-        this.accountBanlance = this.currency === 'BTC' ? wlt[this.coinType + 'TotalValueForBTC'] : wlt[this.coinType + 'TotalValueForUSDT'];
-    },
-    setCurrency: function(param) {
-        this.currency = param;
-        this.initColumnData();
-    },
-    dataLength: 0, // 暂无数据
-    setDataLength: function (param) {
-        this.dataLength = param;
-    },
     columnData: { // 表格列
         wallet: [],
         coin: [],
@@ -65,6 +21,41 @@ const model = {
         coinData: [],
         contractData: [],
         legalData: []
+    },
+    navAry: [{ idx: '01', val: '合约账户' }, { idx: '02', val: '币币账户' }, { idx: '04', val: '法币账户' }],
+    coinType: 'wallet',
+    tableDateList: 'walletData',
+    setPageFlag: function (param) {
+        this.pageFlag = param;
+        this.vnode.attrs.setIdx(param);
+        if (param === '01') {
+            this.coinType = 'contract';
+            this.tableDateList = 'contractData';
+            this.accountTitle = '合约账户';
+        } else if (param === '02') {
+            this.coinType = 'coin';
+            this.tableDateList = 'coinData';
+            this.accountTitle = '币币账户';
+        } else if (param === '04') {
+            this.coinType = 'legal';
+            this.tableDateList = 'legalData';
+            this.accountTitle = '法币账户';
+        } else if (param === '03') {
+            this.coinType = 'wallet';
+            this.tableDateList = 'walletData';
+        }
+        this.setAccountBanlance();
+        this.setDataLength(this.tableData[this.tableDateList].length);
+    },
+    setAccountBanlance: function() {
+        this.accountBanlance = this.currency === 'BTC' ? wlt[this.coinType + 'TotalValueForBTC'] : wlt[this.coinType + 'TotalValueForUSDT'];
+    },
+    setCurrency: function(param) {
+        this.currency = param;
+        this.initColumnData();
+    },
+    setDataLength: function (param) {
+        this.dataLength = param;
     },
     initTableData: function () {
         this.tableData.legalData = this.copyAry(wlt.wallet['04']);
@@ -112,8 +103,7 @@ const model = {
         if (type === '划转') {
             transferLogic.transferModalOption.setTransferModalOption({
                 isShow: true,
-                coin: row.wType, // 币种 默认选中
-                transferFrom: this.vnode.attrs.swValue
+                coin: row.wType // 币种 默认选中
             });
         }
     },
@@ -187,19 +177,24 @@ const model = {
                 this.setCurrency(arg);
             }
         });
-        this.initColumnData();
-        this.initTableData();
-        this.setPageFlag('03');
-        this.setAccountBanlance();
-        if (this.dataLength === 0) {
-            document.getElementsByTagName('table')[0].rows[document.getElementsByTagName('table')[0].rows.length - 1].style.display = '';
-        } else {
-            document.getElementsByTagName('table')[0].rows[document.getElementsByTagName('table')[0].rows.length - 1].style.display = 'none';
-        }
-        m.redraw();
+        setTimeout(() => {
+            this.initColumnData();
+            this.initTableData();
+            this.setPageFlag('03');
+            this.setAccountBanlance();
+            if (this.dataLength === 0) {
+                document.getElementsByTagName('table')[0].rows[document.getElementsByTagName('table')[0].rows.length - 1].style.display = '';
+            } else {
+                document.getElementsByTagName('table')[0].rows[document.getElementsByTagName('table')[0].rows.length - 1].style.display = 'none';
+            }
+        }, '100');
     },
     initFn: function (vnode) {
         this.vnode = vnode;
+    },
+    updateFn(vnode) {
+        this.setPageFlag(vnode.attrs.swValue);
+        // console.log(vnode.attrs.swValue, 'table update.....');
     },
     removeFn: function () {
         broadcast.offMsg({
@@ -208,4 +203,3 @@ const model = {
         });
     }
 };
-module.exports = model;

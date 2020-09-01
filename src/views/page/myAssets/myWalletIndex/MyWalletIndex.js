@@ -2,8 +2,8 @@ const m = require('mithril');
 const wlt = require('@/models/wlt/wlt');
 const broadcast = require('@/broadcast/broadcast');
 const table = require('@/views/page/myAssets/myWalletIndex/tradeTable/tradeTableView');
-const tableIndex = require('@/views/page/myAssets/myWalletIndex/tradeTable/tradeTableIndex');
 const transferLogic = require('@/views/page/myAssets/transfer/transfer.logic.js'); // 划转模块逻辑
+let timeOut = null;
 
 const model = {
     currency: 'BTC',
@@ -17,6 +17,8 @@ const model = {
     legalTotal: 0, // 法币
     contractTotal: 0, // 合约
     swValue: '03', // 03:我的钱包 01:交易账户(01币币，02法币，04合约) 2:其他账户
+    coinType: 'wallet', // 当前 table thead是哪个类型的数据
+    tableDataList: 'walletData', // 当前 table tbody 是哪个类型的数据
     setSwValue(value) {
         model.swValue = value;
         // model.transferModalOption.transferFrom = model.swValue;
@@ -69,22 +71,13 @@ const model = {
         this.contractTotal = param;
     },
     switchChange: function (val) {
+        console.log(val, '--------val-------');
         this.swValue = val;
-        console.log(this.swValue, '--this.swValue', val, '--val');
-        // if (val === '03') {
-        //     tableIndex.setPageContent(val, 'wallet', 'walletData');
-        // }
-        // if (val === '01') {
-        //     tableIndex.setPageContent(val, 'contract', 'contractData');
-        // }
-        tableIndex.setPageContent(val);
         transferLogic.transferModalOption.setTransferModalOption({
             transferFrom: val // from钱包默认选中
         });
         this.sets();
-        // this.switchContent();
-        // // 防止被交易账户01覆盖交易账户悬浮卡片的值
-        // window.event.stopPropagation();
+        this.switchContent();
     },
     switchContent: function () {
         broadcast.emit({ cmd: broadcast.CHANGE_SW_CURRENCY, data: this.currency });
@@ -130,6 +123,7 @@ const model = {
             window.router.push(item.to);
         }
     },
+    // 交易账户（...）显示与隐藏切换
     switchDisplay: function (param, flag) {
         if (param === 'tradeCard') {
             if (flag === 'show') {
@@ -188,13 +182,17 @@ const model = {
         this.setTotalCNY(wlt.totalCNYValue);
     },
     initFn: function() {
+        m.redraw();
     },
     createFn: function() {
         wlt.init();
-        this.sets();
+        timeOut = setTimeout(() => {
+            this.sets();
+        }, '100');
         m.redraw();
     },
     removeFn: function() {
+        clearTimeout(timeOut);
         wlt.remove();
     }
 };
