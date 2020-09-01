@@ -12,6 +12,7 @@ const From = require('../form/form.view');
 const Header = require('../../../../components/indexHeader/indexHeader.view');
 const AssetRecords = require('@/models/asset/assetsRecords');
 const assetTable = require('../../assetTable/assetTable.view');
+const Tooltip = require('@/views/components/common/Tooltip');
 
 require('./index.scss');
 module.exports = {
@@ -31,7 +32,11 @@ module.exports = {
                     m('div.w100.has-bg-level-2', {}, [
                         m('div.pa-5', {}, [
                             m('span.title-small', {}, ['近期提币记录']),
-                            m('i.iconfont.icon-Tooltip', {}, [])
+                            m(Tooltip, {
+                                label: m('i.iconfont.icon-Tooltip.iconfont-large'),
+                                content: '只展示近期十条记录',
+                                hiddenArrows: false
+                            })
                         ]),
                         m('hr.ma-0'),
                         m(assetTable, { class: 'pa-5', list: AssetRecords.showList })

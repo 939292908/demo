@@ -58,8 +58,8 @@
   "dependencies": {
     "axios": "^0.19.2",
     "bulma": "^0.9.0",
+    "bulma-calendar": "^6.0.9",
     "di18n-translate": "0.0.9",
-    "layui-laydate": "^5.0.9",
     "md5": "^2.2.1",
     "mithril": "^2.0.4",
     "qrcode": "^1.4.4",
