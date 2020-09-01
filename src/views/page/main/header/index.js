@@ -6,7 +6,7 @@ const utils = require('@/util/utils').default;
 const apiLines = require('@/models/network/lines.js');
 const globalModels = require('@/models/globalModels');
 require('@/styles/pages/header');
-console.log('lines', apiLines, apiLines.getActive());
+
 const methods = {
     openNavbarDropdown: false,
 
