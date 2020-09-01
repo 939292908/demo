@@ -136,7 +136,7 @@ module.exports = {
                     m('', {
                         class: "navbar-item has-text-primary-hover cursor-pointer ",
                         onclick: function () {
-                            window.router.push('/');
+                            window.router.push('/accountSecurity');
                         }
                     }, [
                         '新手帮助'

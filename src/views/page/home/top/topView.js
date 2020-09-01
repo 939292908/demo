@@ -2,8 +2,7 @@ const m = require('mithril');
 const Slideshow = require('@/views/components/slideshow/bottomToTop');
 const SlideshowNotice = require('@/views/components/slideshow/notice').default;
 const utils = require('@/util/utils').default;
-// require('@/styles/pages/head/topView.scss');
-require('@/styles/pages/home/top.scss');
+require('@/views/page/home/top/top.scss');
 
 module.exports = function (props) {
     const { banneList, noticeList } = props.data;
