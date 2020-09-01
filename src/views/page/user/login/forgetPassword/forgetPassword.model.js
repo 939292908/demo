@@ -14,7 +14,7 @@ module.exports = {
     loginName: '', // 账号
     selectList: [{ cn_name: '中国', code: '86', support: '1', us_name: 'China' }], // 区号列表
     areaCode: '86', // 区号 默认86
-    isValidate: true, // 验证状态
+    isValidate: false, // 验证状态
     password1: '', // 新密码
     password2: '', // 第二次输入密码
     is2fa: false, // 2fa状态
