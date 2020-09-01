@@ -108,6 +108,7 @@ module.exports = {
     },
     //  更新最新价行情数据
     updTickData: function (param) {
+        console.log(param, 'list');
         for (const key in param) {
             this.tickData[key] = this.createTickData(param[key]);
         }
@@ -210,7 +211,8 @@ module.exports = {
         }
     },
     //  初始化首页需要请阅的行情
-    initHomeNeedSub: function () {
-        this.subTick(this.setSubArrType('tick', [...wsApi.displaySym]));
+    initHomeNeedSub: function (syms, list) {
+        this.subTick(this.setSubArrType('tick', [...syms]));
+        this.tickData = list;
     }
 };
