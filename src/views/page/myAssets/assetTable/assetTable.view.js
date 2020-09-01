@@ -23,7 +23,7 @@ module.exports = {
                     m('div.column.is-2', {}, [item.status]),
                     m('div.column.is-2', {}, [item.time]),
                     m('div.column.is-1.has-text-right', {}, [
-                        item.info.length
+                        (item.info ? item.info.length : false)
                             ? m('a.has-text-primary', {
                                 onclick: e => {
                                     item.showInfo = !item.showInfo;
@@ -34,7 +34,7 @@ module.exports = {
                     ])
                 ])
             );
-            if (item.info.length) {
+            if (item.info ? item.info.length : false) {
                 const infoList = [];
                 for (const info of item.info) {
                     infoList.push(m('div.column.is-6.mb-3', {}, [
