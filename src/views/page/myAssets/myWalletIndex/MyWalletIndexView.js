@@ -35,12 +35,12 @@ module.exports = {
                                     ])
                                 ]),
                                 m('div', { class: `number-hide`, style: `color:white;` }, [
-                                    m('span', { class: `title-large` }, [myWalletIndex.totalValue]),
+                                    m('span', { class: `title-large` }, [myWalletIndex.hideMoneyFlag ? '******' : myWalletIndex.totalValue]),
                                     m('span', { class: `title-large` }, [` ` + myWalletIndex.currency]),
                                     m('i', { class: 'iconfont icon-zichanzhengyan changeMoneyImg pl-2 cursor-pointer', onclick: () => { myWalletIndex.hideValue(); }, style: { color: '#585E71' } }),
                                     m('br'),
                                     m('span', { style: `color:#9A9EAC` }, [`≈ `]),
-                                    m('span', { style: `color:#9A9EAC` }, [myWalletIndex.totalCNY]),
+                                    m('span', { style: `color:#9A9EAC` }, [myWalletIndex.hideMoneyFlag ? '******' : myWalletIndex.totalCNY]),
                                     m('span', { style: `color:#9A9EAC` }, [` CNY`])
                                 ])
                             ]),

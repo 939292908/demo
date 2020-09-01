@@ -19,6 +19,7 @@ const model = {
     swValue: '03', // 03:我的钱包 01:交易账户(01币币，02法币，04合约) 2:其他账户
     coinType: 'wallet', // 当前 table thead是哪个类型的数据
     tableDataList: 'walletData', // 当前 table tbody 是哪个类型的数据
+    // 切换我的钱包。交易账户
     setSwValue(value) {
         model.swValue = value;
         // model.transferModalOption.transferFrom = model.swValue;
@@ -29,47 +30,54 @@ const model = {
     selectOpFlag: false, // 是否显示币种列表
     selectOpText: 'BTC', // 默认币种BTC
     selectOp: ['BTC', 'USDT'], // 币种列表
+    // 设置币种
     setCurrency: function (param) {
         this.currency = param;
     },
+    // 设置总估值
     setTotalValue: function (param) {
         this.totalValue = param;
     },
+    // 设置人民币
     setTotalCNY: function (param) {
         this.totalCNY = param;
     },
+    // 设置我的钱包总值
     setWalletTotalValue: function (param) {
         this.walletTotalValue = param;
     },
+    // 设置交易账户总值
     setTradingAccountTotalValue: function (param) {
         this.tradingAccountTotalValue = param;
     },
+    // 设置其他账户宗旨
     setOtherTotalValue: function (param) {
         this.otherTotalValue = param;
     },
+    // 隐藏资产
     hideValue: function () {
         const ele = document.getElementsByClassName('changeMoneyImg')[0];
         if (this.hideMoneyFlag) { // 显示
             ele.classList.value = ele.classList.value.replace('yincang', 'zichanzhengyan');
             this.hideMoneyFlag = !this.hideMoneyFlag;
-            this.setTotalValue(wlt[this.currency === 'BTC' ? 'totalValueForBTC' : 'totalValueForUSDT']);
-            this.setTotalCNY(wlt.totalCNYValue);
         } else { // 隐藏
             ele.classList.value = ele.classList.value.replace('zichanzhengyan', 'yincang');
             this.hideMoneyFlag = !this.hideMoneyFlag;
-            this.setTotalValue('******');
-            this.setTotalCNY('******');
         }
     },
+    // 设置币币总值
     setCoinTotal: function (param) {
         this.coinTotal = param;
     },
+    // 设置法币总值
     setLegalTotal: function (param) {
         this.legalTotal = param;
     },
+    // 设置合约总值
     setContractTotal: function (param) {
         this.contractTotal = param;
     },
+    // 切换我的钱包，交易账户，币币，合约，法币
     switchChange: function (val) {
         console.log(val, '--------val-------');
         this.swValue = val;
@@ -79,6 +87,7 @@ const model = {
         this.sets();
         this.switchContent();
     },
+    // 切换表格内容
     switchContent: function () {
         broadcast.emit({ cmd: broadcast.CHANGE_SW_CURRENCY, data: this.currency });
         return m(table, { tableType: 'wallet', swValue: this.swValue, setIdx: this.setSwValue });
@@ -142,6 +151,7 @@ const model = {
             document.getElementsByClassName('currType')[0].style.display = 'none';
         }
     },
+    // 设置下拉框选中值
     setSelectOpText: function(param) {
         this.selectOpText = param;
     },
@@ -171,6 +181,7 @@ const model = {
             }
         }
     },
+    // 设置各种估值
     sets: function () {
         this.currency === 'BTC' ? this.setTotalValue(wlt.totalValueForBTC) : this.setTotalValue(wlt.totalValueForUSDT);
         this.currency === 'BTC' ? this.setWalletTotalValue(wlt.walletTotalValueForBTC) : this.setWalletTotalValue(wlt.walletTotalValueForUSDT);
