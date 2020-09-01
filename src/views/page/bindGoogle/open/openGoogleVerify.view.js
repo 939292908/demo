@@ -1,5 +1,5 @@
 const m = require('mithril');
-require('@/views/page/bindGoogle/open/openGoogleVerify.scss');
+require('@/views/page/bindGoogle/bindGoogle.scss');
 const openGLogic = require('@/views/page/bindGoogle/open/openGoogleVerify.logic');
 
 const openGView = {
@@ -93,15 +93,15 @@ const openGView = {
                     ]),
                     m('div', { class: `stepFour pt-7`, style: { display: (openGView.checkFlag === 4 ? '' : 'none') } }, [
                         m('div', { class: `desc1 title-small mb-7` }, '完成以下验证，开启谷歌验证'),
-                        m('div', { class: `pwd` }, [
+                        m('div', { class: `pwdDiv` }, [
                             m('span', { class: `body-5` }, '登录密码'),
                             m('br'),
-                            m('input', { class: `border-radius-small mb-5 mt-2`, type: `text` })
+                            m('input', { class: `border-radius-small mb-5 mt-2 pwd`, type: `text` })
                         ]),
-                        m('div', { class: `code` }, [
+                        m('div', { class: `codeDiv` }, [
                             m('span', { class: `body-5 mb-2` }, '谷歌验证码'),
                             m('br'),
-                            m('input', { class: `border-radius-small mt-2`, type: `text` })
+                            m('input', { class: `border-radius-small mt-2 code`, type: `text` })
                         ]),
                         m('div', { class: `btn mt-8` }, [
                             m('button', { class: `has-bg-primary`, onclick: () => { openGLogic.bind(); } }, '确定')

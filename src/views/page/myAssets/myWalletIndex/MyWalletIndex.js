@@ -2,9 +2,8 @@ const m = require('mithril');
 const wlt = require('@/models/wlt/wlt');
 const broadcast = require('@/broadcast/broadcast');
 const table = require('@/views/page/myAssets/myWalletIndex/tradeTable/tradeTableView');
-const tableIndex = require('@/views/page/myAssets/myWalletIndex/tradeTable/tradeTableIndex');
+// const tableIndex = require('@/views/page/myAssets/myWalletIndex/tradeTable/tradeTableIndex');
 const transferLogic = require('@/views/page/myAssets/transfer/transfer.logic.js'); // 划转模块逻辑
-let timeOut = null;
 
 const model = {
     currency: 'BTC',
@@ -71,13 +70,18 @@ const model = {
     },
     switchChange: function (val) {
         this.swValue = val;
-        tableIndex.setPageFlag(val);
         console.log(this.swValue, '--this.swValue');
+        // console.log(val, '--val');
+        // if (val === '03') {
+        //     tableIndex.setPageContent(val, 'wallet', 'walletData');
+        // }
+        // if (val === '01') {
+        //     tableIndex.setPageContent(val, 'contract', 'contractData');
+        // }
         transferLogic.transferModalOption.setTransferModalOption({
             transferFrom: val // from钱包默认选中
         });
         this.sets();
-        this.switchContent();
     },
     switchContent: function () {
         broadcast.emit({ cmd: broadcast.CHANGE_SW_CURRENCY, data: this.currency });
@@ -181,17 +185,13 @@ const model = {
         this.setTotalCNY(wlt.totalCNYValue);
     },
     initFn: function() {
-        m.redraw();
     },
     createFn: function() {
         wlt.init();
-        timeOut = setTimeout(() => {
-            this.sets();
-        }, '100');
+        this.sets();
         m.redraw();
     },
     removeFn: function() {
-        clearTimeout(timeOut);
         wlt.remove();
     }
 };

@@ -1,10 +1,9 @@
 const broadcast = require('@/broadcast/broadcast');
 const wlt = require('@/models/wlt/wlt');
 const m = require('mithril');
-const tradeTableView = require('@/views/page/myAssets/myWalletIndex/tradeTable/tradeTableView');
 const transferLogic = require('@/views/page/myAssets/transfer/transfer.logic.js'); // 划转模块逻辑
 
-module.exports = {
+const model = {
     vnode: {},
     currency: 'BTC',
     hideZeroFlag: false, // 是否隐藏0资产 默认为false
@@ -13,39 +12,38 @@ module.exports = {
     navAry: [{ idx: '01', val: '合约账户' }, { idx: '02', val: '币币账户' }, { idx: '04', val: '法币账户' }],
     coinType: 'wallet',
     tableDataList: 'walletData',
-    name: 'nzm',
     setPageFlag: function (param) {
         // if (JSON.stringify(this.vnode) !== '{}') {
         //     console.log(param, '---param---', this.vnode.attrs.swValue);
-        //     this.vnode.attrs.setIdx(param);
         // }
-        console.log(param);
-        if (param === '01') {
-            this.name = 'qwe';
-            this.coinType = 'contract';
-            this.tableDataList = 'contractData';
-            this.accountTitle = '合约账户';
-            m.redraw();
-        } else if (param === '02') {
-            this.coinType = 'coin';
-            this.tableDataList = 'coinData';
-            this.accountTitle = '币币账户';
-            m.redraw();
-        } else if (param === '04') {
-            this.coinType = 'legal';
-            this.tableDataList = 'legalData';
-            this.accountTitle = '法币账户';
-            m.redraw();
-        } else if (param === '03') {
-            this.coinType = 'wallet';
-            this.tableDataList = 'walletData';
-            m.redraw();
-        }
+        console.log(param, '----------');
+        this.vnode.attrs.setIdx(param);
         this.setAccountBanlance();
         this.setDataLength(this.tableData[this.tableDataList].length);
-        console.log(this.coinType, '==');
-        console.log(this.tableDataList, '==');
-        console.log(tradeTableView, '-----');
+        this.setPageContent(param);
+    },
+    setPageContent: function(param) {
+        console.log(model);
+        console.log(param, '-----111-----');
+        if (param === '01') {
+            model.coinType = 'contract';
+            model.tableDataList = 'contractData';
+            model.accountTitle = '合约账户';
+        } else if (param === '02') {
+            model.coinType = 'coin';
+            model.tableDataList = 'coinData';
+            model.accountTitle = '币币账户';
+        } else if (param === '04') {
+            model.coinType = 'legal';
+            model.tableDataList = 'legalData';
+            model.accountTitle = '法币账户';
+        } else if (param === '03') {
+            model.coinType = 'wallet';
+            model.tableDataList = 'walletData';
+        }
+        console.log(model.coinType, '==');
+        console.log(model.tableDataList, '==');
+        m.redraw();
     },
     setAccountBanlance: function() {
         this.accountBanlance = this.currency === 'BTC' ? wlt[this.coinType + 'TotalValueForBTC'] : wlt[this.coinType + 'TotalValueForUSDT'];
@@ -212,3 +210,4 @@ module.exports = {
         });
     }
 };
+module.exports = model;
