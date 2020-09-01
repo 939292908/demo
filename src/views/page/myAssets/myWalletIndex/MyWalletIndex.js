@@ -115,7 +115,6 @@ const model = {
     handlerClickNavBtn (item) {
         console.log(item);
         if (item.id === 4) { // 点击资金划转
-            transferLogic.initTransferInfo(); // 初始化弹框
             // transferLogic.isShow = true;
             transferLogic.setTransferModalOption({
                 isShow: true,

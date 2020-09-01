@@ -103,7 +103,6 @@ module.exports = {
     test(row, type) {
         const that = this;
         console.log(that.pageFlag, 'this.pageFlag---');
-        transferLogic.initTransferInfo(); // 初始化弹框
         if (type === '划转') {
             transferLogic.setTransferModalOption({
                 isShow: true,
