@@ -16,15 +16,12 @@ const model = {
         // if (JSON.stringify(this.vnode) !== '{}') {
         //     console.log(param, '---param---', this.vnode.attrs.swValue);
         // }
-        console.log(param, '----------');
         this.vnode.attrs.setIdx(param);
         this.setAccountBanlance();
         this.setDataLength(this.tableData[this.tableDataList].length);
         this.setPageContent(param);
     },
     setPageContent: function(param) {
-        console.log(model);
-        console.log(param, '-----111-----');
         if (param === '01') {
             model.coinType = 'contract';
             model.tableDataList = 'contractData';
@@ -41,8 +38,9 @@ const model = {
             model.coinType = 'wallet';
             model.tableDataList = 'walletData';
         }
-        console.log(model.coinType, '==');
-        console.log(model.tableDataList, '==');
+        console.log(param, '  -tradeTableIndex param...');
+        console.log(model.coinType, '  -tradeTableIndex coinType...');
+        console.log(model.tableDataList, '  -tradeTableIndex tableDataList...');
         m.redraw();
     },
     setAccountBanlance: function() {

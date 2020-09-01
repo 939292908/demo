@@ -2,7 +2,7 @@ const m = require('mithril');
 const wlt = require('@/models/wlt/wlt');
 const broadcast = require('@/broadcast/broadcast');
 const table = require('@/views/page/myAssets/myWalletIndex/tradeTable/tradeTableView');
-// const tableIndex = require('@/views/page/myAssets/myWalletIndex/tradeTable/tradeTableIndex');
+const tableIndex = require('@/views/page/myAssets/myWalletIndex/tradeTable/tradeTableIndex');
 const transferLogic = require('@/views/page/myAssets/transfer/transfer.logic.js'); // 划转模块逻辑
 
 const model = {
@@ -70,14 +70,14 @@ const model = {
     },
     switchChange: function (val) {
         this.swValue = val;
-        console.log(this.swValue, '--this.swValue');
-        // console.log(val, '--val');
+        console.log(this.swValue, '--this.swValue', val, '--val');
         // if (val === '03') {
         //     tableIndex.setPageContent(val, 'wallet', 'walletData');
         // }
         // if (val === '01') {
         //     tableIndex.setPageContent(val, 'contract', 'contractData');
         // }
+        tableIndex.setPageContent(val);
         transferLogic.transferModalOption.setTransferModalOption({
             transferFrom: val // from钱包默认选中
         });

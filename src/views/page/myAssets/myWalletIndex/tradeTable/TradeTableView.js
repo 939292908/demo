@@ -11,11 +11,8 @@ module.exports = {
     },
     view: (vnode) => {
         return m('div', { class: `views-pages-Myassets-Table pt-7 px-5` }, [
-            vnode.attrs.swValue,
-            t.coinType + '   0',
-            '0   ' + t.tableDataList,
-            t.name,
-            m('div.tradingAccount mb-8 tabs', { style: { display: vnode.attrs.swValue === '01' || vnode.attrs.swValue === '02' || vnode.attrs.swValue === '04' ? '' : 'none' } }, [
+            vnode.attrs.swValue + ' ' + t.coinType + ' ' + t.tableDataList,
+            m('div.tradingAccount mb-8 tabs', { style: { display: vnode.attrs.swValue !== '03' ? '' : 'none' } }, [
                 m('ul.tradingAccount_nav mx-5', { }, [
                     t.navAry.map((item) => {
                         return m('li', { class: '' + (vnode.attrs.swValue === item.idx ? "is-active" : ''), onclick: () => { t.setPageFlag(item.idx); } }, m('a', {}, item.val));
@@ -40,7 +37,6 @@ module.exports = {
                 ]),
                 m('div.fundRecords mr-7', {}, [
                     m('i', { class: 'iconfont icon-AssetRecord' }),
-                    // m('i', { class: 'iconfont', value: `${nzm}` }),
                     m('span', [`资金记录`])
                 ]),
                 m('div.profit', { style: { display: t.coinType === `contract` ? `` : `none` } }, [
