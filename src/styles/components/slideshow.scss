@@ -23,12 +23,14 @@
     background-color: #FF8B00;
   }
 
-  .swiper-slide .imgBox {
-    margin-right: 20px;
-    border-radius: 10px;
+  .swiper-slide {
     cursor: pointer;
-    box-sizing: border-box;
-    width: 33%;
+    .imgBox {
+      margin-right: 20px;
+      border-radius: 10px;
+      box-sizing: border-box;
+      width: 33%;
+    }
   }
 
   .swiper-slide .imgBox:last-child {
@@ -101,6 +103,7 @@
         font-style: normal;
         line-height: 45px;
         margin-bottom: 4px;
+        text-align: left;
       }
 
       .marketNumber {
@@ -108,6 +111,7 @@
         font-style: normal;
         line-height: 20px;
         align-items: flex-end;
+        text-align: left;
         color: #9A9EAC;
       }
     }
@@ -115,6 +119,9 @@
 }
 
 // 行情轮播
+.swiperLTF {
+  position: relative;
+}
 .slideshow {
 
   .button-prev,
@@ -123,14 +130,14 @@
     top: 50%;
     outline: none;
     width: calc(var(--swiper-navigation-size) / 44 * 27);
-    height: var(--swiper-navigation-size);
+    height: calc(var(--swiper-navigation-size) / 44 * 27);
     margin-top: calc(-1 * var(--swiper-navigation-size) / 2);
     z-index: 10;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
-    transform: translateY(-50%);
+    //transform: translateY(-50%);
     color: var(--swiper-navigation-color, var(--swiper-theme-color));
   }
 

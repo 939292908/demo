@@ -19,11 +19,13 @@ const horizontal = {
         prevEl: '.button-prev'
     }
 };
-// window.open('/w/trd/#!/future');
 module.exports = {
     data: {
         list: [],
         mySwiper: null
+    },
+    openUrl: function () {
+        window.open('/w/trd/#!/future');
     },
     oncreate: function (vnode) {
         this.mySwiper = new Swiper('#slideShowLTR', horizontal);
@@ -31,7 +33,7 @@ module.exports = {
     leftToRight: function (vnode) {
         const nameList = Object.keys(vnode.attrs.list);
         return nameList.map(item => {
-            return m('div.swiper-slide', [
+            return m('div.swiper-slide', { onclick: this.openUrl, style: 'cursor: pointer;' }, [
                 m('div.imgBox', [
                     m('div.marketTitle', [
                         m('div.marketName', { class: 'title-medium' }, vnode.attrs.list[item].distSym),
@@ -45,7 +47,7 @@ module.exports = {
         });
     },
     view: function (vnode) {
-        return m('div', { class: 'slideshow' }, [
+        return m('div', { class: 'slideshow swiperLTF' }, [
             m('div', { class: 'swiper-container', id: "slideShowLTR" }, [
                 m('div.swiper-wrapper', [
                     this.leftToRight(vnode)
