@@ -14,10 +14,12 @@
     .pwdDiv,.codeDiv{
         width: 385px;
         margin: 0 auto;
-        width: 384px;
-        height: 44px;
-        border: 1px solid rgba(30, 40, 70, 0.12);
-        outline: none;
+        input{
+            width: 384px;
+            height: 44px;
+            border: 1px solid rgba(30, 40, 70, 0.12);
+            outline: none;
+        }
     }
     .btn{
         margin: 0 auto;
@@ -127,7 +129,6 @@
 }
 .views-page-accountSecurity-bindGoogle-close{
     .center{
-        background-color: white;
         margin: 0 auto;
         .warning{
             height: 36px;
@@ -138,7 +139,8 @@
             }
             line-height: 36px;
         }
-        .operation{
+        .closeOperation{
+            background-color: white;
             height: 400px;
         }
     }

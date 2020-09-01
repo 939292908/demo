@@ -104,7 +104,7 @@ const openGView = {
                             m('input', { class: `border-radius-small mt-2 code`, type: `text` })
                         ]),
                         m('div', { class: `btn mt-8` }, [
-                            m('button', { class: `has-bg-primary`, onclick: () => { openGLogic.bind(); } }, '确定')
+                            m('button', { class: `has-bg-primary cursor-pointer`, onclick: () => { openGLogic.bind(); } }, '确定')
                         ])
                     ])
                 ]),
