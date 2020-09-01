@@ -69,7 +69,7 @@ module.exports = {
                                     m('span', { }, `我的钱包`)
                                 ]),
                                 m('div', { class: `title-small ` }, [
-                                    m('span', {}, myWalletIndex.walletTotalValue),
+                                    m('span', {}, myWalletIndex.hideMoneyFlag ? '******' : myWalletIndex.walletTotalValue),
                                     m('span', {}, [` ` + myWalletIndex.currency])
                                 ])
                             ]),
@@ -82,7 +82,7 @@ module.exports = {
                                         m('span', { }, `交易账户`)
                                     ]),
                                     m('div', { class: `title-small ` }, [
-                                        m('span', {}, myWalletIndex.tradingAccountTotalValue),
+                                        m('span', {}, myWalletIndex.hideMoneyFlag ? '******' : myWalletIndex.tradingAccountTotalValue),
                                         m('span', {}, [` ` + myWalletIndex.currency])
                                     ])
                                 ]),
@@ -97,18 +97,12 @@ module.exports = {
                                     m('div.tradeCard body-2 border-radius-medium pa-7 has-bg-level-2 box-shadow', {
                                         style: { display: `none` }
                                     }, [
-                                        // m('span.mb-1 cursor-pointer', `合约账户`),
-                                        // m('a.mb-5 has-text-level-3', { class: myWalletIndex.wltIdx === 1 ? 'has-text-primary' : '', onclick: function () { myWalletIndex.changeTradeAccount(1); } }, myWalletIndex.contractTotal + ` ` + myWalletIndex.currency),
-                                        // m('span.mb-1 cursor-pointer', `币币账户`),
-                                        // m('a.mb-5 has-text-level-3', { class: myWalletIndex.wltIdx === 2 ? 'has-text-primary' : '', onclick: function () { myWalletIndex.changeTradeAccount(2); } }, myWalletIndex.coinTotal + ` ` + myWalletIndex.currency),
-                                        // m('span.mb-1 cursor-pointer', `法币账户`),
-                                        // m('a.has-text-level-3', { class: myWalletIndex.wltIdx === 4 ? 'has-text-primary' : '', onclick: function () { myWalletIndex.changeTradeAccount(4); } }, myWalletIndex.legalTotal + ` ` + myWalletIndex.currency)
                                         m('span.mb-1 cursor-pointer', `合约账户`),
-                                        m('a.mb-5 has-text-level-3', { onclick: () => { myWalletIndex.changeTradeAccount(1); } }, myWalletIndex.contractTotal + ` ` + myWalletIndex.currency),
+                                        m('a.mb-5 has-text-level-3', { class: myWalletIndex.swValue === '01' || myWalletIndex.swValue === '03' ? 'has-text-primary' : '', onclick: () => { myWalletIndex.switchChange('01'); } }, myWalletIndex.contractTotal + ` ` + myWalletIndex.currency),
                                         m('span.mb-1 cursor-pointer', `币币账户`),
-                                        m('a.mb-5 has-text-level-3', { onclick: () => { myWalletIndex.changeTradeAccount(2); } }, myWalletIndex.coinTotal + ` ` + myWalletIndex.currency),
+                                        m('a.mb-5 has-text-level-3', { class: myWalletIndex.swValue === '02' ? 'has-text-primary' : '', onclick: () => { myWalletIndex.switchChange('02'); } }, myWalletIndex.coinTotal + ` ` + myWalletIndex.currency),
                                         m('span.mb-1 cursor-pointer', `法币账户`),
-                                        m('a.has-text-level-3', { onclick: () => { myWalletIndex.changeTradeAccount(4); } }, myWalletIndex.legalTotal + ` ` + myWalletIndex.currency)
+                                        m('a.has-text-level-3', { class: myWalletIndex.swValue === '04' ? 'has-text-primary' : '', onclick: () => { myWalletIndex.switchChange('04'); } }, myWalletIndex.legalTotal + ` ` + myWalletIndex.currency)
                                     ])
                                 ])
                             ]),
@@ -117,7 +111,7 @@ module.exports = {
                                     m('span', { }, `其他账户`)
                                 ]),
                                 m('div', { class: `title-small` }, [
-                                    m('span', {}, myWalletIndex.otherTotalValue),
+                                    m('span', {}, myWalletIndex.hideMoneyFlag ? '******' : myWalletIndex.otherTotalValue),
                                     m('span', {}, [` ` + myWalletIndex.currency])
                                 ])
                             ])

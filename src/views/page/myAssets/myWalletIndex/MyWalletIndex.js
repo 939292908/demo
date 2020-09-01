@@ -79,11 +79,12 @@ const model = {
     },
     // 切换我的钱包，交易账户，币币，合约，法币
     switchChange: function (val) {
-        console.log(val, '--------val-------');
         this.swValue = val;
         transferLogic.setTransferModalOption({
             transferFrom: val // from钱包默认选中
         });
+        // 防止被交易账户01覆盖交易账户悬浮卡片的值
+        window.event.stopPropagation();
         this.sets();
         this.switchContent();
     },
