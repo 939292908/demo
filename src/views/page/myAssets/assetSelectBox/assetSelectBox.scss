@@ -1,0 +1,24 @@
+.assetSelectBox {
+    .date-pick-box {
+        .datetimepicker-dummy-wrapper {
+
+            border: 0;
+        }
+
+        .datetimepicker-dummy {
+            position: initial;
+        }
+
+        .datetimepicker-dummy::before {
+            content: initial;
+        }
+
+        .datetimepicker-dummy-input {
+            width: 100px;
+        }
+
+        .datetimepicker-dummy-input.is-datetimepicker-range{
+            text-indent: 0;
+        }
+    }
+}

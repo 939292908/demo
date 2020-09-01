@@ -1,3 +1,13 @@
 .area-code-select-search-icon{
     top: 5px!important;
 }
+
+
+.area-code-select-national-select {
+    top: 2px !important;
+    height: calc(100% - 4px) !important;
+}
+
+.area-code-select-national-dropdown-menu {
+    padding-top: 12px !important;
+}

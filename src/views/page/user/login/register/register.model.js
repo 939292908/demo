@@ -9,6 +9,7 @@ const errCode = require('@/util/errCode').default;
 const broadcast = require('@/broadcast/broadcast');
 const validate = require('@/models/validate/validate').default;
 const helpCenter = require('@/util/helpCenter').default;
+const regExp = require('@/models/validate/regExp');
 
 const register = {
     type: 'phone', // 账号类型 phone 手机，email 邮箱
@@ -30,7 +31,7 @@ const register = {
     exchInfo: config.exchInfo, // 渠道信息
     checkbox: false, // 条款同意
     /**
-     * 必须填写验证码
+     * 必须填写邀请码
      * @returns {boolean}
      */
     mustInvited() {
@@ -38,72 +39,14 @@ const register = {
         return Boolean(parseInt(this.exchInfo.mustInvited));
     },
     /**
-     * 邮箱验证
-     */
-    rulesEmail: {
-        required: value => !!value || '该字段不能为空', // 该字段不能为空
-        email: value => {
-            const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-            return pattern.test(value) || '邮箱格式不正确'; // 邮箱格式不正确
-        }
-    },
-    /**
-     * 手机号验证
-     */
-    rulesPhone: {
-        required: value => !!value || '该字段不能为空', // 该字段不能为空
-        phone: value => {
-            const pattern = /^[0-9]{5,11}$/;
-            return pattern.test(value) || '手机号码不正确'; // 手机号码不正确
-        }
-    },
-    /**
-     * 密码验证
-     */
-    rulesPwd: {
-        required: value => !!value || '该字段不能为空', // 该字段不能为空
-        password: value => {
-            const pattern = /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,}$/;
-            return pattern.test(value) || '至少6个字符，必须是字母和数字'; // 至少6个字符，必须是字母和数字
-        }
-    },
-    /**
      * 注册验证
      * @returns {boolean|boolean}
      */
     valid() {
         const uid = cryptoChar.decrypt(this.refereeId);
-        let valid = false;
+        let valid = !regExp.validAccount(this.type, this.loginName) && !regExp.validPassword(this.password);
         if (this.mustInvited()) {
-            valid = this.loginName && this.password &&
-                /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(this.loginName) &&
-                /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,}$/.test(this.password) &&
-                !(uid <= 1000000 || uid > 100000000) && /^\d+$/.test(uid);
-        } else {
-            valid = this.loginName && this.password &&
-                /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(this.loginName) &&
-                /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,}$/.test(this.password);
-        }
-        if (this.exchInfo.helpCenter.website && this.exchInfo.helpCenter.termsServiceId && this.exchInfo.helpCenter.privacyPolicyId) {
-            return this.checkbox && valid;
-        } else {
-            return valid;
-        }
-    },
-    /**
-     * 注册验证
-     * @returns {string|boolean|boolean}
-     */
-    valid1() {
-        const uid = cryptoChar.decrypt(this.refereeId);
-        let valid = false;
-        if (this.mustInvited()) {
-            valid = this.loginName && this.password &&
-                /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,}$/.test(this.password) &&
-                !(uid <= 1000000 || uid > 100000000) && /^\d+$/.test(uid);
-        } else {
-            valid = this.loginName && this.password &&
-                /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,}$/.test(this.password);
+            valid = valid && !(uid <= 1000000 || uid > 100000000) && /^\d+$/.test(uid);
         }
         if (this.exchInfo.helpCenter.website && this.exchInfo.helpCenter.termsServiceId && this.exchInfo.helpCenter.privacyPolicyId) {
             return this.checkbox && valid;
@@ -118,20 +61,10 @@ const register = {
     toHelpService(id) {
         helpCenter.openArticle(this.exchInfo.helpCenter[id]);
     },
-    // 邮箱注册处理
-    submitEmail() {
+    // 注册
+    submit() {
         const that = this;
-        if (this.valid) {
-            this.loading = true;
-            geetest.verify(() => {
-                that.loading = false;
-            });
-        }
-    },
-    // 手机注册处理
-    submitPhone() {
-        const that = this;
-        if (this.valid1) {
+        if (this.valid()) {
             this.loading = true;
             geetest.verify(() => {
                 that.loading = false;
@@ -318,6 +251,15 @@ const register = {
             }
         });
     },
+    cleanUp() {
+        this.password = '';
+        this.loginName = '';
+        this.code = '';
+        this.showPasswordValidate = false;
+        this.showLoginNameValidate = false;
+        this.isvalidate = false;
+        this.showPassword = false;
+    },
     oninit() {
         this.initGeetest();
         this.getCountryList();
@@ -325,12 +267,7 @@ const register = {
         this.getExchInfo();
     },
     onremove() {
-        this.password = '';
-        this.loginName = '';
-        this.showPasswordValidate = false;
-        this.showLoginNameValidate = false;
-        this.isvalidate = false;
-        this.showPassword = false;
+        this.cleanUp();
         broadcast.offMsg({
             key: 'register',
             cmd: 'geetestMsg',
