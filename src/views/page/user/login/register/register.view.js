@@ -57,7 +57,7 @@ module.exports = {
                                                     : Register.sendEmailCode();
                                             }
                                         },
-                                        [Register.smsCd > 0 ? `${Register.smsCd}` : I18n.$t('10214')/* '获取验证码' */]
+                                        [Register.smsCd > 0 ? `${Register.smsCd} s` : I18n.$t('10214')/* '获取验证码' */]
                                     )
                                 })
                             ]),
