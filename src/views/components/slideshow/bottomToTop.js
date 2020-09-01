@@ -1,6 +1,6 @@
 const m = require("mithril");
 const Swiper = require('swiper/bundle').default;
-const { BaseUrl } = require('@/api');
+const { ActiveLine } = require('@/api');
 require('@/styles/components/slideshow.scss');
 
 const vertical = {
@@ -31,7 +31,7 @@ module.exports = {
         return banneList.map(item => {
             return m('div.swiper-slide', [
                 item.map(item => {
-                    const srcUrl = item.image.indexOf('http') === 0 ? item.image : BaseUrl.WebAPI + item.image;
+                    const srcUrl = item.image.indexOf('http') === 0 ? item.image : ActiveLine.WebAPI + item.image;
                     return m('div', { class: "imgBox", onclick: click.bind(this, item) }, m('img', { class: "border-radius-medium", src: srcUrl }));
                 })
             ]);
