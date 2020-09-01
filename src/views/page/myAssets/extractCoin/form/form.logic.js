@@ -53,7 +53,8 @@ const extract = {
         webApi.getCoinInfo(params).then(res => {
             if (res.result.code === 0) {
                 extract.coinInfo = res.result.data;
-                return extract.getSelectListData();
+                return extract.getCurrentCoinFees();
+                // return extract.getSelectListData();
             }
             window.$message({ content: errCode.getWebApiErrorCode(res.result.code), type: 'danger' });
         });
@@ -63,13 +64,12 @@ const extract = {
         webApi.getCoinFees().then(res => {
             if (res.result.code === 0) {
                 self.feesList = res.feeList;
-                return false;
+                return extract.getSelectListData();
             }
             window.$message({ content: errCode.getWebApiErrorCode(res.result.code), type: 'danger' });
         });
     },
     getSelectListData: function () {
-        console.log(wlt.wallet);
         this.selectList = [...wlt.wallet['03']];
         this.currentSelect = this.selectList[0];
         this.getlinkButtonListData();
@@ -224,14 +224,15 @@ const extract = {
         wlt.init();
         this.initGeetest();
 
-        self.getCurrentCoinFees();
         self.UserInfo = UserInfo.getAccount();
         if (!Object.keys(self.UserInfo).length) {
             broadcast.onMsg({
                 key: this.name,
                 cmd: broadcast.GET_USER_INFO_READY,
-                cb: (data) => { self.UserInfo = data; }
+                cb: (data) => { self.UserInfo = data; self.handleUserCanAction(); }
             });
+        } else {
+            self.handleUserCanAction();
         }
         if (!wlt.wallet['01'].toString()) {
             broadcast.onMsg({

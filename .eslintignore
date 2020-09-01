@@ -1,5 +1,5 @@
 # /node_modules/* and /bower_components/* ignored by default
 
 # Ignore built files except build/index.js
-src/assets/*
-src/languages/I18n.js
+/src/assets/iconfont/*
+/src/languages/I18n.js

@@ -48,7 +48,7 @@ module.exports = {
                     m('div.label has-text-title body-5', '币种'),
                     m('div.control', [
                         m('div.select is-fullwidth', m('select.border-radius-small body-5', { onchange: this.handleSelectChange }, [
-                            FromDataMode.selectList && FromDataMode.selectList.map(item => m('option.title-small', item.wType))
+                            FromDataMode.selectList && FromDataMode.selectList.map(item => m('option', item.wType))
                         ]))
                     ])
                 ]),
