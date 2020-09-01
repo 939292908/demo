@@ -29,6 +29,7 @@ module.exports = {
                             oninput: e => {
                                 Login.account = e.target.value;
                                 Login.showValidAccount = true;
+                                Login.changeType();
                             },
                             onblur: e => { Login.showValidAccount = true; },
                             value: Login.account

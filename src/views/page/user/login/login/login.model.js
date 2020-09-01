@@ -20,16 +20,18 @@ module.exports = {
     showValidAccount: false,
     showValidPassword: false,
     is2fa: false, // 2fa验证状态
-    /**
-     * 登录
-     */
-    login() {
-        const that = this;
+    changeType() {
         if (/@/.test(this.account)) {
             this.loginType = 'email';
         } else {
             this.loginType = 'phone';
         }
+    },
+    /**
+     * 登录
+     */
+    login() {
+        const that = this;
         if (!regExp.validAccount(this.loginType, this.account) && !regExp.validPassword(this.password)) {
             this.loading = true;
             geetest.verify(() => {
