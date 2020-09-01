@@ -6,10 +6,7 @@
  * @Description: In User Settings Edit
  * @FilePath: \website-project\src\api\index.js
  */
-const API = require('./middleware').APITEXTLIST;
-const Http = require('./middleware').Http;
-const _axios = require('./request').default;
-const axios = new _axios();
+const { API, Http } = require('./request');
 /**
  * @description: 极验初始化
  */
@@ -489,7 +486,7 @@ export function assetRecords (params = {}, options = { withCredentials: true }) 
 }
 
 export function assetRecordsAll (aData) {
-    return axios.all(aData);
+    return Promise.all(aData);
 }
 /**
  * 获取渠道信息

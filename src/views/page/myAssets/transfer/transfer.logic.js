@@ -13,6 +13,7 @@ const model = {
     showCurrencyMenu: false, // show币种菜单
     showFromMenu: false, // show from菜单
     showMenuTo: false, // show to菜单
+    showlegalTenderModal: false, // show 法币提示弹框
     wallets: wlt.wallet, // all数据
     form: {
         coin: "USDT", // 合约下拉列表 value
@@ -223,8 +224,12 @@ const model = {
                 // 往法币划转
                 if (Number(res.result.code) === 9040) {
                     // 提示弹框
-                    window.$message({ title: I18n.$t('10037'/* "提示" */), content: "法币划转提示", type: 'danger' });
-                    // obj.isShowModal = true
+                    // window.$message({ title: I18n.$t('10037'/* "提示" */), content: "法币划转提示", type: 'danger' });
+                    model.transferModalOption.setTransferModalOption({
+                        isShow: false // 划转弹框隐藏
+                    });
+                    // 法币弹框显示
+                    model.showlegalTenderModal = true;
                 }
                 window.$message({ title: I18n.$t('10037'/* "提示" */), content: res.result.msg, type: 'danger' });
             }
@@ -232,6 +237,22 @@ const model = {
             console.log(err);
         });
         // console.log("我提交了", this.form, 666);
+    },
+    // 资金划转弹框 配置
+    transferModalOption: {
+        isShow: false, // 弹窗状态
+        transferFrom: '03', // from钱包默认选中
+        coin: 'USDT', // 币种 默认选中
+        setTransferModalOption(option) { // 设置配置
+            // option: {
+            //     isShow: false, // 弹窗显示隐藏
+            //     transferFrom: '03', // from钱包默认选中
+            //     coin: 'USDT' // 币种 默认选中
+            // }
+            model.transferModalOption.isShow = option.isShow;
+            if (option.transferFrom) model.transferModalOption.transferFrom = option.transferFrom;
+            if (option.coin) model.transferModalOption.coin = option.coin;
+        }
     },
     // 币种 菜单配置
     getCurrencyMenuOption() {
@@ -303,8 +324,6 @@ const model = {
         this.initTransferInfo();
     },
     onupdate (vnode) {
-        // console.log(wlt);
-        // console.log("this.authWltList", this.authWltList, "this.fromWltList", this.fromWltList, "this.toWltList", this.toWltList);
     },
     onremove (vnode) {
         wlt.remove();

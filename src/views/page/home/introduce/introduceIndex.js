@@ -1,7 +1,7 @@
 const m = require('mithril');
 const utils = require('@/util/utils').default;
 
-require('@/styles/pages/home/introduce.scss');
+require('@/views/page/home/introduce/introduce.scss');
 
 module.exports = {
     toPage() {

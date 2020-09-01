@@ -1,8 +1,9 @@
 const m = require('mithril');
-const rechargeIndex = require('@/views/page/myAssets/myWalletIndex/children/recharge/index');
+const rechargeIndex = require('@/views/page/myAssets/myWalletIndex/children/recharge/recharge.logic');
 const AssetRecords = require('@/models/asset/assetsRecords');
 const assetTable = require('../../../assetTable/assetTable.view');
 require('@/views/page/myAssets/myWalletIndex/children/recharge/recharge.scss');
+const Tooltip = require('@/views/components/common/Tooltip');
 
 module.exports = {
     oninit: () => {
@@ -26,22 +27,40 @@ module.exports = {
                         m('div.select is-fullwidth',
                             m('select', { class: `coinSel`, onchange: () => { rechargeIndex.modifySelect(); } }, [
                                 rechargeIndex.pageData.map(item => {
-                                    return m('option', { }, item.wType);
+                                    return m('option', { }, item.wType + '  |  ' + item.en);
                                 })
                             ])
                         )
                     ]),
-                    m('div', { class: `xrpLable mb-7`, style: { display: rechargeIndex.selectCheck === 'XRP' ? '' : 'none' } }, [
-                        m('span', {}, '标签'),
-                        m('div', { class: `mt-2 px-2 has-text-primary border-radius-small` }, rechargeIndex.uId)
+                    m('div', { class: `xrpLable mb-7`, style: { display: rechargeIndex.memo ? (rechargeIndex.selectCheck === 'XRP' ? '' : 'none') : 'none' } }, [
+                        m('div', { class: `labeltip` }, [
+                            m('span', {}, '标签'),
+                            m('div.navbar-item.cursor-pointer', { class: `has-text-primary-hover` }, [
+                                m(Tooltip, {
+                                    label: m('i', { class: `iconfont icon-Tooltip` }),
+                                    content: rechargeIndex.labelTips,
+                                    hiddenArrows: false
+                                })
+                            ])
+                        ]),
+                        m('div', { class: `mt-2 px-2 has-text-primary border-radius-small uid` }, rechargeIndex.uId)
                     ]),
-                    m('div', { class: `usdtLable mb-7`, style: { display: rechargeIndex.selectCheck === 'USDT' ? '' : 'none' } }, [
-                        m('span', {}, '标签'),
+                    m('div', { class: `usdtLable mb-7`, style: { display: rechargeIndex.memo ? (rechargeIndex.selectCheck === 'USDT' ? '' : 'none') : 'none' } }, [
+                        m('div', { class: `labeltip` }, [
+                            m('span', {}, '链名称'),
+                            m('div.navbar-item.cursor-pointer', { class: `has-text-primary-hover` }, [
+                                m(Tooltip, {
+                                    label: m('i', { class: `iconfont icon-Tooltip` }),
+                                    content: rechargeIndex.labelTips,
+                                    hiddenArrows: false
+                                })
+                            ])
+                        ]),
                         m('div', { class: `mt-2` }, [
                             rechargeIndex.USDTLabel.map((item, index) => {
                                 return m('button', {
                                     class: `mr-6 cursor-pointer ` + (rechargeIndex.btnCheckFlag === index ? `has-bg-primary` : `noneBG`),
-                                    onclick: () => { rechargeIndex.changeBtnflag(index); }
+                                    onclick: () => { rechargeIndex.changeBtnflag(index, item.title); }
                                 }, item.title);
                             })
                         ])
@@ -72,7 +91,7 @@ module.exports = {
                     m('div', { class: `tips` }, [
                         m('span', {}, '温馨提示'),
                         m('br'),
-                        rechargeIndex.tips.split('*').map(item => m('span', {}, '*' + item))
+                        rechargeIndex.tips.split('*').map((item, index) => m('span', { class: index === 0 ? 'has-text-primary' : '' }, '*' + item))
                     ])
                 ]),
                 m('div.bottom-tab.has-bg-level-2.mt-5.pt-3', {}, [
