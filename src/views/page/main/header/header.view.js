@@ -4,7 +4,7 @@ const I18n = require("../../../../languages/I18n").default;
 const Tooltip = require('@/views/components/common/Tooltip');
 const utils = require('@/util/utils').default;
 const apiLines = require('@/models/network/lines.js');
-const globalModels = require('@/models/globalModels');
+const header = require('./header.logic.js');
 require('@/styles/pages/header');
 
 const methods = {
@@ -247,9 +247,7 @@ module.exports = {
                                     m('a', {
                                         class: `navbar-item has-text-primary-hover`,
                                         onclick: () => {
-                                            utils.removeItem("ex-session");
-                                            utils.setItem('loginState', false);
-                                            globalModels.setAccount({});
+                                            header.loginOut();
                                         }
                                     }, ["退出登录"])
                                 ])
@@ -541,9 +539,7 @@ module.exports = {
                                     m('a', {
                                         class: `navbar-item has-text-primary-hover`,
                                         onclick: () => {
-                                            utils.removeItem("ex-session");
-                                            utils.setItem('loginState', false);
-                                            globalModels.setAccount({});
+                                            header.loginOut();
                                         }
                                     }, ["退出登录"])
                                 ])
