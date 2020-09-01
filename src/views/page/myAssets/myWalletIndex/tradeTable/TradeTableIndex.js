@@ -1,7 +1,6 @@
 const broadcast = require('@/broadcast/broadcast');
 const wlt = require('@/models/wlt/wlt');
 const transferLogic = require('@/views/page/myAssets/transfer/transfer.logic.js'); // 划转模块逻辑
-const m = require('mithril');
 
 module.exports = {
     vnode: {},
@@ -48,9 +47,9 @@ module.exports = {
         }
         this.setAccountBanlance();
         this.setDataLength(this.tableData[this.tableDateList].length);
-        console.log('this.coinType', this.coinType);
-        console.log('this.dataLength', this.dataLength);
-        this.tableAction(``, `hideZero`);
+        setTimeout(() => {
+            this.tableAction(``, `hideZero`);
+        }, 150);
     },
     setAccountBanlance: function() {
         this.accountBanlance = this.currency === 'BTC' ? wlt[this.coinType + 'TotalValueForBTC'] : wlt[this.coinType + 'TotalValueForUSDT'];
@@ -131,7 +130,6 @@ module.exports = {
         if (type === 'search') {
             this.searchTableData(searchContent);
         } else if (type === 'hideZero') {
-            this.showTableData();
             if (this.hideZeroFlag) {
                 this.hideTableData();
             } else {
@@ -166,33 +164,30 @@ module.exports = {
         }
     },
     showTableData: function () {
-        const table = document.getElementsByTagName('table')[0];
-        const rowsLength = table.rows.length;
-        console.log('rowsLength--', table.rows);
-        console.log('rowsLength--', rowsLength);
-        table.rows[rowsLength - 1].style.display = 'none';
-        for (let i = 1; i < rowsLength - 1; i++) {
+        const tbody = document.getElementsByTagName('table')[0].childNodes[1];
+        console.log(tbody.rows);
+        const rowsLength = tbody.rows.length - 1; // tbody.rows.length - 1：最后一行是暂无数据
+        tbody.rows[rowsLength].style.display = 'none';
+        for (let i = 1; i < rowsLength; i++) {
             // 显示行操作
-            table.rows[i].style.display = '';
+            tbody.rows[i].style.display = '';
         }
     },
     hideTableData: function () {
-        const table = document.getElementsByTagName('table')[0];
-        let count = 1;
-        const rowsLength = table.rows.length;
-        for (let i = 1; i < rowsLength - 1; i++) {
-            const value = table.rows[i].cells[1].innerHTML;
-            if (value !== '0.00000000') {
-                // 显示行操作
-                table.rows[i].style.display = '';
-            } else {
-                // 隐藏行操作
-                table.rows[i].style.display = 'none';
+        let count = 0;
+        const tbody = document.getElementsByTagName('table')[0].childNodes[1];
+        const rowsLength = tbody.rows.length - 1; // tbody.rows.length - 1：最后一行是暂无数据
+        for (let i = 0; i < rowsLength; i++) {
+            const text = tbody.rows[i].cells[1].innerHTML;
+            if (text === '0.00000000' || text === '0.0000') {
                 count = count + 1;
+                tbody.rows[i].style.display = 'none';
+            } else {
+                tbody.rows[i].style.display = '';
             }
         }
-        if (count === rowsLength - 1) {
-            table.rows[rowsLength - 1].style.display = '';
+        if (count === rowsLength) {
+            tbody.rows[rowsLength].style.display = '';
         }
     },
     createFn: function (vnode) {
