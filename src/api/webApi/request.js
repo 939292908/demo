@@ -3,7 +3,7 @@ const Axios = require('axios');
 const config = require('../config');
 
 const { ActiveLine, APITEXTLIST } = config;
-console.log(require('@/models/globalModels'));
+
 const { globalModels } = require('@/models/globalModels');
 
 const utils = require('@/util/utils').default;
