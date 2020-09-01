@@ -5,6 +5,9 @@ const myWalletIndex = require('@/pages/page/myAssets/myWalletIndex/MyWalletIndex
 require('@/views/page/myAssets/myWalletIndex/MyWalletIndex.scss');
 
 module.exports = {
+    oninit: () => {
+        myWalletIndex.initFn();
+    },
     view: () => {
         return m('div', { class: `views-pages-myassets-myWalletIndex theme--light` }, [
             m('div', { onclick: () => { myWalletIndex.optionDisplay(event); } }, [
@@ -129,13 +132,7 @@ module.exports = {
                 myWalletIndex.switchContent()
             ]),
             // 资金划转组件
-            myWalletIndex.transferModal.isShow ? m(Transfer, {
-                isShow: myWalletIndex.transferModal.isShow, // 显示隐藏
-                // 设置显示隐藏
-                setShow(type) {
-                    myWalletIndex.transferModal.isShow = type;
-                }
-            }) : []
+            m(Transfer, myWalletIndex.transferModalOption)
         ]);
     },
     oncreate: () => {

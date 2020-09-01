@@ -67,7 +67,7 @@ module.exports = {
                         }
                     }),
                     m('div', { class: `btns-box pr-3` }, [
-                        m('span', { class: `pr-2` }, 'BTC'),
+                        m('span', { class: `pr-2` }, model.form.coin),
                         m('span', {
                             class: `cursor-pointer has-text-primary`,
                             onclick() {
@@ -77,31 +77,55 @@ module.exports = {
                     ])
                 ]),
                 m('div', { class: `has-text-level-4 pt-2` }, [
-                    `可用: ${model.form.maxTransfer} BTC`
+                    `可用: ${model.form.maxTransfer} ${model.form.coin}`
                 ])
             ])
         ]);
-        // 弹框组件
-        return m(Modal, {
-            isShow: vnode.attrs.isShow, // 弹框显示/隐藏
-            // 弹框确认
-            onOk() {
-                model.submit(); // 提交
-                vnode.attrs.setTransferModalOption({
-                    isShow: false // 弹框隐藏
-                });
-            },
-            // 弹框关闭
-            onClose () {
-                vnode.attrs.setTransferModalOption({
-                    isShow: false // 弹框隐藏
-                }); // 弹框隐藏
-            },
-            // 插槽
-            slot: {
-                header: "资金划转",
-                body
-            }
-        });
+        return [
+            // 资金划转 弹框
+            m(Modal, {
+                isShow: model.transferModalOption.isShow, // 弹框显示/隐藏
+                // 弹框确认
+                onOk() {
+                    model.submit(); // 提交
+                    model.transferModalOption.setTransferModalOption({
+                        isShow: false // 弹框隐藏
+                    });
+                },
+                // 弹框关闭
+                onClose () {
+                    model.transferModalOption.setTransferModalOption({
+                        isShow: false // 弹框隐藏
+                    }); // 弹框隐藏
+                },
+                // 插槽
+                slot: {
+                    header: "资金划转",
+                    body
+                }
+            }),
+            // 法币提示 弹框
+            m(Modal, {
+                isShow: model.showlegalTenderModal,
+                onClose () {
+                    model.showlegalTenderModal = false;
+                }, // 关闭事件
+                slot: {
+                    header: m('div', { class: `` }, ["法币审核提示"]),
+                    body: m('div', { class: `` }, [`为防止大额资金流动,您划转至法币账户的${model.form.num + model.form.coin}需进行人工审核,请耐心等候.`]),
+                    footer: [
+                        m('.spacer'),
+                        m("button", {
+                            class: "button is-primary font-size-2 has-text-white modal-default-btn button-large",
+                            onclick () {
+                                model.showlegalTenderModal = false;
+                            }
+                        }, [
+                            "我知道了"
+                        ])
+                    ]
+                }
+            })
+        ];
     }
 };

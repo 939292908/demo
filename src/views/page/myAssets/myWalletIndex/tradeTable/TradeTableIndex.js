@@ -26,7 +26,7 @@ module.exports = {
     },
     navAry: [{ idx: '01', val: '合约账户' }, { idx: '02', val: '币币账户' }, { idx: '04', val: '法币账户' }],
     setPageFlag: function (param) {
-        console.log(param, '----------');
+        console.log(param);
         this.pageFlag = param;
         this.vnode.attrs.setIdx(param);
         if (param === '01') {
@@ -46,6 +46,8 @@ module.exports = {
             this.tableDateList = 'walletData';
         }
         this.setAccountBanlance();
+        console.log(this.tableData[this.tableDateList]);
+        this.setDataLength(this.tableData[this.tableDateList].length);
     },
     setAccountBanlance: function() {
         this.accountBanlance = this.currency === 'BTC' ? wlt[this.coinType + 'TotalValueForBTC'] : wlt[this.coinType + 'TotalValueForUSDT'];
@@ -183,7 +185,6 @@ module.exports = {
         setTimeout(() => {
             this.initColumnData();
             this.initTableData();
-            this.setDataLength(vnode.attrs.tableData.length);
             if (this.dataLength === 0) {
                 document.getElementsByTagName('table')[0].rows[document.getElementsByTagName('table')[0].rows.length - 1].style.display = '';
             } else {
@@ -191,13 +192,12 @@ module.exports = {
             }
         }, '100');
     },
-    updateFn: function(vnode) {
-        console.log(vnode.attrs.swValue, '----------');
-    },
     initFn: function (vnode) {
         this.vnode = vnode;
-        this.coinType = 'wallet';
         this.setAccountBanlance();
+        this.setPageFlag();
+        console.log(this.coinType, 'type');
+        console.log(this.tableDateList, 'list');
     },
     removeFn: function () {
         broadcast.offMsg({

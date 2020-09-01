@@ -49,7 +49,12 @@
             }
             .xrpLable{
                 height: 48px;
-                div{
+                .labeltip{
+                    .navbar-item{
+                        display: inline;
+                    }
+                }
+                .uid{
                     width: 78px;
                     height: 20px;
                     text-align: center;
@@ -58,6 +63,11 @@
                 }
             }
             .usdtLable{
+                .labeltip{
+                    .navbar-item{
+                        display: inline;
+                    }
+                }
                 button{
                     height: 28px;
                     outline: none;
