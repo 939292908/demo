@@ -156,7 +156,7 @@ module.exports = {
                     ]),
                     // 已登录样式
                     // 订单
-                    m('div.navbar-item.cursor-pointer', { class: `has-text-primary-hover ` }, [
+                    m('div.navbar-item.cursor-pointer' + (utils.getItem('loginState') ? '' : '.is-hidden'), { class: `has-text-primary-hover ` }, [
                         m(Tooltip, {
                             label: "订单",
                             content: m('div', { class: `` }, [
@@ -176,7 +176,7 @@ module.exports = {
                         })
                     ]),
                     // 资产
-                    m('div.navbar-item.cursor-pointer', { class: `has-text-primary-hover ` }, [
+                    m('div.navbar-item.cursor-pointer' + (utils.getItem('loginState') ? '' : '.is-hidden'), { class: `has-text-primary-hover ` }, [
                         m(Tooltip, {
                             label: "资产",
                             content: m('div', { class: `` }, [
@@ -222,8 +222,15 @@ module.exports = {
                             class: "header-my-tooltip",
                             content: m('div', { class: `` }, [
                                 m('div', { class: ``, style: `background: url(${require("@/assets/img/home/background.png").default}) no-repeat center center / 100% 100%; width:"200px"` }, [
-                                    m('a', { class: `navbar-item py-5 header-my-tooltip-top` }, [
-                                        globalModels.getAccount().accountName
+                                    m('div', { class: `navbar-item py-5 header-my-tooltip-top` }, [
+                                        m('p', { class: `` }, [
+                                            m('p', { class: `title-small` }, [
+                                                utils.hideMobileInfo(globalModels.getAccount().accountName || '--')
+                                            ]),
+                                            m('p', { class: `body-4 has-text-level-2` }, [
+                                                'UID:' + globalModels.getAccount().uid
+                                            ])
+                                        ])
                                     ])
                                 ]),
                                 m('a', { class: `` }, [
