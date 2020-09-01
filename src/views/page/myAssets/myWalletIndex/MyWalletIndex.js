@@ -119,8 +119,8 @@ const model = {
             // transferLogic.isShow = true;
             transferLogic.setTransferModalOption({
                 isShow: true,
-                transferFrom: "04",
-                coin: "HT"
+                transferFrom: model.swValue,
+                coin: ""
             });
         }
         // 弹框↑

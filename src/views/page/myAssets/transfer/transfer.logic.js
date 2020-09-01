@@ -144,6 +144,7 @@ const model = {
     //         }
     //     }
     // },
+
     // 初始化 2个钱包value
     initFromAndToValueByAuthWalletList () {
         // form钱包value
@@ -190,7 +191,6 @@ const model = {
     },
     // 数量输入框input handler
     handlerNumOnInput (e) {
-        // console.log(e.target.value);
         // value最小为0
         this.form.num = Number(e.target.value) < 0 ? 0 : e.target.value;
     },
@@ -237,11 +237,8 @@ const model = {
             } else {
                 // 往法币划转
                 if (Number(res.result.code) === 9040) {
-                    // 提示弹框
-                    // window.$message({ title: I18n.$t('10037'/* "提示" */), content: "法币划转提示", type: 'danger' });
-                    model.setTransferModalOption({
-                        isShow: false // 划转弹框隐藏
-                    });
+                    // 划转弹框隐藏
+                    model.setTransferModalOption({ isShow: false });
                     // 法币弹框显示
                     model.showlegalTenderModal = true;
                 }
