@@ -8,7 +8,7 @@ const vertical = {
     loop: true,
     speed: 300,
     autoplay: {
-        delay: 3000,
+        delay: 5000,
         disableOnInteraction: false
     }
 };
