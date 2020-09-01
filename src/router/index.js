@@ -78,6 +78,8 @@ class Router {
         this.historyRouteList = new Array([]);
 
         this.route(document.querySelector('body .route-box'), this.defaultRoutePath, this.routerList);
+        // 获取地址栏参数，并验证路由
+        this.checkRoute(this.getUrlInfo());
     }
 
     /**
@@ -95,10 +97,8 @@ class Router {
      * 详细： http://www.mithriljs.net/route.html#mrouteset
      */
     push(param, replace = false) {
-        console.log(param);
         if (typeof param === 'string') {
-            if (this.routerList[param] && this.routerList[param].requireAuth && !utils.getItem('loginState')) {
-                this.route.set('/login');
+            if (this.checkRoute({ path: param })) {
                 return;
             }
             if (!replace && this.path && this.path !== param) {
@@ -107,8 +107,7 @@ class Router {
             this.path = param;
             this.route.set(param);
         } else {
-            if (this.routerList[param.path] && this.routerList[param.path].requireAuth && !utils.getItem('loginState')) {
-                this.route.set('/login');
+            if (this.checkRoute(param)) {
                 return;
             }
             if (!replace && this.path && this.path !== param.path) {
@@ -147,6 +146,36 @@ class Router {
         this.path = null;
         this.params = {};
         this.push(route, false);
+    }
+
+    /**
+     * 验证路由
+     * @param {Object} param 路由对象
+     */
+    checkRoute(param) {
+        if (this.routerList[param.path] && this.routerList[param.path].requireAuth && !utils.getItem('loginState')) {
+            this.route.set('/login');
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * 获取浏览器地址栏路由和参数
+     */
+    getUrlInfo() {
+        const arr = window.location.href.split(this.route.prefix);
+        const path = arr[1].split('?')[0];
+        const queryStr = arr[1].split('?')[1];
+        const queryArr = (queryStr && queryStr.split('&')) || [];
+        const queryObj = {};
+        for (const item of queryArr) {
+            queryObj[item.split('=')[0]] = item.split('=')[1];
+        }
+        return {
+            path,
+            params: queryObj
+        };
     }
 }
 
