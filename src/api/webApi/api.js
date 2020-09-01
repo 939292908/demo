@@ -486,7 +486,7 @@ export function assetRecords (params = {}, options = { withCredentials: true }) 
 }
 
 export function assetRecordsAll (aData) {
-    return Http.all(aData);
+    return Promise.all(aData);
 }
 /**
  * 获取渠道信息

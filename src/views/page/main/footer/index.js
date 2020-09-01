@@ -1,5 +1,5 @@
 const m = require('mithril');
-const Tooltip = require('@/pages/components/common/Tooltip');
+const Tooltip = require('@/views/components/common/Tooltip');
 const utils = require('@/util/utils').default;
 require('@/styles/pages/footer/footer.scss');
 const methods = {
