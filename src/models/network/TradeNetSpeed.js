@@ -18,8 +18,8 @@ class TradeNetSpeed extends NetSpeedBase {
         this.promise = new Promise((resolve, reject) => {
             this.ws = new WebSocket(this.url);
             this.ws.onopen = evt => {
-                console.log("WebSocket连接成功...", this.name);
-                console.log("WebSocket 数据发送中...", this.name);
+                // console.log("WebSocket连接成功...", this.name);
+                // console.log("WebSocket 数据发送中...", this.name);
                 this.startTime = (new Date()).getTime();
                 evt.target.send('{"req":"Time","rid":"0","args":1588696922662,"expires":1588696953162}');
                 // this.duration = (new Date()).getTime() - this.startTime;
@@ -27,13 +27,13 @@ class TradeNetSpeed extends NetSpeedBase {
             };
 
             this.ws.onmessage = evt => {
-                console.log("WebSocket 数据已接收...: ", this.name);
+                // console.log("WebSocket 数据已接收...: ", this.name);
                 this.duration = (new Date()).getTime() - this.startTime;
                 evt.target.close();
             };
 
             this.ws.onclose = evt => {
-                console.log("WebSocket连接已关闭...", this.name);
+                // console.log("WebSocket连接已关闭...", this.name);
                 if (this.duration === -1) {
                     // 未收到消息时任何一方主动关闭链接视为失败
                     this.duration = Number.MAX_SAFE_INTEGER;
@@ -45,7 +45,7 @@ class TradeNetSpeed extends NetSpeedBase {
             };
 
             this.ws.onerror = evt => {
-                window.console.error("WebSocket连接错误: ", this.name, evt);
+                window.console.log("WebSocket连接错误: ", this.name, evt);
                 this.duration = Number.MAX_SAFE_INTEGER;
                 reject(evt);
             };
@@ -59,7 +59,7 @@ class TradeNetSpeed extends NetSpeedBase {
      */
     cancel() {
         if (this.ws) {
-            console.log('WebSocket取消中... ', this.name, this.ws.readyState);
+            // console.log('WebSocket取消中... ', this.name, this.ws.readyState);
             try {
                 this.ws.close();
             } catch (err) {

@@ -1,10 +1,11 @@
 const listenerObj = {};
 module.exports = {
-
-    IS_LOGON_SUC_UPD: 'is_login_suc_upd',
+    // 获取系统开关
+    GET_FUNLIST_READY: 'get_funlist_ready',
+    // 获取用户信息
+    GET_USER_INFO_READY: 'get_user_info_ready',
+    // 页面大小改变
     ONRESIZE_UPD: 'ONRESIZE_UPD',
-    CHANGE_SW_CURRENCY: 'CHANGE_SW_CURRENCY',
-
     // 合约详情
     MSG_ASSETD_UPD: 'MSG_ASSETD_UPD',
     // 合约详情补充参数
@@ -23,9 +24,10 @@ module.exports = {
     MSG_ORDERL2_UPD: 'MSG_ORDERL2_UPD',
     // 点击body广播
     EV_ClICKBODY: 'EV_ClICKBODY',
-
     // 资产获取完成
     MSG_WLT_READY: 'MSG_WLT_READY',
+    // 资产界面切换估值币种
+    CHANGE_SW_CURRENCY: 'CHANGE_SW_CURRENCY',
     /**
      * 发送广播
      * @param {string} cmd

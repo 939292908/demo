@@ -1,12 +1,12 @@
 const m = require('mithril');
 const titleLogo = require("@/assets/img/logo/title-logo.png").default;
 const I18n = require("../../../../languages/I18n").default;
-const Tooltip = require('@/pages/components/common/Tooltip');
+const Tooltip = require('@/views/components/common/Tooltip');
 const utils = require('@/util/utils').default;
 const apiLines = require('@/models/network/lines.js');
 const globalModels = require('@/models/globalModels');
 require('@/styles/pages/header');
-console.log('lines', apiLines, apiLines.getActive());
+
 const methods = {
     openNavbarDropdown: false,
 
@@ -17,8 +17,6 @@ const methods = {
 
 module.exports = {
     oncreate: function() {
-        // 更新线路
-        apiLines.updateLines();
         // 初始化线路数据
         apiLines.initLines();
     },
@@ -138,7 +136,7 @@ module.exports = {
                     m('', {
                         class: "navbar-item has-text-primary-hover cursor-pointer ",
                         onclick: function () {
-                            window.router.push('/');
+                            window.router.push('/accountSecurity');
                         }
                     }, [
                         '新手帮助'

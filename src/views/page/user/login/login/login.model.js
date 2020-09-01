@@ -168,7 +168,7 @@ module.exports = {
         this.initGeetest();
         broadcast.onMsg({
             key: 'login',
-            cmd: 'getUserInfo',
+            cmd: broadcast.GET_USER_INFO_READY,
             cb: res => {
                 if (res) {
                     this.loading = false;
