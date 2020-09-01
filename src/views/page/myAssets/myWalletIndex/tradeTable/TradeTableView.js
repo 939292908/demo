@@ -39,7 +39,7 @@ module.exports = {
                     // m('i', { class: 'iconfont', value: `${nzm}` }),
                     m('span', [`资金记录`])
                 ]),
-                m('div.profit', { style: { display: t.coinType === `contract` ? `` : `none` } }, [
+                m('div.profit', { style: { display: t.coinType === `contract` ? `none` : `none` } }, [
                     m('i', { class: 'iconfont icon-Analysis' }),
                     m('span', [`盈亏分析`])
                 ]),

@@ -62,7 +62,7 @@ module.exports = {
                         // 我的钱包  交易账户  其他账户
                         m('div', { class: `myWalletIndex-switch columns-flex mt-7 is-between` }, [
                             m('div.wallet border-radius-medium px-7 py-7 column cursor-pointer', {
-                                class: (myWalletIndex.swValue === '03' ? `has-bg-primary` : `fuzzy`),
+                                class: (myWalletIndex.swValue === '03' ? `has-bg-primary` : ` has-bg-level-2`),
                                 onclick: () => { myWalletIndex.switchChange('03'); }
                             }, [
                                 m('div', { class: `body-5 mb-1` }, [
@@ -74,7 +74,7 @@ module.exports = {
                                 ])
                             ]),
                             m('div.trade border-radius-medium px-7 py-7 mx-5 column cursor-pointer', {
-                                class: (myWalletIndex.swValue !== '03' ? `has-bg-primary` : `fuzzy`),
+                                class: (myWalletIndex.swValue !== '03' ? `has-bg-primary` : `has-bg-level-2`),
                                 onclick: () => { myWalletIndex.switchChange('01', `true`); }
                             }, [
                                 m('div.left', {}, [
@@ -112,7 +112,7 @@ module.exports = {
                                     ])
                                 ])
                             ]),
-                            m('div.other border-radius-medium px-7 py-7 column cursor-pointer has-bg-level-2 fuzzy', {}, [
+                            m('div.other border-radius-medium px-7 py-7 column cursor-pointer has-bg-level-2', {}, [
                                 m('div', { class: `body-5 mb-1` }, [
                                     m('span', { }, `其他账户`)
                                 ]),

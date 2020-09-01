@@ -249,6 +249,7 @@ const model = {
             //     transferFrom: '03', // from钱包默认选中
             //     coin: 'USDT' // 币种 默认选中
             // }
+            console.log(option, 8888);
             model.transferModalOption.isShow = option.isShow;
             if (option.transferFrom) model.transferModalOption.transferFrom = option.transferFrom;
             if (option.coin) model.transferModalOption.coin = option.coin;

@@ -10,6 +10,7 @@ module.exports = {
     pageFlag: '01', // 01：合约账户，02：币币账户，04：法币账户
     accountTitle: '', // 交易账户中表格右上角的币种
     accountBanlance: 0, // 交易账户中表格右上角的币种总额
+    oldValue: null, // 优化一直执行update
     columnData: { // 表格列
         wallet: [],
         coin: [],
@@ -100,10 +101,14 @@ module.exports = {
         };
     },
     test(row, type) {
+        const that = this;
+        console.log(that.pageFlag, 'this.pageFlag---');
+        transferLogic.initTransferInfo(); // 初始化弹框
         if (type === '划转') {
             transferLogic.transferModalOption.setTransferModalOption({
                 isShow: true,
-                coin: row.wType // 币种 默认选中
+                coin: row.wType, // 币种 默认选中
+                transferFrom: that.pageFlag
             });
         }
     },
@@ -193,8 +198,10 @@ module.exports = {
         this.vnode = vnode;
     },
     updateFn(vnode) {
-        this.setPageFlag(vnode.attrs.swValue);
-        // console.log(vnode.attrs.swValue, 'table update.....');
+        if (this.oldValue !== vnode.attrs.swValue) {
+            this.setPageFlag(vnode.attrs.swValue);
+        }
+        this.oldValue = vnode.attrs.swValue;
     },
     removeFn: function () {
         broadcast.offMsg({
