@@ -6,7 +6,8 @@ require('@/views/page/myAssets/myWalletIndex/MyWalletIndex.scss');
 
 module.exports = {
     oninit: () => {
-        myWalletIndex.initFn();
+        console.log(myWalletIndex);
+        myWalletIndex.createFn();
     },
     view: () => {
         return m('div', { class: `views-pages-myassets-myWalletIndex theme--light` }, [
