@@ -1,10 +1,10 @@
 const m = require('mithril');
 
 require('@/styles/pages/home.css');
-const top = require('../home/top/topIndex');
-const picture = require('./picture/pictureIndex');
-const advantage = require('./advantage/advantageIndex');
-const introduce = require('./introduce/introduceIndex');
+const top = require('./top/top.logic');
+const picture = require('./picture/picture.view');
+const advantage = require('./advantage/advantage.view');
+const introduce = require('./introduce/introduce.view');
 module.exports = {
     view: function () {
         return m('div.views-home-index', [
