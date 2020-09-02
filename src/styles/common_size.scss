@@ -358,7 +358,7 @@ body,
     padding-right: var(--c-padding-level4);
 }
 
-@for $i from 0 through 8 {
+@for $i from 0 through 9 {
     .pa-#{$i} {
         padding: var(--c-padding-level#{$i}) !important;
     }
