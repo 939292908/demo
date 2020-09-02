@@ -2,7 +2,7 @@ const m = require('mithril');
 require('./index.scss');
 const FromDataMode = require('./form.logic');
 const VerifyView = require('@/views/components/dialogVerify/dialogVerify.view');
-const Tooltip = require('@/views/components/common/Tooltip');
+const Tooltip = require('@/views/components/common/Tooltip/Tooltip.view');
 const l180n = require('@/languages/I18n').default;
 
 module.exports = {
