@@ -3,6 +3,7 @@ const Header = require('../../../components/indexHeader/indexHeader.view');
 const Transfer = require('@/views/page/myAssets/transfer/transfer.view.js');
 const myWalletIndex = require('@/views/page/myAssets/myWalletIndex/MyWalletIndex.logic');
 require('@/views/page/myAssets/myWalletIndex/MyWalletIndex.scss');
+const Dropdown = require('@/views/components/common/Dropdown');
 
 module.exports = {
     oninit: () => {
@@ -22,17 +23,21 @@ module.exports = {
                             m('div', { class: `myWalletIndex-head-left column` }, [
                                 m('div', { class: `myWalletIndex-head-left-total columns pt-3` }, [
                                     m('span', { class: `body-6`, style: `color:white` }, [`总资产估值`]),
-                                    m('div', {}, [
-                                        m('div.cursor-pointer showSel', { onclick: () => { myWalletIndex.setSelectOpFlag(); } }, [
-                                            m('button.cursor-pointer showSelBtn', { style: { color: `#FF8B00` } }, myWalletIndex.selectOpText),
-                                            m('i', { class: 'iconfont icon-xiala showSelI', style: { color: '#FF8B00' } })
-                                        ]),
-                                        m('ul.border-radius-small ml-3 has-bg-level-2 currType', { style: { display: `none` } }, [
-                                            myWalletIndex.selectOp.map(item => {
-                                                return m('li.cursor-pointer pl-3', { class: item === myWalletIndex.selectOpText ? `has-text-primary` : ``, onclick: () => { myWalletIndex.selectOpHideUl(item); } }, item);
-                                            })
-                                        ])
+                                    m('div', { class: `form-item-title` }, ['币种']),
+                                    m('div', { class: `form-item-content` }, [
+                                        m(Dropdown, myWalletIndex.getCurrencyMenuOption())
                                     ])
+                                    // m('div', {}, [
+                                    //     m('div.cursor-pointer showSel', { onclick: () => { myWalletIndex.setSelectOpFlag(); } }, [
+                                    //         m('button.cursor-pointer showSelBtn', { style: { color: `#FF8B00` } }, myWalletIndex.selectOpText),
+                                    //         m('i', { class: 'iconfont icon-xiala showSelI', style: { color: '#FF8B00' } })
+                                    //     ]),
+                                    //     m('ul.border-radius-small ml-3 has-bg-level-2 currType', { style: { display: `none` } }, [
+                                    //         myWalletIndex.selectOp.map(item => {
+                                    //             return m('li.cursor-pointer pl-3', { class: item === myWalletIndex.selectOpText ? `has-text-primary` : ``, onclick: () => { myWalletIndex.selectOpHideUl(item); } }, item);
+                                    //         })
+                                    //     ])
+                                    // ])
                                 ]),
                                 m('div', { class: `number-hide`, style: `color:white;` }, [
                                     m('span', { class: `title-large` }, [myWalletIndex.hideMoneyFlag ? '******' : myWalletIndex.totalValue]),

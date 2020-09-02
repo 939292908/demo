@@ -9,6 +9,7 @@ const model = {
     currency: 'BTC',
     totalValue: 0, // 总资产
     totalCNY: 0, // 人民币
+    showCurrencyMenu: false, // show币种菜单
     walletTotalValue: 0, // 我的钱包总资产
     tradingAccountTotalValue: 0, // 交易账户总资产
     otherTotalValue: 0, // 其他账户
@@ -25,9 +26,12 @@ const model = {
             transferFrom: model.swValue // from钱包默认选中
         });
     },
-    selectOpFlag: false, // 是否显示币种列表
-    selectOpText: 'BTC', // 默认币种BTC
-    selectOp: ['BTC', 'USDT'], // 币种列表
+    // selectOpFlag: false, // 是否显示币种列表
+    // selectOpText: 'BTC', // 默认币种BTC
+    selectOp: [{ id: 'BTC', label: 'BTC' }, { id: 'USDT', label: 'USDT' }], // 币种列表
+    form: {
+        coin: this.selectOp[0]
+    },
     // 设置币种
     setCurrency: function (param) {
         this.currency = param;
@@ -193,6 +197,25 @@ const model = {
         this.currency === 'BTC' ? this.setLegalTotal(wlt.legalTotalValueForBTC) : this.setLegalTotal(wlt.legalTotalValueForUSDT);
         this.currency === 'BTC' ? this.setContractTotal(wlt.contractTotalValueForBTC) : this.setContractTotal(wlt.contractTotalValueForUSDT);
         this.setTotalCNY(wlt.totalCNYValue);
+    },
+    getCurrencyMenuOption() {
+        return {
+            evenKey: `myWalletIndex${Math.floor(Math.random() * 10000)}`,
+            activeId: cb => cb(model.form, 'coin'),
+            showMenu: model.showCurrencyMenu,
+            setShowMenu: type => {
+                model.showCurrencyMenu = type;
+            },
+            onClick (item) {
+                console.log(item);
+                this.setCurrency(item);
+                broadcast.emit({ cmd: broadcast.CHANGE_SW_CURRENCY, data: item });
+                this.sets();
+            },
+            getList () {
+                return model.selectOp;
+            }
+        };
     },
     initFn: function() {
         // 获取当前网址，如：http://localhost:8080/#!/myWalletIndex?id=03
