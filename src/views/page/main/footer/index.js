@@ -1,5 +1,5 @@
 const m = require('mithril');
-const Tooltip = require('@/views/components/common/Tooltip');
+const Tooltip = require('@/views/components/common/Tooltip/Tooltip.view');
 const utils = require('@/util/utils').default;
 require('@/styles/pages/footer/footer.scss');
 const methods = {
@@ -133,7 +133,7 @@ const methods = {
                             label: "加入社群",
                             triggerClass: "has-text-primary-hover",
                             content: [
-                                m('div', { class: `mr-1 has-text-centered ${utils.isMobile() ? 'ml-7' : 'pc才有的类名xx'}` }, [
+                                m('div', { class: `mr-1 has-text-centered ${utils.isMobile() ? 'ml-7' : ''}` }, [
                                     m('img', { class: ``, src: require("@/assets/img/home/Communitywechat.png").default })
                                 ])
                             ]
@@ -146,7 +146,7 @@ const methods = {
                             label: "联系客服",
                             triggerClass: "has-text-primary-hover",
                             content: [
-                                m('div', { class: `body-4 has-text-centered ${utils.isMobile() ? 'ml-7' : 'pc才有的类名xx'}` }, [
+                                m('div', { class: `body-4 has-text-centered ${utils.isMobile() ? 'ml-7' : ''}` }, [
                                     m('img', { class: ``, src: require("@/assets/img/home/QQcustomer_service.png").default })
                                 ])
                             ]
@@ -188,7 +188,7 @@ module.exports = {
                     methods.menuList.map((item, index) => {
                         return m('div', { class: `column bottom-navigation-tab-1  ${utils.isMobile() ? 'ml-6' : ''}`, key: 'item' + index }, [
                             // 菜单标题
-                            m('div', { class: `body-4 is-between ${utils.isMobile() ? 'mt-7' : 'pc才有的类名xx'}` }, [
+                            m('div', { class: `body-4 is-between ${utils.isMobile() ? 'mt-7' : ''}` }, [
                                 m('span', { class: `` }, item.label),
                                 m('span', {
                                     class: `pr-5 ${utils.isMobile() ? '' : 'is-hidden'}`,
@@ -211,81 +211,6 @@ module.exports = {
                             }))
                         ]);
                     })
-                    // // 导航栏
-                    // m('div', { class: `column bottom-navigation-tab-1  ${utils.isMobile() ? 'ml-6' : ''}` }, [
-                    //     m('div', { class: `body-6 ` }, ['平台服务']),
-                    //     m('a', { class: `has-text-white  has-text-primary-hover has-text-level-2`, href: "https://vbithelp.zendesk.com/hc/zh-cn/sections/360007961613", target: "_blank" }, ["币币交易"]),
-                    //     m('p', { class: `` },
-                    //         m('a', { class: `has-text-white  has-text-primary-hover has-text-level-2`, href: "https://vbithelp.zendesk.com/hc/zh-cn/sections/360007961593", target: "_blank" }, ["法币交易"])
-                    //     ),
-                    //     m('p', { class: `` },
-                    //         m('a', { class: `has-text-white  has-text-primary-hover has-text-level-2`, href: "https://vbithelp.zendesk.com/hc/zh-cn/sections/360007961633", target: "_blank" }, ["永续合约"])
-                    //     ),
-                    //     m('p', { class: `` },
-                    //         m('a', { class: `has-text-white  has-text-primary-hover has-text-level-2`, href: "https://vbithelp.zendesk.com/hc/zh-cn/sections/360008544873", target: "_blank" }, ["杠杆ETF"])
-                    //     ),
-                    //     m('p', { class: `` },
-                    //         m('a', { class: `has-text-white  has-text-primary-hover has-text-level-2`, href: "https://vbithelp.zendesk.com/hc/zh-cn/categories/360003442694", target: "_blank" }, ["全币种合约"])
-                    //     )
-                    // ]),
-                    // m('div', { class: `column bottom-navigation-tab-2 ${utils.isMobile() ? 'ml-6' : ''}` }, [
-                    //     m('p', { class: `body-6` }, ["平台条款"]),
-                    //     m('p', { class: `` },
-                    //         m('a', { class: `has-text-white  has-text-primary-hover has-text-level-2`, href: "https://vbithelp.zendesk.com/hc/zh-cn/articles/360045404594", target: "_blank" }, ["服务协议"])
-                    //     ),
-                    //     m('a', { class: `has-text-white  has-text-primary-hover has-text-level-2`, href: "https://vbithelp.zendesk.com/hc/zh-cn/articles/360045404554", target: "_blank" }, ["法律声明"]),
-                    //     m('p', { class: `` },
-                    //         m('a', { class: `has-text-white has-text-primary-hover has-text-level-2`, href: "https://vbithelp.zendesk.com/hc/zh-cn/articles/360045404594", target: "_blank" }, ["隐私条款"])
-                    //     ),
-                    //     m('p', { class: `` },
-                    //         m('a', { class: `has-text-white has-text-primary-hover has-text-level-2`, href: "https://vbithelp.zendesk.com/hc/zh-cn/articles/360048389153", target: "_blank" }, ["合约牌照"])
-                    //     )
-                    // ]),
-                    // m('div', { class: `column bottom-navigation-tab-2 ${utils.isMobile() ? 'ml-6' : ''}` }, [
-                    //     m('p', { class: `body-6` }, ["服务支持"]),
-                    //     m('p', { class: `` },
-                    //         m('a', { class: `has-text-white  has-text-primary-hover has-text-level-2`, href: `https://vbithelp.zendesk.com/hc/zh-cn/sections/360007960273`, target: "_blank" }, ["新手帮助"])
-                    //     ),
-                    //     m('p', { class: `` },
-                    //         m('a', { class: `has-text-white has-text-primary-hover has-text-level-2`, href: `https://vbithelp.zendesk.com/hc/zh-cn/categories/360003464933`, target: "_blank" }, ["常见问题"])
-                    //     ),
-                    //     m('p', { class: `` },
-                    //         m('a', { class: `has-text-white has-text-primary-hover has-text-level-2`, href: `https://vbithelp.zendesk.com/hc/zh-cn/categories/360003415534`, target: "_blank" }, ["公告中心"])
-                    //     ),
-                    //     m('p', { class: `` },
-                    //         m('a', { class: `has-text-white has-text-primary-hover has-text-level-2`, href: `https://vbithelp.zendesk.com/hc/zh-cn/sections/360007979093`, target: "_blank" }, ["相关费率"])
-                    //     )
-                    // ]),
-                    // m('div', { class: `column bottom-navigation-tab-2 ${utils.isMobile() ? 'ml-6' : ''}` }, [
-                    //     m('p', { class: ` body-6` }, ["联系我们"]),
-                    //     m('a', { class: `has-text-white has-text-primary-hover has-text-level-2` }, [
-                    //         m('div', {
-                    //             onclick: function () {
-                    //                 window.location = `mailto: support@vbit.one`;
-                    //             }
-                    //         }, ['服务邮箱'])
-                    //     ]),
-                    //     m('p', { class: `has-text-white  has-text-primary-hover has-text-level-2` },
-                    //         m(Tooltip, {
-                    //             label: "加入社群",
-                    //             content: [
-                    //                 m('div', { class: `` }, [
-                    //                     m('img', { class: '', src: require("@/assets/img/home/Communitywechat.png").default })
-                    //                 ])
-                    //             ]
-                    //         })
-                    //     ),
-                    //     m('p', { class: `has-text-white  has-text-primary-hover has-text-level-2` }, m(Tooltip, {
-                    //         label: "联系客服",
-                    //         content: [
-                    //             m('div', { class: `is-flex` }, [
-                    //                 m('div', { class: `` }, [
-                    //                     m('img', { class: '', src: require("@/assets/img/home/QQcustomer_service.png").default })
-                    //                 ])
-                    //             ])
-                    //         ]
-                    //     }))
-                    // ])
                 ])
             ]),
             m('p', { class: `bottom-copyright is-hidden-mobile` }, ["© 2019-2020 Vbit 版权所有"])

@@ -3,7 +3,7 @@ const rechargeIndex = require('@/views/page/myAssets/myWalletIndex/children/rech
 const AssetRecords = require('@/models/asset/assetsRecords');
 const assetTable = require('../../../assetTable/assetTable.view');
 require('@/views/page/myAssets/myWalletIndex/children/recharge/recharge.scss');
-const Tooltip = require('@/views/components/common/Tooltip');
+const Tooltip = require('@/views/components/common/Tooltip/Tooltip.view');
 
 module.exports = {
     oninit: () => {
