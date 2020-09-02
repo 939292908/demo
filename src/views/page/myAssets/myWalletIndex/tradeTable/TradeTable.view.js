@@ -25,7 +25,7 @@ module.exports = {
                         class: `has-line-level-3 border-radius-small py-1 pl-1 coinSearch`,
                         placeholder: `币种搜索`,
                         oninput: function () {
-                            t.tableAction(this.value, `search`);
+                            t.searchTableData();
                         }
                     })
                 ]),
@@ -63,7 +63,7 @@ module.exports = {
                     m('tbody', {}, [
                         // 循环表身
                         t.tableData[t.tableDateList].map((row) => {
-                            return m('tr', {}, [
+                            return m('tr', { style: { display: t.hideZeroFlag ? (row.TOTAL === '0.00000000' || row.TOTAL === '0.0000' || row.MgnBal === '0.00000000' || row.MgnBal === '0.0000' ? 'none' : '') : '' } }, [
                                 t.columnData[t.coinType].map((item, i) => {
                                     if (i === t.columnData[t.coinType].length - 1) {
                                         // 操作列

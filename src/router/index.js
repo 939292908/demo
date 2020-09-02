@@ -23,6 +23,7 @@ m.route(document.querySelector('body .route-box'), defaultRoutePath, {
             return import('@/views/page/user/login/forgetPassword/forgetPassword.view');
         }
     },
+    // 接参数：http://localhost:8080/#!/myWalletIndex?id=03
     '/myWalletIndex': {
         onmatch: function () {
             return import('@/views/page/myAssets/myWalletIndex/MyWalletIndex.view');

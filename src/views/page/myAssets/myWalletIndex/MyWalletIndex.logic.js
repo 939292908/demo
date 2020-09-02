@@ -82,7 +82,7 @@ const model = {
             transferFrom: val // from钱包默认选中
         });
         // 防止被交易账户01覆盖交易账户悬浮卡片的值
-        window.event.stopPropagation();
+        // window.event.stopPropagation();
         this.sets();
         this.switchContent();
     },
@@ -121,7 +121,6 @@ const model = {
     },
     // 按钮事件
     handlerClickNavBtn (item) {
-        console.log(item);
         if (item.id === 4) { // 点击资金划转
             transferLogic.initTransferInfo(); // 初始化弹框
             // transferLogic.isShow = true;
@@ -197,6 +196,15 @@ const model = {
         this.setTotalCNY(wlt.totalCNYValue);
     },
     initFn: function() {
+        // 获取当前网址，如：http://localhost:8080/#!/myWalletIndex?id=03
+        const currencyIndex = window.document.location.href.toString().split('=')[1];
+        if (currencyIndex === '03' || currencyIndex === '02' || currencyIndex === '01' || currencyIndex === '04') {
+            this.switchChange(currencyIndex);
+            this.setSwValue(currencyIndex);
+        } else {
+            this.switchChange('03');
+            this.setSwValue('03');
+        }
         m.redraw();
     },
     createFn: function() {

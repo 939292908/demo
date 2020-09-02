@@ -1,12 +1,13 @@
 const broadcast = require('@/broadcast/broadcast');
 const wlt = require('@/models/wlt/wlt');
 const transferLogic = require('@/views/page/myAssets/transfer/transfer.logic.js'); // 划转模块逻辑
+// const m = require('mithril');
 
 module.exports = {
     vnode: {},
     currency: 'BTC',
-    hideZeroFlag: false, // 是否隐藏0资产 默认为false
-    dataLength: 0, // 暂无数据
+    hideZeroFlag: false, // 是否隐藏0资产 默认为false，
+    dataLength: 0, // 初始化时暂无数据
     pageFlag: '01', // 01：合约账户，02：币币账户，04：法币账户
     accountTitle: '', // 交易账户中表格右上角的币种
     accountBanlance: 0, // 交易账户中表格右上角的币种总额
@@ -48,9 +49,7 @@ module.exports = {
         }
         this.setAccountBanlance();
         this.setDataLength(this.tableData[this.tableDateList].length);
-        setTimeout(() => {
-            this.tableAction(`hideZero`);
-        }, 150);
+        this.searchTableData();
     },
     setAccountBanlance: function() {
         this.accountBanlance = this.currency === 'BTC' ? wlt[this.coinType + 'TotalValueForBTC'] : wlt[this.coinType + 'TotalValueForUSDT'];
@@ -126,74 +125,45 @@ module.exports = {
     },
     setHideZeroFlag: function () {
         this.hideZeroFlag = !this.hideZeroFlag;
-        this.tableAction(`hideZero`);
     },
-    tableAction: function (searchContent, type) {
-        if (type === 'search') {
-            // const searchContent = document.getElementsByClassName('coinSearch').value;
-            this.searchTableData(searchContent);
-        } else if (type === 'hideZero') {
-            // if (this.oldHideMoneyFlag) {
-            //     this.oldHideMoneyFlag = false;
-            //     if (this.hideZeroFlag) {
-            //         this.hideTableData();
-            //     } else {
-            //         this.showTableData();
-            //     }
-            //     this.oldHideMoneyFlag = true;
-            // }
-            if (this.hideZeroFlag) {
-                this.hideTableData();
+    searchTableData: function () {
+        const that = this;
+        setTimeout(() => {
+            const tbody = document.getElementsByTagName('table')[0].childNodes[1];
+            const rowsLength = tbody.rows.length - 1; // tbody.rows.length - 1：最后一行是暂无数据
+            const index = [];
+            if (that.hideZeroFlag) {
+                for (let i = 0; i < rowsLength; i++) {
+                    if (tbody.rows[i].style.display !== 'none') {
+                        index.push(i);
+                    } else {
+                        continue;
+                    }
+                }
             } else {
-                this.showTableData();
+                for (let i = 0; i < rowsLength; i++) {
+                    index.push(i);
+                }
             }
-        }
+            that.search(index);
+        }, 50);
     },
-    searchTableData: function (searchContent) {
+    // oldAry: [],
+    search: function (ary) {
         const tbody = document.getElementsByTagName('table')[0].childNodes[1];
-        const rowsLength = tbody.rows.length - 1; // tbody.rows.length - 1：最后一行是暂无数据
-        let count = 0;
-        if (searchContent !== "") {
-            for (let i = 0; i < rowsLength; i++) {
+        const searchContent = document.getElementsByClassName('coinSearch')[0].value;
+        for (const i of ary) {
+            if (searchContent) {
                 const searchText = tbody.rows[i].cells[0].innerHTML;
                 if (searchText.toUpperCase().indexOf(searchContent.toUpperCase()) !== -1) {
                     tbody.rows[i].style.display = ''; // 显示行操作
                 } else {
                     tbody.rows[i].style.display = 'none'; // 隐藏行操作
-                    count = count + 1;
                 }
-            }
-            if (count === rowsLength) { tbody.rows[rowsLength].style.display = ''; }
-        } else if (searchContent === "") {
-            tbody.rows[rowsLength].style.display = 'none';
-            for (let j = 0; j < rowsLength; j++) {
-                tbody.rows[j].style.display = '';
-            }
-        }
-    },
-    showTableData: function () {
-        const tbody = document.getElementsByTagName('table')[0].childNodes[1];
-        const rowsLength = tbody.rows.length - 1; // tbody.rows.length - 1：最后一行是暂无数据
-        tbody.rows[rowsLength].style.display = 'none';
-        for (let i = 1; i < rowsLength; i++) {
-            // 显示行操作
-            tbody.rows[i].style.display = '';
-        }
-    },
-    hideTableData: function () {
-        let count = 0;
-        const tbody = document.getElementsByTagName('table')[0].childNodes[1];
-        const rowsLength = tbody.rows.length - 1; // tbody.rows.length - 1：最后一行是暂无数据
-        for (let i = 0; i < rowsLength; i++) {
-            const text = tbody.rows[i].cells[1].innerHTML;
-            if (text === '0.00000000' || text === '0.0000') {
-                count = count + 1;
-                tbody.rows[i].style.display = 'none';
             } else {
                 tbody.rows[i].style.display = '';
             }
         }
-        if (count === rowsLength) { tbody.rows[rowsLength].style.display = ''; }
     },
     createFn: function () {
         wlt.init();
@@ -207,7 +177,13 @@ module.exports = {
         setTimeout(() => {
             this.initColumnData();
             this.initTableData();
-            this.setPageFlag('03');
+            // 获取当前网址，如：http://localhost:8080/#!/myWalletIndex?id=03
+            const currencyIndex = window.document.location.href.toString().split('=')[1];
+            if (currencyIndex === '03' || currencyIndex === '02' || currencyIndex === '01' || currencyIndex === '04') {
+                this.setPageFlag(currencyIndex);
+            } else {
+                this.setPageFlag('03');
+            }
             this.setAccountBanlance();
             if (this.dataLength === 0) {
                 document.getElementsByTagName('table')[0].rows[document.getElementsByTagName('table')[0].rows.length - 1].style.display = '';
