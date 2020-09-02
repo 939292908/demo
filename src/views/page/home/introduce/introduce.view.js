@@ -11,6 +11,9 @@ module.exports = {
             window.router.push('/login');
         }
     },
+    toUrl () {
+        window.open("/#!/register", '_blank');
+    },
     view: function () {
         return m('div', { class: 'views-pages-home-introduce ' }, [
             // 1. 平台介绍 模块
@@ -35,7 +38,7 @@ module.exports = {
                 m('p', { class: `pt-8 has-text-centered font-weight-regular title-x-large-1` }, "开启交易之旅"),
                 // 按钮
                 m('div', { class: `has-text-centered mt-8` }, [
-                    m('a', { class: `border-radius-medium button-register has-bg-primary button mr-2 title-medium font-weight-regular skew-right ${utils.isMobile() ? 'body-5 ' : 'pc才有的类名xx'}`, href: "http://localhost:8080/#!/register", target: "_blank" }, ['立即注册']),
+                    m('a', { class: `border-radius-medium button-register has-bg-primary button mr-2 title-medium font-weight-regular skew-right ${utils.isMobile() ? 'body-5 ' : 'pc才有的类名xx'}`, onclick: this.toUrl, target: "_blank" }, ['立即注册']),
                     m('a', { class: `border-radius-medium button-transaction has-bg-primary button title-medium font-weight-regular  skew-left ml-3  ${utils.isMobile() ? 'body-5 ' : 'pc才有的类名xx'}`, onclick: this.toPage, target: "_blank" }, ['即可交易'])
                 ]),
                 // 橘色 盒子
