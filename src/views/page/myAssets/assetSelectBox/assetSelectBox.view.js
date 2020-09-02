@@ -1,6 +1,7 @@
 const m = require('mithril');
 const AssetSelectBox = require('./assetSelectBox.model');
 const InputWithComponent = require('../../../components/inputWithComponent/inputWithComponent.view');
+const I18n = require('@/languages/I18n').default;
 
 module.exports = {
     oncreate(vnode) {
@@ -20,9 +21,9 @@ module.exports = {
             class: vnode.attrs.class
         }, [
             m('div.columns.is-variable.is-6', {}, [
-                m('div.column.is-3', {}, ['时间']),
-                m('div.column.is-3', {}, ['币种']),
-                m('div.column.is-3', {}, ['类型']),
+                m('div.column.is-3', {}, [I18n.$t('10091')/* '时间' */]),
+                m('div.column.is-3', {}, [I18n.$t('10063')/* '币种' */]),
+                m('div.column.is-3', {}, [I18n.$t('10088')/* '类型' */]),
                 m('div.column', {}, [])
             ]),
             m('div.columns.is-variable.is-6', {}, [

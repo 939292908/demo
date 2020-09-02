@@ -3,6 +3,7 @@ const geetest = require('@/models/validate/geetest').default;
 const validate = require('@/models/validate/validate').default;
 const broadcast = require('@/broadcast/broadcast');
 const errCode = require('@/util/errCode').default;
+const I18n = require('@/languages/I18n').default;
 
 module.exports = {
     smsCd: 0, // 短信冷却时间
@@ -10,8 +11,16 @@ module.exports = {
     geetestCallBackType: '', // 极验回调类型 用于判断是邮箱还是短信的回调
     selectType: '', // 当前验证类型
     anotherType: '', // 另一种验证类型
-    selectName: '', // 选择验证类型的显示文字
-    anotherName: '', // 切换选择验证类型显示的文字
+    selectName: {
+        sms: I18n.$t('10118')/* '短信验证码' */,
+        email: I18n.$t('10116')/* '邮箱验证码' */,
+        google: I18n.$t('10119')/* '谷歌验证码' */
+    }, // 选择验证类型的显示文字
+    anotherName: {
+        sms: '切换短信验证',
+        email: '切换邮箱验证',
+        google: '切换谷歌验证'
+    }, // 切换选择验证类型显示的文字
     code: '', // 验证码
     smsInt: null,
     emailInt: null,
@@ -137,34 +146,6 @@ module.exports = {
             break;
         }
     },
-    /**
-     * 设置显示的文字
-     */
-    setName() {
-        switch (this.selectType) {
-        case 'sms':
-            this.selectName = '短信验证码';
-            break;
-        case 'email':
-            this.selectName = '邮箱验证码';
-            break;
-        case 'google':
-            this.selectName = '谷歌验证码';
-            break;
-        }
-        if (!this.anotherType.length) return;
-        switch (this.anotherType) {
-        case 'sms':
-            this.anotherName = '切换短信验证';
-            break;
-        case 'email':
-            this.anotherName = '切换邮箱验证';
-            break;
-        case 'google':
-            this.anotherName = '切换谷歌验证';
-            break;
-        }
-    },
 
     /**
      * 切换验证方式
@@ -173,8 +154,6 @@ module.exports = {
         const temp = this.selectType;
         this.selectType = this.anotherType;
         this.anotherType = temp;
-        this.setName();
-        m.redraw();
     },
 
     init() {
@@ -186,7 +165,6 @@ module.exports = {
             this.selectType = validate.validateType;
             this.anotherType = '';
         }
-        this.setName();
     },
 
     oninit() {

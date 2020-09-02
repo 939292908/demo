@@ -143,7 +143,7 @@ module.exports = {
                                     window.router.push('/login');
                                 }
                             }, [
-                                I18n.$t('10136')
+                                I18n.$t('10006')
                             ]),
                             m('div.button.has-bg-primary.is-small', {
                                 onclick: function () {
@@ -480,7 +480,7 @@ module.exports = {
                                     window.router.push('/login');
                                 }
                             }, [
-                                I18n.$t('10136')
+                                I18n.$t('10006')
                             ]),
                             m('div.button.has-bg-primary', {
                                 onclick: function () {

@@ -1,16 +1,17 @@
 const m = require('mithril');
+const I18n = require('@/languages/I18n').default;
 module.exports = {
     view(vnode) {
         const table = [];
         table.push(
             m('div.columns.body-4.has-text-level-3', {}, [
-                m('div.column.is-1', {}, ['币种']),
-                m('div.column.is-2', {}, ['类型']),
-                m('div.column.is-2', {}, ['数量']),
-                m('div.column.is-2', {}, ['手续费']),
-                m('div.column.is-2', {}, ['状态']),
-                m('div.column.is-2', {}, ['时间']),
-                m('div.column.is-1.has-text-right', {}, ['备注'])
+                m('div.column.is-1', {}, [I18n.$t('10063')/* '币种' */]),
+                m('div.column.is-2', {}, [I18n.$t('10088')/* '类型' */]),
+                m('div.column.is-2', {}, [I18n.$t('10089')/* '数量' */]),
+                m('div.column.is-2', {}, [I18n.$t('10099')/* '手续费' */]),
+                m('div.column.is-2', {}, [I18n.$t('10090')/* '状态' */]),
+                m('div.column.is-2', {}, [I18n.$t('10091')/* '时间' */]),
+                m('div.column.is-1.has-text-right', {}, [I18n.$t('10092')/* '备注' */])
             ])
         );
         if (!vnode.attrs.list.length) {
@@ -32,7 +33,7 @@ module.exports = {
                                         item.showInfo = !item.showInfo;
                                     }
                                 },
-                                ['详情', m('i.iconfont', { class: item.showInfo ? 'icon-xiala' : 'icon-xiala' }, [])])
+                                [I18n.$t('10096')/* '详情' */, m('i.iconfont', { class: item.showInfo ? 'icon-xiala' : 'icon-xiala' }, [])])
                                 : '--'
                         ])
                     ])

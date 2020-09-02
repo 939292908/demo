@@ -28,9 +28,9 @@ module.exports = {
                                 {}, [config.exchName]),
                             m('div.title-large.has-text-title', {},
                                 ['注册验证']),
-                            m('div.py-0.mb-7.body-3.has-text-level-3', {}, ['您正在注册账户，请完成以下验证']),
+                            m('div.py-0.mb-7.body-3.has-text-level-3', {}, [I18n.$t('10200')/* '您正在注册账户，请完成以下验证' */]),
                             m('div.py-0.mb-2.has-text-level-1.body-3', {},
-                                [Register.type === 'phone' ? '手机验证码' : '邮箱验证码']),
+                                [Register.type === 'phone' ? '手机验证码' : I18n.$t('10116')/* '邮箱验证码' */]),
                             m('div.control.has-icons-right.mb-6', {}, [
                                 m(InputWithComponent, {
                                     options: {
@@ -57,19 +57,19 @@ module.exports = {
                                                     : Register.sendEmailCode();
                                             }
                                         },
-                                        [Register.smsCd > 0 ? `${Register.smsCd} s` : I18n.$t('10214')/* '获取验证码' */]
+                                        [Register.smsCd > 0 ? `${Register.smsCd} s` : I18n.$t('10117')/* '获取验证码' */]
                                     )
                                 })
                             ]),
                             m('button.button.my-3.has-bg-primary.button-medium.is-fullwidth.has-text-white.mb-2',
                                 {
                                     onclick: () => { Register.checkCode(); }
-                                }, ['注册'])
+                                }, [I18n.$t('10007')/* '注册' */])
                         ] : [
                             m('div.title-large.views-page-login-title.opacity',
                                 {}, [config.exchName]),
                             m('div.mb-5.title-large.has-text-title', {},
-                                ['注册']),
+                                [I18n.$t('10007')/* '注册' */]),
                             m('div.tabs.mb-7', {}, [
                                 m('ul', {}, [
                                     m('li', { class: Register.type === 'phone' ? 'is-active' : '' }, [
@@ -78,7 +78,7 @@ module.exports = {
                                                 Register.type = 'phone';
                                                 Register.cleanUp();
                                             }
-                                        }, ['手机'])
+                                        }, [I18n.$t('10193')/* '手机' */])
                                     ]),
                                     m('li', { class: Register.type === 'email' ? 'is-active' : '' }, [
                                         m('a', {
@@ -86,12 +86,12 @@ module.exports = {
                                                 Register.type = 'email';
                                                 Register.cleanUp();
                                             }
-                                        }, ['邮箱'])
+                                        }, [I18n.$t('10194')/* '邮箱' */])
                                     ])
                                 ])
                             ]),
                             m('div.py-0.mb-2.has-text-level-1.body-3', {},
-                                [Register.type === 'phone' ? '手机号' : '邮箱']),
+                                [Register.type === 'phone' ? I18n.$t('10121')/* '手机号' */ : I18n.$t('10122')/* '邮箱号' */]),
                             Register.type === 'phone'
                                 ? m(InputWithComponent, {
                                     leftComponents: m(AreaCodeSelect, {
@@ -121,7 +121,7 @@ module.exports = {
                                 hidden: !Register.showLoginNameValidate
                             }, [regExp.validAccount(Register.type, Register.loginName)]),
                             m('div.py-0.mb-2.has-text-level-1.body-3.mt-5', {},
-                                ['密码']),
+                                [I18n.$t('10195')/* '密码' */]),
                             m(InputWithComponent, {
                                 hiddenLine: true,
                                 options: {
@@ -149,7 +149,7 @@ module.exports = {
                                 hidden: !Register.showPasswordValidate
                             }, [regExp.validPassword(Register.password)]),
                             m('div.py-0.mb-2.has-text-level-1.body-3.mt-5', {},
-                                [`邀请码${Register.mustInvited() ? '(必填)' : '(选填)'}`]),
+                                [Register.mustInvited() ? '邀请码(必填)' : I18n.$t('10196')/* '邀请码(选填)' */]),
                             m('input.input.mb-6', {
                                 oninput: e => {
                                     Register.refereeId = e.target.value;
@@ -200,7 +200,7 @@ module.exports = {
                                     },
                                     disabled: !Register.valid(),
                                     class: Register.loading ? 'is-loading' : ''
-                                }, ['注册']),
+                                }, [I18n.$t('10007')/* '注册' */]),
                             m('div.has-text-centered.body-3.has-text-level-2',
                                 {}, [
                                     '已有账号？去',
@@ -208,7 +208,7 @@ module.exports = {
                                         onclick: () => {
                                             window.router.push('/login');
                                         }
-                                    }, [I18n.$t('10136')/* '登录' */])
+                                    }, [I18n.$t('10006')/* '登录' */])
                                 ])
                         ]
                     ])
