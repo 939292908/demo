@@ -214,11 +214,11 @@ const extract = {
         extract.popUpData = {
             show: !extract.popUpData.show,
             isHandleVerify,
-            title: { text: isHandleVerify ? '安全验证' : '温馨提示' }
+            title: { text: isHandleVerify ? l180n.$t('10113')/* 安全验证 */ : l180n.$t('10082') /* '温馨提示' */ }
         };
         m.redraw();
     },
-    handleTotalShow: function ({ content, buttonText, buttonClick, doubleButtonCof, doubleButton }) {
+    handleTotalShow: function ({ content, buttonText, buttonClick, doubleButtonCof, doubleButton, isLinshiErWeiMa }) {
         extract.isChangeClose = true;
         extract.popUpData = {
             show: true,
@@ -228,15 +228,18 @@ const extract = {
             buttonClick,
             doubleButtonCof,
             doubleButton,
-            title: { text: '温馨提示' }
+            title: { text: l180n.$t('10082') /* '温馨提示' */ },
+            isLinshiErWeiMa
         };
-        m.redraw();
+        // m.redraw();
     },
     handleUserCanAction: function () {
-        if (!this.UserInfo.setting2fa.email) return this.handleTotalShow({ content: '提币需邮件确认，请先绑定邮箱', buttonText: '邮箱验证', buttonClick: () => { m.route.set("/my"); } });
+        if (!this.UserInfo.setting2fa.email || (!this.UserInfo.setting2fa.google && !this.UserInfo.setting2fa.phone)) return this.handleTotalShow({ content: '提币需邮件确认，请先绑定邮箱 为了您的账户安全，还需绑定手机或谷歌', isLinshiErWeiMa: true });
+        // 二期使用
+        if (!this.UserInfo.setting2fa.email) return this.handleTotalShow({ content: '提币需邮件确认，请先绑定邮箱', buttonText: l180n.$t('10229') /* '邮箱验证' */, buttonClick: () => { m.route.set("/my"); } });
         const doubleButtonCof = [
-            { text: '谷歌验证', click: () => { m.route.set("/my"); } },
-            { text: '手机验证', click: () => { m.route.set("/my"); } }
+            { text: l180n.$t('10227') /* '谷歌验证' */, click: () => { m.route.set("/my"); } },
+            { text: l180n.$t('10228') /* '手机验证' */, click: () => { m.route.set("/my"); } }
         ];
         if (!this.UserInfo.setting2fa.google && !this.UserInfo.setting2fa.phone) return this.handleTotalShow({ content: '为了您的账户安全，请先绑定手机或谷歌', doubleButton: true, doubleButtonCof });
     },

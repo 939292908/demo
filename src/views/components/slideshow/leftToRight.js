@@ -38,6 +38,7 @@ module.exports = {
     },
     leftToRight: function (vnode) {
         const data = market.tickData;
+        console.log(data, vnode.attrs.list);
         return vnode.attrs.list.map(item => {
             return m('div.swiper-slide', { onclick: this.openUrl, style: 'cursor: pointer;' }, [
                 m('div.imgBox', [

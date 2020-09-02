@@ -19,6 +19,12 @@
           cursor: pointer;
         }
       }
+      .toolLable {
+        .dropdown-menu {
+          min-width: 7rem;
+          text-align: center;
+        }
+      }
 
       .changeCoin {
         .select {
@@ -132,7 +138,7 @@
 
     .promptTitle {
       line-height: var(--c-fontsz-level4);
-      margin-bottom: 8px;
+      margin-bottom: 10px;
     }
 
     .rulesText {
