@@ -62,11 +62,13 @@ module.exports = {
                     // 数组去重
                     const tempJson = {};
                     const res = [];
-                    for (let i = 0; i < this.selectList.length; i++) {
-                        tempJson[JSON.stringify(this.selectList[i])] = true; // 取出每一个对象当做key
-                    }
-                    for (let j = 0; j < Object.keys(tempJson).length; j++) {
-                        res.push(JSON.parse(Object.keys(tempJson)[j]));
+                    if (this.selectList) {
+                        for (let i = 0; i < this.selectList.length; i++) {
+                            tempJson[JSON.stringify(this.selectList[i])] = true; // 取出每一个对象当做key
+                        }
+                        for (let j = 0; j < Object.keys(tempJson).length; j++) {
+                            res.push(JSON.parse(Object.keys(tempJson)[j]));
+                        }
                     }
                     this.selectList = res;
 
