@@ -1,5 +1,6 @@
 const m = require("mithril");
 const Swiper = require('swiper/bundle').default;
+const market = require('@/models/market/market');
 // 轮播
 require('@/styles/components/slideshow.scss');
 const TOLEFT = require('@/assets/img/home/toLeft.png').default;
@@ -36,24 +37,25 @@ module.exports = {
         this.mySwiper.autoplay.stop();
     },
     leftToRight: function (vnode) {
-        const nameList = Object.keys(vnode.attrs.list);
-        return nameList.map(item => {
+        const data = market.tickData;
+        return vnode.attrs.list.map(item => {
             return m('div.swiper-slide', { onclick: this.openUrl, style: 'cursor: pointer;' }, [
                 m('div.imgBox', [
                     m('div.marketTitle', [
-                        m('div.marketName', { class: 'title-medium' }, vnode.attrs.list[item].distSym || '--'),
-                        m('div.marketGrowth body-6', { class: vnode.attrs.list[item]?.rfpreColor > 0 ? 'has-bg-up' : 'has-bg-down' }, vnode.attrs.list[item].rfpre || '--')
+                        m('div.marketName', { class: 'title-medium' }, data[item]?.distSym || '--'),
+                        m('div.marketGrowth body-6', { class: data[item]?.rfpreColor > 0 ? 'has-bg-up' : data[item]?.rfpreColor === 0 ? 'is0Colorbg' : 'has-bg-down' }, data[item]?.rfpre || '--')
                     ]),
-                    m('div.marketPrice title-large', { class: vnode.attrs.list[item]?.rfpreColor > 0 ? 'has-text-up' : 'has-text-down' }, `$${vnode.attrs.list[item].LastPrz || '--'}`),
-                    m('div.marketNumber body-5', `24H量 ${vnode.attrs.list[item].Volume24 || '--'}`),
-                    m('div.marketNumber body-5', `24H额 ${vnode.attrs.list[item].Turnover24 || '--'}`)
+                    m('div.marketPrice title-large', { class: data[item]?.rfpreColor > 0 ? 'has-text-up' : data[item]?.rfpreColor === 0 ? 'is0ColorTxt' : 'has-text-down' }, `$${data[item]?.LastPrz || '--'}`),
+                    m('div.marketNumber body-5', `24H量 ${data[item]?.Volume24 || '--'}`),
+                    m('div.marketNumber body-5', `24H额 ${data[item]?.Turnover24 || '--'}`)
                 ])
             ]);
         });
     },
     view: function (vnode) {
+        console.log(vnode.attrs.list);
         if (swiper.Loadingnumber < 10) swiper.Loadingnumber += 1;
-        if (swiper.Loadingnumber === 8) {
+        if (swiper.Loadingnumber === 5) {
             this.mySwiper.removeSlide(0);
             this.mySwiper.removeSlide(0);
             this.mySwiper.removeSlide(0);

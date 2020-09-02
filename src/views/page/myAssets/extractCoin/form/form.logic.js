@@ -7,8 +7,10 @@ const geetest = require('@/models/validate/geetest').default;
 const errCode = require('@/util/errCode').default;
 const utils = require('@/util/utils').default;
 const validate = require('@/models/validate/validate').default;
+const l180n = require('@/languages/I18n').default;
 
 const extract = {
+    locale: '',
     name: 'FROM_DATA',
     promptText: '如果您希望将本地数字资产提出至某地址，则该地址及为您的提币地址。 *某些地址可能需要您提供地址的标签，请务必填写，否则有丢失币的风险 *填写错误可能导致资产损失，请仔细核对 *完成LV3身份认证后，24h提币额度提升至100BTC，如需更多请联系客服',
     UserInfo: {},
@@ -50,7 +52,7 @@ const extract = {
         linkName: ''
     }, // 提币数据
     getCoinInfo: function () {
-        const params = { locale: 'zh', vp: Conf.exchId };
+        const params = { locale: extract.locale, vp: Conf.exchId };
         webApi.getCoinInfo(params).then(res => {
             if (res.result.code === 0) {
                 extract.coinInfo = res.result.data;
@@ -71,10 +73,23 @@ const extract = {
         });
     },
     getSelectListData: function () {
-        this.selectList = [...wlt.wallet['03']];
+        /* eslint-disable */
+        // const self = this;
+        let selectList = [...wlt.wallet['03']];
+        for (let i = 0; i < selectList.length; i ++) {
+            webApi.GetRechargeAddr({
+                wType: selectList[i].wType
+            }).then(function(res) {
+                if (res.result.code ===  0) {
+                    selectList[i].fullNameAddLeez = res.trade.fullName[extract.locale] || res.trade.fullName.en;
+                    m.redraw();
+                }
+            })
+        }
+        this.selectList = selectList;
         this.currentSelect = this.selectList[0];
         this.getlinkButtonListData();
-        m.redraw();
+        /* eslint-enable */
     },
     getlinkButtonListData: function () {
         this.getCurrentFeesChange();
@@ -229,7 +244,7 @@ const extract = {
         const self = this;
         wlt.init();
         this.initGeetest();
-
+        this.locale = l180n.getLocale();
         self.UserInfo = UserInfo.getAccount();
         if (!Object.keys(self.UserInfo).length) {
             broadcast.onMsg({

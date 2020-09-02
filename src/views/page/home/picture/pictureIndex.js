@@ -7,7 +7,8 @@ require('@/views/page/home/picture/picture.scss');
 const market = require('@/models/market/market');
 
 const logic = {
-    length: 0
+    length: 0,
+    nameList: []
 };
 
 module.exports = {
@@ -31,6 +32,7 @@ module.exports = {
             }
         });
         logic.length = syms.length;
+        logic.nameList = syms;
         market.initHomeNeedSub(syms, list);
     },
     view: function () {
@@ -41,7 +43,7 @@ module.exports = {
                 m('img', { class: 'picture-layer ', src: require("@/assets/img/home/layer-4.png").default }),
                 // 轮播2
                 m('div', { class: `rotationtwo-content container mt-7` }, [
-                    Object.keys(market.tickData).length > 0 && Object.keys(market.tickData).length === logic.length ? m(Slideshow, { list: market.tickData }) : m(Slideshow, { list: { a: {}, b: {}, c: {}, d: {} } })
+                    Object.keys(market.tickData).length > 0 && Object.keys(market.tickData).length === logic.length ? m(Slideshow, { list: logic.nameList }) : m(Slideshow, { list: ['a', 'b', 'c', 'd'] })
                 ])
             ])
         ]);
