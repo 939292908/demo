@@ -36,10 +36,13 @@ module.exports = {
                             oninput: e => {},
                             value: AssetSelectBox.date
                         },
-                        rightComponents: m('i.iconfont.mx-2.icon-Close', {
+                        rightComponents: m('i.iconfont.mr-2.iconfont-small', {
+                            class: AssetSelectBox.date ? 'icon-Close' : 'icon-xiala',
                             onclick: () => {
-                                AssetSelectBox.date = '';
-                                AssetSelectBox.picker.reset();
+                                if (AssetSelectBox.date) {
+                                    AssetSelectBox.date = '';
+                                    AssetSelectBox.picker.reset();
+                                }
                             }
                         })
                     })
