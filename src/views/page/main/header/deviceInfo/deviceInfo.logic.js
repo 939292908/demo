@@ -19,6 +19,7 @@ const deviceInfo = {
         this.initDeviceInfo();
     },
     initDeviceInfo: function () {
+        const that = this;
         const excludes = {
             userAgent: true,
             audio: true,
@@ -30,7 +31,7 @@ const deviceInfo = {
         };
         const options = { excludes: excludes };
 
-        this.deviceInfo.userAgent = window.location.userAgent;
+        this.deviceInfo.userAgent = window.navigator.userAgent;
 
         Fingerprint2.get(options, function (components) {
             // 参数
@@ -38,13 +39,13 @@ const deviceInfo = {
             for (const item of components) {
                 switch (item.key) {
                 case 'language':
-                    this.deviceInfo.language = item.value;
+                    that.deviceInfo.language = item.value;
                     break;
                 case 'timezone':
-                    this.deviceInfo.location = item.value;
+                    that.deviceInfo.location = item.value;
                     break;
                 case 'platform':
-                    this.deviceInfo.platform = item.value;
+                    that.deviceInfo.platform = item.value;
                     break;
                 }
             }
