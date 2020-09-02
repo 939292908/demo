@@ -39,9 +39,7 @@ module.exports = {
                                         },
                                         onkeyup: e => {
                                             if (e.keyCode === 13) {
-                                                Register.type === 'phone'
-                                                    ? window.validate.checkSmsCode(Register.code)
-                                                    : window.validate.checkEmailCode(Register.code);
+                                                Register.checkCode();
                                             }
                                         },
                                         maxlength: '6',
