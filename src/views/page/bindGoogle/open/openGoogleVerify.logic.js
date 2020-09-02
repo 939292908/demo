@@ -76,7 +76,7 @@ module.exports = {
         geetest.init(() => {
         });
         broadcast.onMsg({
-            key: 'bindGoogle',
+            key: 'openBindGoogle',
             cmd: 'geetestMsg',
             cb: res => {
                 if (res === 'success') {
