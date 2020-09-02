@@ -1,8 +1,10 @@
 const m = require('mithril');
 const model = require('./bindEmail.logic.js');
-
+const VerifyView = require('@/views/components/dialogVerify/dialogVerify.view');
 require('@/views/page/user/bind/bind.scss');
 require('./bindEmail.scss');
+// const Modal = require('@/views/components/common/Modal');
+// const I18n = require('@/languages/I18n').default;
 
 module.exports = {
     oninit: vnode => model.oninit(vnode),
@@ -33,6 +35,7 @@ module.exports = {
                                 m('input', {
                                     class: `input`,
                                     placeholder: '请输入登录密码',
+                                    type: 'password',
                                     value: model.form.password,
                                     oninput(e) {
                                         model.onInputPassword(e);
@@ -67,7 +70,15 @@ module.exports = {
                         ])
                     ])
                 ])
-            ])
+            ]),
+            model.isShowVerifyView ? m(VerifyView, {
+                close: () => model.switchSafetyVerifyModal(false),
+                isHandleVerify: true,
+                title: {
+                    logo: "Vbit",
+                    text: "安全验证"
+                }
+            }) : null
         ]);
     }
 };

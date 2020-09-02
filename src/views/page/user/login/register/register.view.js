@@ -4,6 +4,7 @@ const InputWithComponent = require('../../../../components/inputWithComponent/in
 const AreaCodeSelect = require('../areaCodeSelect/areaCodeSelect.view');
 const config = require('@/config');
 const I18n = require('@/languages/I18n').default;
+const regExp = require('@/models/validate/regExp');
 
 import('../login.css');
 
@@ -13,6 +14,9 @@ module.exports = {
     },
     onremove() {
         Register.onremove();
+    },
+    oncreate() {
+
     },
     view() {
         return m('div.is-align-items-center.has-bg-level-1.pa-8.theme--light',
@@ -53,7 +57,7 @@ module.exports = {
                                                     : Register.sendEmailCode();
                                             }
                                         },
-                                        [Register.smsCd > 0 ? `${Register.smsCd}` : I18n.$t('10214')/* '获取验证码' */]
+                                        [Register.smsCd > 0 ? `${Register.smsCd} s` : I18n.$t('10214')/* '获取验证码' */]
                                     )
                                 })
                             ]),
@@ -69,10 +73,20 @@ module.exports = {
                             m('div.tabs.mb-7', {}, [
                                 m('ul', {}, [
                                     m('li', { class: Register.type === 'phone' ? 'is-active' : '' }, [
-                                        m('a', { onclick: () => { Register.type = 'phone'; } }, ['手机'])
+                                        m('a', {
+                                            onclick: () => {
+                                                Register.type = 'phone';
+                                                Register.cleanUp();
+                                            }
+                                        }, ['手机'])
                                     ]),
                                     m('li', { class: Register.type === 'email' ? 'is-active' : '' }, [
-                                        m('a', { onclick: () => { Register.type = 'email'; } }, ['邮箱'])
+                                        m('a', {
+                                            onclick: () => {
+                                                Register.type = 'email';
+                                                Register.cleanUp();
+                                            }
+                                        }, ['邮箱'])
                                     ])
                                 ])
                             ]),
@@ -99,20 +113,13 @@ module.exports = {
                                 : m('input.input[type=text]', {
                                     oninput: e => {
                                         Register.loginName = e.target.value;
+                                        Register.showLoginNameValidate = true;
                                     },
                                     value: Register.loginName
                                 }, []),
                             m('div.body-3.mt-2.has-text-tip-error', {
                                 hidden: !Register.showLoginNameValidate
-                            }, [
-                                Register.type === 'phone'
-                                    ? Register.rulesPhone.required(Register.loginName) === true
-                                        ? Register.rulesPhone.phone(Register.loginName)
-                                        : Register.rulesPhone.required(Register.loginName)
-                                    : Register.rulesEmail.required(Register.loginName) === true
-                                        ? Register.rulesEmail.email(Register.loginName)
-                                        : Register.rulesEmail.required(Register.loginName)
-                            ]),
+                            }, [regExp.validAccount(Register.type, Register.loginName)]),
                             m('div.py-0.mb-2.has-text-level-1.body-3.mt-5', {},
                                 ['密码']),
                             m(InputWithComponent, {
@@ -125,9 +132,7 @@ module.exports = {
                                     onkeyup: e => {
                                         Register.showPasswordValidate = true;
                                         if (e.keyCode === 13) {
-                                            Register.type === 'phone'
-                                                ? Register.submitEmail()
-                                                : Register.submitPhone();
+                                            Register.submit();
                                         }
                                     },
                                     onblur: e => {
@@ -142,22 +147,16 @@ module.exports = {
                             }),
                             m('div.body-3.mt-2.has-text-tip-error', {
                                 hidden: !Register.showPasswordValidate
-                            }, [
-                                Register.rulesPwd.required(Register.password) === true
-                                    ? Register.rulesPwd.password(Register.password)
-                                    : Register.rulesPwd.required(Register.password)
-                            ]),
+                            }, [regExp.validPassword(Register.password)]),
                             m('div.py-0.mb-2.has-text-level-1.body-3.mt-5', {},
-                                ['邀请码（选填）']),
+                                [`邀请码${Register.mustInvited() ? '(必填)' : '(选填)'}`]),
                             m('input.input.mb-6', {
                                 oninput: e => {
                                     Register.refereeId = e.target.value;
                                 },
                                 onkeyup: e => {
                                     if (e.keyCode === 13) {
-                                        Register.type === 'phone'
-                                            ? Register.submitEmail()
-                                            : Register.submitPhone();
+                                        Register.submit();
                                     }
                                 },
                                 value: Register.refereeId
@@ -197,9 +196,9 @@ module.exports = {
                             m('button.button.my-3.has-bg-primary.button-medium.is-fullwidth.has-text-white.mb-2',
                                 {
                                     onclick: () => {
-                                        Register.type === 'phone' ? Register.submitEmail() : Register.submitPhone();
+                                        Register.submit();
                                     },
-                                    disabled: Register.type === 'phone' ? !Register.valid1() : !Register.valid(),
+                                    disabled: !Register.valid(),
                                     class: Register.loading ? 'is-loading' : ''
                                 }, ['注册']),
                             m('div.has-text-centered.body-3.has-text-level-2',

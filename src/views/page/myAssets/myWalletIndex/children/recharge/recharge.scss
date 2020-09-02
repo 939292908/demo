@@ -22,7 +22,6 @@
             .currencyAddr{
                 width: 420px;
                 height: 44px;
-                border: 1px solid red;
                 display: flex;
                 flex-direction: row;
                 .currencyAddr-text{
@@ -38,7 +37,6 @@
                 .currencyAddr-Operation{
                     margin: auto 0;
                     .QrCodeImg{
-                        border: 1px solid red;
                         z-index: 999;
                         position: absolute;
                         width: 105px;
@@ -85,6 +83,10 @@
         }
         .bottom-tab{
             height: 309px;
+            .all{
+                float: right;
+            }
+            clear: both;
         }
     }
 }

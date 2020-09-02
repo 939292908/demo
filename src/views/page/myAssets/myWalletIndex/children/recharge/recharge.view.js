@@ -14,8 +14,9 @@ module.exports = {
     },
     view: () => {
         return m('div', { class: `views-page-myAssets-myWalletIndex-childer-recharge theme--light` }, [
+            // rechargeIndex.USDTLabel,
             m('div', { class: `top mb-7 has-bg-level-2 ` }, [
-                m('i', { class: `iconfont icon-Return has-text-title` }),
+                m('i', { class: `iconfont icon-Return has-text-title`, onclick: () => { window.router.go(-1); } }),
                 m('span', { class: `has-text-title my-4 ml-4 title-medium` }, '充币')
             ]),
             m('div', { class: `bottom content-width mb-9` }, [
@@ -27,12 +28,12 @@ module.exports = {
                         m('div.select is-fullwidth',
                             m('select', { class: `coinSel`, onchange: () => { rechargeIndex.modifySelect(); } }, [
                                 rechargeIndex.pageData.map(item => {
-                                    return m('option', { }, item.wType + '  |  ' + item.en);
+                                    return m('option', { }, item.wType + '  |  ' + item.zh);
                                 })
                             ])
                         )
                     ]),
-                    m('div', { class: `xrpLable mb-7`, style: { display: rechargeIndex.memo ? (rechargeIndex.selectCheck === 'XRP' ? '' : 'none') : 'none' } }, [
+                    m('div', { class: `xrpLable mb-7`, style: { display: rechargeIndex.memo ? (rechargeIndex.selectCheck === 'XRP' || rechargeIndex.selectCheck === 'EOS' ? '' : 'none') : 'none' } }, [
                         m('div', { class: `labeltip` }, [
                             m('span', {}, '标签'),
                             m('div.navbar-item.cursor-pointer', { class: `has-text-primary-hover` }, [
@@ -60,8 +61,8 @@ module.exports = {
                             rechargeIndex.USDTLabel.map((item, index) => {
                                 return m('button', {
                                     class: `mr-6 cursor-pointer ` + (rechargeIndex.btnCheckFlag === index ? `has-bg-primary` : `noneBG`),
-                                    onclick: () => { rechargeIndex.changeBtnflag(index, item.title); }
-                                }, item.title);
+                                    onclick: () => { rechargeIndex.changeBtnflag(index, item); }
+                                }, item);
                             })
                         ])
                     ]),
@@ -96,8 +97,13 @@ module.exports = {
                 ]),
                 m('div.bottom-tab.has-bg-level-2.mt-5.pt-3', {}, [
                     m('div.pa-5', {}, [
-                        m('span.title-small', {}, ['近期提币记录']),
-                        m('i.iconfont.icon-Tooltip', {}, [])
+                        m('span.title-small', {}, ['近期充币记录']),
+                        m(Tooltip, {
+                            label: m('i.iconfont.icon-Tooltip.iconfont-large'),
+                            content: '只展示近期十条记录',
+                            hiddenArrows: false
+                        }),
+                        m('span.all', { class: `has-text-primary cursor-pointer`, onclick: () => { window.router.push('/assetRecords'); } }, '全部记录')
                     ]),
                     m('hr.ma-0'),
                     m(assetTable, { class: 'pa-5', list: AssetRecords.showList })

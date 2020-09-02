@@ -1,3 +1,37 @@
 .area-code-select-search-icon{
     top: 5px!important;
 }
+
+.area-code-select-national-select {
+    top: 2px !important;
+    height: calc(100% - 4px) !important;
+}
+
+.area-code-select-national-dropdown-menu {
+    padding-top: 12px !important;
+}
+
+.views-page-login-area-code-select-box{
+    width: 300px;
+    cursor: pointer;
+}
+
+.views-page-login-area-code-select-content {
+    height: 200px;
+    overflow-y: auto;
+}
+
+.views-page-login-area-code-select-content::-webkit-scrollbar {/*滚动条整体样式*/
+    width: 10px;
+    height: 1px;
+}
+
+.views-page-login-area-code-select-content::-webkit-scrollbar-thumb {/*滚动条里面小方块*/
+    border-radius: var(--c-radius-level2);
+    background: var(--c-primary-lighten);
+}
+
+.views-page-login-area-code-select-content::-webkit-scrollbar-track {/*滚动条里面轨道*/
+    border-radius: var(--c-radius-level2);
+    background: var(--c-background-lighten3);
+}

@@ -694,3 +694,17 @@ export function bindPhoneAuth (params = {}, options = { withCredentials: false }
 export function bindEmailAuth (params = {}, options = { withCredentials: false }) {
     return Http.post(API.SET_2FA_V2, params, options);
 }
+
+/**
+ * 退出登录
+ * @param {Object} params {}
+ * @param {Object} options axios请求配置
+ * @returns {Object} {
+        "result":{
+            "code":0 // code为0则是成功，其他失败
+        }
+    }
+ */
+export function logOut(params = {}, options = { withCredentials: false }) {
+    return Http.get(API.USDER_LOGOUT, params, options);
+}

@@ -1,9 +1,9 @@
-.views-page-accountSecurity-bindGoogle-open{
+.views-page-accountSecurity-bindGoogle-close,.views-page-accountSecurity-bindGoogle-open{
     .operation{
         width: 1920px;
         height: 66px;
         i{
-            width: 17.98px;
+            width: 24px;
             height: 16px;
             margin-left: 361.02px;
         }
@@ -11,6 +11,28 @@
             display: inline-block;
         }
     }
+    .pwdDiv,.codeDiv{
+        width: 385px;
+        margin: 0 auto;
+        input{
+            width: 384px;
+            height: 44px;
+            border: 1px solid rgba(30, 40, 70, 0.12);
+            outline: none;
+        }
+    }
+    .btn{
+        margin: 0 auto;
+        width: 385px;
+        button{
+            width: 384px;
+            height: 44px;
+            border: none;
+            outline: none;
+        }
+    }
+}
+.views-page-accountSecurity-bindGoogle-open{
     .center{
         background-color: white;
         margin: 0 auto;
@@ -84,25 +106,6 @@
                 .desc1{
                     text-align: center;
                 }
-                .pwd,.code{
-                    width: 385px;
-                    margin: 0 auto;
-                }
-                input{
-                    width: 384px;
-                    height: 44px;
-                    border: 1px solid rgba(30, 40, 70, 0.12);
-                }
-                .btn{
-                    margin: 0 auto;
-                    width: 385px;
-                    button{
-                        width: 384px;
-                        height: 44px;
-                        border: none;
-                        outline: none;
-                    }
-                }
             }
         }
         .center-btn{
@@ -121,6 +124,24 @@
                 float: right;
             }
             clear: both;
+        }
+    }
+}
+.views-page-accountSecurity-bindGoogle-close{
+    .center{
+        margin: 0 auto;
+        .warning{
+            height: 36px;
+            background: rgba(255, 139, 0, 0.08);
+            border: 1px solid rgba(255, 139, 0, 0.2);
+            i{
+                color: #FF8B00;
+            }
+            line-height: 36px;
+        }
+        .closeOperation{
+            background-color: white;
+            height: 400px;
         }
     }
 }

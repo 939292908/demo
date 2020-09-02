@@ -1,5 +1,5 @@
 import m from 'mithril';
-import header from './page/main/header';
+import header from './page/main/header/header.view';
 import footer from './page/main/footer';
 import message from './page/main/message';
 import broadcast from '../broadcast/broadcast';

@@ -9,7 +9,7 @@
 const m = require('mithril');
 const Http = require('@/api').webApi;
 const l180n = require('@/languages/I18n').default;
-const TopView = require('./topView');
+const TopView = require('./top.view');
 const Conf = require('@/api').Conf;
 
 module.exports = {

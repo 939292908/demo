@@ -35,12 +35,12 @@ module.exports = {
                 ]),
                 // 切换
                 m('div', { class: `column is-align-items-center` }, [
-                    m('span', {
-                        class: `has-text-level-4 cursor-pointer`,
+                    m('i', {
+                        class: `iconfont icon-Conversion has-text-level-4 cursor-pointer iconfont-large pt-2`,
                         onclick() {
                             model.handlerSwitchBtnClick();
                         }
-                    }, "切换")
+                    })
                 ]),
                 // 到 (下拉)
                 m('div', { class: `form-item column is-5` }, [
@@ -84,19 +84,17 @@ module.exports = {
         return [
             // 资金划转 弹框
             m(Modal, {
-                isShow: model.transferModalOption.isShow, // 弹框显示/隐藏
+                isShow: model.isShowTransferModal, // 弹框显示/隐藏
                 // 弹框确认
                 onOk() {
                     model.submit(); // 提交
-                    model.transferModalOption.setTransferModalOption({
+                    model.setTransferModalOption({
                         isShow: false // 弹框隐藏
                     });
                 },
                 // 弹框关闭
                 onClose () {
-                    model.transferModalOption.setTransferModalOption({
-                        isShow: false // 弹框隐藏
-                    }); // 弹框隐藏
+                    model.closeTransferModalHandler();
                 },
                 // 插槽
                 slot: {

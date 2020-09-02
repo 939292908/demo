@@ -1,4 +1,5 @@
 const Http = require('@/api').webApi;
+const { Conf, webApi } = require('@/api');
 const m = require('mithril');
 const wlt = require('@/models/wlt/wlt');
 const broadcast = require('@/broadcast/broadcast');
@@ -14,39 +15,30 @@ module.exports = {
     qrcodeDisplayFlag: false,
     btnCheckFlag: 0, // 默认选中第一个
     labelTips: '', // 标签提示
+    memo: null, // 是否显示标签
+    coinInfo: {},
     setWalletData() {
         const that = this;
         this.pageData = []; // 初始化
-        this.USDTLabel = []; // 初始化
+        this.setUSDTLabel();
         for (const i in wlt.wallet['03']) {
             if (wlt.wallet['03'][i].Setting.canRecharge) { // 能否充值
                 const item = {};
                 const walletI = wlt.wallet['03'][i];
+                that.uId = this.uId || walletI.uid;
                 item.canRecharge = walletI.Setting.canRecharge; // 能否充值
-                if (walletI.wType === 'USDT') {
-                    for (const i in walletI.Setting) {
-                        if (i.search('-') !== -1) {
-                            const value = {};
-                            value.title = i.split('-')[1];
-                            value.flag = walletI.Setting[i];
-                            this.USDTLabel.push(value);
-                        }
-                    }
-
-                    // 数组去重
-                    const tempJson = {};
-                    const res = [];
-                    for (let i = 0; i < this.USDTLabel.length; i++) {
-                        tempJson[JSON.stringify(this.USDTLabel[i])] = true; // 取出每一个对象当做key
-                    }
-                    for (let j = 0; j < Object.keys(tempJson).length; j++) {
-                        res.push(JSON.parse(Object.keys(tempJson)[j]));
-                    }
-                    this.USDTLabel = res;
-                }
                 item.promptRecharge = walletI.promptRecharge; // 充值提示
                 item.wType = walletI.wType; // 币种
                 item.memo = walletI.Setting.memo; // 是否显示标签
+                if (walletI.wType === 'USDT') {
+                    for (const i in walletI.Setting) {
+                        if (i.search('-') !== -1) {
+                            if (!walletI.Setting[i]) {
+                                this.USDTLabel.pop(i.split('-')[1]);
+                            }
+                        }
+                    }
+                }
                 Http.GetRechargeAddr({
                     wType: walletI.wType
                 }).then(function(arg) {
@@ -55,7 +47,6 @@ module.exports = {
                     item.zh = arg.trade.fullName.zh; // 中文
                     item.en = arg.trade.fullName.en; // 英文
                     item.networkNum = arg.trade.networkNum; // 网络数
-                    that.uId = walletI.uid; // 用户uId
                     that.pageData.push(item);
                     that.selectCheck = that.pageData[0].wType;
                     that.setTipsAndAddrAndCode();
@@ -66,8 +57,21 @@ module.exports = {
             }
         }
     },
+    setUSDTLabel() {
+        const params = { locale: 'zh', vp: Conf.exchId };
+        webApi.getCoinInfo(params).then(res => {
+            if (res.result.code === 0) {
+                this.USDTLabel = Array.from(res.result.data.USDT.chains);
+                const ary = [];
+                for (let i = 0; i < this.USDTLabel.length; i++) {
+                    ary.push(this.USDTLabel[i].name);
+                }
+                this.USDTLabel = ary;
+                console.log(this.USDTLabel);
+            }
+        });
+    },
     setTipsAndAddrAndCode() {
-        m.redraw();
         for (const i in this.pageData) {
             if (this.pageData[i].wType === this.selectCheck) {
                 const networkNum = this.pageData[i].networkNum;
@@ -76,11 +80,13 @@ module.exports = {
                 } else {
                     this.tips = '您只能向此地址充值' + this.selectCheck + '，其他资产充入' + this.selectCheck + '地址将无法找回 *使用' + this.selectCheck + '地址充值需要' + networkNum + '个网络确认才能到账 *默认充入我的钱包，您可以通过“资金划转”将资金转至交易账户或者其他账户';
                 }
+                this.memo = this.pageData[i].memo;
                 this.rechargeAddr = this.pageData[i].rechargeAddr;
                 this.setQrCodeImg();
                 this.setLabelTips();
             }
         }
+        m.redraw();
     },
     setLabelTips() {
         this.labelTips = '充值' + this.selectCheck + '同时需要一个充币地址和' + this.selectCheck + '标签；警告：如果未遵守正确的' + this.selectCheck + '充币步骤，币会有丢失风险！';

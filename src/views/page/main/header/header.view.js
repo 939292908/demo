@@ -4,16 +4,9 @@ const I18n = require("../../../../languages/I18n").default;
 const Tooltip = require('@/views/components/common/Tooltip');
 const utils = require('@/util/utils').default;
 const apiLines = require('@/models/network/lines.js');
+const header = require('./header.logic.js');
 const globalModels = require('@/models/globalModels');
 require('@/styles/pages/header');
-
-const methods = {
-    openNavbarDropdown: false,
-
-    clickNavbarOpenBtn: () => {
-        methods.openNavbarDropdown = !methods.openNavbarDropdown;
-    }
-};
 
 module.exports = {
     oncreate: function() {
@@ -39,12 +32,12 @@ module.exports = {
                     })
                 ]),
                 m('a.navbar-burger.burger', {
-                    class: "" + (methods.openNavbarDropdown ? " is-active" : ""),
+                    class: "" + (header.openNavbarDropdown ? " is-active" : ""),
                     role: "button",
                     "aria-label": "menu",
                     "aria-expanded": false,
                     "data-target": "navbarBasicExample",
-                    onclick: methods.clickNavbarOpenBtn
+                    onclick: header.clickNavbarOpenBtn
                 }, [
                     m('span', { "aria-hidden": true }),
                     m('span', { "aria-hidden": true }),
@@ -52,7 +45,7 @@ module.exports = {
                 ])
             ]),
             // 未登录样式  pc
-            m('div#navbarBasicExample.navbar-menu', { class: 'is-hidden-mobile' + (methods.openNavbarDropdown ? " is-active" : "") }, [
+            m('div#navbarBasicExample.navbar-menu', { class: 'is-hidden-mobile' + (header.openNavbarDropdown ? " is-active" : "") }, [
                 m('div.navbar-start', {}, [
                     m('', {
                         class: "navbar-item has-text-primary-hover cursor-pointer ",
@@ -163,7 +156,7 @@ module.exports = {
                     ]),
                     // 已登录样式
                     // 订单
-                    m('div.navbar-item.cursor-pointer', { class: `has-text-primary-hover ` }, [
+                    m('div.navbar-item.cursor-pointer' + (utils.getItem('loginState') ? '' : '.is-hidden'), { class: `has-text-primary-hover ` }, [
                         m(Tooltip, {
                             label: "订单",
                             content: m('div', { class: `` }, [
@@ -183,7 +176,7 @@ module.exports = {
                         })
                     ]),
                     // 资产
-                    m('div.navbar-item.cursor-pointer', { class: `has-text-primary-hover ` }, [
+                    m('div.navbar-item.cursor-pointer' + (utils.getItem('loginState') ? '' : '.is-hidden'), { class: `has-text-primary-hover ` }, [
                         m(Tooltip, {
                             label: "资产",
                             content: m('div', { class: `` }, [
@@ -229,7 +222,16 @@ module.exports = {
                             class: "header-my-tooltip",
                             content: m('div', { class: `` }, [
                                 m('div', { class: ``, style: `background: url(${require("@/assets/img/home/background.png").default}) no-repeat center center / 100% 100%; width:"200px"` }, [
-                                    m('a', { class: `navbar-item py-5 header-my-tooltip-top` }, ["12"])
+                                    m('div', { class: `navbar-item py-5 header-my-tooltip-top` }, [
+                                        m('p', { class: `` }, [
+                                            m('p', { class: `title-small` }, [
+                                                utils.hideMobileInfo(globalModels.getAccount().accountName || '--')
+                                            ]),
+                                            m('p', { class: `body-4 has-text-level-2` }, [
+                                                'UID:' + globalModels.getAccount().uid
+                                            ])
+                                        ])
+                                    ])
                                 ]),
                                 m('a', { class: `` }, [
                                     m('a', { class: `navbar-item has-text-primary-hover` }, ["账户安全"])
@@ -247,9 +249,7 @@ module.exports = {
                                     m('a', {
                                         class: `navbar-item has-text-primary-hover`,
                                         onclick: () => {
-                                            utils.removeItem("ex-session");
-                                            utils.setItem('loginState', false);
-                                            globalModels.setAccount({});
+                                            header.loginOut();
                                         }
                                     }, ["退出登录"])
                                 ])
@@ -274,36 +274,72 @@ module.exports = {
                         })
                     ]),
                     // 线路切换
-                    m('div.navbar-item.cursor-pointer', { class: `has-text-primary-hover ` }, [
-                        m(Tooltip, {
-                            label: m('i.iconfont.icon-signal'),
-                            content: m('div', { class: `` }, [
-                                m('div', { class: `is-align-items-center` }, [
-                                    m('div', { class: `` }, [
-                                        apiLines.netLines.map((item, i) => {
-                                            return m('a', {
-                                                class: `navbar-item columns has-text-primary-hover min-width-200 ${item.Id === apiLines.activeLine.Id ? 'is-active' : ''}`,
-                                                onclick: function() {
-                                                    apiLines.setLinesActive(item.Id);
-                                                }
-                                            }, [
-                                                m('span.column', {}, [
-                                                    item.Name
-                                                ]),
-                                                m('span.column', {}, [
-                                                    '延迟 ' + apiLines.apiResponseSpeed[i] + 'ms'
-                                                ])
-                                            ]);
-                                        })
-                                    ])
+                    m('div.navbar-item.has-dropdown.is-hoverable', {}, [
+                        m('a.navbar-item.ma-0', {}, [
+                            m('i.iconfont.icon-signal')
+                        ]),
+                        m('div.navbar-dropdown.is-right.has-bg-level-2.border-radius-medium', {}, [
+                            m('div', {
+                                class: "navbar-item px-7 ma-0 title-small is-flex"
+                            }, [
+                                `线路切换(${apiLines.netLines.length})`,
+                                m('div.spacer'),
+                                m('button.button.is-light', {}, [
+                                    m('i.iconfont.icon-Order.iconfont-large')
                                 ])
-                            ])
-                        })
+                            ]),
+                            m('hr.navbar-divider'),
+                            apiLines.netLines.map((item, i) => {
+                                return m('a', {
+                                    class: `navbar-item columns has-text-primary-hover min-width-200 ma-0 px-7 py-4 ${item.Id === apiLines.activeLine.Id ? 'is-active' : ''}`,
+                                    onclick: function() {
+                                        apiLines.setLinesActive(item.Id);
+                                    }
+                                }, [
+                                    m('span.column.pr-8', {}, [
+                                        item.Name
+                                    ]),
+                                    m('span.column.has-text-left', {}, [
+                                        '延迟 ' + apiLines.apiResponseSpeed[i] + 'ms'
+                                    ])
+                                ]);
+                            })
+                        ])
                     ]),
+                    // m('div.navbar-item.cursor-pointer', { class: `has-text-primary-hover ` }, [
+                    //     m(Tooltip, {
+                    //         label: m('i.iconfont.icon-signal'),
+                    //         content: m('div', { class: `` }, [
+                    //             m('div', { class: `is-align-items-center` }, [
+                    //                 m('div', { class: `` }, [
+                    //                     m('div', {}, [
+                    //                         '线路切换'
+                    //                     ]),
+                    //                     m('hr.navbar-divider'),
+                    //                     apiLines.netLines.map((item, i) => {
+                    //                         return m('a', {
+                    //                             class: `navbar-item columns has-text-primary-hover min-width-200 ${item.Id === apiLines.activeLine.Id ? 'is-active' : ''}`,
+                    //                             onclick: function() {
+                    //                                 apiLines.setLinesActive(item.Id);
+                    //                             }
+                    //                         }, [
+                    //                             m('span.column', {}, [
+                    //                                 item.Name
+                    //                             ]),
+                    //                             m('span.column', {}, [
+                    //                                 '延迟 ' + apiLines.apiResponseSpeed[i] + 'ms'
+                    //                             ])
+                    //                         ]);
+                    //                     })
+                    //                 ])
+                    //             ])
+                    //         ])
+                    //     })
+                    // ]),
                     // 语言
                     m('div.navbar-item.cursor-pointer', { class: `has-text-primary-hover mr-7` }, [
                         m(Tooltip, {
-                            label: "英",
+                            label: I18n.getLocale(),
                             width: '120px',
                             content: m('div', { class: `` }, [
                                 m('div', { class: `is-align-items-center` }, [
@@ -346,7 +382,7 @@ module.exports = {
                 ])
             ]),
             // 未登录样式  移动端
-            m('div#navbarBasicExample.navbar-menu', { class: "is-hidden-widescreen" + (methods.openNavbarDropdown ? " is-active" : "") }, [
+            m('div#navbarBasicExample.navbar-menu', { class: "is-hidden-widescreen" + (header.openNavbarDropdown ? " is-active" : "") }, [
                 m('div.navbar-start', {}, [
                     m('', {
                         class: "navbar-item has-text-primary-hover",
@@ -503,7 +539,7 @@ module.exports = {
                                         window.router.push('/myWalletIndex');
                                     }
                                 }, [
-                                    m('a', { class: `navbar-item has-text-primary-hover` }, ["币币账号"])
+                                    m('a', { class: `navbar-item has-text-primary-hover` }, ["币币账户"])
                                 ]),
                                 m('a', {
                                     class: `navbar-item`,
@@ -541,9 +577,7 @@ module.exports = {
                                     m('a', {
                                         class: `navbar-item has-text-primary-hover`,
                                         onclick: () => {
-                                            utils.removeItem("ex-session");
-                                            utils.setItem('loginState', false);
-                                            globalModels.setAccount({});
+                                            header.loginOut();
                                         }
                                     }, ["退出登录"])
                                 ])

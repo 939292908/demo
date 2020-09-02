@@ -73,5 +73,7 @@ module.exports = {
     // 查询用户简介
     QUERY_USER_INFO_V2: '/v2/users/queryUserInfo',
     // 2FA验证
-    SET_2FA_V2: '/v2/users/Set2FA'
+    SET_2FA_V2: '/v2/users/Set2FA',
+    // 退出登陆
+    USDER_LOGOUT: '/users/out'
 };

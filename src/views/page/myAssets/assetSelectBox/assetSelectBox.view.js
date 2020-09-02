@@ -1,6 +1,6 @@
 const m = require('mithril');
 const AssetSelectBox = require('./assetSelectBox.model');
-require('@/../node_modules/layui-laydate/src/theme/default/laydate.css');
+require('./assetSelectBox.scss');
 
 module.exports = {
     oncreate (vnode) {
@@ -16,7 +16,7 @@ module.exports = {
         for (const k in vnode.attrs.typeList) {
             typeList.push(m('option', { value: k }, [vnode.attrs.typeList[k]]));
         }
-        return m('div', {
+        return m('div.assetSelectBox', {
             class: vnode.attrs.class
         }, [
             m('div.columns.is-variable.is-6', {}, [
@@ -27,11 +27,9 @@ module.exports = {
             ]),
             m('div.columns.is-variable.is-6', {}, [
                 m('div.column.is-3', {}, [
-                    m('.input.input[type=text]', {
-                        id: 'asset-select-box-time-selector',
-                        placeholder: '请选择时间',
-                        required: 'required'
-                    })
+                    m('div.input.date-pick-box.input', {}, [
+                        m('.input[type=date]', { id: 'asset-select-box-time-selector' })
+                    ])
                 ]),
                 m('div.column.is-3', {}, [
                     m('div.select.w100', {}, [

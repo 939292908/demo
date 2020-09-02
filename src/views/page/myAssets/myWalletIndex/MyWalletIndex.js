@@ -2,7 +2,6 @@ const m = require('mithril');
 const wlt = require('@/models/wlt/wlt');
 const broadcast = require('@/broadcast/broadcast');
 const table = require('@/views/page/myAssets/myWalletIndex/tradeTable/tradeTableView');
-const tableIndex = require('@/views/page/myAssets/myWalletIndex/tradeTable/tradeTableIndex');
 const transferLogic = require('@/views/page/myAssets/transfer/transfer.logic.js'); // 划转模块逻辑
 let timeOut = null;
 
@@ -13,77 +12,84 @@ const model = {
     walletTotalValue: 0, // 我的钱包总资产
     tradingAccountTotalValue: 0, // 交易账户总资产
     otherTotalValue: 0, // 其他账户
-    hideMoneyFlag: false, // 是否隐藏资产
+    hideMoneyFlag: false, // 是否隐藏资产 默认false不隐藏
     coinTotal: 0, // 币币
     legalTotal: 0, // 法币
     contractTotal: 0, // 合约
     swValue: '03', // 03:我的钱包 01:交易账户(01币币，02法币，04合约) 2:其他账户
+    // 切换我的钱包。交易账户
     setSwValue(value) {
         model.swValue = value;
-        // model.transferModalOption.transferFrom = model.swValue;
-        transferLogic.transferModalOption.setTransferModalOption({
+        // model.transferFrom = model.swValue;
+        transferLogic.setTransferModalOption({
             transferFrom: model.swValue // from钱包默认选中
         });
     },
     selectOpFlag: false, // 是否显示币种列表
     selectOpText: 'BTC', // 默认币种BTC
     selectOp: ['BTC', 'USDT'], // 币种列表
+    // 设置币种
     setCurrency: function (param) {
         this.currency = param;
     },
+    // 设置总估值
     setTotalValue: function (param) {
         this.totalValue = param;
     },
+    // 设置人民币
     setTotalCNY: function (param) {
         this.totalCNY = param;
     },
+    // 设置我的钱包总值
     setWalletTotalValue: function (param) {
         this.walletTotalValue = param;
     },
+    // 设置交易账户总值
     setTradingAccountTotalValue: function (param) {
         this.tradingAccountTotalValue = param;
     },
+    // 设置其他账户宗旨
     setOtherTotalValue: function (param) {
         this.otherTotalValue = param;
     },
+    // 隐藏资产
     hideValue: function () {
         const ele = document.getElementsByClassName('changeMoneyImg')[0];
         if (this.hideMoneyFlag) { // 显示
             ele.classList.value = ele.classList.value.replace('yincang', 'zichanzhengyan');
             this.hideMoneyFlag = !this.hideMoneyFlag;
-            this.setTotalValue(wlt[this.currency === 'BTC' ? 'totalValueForBTC' : 'totalValueForUSDT']);
-            this.setTotalCNY(wlt.totalCNYValue);
         } else { // 隐藏
             ele.classList.value = ele.classList.value.replace('zichanzhengyan', 'yincang');
             this.hideMoneyFlag = !this.hideMoneyFlag;
-            this.setTotalValue('******');
-            this.setTotalCNY('******');
         }
     },
+    // 设置币币总值
     setCoinTotal: function (param) {
         this.coinTotal = param;
     },
+    // 设置法币总值
     setLegalTotal: function (param) {
         this.legalTotal = param;
     },
+    // 设置合约总值
     setContractTotal: function (param) {
         this.contractTotal = param;
     },
+    // 切换我的钱包，交易账户，币币，合约，法币
     switchChange: function (val) {
         this.swValue = val;
-        tableIndex.setPageFlag(val);
-        console.log(this.swValue, '--this.swValue');
-        transferLogic.transferModalOption.setTransferModalOption({
+        transferLogic.setTransferModalOption({
             transferFrom: val // from钱包默认选中
         });
-        this.sets();
-        this.switchContent();
         // 防止被交易账户01覆盖交易账户悬浮卡片的值
         window.event.stopPropagation();
+        this.sets();
+        this.switchContent();
     },
+    // 切换表格内容
     switchContent: function () {
         broadcast.emit({ cmd: broadcast.CHANGE_SW_CURRENCY, data: this.currency });
-        return m(table, { tableType: 'wallet', swValue: this.swValue, setIdx: this.setSwValue });
+        return m(table, { swValue: this.swValue, setIdx: this.setSwValue, hideMoneyFlag: this.hideMoneyFlag });
     },
     Nav: {
         firstNav: [
@@ -117,14 +123,19 @@ const model = {
     handlerClickNavBtn (item) {
         console.log(item);
         if (item.id === 4) { // 点击资金划转
-            transferLogic.initTransferInfo(); // 初始化弹框
-            transferLogic.transferModalOption.isShow = true;
+            // transferLogic.isShow = true;
+            transferLogic.setTransferModalOption({
+                isShow: true,
+                transferFrom: model.swValue,
+                coin: ""
+            });
         }
         // 弹框↑
         if (item.to !== "") { // 跳转
             window.router.push(item.to);
         }
     },
+    // 交易账户（...）显示与隐藏切换
     switchDisplay: function (param, flag) {
         if (param === 'tradeCard') {
             if (flag === 'show') {
@@ -143,6 +154,7 @@ const model = {
             document.getElementsByClassName('currType')[0].style.display = 'none';
         }
     },
+    // 设置下拉框选中值
     setSelectOpText: function(param) {
         this.selectOpText = param;
     },
@@ -172,6 +184,7 @@ const model = {
             }
         }
     },
+    // 设置各种估值
     sets: function () {
         this.currency === 'BTC' ? this.setTotalValue(wlt.totalValueForBTC) : this.setTotalValue(wlt.totalValueForUSDT);
         this.currency === 'BTC' ? this.setWalletTotalValue(wlt.walletTotalValueForBTC) : this.setWalletTotalValue(wlt.walletTotalValueForUSDT);
