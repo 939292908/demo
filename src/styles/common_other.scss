@@ -274,3 +274,8 @@
     flex-grow: 1 !important;
     -webkit-box-flex: 1 !important;
 }
+
+// 换行
+.break-word {
+    word-wrap: break-word!important;
+}
