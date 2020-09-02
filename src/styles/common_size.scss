@@ -53,31 +53,37 @@ body,
     .title-small {
         font-size: var(--c-fontsz-level6);
         font-weight: var(--c-fontweight-level3);
+        line-height: 1.5;
     }
 
     .title-medium {
         font-size: var(--c-fontsz-level7);
         font-weight: var(--c-fontweight-level3);
+        line-height: 1.5;
     }
 
     .title-large {
         font-size: var(--c-fontsz-level8);
         font-weight: var(--c-fontweight-level3);
+        line-height: 1.5;
     }
 
     .title-x-large {
         font-size: var(--c-fontsz-level8);
         font-weight: var(--c-fontweight-level3);
+        line-height: 1.5;
     }
 
     .title-x-large-1 {
         font-size: var(--c-fontsz-level8);
         font-weight: var(--c-fontweight-level3);
+        line-height: 1.5;
     }
 
     .title-x-large-2 {
         font-size: var(--c-fontsz-level8);
         font-weight: var(--c-fontweight-level3);
+        line-height: 1.5;
     }
 
     .body-1 {
@@ -202,6 +208,37 @@ body,
 
 .iconfont-x-large-4 {
     font-size: var(--c-iconsz-level7) !important;
+}
+
+/* 边框 */
+
+.border-1 {
+    border-width: 1px;
+}
+
+.border-2 {
+    border-width: 2px;
+}
+
+.border-3 {
+    border-width: 3px;
+}
+
+// 点状
+.border-dotted {
+    border-style: dotted;
+}
+// 实线
+.border-solid  {
+    border-style: solid;
+}
+// 双线
+.border-double {
+    border-style: double;
+}
+// 虚线
+.border-dashed  {
+    border-style: dashed;
 }
 
 /* 字体粗细 */
