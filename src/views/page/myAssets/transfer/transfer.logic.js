@@ -33,14 +33,19 @@ const model = {
     authWltList: [], // 钱包列表 当前币种有权限
     fromWltList: [], // 钱包列表 从xx  （from与to钱包 不能同一种类型相互划转）
     toWltList: [], // 钱包列表 到xx
-    // 设置 资金划转弹框
+    successCallback () {}, // 划转成功回调
+    /**
+     * @method 设置资金划转弹框
+     * @param {{
+     * isShow: false, // 弹窗显示隐藏
+     * transferFrom: '03', // from钱包默认选中
+     * coin: 'USDT', // 币种 默认选中
+     * successCallback(){} // 划转成功回调
+     * }} option
+     */
     setTransferModalOption(option) {
-        // option: {
-        //     isShow: false, // 弹窗显示隐藏
-        //     transferFrom: '03', // from钱包默认选中
-        //     coin: 'USDT' // 币种 默认选中
-        // }
         model.isShowTransferModal = option.isShow;
+        if (option.successCallback) model.successCallback = option.successCallback;
         if (option.transferFrom) model.form.transferFrom = option.transferFrom;
         if (option.coin) model.form.coin = option.coin;
         this.initTransferInfo(); // 初始化 划转信息
@@ -107,7 +112,7 @@ const model = {
                 }
             });
         });
-        console.log("币种下拉", this.canTransferCoin, this.allWalletList);
+        // console.log("币种下拉", this.canTransferCoin, this.allWalletList);
 
         // if (this.canTransferCoin[0]) this.form.coin = this.canTransferCoin[0].wType  // 合约下拉列表 默认选中第一个
         this.initCoinValue();// 初始化 币种value
@@ -146,7 +151,6 @@ const model = {
             this.form.coin = this.form.coin ? this.form.coin : this.canTransferCoin[0].wType; // 默认选中第1个
         }
     },
-
     // 初始化 2个钱包value
     initFromAndToValueByAuthWalletList () {
         // form钱包value
@@ -239,6 +243,7 @@ const model = {
         };
         Http.postTransfer(params).then(res => {
             this.reset(); // 重置
+            this.successCallback(); // 成功回调
             if (res.result.code === 0) {
                 wlt.init(); // 更新数据
                 window.$message({ content: I18n.$t('10224'/* '划转成功！' */), type: 'success' });
@@ -266,7 +271,7 @@ const model = {
         this.form.num = ""; // 数量
         this.form.maxTransfer = ""; // 最大划转
     },
-    // 关闭划转弹框 handler
+    // 关闭划转弹框
     closeTransferModalHandler () {
         this.setTransferModalOption({ isShow: false }); // 弹框隐藏
         this.reset(); // 重置

@@ -130,7 +130,10 @@ const model = {
             transferLogic.setTransferModalOption({
                 isShow: true,
                 transferFrom: model.swValue,
-                coin: ""
+                coin: "",
+                successCallback() { // 划转成功回调
+                    // alert(11);
+                }
             });
         }
         // 弹框↑
