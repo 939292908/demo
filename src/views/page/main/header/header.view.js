@@ -167,10 +167,7 @@ module.exports = {
                                 class: `navbar-item columns has-text-primary-hover min-width-200 ma-0 px-6 py-4 body-5`,
                                 onclick: function () {
                                     window.router.push({
-                                        path: '/myWalletIndex',
-                                        params: {
-                                            id: '03'
-                                        }
+                                        path: '/myWalletIndex?id=03'
                                     });
                                 }
                             }, [
@@ -180,10 +177,7 @@ module.exports = {
                                 class: `navbar-item columns has-text-primary-hover min-width-200 ma-0 px-6 py-4 body-5`,
                                 onclick: function () {
                                     window.router.push({
-                                        path: '/myWalletIndex',
-                                        params: {
-                                            id: '01'
-                                        }
+                                        path: '/myWalletIndex?id=01'
                                     });
                                 }
                             }, [
@@ -193,10 +187,7 @@ module.exports = {
                                 class: `navbar-item columns has-text-primary-hover min-width-200 ma-0 px-6 py-4 body-5`,
                                 onclick: function () {
                                     window.router.push({
-                                        path: '/myWalletIndex',
-                                        params: {
-                                            id: '02'
-                                        }
+                                        path: '/myWalletIndex?id=02'
                                     });
                                 }
                             }, [
@@ -206,10 +197,7 @@ module.exports = {
                                 class: `navbar-item columns has-text-primary-hover min-width-200 ma-0 px-6 py-4 body-5`,
                                 onclick: function () {
                                     window.router.push({
-                                        path: '/myWalletIndex',
-                                        params: {
-                                            id: '04'
-                                        }
+                                        path: '/myWalletIndex?id=04'
                                     });
                                 }
                             }, [
@@ -250,11 +238,11 @@ module.exports = {
                             }, [
                                 'API管理'
                             ]),
-                            m('a', {
-                                class: `navbar-item columns has-text-primary-hover min-width-200 ma-0 px-6 py-4 body-5`
-                            }, [
-                                '邀请返佣'
-                            ]),
+                            // m('a', {
+                            //     class: `navbar-item columns has-text-primary-hover min-width-200 ma-0 px-6 py-4 body-5`
+                            // }, [
+                            //     '邀请返佣'
+                            // ]),
                             m('a', {
                                 class: `navbar-item columns has-text-primary-hover min-width-200 ma-0 px-6 py-4 body-5`,
                                 onclick: () => {
