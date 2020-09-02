@@ -1,6 +1,6 @@
 const m = require('mithril');
 const t = require('@/views/page/myAssets/myWalletIndex/tradeTable/TradeTable.logic');
-console.log(t);
+// console.log(t);
 require('@/views/page/myAssets/myWalletIndex/tradeTable/TradeTable.scss');
 
 module.exports = {
