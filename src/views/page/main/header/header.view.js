@@ -14,7 +14,7 @@ module.exports = {
         apiLines.initLines();
     },
     view: function () {
-        return m('nav.navbar.is-fixed-top.theme--light', {
+        return m('nav.navbar.is-fixed-top.theme--light.body-5', {
             role: "navigation",
             "aria-label": "main navigation",
             class: "has-bg-sub-level-1"
@@ -135,22 +135,24 @@ module.exports = {
                         '新手帮助'
                     ])
                 ]),
-                m('div.navbar-end', {}, [
+                m('div.navbar-end.mr-3', {}, [
                     m('div.navbar-item' + (utils.getItem('loginState') ? '.is-hidden' : ''), {}, [
                         m('div.buttons', {}, [
-                            m('div.button', {
+                            m('button.button.button-small.is-outlined.is-primary.px-6', {
                                 onclick: function () {
                                     window.router.push('/login');
                                 }
                             }, [
-                                I18n.$t('10136')
+                                // 登录
+                                I18n.$t('10006')
                             ]),
-                            m('div.button.has-bg-primary.is-small', {
+                            m('button.button.is-primary.button-small.px-6', {
                                 onclick: function () {
                                     window.router.push('/register');
                                 }
                             }, [
-                                "注册"
+                                // "注册"
+                                I18n.$t('10007')
                             ])
                         ])
                     ]),
@@ -257,25 +259,29 @@ module.exports = {
                         })
                     ]),
                     // 下载
-                    m('div.navbar-item.cursor-pointer', { class: `has-text-primary-hover ` }, [
-                        m(Tooltip, {
-                            label: m('i.iconfont.icon-xiazai'),
-                            width: '254px',
-                            height: '104px',
-                            content: m('div', { class: `is-flex` }, [
-                                m('img', { class: 'mt-2 ml-2', src: require("@/assets/img/home/Rectangle_530.png").default }),
-                                m('div', { class: `is-align-items-center` }, [
-                                    m('div', { class: `` }, [
-                                        m('p', { class: `ml-6 mt-2 title-small` }, "扫码下载APP"),
-                                        m('p', { class: `ml-6  title-small` }, "iOS&Android")
+                    m('div.navbar-item.has-dropdown.is-hoverable', {}, [
+                        m('a.navbar-item.ma-0.has-text-primary-hover', {}, [
+                            m('i.iconfont.icon-xiazai')
+                        ]),
+                        m('div.navbar-dropdown.is-right.has-bg-level-2.border-radius-medium.box.min-width-250.pa-5', {}, [
+                            m('article', { class: `media is-align-items-center` }, [
+                                m('div.media-left', {}, [
+                                    m('figure.image.is-64x64', {}, [
+                                        m('img', { class: '', src: require("@/assets/img/home/Rectangle_530.png").default })
+                                    ])
+                                ]),
+                                m('div', { class: `media-content` }, [
+                                    m('div', { class: `content` }, [
+                                        m('p', { class: `title-small` }, "扫码下载APP"),
+                                        m('p', { class: `title-small` }, "iOS&Android")
                                     ])
                                 ])
                             ])
-                        })
+                        ])
                     ]),
                     // 线路切换
                     m('div.navbar-item.has-dropdown.is-hoverable', {}, [
-                        m('a.navbar-item.ma-0', {}, [
+                        m('a.navbar-item.ma-0.has-text-primary-hover', {}, [
                             m('i.iconfont.icon-signal')
                         ]),
                         m('div.navbar-dropdown.is-right.has-bg-level-2.border-radius-medium', {}, [
@@ -284,14 +290,14 @@ module.exports = {
                             }, [
                                 `线路切换(${apiLines.netLines.length})`,
                                 m('div.spacer'),
-                                m('button.button.is-light', {}, [
-                                    m('i.iconfont.icon-Order.iconfont-large')
+                                m('button.button.is-light.pa-0', {}, [
+                                    m('i.iconfont.icon-fi_file-text.iconfont-x-large-1')
                                 ])
                             ]),
                             m('hr.navbar-divider'),
                             apiLines.netLines.map((item, i) => {
                                 return m('a', {
-                                    class: `navbar-item columns has-text-primary-hover min-width-200 ma-0 px-7 py-4 ${item.Id === apiLines.activeLine.Id ? 'is-active' : ''}`,
+                                    class: `navbar-item columns has-text-primary-hover min-width-200 ma-0 px-6 py-4 body-5 ${item.Id === apiLines.activeLine.Id ? 'is-active' : ''}`,
                                     onclick: function() {
                                         apiLines.setLinesActive(item.Id);
                                     }
@@ -306,78 +312,27 @@ module.exports = {
                             })
                         ])
                     ]),
-                    // m('div.navbar-item.cursor-pointer', { class: `has-text-primary-hover ` }, [
-                    //     m(Tooltip, {
-                    //         label: m('i.iconfont.icon-signal'),
-                    //         content: m('div', { class: `` }, [
-                    //             m('div', { class: `is-align-items-center` }, [
-                    //                 m('div', { class: `` }, [
-                    //                     m('div', {}, [
-                    //                         '线路切换'
-                    //                     ]),
-                    //                     m('hr.navbar-divider'),
-                    //                     apiLines.netLines.map((item, i) => {
-                    //                         return m('a', {
-                    //                             class: `navbar-item columns has-text-primary-hover min-width-200 ${item.Id === apiLines.activeLine.Id ? 'is-active' : ''}`,
-                    //                             onclick: function() {
-                    //                                 apiLines.setLinesActive(item.Id);
-                    //                             }
-                    //                         }, [
-                    //                             m('span.column', {}, [
-                    //                                 item.Name
-                    //                             ]),
-                    //                             m('span.column', {}, [
-                    //                                 '延迟 ' + apiLines.apiResponseSpeed[i] + 'ms'
-                    //                             ])
-                    //                         ]);
-                    //                     })
-                    //                 ])
-                    //             ])
-                    //         ])
-                    //     })
-                    // ]),
                     // 语言
-                    m('div.navbar-item.cursor-pointer', { class: `has-text-primary-hover mr-7` }, [
-                        m(Tooltip, {
-                            label: I18n.getLocale(),
-                            width: '120px',
-                            content: m('div', { class: `` }, [
-                                m('div', { class: `is-align-items-center` }, [
-                                    m('div', { class: `` }, [
-                                        m('a.navbar-item has-text-primary-hover', {
-                                            class: "" + (I18n.getLocale() === 'zh' ? ' is-active' : ''),
-                                            onclick: function () {
-                                                I18n.setLocale('zh', res => {
-                                                    // window._console.log('header setLocale', res);
-                                                });
-                                            }
-                                        }, [
-                                            '简体中文'
-                                        ]),
-                                        m('a.navbar-item  has-text-primary-hover', {
-                                            class: "" + (I18n.getLocale() === 'en' ? ' is-active' : ''),
-                                            onclick: function () {
-                                                I18n.setLocale('en', res => {
-                                                    // window._console.log('header setLocale', res);
-                                                });
-                                            }
-                                        }, [
-                                            'English'
-                                        ]),
-                                        m('a.navbar-item  has-text-primary-hover', {
-                                            class: "" + (I18n.getLocale() === 'tw' ? ' is-active' : ''),
-                                            onclick: function () {
-                                                I18n.setLocale('tw', res => {
-                                                    // window._console.log('header setLocale', res);
-                                                });
-                                            }
-                                        }, [
-                                            '繁体中文'
-                                        ])
-                                    ])
-                                ])
-                            ])
-                        })
+                    m('div.navbar-item.has-dropdown.is-hoverable', {}, [
+                        m('a.navbar-item.ma-0.has-text-primary-hover', {}, [
+                            I18n.langList[I18n.getLocale()].language
+                        ]),
+                        m('div.navbar-dropdown.is-right.has-bg-level-2.border-radius-medium', {}, [
+                            Object.keys(I18n.langList).map((item, i) => {
+                                if (I18n.langList[item].open) {
+                                    return m('a', {
+                                        class: `navbar-item has-text-primary-hover min-width-200 ma-0 px-6 py-4 body-5 ${item === I18n.getLocale() ? 'is-active' : ''}`,
+                                        onclick: function() {
+                                            I18n.setLocale(item, res => {
+                                                // window._console.log('header setLocale', res);
+                                            });
+                                        }
+                                    }, [
+                                        I18n.langList[item].language
+                                    ]);
+                                }
+                            })
+                        ])
                     ])
                 ])
             ]),
