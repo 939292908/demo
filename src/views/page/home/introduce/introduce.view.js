@@ -6,13 +6,13 @@ require('@/views/page/home/introduce/introduce.scss');
 module.exports = {
     toPage() {
         if (utils.getItem('loginState')) {
-            window.router.push('/myWalletIndex');
+            window.open("w/trd/", '_blank');
         } else {
             window.router.push('/login');
         }
     },
     toUrl () {
-        window.open("/#!/register", '_blank');
+        window.open("w/#!/register", '_blank');
     },
     view: function () {
         return m('div', { class: 'views-pages-home-introduce ' }, [
@@ -39,7 +39,7 @@ module.exports = {
                 // 按钮
                 m('div', { class: `has-text-centered mt-8` }, [
                     m('a', { class: `border-radius-medium button-register has-bg-primary button mr-2 title-medium font-weight-regular skew-right ${utils.isMobile() ? 'body-5 ' : 'pc才有的类名xx'}`, onclick: this.toUrl, target: "_blank" }, ['立即注册']),
-                    m('a', { class: `border-radius-medium button-transaction has-bg-primary button title-medium font-weight-regular  skew-left ml-3  ${utils.isMobile() ? 'body-5 ' : 'pc才有的类名xx'}`, onclick: this.toPage, target: "_blank" }, ['即可交易'])
+                    m('a', { class: `border-radius-medium button-transaction has-bg-primary button title-medium font-weight-regular  skew-left ml-3  ${utils.isMobile() ? 'body-5 ' : 'pc才有的类名xx'}`, onclick: this.toPage, target: "_blank" }, ['即刻交易'])
                 ]),
                 // 橘色 盒子
                 m('div', { class: `home-introduce-Rectangle border-1 container is-align-items-center has-bg-primary ` }, [
