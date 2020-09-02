@@ -6,6 +6,10 @@ const utils = require('@/util/utils').default;
 const apiLines = require('@/models/network/lines.js');
 const header = require('./header.logic.js');
 const globalModels = require('@/models/globalModels');
+
+const modal = require('@/views/components/common/Modal.js');
+const deviceInfoView = require('./deviceInfo/deviceInfo.view.js');
+const deviceInfo = require('./deviceInfo/deviceInfo.logic.js');
 require('@/styles/pages/header');
 
 module.exports = {
@@ -289,11 +293,15 @@ module.exports = {
                         ]),
                         m('div.navbar-dropdown.is-right.has-bg-level-2.border-radius-medium', {}, [
                             m('div', {
-                                class: "navbar-item px-7 ma-0 title-small is-flex"
+                                class: "navbar-item px-6 ma-0 pa-0 title-small is-flex"
                             }, [
                                 `线路切换(${apiLines.netLines.length})`,
                                 m('div.spacer'),
-                                m('button.button.is-light.pa-0', {}, [
+                                m('button.button.is-light.pa-0', {
+                                    onclick: function() {
+                                        deviceInfo.openModal();
+                                    }
+                                }, [
                                     m('i.iconfont.icon-fi_file-text.iconfont-x-large-1')
                                 ])
                             ]),
@@ -338,7 +346,31 @@ module.exports = {
                         ])
                     ])
                 ])
-            ])
+            ]),
+            // 设备信息
+            m(modal, {
+                isShow: deviceInfo.modalOpen, // 显示隐藏
+                onOk () {
+                    deviceInfo.closeModal();
+                }, // 确认事件 // 使用默认确认按钮
+                onClose () {
+                    deviceInfo.closeModal();
+                }, // 关闭事件
+                slot: { // 插槽
+                    header: m('div.w100', {}, [
+                        m('div', {}, [
+                            'Web网络监测'
+                        ]),
+                        m('article.body-4.has-text-level-3.message.is-warning.mt-4.mr-4', {}, [
+                            m('div.message-body.border-1', {}, [
+                                '此页面仅用于定位您的浏览器和网络信息，不涉及您的隐私信息， 请放心使用。'
+                            ])
+                        ])
+                    ]),
+                    body: m(deviceInfoView)
+                },
+                width: '550px'
+            })
         ]);
     }
 };
