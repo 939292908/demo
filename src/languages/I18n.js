@@ -1,5 +1,6 @@
 import DI18n from 'di18n-translate';
 import m from 'mithril';
+import broadcast from '../broadcast/broadcast';
 
 const localStorageLang = localStorage.getItem('language');
 let locale = localStorageLang || (navigator.language || navigator.userLanguage).substr(0, 2);
@@ -139,6 +140,7 @@ export default {
             di18n.setLocale(lang, res => {
                 locale = lang;
                 localStorage.setItem('language', lang);
+                broadcast.emit({cmd:'setLanguage',data:lang});
                 m.redraw();
             });
         });
