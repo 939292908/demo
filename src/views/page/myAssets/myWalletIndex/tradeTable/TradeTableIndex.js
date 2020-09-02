@@ -107,7 +107,10 @@ module.exports = {
             transferLogic.setTransferModalOption({
                 isShow: true,
                 coin: row.wType, // 币种 默认选中
-                transferFrom: that.pageFlag
+                transferFrom: that.pageFlag,
+                successCallback() { // 划转成功回调
+                    // alert(22);
+                }
             });
         }
     },
