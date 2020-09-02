@@ -7,6 +7,10 @@
     height: calc(100% - 4px) !important;
 }
 
+.area-code-select-national-dropdown-menu {
+    padding-top: 12px !important;
+}
+
 .views-page-login-area-code-select-box{
     width: 300px;
     cursor: pointer;

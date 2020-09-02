@@ -35,12 +35,12 @@ module.exports = {
                 ]),
                 // 切换
                 m('div', { class: `column is-align-items-center` }, [
-                    m('span', {
-                        class: `has-text-level-4 cursor-pointer`,
+                    m('i', {
+                        class: `iconfont icon-Conversion has-text-level-4 cursor-pointer iconfont-large pt-2`,
                         onclick() {
                             model.handlerSwitchBtnClick();
                         }
-                    }, "切换")
+                    })
                 ]),
                 // 到 (下拉)
                 m('div', { class: `form-item column is-5` }, [
@@ -94,9 +94,7 @@ module.exports = {
                 },
                 // 弹框关闭
                 onClose () {
-                    model.setTransferModalOption({
-                        isShow: false // 弹框隐藏
-                    }); // 弹框隐藏
+                    model.closeTransferModalHandler();
                 },
                 // 插槽
                 slot: {

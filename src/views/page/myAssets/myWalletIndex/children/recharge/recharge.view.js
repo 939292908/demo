@@ -97,8 +97,12 @@ module.exports = {
                 ]),
                 m('div.bottom-tab.has-bg-level-2.mt-5.pt-3', {}, [
                     m('div.pa-5', {}, [
-                        m('span.title-small', {}, ['近期提币记录']),
-                        m('i.iconfont.icon-Tooltip', {}, []),
+                        m('span.title-small', {}, ['近期充币记录']),
+                        m(Tooltip, {
+                            label: m('i.iconfont.icon-Tooltip.iconfont-large'),
+                            content: '只展示近期十条记录',
+                            hiddenArrows: false
+                        }),
                         m('span.all', { class: `has-text-primary cursor-pointer`, onclick: () => { window.router.push('/assetRecords'); } }, '全部记录')
                     ]),
                     m('hr.ma-0'),

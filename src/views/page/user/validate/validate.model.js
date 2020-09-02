@@ -2,6 +2,7 @@ const m = require('mithril');
 const geetest = require('@/models/validate/geetest').default;
 const validate = require('@/models/validate/validate').default;
 const broadcast = require('@/broadcast/broadcast');
+const errCode = require('@/util/errCode').default;
 
 module.exports = {
     smsCd: 0, // 短信冷却时间
@@ -27,12 +28,13 @@ module.exports = {
                 geetest.verify();
             } else {
                 window.$message({
-                    content: window.errCode.getWebApiErrorCode(res.result.code),
+                    content: errCode.getWebApiErrorCode(res.result.code),
                     type: 'danger'
                 });
             }
-        }).catch(() => {
+        }).catch(err => {
             this.waiting = false;
+            console.log(err);
         });
     },
     /**
@@ -50,12 +52,13 @@ module.exports = {
                 geetest.verify();
             } else {
                 window.$message({
-                    content: window.errCode.getWebApiErrorCode(res.result.code),
+                    content: errCode.getWebApiErrorCode(res.result.code),
                     type: 'danger'
                 });
             }
-        }).catch(() => {
+        }).catch(err => {
             this.waiting = false;
+            console.log(err);
         });
     },
     /**

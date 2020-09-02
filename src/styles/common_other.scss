@@ -268,3 +268,9 @@
 }
 
 /* 公共样式 end */
+
+// flex
+.spacer {
+    flex-grow: 1 !important;
+    -webkit-box-flex: 1 !important;
+}

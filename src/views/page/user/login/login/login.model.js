@@ -9,6 +9,7 @@ const errCode = require('@/util/errCode').default;
 const config = require('@/config');
 const validate = require('@/models/validate/validate').default;
 const models = require('@/models');
+const regExp = require('@/models/validate/regExp');
 
 module.exports = {
     account: '', // 账号
@@ -16,57 +17,22 @@ module.exports = {
     loginType: 'phone', // 账号类型 phone 手机，email 邮箱
     loading: false, // 按钮loading
     showPassword: false, // 显示密码
+    showValidAccount: false,
+    showValidPassword: false,
     is2fa: false, // 2fa验证状态
-    /**
-     * 邮箱字段验证
-     */
-    rulesEmail: {
-        required: value => !!value || '该字段不能为空', // 该字段不能为空
-        email: value => {
-            const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-            return pattern.test(value) || I18n.$t('10668'); // 邮箱格式不正确
+    changeType() {
+        if (/@/.test(this.account)) {
+            this.loginType = 'email';
+        } else {
+            this.loginType = 'phone';
         }
-    },
-    /**
-     * 手机字段验证
-     */
-    rulesPhone: {
-        required: value => !!value || '该字段不能为空', // 该字段不能为空
-        phone: value => {
-            const pattern = /^[1][0-9]{10}$/;
-            return pattern.test(value) || I18n.$t('10669'); // 手机号码不正确
-        }
-    },
-    /**
-     * 全部验证
-     */
-    rulesAll: {
-        required: value => !!value || '该字段不能为空' // 该字段不能为空
-    },
-    /**
-     * 密码验证
-     */
-    rulesPwd: {
-        required: value => !!value || '该字段不能为空' // 该字段不能为空
-    },
-    /**
-     * 登录按钮disable状态
-     * @returns {boolean}
-     */
-    valid() {
-        return !!(this.password && this.account);
     },
     /**
      * 登录
      */
     login() {
         const that = this;
-        if (/@/.test(this.account)) {
-            this.loginType = 'email';
-        } else {
-            this.loginType = 'phone';
-        }
-        if (this.valid) {
+        if (!regExp.validAccount(this.loginType, this.account) && !regExp.validPassword(this.password)) {
             this.loading = true;
             geetest.verify(() => {
                 that.loading = false;
@@ -217,9 +183,16 @@ module.exports = {
             }
         });
     },
-    onremove() {
+    cleanUp() {
         this.is2fa = false;
         this.showPassword = false;
+        this.showValidAccount = false;
+        this.showValidPassword = false;
+        this.account = '';
+        this.password = '';
+    },
+    onremove() {
+        this.cleanUp();
         validate.close();
         broadcast.offMsg({
             key: 'login',

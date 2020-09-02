@@ -122,12 +122,11 @@ const model = {
     // 按钮事件
     handlerClickNavBtn (item) {
         if (item.id === 4) { // 点击资金划转
-            transferLogic.initTransferInfo(); // 初始化弹框
             // transferLogic.isShow = true;
             transferLogic.setTransferModalOption({
                 isShow: true,
-                transferFrom: "04",
-                coin: "HT"
+                transferFrom: model.swValue,
+                coin: ""
             });
         }
         // 弹框↑

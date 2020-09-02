@@ -1,10 +1,14 @@
 const m = require('mithril');
 const Slideshow = require('@/views/components/slideshow/leftToRight');
 const broadcast = require('@/broadcast/broadcast');
-// require('@/styles/pages/home.css');
+const wsApi = require('@/api').wsApi;
 require('@/views/page/home/picture/picture.scss');
 
 const market = require('@/models/market/market');
+
+const logic = {
+    length: 0
+};
 
 module.exports = {
     oninit: function () {
@@ -16,7 +20,18 @@ module.exports = {
         });
     },
     assetDCallBack: function (arg) {
-        market.initHomeNeedSub();
+        // const data = arg.data.filter(item => item.TrdCls === 3 && (item.Flag & 1) !== 1);
+        var syms = [];
+        var list = {};
+        wsApi.displaySym.forEach(item => {
+            const sys = wsApi.AssetD[item];
+            if (sys.TrdCls === 3 && (sys.Flag & 1) !== 1) {
+                syms.push(item);
+                list[item] = sys;
+            }
+        });
+        logic.length = syms.length;
+        market.initHomeNeedSub(syms, list);
     },
     view: function () {
         return m('div.views-pages-home-picture', {
@@ -26,7 +41,7 @@ module.exports = {
                 m('img', { class: 'picture-layer ', src: require("@/assets/img/home/layer-4.png").default }),
                 // 轮播2
                 m('div', { class: `rotationtwo-content container mt-7` }, [
-                    Object.keys(market.tickData).length > 0 ? m(Slideshow, { list: market.tickData }) : null
+                    Object.keys(market.tickData).length > 0 && Object.keys(market.tickData).length === logic.length ? m(Slideshow, { list: market.tickData }) : m(Slideshow, { list: { a: {}, b: {}, c: {}, d: {} } })
                 ])
             ])
         ]);

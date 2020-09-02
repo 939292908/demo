@@ -99,6 +99,10 @@ export default {
      * @param code
      */
     checkSmsCode(code) {
+        console.log({
+            phoneNum: this.smsConfig.phoneNum,
+            code: code
+        });
         if (!code) {
             window.$message({
                 content: '该字段不能为空',
@@ -106,7 +110,10 @@ export default {
             });
             return;
         }
-        webApi.smsVerifyV2({ code: code }).then(res => {
+        webApi.smsVerifyV2({
+            phoneNum: this.smsConfig.phoneNum,
+            code: code
+        }).then(res => {
             if (res.result === 0) {
                 this.finished();
             } else {

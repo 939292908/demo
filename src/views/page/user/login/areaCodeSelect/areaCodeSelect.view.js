@@ -44,7 +44,7 @@ module.exports = {
                     ])
                 ])
             ]),
-            m('div.dropdown-menu', {
+            m('div.dropdown-menu.area-code-select-national-dropdown-menu', {
                 id: 'views-pages-register-area-code-dropdown-menu',
                 role: 'menu',
                 onclick: e => {

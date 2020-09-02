@@ -39,7 +39,7 @@ module.exports = {
                         }
                     }, [
                         Validate.smsCd > 0
-                            ? `${Validate.smsCd}`
+                            ? `${Validate.smsCd} s`
                             : I18n.$t('10214')/* '获取验证码' */])
             }));
             break;
@@ -63,7 +63,7 @@ module.exports = {
                         }
                     }, [
                         Validate.emailCd > 0
-                            ? `${Validate.emailCd}`
+                            ? `${Validate.emailCd} s`
                             : I18n.$t('10214')/* '获取验证码' */])
             }));
             break;
