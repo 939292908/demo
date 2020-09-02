@@ -38,6 +38,7 @@ module.exports = {
         vNode.attrs.isHandleVerify && Validate.oninit();
     },
     onremove(vNode) {
+        linShiToApp.showErCode = false;
         vNode.attrs.isHandleVerify && Validate.onremove();
     },
     handlecloseDialog: function () {
@@ -68,7 +69,6 @@ module.exports = {
         ]);
     },
     promptText: function () {
-        this.showErWeiMa = false; // 临时
         if (this.props.isLinshiErWeiMa) return this.isLinshiErWeiMaVnode(); // 临时
         return m('div.mainPrompt', [
             m('div.promptText', this.props.content || '已提交提币申请，请前往邮件进行提币确认，邮件确认 后才能进入出金环节。'),
