@@ -46,7 +46,7 @@ module.exports = {
         window.router.go(-1);
     },
     view: function () {
-        return m('div.page-extract-coin-from has-bg-level-2', [
+        return m('div.page-extract-coin-from border-radius-small has-bg-level-2', [
             m('div.form-block', [
                 m('div.formModule', [
                     m('div.label has-text-title body-5', l180n.$t('10063') /* '币种' */),
@@ -78,7 +78,7 @@ module.exports = {
                 m('div.formModule', [
                     m('div.label has-text-title body-5', l180n.$t('10103') /* '提币地址' */),
                     m('div.control address', [
-                        m('input.input body-5', { type: 'text', placeholder: '', onchange: this.handleAddressVal, value: FromDataMode.extractCoin.address })
+                        m('input.input body-5 border-radius-small', { type: 'text', placeholder: '', onchange: this.handleAddressVal, value: FromDataMode.extractCoin.address })
                     ]),
                     FromDataMode.errorShow.address.show ? m('div.errorToTal body-4', '地址错误') : null
                 ]),
@@ -88,7 +88,7 @@ module.exports = {
                         m(Tooltip, { label: m('i.iconfont icon-Tooltip'), content: '限额提示' })
                     ]),
                     m('div.control extract-num', [
-                        m('input.input body-5', { type: 'number', placeholder: `${l180n.$t('10105') /* '最小提币量' */}：${FromDataMode.currentFees.withdrawMin}`, onchange: this.handleExtractCoinNameVal, value: FromDataMode.extractCoin.coinNum }),
+                        m('input.input body-5 border-radius-small', { type: 'number', placeholder: `${l180n.$t('10105') /* '最小提币量' */}：${FromDataMode.currentFees.withdrawMin}`, onchange: this.handleExtractCoinNameVal, value: FromDataMode.extractCoin.coinNum }),
                         m('div.icon-right-all', [
                             m('span', FromDataMode.currentSelect.wType),
                             m('span.clickAll', { onclick: this.handleClickAll }, l180n.$t('10106') /* '全部' */)
