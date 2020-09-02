@@ -1,0 +1,232 @@
+$arrowsSpace: 8%; // 三角形方向 距离
+$arrowsSize: 6px; // 三角形 大小
+
+// hover提示 组件
+.my-tooltip {
+
+    // 下边框-虚线
+    .bdb-dashed {
+        border-bottom: 1px dashed;
+    }
+
+    // hover 菜单
+    .dropdown-menu {
+        padding: $arrowsSize;
+
+        // 三角形
+        &.arrows::before {
+            content: "";
+            width: 0;
+            height: 0;
+            position: absolute;
+            z-index: 9;
+            border-top: solid $arrowsSize transparent !important;
+            border-left: solid $arrowsSize transparent !important;
+            border-right: solid $arrowsSize transparent !important;
+            border-bottom: solid $arrowsSize;
+        }
+
+        // 提示方向 下 (上下左右)
+        &.my-tooltip-position-bottom {
+            top: 100%;
+            bottom: auto;
+
+            // 三角形 方向
+            &.arrows::before {
+                top: 0;
+                bottom: auto;
+                transform: translateY(-50%);
+            }
+
+            // 提示位置 中 (左中右)
+            &.my-tooltip-direction-center {
+                left: 50%;
+                right: auto;
+                transform: translateX(-50%);
+    
+                // 三角形
+                &.arrows::before {
+                    left: 50%;
+                    right: auto;
+                    transform: translate(-50%, -50%);
+                }
+            }
+
+            // 提示位置 左 (左中右)
+            &.my-tooltip-direction-left {
+                right: 0;
+                left: auto;
+
+                // 三角形
+                &.arrows::before {
+                    right: $arrowsSpace;
+                    left: auto;
+                }
+            }
+
+            // 提示位置 右 (左中右)
+            &.my-tooltip-direction-right {
+                left: 0;
+                right: auto;
+    
+                // 三角形
+                &.arrows::before {
+                    left: $arrowsSpace;
+                    right: auto;
+                }
+            }
+        }
+
+        // 提示方向 上 (上下左右)
+        &.my-tooltip-position-top {
+            bottom: 100%;
+            top: auto;
+
+            // 三角形 方向
+            &.arrows::before {
+                top: auto;
+                bottom: 0;
+                transform: translateY(50%) rotate(180deg);
+            }
+
+            // 提示位置 中 (左中右)
+            &.my-tooltip-direction-center {
+                left: 50%;
+                right: auto;
+                transform: translateX(-50%);
+    
+                // 三角形
+                &.arrows::before {
+                    left: 50%;
+                    right: auto;
+                    transform: translate(-50%, 50%) rotate(180deg);
+                }
+            }
+
+            // 提示位置 左 (左中右)
+            &.my-tooltip-direction-left {
+                right: 0;
+                left: auto;
+
+                // 三角形
+                &.arrows::before {
+                    right: $arrowsSpace;
+                    left: auto;
+                }
+            }
+
+            // 提示位置 右 (左中右)
+            &.my-tooltip-direction-right {
+                left: 0;
+                right: auto;
+    
+                // 三角形
+                &.arrows::before {
+                    left: $arrowsSpace;
+                    right: auto;
+                }
+            }
+        }
+
+        // 提示方向 左 (上下左右)
+        &.my-tooltip-position-left {
+            right: 100%;
+            left: auto;
+
+            // 三角形 方向
+            &.arrows::before {
+                left: 100%;
+                right: auto;
+                transform: translateX(-50%) rotate(90deg);
+            }
+
+            // 提示位置 中 (左中右)
+            &.my-tooltip-direction-center {
+                top: 50%;
+                bottom: auto;
+                transform: translateY(-50%);
+    
+                // 三角形
+                &.arrows::before {
+                    top: 50%;
+                    transform: translate(-50%, -50%) rotate(90deg);
+                }
+            }
+
+            // 提示位置 左 (左中右)
+            &.my-tooltip-direction-left {
+                top: 0;
+                bottom: auto;
+
+                // 三角形
+                &.arrows::before {
+                    top: $arrowsSpace;
+                    bottom: auto;
+                }
+            }
+
+            // 提示位置 右 (左中右)
+            &.my-tooltip-direction-right {
+                bottom: 0;
+                top: auto;
+    
+                // 三角形
+                &.arrows::before {
+                    bottom: $arrowsSpace;
+                    top: auto;
+                }
+            }
+        }
+
+        // 提示方向 右 (上下左右)
+        &.my-tooltip-position-right {
+            right: auto;
+            left: 100%;
+
+            // 三角形 方向
+            &.arrows::before {
+                left: auto;
+                right: 100%;
+                transform: translateX(50%) rotate(-90deg);
+            }
+
+            // 提示位置 中 (左中右)
+            &.my-tooltip-direction-center {
+                top: auto;
+                bottom: 50%;
+                transform: translateY(50%);
+    
+                // 三角形
+                &.arrows::before {
+                    top: 50%;
+                    transform: translate(50%, -50%) rotate(-90deg);
+                }
+            }
+
+            // 提示位置 左 (左中右)
+            &.my-tooltip-direction-left {
+                top: 0;
+                bottom: auto;
+
+                // 三角形
+                &.arrows::before {
+                    top: $arrowsSpace;
+                    bottom: auto;
+                }
+            }
+
+            // 提示位置 右 (左中右)
+            &.my-tooltip-direction-right {
+                bottom: 0;
+                top: auto;
+    
+                // 三角形
+                &.arrows::before {
+                    bottom: $arrowsSpace;
+                    top: auto;
+                }
+            }
+        }
+
+    }
+}
