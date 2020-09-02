@@ -6,7 +6,6 @@ const wlt = require('@/models/wlt/wlt');
 
 module.exports = {
     oninit: vnode => {
-        wlt.init();
         TradeAccountIndex.initFn(vnode);
     },
     view: () => {

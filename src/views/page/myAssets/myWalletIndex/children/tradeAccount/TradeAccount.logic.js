@@ -34,7 +34,6 @@ module.exports = {
         }
     },
     initFn: function (vnode) {
-        wlt.init();
         this.vnode = vnode;
         this.setPageFlag('01');
         broadcast.onMsg({

@@ -2,6 +2,8 @@ const Http = require('@/api').webApi;
 const m = require('mithril');
 const Qrcode = require('qrcode');
 const geetest = require('@/models/validate/geetest').default;
+// const validate = require('@/models/validate/validate').default;
+const broadcast = require('@/broadcast/broadcast');
 
 module.exports = {
     // 密钥
@@ -9,16 +11,20 @@ module.exports = {
     IOSDLAdd: 'https://apps.apple.com/us/app/google-authenticator/id388497605',
     AndroidDLAdd: 'https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2',
     initFn: function() {
+        this.initGeetest();
         const that = this;
         Http.getGoogleSecret().then(function(arg) {
-            console.log('nzm', 'getGoogleSecret success', arg);
+            // console.log('nzm', 'getGoogleSecret success', arg);
             that.secret = arg.secret;
+            // 生成密钥二维码
             that.generatedCode(arg.secret, 'key');
             m.redraw();
         }).catch(function(err) {
             console.log('nzm', 'getGoogleSecret error', err);
         });
+        // 生成IOS下载地址二维码
         this.generatedCode(this.IOSDLAdd, 'IOS');
+        // 生成Android下载地址二维码
         this.generatedCode(this.AndroidDLAdd, 'Android');
     },
     generatedCode: function(text, type) {
@@ -39,9 +45,11 @@ module.exports = {
             console.log(err);
         });
     },
+    confirmBtn: function () {
+        geetest.verify();
+    },
     // 绑定谷歌验证
-    bind: function() {
-        this.initGeetest();
+    bindGoogle: function() {
         // 密钥
         const opInfo = this.secret;
         // 用户密码
@@ -67,6 +75,29 @@ module.exports = {
     initGeetest() {
         geetest.init(() => {
         });
+        broadcast.onMsg({
+            key: 'bindGoogle',
+            cmd: 'geetestMsg',
+            cb: res => {
+                if (res === 'success') {
+                    // 成功则进入安全验证
+                    console.log('success');
+                } else {
+                    console.log('error');
+                }
+            }
+        });
+    },
+    initSafetyVerifyModal() {
+        // const params = {
+        // };
+        // 初始化 校验弹框
+        // validate.activeGoogle(params, callback){
+        //     this.validateType = 'google';
+        //     if (callback) {
+        //         this.callbackHandler = callback;
+        //     }
+        // };
     },
     removeFn: function() {
 
