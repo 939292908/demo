@@ -4,6 +4,7 @@ const InputWithComponent = require('../../../../components/inputWithComponent/in
 const ForgetPassword = require('./forgetPassword.model');
 const AreaCodeSelect = require('../areaCodeSelect/areaCodeSelect.view');
 const regExp = require('@/models/validate/regExp');
+const I18n = require('@/languages/I18n').default;
 
 import('../login.css');
 
@@ -19,10 +20,10 @@ module.exports = {
             m('div.box.has-bg-level-2.views-page-login-box-width.px-7.py-8', {},
                 ForgetPassword.isValidate ? [
                     m('div.mb-2.title-4.has-text-level-1.title-large.has-text-title', {},
-                        ['重置密码']),
+                        [I18n.$t('10209')/* '重置密码' */]),
                     m('p.body-3.has-text-primary.mb-7', {},
-                        ['出于安全考虑，修改账户安全项之后，24h内禁止提币、内部转出与卖币操作']),
-                    m('div.has-text-level-1.body-3.mb-2', {}, ['新密码']),
+                        [I18n.$t('10205')/* '出于安全考虑，修改账户安全项之后，24h内禁止提币、内部转出与卖币操作' */]),
+                    m('div.has-text-level-1.body-3.mb-2', {}, [I18n.$t('10210')/* '新密码' */]),
                     m('input.input[type=password]', {
                         oninput: e => {
                             ForgetPassword.password1 = e.target.value;
@@ -34,7 +35,7 @@ module.exports = {
                     m('div.body-3.mt-2.has-text-tip-error', {
                         hidden: !ForgetPassword.showPassword1Validate
                     }, [regExp.validPassword(ForgetPassword.password1)]),
-                    m('div.has-text-level-1.body-3.mb-2.mt-4', {}, ['确认密码']),
+                    m('div.has-text-level-1.body-3.mb-2.mt-4', {}, [I18n.$t('10211')/* '确认密码' */]),
                     m('input.input[type=password]', {
                         oninput: e => {
                             ForgetPassword.password2 = e.target.value;
@@ -59,7 +60,7 @@ module.exports = {
                 ] : ForgetPassword.is2fa ? m(Validate, {})
                     : [
                         m('div.mb-2.title-large.has-text-title', {},
-                            ['忘记密码']),
+                            [I18n.$t('10204')/* '忘记密码' */]),
                         m('p.body-3.has-text-primary.mb-7', {},
                             ['出于安全考虑，修改账户安全项之后，24h内禁止提币、内部转出与卖币操作']),
                         m('div.body-3.mb-6', {}, [
@@ -69,16 +70,16 @@ module.exports = {
                                     ForgetPassword.loginType = 'phone';
                                     ForgetPassword.cleanUp();
                                 }
-                            }, ['手机']),
+                            }, [I18n.$t('10193')/* '手机' */]),
                             m('a.has-text-level-1', {
                                 class: ForgetPassword.loginType === 'email' ? 'has-text-primary' : '',
                                 onclick: () => {
                                     ForgetPassword.loginType = 'email';
                                     ForgetPassword.cleanUp();
                                 }
-                            }, ['邮箱'])
+                            }, [I18n.$t('10194')/* '邮箱' */])
                         ]),
-                        m('div.has-text-level-1.body-3.mb-2', {}, [ForgetPassword.loginType === 'phone' ? '手机号' : '邮箱号']),
+                        m('div.has-text-level-1.body-3.mb-2', {}, [ForgetPassword.loginType === 'phone' ? I18n.$t('10121')/* '手机号' */ : I18n.$t('10122')/* '邮箱号' */]),
                         ForgetPassword.loginType === 'phone'
                             ? m(InputWithComponent, {
                                 leftComponents: m(AreaCodeSelect, {
@@ -122,7 +123,7 @@ module.exports = {
                             },
                             disabled: regExp.validAccount(ForgetPassword.loginType, ForgetPassword.loginName),
                             class: ForgetPassword.loading ? 'is-loading' : ''
-                        }, ['下一步'])
+                        }, [I18n.$t('10206')/* '下一步' */])
                     ]
             )
         ]);

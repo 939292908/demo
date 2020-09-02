@@ -3,6 +3,7 @@ const globalModels = require('./globalModels');
 const config = require('../config');
 const broadcast = require('../broadcast/broadcast');
 const errCode = require('../util/errCode');
+const utils = require('../util/utils').default;
 
 module.exports = {
     getFunList() {
@@ -29,6 +30,7 @@ module.exports = {
             // 获取个人信息成功
                 broadcast.emit({ cmd: broadcast.GET_USER_INFO_READY, data: data.account });
                 globalModels.setAccount(data.account);
+                utils.setItem('userAccount', data.account.accountName);
                 // window.router.push('/home');
             } else {
                 window.$message({

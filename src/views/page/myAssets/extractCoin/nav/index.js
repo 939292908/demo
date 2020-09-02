@@ -1,5 +1,6 @@
 const m = require('mithril');
 const Back = require('./Return.png').default;
+const l180n = require('@/languages/I18n').default;
 require('./index.scss');
 
 module.exports = {
@@ -14,7 +15,7 @@ module.exports = {
             m('div.content-width nav-content', [
                 m('div.title-medium dis-flex', [
                     m('div.itemNav', { onclick: this.back }, m('img', { src: Back })),
-                    m('div.itemNav', { onclick: this.toUrl }, m('span', '提币'))
+                    m('div.itemNav', { onclick: this.toUrl }, m('span', l180n.$t('10057')/* '提币' */))
                 ])
             ])
         ]);

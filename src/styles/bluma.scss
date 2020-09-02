@@ -10,6 +10,7 @@ $dark: #171A21;
 // Import only what you need from Bulma
 @import "@/../node_modules/bulma/sass/utilities/_all.sass";
 @import "@/../node_modules/bulma/sass/base/_all.sass";
+
 // @import "@/../node_modules/bulma/sass/elements/_all.sass";
 @import "@/../node_modules/bulma/sass/elements/button.sass";
 @import "@/../node_modules/bulma/sass/elements/container.sass";
@@ -32,6 +33,7 @@ $dark: #171A21;
 @import "@/../node_modules/bulma/sass/components/dropdown.sass";
 @import "@/../node_modules/bulma/sass/components/message.sass";
 @import "@/../node_modules/bulma/sass/components/menu.sass";
+@import "@/../node_modules/bulma/sass/components/media.sass";
 
 // @import "@/../node_modules/bulma/sass/layout/_all.sass";
 @import "@/../node_modules/bulma/sass/layout/hero.sass";
@@ -41,7 +43,6 @@ $dark: #171A21;
 @import "@/../node_modules/bulma/sass/grid/_all.sass";
 
 @import "@/../node_modules/bulma/sass/helpers/_all.sass";
-@import "@/../node_modules/bulma-calendar/src/sass/index.sass";
 
 @import "./common_color.scss";
 @import "./common_size.scss";

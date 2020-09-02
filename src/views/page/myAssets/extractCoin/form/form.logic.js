@@ -7,8 +7,10 @@ const geetest = require('@/models/validate/geetest').default;
 const errCode = require('@/util/errCode').default;
 const utils = require('@/util/utils').default;
 const validate = require('@/models/validate/validate').default;
+const l180n = require('@/languages/I18n').default;
 
 const extract = {
+    locale: '',
     name: 'FROM_DATA',
     promptText: '如果您希望将本地数字资产提出至某地址，则该地址及为您的提币地址。 *某些地址可能需要您提供地址的标签，请务必填写，否则有丢失币的风险 *填写错误可能导致资产损失，请仔细核对 *完成LV3身份认证后，24h提币额度提升至100BTC，如需更多请联系客服',
     UserInfo: {},
@@ -18,6 +20,7 @@ const extract = {
     currentSelect: {}, // 选中的币种
     currenLinkBut: '', // 选中链名字
     currentFees: {}, // 最小值 手续费
+    isChangeClose: false, // 是否修改弹框关闭事件
     coinInfo: {},
     feesList: [],
     popUpData: { // 弹框【验证，提示】 数据
@@ -49,7 +52,7 @@ const extract = {
         linkName: ''
     }, // 提币数据
     getCoinInfo: function () {
-        const params = { locale: 'zh', vp: Conf.exchId };
+        const params = { locale: extract.locale, vp: Conf.exchId };
         webApi.getCoinInfo(params).then(res => {
             if (res.result.code === 0) {
                 extract.coinInfo = res.result.data;
@@ -70,15 +73,31 @@ const extract = {
         });
     },
     getSelectListData: function () {
-        this.selectList = [...wlt.wallet['03']];
+        /* eslint-disable */
+        // const self = this;
+        let selectList = [...wlt.wallet['03']];
+        for (let i = 0; i < selectList.length; i ++) {
+            webApi.GetRechargeAddr({
+                wType: selectList[i].wType
+            }).then(function(res) {
+                if (res.result.code ===  0) {
+                    selectList[i].fullNameAddLeez = res.trade.fullName[extract.locale] || res.trade.fullName.en;
+                    m.redraw();
+                }
+            })
+        }
+        this.selectList = selectList;
         this.currentSelect = this.selectList[0];
         this.getlinkButtonListData();
-        m.redraw();
+        /* eslint-enable */
     },
     getlinkButtonListData: function () {
         this.getCurrentFeesChange();
         this.getExtractableCoinToBTCNum();
         this.currenLinkBut = '';
+        this.extractCoin.address = '';
+        this.extractCoin.coinNum = '';
+        this.extractCoin.linkName = '';
         if (this.currentSelect.wType !== 'USDT') {
             this.linkButtonList = [];
             return;
@@ -112,7 +131,7 @@ const extract = {
             BTCNum = Number(usableCoin * price / btcPrice).toFixed(8);
         }
         if (BTCNum > 2) return this.getExtractableNum(BTCNum);
-        this.currentExtractableNum = BTCNum;
+        this.currentExtractableNum = usableCoin;
     },
     getBTCToCoin: function (BTCNum) {
         const price = wlt.getPrz(this.currentSelect.wType);
@@ -191,31 +210,36 @@ const extract = {
         extract.handleChangeShow(true); // 打开 a
     },
     handleChangeShow: function (isHandleVerify) {
+        extract.isChangeClose = false;
         extract.popUpData = {
             show: !extract.popUpData.show,
             isHandleVerify,
-            title: { text: isHandleVerify ? '安全验证' : '温馨提示' }
+            title: { text: isHandleVerify ? l180n.$t('10113')/* 安全验证 */ : l180n.$t('10082') /* '温馨提示' */ }
         };
         m.redraw();
     },
-    handleTotalShow: function ({ content, buttonText, buttonClick, doubleButtonCof, doubleButton }) {
+    handleTotalShow: function ({ content, buttonText, buttonClick, doubleButtonCof, doubleButton, isLinshiErWeiMa }) {
+        extract.isChangeClose = true;
         extract.popUpData = {
-            show: !extract.popUpData.show,
+            show: true,
             isHandleVerify: false,
             content,
             buttonText,
             buttonClick,
             doubleButtonCof,
             doubleButton,
-            title: { text: '温馨提示' }
+            title: { text: l180n.$t('10082') /* '温馨提示' */ },
+            isLinshiErWeiMa
         };
-        m.redraw();
+        // m.redraw();
     },
     handleUserCanAction: function () {
-        if (!this.UserInfo.setting2fa.email) return this.handleTotalShow({ content: '提币需邮件确认，请先绑定邮箱', buttonText: '邮箱验证', buttonClick: () => { m.route.set("/my"); } });
+        if (!this.UserInfo.setting2fa.email || (!this.UserInfo.setting2fa.google && !this.UserInfo.setting2fa.phone)) return this.handleTotalShow({ content: '提币需邮件确认，请先绑定邮箱 为了您的账户安全，还需绑定手机或谷歌', isLinshiErWeiMa: true });
+        // 二期使用
+        if (!this.UserInfo.setting2fa.email) return this.handleTotalShow({ content: '提币需邮件确认，请先绑定邮箱', buttonText: l180n.$t('10229') /* '邮箱验证' */, buttonClick: () => { m.route.set("/my"); } });
         const doubleButtonCof = [
-            { text: '谷歌验证', click: () => { m.route.set("/my"); } },
-            { text: '手机验证', click: () => { m.route.set("/my"); } }
+            { text: l180n.$t('10227') /* '谷歌验证' */, click: () => { m.route.set("/my"); } },
+            { text: l180n.$t('10228') /* '手机验证' */, click: () => { m.route.set("/my"); } }
         ];
         if (!this.UserInfo.setting2fa.google && !this.UserInfo.setting2fa.phone) return this.handleTotalShow({ content: '为了您的账户安全，请先绑定手机或谷歌', doubleButton: true, doubleButtonCof });
     },
@@ -223,7 +247,7 @@ const extract = {
         const self = this;
         wlt.init();
         this.initGeetest();
-
+        this.locale = l180n.getLocale();
         self.UserInfo = UserInfo.getAccount();
         if (!Object.keys(self.UserInfo).length) {
             broadcast.onMsg({

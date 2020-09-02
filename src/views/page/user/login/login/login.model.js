@@ -3,7 +3,7 @@ const m = require('mithril');
 const geetest = require('@/models/validate/geetest').default;
 const md5 = require('md5');
 const utils = require('@/util/utils').default;
-const I18n = require('@/languages/I18n').default;
+// const I18n = require('@/languages/I18n').default;
 const broadcast = require('@/broadcast/broadcast');
 const errCode = require('@/util/errCode').default;
 const config = require('@/config');
@@ -97,7 +97,7 @@ module.exports = {
         }).catch(err => {
             window.console.log('tlh', err);
             window.$message({
-                content: I18n.$t('10683') + '(请求异常)',
+                content: '系统繁忙请稍后再试(请求异常)',
                 type: 'danger'
             });
             this.loading = false;
@@ -114,7 +114,7 @@ module.exports = {
                 this.getUserInfo();
             } else {
                 window.$message({
-                    content: I18n.$t('10683') + `(${res.result.code})`,
+                    content: `系统繁忙请稍后再试(${res.result.code})`,
                     type: 'danger'
                 });
                 this.loading = false;
@@ -123,7 +123,7 @@ module.exports = {
         }).catch(err => {
             window.console.log('tlh', err);
             window.$message({
-                content: I18n.$t('10683') + '(请求异常)',
+                content: '系统繁忙请稍后再试(请求异常)',
                 type: 'danger'
             });
             this.loading = false;
@@ -166,6 +166,7 @@ module.exports = {
         }
         if (utils.getItem('userAccount')) {
             this.account = utils.getItem('userAccount');
+            this.changeType();
         }
         this.initGeetest();
         broadcast.onMsg({

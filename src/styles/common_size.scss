@@ -40,6 +40,7 @@ body,
 .select select,
 .file-cta,
 .file-name {
+    outline: none;
     padding: var(--c-padding-level0) var(--c-padding-level3);
     border-radius: var(--c-radius-level1);
     font-size: var(--c-fontsz-level4);
@@ -52,31 +53,37 @@ body,
     .title-small {
         font-size: var(--c-fontsz-level6);
         font-weight: var(--c-fontweight-level3);
+        line-height: 1.5;
     }
 
     .title-medium {
         font-size: var(--c-fontsz-level7);
         font-weight: var(--c-fontweight-level3);
+        line-height: 1.5;
     }
 
     .title-large {
         font-size: var(--c-fontsz-level8);
         font-weight: var(--c-fontweight-level3);
+        line-height: 1.5;
     }
 
     .title-x-large {
         font-size: var(--c-fontsz-level8);
         font-weight: var(--c-fontweight-level3);
+        line-height: 1.5;
     }
 
     .title-x-large-1 {
         font-size: var(--c-fontsz-level8);
         font-weight: var(--c-fontweight-level3);
+        line-height: 1.5;
     }
 
     .title-x-large-2 {
         font-size: var(--c-fontsz-level8);
         font-weight: var(--c-fontweight-level3);
+        line-height: 1.5;
     }
 
     .body-1 {
@@ -164,8 +171,10 @@ body,
 
 .iconfont {
     font-family: "iconfont" !important;
-    font-size: var(--c-iconsz-level3);
+    font-size: var(--c-iconsz-level3)!important;
     font-style: normal;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale; 
     line-height: 1;
 }
 
@@ -199,6 +208,37 @@ body,
 
 .iconfont-x-large-4 {
     font-size: var(--c-iconsz-level7) !important;
+}
+
+/* 边框 */
+
+.border-1 {
+    border-width: 1px;
+}
+
+.border-2 {
+    border-width: 2px;
+}
+
+.border-3 {
+    border-width: 3px;
+}
+
+// 点状
+.border-dotted {
+    border-style: dotted;
+}
+// 实线
+.border-solid  {
+    border-style: solid;
+}
+// 双线
+.border-double {
+    border-style: double;
+}
+// 虚线
+.border-dashed  {
+    border-style: dashed;
 }
 
 /* 字体粗细 */
@@ -422,14 +462,17 @@ body,
 
 .button-small {
     height: var(--c-button-level0) !important;
+    font-size: var(--c-fontsz-level3) !important;
 }
 
 .button-medium {
     height: var(--c-button-level1) !important;
+    font-size: var(--c-fontsz-level3) !important;
 }
 
 .button-large {
     height: var(--c-button-level2) !important;
+    font-size: var(--c-fontsz-level4) !important;
 }
 
 /* 公共样式 end */
@@ -460,4 +503,8 @@ body,
 
 .min-width-200 {
     min-width: 200px;
+}
+
+.min-width-250 {
+    min-width: 250px;
 }

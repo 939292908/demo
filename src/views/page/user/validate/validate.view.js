@@ -15,9 +15,9 @@ module.exports = {
     },
     view() {
         const validInput = [];
-        validInput.push(m('div.title-large.has-text-title', {}, ['安全验证']));
-        validInput.push(m('div.py-0.mb-7.body-3.has-text-level-2', {}, ['为了您的账户安全，请完成以下验证']));
-        validInput.push(m('div.has-text-level-2.body-3.mb-2', {}, [Validate.selectName]));
+        validInput.push(m('div.title-large.has-text-title', {}, [I18n.$t('10113')/* '安全验证' */]));
+        validInput.push(m('div.py-0.mb-7.body-3.has-text-level-2', {}, [I18n.$t('10248')/* '为了您的账户安全，请完成以下验证' */]));
+        validInput.push(m('div.has-text-level-2.body-3.mb-2', {}, [Validate.selectName[Validate.selectType]]));
         switch (Validate.selectType) {
         case 'sms':
             validInput.push(m(InputWithComponent, {
@@ -40,7 +40,7 @@ module.exports = {
                     }, [
                         Validate.smsCd > 0
                             ? `${Validate.smsCd} s`
-                            : I18n.$t('10214')/* '获取验证码' */])
+                            : I18n.$t('10117')/* '获取验证码' */])
             }));
             break;
         case 'email':
@@ -64,7 +64,7 @@ module.exports = {
                     }, [
                         Validate.emailCd > 0
                             ? `${Validate.emailCd} s`
-                            : I18n.$t('10214')/* '获取验证码' */])
+                            : I18n.$t('10117')/* '获取验证码' */])
             }));
             break;
         case 'google':
@@ -85,7 +85,7 @@ module.exports = {
             validInput.push(m('div.has-text-right.mt-2', {}, [
                 m('a.has-text-primary', {
                     onclick: () => { Validate.changeValidate(); }
-                }, [Validate.anotherName])
+                }, [Validate.anotherName[Validate.anotherType]])
             ]));
         }
 

@@ -108,7 +108,6 @@ module.exports = {
     },
     //  更新最新价行情数据
     updTickData: function (param) {
-        console.log(param, 'list');
         for (const key in param) {
             this.tickData[key] = this.createTickData(param[key]);
         }
@@ -124,7 +123,7 @@ module.exports = {
             tick.LastPrz = utils.toPrecision2(Number(tick.Prz || 0), PrzMinIncSize, 8);
             const rfpre = tick.Prz24 === 0 ? 0 : (tick.Prz - tick.Prz24) / tick.Prz24 * 100;
             tick.rfpre = (rfpre).toFixed(2) + '%';
-            tick.rfpreColor = rfpre > 0 ? 1 : -1;
+            tick.rfpreColor = rfpre > 0 ? 1 : rfpre === 0 ? 0 : -1;
             tick.rf = utils.toPrecision2(Number(tick.Prz || 0) - Number(tick.Prz24 || 0), PrzMinIncSize, 8);
             tick.Volume24 = Number(tick.Volume24 || 0).toFixed(VolMinValSize);
             tick.distSym = (param.Sym).split('_')[1] + window.gI18n.$t('10413');// 指数
@@ -137,7 +136,7 @@ module.exports = {
             const rfpre = tick.Prz24 === 0 ? 0 : (tick.LastPrz - tick.Prz24) / tick.Prz24 * 100;
             tick.distSym = this.getSymDisplayName(AssetD, tick.Sym);
             tick.rfpre = (rfpre).toFixed(2) + '%';
-            tick.rfpreColor = rfpre > 0 ? 1 : -1;
+            tick.rfpreColor = rfpre > 0 ? 1 : rfpre === 0 ? 0 : -1;
             tick.rf = (Number(tick.LastPrz || 0) - Number(tick.Prz24 || 0)).toFixed(PrzMinIncSize);
             // 最新价格
             tick.LastPrz = Number(tick.LastPrz || 0).toFixed(PrzMinIncSize);

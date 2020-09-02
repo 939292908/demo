@@ -679,20 +679,20 @@ $primary-lighten: #FF8B00;
     box-shadow: 0 0.5em 1em -0.125em rgba(10, 10, 10, 0.1), 0 0px 0 1px rgba(10, 10, 10, 0.02);
 }
 
-// // 滚动条
-// ::-webkit-scrollbar-track-piece {
-//     background: var(--c-background-lighten1);
-// }
+// 滚动条
+::-webkit-scrollbar-track-piece {
+    background: transparent;
+}
 
-// ::-webkit-scrollbar {
-//     width: 6px;
-//     height: 10px;
-// }
+::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
 
-// ::-webkit-scrollbar-thumb {
-//     background: var(--c-background-lighten2);
-//     border-radius: 20px;
-// }
+::-webkit-scrollbar-thumb {
+    background: var(--c-background-darken3);
+    border-radius: 20px;
+}
 
 // 透明度
 @for $i from 0 through 9 {
