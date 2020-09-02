@@ -53,7 +53,6 @@ module.exports = {
         });
     },
     view: function (vnode) {
-        console.log(vnode.attrs.list);
         if (swiper.Loadingnumber < 10) swiper.Loadingnumber += 1;
         if (swiper.Loadingnumber === 5) {
             this.mySwiper.removeSlide(0);
