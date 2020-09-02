@@ -4,6 +4,7 @@ const AssetRecords = require('@/models/asset/assetsRecords');
 const assetTable = require('../../../assetTable/assetTable.view');
 require('@/views/page/myAssets/myWalletIndex/children/recharge/recharge.scss');
 const Tooltip = require('@/views/components/common/Tooltip/Tooltip.view');
+const Dropdown = require('@/views/components/common/Dropdown');
 
 module.exports = {
     oninit: () => {
@@ -21,19 +22,11 @@ module.exports = {
             ]),
             m('div', { class: `bottom content-width mb-9` }, [
                 m('div', { class: `bottom-upper has-bg-level-2 pl-8 pt-7` }, [
-                    m('div', { class: `` }, [
-                        m('span', { class: `body-5` }, '币种')
+                    m('div', { class: `form-item-title` }, ['币种']),
+                    m('div', { class: `form-item-content border-radius-medium mt-2 mb-7`, style: { width: `384px` } }, [
+                        m(Dropdown, rechargeIndex.getCurrencyMenuOption())
                     ]),
-                    m('div', { class: `currencySel border-radius-medium mt-2 mb-7` }, [
-                        m('div.select is-fullwidth',
-                            m('select', { class: `coinSel`, onchange: () => { rechargeIndex.modifySelect(); } }, [
-                                rechargeIndex.pageData.map(item => {
-                                    return m('option', { }, item.wType + '  |  ' + item.zh);
-                                })
-                            ])
-                        )
-                    ]),
-                    m('div', { class: `xrpLable mb-7`, style: { display: rechargeIndex.memo ? (rechargeIndex.selectCheck === 'XRP' || rechargeIndex.selectCheck === 'EOS' ? '' : 'none') : 'none' } }, [
+                    m('div', { class: `xrpLable mb-7`, style: { display: rechargeIndex.memo ? (rechargeIndex.form.selectCheck === 'XRP' || rechargeIndex.form.selectCheck === 'EOS' ? '' : 'none') : 'none' } }, [
                         m('div', { class: `labeltip` }, [
                             m('span', {}, '标签'),
                             m('div.navbar-item.cursor-pointer', { class: `has-text-primary-hover` }, [
@@ -46,7 +39,7 @@ module.exports = {
                         ]),
                         m('div', { class: `mt-2 px-2 has-text-primary border-radius-small uid` }, rechargeIndex.uId)
                     ]),
-                    m('div', { class: `usdtLable mb-7`, style: { display: rechargeIndex.openChains ? (rechargeIndex.selectCheck === 'USDT' ? '' : 'none') : 'none' } }, [
+                    m('div', { class: `usdtLable mb-7`, style: { display: rechargeIndex.openChains ? (rechargeIndex.form.selectCheck === 'USDT' ? '' : 'none') : 'none' } }, [
                         m('div', { class: `labeltip` }, [
                             m('span', {}, '链名称'),
                             m('div.navbar-item.cursor-pointer', { class: `has-text-primary-hover` }, [
