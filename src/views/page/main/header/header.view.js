@@ -158,7 +158,7 @@ module.exports = {
                         })
                     ]),
                     // 资产
-                    m('div.navbar-item.has-dropdown.is-hoverable', {}, [
+                    m('div.navbar-item.has-dropdown.is-hoverable' + (utils.getItem('loginState') ? '' : '.is-hidden'), {}, [
                         m('a.navbar-item.ma-0.has-text-primary-hover', {}, [
                             "资产"
                         ]),
@@ -218,7 +218,7 @@ module.exports = {
                         ])
                     ]),
                     // 我的
-                    m('div.navbar-item.has-dropdown.is-hoverable', {}, [
+                    m('div.navbar-item.has-dropdown.is-hoverable' + (utils.getItem('loginState') ? '' : '.is-hidden'), {}, [
                         m('a.navbar-item.ma-0.has-text-primary-hover', {}, [
                             m('i.iconfont.icon-Personal')
                         ]),
