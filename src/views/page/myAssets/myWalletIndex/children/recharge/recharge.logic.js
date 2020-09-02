@@ -6,9 +6,12 @@ const broadcast = require('@/broadcast/broadcast');
 const Qrcode = require('qrcode');
 
 module.exports = {
-    pageData: [],
-    USDTLabel: [],
-    selectCheck: '', // 当前币种选中值
+    pageData: [], // 所需数据
+    USDTLabel: [], // 链名称
+    selectList: [], // 下拉列表
+    form: {
+        selectCheck: '' // 当前币种选中值
+    },
     tips: '', // 提示
     uId: '', // 用户uId
     rechargeAddr: '', // 充币地址
@@ -16,8 +19,9 @@ module.exports = {
     btnCheckFlag: 0, // 默认选中第一个
     labelTips: '', // 标签提示
     memo: null, // 是否显示标签
-    coinInfo: {},
-    setWalletData() {
+    openChains: null, // 是否显示链名称
+    showCurrencyMenu: false, // show币种菜单
+    setPageData() {
         const that = this;
         this.pageData = []; // 初始化
         this.setUSDTLabel();
@@ -28,11 +32,13 @@ module.exports = {
                 that.uId = this.uId || walletI.uid;
                 item.canRecharge = walletI.Setting.canRecharge; // 能否充值
                 item.promptRecharge = walletI.promptRecharge; // 充值提示
+                item.openChains = walletI.Setting.openChains;
                 item.wType = walletI.wType; // 币种
                 item.memo = walletI.Setting.memo; // 是否显示标签
                 if (walletI.wType === 'USDT') {
                     for (const i in walletI.Setting) {
                         if (i.search('-') !== -1) {
+                            // 去掉为false的链名称
                             if (!walletI.Setting[i]) {
                                 this.USDTLabel.pop(i.split('-')[1]);
                             }
@@ -48,8 +54,21 @@ module.exports = {
                     item.en = arg.trade.fullName.en; // 英文
                     item.networkNum = arg.trade.networkNum; // 网络数
                     that.pageData.push(item);
-                    that.selectCheck = that.pageData[0].wType;
+                    that.form.selectCheck = that.pageData[0].wType;
                     that.setTipsAndAddrAndCode();
+                    that.selectList.push({ label: walletI.wType + ' | ' + arg.trade.fullName.zh, id: walletI.wType });
+
+                    // 数组去重
+                    const tempJson = {};
+                    const res = [];
+                    for (let i = 0; i < this.selectList.length; i++) {
+                        tempJson[JSON.stringify(this.selectList[i])] = true; // 取出每一个对象当做key
+                    }
+                    for (let j = 0; j < Object.keys(tempJson).length; j++) {
+                        res.push(JSON.parse(Object.keys(tempJson)[j]));
+                    }
+                    this.selectList = res;
+
                     m.redraw();
                 }).catch(function(err) {
                     console.log('nzm', 'GetRechargeAddr error', err);
@@ -67,20 +86,21 @@ module.exports = {
                     ary.push(this.USDTLabel[i].name);
                 }
                 this.USDTLabel = ary;
-                console.log(this.USDTLabel);
+                console.log('nzm', this.USDTLabel);
             }
         });
     },
     setTipsAndAddrAndCode() {
         for (const i in this.pageData) {
-            if (this.pageData[i].wType === this.selectCheck) {
+            if (this.pageData[i].wType === this.form.selectCheck) {
                 const networkNum = this.pageData[i].networkNum;
                 if (this.pageData[i].promptRecharge) {
-                    this.tips = this.pageData[i].promptRecharge + '*您只能向此地址充值' + this.selectCheck + '，其他资产充入' + this.selectCheck + '地址将无法找回 *使用' + this.selectCheck + '地址充值需要' + networkNum + '个网络确认才能到账 *默认充入我的钱包，您可以通过“资金划转”将资金转至交易账户或者其他账户';
+                    this.tips = this.pageData[i].promptRecharge + '*您只能向此地址充值' + this.form.selectCheck + '，其他资产充入' + this.form.selectCheck + '地址将无法找回 *使用' + this.form.selectCheck + '地址充值需要' + networkNum + '个网络确认才能到账 *默认充入我的钱包，您可以通过“资金划转”将资金转至交易账户或者其他账户';
                 } else {
-                    this.tips = '您只能向此地址充值' + this.selectCheck + '，其他资产充入' + this.selectCheck + '地址将无法找回 *使用' + this.selectCheck + '地址充值需要' + networkNum + '个网络确认才能到账 *默认充入我的钱包，您可以通过“资金划转”将资金转至交易账户或者其他账户';
+                    this.tips = '您只能向此地址充值' + this.form.selectCheck + '，其他资产充入' + this.form.selectCheck + '地址将无法找回 *使用' + this.form.selectCheck + '地址充值需要' + networkNum + '个网络确认才能到账 *默认充入我的钱包，您可以通过“资金划转”将资金转至交易账户或者其他账户';
                 }
                 this.memo = this.pageData[i].memo;
+                this.openChains = this.pageData[i].openChains;
                 this.rechargeAddr = this.pageData[i].rechargeAddr;
                 this.setQrCodeImg();
                 this.setLabelTips();
@@ -89,15 +109,7 @@ module.exports = {
         m.redraw();
     },
     setLabelTips() {
-        this.labelTips = '充值' + this.selectCheck + '同时需要一个充币地址和' + this.selectCheck + '标签；警告：如果未遵守正确的' + this.selectCheck + '充币步骤，币会有丢失风险！';
-    },
-    // 币种发生变化切换充币地址
-    modifySelect() {
-        var myselect = document.getElementsByClassName('coinSel')[0];
-        var value = myselect.options[myselect.selectedIndex].value.split('|')[0].trim();
-        this.selectCheck = value;
-        this.setTipsAndAddrAndCode();
-        this.setQrCodeImg();
+        this.labelTips = '充值' + this.form.selectCheck + '同时需要一个充币地址和' + this.form.selectCheck + '标签；警告：如果未遵守正确的' + this.form.selectCheck + '充币步骤，币会有丢失风险！';
     },
     setQrCodeImg() {
         document.getElementsByClassName('QrCodeImg')[0].innerHTML = '';
@@ -109,8 +121,28 @@ module.exports = {
         }).then(canvas => {
             document.getElementsByClassName('QrCodeImg')[0].appendChild(canvas);
         }).catch((err) => {
-            console.log(err);
+            console.log('nzm', err);
         });
+    },
+    // 币种 菜单配置
+    getCurrencyMenuOption() {
+        const that = this;
+        return {
+            evenKey: `rechargeSelect${Math.floor(Math.random() * 10000)}`,
+            menuWidth: 384,
+            showMenu: that.showCurrencyMenu,
+            setShowMenu: type => {
+                that.showCurrencyMenu = type;
+            },
+            activeId: cb => cb(that.form, 'selectCheck'),
+            onClick (item) {
+                that.setTipsAndAddrAndCode();
+                that.setQrCodeImg();
+            },
+            getList () {
+                return that.selectList;
+            }
+        };
     },
     changeQrcodeDisplay(type) {
         type === 'show' ? this.qrcodeDisplayFlag = true : this.qrcodeDisplayFlag = false;
@@ -144,11 +176,11 @@ module.exports = {
                 key: 'index',
                 cmd: broadcast.MSG_WLT_READY,
                 cb: () => {
-                    this.setWalletData();
+                    this.setPageData();
                 }
             });
         } else {
-            this.setWalletData();
+            this.setPageData();
         }
     },
     updateFn: function (vnode) {

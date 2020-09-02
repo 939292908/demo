@@ -1,7 +1,7 @@
 const m = require('mithril');
 const TradeAccountIndex = require('@/views/page/myAssets/myWalletIndex/children/tradeAccount/TradeAccountIndex');
 require('@/views/page/myAssets/myWalletIndex/children/tradeAccount/TradingAccount.scss');
-const table = require('@/views/page/myAssets/myWalletIndex/tradeTable/tradeTableView');
+const table = require('@/views/page/myAssets/myWalletIndex/tradeTable/TradeTable.view');
 const wlt = require('@/models/wlt/wlt');
 
 module.exports = {

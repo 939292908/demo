@@ -1,16 +1,18 @@
 const m = require('mithril');
 const Header = require('../../../components/indexHeader/indexHeader.view');
 const Transfer = require('@/views/page/myAssets/transfer/transfer.view.js');
-const myWalletIndex = require('@/views/page/myAssets/myWalletIndex/MyWalletIndex');
+const myWalletIndex = require('@/views/page/myAssets/myWalletIndex/MyWalletIndex.logic');
 require('@/views/page/myAssets/myWalletIndex/MyWalletIndex.scss');
+const Dropdown = require('@/views/components/common/Dropdown');
 
 module.exports = {
     oninit: () => {
         myWalletIndex.initFn();
+        m.redraw();
     },
     view: () => {
         return m('div', { class: `views-pages-myassets-myWalletIndex theme--light` }, [
-            m('div', { onclick: () => { myWalletIndex.optionDisplay(event); } }, [
+            m('div', {}, [
                 m('div.top mb-8', { style: { height: `344px`, width: `100%`, backgroundColor: `#0E1C33` } }, [
                     m('div', { class: `myWalletIndex-warpper container content-width` }, [
                         // highlightFlag:哪个高亮   0：我的资产  1：资产记录
@@ -21,23 +23,15 @@ module.exports = {
                         m('div', { class: `myWalletIndex-head columns-flex mt-7` }, [
                             m('div', { class: `myWalletIndex-head-left column` }, [
                                 m('div', { class: `myWalletIndex-head-left-total columns pt-3` }, [
-                                    m('span', { class: `body-6`, style: `color:white` }, [`总资产估值`]),
-                                    m('div', {}, [
-                                        m('div.cursor-pointer showSel', { onclick: () => { myWalletIndex.setSelectOpFlag(); } }, [
-                                            m('button.cursor-pointer showSelBtn', { style: { color: `#FF8B00` } }, myWalletIndex.selectOpText),
-                                            m('i', { class: 'iconfont icon-xiala showSelI', style: { color: '#FF8B00' } })
-                                        ]),
-                                        m('ul.border-radius-small ml-3 has-bg-level-2 currType', { style: { display: `none` } }, [
-                                            myWalletIndex.selectOp.map(item => {
-                                                return m('li.cursor-pointer pl-3', { class: item === myWalletIndex.selectOpText ? `has-text-primary` : ``, onclick: () => { myWalletIndex.selectOpHideUl(item); } }, item);
-                                            })
-                                        ])
+                                    m('span', { class: `body-6 pt-2`, style: `color:white` }, [`总资产估值`]),
+                                    m('div', { class: `form-item-content border-radius-medium mt-2 mb-7` }, [
+                                        m(Dropdown, myWalletIndex.getCurrencyMenuOption())
                                     ])
                                 ]),
                                 m('div', { class: `number-hide`, style: `color:white;` }, [
                                     m('span', { class: `title-large` }, [myWalletIndex.hideMoneyFlag ? '******' : myWalletIndex.totalValue]),
                                     m('span', { class: `title-large` }, [` ` + myWalletIndex.currency]),
-                                    m('i', { class: 'iconfont icon-zichanzhengyan changeMoneyImg pl-2 cursor-pointer', onclick: () => { myWalletIndex.hideValue(); }, style: { color: '#585E71' } }),
+                                    m('i', { class: (myWalletIndex.hideMoneyFlag ? `iconfont icon-zichanzhengyan` : `iconfont icon-yincang`) + ` changeMoneyImg pl-2 cursor-pointer`, onclick: () => { myWalletIndex.hideValue(); }, style: { color: '#585E71' } }),
                                     m('br'),
                                     m('span', { style: `color:#9A9EAC` }, [`≈ `]),
                                     m('span', { style: `color:#9A9EAC` }, [myWalletIndex.hideMoneyFlag ? '******' : myWalletIndex.totalCNY]),
@@ -75,7 +69,7 @@ module.exports = {
                             ]),
                             m('div.trade border-radius-medium px-7 py-7 mx-5 column cursor-pointer', {
                                 class: (myWalletIndex.swValue !== '03' ? `has-bg-primary` : `has-bg-level-2`),
-                                onclick: () => { myWalletIndex.switchChange('01', `true`); }
+                                onclick: () => { myWalletIndex.switchChange('01'); }
                             }, [
                                 m('div.left', {}, [
                                     m('div', { class: `body-5 mb-1` }, [
@@ -98,17 +92,17 @@ module.exports = {
                                         style: { display: `none` }
                                     }, [
                                         m('span.mb-1 cursor-pointer', `合约账户`),
-                                        m('a.mb-5 has-text-level-3', { class: myWalletIndex.swValue === '01' || myWalletIndex.swValue === '03' ? 'has-text-primary' : '', onclick: () => { myWalletIndex.switchChange('01'); } }, myWalletIndex.contractTotal + ` ` + myWalletIndex.currency),
+                                        m('a.mb-5 has-text-level-3', { class: myWalletIndex.swValue === '01' || myWalletIndex.swValue === '03' ? 'has-text-primary' : '', onclick: () => { myWalletIndex.switchChange('01', 'small'); } }, myWalletIndex.contractTotal + ` ` + myWalletIndex.currency),
                                         m('span.mb-1 cursor-pointer', `币币账户`),
-                                        m('a.mb-5 has-text-level-3', { class: myWalletIndex.swValue === '02' ? 'has-text-primary' : '', onclick: () => { myWalletIndex.switchChange('02'); } }, myWalletIndex.coinTotal + ` ` + myWalletIndex.currency),
+                                        m('a.mb-5 has-text-level-3', { class: myWalletIndex.swValue === '02' ? 'has-text-primary' : '', onclick: () => { myWalletIndex.switchChange('02', 'small'); } }, myWalletIndex.coinTotal + ` ` + myWalletIndex.currency),
                                         m('span.mb-1 cursor-pointer', `法币账户`),
-                                        m('a.has-text-level-3', { class: myWalletIndex.swValue === '04' ? 'has-text-primary' : '', onclick: () => { myWalletIndex.switchChange('04'); } }, myWalletIndex.legalTotal + ` ` + myWalletIndex.currency)
+                                        m('a.has-text-level-3', { class: myWalletIndex.swValue === '04' ? 'has-text-primary' : '', onclick: () => { myWalletIndex.switchChange('04', 'small'); } }, myWalletIndex.legalTotal + ` ` + myWalletIndex.currency)
                                     ])
                                 ])
                             ]),
-                            m('div.other border-radius-medium px-7 py-7 column cursor-pointer has-bg-level-2', {}, [
+                            m('div.other border-radius-medium px-7 py-7 column cursor-pointer has-bg-level-2', { onclick: () => { myWalletIndex.switchChange('none'); } }, [
                                 m('div', { class: `body-5 mb-1` }, [
-                                    m('span', { }, `其他账户`)
+                                    m('span', {}, `其他账户`)
                                 ]),
                                 m('div', { class: `title-small` }, [
                                     m('span', {}, myWalletIndex.hideMoneyFlag ? '******' : myWalletIndex.otherTotalValue),

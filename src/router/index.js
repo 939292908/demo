@@ -29,10 +29,11 @@ class Router {
                 return import('@/views/page/user/login/forgetPassword/forgetPassword.view');
             }
         },
+        // 接参数：http://localhost:8080/#!/myWalletIndex?id=03
         '/myWalletIndex': {
             requireAuth: true,
             onmatch: function () {
-                return import('@/views/page/myAssets/myWalletIndex/MyWalletIndexView');
+                return import('@/views/page/myAssets/myWalletIndex/MyWalletIndex.view');
             }
         },
         '/recharge': {

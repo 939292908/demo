@@ -1,12 +1,14 @@
 const broadcast = require('@/broadcast/broadcast');
 const wlt = require('@/models/wlt/wlt');
 const transferLogic = require('@/views/page/myAssets/transfer/transfer.logic.js'); // 划转模块逻辑
+const I18n = require('@/languages/I18n').default;
+// const m = require('mithril');
 
 module.exports = {
     vnode: {},
     currency: 'BTC',
-    hideZeroFlag: false, // 是否隐藏0资产 默认为false
-    dataLength: 0, // 暂无数据
+    hideZeroFlag: false, // 是否隐藏0资产 默认为false，
+    dataLength: 0, // 初始化时暂无数据
     pageFlag: '01', // 01：合约账户，02：币币账户，04：法币账户
     accountTitle: '', // 交易账户中表格右上角的币种
     accountBanlance: 0, // 交易账户中表格右上角的币种总额
@@ -48,9 +50,7 @@ module.exports = {
         }
         this.setAccountBanlance();
         this.setDataLength(this.tableData[this.tableDateList].length);
-        setTimeout(() => {
-            this.tableAction(``, `hideZero`);
-        }, 150);
+        this.searchTableData();
     },
     setAccountBanlance: function() {
         this.accountBanlance = this.currency === 'BTC' ? wlt[this.coinType + 'TotalValueForBTC'] : wlt[this.coinType + 'TotalValueForUSDT'];
@@ -76,7 +76,7 @@ module.exports = {
                 { col: '可用', val: 'NL' },
                 { col: '锁定', val: 'depositLock' },
                 { col: this.currency + '估值', val: this.currency === 'BTC' ? 'valueForBTC' : 'valueForUSDT' },
-                { col: '操作', val: [{ operation: '充值', to: '地址' }, { operation: '提现', to: '地址' }, { operation: '划转', to: '地址' }] }
+                { col: '操作', val: [{ operation: '充值', to: '/recharge' }, { operation: '提现', to: '/extractCoin' }, { operation: '划转', to: '地址' }] }
             ],
             coin: [
                 { col: '币种', val: 'wType' },
@@ -84,7 +84,7 @@ module.exports = {
                 { col: '可用', val: 'NL' },
                 { col: '冻结', val: 'Frz' },
                 { col: this.currency + '估值', val: this.currency === 'BTC' ? 'valueForBTC' : 'valueForUSDT' },
-                { col: '操作', val: [{ operation: '划转', to: '地址' }, { operation: '去交易', to: '地址' }] }
+                { col: '操作', val: [{ operation: '划转', to: '' }, { operation: '去交易', to: '' }] }
             ],
             contract: [
                 { col: '币种', val: 'wType' },
@@ -92,7 +92,7 @@ module.exports = {
                 { col: '未实现盈亏', val: 'UPNL' },
                 { col: '可用保证金', val: 'NL' },
                 { col: this.currency + '估值', val: this.currency === 'BTC' ? 'valueForBTC' : 'valueForUSDT' },
-                { col: '操作', val: [{ operation: '划转', to: '地址' }, { operation: '去交易', to: '地址' }] }
+                { col: '操作', val: [{ operation: '划转', to: '' }, { operation: '去交易', to: '' }] }
             ],
             legal: [
                 { col: '币种', val: 'wType' },
@@ -100,22 +100,26 @@ module.exports = {
                 { col: '可用', val: 'NL' },
                 { col: '冻结', val: 'otcLock' },
                 { col: this.currency + '估值', val: this.currency === 'BTC' ? 'valueForBTC' : 'valueForUSDT' },
-                { col: '操作', val: [{ operation: '划转', to: '地址' }, { operation: '去交易', to: '地址' }] }
+                { col: '操作', val: [{ operation: '划转', to: '' }, { operation: '去交易', to: '' }] }
             ]
         };
     },
-    jump(row, type) {
+    jump(row, item) {
         const that = this;
         transferLogic.initTransferInfo(); // 初始化弹框
-        if (type === '划转') {
+        if (item.operation === '划转') {
             transferLogic.setTransferModalOption({
                 isShow: true,
                 coin: row.wType, // 币种 默认选中
                 transferFrom: that.pageFlag,
                 successCallback() { // 划转成功回调
-                    // alert(22);
+                    that.setPageFlag();
                 }
             });
+        } else if (item.to) {
+            window.router.push(item.to);
+        } else if (item.operation === '去交易') {
+            return window.$message({ title: I18n.$t('10037'/* "提示" */), content: '暂未开放', type: 'danger' });
         }
     },
     copyAry: function (ary) {
@@ -127,78 +131,44 @@ module.exports = {
     },
     setHideZeroFlag: function () {
         this.hideZeroFlag = !this.hideZeroFlag;
-        this.tableAction(``, `hideZero`);
     },
-    tableAction: function (searchContent, type) {
-        if (type === 'search') {
-            this.searchTableData(searchContent);
-        } else if (type === 'hideZero') {
-            // if (this.oldHideMoneyFlag) {
-            //     this.oldHideMoneyFlag = false;
-            //     if (this.hideZeroFlag) {
-            //         this.hideTableData();
-            //     } else {
-            //         this.showTableData();
-            //     }
-            //     this.oldHideMoneyFlag = true;
-            // }
-            if (this.hideZeroFlag) {
-                this.hideTableData();
+    searchTableData: function () {
+        const that = this;
+        setTimeout(() => {
+            const tbody = document.getElementsByTagName('table')[0].childNodes[1];
+            const rowsLength = tbody.rows.length - 1; // tbody.rows.length - 1：最后一行是暂无数据
+            const index = [];
+            if (that.hideZeroFlag) {
+                for (let i = 0; i < rowsLength; i++) {
+                    if (tbody.rows[i].style.display !== 'none') {
+                        index.push(i);
+                    } else {
+                        continue;
+                    }
+                }
             } else {
-                this.showTableData();
-            }
-        }
-    },
-    searchTableData: function (searchContent) {
-        const table = document.getElementsByTagName('table')[0];
-        const rowsLength = table.rows.length;
-        let count = 1;
-        if (searchContent !== "") {
-            for (let i = 1; i < rowsLength; i++) {
-                const searchText = table.rows[i].cells[0].innerHTML;
-                if (searchText.toUpperCase().indexOf(searchContent.toUpperCase()) !== -1) {
-                    // 显示行操作
-                    table.rows[i].style.display = '';
-                } else {
-                    // 隐藏行操作
-                    table.rows[i].style.display = 'none';
-                    count = count + 1;
+                for (let i = 0; i < rowsLength; i++) {
+                    index.push(i);
                 }
             }
-            if (count === rowsLength) {
-                table.rows[rowsLength - 1].style.display = '';
-            }
-        } else if (searchContent === "") {
-            table.rows[rowsLength - 1].style.display = 'none';
-            for (let j = 1; j < rowsLength - 1; j++) {
-                table.rows[j].style.display = '';
-            }
-        }
+            that.search(index);
+        }, 50);
     },
-    showTableData: function () {
+    // oldAry: [],
+    search: function (ary) {
         const tbody = document.getElementsByTagName('table')[0].childNodes[1];
-        const rowsLength = tbody.rows.length - 1; // tbody.rows.length - 1：最后一行是暂无数据
-        tbody.rows[rowsLength].style.display = 'none';
-        for (let i = 1; i < rowsLength; i++) {
-            // 显示行操作
-            tbody.rows[i].style.display = '';
-        }
-    },
-    hideTableData: function () {
-        let count = 0;
-        const tbody = document.getElementsByTagName('table')[0].childNodes[1];
-        const rowsLength = tbody.rows.length - 1; // tbody.rows.length - 1：最后一行是暂无数据
-        for (let i = 0; i < rowsLength; i++) {
-            const text = tbody.rows[i].cells[1].innerHTML;
-            if (text === '0.00000000' || text === '0.0000') {
-                count = count + 1;
-                tbody.rows[i].style.display = 'none';
+        const searchContent = document.getElementsByClassName('coinSearch')[0].value;
+        for (const i of ary) {
+            if (searchContent) {
+                const searchText = tbody.rows[i].cells[0].innerHTML;
+                if (searchText.toUpperCase().indexOf(searchContent.toUpperCase()) !== -1) {
+                    tbody.rows[i].style.display = ''; // 显示行操作
+                } else {
+                    tbody.rows[i].style.display = 'none'; // 隐藏行操作
+                }
             } else {
                 tbody.rows[i].style.display = '';
             }
-        }
-        if (count === rowsLength) {
-            tbody.rows[rowsLength].style.display = '';
         }
     },
     createFn: function () {
@@ -213,7 +183,13 @@ module.exports = {
         setTimeout(() => {
             this.initColumnData();
             this.initTableData();
-            this.setPageFlag('03');
+            // 获取当前网址，如：http://localhost:8080/#!/myWalletIndex?id=03
+            const currencyIndex = window.document.location.href.toString().split('=')[1];
+            if (currencyIndex === '03' || currencyIndex === '02' || currencyIndex === '01' || currencyIndex === '04') {
+                this.setPageFlag(currencyIndex);
+            } else {
+                this.setPageFlag('03');
+            }
             this.setAccountBanlance();
             if (this.dataLength === 0) {
                 document.getElementsByTagName('table')[0].rows[document.getElementsByTagName('table')[0].rows.length - 1].style.display = '';

@@ -1,6 +1,6 @@
 const m = require('mithril');
-const t = require('@/views/page/myAssets/myWalletIndex/tradeTable/TradeTableIndex');
-console.log(t);
+const t = require('@/views/page/myAssets/myWalletIndex/tradeTable/TradeTable.logic');
+// console.log(t);
 require('@/views/page/myAssets/myWalletIndex/tradeTable/TradeTable.scss');
 
 module.exports = {
@@ -22,10 +22,10 @@ module.exports = {
             m('div', { class: `nav mb-3 pr-5` }, [
                 m('div.search mr-7', {}, [
                     m('input', {
-                        class: `has-line-level-3 border-radius-small py-1 pl-1`,
+                        class: `has-line-level-3 border-radius-small py-1 pl-1 coinSearch`,
                         placeholder: `币种搜索`,
                         oninput: function () {
-                            t.tableAction(this.value, `search`);
+                            t.searchTableData();
                         }
                     })
                 ]),
@@ -63,13 +63,13 @@ module.exports = {
                     m('tbody', {}, [
                         // 循环表身
                         t.tableData[t.tableDateList].map((row) => {
-                            return m('tr', {}, [
+                            return m('tr', { style: { display: t.hideZeroFlag ? (row.TOTAL === '0.00000000' || row.TOTAL === '0.0000' || row.MgnBal === '0.00000000' || row.MgnBal === '0.0000' ? 'none' : '') : '' } }, [
                                 t.columnData[t.coinType].map((item, i) => {
                                     if (i === t.columnData[t.coinType].length - 1) {
                                         // 操作列
                                         return m('td.pt-7 has-text-level-1', {}, [
                                             item.val.map(aHref => {
-                                                return m('a.mr-4 has-text-primary', { onclick: () => { t.jump(row, aHref.operation); } }, aHref.operation);
+                                                return m('a.mr-4 has-text-primary', { onclick: () => { t.jump(row, aHref); } }, aHref.operation);
                                             })
                                         ]);
                                     } else if (i === t.columnData[t.coinType].length - 2) { // 估值列
