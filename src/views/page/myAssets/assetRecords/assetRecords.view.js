@@ -86,7 +86,7 @@ module.exports = {
                                 onSelectTime(time) {
                                     AssetRecords.onSelectTime(time);
                                 },
-                                typeList: AssetRecords.recordTypeName[AssetRecords.aType],
+                                typeList: AssetRecords.recordTypeName()[AssetRecords.aType],
                                 type: AssetRecords.type,
                                 onSelectType(type) {
                                     AssetRecords.onSelectType(type);

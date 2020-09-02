@@ -33,10 +33,9 @@ export default {
     },
     /**
      * 激活谷歌验证弹窗
-     * @param params
      * @callback callback
      */
-    activeGoogle(params, callback) {
+    activeGoogle(callback) {
         this.validateType = 'google';
         if (callback) {
             this.callbackHandler = callback;
