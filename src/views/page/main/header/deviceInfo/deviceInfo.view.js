@@ -1,6 +1,7 @@
 const m = require('mithril');
 const config = require('@/config.js');
 const deviceInfo = require('./deviceInfo.logic.js');
+const apiLines = require('@/models/network/lines.js');
 
 module.exports = {
     view: function() {
@@ -18,7 +19,7 @@ module.exports = {
                     `设备信息(userAgent)`
                 ]),
                 m('p.has-text-level-2.font-weight-regular.body-4', {}, [
-                    deviceInfo.userAgent
+                    deviceInfo.deviceInfo.userAgent
                 ])
             ]),
             m('div.has-text-level-1.font-weight-bold.body-5.mb-7', {}, [
@@ -34,7 +35,7 @@ module.exports = {
                     `浏览器语言(Language)`
                 ]),
                 m('p.has-text-level-2.font-weight-regular.body-4', {}, [
-                    '(Basic information Monitoring)'
+                    deviceInfo.deviceInfo.language
                 ])
             ]),
             m('div.has-text-level-1.font-weight-bold.body-5.mb-7', {}, [
@@ -58,7 +59,7 @@ module.exports = {
                     `用户所在地(Location)`
                 ]),
                 m('p.has-text-level-2.font-weight-regular.body-4', {}, [
-                    '(Basic information Monitoring)'
+                    deviceInfo.deviceInfo.location
                 ])
             ]),
             m('div.has-text-level-1.font-weight-bold.body-5.mb-7', {}, [
@@ -74,7 +75,21 @@ module.exports = {
                     `Api响应速度(Api response speed)`
                 ]),
                 m('p.has-text-level-2.font-weight-regular.body-4', {}, [
-                    '(Basic information Monitoring)'
+                    apiLines.netLines.map((item, i) => {
+                        return m('a', {
+                            class: `navbar-item columns has-text-primary-hover min-width-200 ma-0 px-6 py-4 body-5 ${item.Id === apiLines.activeLine.Id ? 'is-active' : ''}`,
+                            onclick: function() {
+                                apiLines.setLinesActive(item.Id);
+                            }
+                        }, [
+                            m('span.column.pr-8', {}, [
+                                item.Name
+                            ]),
+                            m('span.column.has-text-left', {}, [
+                                '延迟 ' + apiLines.apiResponseSpeed[i] + 'ms'
+                            ])
+                        ]);
+                    })
                 ])
             ])
         ]);
