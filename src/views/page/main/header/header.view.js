@@ -250,11 +250,11 @@ module.exports = {
                             }, [
                                 'API管理'
                             ]),
-                            m('a', {
-                                class: `navbar-item columns has-text-primary-hover min-width-200 ma-0 px-6 py-4 body-5`
-                            }, [
-                                '邀请返佣'
-                            ]),
+                            // m('a', {
+                            //     class: `navbar-item columns has-text-primary-hover min-width-200 ma-0 px-6 py-4 body-5`
+                            // }, [
+                            //     '邀请返佣'
+                            // ]),
                             m('a', {
                                 class: `navbar-item columns has-text-primary-hover min-width-200 ma-0 px-6 py-4 body-5`,
                                 onclick: () => {
