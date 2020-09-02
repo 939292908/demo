@@ -1,9 +1,9 @@
 const m = require('mithril');
 const AssetSelectBox = require('./assetSelectBox.model');
-require('./assetSelectBox.scss');
+const InputWithComponent = require('../../../components/inputWithComponent/inputWithComponent.view');
 
 module.exports = {
-    oncreate (vnode) {
+    oncreate(vnode) {
         AssetSelectBox.oncreate(vnode);
     },
     view(vnode) {
@@ -16,7 +16,7 @@ module.exports = {
         for (const k in vnode.attrs.typeList) {
             typeList.push(m('option', { value: k }, [vnode.attrs.typeList[k]]));
         }
-        return m('div.assetSelectBox', {
+        return m('div', {
             class: vnode.attrs.class
         }, [
             m('div.columns.is-variable.is-6', {}, [
@@ -27,9 +27,21 @@ module.exports = {
             ]),
             m('div.columns.is-variable.is-6', {}, [
                 m('div.column.is-3', {}, [
-                    m('div.input.date-pick-box.input', {}, [
-                        m('.input[type=date]', { id: 'asset-select-box-time-selector' })
-                    ])
+                    m(InputWithComponent, {
+                        hiddenLine: true,
+                        options: {
+                            id: 'asset-select-box-time-selector',
+                            autocomplete: "off",
+                            oninput: e => {},
+                            value: AssetSelectBox.date
+                        },
+                        rightComponents: m('i.iconfont.mx-2.icon-Close', {
+                            onclick: () => {
+                                AssetSelectBox.date = '';
+                                AssetSelectBox.picker.reset();
+                            }
+                        })
+                    })
                 ]),
                 m('div.column.is-3', {}, [
                     m('div.select.w100', {}, [
@@ -54,5 +66,8 @@ module.exports = {
                 m('div.column', {}, [])
             ])
         ]);
+    },
+    onremove() {
+        AssetSelectBox.onremove();
     }
 };

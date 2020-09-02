@@ -1,42 +1,61 @@
-const bulmaCalendar = require('bulma-calendar');
+// const m = require('mithril');
+const Lightpick = require('lightpick');
 const I18n = require('@/languages/I18n').default;
 
 module.exports = {
+    date: '',
+    picker: null,
     oncreate(vnode) {
-        // Initialize all input of date type.
-        const calendars = bulmaCalendar.attach('[type="date"]', {
-            isRange: true,
-            dateFormat: 'YYYY-MM-DD',
-            lang: I18n.getLocale() === 'zh' ? 'zh_cn' : I18n.getLocale(),
-            todayLabel: '今天',
-            nowLabel: '现在',
-            clearLabel: '清除',
-            cancelLabel: '取消',
-            'icons.date': ''
-        });
+        const self = this;
+        this.picker = new Lightpick({
+            field: document.getElementById('asset-select-box-time-selector'),
+            singleDate: false,
+            numberOfMonths: 2,
+            lang: I18n.getLocale(),
+            locale: {
+                buttons: {
+                    prev: '←',
+                    next: '→',
+                    close: '×',
+                    reset: '清除',
+                    apply: '确定'
+                },
+                tooltip: {
+                    one: '天',
+                    other: '天'
+                },
+                tooltipOnDisabled: null,
+                pluralize: function(i, locale) {
+                    if (typeof i === "string") i = parseInt(i, 10);
 
-        // Loop on each calendar initialized
-        calendars.forEach(calendar => {
-            // Add listener to date:selected event
-            calendar.on('date:selected', date => {
-                console.log(date);
-            });
-        });
+                    if (i === 1 && 'one' in locale) return locale.one;
+                    if ('other' in locale) return locale.other;
 
-        // To access to bulmaCalendar instance of an element
-        const element = document.querySelector('#asset-select-box-time-selector');
-        if (element) {
-            // bulmaCalendar instance is available as element.bulmaCalendar
-            element.bulmaCalendar.on('select', datepicker => {
-                const time = datepicker.data.value().split(' - ');
-                if (!time) {
-                    vnode.attrs.onSelectTime([]);
-                    return;
+                    return '';
                 }
-                time[0] = new Date(time[0]).valueOf() / 1000;
-                time[1] = new Date(time[1]).valueOf() / 1000 + 24 * 60 * 60;
-                vnode.attrs.onSelectTime(time);
-            });
+            },
+            onSelect: (start, end) => {
+                self.onSelect(vnode, start, end);
+            }
+        });
+    },
+    onSelect(vnode, start, end) {
+        let str = '';
+        str += start ? start.format('yyyy-MM-DD') + ' - ' : '';
+        str += end ? end.format('yyyy-MM-DD') : '...';
+        if (!start || !end) {
+            vnode.attrs.onSelectTime([]);
+            return;
         }
+        const time = [];
+        time[0] = start / 1000;
+        time[1] = end / 1000 + 24 * 60 * 60;
+        vnode.attrs.onSelectTime(time);
+        this.date = str;
+    },
+    onremove() {
+        this.picker.destroy();
+        this.picker = null;
+        this.date = '';
     }
 };
