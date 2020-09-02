@@ -10,16 +10,20 @@ module.exports = {
     IOSDLAdd: 'https://apps.apple.com/us/app/google-authenticator/id388497605',
     AndroidDLAdd: 'https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2',
     initFn: function() {
+        this.initGeetest();
         const that = this;
         Http.getGoogleSecret().then(function(arg) {
-            console.log('nzm', 'getGoogleSecret success', arg);
+            // console.log('nzm', 'getGoogleSecret success', arg);
             that.secret = arg.secret;
+            // 生成密钥二维码
             that.generatedCode(arg.secret, 'key');
             m.redraw();
         }).catch(function(err) {
             console.log('nzm', 'getGoogleSecret error', err);
         });
+        // 生成IOS下载地址二维码
         this.generatedCode(this.IOSDLAdd, 'IOS');
+        // 生成Android下载地址二维码
         this.generatedCode(this.AndroidDLAdd, 'Android');
     },
     generatedCode: function(text, type) {
@@ -66,7 +70,6 @@ module.exports = {
      * 加载极验
      */
     initGeetest() {
-        const self = this;
         geetest.init(() => {
         });
         broadcast.onMsg({
@@ -74,16 +77,9 @@ module.exports = {
             cmd: 'geetestMsg',
             cb: res => {
                 if (res === 'success') {
-                    switch (self.geetestCallBackType) {
-                    case 'email':
-                        self.sendEmailCode();
-                        break;
-                    case 'sms':
-                        self.sendSmsCode();
-                        break;
-                    }
+                    console.log('success');
                 } else {
-                    self.loading = false;
+                    console.log('error');
                 }
             }
         });
