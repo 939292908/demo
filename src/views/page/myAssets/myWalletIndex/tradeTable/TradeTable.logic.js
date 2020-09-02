@@ -1,7 +1,7 @@
 const broadcast = require('@/broadcast/broadcast');
 const wlt = require('@/models/wlt/wlt');
 const transferLogic = require('@/views/page/myAssets/transfer/transfer.logic.js'); // 划转模块逻辑
-const I18n = require('@/languages/I18n').default;
+// const I18n = require('@/languages/I18n').default;
 // const m = require('mithril');
 
 module.exports = {
@@ -119,7 +119,7 @@ module.exports = {
         } else if (item.to) {
             window.router.push(item.to);
         } else if (item.operation === '去交易') {
-            return window.$message({ title: I18n.$t('10037'/* "提示" */), content: '暂未开放', type: 'danger' });
+            return window.$message({ title: '提示', content: '暂未开放', type: 'danger' });
         }
     },
     copyAry: function (ary) {

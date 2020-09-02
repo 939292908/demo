@@ -2,6 +2,7 @@ const Http = require('@/api').webApi;
 const m = require('mithril');
 const Qrcode = require('qrcode');
 const geetest = require('@/models/validate/geetest').default;
+const broadcast = require('@/broadcast/broadcast');
 
 module.exports = {
     // 密钥
@@ -65,7 +66,26 @@ module.exports = {
      * 加载极验
      */
     initGeetest() {
+        const self = this;
         geetest.init(() => {
+        });
+        broadcast.onMsg({
+            key: 'validate',
+            cmd: 'geetestMsg',
+            cb: res => {
+                if (res === 'success') {
+                    switch (self.geetestCallBackType) {
+                    case 'email':
+                        self.sendEmailCode();
+                        break;
+                    case 'sms':
+                        self.sendSmsCode();
+                        break;
+                    }
+                } else {
+                    self.loading = false;
+                }
+            }
         });
     },
     removeFn: function() {

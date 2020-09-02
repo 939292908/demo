@@ -3,7 +3,7 @@ const wlt = require('@/models/wlt/wlt');
 const broadcast = require('@/broadcast/broadcast');
 const table = require('@/views/page/myAssets/myWalletIndex/tradeTable/TradeTable.view');
 const transferLogic = require('@/views/page/myAssets/transfer/transfer.logic.js'); // 划转模块逻辑
-const I18n = require('@/languages/I18n').default;
+// const I18n = require('@/languages/I18n').default;
 let timeOut = null;
 
 const model = {
@@ -96,7 +96,7 @@ const model = {
     switchChange: function (val, type) {
         console.log('nzm', val);
         if (val === 'none') {
-            return window.$message({ title: I18n.$t('10037'/* "提示" */), content: '暂未开放', type: 'danger' });
+            return window.$message({ title: '提示', content: '暂未开放', type: 'danger' });
         }
         this.swValue = val;
         transferLogic.setTransferModalOption({
