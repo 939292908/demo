@@ -359,7 +359,7 @@ module.exports = {
                 slot: { // 插槽
                     header: m('div.w100', {}, [
                         m('div', {}, [
-                            'Web网络监测'
+                            `Web网络监测(${globalModels.getAccount().uid})`
                         ]),
                         m('article.body-4.has-text-level-3.message.is-warning.mt-4.mr-4', {}, [
                             m('div.message-body.border-1', {}, [
