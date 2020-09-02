@@ -23,8 +23,8 @@ module.exports = {
                     : [
                         m('div.title-large.views-page-login-title.opacity', {}, [config.exchName]),
                         m('div.mb-8.title-large.has-text-title', {},
-                            [`登录`]),
-                        m('div.has-text-level-1.body-3.mb-2', {}, ['手机/邮箱']),
+                            [I18n.$t('10006')/* '登录' */]),
+                        m('div.has-text-level-1.body-3.mb-2', {}, [I18n.$t('10201')/* '手机/邮箱' */]),
                         m('input.input[type=text]', {
                             oninput: e => {
                                 Login.account = e.target.value;
@@ -37,7 +37,7 @@ module.exports = {
                         m('div.body-3.mt-2.has-text-tip-error', {
                             hidden: !Login.showValidAccount
                         }, [regExp.validAccount(Login.loginType, Login.account)]),
-                        m('div.body-3.has-text-level-1.mb-2.mt-5', {}, ['密码']),
+                        m('div.body-3.has-text-level-1.mb-2.mt-5', {}, [I18n.$t('10195')/* '密码' */]),
                         m(InputWithComponent, {
                             hiddenLine: true,
                             options: {
@@ -65,19 +65,19 @@ module.exports = {
                                 onclick: () => {
                                     window.router.push('/forgetPassword');
                                 }
-                            }, ['忘记密码？'])]),
+                            }, [I18n.$t('10202')/* '忘记密码？' */])]),
                         m('button.button.my-3.has-bg-primary.button-medium.is-fullwidth.mb-2.has-text-white', {
                             onclick: () => { Login.login(); },
                             disabled: regExp.validAccount(Login.loginType, Login.account) || regExp.validPassword(Login.password),
                             class: Login.loading ? 'is-loading' : ''
-                        }, [I18n.$t('10136')/* '登录' */]),
+                        }, [I18n.$t('10006')/* '登录' */]),
                         m('div.has-text-centered.body-3.has-text-level-2', {}, [
                             '还没账号？去',
                             m('a.has-text-primary', {
                                 onclick: () => {
                                     window.router.push('/register');
                                 }
-                            }, ['注册'])
+                            }, [I18n.$t('10007')/* '注册' */])
                         ])
                     ])
         ]);

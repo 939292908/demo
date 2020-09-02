@@ -71,23 +71,29 @@
     &.theme--light {
         background-color: initial;
     }
+
     .modal-card {
         width: 448px;
     }
+
     .modal-card-head {
         padding: var(--c-padding-level7);
+
         .modal-card-title {
             .modal-card-title-log {
                 opacity: .12;
             }
         }
     }
+
     .modal-card-body {
         padding: var(--c-padding-level7);
     }
+
     .modal-card-foot {
         padding: var(--c-padding-level7);
         border: none;
+
         .button {
             width: 100%;
         }
@@ -97,8 +103,10 @@
 // 下拉组件
 .my-dropdown {
     width: 100%;
+
     .dropdown-trigger {
         width: 100%;
+
         .button {
             width: 100%;
             display: flex;
@@ -106,13 +114,16 @@
             align-items: center;
         }
     }
+
     .dropdown-menu {
         width: 100%;
         min-width: 10rem;
+
         .dropdown-item {
             display: flex;
             justify-content: space-between;
             align-items: center;
+
             &.has-hover:hover,
             &.has-active {
                 color: var(--c-primary-lighten);
@@ -125,11 +136,13 @@
 .my-form {
     .form-item {
         padding-bottom: var(--c-padding-level5);
+
         .form-item-title {
             font-size: var(--c-fontsz-level4);
             color: var(--c-font-lighten);
             padding-bottom: var(--c-padding-level2);
         }
+
         .form-item-content {
 
         }
@@ -180,7 +193,6 @@
 }
 
 
-
 /* 滚动 */
 .scroll {
     overflow: auto;
@@ -214,3 +226,33 @@
 .break-word {
     word-wrap: break-word!important;
 }
+// 全局修改下拉框图标样式
+.select:not(.is-multiple):not(.is-loading)::after {
+    font-family: "iconfont", serif;
+    content: '\e625' !important;
+    transform: initial;
+    transform-origin: center;
+    width: 6px;
+    height: 6px;
+    border: 0;
+    right: 20px;
+}
+
+/* Start 日期选择控件颜色 */
+$lightpick-action-apply-background-color: $primary-lighten !default;
+$lightpick-selected-date-background-color: $primary-lighten !default;
+$lightpick-day-hover-background-image-color: rgba($primary-lighten,0.99) !default;
+$lightpick-day-hover-background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle fill='#{$lightpick-day-hover-background-image-color}' cx='16' cy='16' r='16'/%3E%3C/svg%3E") !default;
+
+@import "@/../node_modules/lightpick/scss/lightpick.scss";
+
+.lightpick {
+    &__day {
+        &.is-in-range {
+            &:hover {
+                background-image: $lightpick-day-hover-background-image ;
+            }
+        }
+    }
+}
+/* End 日期选择控件颜色 */

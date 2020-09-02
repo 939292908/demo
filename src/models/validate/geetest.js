@@ -78,10 +78,10 @@ const geetest = {
      */
     onError() {
         geetest.isloading = false;
-        window.$message({
-            content: '初始化极验失败，请稍后重试',
-            type: 'danger'
-        });
+        // window.$message({
+        //     content: '初始化极验失败，请稍后重试',
+        //     type: 'danger'
+        // });
     },
     /**
      * 关闭验证回调
