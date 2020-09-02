@@ -39,14 +39,31 @@
         }
         .hideZeroAsset{
             margin: auto 0px;
-            label{
-                clear: both;
-                input{
-                    width: 18px;
-                    height: 18px;
-                    float: left;
-                }
+            .color-input-gray+label {
+				display: block;
+				width: 20px;
+				height: 20px;
+				cursor: pointer;
+			}
+			.color-input-gray:checked+label::before {
+				display: block;
+				content: "\2714";
+				text-align: center;
+				font-size: 8px;
+				color: white;
+				background: #9A9EAC;
+			}
+			input[type=checkbox] {
+				visibility: hidden;
+			}
+			label{
+                border: 1px solid #9A9EAC;
+                float: left;
             }
+            span{
+                float: left;
+            }
+            clear: both;
         }
         .fundRecords{
             i,span{
