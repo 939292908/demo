@@ -12,15 +12,16 @@
     .nav{
         display: flex;
         flex-direction: row;
-        .search{
+        .search{ border: 1px solid rgba(30, 40, 70, 0.12);
             input{
                 width: 128px;
-                background-image: url('../../../../../assets/img/myAssets/search.svg');
-                background-repeat: no-repeat;
-                background-position: 105px center;
                 outline:none;
-                // theme--dark 下未找到！！！
-                border: 1px solid rgba(30, 40, 70, 0.12);
+                float: left;
+                border: none;
+            }
+            i{
+                float: left;
+                color: rgba(30, 40, 70, 0.12);
             }
             // 修改placeholder字体颜色 start
             input::-webkit-input-placeholder{
@@ -36,6 +37,7 @@
                 color: #9A9EAC;
             }
             // 修改placeholder字体颜色 end
+            clear: both;
         }
         .hideZeroAsset{
             margin: auto 0px;
