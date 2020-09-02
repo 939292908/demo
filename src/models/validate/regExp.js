@@ -19,7 +19,7 @@ module.exports = {
         if (!password) {
             return I18n.$t('10015'); /* '该字段不能为空' */
         } else if (!this.password.test(password)) {
-            return I18n.$t('10028'); /* '至少6个字符，必须是字母和数字' */
+            return '至少6个字符，必须是字母和数字';
         } else {
             return '';
         }
