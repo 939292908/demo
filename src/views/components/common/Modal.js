@@ -37,11 +37,11 @@ module.exports = {
                 // 内容
                 m("section", { class: "modal-card-body has-bg-level-2" }, vnode.attrs.slot ? vnode.attrs.slot.body ? vnode.attrs.slot.body : ['内容部分'] : ['内容部分']),
                 // 底部
-                m("footer", { class: "modal-card-foot has-bg-level-2 " + (vnode.attrs.slot?.footer ? '' : ' is-hidden') }, vnode.attrs.slot ? vnode.attrs.slot.footer ? vnode.attrs.slot.footer : vnode.attrs.onOk ? [
+                m("footer", { class: "modal-card-foot has-bg-level-2 " + ((vnode.attrs.slot?.footer || vnode.attrs.onOk) ? '' : ' is-hidden') }, vnode.attrs.slot?.footer ? vnode.attrs.slot.footer : vnode.attrs.onOk ? [
                     m("button", { class: "button is-primary font-size-2 has-text-white modal-default-btn button-large", onclick: vnode.attrs.onOk }, [
                         '确定'
                     ])
-                ] : [] : [])
+                ] : [])
             ])
         ]);
     },
