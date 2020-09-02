@@ -75,7 +75,7 @@ module.exports = {
                 { col: '可用', val: 'NL' },
                 { col: '锁定', val: 'depositLock' },
                 { col: this.currency + '估值', val: this.currency === 'BTC' ? 'valueForBTC' : 'valueForUSDT' },
-                { col: '操作', val: [{ operation: '充值', to: '/recharge' }, { operation: '提现', to: '地址' }, { operation: '划转', to: '地址' }] }
+                { col: '操作', val: [{ operation: '充值', to: '/recharge' }, { operation: '提现', to: '/extractCoin' }, { operation: '划转', to: '地址' }] }
             ],
             coin: [
                 { col: '币种', val: 'wType' },
@@ -112,7 +112,7 @@ module.exports = {
                 coin: row.wType, // 币种 默认选中
                 transferFrom: that.pageFlag
             });
-        } else if (item.operation === '充值') {
+        } else if (item.to) {
             window.router.push(item.to);
         }
     },

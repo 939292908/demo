@@ -40,7 +40,7 @@ module.exports = {
                                 m(Tooltip, {
                                     label: m('i', { class: `iconfont icon-Tooltip` }),
                                     content: rechargeIndex.labelTips,
-                                    hiddenArrows: false
+                                    position: 'top'
                                 })
                             ])
                         ]),
@@ -53,7 +53,7 @@ module.exports = {
                                 m(Tooltip, {
                                     label: m('i', { class: `iconfont icon-Tooltip` }),
                                     content: rechargeIndex.labelTips,
-                                    hiddenArrows: false
+                                    position: 'top'
                                 })
                             ])
                         ]),

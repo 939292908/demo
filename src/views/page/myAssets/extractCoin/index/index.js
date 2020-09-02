@@ -12,7 +12,7 @@ const From = require('../form/form.view');
 const Header = require('../../../../components/indexHeader/indexHeader.view');
 const AssetRecords = require('@/models/asset/assetsRecords');
 const assetTable = require('../../assetTable/assetTable.view');
-const Tooltip = require('@/views/components/common/Tooltip');
+const Tooltip = require('@/views/components/common/Tooltip/Tooltip.view');
 
 require('./index.scss');
 module.exports = {
