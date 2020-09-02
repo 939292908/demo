@@ -166,6 +166,7 @@ module.exports = {
         }
         if (utils.getItem('userAccount')) {
             this.account = utils.getItem('userAccount');
+            this.changeType();
         }
         this.initGeetest();
         broadcast.onMsg({
