@@ -1,4 +1,4 @@
-// 传递参数说明
+// 参数说明
 // getList() {return [{ id:xxx, label:xxx,... }, { id:xxx, label:xxx,... }]} 菜单数据 (id, label必须项) (必填)
 // evenKey body事件key (必填)
 
@@ -7,13 +7,11 @@
 // type 触发类型：active / hover (选填)默认active
 
 // placeholder 提示文字 (选填)
-
 // class 类名 (选填)
-
 // btnClass 按钮 类名 (选填)
+
 // btnWidth 按钮 宽 (选填)
 // btnHeight 按钮 高 (选填)
-
 // menuWidth 菜单 宽 (选填)
 
 var m = require("mithril");
