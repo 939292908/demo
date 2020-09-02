@@ -3,6 +3,7 @@ const wlt = require('@/models/wlt/wlt');
 const broadcast = require('@/broadcast/broadcast');
 const table = require('@/views/page/myAssets/myWalletIndex/tradeTable/TradeTable.view');
 const transferLogic = require('@/views/page/myAssets/transfer/transfer.logic.js'); // 划转模块逻辑
+const I18n = require('@/languages/I18n').default;
 let timeOut = null;
 
 const model = {
@@ -94,7 +95,7 @@ const model = {
     // 切换我的钱包，交易账户，币币，合约，法币
     switchChange: function (val) {
         if (val === 'none') {
-            return;
+            return window.$message({ title: I18n.$t('10037'/* "提示" */), content: '暂未开放', type: 'danger' });
         }
         this.swValue = val;
         transferLogic.setTransferModalOption({

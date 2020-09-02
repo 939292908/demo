@@ -99,9 +99,9 @@ module.exports = {
                                     ])
                                 ])
                             ]),
-                            m('div.other border-radius-medium px-7 py-7 column cursor-pointer has-bg-level-2', {}, [
+                            m('div.other border-radius-medium px-7 py-7 column cursor-pointer has-bg-level-2', { onclick: () => { myWalletIndex.switchChange('none'); } }, [
                                 m('div', { class: `body-5 mb-1` }, [
-                                    m('span', { onclick: () => { myWalletIndex.switchChange('none'); } }, `其他账户`)
+                                    m('span', {}, `其他账户`)
                                 ]),
                                 m('div', { class: `title-small` }, [
                                     m('span', {}, myWalletIndex.hideMoneyFlag ? '******' : myWalletIndex.otherTotalValue),
