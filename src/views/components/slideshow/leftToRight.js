@@ -10,7 +10,7 @@ const swiper = { Loadingnumber: 0 };
 
 const horizontal = {
     direction: 'horizontal',
-    loop: true,
+    loop: false,
     slidesPerView: 4,
     spaceBetween: 24,
     observer: true,
@@ -34,11 +34,9 @@ module.exports = {
     },
     oncreate: function (vnode) {
         this.mySwiper = new Swiper('#slideShowLTR', horizontal);
-        this.mySwiper.autoplay.stop();
     },
     leftToRight: function (vnode) {
         const data = market.tickData;
-        console.log(data, vnode.attrs.list);
         return vnode.attrs.list.map(item => {
             return m('div.swiper-slide', { onclick: this.openUrl, style: 'cursor: pointer;' }, [
                 m('div.imgBox', [
@@ -56,12 +54,16 @@ module.exports = {
     view: function (vnode) {
         if (swiper.Loadingnumber < 10) swiper.Loadingnumber += 1;
         if (swiper.Loadingnumber === 5) {
-            this.mySwiper.removeSlide(0);
-            this.mySwiper.removeSlide(0);
-            this.mySwiper.removeSlide(0);
-            this.mySwiper.removeSlide(0);
-            this.mySwiper.update();
-            this.mySwiper.autoplay.start();
+            this.mySwiper.destroy();
+            horizontal.loop = true;
+            this.mySwiper = new Swiper('#slideShowLTR', horizontal);
+            // this.mySwiper.removeSlide(0);
+            // this.mySwiper.removeSlide(0);
+            // this.mySwiper.removeSlide(0);
+            // this.mySwiper.removeSlide(0);
+            // this.mySwiper.params.loop = true;
+            // this.mySwiper.update();
+            // this.mySwiper.autoplay.start();
         }
         return m('div', { class: 'slideshow swiperLTF' }, [
             m('div', { class: 'swiper-container', id: "slideShowLTR" }, [
