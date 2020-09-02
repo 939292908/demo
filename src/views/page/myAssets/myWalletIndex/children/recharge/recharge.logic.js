@@ -103,7 +103,7 @@ module.exports = {
                     /* '默认充入我的钱包，您可以通过“资金划转”将资金转至交易账户或者其他账户' */
                     '*' + l180n.$t('10085');
                 } else {
-                    this.tips = '您只能向此地址充值' + this.form.selectCheck + '，其他资产充入' + this.form.selectCheck + '地址将无法找回*' +
+                    this.tips = '您只能向此地址充值' + this.form.selectCheck + '，其他资产充入' + this.form.selectCheck + '地址将无法找回' +
                     /* 使用{value1}地址充币需要{value2}个网络确认才能到账 */
                     '*' + l180n.$t('10084', { value1: this.form.selectCheck, value2: networkNum }) +
                     /* '默认充入我的钱包，您可以通过“资金划转”将资金转至交易账户或者其他账户' */
