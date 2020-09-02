@@ -30,7 +30,7 @@ const closeGView = {
                         m('input', { class: `border-radius-small mt-2 code`, type: `text` })
                     ]),
                     m('div', { class: `btn mt-8` }, [
-                        m('button', { class: `has-bg-primary cursor-pointer`, onclick: () => { closeGLogic.unbind(); } }, '确定')
+                        m('button', { class: `has-bg-primary cursor-pointer`, onclick: () => { closeGLogic.confirmBtn(); } }, '确定')
                     ])
                 ])
             ])
