@@ -49,7 +49,7 @@ module.exports = {
         this.setAccountBanlance();
         this.setDataLength(this.tableData[this.tableDateList].length);
         setTimeout(() => {
-            this.tableAction(``, `hideZero`);
+            this.tableAction(`hideZero`);
         }, 150);
     },
     setAccountBanlance: function() {
@@ -124,10 +124,11 @@ module.exports = {
     },
     setHideZeroFlag: function () {
         this.hideZeroFlag = !this.hideZeroFlag;
-        this.tableAction(``, `hideZero`);
+        this.tableAction(`hideZero`);
     },
-    tableAction: function (searchContent, type) {
+    tableAction: function (type) {
         if (type === 'search') {
+            const searchContent = document.getElementsByClassName('coinSearch').value;
             this.searchTableData(searchContent);
         } else if (type === 'hideZero') {
             // if (this.oldHideMoneyFlag) {

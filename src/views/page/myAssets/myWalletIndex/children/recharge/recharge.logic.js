@@ -16,6 +16,7 @@ module.exports = {
     btnCheckFlag: 0, // 默认选中第一个
     labelTips: '', // 标签提示
     memo: null, // 是否显示标签
+    openChains: null, // 是否显示链名称
     coinInfo: {},
     setWalletData() {
         const that = this;
@@ -28,6 +29,7 @@ module.exports = {
                 that.uId = this.uId || walletI.uid;
                 item.canRecharge = walletI.Setting.canRecharge; // 能否充值
                 item.promptRecharge = walletI.promptRecharge; // 充值提示
+                item.openChains = walletI.Setting.openChains;
                 item.wType = walletI.wType; // 币种
                 item.memo = walletI.Setting.memo; // 是否显示标签
                 if (walletI.wType === 'USDT') {
@@ -81,6 +83,7 @@ module.exports = {
                     this.tips = '您只能向此地址充值' + this.selectCheck + '，其他资产充入' + this.selectCheck + '地址将无法找回 *使用' + this.selectCheck + '地址充值需要' + networkNum + '个网络确认才能到账 *默认充入我的钱包，您可以通过“资金划转”将资金转至交易账户或者其他账户';
                 }
                 this.memo = this.pageData[i].memo;
+                this.openChains = this.pageData[i].openChains;
                 this.rechargeAddr = this.pageData[i].rechargeAddr;
                 this.setQrCodeImg();
                 this.setLabelTips();

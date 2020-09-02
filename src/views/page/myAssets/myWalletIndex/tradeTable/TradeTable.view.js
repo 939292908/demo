@@ -1,5 +1,5 @@
 const m = require('mithril');
-const t = require('@/views/page/myAssets/myWalletIndex/tradeTable/TradeTableIndex');
+const t = require('@/views/page/myAssets/myWalletIndex/tradeTable/TradeTable.logic');
 console.log(t);
 require('@/views/page/myAssets/myWalletIndex/tradeTable/TradeTable.scss');
 
@@ -22,10 +22,10 @@ module.exports = {
             m('div', { class: `nav mb-3 pr-5` }, [
                 m('div.search mr-7', {}, [
                     m('input', {
-                        class: `has-line-level-3 border-radius-small py-1 pl-1`,
+                        class: `has-line-level-3 border-radius-small py-1 pl-1 coinSearch`,
                         placeholder: `币种搜索`,
                         oninput: function () {
-                            t.tableAction(this.value, `search`);
+                            t.tableAction(`search`);
                         }
                     })
                 ]),

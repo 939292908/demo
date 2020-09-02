@@ -46,7 +46,7 @@ module.exports = {
                         ]),
                         m('div', { class: `mt-2 px-2 has-text-primary border-radius-small uid` }, rechargeIndex.uId)
                     ]),
-                    m('div', { class: `usdtLable mb-7`, style: { display: rechargeIndex.memo ? (rechargeIndex.selectCheck === 'USDT' ? '' : 'none') : 'none' } }, [
+                    m('div', { class: `usdtLable mb-7`, style: { display: rechargeIndex.openChains ? (rechargeIndex.selectCheck === 'USDT' ? '' : 'none') : 'none' } }, [
                         m('div', { class: `labeltip` }, [
                             m('span', {}, '链名称'),
                             m('div.navbar-item.cursor-pointer', { class: `has-text-primary-hover` }, [

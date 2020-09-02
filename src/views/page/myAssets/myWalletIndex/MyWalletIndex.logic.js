@@ -1,7 +1,7 @@
 const m = require('mithril');
 const wlt = require('@/models/wlt/wlt');
 const broadcast = require('@/broadcast/broadcast');
-const table = require('@/views/page/myAssets/myWalletIndex/tradeTable/tradeTableView');
+const table = require('@/views/page/myAssets/myWalletIndex/tradeTable/TradeTable.view');
 const transferLogic = require('@/views/page/myAssets/transfer/transfer.logic.js'); // 划转模块逻辑
 let timeOut = null;
 

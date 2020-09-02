@@ -25,7 +25,7 @@ m.route(document.querySelector('body .route-box'), defaultRoutePath, {
     },
     '/myWalletIndex': {
         onmatch: function () {
-            return import('@/views/page/myAssets/myWalletIndex/MyWalletIndexView');
+            return import('@/views/page/myAssets/myWalletIndex/MyWalletIndex.view');
         }
     },
     '/recharge': {
