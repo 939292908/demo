@@ -14,8 +14,7 @@ module.exports = {
     oncreate: () => {
     },
     view: () => {
-        return m('div', { class: `views-page-myAssets-myWalletIndex-childer-recharge theme--light` }, [
-            // rechargeIndex.USDTLabel,
+        return m('div', { class: `views-page-myAssets-myWalletIndex-childer-recharge theme--light pb-7` }, [
             m('div', { class: `top mb-7 has-bg-level-2 ` }, [
                 m('i', { class: `iconfont icon-Return has-text-title`, onclick: () => { window.router.go(-1); } }),
                 m('span', { class: `has-text-title my-4 ml-4 title-medium` }, '充币')
@@ -72,20 +71,20 @@ module.exports = {
                                 m('i', {
                                     class: `iconfont icon-QrCode has-text-primary cursor-pointer`,
                                     onmouseover: () => {
-                                        rechargeIndex.changeQrcodeDisplay('show');
+                                        rechargeIndex.changeQrcodeDisplay(`show`);
                                     },
                                     onmouseout: () => {
-                                        rechargeIndex.changeQrcodeDisplay('hide');
+                                        rechargeIndex.changeQrcodeDisplay(`hide`);
                                     }
                                 })
                             ]),
-                            m('div', { class: `QrCodeImg`, style: { display: rechargeIndex.qrcodeDisplayFlag ? '' : 'none' } })
+                            m('div', { class: `QrCodeImg`, style: { display: rechargeIndex.qrcodeDisplayFlag ? `` : `none` } })
                         ])
                     ]),
                     m('div', { class: `tips` }, [
-                        m('span', {}, '温馨提示'),
+                        m('span', { class: `body-5` }, '温馨提示'),
                         m('br'),
-                        rechargeIndex.tips.split('*').map((item, index) => m('span', { class: index === 0 ? 'has-text-primary' : '' }, '*' + item))
+                        rechargeIndex.tips.split('*').map((item, index) => m(`span.pb-1 body-4`, { class: index === 0 ? `has-text-primary` : `` }, '*' + item))
                     ])
                 ]),
                 m('div.bottom-tab.has-bg-level-2.mt-5.pt-3', {}, [

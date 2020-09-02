@@ -9,7 +9,6 @@ module.exports = {
     pageData: [], // 所需数据
     USDTLabel: [], // 链名称
     selectList: [], // 下拉列表
-    selectCheck: '', // 当前币种选中值
     form: {
         selectCheck: '' // 当前币种选中值
     },
@@ -55,10 +54,21 @@ module.exports = {
                     item.en = arg.trade.fullName.en; // 英文
                     item.networkNum = arg.trade.networkNum; // 网络数
                     that.pageData.push(item);
-                    that.selectCheck = that.pageData[0].wType;
                     that.form.selectCheck = that.pageData[0].wType;
                     that.setTipsAndAddrAndCode();
                     that.selectList.push({ label: walletI.wType + ' | ' + arg.trade.fullName.zh, id: walletI.wType });
+
+                    // 数组去重
+                    const tempJson = {};
+                    const res = [];
+                    for (let i = 0; i < this.selectList.length; i++) {
+                        tempJson[JSON.stringify(this.selectList[i])] = true; // 取出每一个对象当做key
+                    }
+                    for (let j = 0; j < Object.keys(tempJson).length; j++) {
+                        res.push(JSON.parse(Object.keys(tempJson)[j]));
+                    }
+                    this.selectList = res;
+
                     m.redraw();
                 }).catch(function(err) {
                     console.log('nzm', 'GetRechargeAddr error', err);

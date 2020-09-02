@@ -25,9 +25,32 @@ const model = {
             transferFrom: model.swValue // from钱包默认选中
         });
     },
-    selectOpFlag: false, // 是否显示币种列表
-    selectOpText: 'BTC', // 默认币种BTC
-    selectOp: ['BTC', 'USDT'], // 币种列表
+    showCurrencyMenu: false, // show币种菜单
+    selectOp: [{ id: 'BTC', label: 'BTC' }, { id: 'USDT', label: 'USDT' }], // 币种列表
+    form: {
+        wType: '' // 当前币种选中值
+    },
+    // 币种 菜单配置
+    getCurrencyMenuOption() {
+        const that = this;
+        return {
+            evenKey: `myWalletIndex${Math.floor(Math.random() * 10000)}`,
+            showMenu: that.showCurrencyMenu,
+            setShowMenu: type => {
+                that.showCurrencyMenu = type;
+            },
+            class: `myCoinSelect`,
+            activeId: cb => cb(that.form, 'wType'),
+            onClick (item) {
+                that.setCurrency(item.id);
+                broadcast.emit({ cmd: broadcast.CHANGE_SW_CURRENCY, data: item.id });
+                that.sets();
+            },
+            getList () {
+                return that.selectOp;
+            }
+        };
+    },
     // 设置币种
     setCurrency: function (param) {
         this.currency = param;
@@ -54,14 +77,7 @@ const model = {
     },
     // 隐藏资产
     hideValue: function () {
-        const ele = document.getElementsByClassName('changeMoneyImg')[0];
-        if (this.hideMoneyFlag) { // 显示
-            ele.classList.value = ele.classList.value.replace('yincang', 'zichanzhengyan');
-            this.hideMoneyFlag = !this.hideMoneyFlag;
-        } else { // 隐藏
-            ele.classList.value = ele.classList.value.replace('zichanzhengyan', 'yincang');
-            this.hideMoneyFlag = !this.hideMoneyFlag;
-        }
+        this.hideMoneyFlag = !this.hideMoneyFlag;
     },
     // 设置币币总值
     setCoinTotal: function (param) {
@@ -77,6 +93,9 @@ const model = {
     },
     // 切换我的钱包，交易账户，币币，合约，法币
     switchChange: function (val) {
+        if (val === 'none') {
+            return;
+        }
         this.swValue = val;
         transferLogic.setTransferModalOption({
             transferFrom: val // from钱包默认选中
@@ -147,34 +166,6 @@ const model = {
             }
         }
     },
-    // 切换币种列表的显示隐藏
-    setSelectOpFlag: function() {
-        this.selectOpFlag = !this.selectOpFlag;
-        if (this.selectOpFlag) {
-            document.getElementsByClassName('currType')[0].style.display = '';
-        } else {
-            document.getElementsByClassName('currType')[0].style.display = 'none';
-        }
-    },
-    // 设置下拉框选中值
-    setSelectOpText: function(param) {
-        this.selectOpText = param;
-    },
-    // 设置button（option）显示的值     切换currency
-    selectOpHideUl: function(item) {
-        document.getElementsByClassName('currType')[0].style.display = 'none';
-        this.setSelectOpText(item);
-        this.setCurrency(item);
-        broadcast.emit({ cmd: broadcast.CHANGE_SW_CURRENCY, data: item });
-        this.sets();
-    },
-    // 点击除button的元素隐藏币种列表
-    optionDisplay: function(event) {
-        if (event.target.classList.value.indexOf('showSelI') < 0 && event.target.classList.value.indexOf('showSelBtn') < 0) {
-            this.selectOpFlag = false;
-            document.getElementsByClassName('currType')[0].style.display = 'none';
-        }
-    },
     // 提币，内部转账，资金划转悬浮样式
     changeBtnSty: function (index, type) {
         if (index !== 0) {
@@ -198,6 +189,7 @@ const model = {
         this.setTotalCNY(wlt.totalCNYValue);
     },
     initFn: function() {
+        this.form.wType = this.selectOp[0].id;
         // 获取当前网址，如：http://localhost:8080/#!/myWalletIndex?id=03
         const currencyIndex = window.document.location.href.toString().split('=')[1];
         if (currencyIndex === '03' || currencyIndex === '02' || currencyIndex === '01' || currencyIndex === '04') {
