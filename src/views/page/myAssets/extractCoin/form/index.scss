@@ -20,18 +20,32 @@
         }
       }
 
-      .select select{ // 币中选择
-        color: var(--c-font-lighten1);
-        //font-size: 14px;
+      .changeCoin {
+        .select {
+          position: relative;
+          select{ // 币中选择
+            color: var(--c-font-lighten1);
+            //font-size: 14px;
 
-        option {
-          //font-size: 18px;
-          font-size: var(--c-fontsz-level6);
-          line-height: 20px;
+            option {
+              //font-size: 18px;
+              font-size: var(--c-fontsz-level6);
+              line-height: 20px;
+            }
+          }
         }
-      }
-      .select:not(.is-multiple) {
-        height: 100%;
+        .select:not(.is-multiple) {
+          height: 100%;
+        }
+        .select:not(.is-multiple):not(.is-loading)::after {
+          border: 0px;
+        }
+        i.iconfont {
+          position: absolute;
+          top: 50%;
+          right: 10px;
+          transform: translateY(-50%);
+        }
       }
 
       .line-label input.input { // 标签 名
@@ -88,14 +102,14 @@
           }
         }
 
-        //input[type=number]::-webkit-inner-spin-button,
-        //input[type=number]::-webkit-outer-spin-button {
-        //  -webkit-appearance: none;
-        //  margin: 0;
-        //}
-        //input[type=number] {
-        //  -moz-appearance:textfield;
-        //}
+        input[type=number]::-webkit-inner-spin-button,
+        input[type=number]::-webkit-outer-spin-button {
+          -webkit-appearance: none;
+          margin: 0;
+        }
+        input[type=number] {
+          -moz-appearance:textfield;
+        }
       }
 
       .charge { //  手续费

@@ -18,6 +18,7 @@ const extract = {
     currentSelect: {}, // 选中的币种
     currenLinkBut: '', // 选中链名字
     currentFees: {}, // 最小值 手续费
+    isChangeClose: false, // 是否修改弹框关闭事件
     coinInfo: {},
     feesList: [],
     popUpData: { // 弹框【验证，提示】 数据
@@ -79,6 +80,9 @@ const extract = {
         this.getCurrentFeesChange();
         this.getExtractableCoinToBTCNum();
         this.currenLinkBut = '';
+        this.extractCoin.address = '';
+        this.extractCoin.coinNum = '';
+        this.extractCoin.linkName = '';
         if (this.currentSelect.wType !== 'USDT') {
             this.linkButtonList = [];
             return;
@@ -112,7 +116,7 @@ const extract = {
             BTCNum = Number(usableCoin * price / btcPrice).toFixed(8);
         }
         if (BTCNum > 2) return this.getExtractableNum(BTCNum);
-        this.currentExtractableNum = BTCNum;
+        this.currentExtractableNum = usableCoin;
     },
     getBTCToCoin: function (BTCNum) {
         const price = wlt.getPrz(this.currentSelect.wType);
@@ -191,6 +195,7 @@ const extract = {
         extract.handleChangeShow(true); // 打开 a
     },
     handleChangeShow: function (isHandleVerify) {
+        extract.isChangeClose = false;
         extract.popUpData = {
             show: !extract.popUpData.show,
             isHandleVerify,
@@ -199,8 +204,9 @@ const extract = {
         m.redraw();
     },
     handleTotalShow: function ({ content, buttonText, buttonClick, doubleButtonCof, doubleButton }) {
+        extract.isChangeClose = true;
         extract.popUpData = {
-            show: !extract.popUpData.show,
+            show: true,
             isHandleVerify: false,
             content,
             buttonText,

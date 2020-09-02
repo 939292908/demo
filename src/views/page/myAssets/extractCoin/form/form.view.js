@@ -41,15 +41,19 @@ module.exports = {
     handleCloseDialog: function () {
         FromDataMode.popUpData.show = false;
     },
+    handleBack: function () {
+        window.router.go(-1);
+    },
     view: function () {
         return m('div.page-extract-coin-from has-bg-level-2', [
             m('div.form-block', [
                 m('div.formModule', [
                     m('div.label has-text-title body-5', '币种'),
-                    m('div.control', [
+                    m('div.control changeCoin', [
                         m('div.select is-fullwidth', m('select.border-radius-small body-5', { onchange: this.handleSelectChange }, [
                             FromDataMode.selectList && FromDataMode.selectList.map(item => m('option', item.wType))
-                        ]))
+                        ])),
+                        m('i.iconfont icon-xiala')
                     ])
                 ]),
                 FromDataMode.currentSelect.Setting && FromDataMode.currentSelect.Setting.memo ? m('div.formModule', [
@@ -58,7 +62,7 @@ module.exports = {
                         m(Tooltip, { label: m('i.iconfont icon-Tooltip'), content: '填写错误可能导致资产丢失，请仔细核对' })
                     ]),
                     m('div.control line-label', [
-                        m('input.input body-5 border-radius-small', { type: 'text', placeholder: '1234562', onchange: this.handleLabelVal })
+                        m('input.input body-5 border-radius-small', { type: 'text', placeholder: '标签', onchange: this.handleLabelVal, value: FromDataMode.extractCoin.linkName })
                     ])
                 ]) : null,
                 FromDataMode.linkButtonList.length > 0 ? m('div.formModule', [
@@ -73,7 +77,7 @@ module.exports = {
                 m('div.formModule', [
                     m('div.label has-text-title body-5', '提币地址'),
                     m('div.control address', [
-                        m('input.input body-5', { type: 'text', placeholder: '', onchange: this.handleAddressVal })
+                        m('input.input body-5', { type: 'text', placeholder: '', onchange: this.handleAddressVal, value: FromDataMode.extractCoin.address })
                     ]),
                     FromDataMode.errorShow.address.show ? m('div.errorToTal body-4', '地址错误') : null
                 ]),
@@ -97,7 +101,7 @@ module.exports = {
                 ]),
                 m('button.button is-info is-fullwidth', { onclick: () => { FromDataMode.handleSubmit(); } }, '确定')
             ]),
-            FromDataMode.popUpData.show ? m(VerifyView, { close: this.handleCloseDialog, ...FromDataMode.popUpData }) : null,
+            FromDataMode.popUpData.show ? m(VerifyView, { close: FromDataMode.isChangeClose ? this.handleBack : this.handleCloseDialog, ...FromDataMode.popUpData }) : null,
             m('div.promptText', [
                 m('div.promptTitle body-5', '温馨提示'),
                 FromDataMode.promptText.split('*').map(item => m('div.rulesText body-4', '*' + item))

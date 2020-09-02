@@ -20,7 +20,7 @@ import('swiper/swiper-bundle.css');
 import('./libs/gt');
 
 // 重写console.log
-require('@/util/log');
+// require('@/util/log');
 window.onresize = function (arg) {
     // 判断是否是移动端
     broadcast.emit({ cmd: broadcast.ONRESIZE_UPD, data: { Ev: broadcast.ONRESIZE_UPD } });

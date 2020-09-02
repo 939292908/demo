@@ -44,7 +44,7 @@ module.exports = {
                 m('div.logotext', this.props.title.logo || 'Vbit'),
                 m('div.promptTitle', this.props.title.text)
             ]),
-            m('div', { onclick: this.handlecloseDialog.bind(this) }, m('i.iconfont icon-TurnOff'))
+            m('div.icomBox', { onclick: this.handlecloseDialog.bind(this) }, m('i.iconfont icon-TurnOff'))
         ]);
     },
     promptText: function () {
