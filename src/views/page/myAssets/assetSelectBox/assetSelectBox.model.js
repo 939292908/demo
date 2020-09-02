@@ -34,7 +34,7 @@ module.exports = {
                     return;
                 }
                 time[0] = new Date(time[0]).valueOf() / 1000;
-                time[1] = new Date(time[1]).valueOf() / 1000;
+                time[1] = new Date(time[1]).valueOf() / 1000 + 24 * 60 * 60;
                 vnode.attrs.onSelectTime(time);
             });
         }
