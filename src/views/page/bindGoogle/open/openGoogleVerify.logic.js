@@ -70,7 +70,7 @@ module.exports = {
         geetest.init(() => {
         });
         broadcast.onMsg({
-            key: 'validate',
+            key: 'bindGoogle',
             cmd: 'geetestMsg',
             cb: res => {
                 if (res === 'success') {

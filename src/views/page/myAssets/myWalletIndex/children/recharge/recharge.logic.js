@@ -159,9 +159,11 @@ module.exports = {
     },
     copyText() {
         const ele = document.getElementsByClassName('addrText')[0];
-        ele.select(); // 选择对象
-        document.execCommand("copy", false, null);
-        alert('复制成功');
+        if (ele.value) {
+            ele.select(); // 选择对象
+            document.execCommand("copy", false, null);
+            alert('复制成功');
+        }
     },
     changeBtnflag(index, title) {
         this.btnCheckFlag = index;
