@@ -93,7 +93,8 @@ const model = {
         this.contractTotal = param;
     },
     // 切换我的钱包，交易账户，币币，合约，法币
-    switchChange: function (val) {
+    switchChange: function (val, type) {
+        console.log('nzm', val);
         if (val === 'none') {
             return window.$message({ title: I18n.$t('10037'/* "提示" */), content: '暂未开放', type: 'danger' });
         }
@@ -101,8 +102,10 @@ const model = {
         transferLogic.setTransferModalOption({
             transferFrom: val // from钱包默认选中
         });
-        // 防止被交易账户01覆盖交易账户悬浮卡片的值
-        // window.event.stopPropagation();
+        if (type === 'small') {
+            // 防止被交易账户01覆盖交易账户悬浮卡片的值
+            window.event.stopPropagation();
+        }
         this.sets();
         this.switchContent();
     },
@@ -190,6 +193,7 @@ const model = {
         this.setTotalCNY(wlt.totalCNYValue);
     },
     initFn: function() {
+        wlt.init();
         this.form.wType = this.selectOp[0].id;
         // 获取当前网址，如：http://localhost:8080/#!/myWalletIndex?id=03
         const currencyIndex = window.document.location.href.toString().split('=')[1];
@@ -200,10 +204,8 @@ const model = {
             this.switchChange('03');
             this.setSwValue('03');
         }
-        m.redraw();
     },
     createFn: function() {
-        wlt.init();
         timeOut = setTimeout(() => {
             this.sets();
         }, '100');
