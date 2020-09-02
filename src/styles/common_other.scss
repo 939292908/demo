@@ -281,6 +281,12 @@
 
 /* 公共样式 end */
 
+// flex
+.spacer {
+    flex-grow: 1 !important;
+    -webkit-box-flex: 1 !important;
+}
+
 // 全局修改下拉框图标样式
 .select:not(.is-multiple):not(.is-loading)::after {
     font-family: "iconfont", serif;

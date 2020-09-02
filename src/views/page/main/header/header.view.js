@@ -274,36 +274,72 @@ module.exports = {
                         })
                     ]),
                     // 线路切换
-                    m('div.navbar-item.cursor-pointer', { class: `has-text-primary-hover ` }, [
-                        m(Tooltip, {
-                            label: m('i.iconfont.icon-signal'),
-                            content: m('div', { class: `` }, [
-                                m('div', { class: `is-align-items-center` }, [
-                                    m('div', { class: `` }, [
-                                        apiLines.netLines.map((item, i) => {
-                                            return m('a', {
-                                                class: `navbar-item columns has-text-primary-hover min-width-200 ${item.Id === apiLines.activeLine.Id ? 'is-active' : ''}`,
-                                                onclick: function() {
-                                                    apiLines.setLinesActive(item.Id);
-                                                }
-                                            }, [
-                                                m('span.column', {}, [
-                                                    item.Name
-                                                ]),
-                                                m('span.column', {}, [
-                                                    '延迟 ' + apiLines.apiResponseSpeed[i] + 'ms'
-                                                ])
-                                            ]);
-                                        })
-                                    ])
+                    m('div.navbar-item.has-dropdown.is-hoverable', {}, [
+                        m('a.navbar-item.ma-0', {}, [
+                            m('i.iconfont.icon-signal')
+                        ]),
+                        m('div.navbar-dropdown.is-right.has-bg-level-2.border-radius-medium', {}, [
+                            m('div', {
+                                class: "navbar-item px-7 ma-0 title-small is-flex"
+                            }, [
+                                `线路切换(${apiLines.netLines.length})`,
+                                m('div.spacer'),
+                                m('button.button.is-light', {}, [
+                                    m('i.iconfont.icon-Order.iconfont-large')
                                 ])
-                            ])
-                        })
+                            ]),
+                            m('hr.navbar-divider'),
+                            apiLines.netLines.map((item, i) => {
+                                return m('a', {
+                                    class: `navbar-item columns has-text-primary-hover min-width-200 ma-0 px-7 py-4 ${item.Id === apiLines.activeLine.Id ? 'is-active' : ''}`,
+                                    onclick: function() {
+                                        apiLines.setLinesActive(item.Id);
+                                    }
+                                }, [
+                                    m('span.column.pr-8', {}, [
+                                        item.Name
+                                    ]),
+                                    m('span.column.has-text-left', {}, [
+                                        '延迟 ' + apiLines.apiResponseSpeed[i] + 'ms'
+                                    ])
+                                ]);
+                            })
+                        ])
                     ]),
+                    // m('div.navbar-item.cursor-pointer', { class: `has-text-primary-hover ` }, [
+                    //     m(Tooltip, {
+                    //         label: m('i.iconfont.icon-signal'),
+                    //         content: m('div', { class: `` }, [
+                    //             m('div', { class: `is-align-items-center` }, [
+                    //                 m('div', { class: `` }, [
+                    //                     m('div', {}, [
+                    //                         '线路切换'
+                    //                     ]),
+                    //                     m('hr.navbar-divider'),
+                    //                     apiLines.netLines.map((item, i) => {
+                    //                         return m('a', {
+                    //                             class: `navbar-item columns has-text-primary-hover min-width-200 ${item.Id === apiLines.activeLine.Id ? 'is-active' : ''}`,
+                    //                             onclick: function() {
+                    //                                 apiLines.setLinesActive(item.Id);
+                    //                             }
+                    //                         }, [
+                    //                             m('span.column', {}, [
+                    //                                 item.Name
+                    //                             ]),
+                    //                             m('span.column', {}, [
+                    //                                 '延迟 ' + apiLines.apiResponseSpeed[i] + 'ms'
+                    //                             ])
+                    //                         ]);
+                    //                     })
+                    //                 ])
+                    //             ])
+                    //         ])
+                    //     })
+                    // ]),
                     // 语言
                     m('div.navbar-item.cursor-pointer', { class: `has-text-primary-hover mr-7` }, [
                         m(Tooltip, {
-                            label: "英",
+                            label: I18n.getLocale(),
                             width: '120px',
                             content: m('div', { class: `` }, [
                                 m('div', { class: `is-align-items-center` }, [
