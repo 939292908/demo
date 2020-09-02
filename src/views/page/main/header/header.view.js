@@ -339,7 +339,7 @@ module.exports = {
                     // 语言
                     m('div.navbar-item.cursor-pointer', { class: `has-text-primary-hover mr-7` }, [
                         m(Tooltip, {
-                            label: I18n.locale,
+                            label: I18n.getLocale(),
                             width: '120px',
                             content: m('div', { class: `` }, [
                                 m('div', { class: `is-align-items-center` }, [
