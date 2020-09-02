@@ -79,6 +79,8 @@ module.exports = {
     init(aType, type = 'all') {
         this.aType = aType;
         this.type = type;
+        this.coin = 'all';
+        this.filterTime = [];
         this.getCoinList();
         this.getATypeRecords();
     },
