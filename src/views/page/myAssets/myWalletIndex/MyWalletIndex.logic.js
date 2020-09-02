@@ -204,12 +204,13 @@ const model = {
             this.switchChange('03');
             this.setSwValue('03');
         }
+        m.redraw();
     },
     createFn: function() {
         timeOut = setTimeout(() => {
             this.sets();
+            m.redraw();
         }, '100');
-        m.redraw();
     },
     removeFn: function() {
         clearTimeout(timeOut);

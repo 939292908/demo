@@ -172,7 +172,6 @@ module.exports = {
         }
     },
     createFn: function () {
-        wlt.init();
         broadcast.onMsg({
             key: 'view-pages-Myassets-TablegB',
             cmd: broadcast.CHANGE_SW_CURRENCY,
