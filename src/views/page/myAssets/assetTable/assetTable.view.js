@@ -34,7 +34,7 @@ module.exports = {
                                     }
                                 },
                                 [I18n.$t('10096')/* '详情' */, m('i.iconfont', { class: item.showInfo ? 'icon-xiala' : 'icon-xiala' }, [])])
-                                : '--'
+                                : '─ ─'
                         ])
                     ])
                 );
