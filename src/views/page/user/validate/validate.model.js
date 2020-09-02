@@ -13,6 +13,8 @@ module.exports = {
     selectName: '', // 选择验证类型的显示文字
     anotherName: '', // 切换选择验证类型显示的文字
     code: '', // 验证码
+    smsInt: null,
+    emailInt: null,
     /**
      * 发送验证码
      */
@@ -202,6 +204,16 @@ module.exports = {
     },
 
     onremove() {
+        if (this.smsInt) {
+            clearInterval(this.smsInt);
+            this.smsInt = null;
+            this.smsCd = 0;
+        }
+        if (this.emailInt) {
+            clearInterval(this.emailInt);
+            this.emailInt = null;
+            this.emailCd = 0;
+        }
         this.code = '';
         this.selectType = '';
         this.anotherType = '';
