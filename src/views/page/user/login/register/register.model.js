@@ -30,6 +30,7 @@ const register = {
     waiting: false, // 等待状态
     smsCd: 0, // 激活短信按钮倒计时
     exchInfo: config.exchInfo, // 渠道信息
+    int: null,
     checkbox: false, // 条款同意
     /**
      * 必须填写邀请码
@@ -270,6 +271,11 @@ const register = {
     },
     onremove() {
         this.cleanUp();
+        this.smsCd = 0;
+        if (this.int) {
+            clearInterval(this.int);
+            this.int = null;
+        }
         broadcast.offMsg({
             key: 'register',
             cmd: 'geetestMsg',
