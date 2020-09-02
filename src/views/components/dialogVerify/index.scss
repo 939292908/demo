@@ -31,6 +31,19 @@
       .logotext {
         opacity: 0.12;
       }
+      .icomBox {
+        width: 24px;
+        height: 24px;
+        position: relative;
+        border-radius: 50%;
+        background-color: #F7F7F8;
+        i.iconfont {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+        }
+      }
     }
 
     .mainPrompt { // 具体内容

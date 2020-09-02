@@ -82,6 +82,14 @@
           border-radius: 4px;
           margin-bottom: 4px;
         }
+        .is0Colorbg {
+          background-color: var(--c-font-darken);
+          border-color: var(--c-font-darken);
+          color: #FFFFFF;
+        }
+        .is0ColorTxt {
+          color: var(--c-font-darken);
+        }
       }
 
       @media screen and (min-width: 1024px) {
