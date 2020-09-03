@@ -109,7 +109,7 @@ module.exports = {
                     m('', {
                         class: "navbar-item has-text-primary-hover cursor-pointer ",
                         onclick: function () {
-                            window.router.push('/accountSecurity');
+                            window.open('/accountSecurity');
                         }
                     }, [
                         '新手帮助'
