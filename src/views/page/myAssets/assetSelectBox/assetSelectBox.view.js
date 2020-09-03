@@ -35,12 +35,12 @@ module.exports = {
                             id: 'asset-select-box-time-selector',
                             autocomplete: "off",
                             oninput: e => {},
-                            value: vnode.attrs.dateStr
+                            value: AssetSelectBox.date
                         },
                         rightComponents: m('div..date-picker-icon', {
                             onclick: () => {
-                                if (vnode.attrs.dateStr) {
-                                    vnode.attrs.setDateStr('');
+                                if (AssetSelectBox.date) {
+                                    AssetSelectBox.date = '';
                                     AssetSelectBox.picker.reset();
                                 } else {
                                     AssetSelectBox.picker.show();
@@ -48,7 +48,7 @@ module.exports = {
                             }
                         }, [
                             m('i.iconfont.pr-2.iconfont-small', {
-                                class: vnode.attrs.dateStr ? 'icon-Close' : 'icon-xiala'
+                                class: AssetSelectBox.date ? 'icon-Close' : 'icon-xiala'
                             })
                         ])
                     })

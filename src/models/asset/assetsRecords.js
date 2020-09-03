@@ -2,6 +2,7 @@ const m = require('mithril');
 const Http = require('@/api').webApi;
 const utils = require('@/util/utils').default;
 const I18n = require('@/languages/I18n').default;
+const broadcast = require('@/broadcast/broadcast');
 
 module.exports = {
     recordObj: {
@@ -76,13 +77,12 @@ module.exports = {
     },
     coin: 'all',
     type: 'all',
-    dateStr: '',
     init(aType, type = 'all') {
         this.aType = aType;
         this.type = type;
         this.coin = 'all';
-        this.dateStr = '';
         this.filterTime = [];
+        broadcast.emit({ cmd: 'assetsRecordOnInit' });
         this.getCoinList();
         this.getATypeRecords();
     },
