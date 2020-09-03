@@ -1,5 +1,5 @@
 const m = require('mithril');
-const { Conf, webApi, BaseUrl } = require('@/api');
+const { Conf, webApi, ActiveLine } = require('@/api');
 const UserInfo = require('@/models/globalModels');
 const wlt = require('@/models/wlt/wlt');
 const broadcast = require('@/broadcast/broadcast');
@@ -8,7 +8,7 @@ const errCode = require('@/util/errCode').default;
 const utils = require('@/util/utils').default;
 const validate = require('@/models/validate/validate').default;
 const l180n = require('@/languages/I18n').default;
-
+console.log(require('@/api'));
 const extract = {
     locale: '',
     name: 'FROM_DATA',
@@ -74,7 +74,6 @@ const extract = {
     },
     getSelectListData: function () {
         /* eslint-disable */
-        // const self = this;
         let selectList = [...wlt.wallet['03']];
         for (let i = 0; i < selectList.length; i ++) {
             webApi.GetRechargeAddr({
@@ -113,10 +112,14 @@ const extract = {
         this.linkButtonList = this.coinInfo[this.currentSelect.wType].chains.filter(item => {
             return canWithdrawChains[`${'canWithdraw' + item.attr}`];
         });
-        if (this.linkButtonList.length > 0) this.currenLinkBut = this.linkButtonList[0].attr;
+        if (this.linkButtonList.length > 0) {
+            this.currenLinkBut = this.linkButtonList[0].attr;
+            this.getCurrentFeesChange(true);
+        }
     },
-    getCurrentFeesChange: function () {
-        this.currentFees = this.feesList.find(item => item.wType === this.currentSelect.wType);
+    getCurrentFeesChange: function (isLinkBut) {
+        const wType = isLinkBut ? this.currenLinkBut : this.currentSelect.wType;
+        this.currentFees = this.feesList.find(item => item.wType === wType);
     },
     getExtractableCoinToBTCNum: function () {
         var BTCNum = 0;
@@ -180,9 +183,9 @@ const extract = {
         const emailParms = {
             seq,
             email: user.email,
-            host: BaseUrl.WebAPI + '/m/#/accounts', // TODO 参数获取
+            host: ActiveLine.WebAPI + '/m/#/accounts', // TODO 参数获取
             fn: 'wda',
-            lang: 'zh',
+            lang: extract.locale,
             fishCode: user.antiFishCode,
             token: encodeURIComponent(user.token),
             checkCode: new Date().valueOf().toString(32),
@@ -200,13 +203,23 @@ const extract = {
     },
     readyStartSafetyVerify: function (start) {
         if (start !== 'success') return;
-        validate.activeSmsAndGoogle({
-            securePhone: utils.hideMobileInfo(extract.UserInfo.phone),
-            phoneNum: extract.UserInfo.phone
-        }, res => {
-            extract.sendExtractCoin();
-            extract.handleChangeShow(); // 关闭 a
-        });
+        const funName = extract.UserInfo?.setting2fa.google && extract.UserInfo?.setting2fa.phone ? 'activeSmsAndGoogle' : extract.UserInfo?.setting2fa.google ? 'activeGoogle' : 'activeSms';
+        console.log(validate[funName], funName);
+        if ((extract.UserInfo?.setting2fa.google && extract.UserInfo?.setting2fa.phone) || extract.UserInfo?.setting2fa.phone) {
+            validate[funName]({
+                securePhone: utils.hideMobileInfo(extract.UserInfo.phone),
+                phoneNum: extract.UserInfo.phone
+            }, res => {
+                extract.sendExtractCoin();
+                extract.handleChangeShow(); // 关闭 a
+            });
+        }
+        if (extract.UserInfo?.setting2fa.google) {
+            validate[funName](res => {
+                extract.sendExtractCoin();
+                extract.handleChangeShow(); // 关闭 a
+            });
+        }
         extract.handleChangeShow(true); // 打开 a
     },
     handleChangeShow: function (isHandleVerify) {
@@ -238,8 +251,8 @@ const extract = {
         // 二期使用
         if (!this.UserInfo.setting2fa.email) return this.handleTotalShow({ content: '提币需邮件确认，请先绑定邮箱', buttonText: l180n.$t('10229') /* '邮箱验证' */, buttonClick: () => { m.route.set("/my"); } });
         const doubleButtonCof = [
-            { text: l180n.$t('10227') /* '谷歌验证' */, click: () => { m.route.set("/my"); } },
-            { text: l180n.$t('10228') /* '手机验证' */, click: () => { m.route.set("/my"); } }
+            { text: l180n.$t('10227') /* '谷歌验证' */, issolid: false, click: () => { m.route.set("/my"); } },
+            { text: l180n.$t('10228') /* '手机验证' */, issolid: true, click: () => { m.route.set("/my"); } }
         ];
         if (!this.UserInfo.setting2fa.google && !this.UserInfo.setting2fa.phone) return this.handleTotalShow({ content: '为了您的账户安全，请先绑定手机或谷歌', doubleButton: true, doubleButtonCof });
     },

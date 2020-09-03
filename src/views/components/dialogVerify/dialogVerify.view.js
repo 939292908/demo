@@ -78,11 +78,11 @@ module.exports = {
     verifyContentTitle: function () { // 验证 title
         return m('.dis-flex verifyContentTitle', [
             m('.has-text-level-2.body-3.mb-2', Validate.selectName),
-            Validate.anotherType.length && m('div.has-text-right.mt-2', {}, [
+            Validate.anotherType.length ? m('div.has-text-right.mt-2', {}, [
                 m('a.has-text-primary', {
                     onclick: () => { Validate.changeValidate(); }
                 }, [Validate.anotherName])
-            ])
+            ]) : null
         ]);
     },
     smsVerifyContent: function () {
@@ -98,8 +98,9 @@ module.exports = {
     },
     doubleButtonVnode: function () {
         return m('div.butBox dis-flex', [
-            m('div.itemBut', '谷歌验证'),
-            m('div.itemBut bgBut', '手机验证')
+            this.props.doubleButtonCof.map(item => m('div.itemBut', { class: item.issolid ? 'bgBut' : '' }, item.text))
+            // m('div.itemBut', '谷歌验证'),
+            // m('div.itemBut bgBut', '手机验证')
         ]);
     },
     verifyVnode: function () {

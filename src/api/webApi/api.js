@@ -708,3 +708,9 @@ export function bindEmailAuth (params = {}, options = { withCredentials: false }
 export function logOut(params = {}, options = { withCredentials: false }) {
     return Http.get(API.USDER_LOGOUT, params, options);
 }
+/*
+*
+* */
+export function getCurrenciesIntro (params = {}, options = { withCredentials: false }) {
+    return Http.get(API.MARKETS_CURRENCY_INTRO_V1, { params }, options);
+}
