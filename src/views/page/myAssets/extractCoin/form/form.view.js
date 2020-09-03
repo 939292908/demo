@@ -54,9 +54,8 @@ module.exports = {
                     m('div.topLabel has-text-title body-5', l180n.$t('10063') /* '币种' */),
                     m('div.control changeCoin', [
                         m('div.select is-fullwidth', m('select.border-radius-small body-5', { onchange: this.handleSelectChange }, [
-                            FromDataMode.selectList && FromDataMode.selectList.map(item => m('option', `${item.wType} | ${item.fullNameAddLeez}`))
+                            FromDataMode.selectList && FromDataMode.selectList.map(item => m('option', { selected: item.wType === FromDataMode.currentSelect.wType }, `${item.wType} | ${item.fullNameAddLeez}`))
                         ]))
-                        // m('i.iconfont icon-xiala')
                     ])
                 ]),
                 FromDataMode.currentSelect.Setting && FromDataMode.currentSelect.Setting.memo ? m('div.formModule', [
