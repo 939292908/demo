@@ -18,6 +18,7 @@ module.exports = {
     },
     handleLinNameButClick: function (e) {
         FromDataMode.currenLinkBut = e.attr;
+        FromDataMode.getCurrentFeesChange(true);
     },
     handleAddressVal: function (e) {
         FromDataMode.extractCoin.address = e.target.value;
