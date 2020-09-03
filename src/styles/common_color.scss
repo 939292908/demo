@@ -731,7 +731,7 @@
 /* light UI库样式覆盖 end */
 
 
-$primary-lighten: #FF8B00;
+$primary-lighten: var(--c-primary-lighten);
 
 .input:focus,
 .textarea:focus,
