@@ -5,7 +5,7 @@
  * coin: 默认选中 币种 (USDT)
  */
 const wlt = require('@/models/wlt/wlt');
-const I18n = require('@/languages/I18n').default;
+// const I18n = require('@/languages/I18n').default;
 const Http = require('@/api').webApi;
 const broadcast = require('@/broadcast/broadcast');
 
@@ -292,13 +292,13 @@ const model = {
     submit () {
         // 校验
         if (this.form.num === '0') {
-            return window.$message({ title: I18n.$t('10037'/* "提示" */), content: I18n.$t('10221'/* '划转数量不能为0' */), type: 'danger' });
+            return window.$message({ title: "提示", content: '划转数量不能为0', type: 'danger' });
         } else if (!this.form.num) {
-            return window.$message({ title: I18n.$t('10037'/* "提示" */), content: I18n.$t('10222'/* '划转数量不能为空' */), type: 'danger' });
+            return window.$message({ title: "提示", content: '划转数量不能为空', type: 'danger' });
         } else if (Number(this.form.num) === 0) {
-            return window.$message({ title: I18n.$t('10037'/* "提示" */), content: I18n.$t('10221'/* '划转数量不能为0' */), type: 'danger' });
+            return window.$message({ title: "提示", content: '划转数量不能为0', type: 'danger' });
         } else if (Number(this.form.num) > Number(this.form.maxTransfer)) {
-            return window.$message({ title: I18n.$t('10037'/* "提示" */), content: I18n.$t('10223'/* '划转数量不能大于最大可划' */), type: 'danger' });
+            return window.$message({ title: "提示", content: '划转数量不能大于最大可划', type: 'danger' });
         }
         model.setMaxTransfer(); // 设置 最大划转
         // api
@@ -312,7 +312,7 @@ const model = {
             this.reset(); // 重置
             if (res.result.code === 0) {
                 wlt.init(); // 更新数据
-                window.$message({ content: I18n.$t('10224'/* '划转成功！' */), type: 'success' });
+                window.$message({ content: '资金划转成功！', type: 'success' });
                 model.initFromAndToValueByAuthWalletList(); // 2. 钱包value  初始化
             } else {
                 // 往法币划转
@@ -322,7 +322,7 @@ const model = {
                     // 法币弹框显示
                     model.showlegalTenderModal = true;
                 }
-                window.$message({ title: I18n.$t('10037'/* "提示" */), content: res.result.msg, type: 'danger' });
+                window.$message({ title: "提示", content: res.result.msg, type: 'danger' });
             }
             this.successCallback(); // 成功回调
         }).catch(err => {
