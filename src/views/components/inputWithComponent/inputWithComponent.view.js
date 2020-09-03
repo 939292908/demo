@@ -29,7 +29,7 @@ module.exports = {
         return m('div.input-with-components', {
             class: vnode.attrs.addClass
         }, [
-            m('div.input.px-0', {}, inside)
+            m('div.input.px-1', {}, inside)
         ]);
     }
 };

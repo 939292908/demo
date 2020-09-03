@@ -11,7 +11,8 @@ const Header = require('@/views/components/indexHeader/indexHeader.view');
 module.exports = {
     oninit: () => {
         rechargeIndex.initFn();
-        AssetRecords.init('03', 'recharge');
+        AssetRecords.init('03', 'recharge', 10);
+        AssetRecords.setLanguageListen();
     },
     oncreate: () => {
     },
@@ -113,12 +114,13 @@ module.exports = {
                         m('span.all', { class: `has-text-primary cursor-pointer`, onclick: () => { window.router.push('/assetRecords'); } }, l180n.$t('10087') /* '全部记录' */)
                     ]),
                     m('hr.ma-0'),
-                    m(assetTable, { class: 'pa-5', list: AssetRecords.showList })
+                    m(assetTable, { class: 'pa-5', list: AssetRecords.showList, loading: AssetRecords.loading })
                 ])
             ])
         ]);
     },
     onremove: () => {
         rechargeIndex.removeFn();
+        AssetRecords.destroy();
     }
 };

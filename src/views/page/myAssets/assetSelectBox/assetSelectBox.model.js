@@ -5,6 +5,7 @@ const broadcast = require('@/broadcast/broadcast');
 
 module.exports = {
     picker: null,
+    date: '',
     oncreate(vnode) {
         this.initPicker(vnode);
         broadcast.onMsg({
@@ -14,6 +15,18 @@ module.exports = {
                 if (this.picker) {
                     this.picker.destroy();
                 }
+                this.picker = null;
+                this.initPicker(vnode);
+            }
+        });
+        broadcast.onMsg({
+            key: 'assetSelectBox',
+            cmd: 'assetsRecordOnInit',
+            cb: () => {
+                if (this.picker) {
+                    this.picker.destroy();
+                }
+                this.date = '';
                 this.picker = null;
                 this.initPicker(vnode);
             }
@@ -55,17 +68,22 @@ module.exports = {
     },
     onSelect(vnode, start, end) {
         let str = '';
+        if (end < start) {
+            const t = end;
+            end = start;
+            start = t;
+        }
         str += start ? start.format('yyyy-MM-DD') + ' - ' : '';
         str += end ? end.format('yyyy-MM-DD') : '...';
         if (!start || !end) {
             vnode.attrs.onSelectTime([]);
             return;
         }
+        this.date = str;
         const time = [];
         time[0] = start / 1000;
         time[1] = end / 1000 + 24 * 60 * 60;
         vnode.attrs.onSelectTime(time);
-        vnode.attrs.setDateStr(str);
     },
     onremove() {
         this.picker.destroy();
@@ -74,6 +92,11 @@ module.exports = {
         broadcast.offMsg({
             key: 'assetSelectBox',
             cmd: 'setLanguage',
+            isall: true
+        });
+        broadcast.offMsg({
+            key: 'assetSelectBox',
+            cmd: 'assetsRecordOnInit',
             isall: true
         });
     }
