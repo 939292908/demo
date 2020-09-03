@@ -24,6 +24,9 @@ module.exports = {
         );
     },
     getUserInfo() {
+        if (!(utils.getItem('loginState') && utils.getItem('ex-session'))) {
+            return;
+        }
         webApi.getUserInfo({}).then(data => {
             self.loading = false;
             if (data.result.code === 0) {
