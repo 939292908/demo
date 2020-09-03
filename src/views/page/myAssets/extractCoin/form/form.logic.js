@@ -89,7 +89,6 @@ const extract = {
     },
     getlinkButtonListData: function () {
         this.getCurrentFeesChange();
-        this.getExtractableCoinToBTCNum();
         this.currenLinkBut = '';
         this.extractCoin.address = '';
         this.extractCoin.coinNum = '';
@@ -117,10 +116,11 @@ const extract = {
     getCurrentFeesChange: function (isLinkBut) {
         const wType = isLinkBut ? this.currenLinkBut : this.currentSelect.wType;
         this.currentFees = this.feesList.find(item => item.wType === wType);
+        this.getExtractableCoinToBTCNum();
     },
     getExtractableCoinToBTCNum: function () {
         var BTCNum = 0;
-        const price = wlt.getPrz(this.currentSelect.wType);
+        const price = wlt.getPrz(this.currenLinkBut || this.currentSelect.wType);
         const btcPrice = wlt.getPrz('BTC');
         const usableCoin = this.currentSelect.mainBal - this.currentFees.withdrawFee > 0 ? this.currentSelect.mainBal - this.currentFees.withdrawFee : 0;
         if (this.currentSelect.wType === 'USDT') {
