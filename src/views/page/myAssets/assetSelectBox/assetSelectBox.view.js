@@ -2,6 +2,7 @@ const m = require('mithril');
 const AssetSelectBox = require('./assetSelectBox.model');
 const InputWithComponent = require('../../../components/inputWithComponent/inputWithComponent.view');
 const I18n = require('@/languages/I18n').default;
+require('./assetSelectBox.scss');
 
 module.exports = {
     oncreate(vnode) {
@@ -17,7 +18,7 @@ module.exports = {
         for (const k in vnode.attrs.typeList) {
             typeList.push(m('option', { value: k }, [vnode.attrs.typeList[k]]));
         }
-        return m('div', {
+        return m('div.assetSelectBox', {
             class: vnode.attrs.class
         }, [
             m('div.columns.is-variable.is-6', {}, [
@@ -34,17 +35,22 @@ module.exports = {
                             id: 'asset-select-box-time-selector',
                             autocomplete: "off",
                             oninput: e => {},
-                            value: AssetSelectBox.date
+                            value: vnode.attrs.dateStr
                         },
-                        rightComponents: m('i.iconfont.mr-2.iconfont-small', {
-                            class: AssetSelectBox.date ? 'icon-Close' : 'icon-xiala',
+                        rightComponents: m('div..date-picker-icon', {
                             onclick: () => {
-                                if (AssetSelectBox.date) {
-                                    AssetSelectBox.date = '';
+                                if (vnode.attrs.dateStr) {
+                                    vnode.attrs.setDateStr('');
                                     AssetSelectBox.picker.reset();
+                                } else {
+                                    AssetSelectBox.picker.show();
                                 }
                             }
-                        })
+                        }, [
+                            m('i.iconfont.pr-2.iconfont-small', {
+                                class: vnode.attrs.dateStr ? 'icon-Close' : 'icon-xiala'
+                            })
+                        ])
                     })
                 ]),
                 m('div.column.is-3', {}, [

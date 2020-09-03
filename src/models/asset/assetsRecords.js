@@ -76,10 +76,12 @@ module.exports = {
     },
     coin: 'all',
     type: 'all',
+    dateStr: '',
     init(aType, type = 'all') {
         this.aType = aType;
         this.type = type;
         this.coin = 'all';
+        this.dateStr = '';
         this.filterTime = [];
         this.getCoinList();
         this.getATypeRecords();
@@ -196,7 +198,7 @@ module.exports = {
                     timestamp: item.timestamp,
                     status: utils.getTransferInfo(item.stat),
                     // stat: item.stat,
-                    // seq: item.seq,
+                    seq: item.seq,
                     des: I18n.$t('10056'), /* '充币' */
                     info: [
                         {
@@ -233,7 +235,7 @@ module.exports = {
                     timestamp: item.timestamp,
                     status: utils.getWithdrawArr(item.stat),
                     // stat: item.stat,
-                    // seq: item.seq,
+                    seq: item.seq,
                     des: I18n.$t('10057'), /* '提币' */
                     info: [
                         {
@@ -396,7 +398,7 @@ module.exports = {
                         timestamp: item.timestamp,
                         status: utils.getTransferInfo(item.stat),
                         // stat: item.stat,
-                        // seq: item.seq,
+                        seq: item.seq,
                         des: des,
                         info: info
                         // addrLink: item.addrLink,
@@ -438,7 +440,7 @@ module.exports = {
                         timestamp: item.timestamp,
                         status: utils.getTransferInfo(item.stat),
                         // stat: item.stat,
-                        // seq: item.seq,
+                        seq: item.seq,
                         des: item.addr === 'to' ? '买入' : '卖出'
                     });
                 }
@@ -579,7 +581,7 @@ module.exports = {
                     timestamp: item.timestamp,
                     status: utils.getTransferInfo(item.stat),
                     // stat: item.stat,
-                    // seq: item.seq,
+                    seq: item.seq,
                     des: des,
                     fee: item.fee
                 };
