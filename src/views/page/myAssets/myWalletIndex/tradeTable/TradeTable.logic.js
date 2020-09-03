@@ -149,6 +149,20 @@ module.exports = {
     },
     setHideZeroFlag: function () {
         this.hideZeroFlag = !this.hideZeroFlag;
+        console.log(this.tableDateList);
+        if (this.tableDateList === 'contractData') {
+            for (let i = 0; i < this.tableData[this.tableDateList].length; i++) {
+                if (this.tableData[this.tableDateList][i].MgnBal === '0.00000000' || this.tableData[this.tableDateList][i].MgnBal === '0.0000') {
+                    console.log(1);
+                }
+            }
+        } else {
+            for (let i = 0; i < this.tableData[this.tableDateList].length; i++) {
+                if (this.tableData[this.tableDateList][i].TOTAL === '0.00000000' || this.tableData[this.tableDateList][i].TOTAL === '0.0000') {
+                    console.log(1);
+                }
+            }
+        }
     },
     searchTableData: function () {
         const that = this;
