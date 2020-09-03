@@ -167,7 +167,10 @@ module.exports = {
                                 class: `navbar-item columns has-text-primary-hover min-width-200 ma-0 px-6 py-4 body-5`,
                                 onclick: function () {
                                     window.router.push({
-                                        path: '/myWalletIndex?id=03'
+                                        path: '/myWalletIndex',
+                                        data: {
+                                            id: '03'
+                                        }
                                     });
                                 }
                             }, [
@@ -177,7 +180,10 @@ module.exports = {
                                 class: `navbar-item columns has-text-primary-hover min-width-200 ma-0 px-6 py-4 body-5`,
                                 onclick: function () {
                                     window.router.push({
-                                        path: '/myWalletIndex?id=01'
+                                        path: '/myWalletIndex',
+                                        data: {
+                                            id: '01'
+                                        }
                                     });
                                 }
                             }, [
@@ -187,7 +193,10 @@ module.exports = {
                                 class: `navbar-item columns has-text-primary-hover min-width-200 ma-0 px-6 py-4 body-5`,
                                 onclick: function () {
                                     window.router.push({
-                                        path: '/myWalletIndex?id=02'
+                                        path: '/myWalletIndex',
+                                        data: {
+                                            id: '02'
+                                        }
                                     });
                                 }
                             }, [
@@ -197,7 +206,10 @@ module.exports = {
                                 class: `navbar-item columns has-text-primary-hover min-width-200 ma-0 px-6 py-4 body-5`,
                                 onclick: function () {
                                     window.router.push({
-                                        path: '/myWalletIndex?id=04'
+                                        path: '/myWalletIndex',
+                                        data: {
+                                            id: '04'
+                                        }
                                     });
                                 }
                             }, [
