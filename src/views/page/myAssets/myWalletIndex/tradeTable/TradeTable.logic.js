@@ -69,6 +69,7 @@ module.exports = {
         this.tableData.coinData = this.copyAry(wlt.wallet['02']);
     },
     initColumnData: function () {
+        // fssfd
         this.columnData = {
             wallet: [
                 { col: '币种', val: 'wType' },
