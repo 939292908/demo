@@ -18,6 +18,10 @@ require('./index.scss');
 module.exports = {
     oninit() {
         AssetRecords.init('03', 'withdraw');
+        AssetRecords.setLanguageListen();
+    },
+    onremove() {
+        AssetRecords.destroy();
     },
     view: function () {
         return m('div', { class: `page-extract-Coin-index` }, [
@@ -39,7 +43,7 @@ module.exports = {
                             })
                         ]),
                         m('hr.ma-0'),
-                        m(assetTable, { class: 'pa-5', list: AssetRecords.showList })
+                        m(assetTable, { class: 'pa-5', list: AssetRecords.showList, loading: AssetRecords.loading })
                     ])
                 ])
             ])

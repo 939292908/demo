@@ -8,6 +8,10 @@ require('./assetRecord.scss');
 module.exports = {
     oninit() {
         AssetRecords.init('03');
+        AssetRecords.setLanguageListen();
+    },
+    onremove() {
+        AssetRecords.destroy();
     },
     view() {
         return m('div', {}, [
@@ -96,7 +100,7 @@ module.exports = {
                                     AssetRecords.onSelectType(type);
                                 }
                             }),
-                            m(assetTable, { class: 'mt-7', list: AssetRecords.showList })
+                            m(assetTable, { class: 'mt-7', list: AssetRecords.showList, loading: AssetRecords.loading })
                         ])
                     ])
                 ])

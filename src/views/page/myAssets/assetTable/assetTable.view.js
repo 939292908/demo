@@ -16,6 +16,9 @@ module.exports = {
         );
         if (!vnode.attrs.list.length) {
             table.push(m('div.is-align-items-center', {}, [
+                // vnode.attrs.loading
+                //     ? m('div.mt-8.is-loading')
+                //     :
                 m('img', { class: `mt-8`, src: require(`@/assets/img/myAssets/noneData.png`).default, style: { height: `120px`, width: `88px` } })])
             );
         } else {
