@@ -116,7 +116,15 @@ module.exports = {
                     that.setPageFlag();
                 }
             });
-        } else if (item.to) {
+        } else if (item.operation === '充值') {
+            console.log(wlt.wallet['03']);
+            console.log(row.Setting.canRecharge);
+            if (row.Setting.canRecharge) {
+                window.router.push(item.to + '?wType=' + row.wType);
+            } else {
+                return window.$message({ title: '提示', content: '暂未开启', type: 'primary' });
+            }
+        } else if (item.operation === '提现') {
             window.router.push(item.to);
         } else if (item.operation === '去交易') {
             return window.$message({ title: '提示', content: '暂未开放', type: 'danger' });
