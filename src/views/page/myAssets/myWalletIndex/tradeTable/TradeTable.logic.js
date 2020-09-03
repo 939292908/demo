@@ -26,8 +26,8 @@ module.exports = {
         contractData: [],
         legalData: []
     },
-    navAry: [{ idx: '01', val: '合约账户' }, { idx: '02', val: '币币账户' }],
-    // navAry: [{ idx: '01', val: '合约账户' }, { idx: '02', val: '币币账户' }, { idx: '04', val: '法币账户' }],
+    // navAry: [{ idx: '01', val: '合约账户' }, { idx: '02', val: '币币账户' }],
+    navAry: [{ idx: '01', val: '合约账户' }, { idx: '02', val: '币币账户' }, { idx: '04', val: '法币账户' }],
     coinType: 'wallet',
     tableDateList: 'walletData',
     setPageFlag: function (param) {
