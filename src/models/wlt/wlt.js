@@ -396,10 +396,15 @@ module.exports = {
      * @returns {*|number}
      */
     getPrz(coin) {
-        const AssetD = gWsApi.AssetD;
-        const SymName = utils.getSpotName(AssetD, coin, 'USDT');
-        const InitValue = (this.wallet_obj['03'] && this.wallet_obj['03'][coin] && this.wallet_obj['03'][coin].initValue) || 0;
-        const Prz = (AssetD[SymName] && AssetD[SymName].PrzLatest) || InitValue;
-        return Prz;
+        if (coin === 'USDT') {
+            const InitValue = (this.wallet_obj['03'] && this.wallet_obj['03'][coin] && this.wallet_obj['03'][coin].initValue) || 0;
+            return InitValue;
+        } else {
+            const AssetD = gWsApi.AssetD;
+            const SymName = utils.getSpotName(AssetD, coin, 'USDT');
+            const InitValue = (this.wallet_obj['03'] && this.wallet_obj['03'][coin] && this.wallet_obj['03'][coin].initValue) || 0;
+            const Prz = (AssetD[SymName] && AssetD[SymName].PrzLatest) || InitValue;
+            return Prz;
+        }
     }
 };
