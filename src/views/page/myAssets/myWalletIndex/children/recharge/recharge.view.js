@@ -57,6 +57,7 @@ module.exports = {
                                 m(Tooltip, {
                                     label: m('i', { class: `iconfont icon-Tooltip` }),
                                     content: rechargeIndex.nameTips,
+                                    width: `240px`,
                                     position: 'top'
                                 })
                             ])
