@@ -124,7 +124,7 @@ const model = {
         if (this.canTransferCoin[0]) {
             this.curItem = this.canTransferCoin.find(item => item.id === this.form.coin) || this.canTransferCoin[0];
         }
-        console.log("币种下拉", this.canTransferCoin, wlt);
+        // console.log("币种下拉", this.canTransferCoin, wlt);
     },
     // 初始化 币种下拉value
     initCoinValue() {
