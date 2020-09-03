@@ -3,8 +3,6 @@ const wlt = require('@/models/wlt/wlt');
 const broadcast = require('@/broadcast/broadcast');
 const table = require('@/views/page/myAssets/myWalletIndex/tradeTable/TradeTable.view');
 const transferLogic = require('@/views/page/myAssets/transfer/transfer.logic.js'); // 划转模块逻辑
-// const I18n = require('@/languages/I18n').default;
-let timeOut = null;
 
 const model = {
     currency: 'BTC',
@@ -43,8 +41,8 @@ const model = {
             class: `myCoinSelect`,
             activeId: cb => cb(that.form, 'wType'),
             onClick (item) {
-                that.setCurrency(item.id);
                 broadcast.emit({ cmd: broadcast.CHANGE_SW_CURRENCY, data: item.id });
+                that.setCurrency(item.id);
                 that.sets();
             },
             getList () {
@@ -94,7 +92,7 @@ const model = {
     },
     // 切换我的钱包，交易账户，币币，合约，法币
     switchChange: function (val, type) {
-        console.log('nzm', val);
+        // console.log('nzm', val);
         if (val === 'none') {
             return window.$message({ title: '提示', content: '暂未开放', type: 'danger' });
         }
@@ -208,13 +206,12 @@ const model = {
         m.redraw();
     },
     createFn: function() {
-        timeOut = setTimeout(() => {
+        setTimeout(() => {
             this.sets();
-            m.redraw();
-        }, '100');
+        }, 200);
+        m.redraw();
     },
     removeFn: function() {
-        clearTimeout(timeOut);
         wlt.remove();
     }
 };

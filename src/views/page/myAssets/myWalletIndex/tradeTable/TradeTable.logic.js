@@ -117,8 +117,6 @@ module.exports = {
                 }
             });
         } else if (item.operation === '充值') {
-            console.log(wlt.wallet['03']);
-            console.log(row.Setting.canRecharge);
             if (row.Setting.canRecharge) {
                 window.router.push(item.to + '?wType=' + row.wType);
             } else {

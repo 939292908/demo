@@ -186,17 +186,19 @@ module.exports = {
 
         this.totalCNYValue = utils.toFixedForFloor(this.totalCNYValue, 2);
 
-        // console.log('nzm', 'totalCNYValue', this.totalCNYValue, 'totalValueForUSDT', this.totalValueForUSDT);
-        // console.log('\n');
-        // console.log('nzm', 'tradingAccountTotalValueForBTC', this.tradingAccountTotalValueForBTC, 'tradingAccountTotalValueForUSDT', this.tradingAccountTotalValueForUSDT);
-        // console.log('\n');
-        // console.log('nzm', 'legalTotalValueForBTC', this.legalTotalValueForBTC, 'legalTotalValueForUSDT', this.legalTotalValueForUSDT);
-        // console.log('\n');
-        // console.log('nzm', 'coinTotalValueForBTC', this.coinTotalValueForBTC, 'coinTotalValueForUSDT', this.coinTotalValueForUSDT);
-        // console.log('\n');
-        // console.log('nzm', 'contractTotalValueForBTC', this.contractTotalValueForBTC, 'contractTotalValueForUSDT', this.contractTotalValueForUSDT);
-        // console.log('\n');
-        // console.log('nzm', 'walletTotalValueForBTC', this.walletTotalValueForBTC, 'walletTotalValueForUSDT', this.walletTotalValueForUSDT);
+        console.log('nzm', 'this.wallet', this.wallet);
+        console.log('\n');
+        console.log('nzm', 'totalCNYValue', this.totalCNYValue, 'totalValueForUSDT', this.totalValueForUSDT);
+        console.log('\n');
+        console.log('nzm', 'tradingAccountTotalValueForBTC', this.tradingAccountTotalValueForBTC, 'tradingAccountTotalValueForUSDT', this.tradingAccountTotalValueForUSDT);
+        console.log('\n');
+        console.log('nzm', 'legalTotalValueForBTC', this.legalTotalValueForBTC, 'legalTotalValueForUSDT', this.legalTotalValueForUSDT);
+        console.log('\n');
+        console.log('nzm', 'coinTotalValueForBTC', this.coinTotalValueForBTC, 'coinTotalValueForUSDT', this.coinTotalValueForUSDT);
+        console.log('\n');
+        console.log('nzm', 'contractTotalValueForBTC', this.contractTotalValueForBTC, 'contractTotalValueForUSDT', this.contractTotalValueForUSDT);
+        console.log('\n');
+        console.log('nzm', 'walletTotalValueForBTC', this.walletTotalValueForBTC, 'walletTotalValueForUSDT', this.walletTotalValueForUSDT);
     },
     updWlt: function() {
         const that = this;
