@@ -178,7 +178,7 @@ const extract = {
         const emailParms = {
             seq,
             email: user.email,
-            host: ActiveLine.WebAPI + '/m/#/accounts', // TODO 参数获取
+            host: ActiveLine.WEBSITE + '/m/#/accounts',
             fn: 'wda',
             lang: extract.locale,
             fishCode: user.antiFishCode,
