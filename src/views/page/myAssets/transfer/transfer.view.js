@@ -19,7 +19,48 @@ module.exports = {
             m('div', { class: `form-item` }, [
                 m('div', { class: `form-item-title` }, ['币种']),
                 m('div', { class: `form-item-content` }, [
-                    m(Dropdown, model.getCurrencyMenuOption())
+                    // m(Dropdown, model.getCurrencyMenuOption())
+                    m('div', { class: `my-dropdown dropdown ${model.showCurrencyMenu ? " is-active" : ''}` }, [
+                        // btn
+                        m('div', { class: "dropdown-trigger has-text-1" }, [
+                            m('button', {
+                                class: `button`,
+                                onclick: (e) => {
+                                    // 进入下一次事件队列，先让body事件关闭所有下拉，再开启自己
+                                    setTimeout(() => (model.showCurrencyMenu = true), 0);
+                                }
+                            }, [
+                                m('p', { class: `my-trigger-text` }, [
+                                    m('span', { class: `mr-2` }, model.curItem.label),
+                                    m('span', { class: `has-text-level-4` }, model.curItem.coinName)
+                                ]), // btnText
+                                m('i', { class: "my-trigger-icon iconfont icon-xiala has-text-primary" }) // icon
+                            ])
+                        ]),
+                        // menu
+                        m('div', { class: "dropdown-menu " }, [
+                            m('div', { class: "dropdown-content", style: "max-height: 400px; overflow: auto;" },
+                                model.canTransferCoin.map((item, index) => {
+                                    return m('a', {
+                                        class: `dropdown-item has-hover ${model.form.coin === item.id ? 'has-active' : ''}`,
+                                        key: item.id + index,
+                                        onclick () {
+                                            model.form.coin = item.id; // 修改选中id
+                                            model.curItem = item;
+                                            model.setMaxTransfer(); // 设置 最大划转
+                                            model.showCurrencyMenu = false; // 关闭菜单
+                                        }
+                                    }, [
+                                        m('span', { class: `my-menu-label` }, [
+                                            m('span', { class: `mr-2` }, item.label),
+                                            m('span', { class: `has-text-level-4` }, item.coinName)
+                                        ]),
+                                        m('i', { class: `my-menu-icon iconfont icon-fabijiaoyiwancheng ${model.form.coin === item.id ? '' : 'is-hidden'}` }) // icon
+                                    ]);
+                                })
+                            )
+                        ])
+                    ])
                 ])
             ]),
             // 账户划转
@@ -94,7 +135,7 @@ module.exports = {
                 },
                 // 弹框关闭
                 onClose () {
-                    model.closeTransferModalHandler();
+                    model.handlerCloseTransferModal();
                 },
                 // 插槽
                 slot: {
