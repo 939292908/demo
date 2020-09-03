@@ -75,15 +75,16 @@ module.exports = {
     tradeAccount: ['01', '02', '04'], // 交易账户
     aType: '03', // 子账户 默认为钱包
     filterTime: [],
-    coinList: {
+    coinList: { // 币种列表
         '01': [],
         '02': [],
         '03': [],
         '04': []
     },
-    coin: 'all',
-    type: 'all',
+    coin: 'all', // 币种
+    type: 'all', // 类型
     loading: false,
+    length: -1, // 显示条数
     setLanguageListen() {
         broadcast.onMsg({
             key: 'assetRecords',
@@ -128,9 +129,10 @@ module.exports = {
         this.filterTime = [];
         this.showList = [];
     },
-    init(aType, type = 'all') {
+    init(aType, type = 'all', length = -1) {
         this.aType = aType;
         this.type = type;
+        this.length = length;
         this.coin = 'all';
         this.filterTime = [];
         broadcast.emit({ cmd: 'assetsRecordOnInit' });
@@ -699,6 +701,9 @@ module.exports = {
         this.showList.sort((a, b) => {
             return b.timestamp - a.timestamp;
         });
+        if (this.length !== -1) {
+            this.showList.splice(this.length);
+        }
         m.redraw();
     }
 };

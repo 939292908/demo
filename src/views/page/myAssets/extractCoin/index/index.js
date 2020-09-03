@@ -13,11 +13,12 @@ const Header = require('../../../../components/indexHeader/indexHeader.view');
 const AssetRecords = require('@/models/asset/assetsRecords');
 const assetTable = require('../../assetTable/assetTable.view');
 const Tooltip = require('@/views/components/common/Tooltip/Tooltip.view');
+const I18n = require('@/languages/I18n').default;
 
 require('./index.scss');
 module.exports = {
     oninit() {
-        AssetRecords.init('03', 'withdraw');
+        AssetRecords.init('03', 'withdraw', 10);
         AssetRecords.setLanguageListen();
     },
     onremove() {
@@ -40,7 +41,11 @@ module.exports = {
                                 label: m('i.iconfont.icon-Tooltip.iconfont-large'),
                                 content: '只展示近期十条记录',
                                 hiddenArrows: false
-                            })
+                            }),
+                            m('span.all-records', {
+                                class: `has-text-primary cursor-pointer`,
+                                onclick: () => { window.router.push('/assetRecords'); }
+                            }, I18n.$t('10087') /* '全部记录' */)
                         ]),
                         m('hr.ma-0'),
                         m(assetTable, { class: 'pa-5', list: AssetRecords.showList, loading: AssetRecords.loading })

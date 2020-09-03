@@ -19,7 +19,7 @@ module.exports = {
                 // vnode.attrs.loading
                 //     ? m('div.mt-8.is-loading')
                 //     :
-                m('img', { class: `mt-8`, src: require(`@/assets/img/myAssets/noneData.png`).default, style: { height: `120px`, width: `88px` } })])
+                m('img', { class: `my-8`, src: require(`@/assets/img/myAssets/noneData.png`).default, style: { height: `120px`, width: `88px` } })])
             );
         } else {
             for (const item of vnode.attrs.list) {

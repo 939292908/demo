@@ -10,7 +10,7 @@ const l180n = require('@/languages/I18n').default;
 module.exports = {
     oninit: () => {
         rechargeIndex.initFn();
-        AssetRecords.init('03', 'recharge');
+        AssetRecords.init('03', 'recharge', 10);
         AssetRecords.setLanguageListen();
     },
     oncreate: () => {
