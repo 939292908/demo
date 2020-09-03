@@ -33,6 +33,9 @@ module.exports = {
     setPageFlag: function (param) {
         this.pageFlag = param;
         this.vnode.attrs.setIdx(param);
+
+        console.log(param, 'param');
+
         if (param === '01') {
             this.coinType = 'contract';
             this.tableDateList = 'contractData';
@@ -52,6 +55,16 @@ module.exports = {
         this.initAccountBanlance();
         this.setDataLength(this.tableData[this.tableDateList].length);
         this.searchTableData();
+
+        // console.log('this.dataLength', this.dataLength);
+        // console.log('this.tableDateList', this.tableDateList);
+        // console.log('this.tableData', this.tableData);
+        // 判断暂无数据是否显示
+        if (this.dataLength === 0) {
+            document.getElementsByTagName('table')[0].rows[document.getElementsByTagName('table')[0].rows.length - 1].style.display = '';
+        } else {
+            document.getElementsByTagName('table')[0].rows[document.getElementsByTagName('table')[0].rows.length - 1].style.display = 'none';
+        }
     },
     initAccountBanlance: function() {
         this.accountBanlance = this.currency === 'BTC' ? wlt[this.coinType + 'TotalValueForBTC'] : wlt[this.coinType + 'TotalValueForUSDT'];
@@ -204,6 +217,7 @@ module.exports = {
             cmd: broadcast.MSG_WLT_UPD,
             cb: function () {
                 self.initTableData();
+                self.setPageFlag(vnode.attrs.swValue);
             }
         });
 
@@ -213,13 +227,6 @@ module.exports = {
             this.setPageFlag(currencyIndex);
         } else {
             this.setPageFlag('03');
-        }
-
-        // 判断暂无数据是否显示
-        if (this.dataLength === 0) {
-            document.getElementsByTagName('table')[0].rows[document.getElementsByTagName('table')[0].rows.length - 1].style.display = '';
-        } else {
-            document.getElementsByTagName('table')[0].rows[document.getElementsByTagName('table')[0].rows.length - 1].style.display = 'none';
         }
     },
     updateFn: function(vnode) {
