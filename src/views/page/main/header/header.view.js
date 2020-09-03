@@ -274,7 +274,7 @@ module.exports = {
                             m('article', { class: `media is-align-items-center` }, [
                                 m('div.media-left', {}, [
                                     m('figure.image.is-64x64', {}, [
-                                        m('img', { class: '', src: require("@/assets/img/home/Rectangle_530.png").default })
+                                        m('img', { class: '', src: require("@/assets/img/home/download.png").default })
                                     ])
                                 ]),
                                 m('div', { class: `media-content` }, [
