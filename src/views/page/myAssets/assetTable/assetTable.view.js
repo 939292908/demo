@@ -21,9 +21,7 @@ module.exports = {
         } else {
             for (const item of vnode.attrs.list) {
                 table.push(
-                    m('div.columns.body-4.has-text-level-3.my-7', {
-                        key: item.seq
-                    }, [
+                    m('div.columns.body-4.has-text-level-3.my-7', {}, [
                         m('div.column.is-1', {}, [item.coin]),
                         m('div.column.is-2', {}, [item.des]),
                         m('div.column.is-2', {}, [item.num + ' ' + item.coin]),
