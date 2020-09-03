@@ -54,7 +54,7 @@ const openGView = {
             m('div', { class: `center content-width` }, [
                 m('div', { class: `center-top mt-7` }, [
                     openGView.nav.map(item => {
-                        return m('div', { class: `column my-7 pb-7 ` + (item.id <= openGView.checkFlag ? 'is-active' : '') }, [
+                        return m('div', { class: `column my-7 pb-7 ` + (item.id <= openGView.checkFlag ? 'is-active' : ''), key: item.id }, [
                             m('span', { class: `title-small` }, item.id),
                             m('span', { class: `body-5` }, item.title)
                         ]);

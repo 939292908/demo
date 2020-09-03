@@ -19,58 +19,52 @@ module.exports = {
     qrcodeDisplayFlag: false,
     btnCheckFlag: 0, // 默认选中第一个
     labelTips: '', // 标签提示
+    nameTips: null,
     memo: null, // 是否显示标签
     openChains: null, // 是否显示链名称
     showCurrencyMenu: false, // show币种菜单
+    coinParam: null, // 传过来的币种
+    chains: null, // 链名称
     setPageData() {
         const that = this;
         this.pageData = []; // 初始化
+        that.selectList = []; // 初始化
         this.setUSDTLabel();
         for (const i in wlt.wallet['03']) {
             if (wlt.wallet['03'][i].Setting.canRecharge) { // 能否充值
                 const item = {};
                 const walletI = wlt.wallet['03'][i];
-                that.uId = this.uId || walletI.uid;
+                that.uId = that.uId || walletI.uid;
                 item.canRecharge = walletI.Setting.canRecharge; // 能否充值
                 item.promptRecharge = walletI.promptRecharge; // 充值提示
                 item.openChains = walletI.Setting.openChains;
                 item.wType = walletI.wType; // 币种
                 item.memo = walletI.Setting.memo; // 是否显示标签
-                if (walletI.wType === 'USDT') {
-                    for (const i in walletI.Setting) {
-                        if (i.search('-') !== -1) {
-                            // 去掉为false的链名称
-                            if (!walletI.Setting[i]) {
-                                this.USDTLabel.pop(i.split('-')[1]);
-                            }
-                        }
-                    }
-                }
                 Http.GetRechargeAddr({
                     wType: walletI.wType
                 }).then(function(arg) {
-                    console.log('nzm', 'GetRechargeAddr success', arg);
+                    // console.log('nzm', 'GetRechargeAddr success', arg);
                     item.rechargeAddr = arg.rechargeAddr; // 充币地址
                     item.zh = arg.trade.fullName.zh; // 中文
                     item.en = arg.trade.fullName.en; // 英文
                     item.networkNum = arg.trade.networkNum; // 网络数
                     that.pageData.push(item);
-                    that.form.selectCheck = that.pageData[0].wType;
+                    that.coinParam ? that.form.selectCheck = that.coinParam : that.form.selectCheck = that.pageData[0].wType;
                     that.setTipsAndAddrAndCode();
                     that.selectList.push({ label: walletI.wType + ' | ' + arg.trade.fullName.zh, id: walletI.wType });
 
                     // 数组去重
                     const tempJson = {};
                     const res = [];
-                    if (this.selectList) {
-                        for (let i = 0; i < this.selectList.length; i++) {
-                            tempJson[JSON.stringify(this.selectList[i])] = true; // 取出每一个对象当做key
+                    if (that.selectList) {
+                        for (let i = 0; i < that.selectList.length; i++) {
+                            tempJson[JSON.stringify(that.selectList[i])] = true; // 取出每一个对象当做key
                         }
                         for (let j = 0; j < Object.keys(tempJson).length; j++) {
                             res.push(JSON.parse(Object.keys(tempJson)[j]));
                         }
                     }
-                    this.selectList = res;
+                    that.selectList = res;
 
                     m.redraw();
                 }).catch(function(err) {
@@ -81,18 +75,33 @@ module.exports = {
     },
     setUSDTLabel() {
         const params = { locale: 'zh', vp: Conf.exchId };
+        const that = this;
         webApi.getCoinInfo(params).then(res => {
+            // console.log('nzm', 'getCoinInfo success', res);
             if (res.result.code === 0) {
-                this.USDTLabel = Array.from(res.result.data.USDT.chains);
+                that.chains = Array.from(res.result.data.USDT.chains);
+                that.USDTLabel = Array.from(res.result.data.USDT.chains);
                 const ary = [];
-                for (let i = 0; i < this.USDTLabel.length; i++) {
-                    ary.push(this.USDTLabel[i].name);
+                for (let i = 0; i < that.USDTLabel.length; i++) {
+                    ary.push(that.USDTLabel[i].name);
                 }
-                this.USDTLabel = ary;
-                console.log('nzm', this.USDTLabel);
+                that.USDTLabel = ary;
+                // 需按顺序显示
+                for (const i of wlt.wallet['03']) {
+                    if (i.wType === 'USDT') {
+                        for (const j in i.Setting) {
+                            if (j.search('canRechargeUSDT-') > -1) {
+                                if (!i.Setting[j]) {
+                                    that.USDTLabel = that.USDTLabel.filter((x) => x !== j.split('canRechargeUSDT-')[1]);
+                                }
+                            }
+                        }
+                    }
+                }
             }
         });
     },
+    // 切换币种时的操作
     setTipsAndAddrAndCode() {
         for (const i in this.pageData) {
             if (this.pageData[i].wType === this.form.selectCheck) {
@@ -108,17 +117,17 @@ module.exports = {
                     this.tips = '您只能向此地址充值' + this.form.selectCheck + '，其他资产充入' + this.form.selectCheck + '地址将无法找回' +
                     /* 使用{value1}地址充币需要{value2}个网络确认才能到账 */
                     '*' + l180n.$t('10084', { value1: this.form.selectCheck, value2: networkNum }) +
+                    (this.form.selectCheck === 'EOS' || this.form.selectCheck === 'XRP' ? '*关于标签{value}充币时同时需要一个充币地址和{value}标签。标签是一种保证您的充币地址唯一性的数字串，与充币地址成对出现并一一对应。请您务必遵守正确的{value}充币步骤，在提币时输入完整的信息，否则将面临丢失币的风险！' : '') +
                     /* '默认充入我的钱包，您可以通过“资金划转”将资金转至交易账户或者其他账户' */
                     '*' + l180n.$t('10085');
                 }
-                this.memo = this.pageData[i].memo;
-                this.openChains = this.pageData[i].openChains;
-                this.rechargeAddr = this.pageData[i].rechargeAddr;
-                this.setQrCodeImg();
-                this.setLabelTips();
+                this.memo = this.pageData[i].memo; // 当前选中币种的标签是否显示
+                this.openChains = this.pageData[i].openChains; // 当前选中币种的链名称是否显示
+                this.rechargeAddr = this.pageData[i].rechargeAddr; // 当前选中币种的充币地址
+                this.setQrCodeImg(); // 当前选中币种的二维码
+                this.setLabelTips(); // 当前选中币种的标签提示语句
             }
         }
-        m.redraw();
     },
     setLabelTips() {
         this.labelTips = '充值' + this.form.selectCheck + '同时需要一个充币地址和' + this.form.selectCheck + '标签；警告：如果未遵守正确的' + this.form.selectCheck + '充币步骤，币会有丢失风险！';
@@ -150,6 +159,7 @@ module.exports = {
             onClick (item) {
                 that.setTipsAndAddrAndCode();
                 that.setQrCodeImg();
+                m.redraw();
             },
             getList () {
                 return that.selectList;
@@ -169,9 +179,11 @@ module.exports = {
     },
     changeBtnflag(index, title) {
         this.btnCheckFlag = index;
-        let wType = 'USDT';
-        if (title !== 'Omni') {
-            wType = wType + title;
+        let wType = null;
+        for (const i of this.chains) {
+            if (i.name === title) {
+                wType = i.attr;
+            }
         }
         Http.GetRechargeAddr({
             wType: wType
@@ -184,6 +196,13 @@ module.exports = {
         });
     },
     initFn: function () {
+        // 获取当前网址，如：http://localhost:8080/#!/recharge?wType=USDT
+        const currencyType = window.document.location.href.toString().split('=')[1];
+        if (currencyType) {
+            this.coinParam = currencyType;
+            this.setPageData();
+        }
+        this.nameTips = 'USDT-ERC20是Tether泰达公司基于ETH网络发行的USDT，充币地址是ETH地址，充提币走ETH网络，USDT-ERC20使用的是ERC20协议。USDT-TRC20(USDT-TRON)是Tether泰达公司基于TRON网络发行的USDT，充币地址是TRON地址，充提币走TRON网络，USDT-TRC20(USDT-TRON)使用的是TRC20协议。USDT-Omni是Tether泰达公司基于BTC网络发行的USDT，充币地址是BTC地址，充提币走BTC网络，USDT-Omni使用的协议是建立在BTC区块链网络上的omni layer 议。';
         wlt.init();
         if (!wlt.wallet['03'].toString()) {
             broadcast.onMsg({
