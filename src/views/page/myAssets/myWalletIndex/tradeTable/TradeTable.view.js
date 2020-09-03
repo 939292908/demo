@@ -11,7 +11,7 @@ module.exports = {
         t.createFn(vnode);
     },
     view(vnode) {
-        return m('div', { class: `views-pages-Myassets-Table pt-7 px-5` }, [
+        return m('div', { class: `views-pages-Myassets-Table pt-7 px-5 has-bg-level-2` }, [
             m('div.tradingAccount mb-8 tabs', { style: { display: vnode.attrs.swValue === '01' || vnode.attrs.swValue === '02' || vnode.attrs.swValue === '04' ? '' : 'none' } }, [
                 m('ul.tradingAccount_nav mx-5', { }, [
                     t.navAry.map((item) => {
@@ -20,15 +20,15 @@ module.exports = {
                 ])
             ]),
             m('div', { class: `nav mb-3 pr-5` }, [
-                m('div.search mr-7', {}, [
+                m('div.search mr-7 has-line-level-3', {}, [
                     m('input', {
-                        class: `has-line-level-3 border-radius-small py-1 pl-1 coinSearch`,
+                        class: `border-radius-small py-1 pl-1 coinSearch`,
                         placeholder: `币种搜索`,
                         oninput: function () {
                             t.searchTableData();
                         }
                     }),
-                    m('i', { class: `iconfont icon-Search` })
+                    m('i', { class: `iconfont icon-Search has-text-level-4` })
                 ]),
                 m('div.hideZeroAsset mr-7', {}, [
                     m('input', { id: `color-input-gray`, class: `color-input-gray`, type: `checkbox`, checked: t.hideZeroFlag, onchange: () => { t.setHideZeroFlag(); } }),

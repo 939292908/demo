@@ -22,15 +22,15 @@ module.exports = {
                         m('div', { class: `myWalletIndex-head columns-flex mt-7` }, [
                             m('div', { class: `myWalletIndex-head-left column` }, [
                                 m('div', { class: `myWalletIndex-head-left-total columns pt-3` }, [
-                                    m('span', { class: `body-6 pt-2`, style: `color:white` }, [`总资产估值`]),
+                                    m('span', { class: `body-6 pt-2 has-text-white` }, [`总资产估值`]),
                                     m('div', { class: `form-item-content border-radius-medium mt-2 mb-7` }, [
                                         m(Dropdown, myWalletIndex.getCurrencyMenuOption())
                                     ])
                                 ]),
-                                m('div', { class: `number-hide`, style: `color:white;` }, [
+                                m('div', { class: `number-hide has-text-white` }, [
                                     m('span', { class: `title-large` }, [myWalletIndex.hideMoneyFlag ? '******' : myWalletIndex.totalValue]),
                                     m('span', { class: `title-large` }, [` ` + myWalletIndex.currency]),
-                                    m('i', { class: (myWalletIndex.hideMoneyFlag ? `iconfont icon-zichanzhengyan` : `iconfont icon-yincang`) + ` changeMoneyImg pl-2 cursor-pointer`, onclick: () => { myWalletIndex.hideValue(); }, style: { color: '#585E71' } }),
+                                    m('i', { class: (myWalletIndex.hideMoneyFlag ? `iconfont icon-zichanzhengyan` : `iconfont icon-yincang`) + ` changeMoneyImg pl-2 cursor-pointer has-text-level-3`, onclick: () => { myWalletIndex.hideValue(); } }),
                                     m('br'),
                                     m('span', { class: `has-text-level-4` }, [`≈ `]),
                                     m('span', { class: `has-text-level-4` }, [myWalletIndex.hideMoneyFlag ? '******' : myWalletIndex.totalCNY]),

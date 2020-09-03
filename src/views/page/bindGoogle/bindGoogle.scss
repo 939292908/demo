@@ -17,7 +17,6 @@
         input{
             width: 384px;
             height: 44px;
-            border: 1px solid rgba(30, 40, 70, 0.12);
             outline: none;
         }
     }
@@ -34,7 +33,6 @@
 }
 .views-page-accountSecurity-bindGoogle-open{
     .center{
-        background-color: white;
         margin: 0 auto;
         .center-top{
             display: flex;
@@ -45,7 +43,6 @@
                 text-align: center;
             }
             .is-active{
-                color: #FF8B00;
                 border-bottom: 2px solid #FF8B00;
             }
         }
@@ -75,16 +72,10 @@
                     height: 120px;
                     margin: 0 auto;
                 }
-                .desc2{
-                    color: #919EAC;
-                }
                 .key{
                     input{
                         outline: none;
                         border: none;
-                    }
-                    i{
-                        color: #FF8B00;
                     }
                 }
             }   
@@ -95,9 +86,6 @@
                     input{
                         outline: none;
                         border: none;
-                    }
-                    i{
-                        color: #FF8B00;
                     }
                 }
             }
@@ -113,7 +101,6 @@
             border-top: 1px solid rgba(10, 13, 22, 0.04);
             .prev{
                 border: 1px solid #FF8B00;
-                background-color: white;
                 float: left;
             }
             button{
@@ -134,13 +121,9 @@
             height: 36px;
             background: rgba(255, 139, 0, 0.08);
             border: 1px solid rgba(255, 139, 0, 0.2);
-            i{
-                color: #FF8B00;
-            }
             line-height: 36px;
         }
         .closeOperation{
-            background-color: white;
             height: 400px;
         }
     }

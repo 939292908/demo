@@ -48,7 +48,8 @@ module.exports = {
                                 })
                             ])
                         ]),
-                        m('div', { class: `mt-2 px-2 has-text-primary border-radius-small uid` }, rechargeIndex.uId)
+                        // m('div', { class: `mt-2 px-2 has-text-primary border-radius-small uid` }, rechargeIndex.uId)
+                        m('div', { class: `mt-2 px-2 has-text-primary border-radius-small tag is-primary is-light uid` }, rechargeIndex.uId)
                     ]),
                     m('div', { class: `usdtLable mb-7`, style: { display: rechargeIndex.openChains ? (rechargeIndex.form.selectCheck === 'USDT' ? '' : 'none') : 'none' } }, [
                         m('div', { class: `labeltip` }, [
