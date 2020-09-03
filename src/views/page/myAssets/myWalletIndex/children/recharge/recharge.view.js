@@ -53,7 +53,7 @@ module.exports = {
                         m('div', { class: `mt-2` }, [
                             rechargeIndex.USDTLabel.map((item, index) => {
                                 return m('button', {
-                                    class: `mr-6 cursor-pointer ` + (rechargeIndex.btnCheckFlag === index ? `has-bg-primary` : `noneBG`),
+                                    class: `mr-6 button button-small is-primary` + (rechargeIndex.btnCheckFlag === index ? `` : ` is-outlined`),
                                     key: item,
                                     onclick: () => { rechargeIndex.changeBtnflag(index, item); }
                                 }, item);
