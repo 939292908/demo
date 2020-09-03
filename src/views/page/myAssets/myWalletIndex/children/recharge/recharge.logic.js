@@ -65,6 +65,8 @@ module.exports = {
                         }
                     }
                     that.selectList = res;
+                    // that.selectList = new Set(that.selectList);
+                    // console.log(that.selectList);
 
                     m.redraw();
                 }).catch(function(err) {

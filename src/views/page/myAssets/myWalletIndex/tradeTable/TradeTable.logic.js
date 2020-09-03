@@ -141,25 +141,25 @@ module.exports = {
     },
     searchTableData: function () {
         const that = this;
-        setTimeout(() => {
-            const tbody = document.getElementsByTagName('table')[0].childNodes[1];
-            const rowsLength = tbody.rows.length - 1; // tbody.rows.length - 1：最后一行是暂无数据
-            const index = [];
-            if (that.hideZeroFlag) {
-                for (let i = 0; i < rowsLength; i++) {
-                    if (tbody.rows[i].style.display !== 'none') {
-                        index.push(i);
-                    } else {
-                        continue;
-                    }
-                }
-            } else {
-                for (let i = 0; i < rowsLength; i++) {
+        // setTimeout(() => {
+        const tbody = document.getElementsByTagName('table')[0].childNodes[1];
+        const rowsLength = tbody.rows.length - 1; // tbody.rows.length - 1：最后一行是暂无数据
+        const index = [];
+        if (that.hideZeroFlag) {
+            for (let i = 0; i < rowsLength; i++) {
+                if (tbody.rows[i].style.display !== 'none') {
                     index.push(i);
+                } else {
+                    continue;
                 }
             }
-            that.search(index);
-        }, 50);
+        } else {
+            for (let i = 0; i < rowsLength; i++) {
+                index.push(i);
+            }
+        }
+        that.search(index);
+        // }, 50);
     },
     oldAry: [],
     search: function (ary) {
@@ -182,7 +182,9 @@ module.exports = {
             }
         }
     },
-    createFn: function () {
+    createFn: function (vnode) {
+        const self = this;
+        this.vnode = vnode;
         broadcast.onMsg({
             key: 'view-pages-Myassets-TablegB',
             cmd: broadcast.CHANGE_SW_CURRENCY,
@@ -190,33 +192,35 @@ module.exports = {
                 this.setCurrency(arg);
             }
         });
-    },
-    initFn: function (vnode) {
-        this.vnode = vnode;
         this.oldHideMoneyFlag = vnode.attrs.hideMoneyFlag;
-        setTimeout(() => {
-            // 初始化表头
-            this.initColumnData();
-            // 初始化表格数据（表身）
-            this.initTableData();
-            // 初始化交易账户各账户名称与估值
-            this.initAccountBanlance();
-
-            // 获取当前网址，如：http://localhost:8080/#!/myWalletIndex?id=03
-            const currencyIndex = window.document.location.href.toString().split('=')[1];
-            if (currencyIndex === '03' || currencyIndex === '02' || currencyIndex === '01' || currencyIndex === '04') {
-                this.setPageFlag(currencyIndex);
-            } else {
-                this.setPageFlag('03');
+        // 初始化表头
+        this.initColumnData();
+        // 初始化表格数据（表身）
+        this.initTableData();
+        // 初始化交易账户各账户名称与估值
+        this.initAccountBanlance();
+        broadcast.onMsg({
+            key: 'view-pages-Myassets-TablegB',
+            cmd: broadcast.MSG_WLT_UPD,
+            cb: function () {
+                self.initTableData();
             }
+        });
 
-            // 判断暂无数据是否显示
-            if (this.dataLength === 0) {
-                document.getElementsByTagName('table')[0].rows[document.getElementsByTagName('table')[0].rows.length - 1].style.display = '';
-            } else {
-                document.getElementsByTagName('table')[0].rows[document.getElementsByTagName('table')[0].rows.length - 1].style.display = 'none';
-            }
-        }, 200);
+        // 获取当前网址，如：http://localhost:8080/#!/myWalletIndex?id=03
+        const currencyIndex = window.document.location.href.toString().split('=')[1];
+        if (currencyIndex === '03' || currencyIndex === '02' || currencyIndex === '01' || currencyIndex === '04') {
+            this.setPageFlag(currencyIndex);
+        } else {
+            this.setPageFlag('03');
+        }
+
+        // 判断暂无数据是否显示
+        if (this.dataLength === 0) {
+            document.getElementsByTagName('table')[0].rows[document.getElementsByTagName('table')[0].rows.length - 1].style.display = '';
+        } else {
+            document.getElementsByTagName('table')[0].rows[document.getElementsByTagName('table')[0].rows.length - 1].style.display = 'none';
+        }
     },
     updateFn: function(vnode) {
         if (this.oldValue !== vnode.attrs.swValue) {

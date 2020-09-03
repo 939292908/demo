@@ -1,11 +1,10 @@
 const m = require('mithril');
 const t = require('@/views/page/myAssets/myWalletIndex/tradeTable/TradeTable.logic');
-// console.log(t);
 require('@/views/page/myAssets/myWalletIndex/tradeTable/TradeTable.scss');
 
 module.exports = {
     oninit(vnode) {
-        t.initFn(vnode);
+        // t.initFn(vnode);
     },
     oncreate: (vnode) => {
         t.createFn(vnode);
@@ -33,11 +32,13 @@ module.exports = {
                 m('div.hideZeroAsset mr-7', {}, [
                     m('input', { id: `color-input-gray`, class: `color-input-gray`, type: `checkbox`, checked: t.hideZeroFlag, onchange: () => { t.setHideZeroFlag(); } }),
                     m('label', { for: `color-input-gray` }),
+                    // m('label', { class: `checkbox` }, [
+                    // m('input、', { type: `checkbox` }),
+                    // ]),
                     m('span', { class: `ml-2` }, `隐藏0资产`)
                 ]),
                 m('div.fundRecords mr-7', {}, [
                     m('i', { class: 'iconfont icon-AssetRecord' }),
-                    // m('i', { class: 'iconfont', value: `${nzm}` }),
                     m('span', [`资金记录`])
                 ]),
                 m('div.profit', { style: { display: t.coinType === `contract` ? `none` : `none` } }, [

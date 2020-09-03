@@ -126,12 +126,12 @@ const model = {
                 // 跳转至哪个链接
                 to: '/extractCoin'
             },
-            // {
-            //     id: 3,
-            //     title: '内部转账',
-            //     // 跳转至哪个链接
-            //     to: ''
-            // },
+            {
+                id: 3,
+                title: '内部转账',
+                // 跳转至哪个链接
+                to: ''
+            },
             {
                 id: 4,
                 title: '资金划转',
@@ -210,6 +210,13 @@ const model = {
         broadcast.onMsg({
             key: this.currency,
             cmd: broadcast.MSG_WLT_READY,
+            cb: function () {
+                self.sets();
+            }
+        });
+        broadcast.onMsg({
+            key: this.currency,
+            cmd: broadcast.MSG_WLT_UPD,
             cb: function () {
                 self.sets();
             }
