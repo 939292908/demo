@@ -19,6 +19,7 @@ module.exports = {
     qrcodeDisplayFlag: false,
     btnCheckFlag: 0, // 默认选中第一个
     labelTips: '', // 标签提示
+    nameTips: null,
     memo: null, // 是否显示标签
     openChains: null, // 是否显示链名称
     showCurrencyMenu: false, // show币种菜单
@@ -194,6 +195,7 @@ module.exports = {
             this.coinParam = currencyType;
             this.setPageData();
         }
+        this.nameTips = 'USDT-ERC20是Tether泰达公司基于ETH网络发行的USDT，充币地址是ETH地址，充提币走ETH网络，USDT-ERC20使用的是ERC20协议。USDT-TRC20(USDT-TRON)是Tether泰达公司基于TRON网络发行的USDT，充币地址是TRON地址，充提币走TRON网络，USDT-TRC20(USDT-TRON)使用的是TRC20协议。USDT-Omni是Tether泰达公司基于BTC网络发行的USDT，充币地址是BTC地址，充提币走BTC网络，USDT-Omni使用的协议是建立在BTC区块链网络上的omni layer 议。';
         wlt.init();
         if (!wlt.wallet['03'].toString()) {
             broadcast.onMsg({
