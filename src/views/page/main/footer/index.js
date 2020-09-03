@@ -206,7 +206,7 @@ module.exports = {
                             // 子菜单
                             m('ul', { class: `${methods.openMenuIdList.some(id => id === item.id) || !utils.isMobile() ? '' : 'is-hidden'}` }, item.list.map((item1, index1) => {
                                 return m('li', { class: `body-4 has-text-white  has-text-primary-hover has-text-level-2`, onclick: () => methods.handlerMenuClick(item1), key: 'item1' + index1 }, [
-                                    (item1.render && item1.render()) || item1.label
+                                    m('span.curPri', (item1.render && item1.render()) || item1.label)
                                 ]);
                             }))
                         ]);

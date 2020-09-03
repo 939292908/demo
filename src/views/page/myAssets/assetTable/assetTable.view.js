@@ -15,7 +15,9 @@ module.exports = {
             ])
         );
         if (!vnode.attrs.list.length) {
-            table.push(m('div.is-align-items-center.ma-8.pa-8', {}, ['暂无数据']));
+            table.push(m('div.is-align-items-center', {}, [
+                m('img', { class: `mt-8`, src: require(`@/assets/img/myAssets/noneData.png`).default, style: { height: `120px`, width: `88px` } })])
+            );
         } else {
             for (const item of vnode.attrs.list) {
                 table.push(
@@ -34,7 +36,7 @@ module.exports = {
                                     }
                                 },
                                 [I18n.$t('10096')/* '详情' */, m('i.iconfont', { class: item.showInfo ? 'icon-xiala' : 'icon-xiala' }, [])])
-                                : '--'
+                                : '─ ─'
                         ])
                     ])
                 );

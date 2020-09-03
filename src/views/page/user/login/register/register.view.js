@@ -39,9 +39,7 @@ module.exports = {
                                         },
                                         onkeyup: e => {
                                             if (e.keyCode === 13) {
-                                                Register.type === 'phone'
-                                                    ? window.validate.checkSmsCode(Register.code)
-                                                    : window.validate.checkEmailCode(Register.code);
+                                                Register.checkCode();
                                             }
                                         },
                                         maxlength: '6',
@@ -115,6 +113,9 @@ module.exports = {
                                         Register.loginName = e.target.value;
                                         Register.showLoginNameValidate = true;
                                     },
+                                    onblur: e => {
+                                        Register.showLoginNameValidate = true;
+                                    },
                                     value: Register.loginName
                                 }, []),
                             m('div.body-3.mt-2.has-text-tip-error', {
@@ -128,9 +129,9 @@ module.exports = {
                                     type: Register.showPassword ? 'text' : 'password',
                                     oninput: e => {
                                         Register.password = e.target.value;
+                                        Register.showPasswordValidate = true;
                                     },
                                     onkeyup: e => {
-                                        Register.showPasswordValidate = true;
                                         if (e.keyCode === 13) {
                                             Register.submit();
                                         }

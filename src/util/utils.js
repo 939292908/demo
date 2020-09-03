@@ -342,4 +342,24 @@ utils.queryParams = function (key) {
     return null;
 };
 
+// 初始化script标签
+utils.createScript = function({ src, type = 'text/javascript', id, async = true, cb, errcb }) {
+    const script = document.createElement('script');
+    script.id = id || Date.now();
+    script.type = type;
+    script.async = async;
+    script.src = src;
+    script.onerror = function() {
+        errcb && errcb();
+    };
+    script.onload = script.onreadystatechange = function() {
+        if (!this.readyState || this.readyState === 'loaded' ||
+            this.readyState === 'complete') {
+            cb && cb();
+            script.onload = script.onreadystatechange = null;
+        }
+    };
+    document.getElementsByTagName('head')[0].appendChild(script);
+};
+
 export default utils;

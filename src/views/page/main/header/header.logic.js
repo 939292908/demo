@@ -16,7 +16,7 @@ const header = {
             utils.setItem('loginState', false);
             globalModels.setAccount({});
 
-            window.router.checkRoute(window.router.path);
+            window.router.checkRoute({ path: window.router.path });
             broadcast.emit({
                 cmd: broadcast.MSG_LOG_OUT,
                 data: {

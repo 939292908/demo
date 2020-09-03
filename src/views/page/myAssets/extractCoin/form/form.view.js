@@ -53,8 +53,8 @@ module.exports = {
                     m('div.control changeCoin', [
                         m('div.select is-fullwidth', m('select.border-radius-small body-5', { onchange: this.handleSelectChange }, [
                             FromDataMode.selectList && FromDataMode.selectList.map(item => m('option', `${item.wType} | ${item.fullNameAddLeez}`))
-                        ])),
-                        m('i.iconfont icon-xiala')
+                        ]))
+                        // m('i.iconfont icon-xiala')
                     ])
                 ]),
                 FromDataMode.currentSelect.Setting && FromDataMode.currentSelect.Setting.memo ? m('div.formModule', [
