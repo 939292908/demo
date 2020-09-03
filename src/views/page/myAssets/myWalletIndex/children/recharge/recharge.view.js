@@ -41,7 +41,7 @@ module.exports = {
                     ]),
                     m('div', { class: `usdtLable mb-7`, style: { display: rechargeIndex.openChains ? (rechargeIndex.form.selectCheck === 'USDT' ? '' : 'none') : 'none' } }, [
                         m('div', { class: `labeltip` }, [
-                            m('span', {}, l180n.$t('10110') /* '链名称' */),
+                            m('span', {}, l180n.$t('10100') /* '链名称' */),
                             m('div.navbar-item.cursor-pointer', { class: `has-text-primary-hover` }, [
                                 m(Tooltip, {
                                     label: m('i', { class: `iconfont icon-Tooltip` }),
@@ -54,6 +54,7 @@ module.exports = {
                             rechargeIndex.USDTLabel.map((item, index) => {
                                 return m('button', {
                                     class: `mr-6 cursor-pointer ` + (rechargeIndex.btnCheckFlag === index ? `has-bg-primary` : `noneBG`),
+                                    key: item,
                                     onclick: () => { rechargeIndex.changeBtnflag(index, item); }
                                 }, item);
                             })
@@ -85,7 +86,7 @@ module.exports = {
                     m('div', { class: `tips` }, [
                         m('span', { class: `body-5` }, l180n.$t('10082') /* '温馨提示' */),
                         m('br'),
-                        rechargeIndex.tips.split('*').map((item, index) => m(`span.pb-1 body-4`, { class: index === 0 ? `has-text-primary` : `` }, '*' + item))
+                        rechargeIndex.tips.split('*').map((item, index) => m(`span.pb-1 body-4`, { class: index === 0 ? `has-text-primary` : ``, key: item }, '*' + item))
                     ])
                 ]),
                 m('div.bottom-tab.has-bg-level-2.mt-5.pt-3', {}, [
