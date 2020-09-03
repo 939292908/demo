@@ -50,7 +50,7 @@ module.exports = {
         return m('div.page-extract-coin-from border-radius-small has-bg-level-2', [
             m('div.form-block', [
                 m('div.formModule', [
-                    m('div.label has-text-title body-5', l180n.$t('10063') /* '币种' */),
+                    m('div.topLabel has-text-title body-5', l180n.$t('10063') /* '币种' */),
                     m('div.control changeCoin', [
                         m('div.select is-fullwidth', m('select.border-radius-small body-5', { onchange: this.handleSelectChange }, [
                             FromDataMode.selectList && FromDataMode.selectList.map(item => m('option', `${item.wType} | ${item.fullNameAddLeez}`))
@@ -59,7 +59,7 @@ module.exports = {
                     ])
                 ]),
                 FromDataMode.currentSelect.Setting && FromDataMode.currentSelect.Setting.memo ? m('div.formModule', [
-                    m('div.label has-text-title body-5', [
+                    m('div.topLabel has-text-title body-5', [
                         m('span', l180n.$t('10098') /* '标签' */),
                         m(Tooltip, { label: m('i.iconfont icon-Tooltip'), content: l180n.$t('10399') /* 填写错误可能导致资产丢失，请仔细核对 */ })
                     ]),
@@ -68,7 +68,7 @@ module.exports = {
                     ])
                 ]) : null,
                 FromDataMode.linkButtonList.length > 0 ? m('div.formModule', [
-                    m('div.label has-text-title body-5', [
+                    m('div.topLabel has-text-title body-5', [
                         m('span', l180n.$t('10100') /* '链名称' */),
                         m(Tooltip, { label: m('i.iconfont icon-Tooltip'), content: `USDT-ERC20是Tether泰达公司基于ETH网络发行的USDT，充币地址是ETH地址，充提币走ETH网络，USDT-ERC20使用的是ERC20协议。'USDT-TRC20(USDT-TRON)是Tether泰达公司基于TRON网络发行的USDT，充币地址是TRON地址，充提币走TRON网络，USDT-TRC20(USDT-TRON)使用的是TRC20协议。'USDT-Omni是Tether泰达公司基于BTC网络发行的USDT，充币地址是BTC地址，充提币走BTC网络，USDT-Omni使用的协议是建立在BTC区块链网络上的omni layer 协议。` })
                     ]),
@@ -77,14 +77,14 @@ module.exports = {
                     ])
                 ]) : null,
                 m('div.formModule', [
-                    m('div.label has-text-title body-5', l180n.$t('10103') /* '提币地址' */),
+                    m('div.topLabel has-text-title body-5', l180n.$t('10103') /* '提币地址' */),
                     m('div.control address', [
                         m('input.input body-5 border-radius-small', { type: 'text', placeholder: '', onchange: this.handleAddressVal, value: FromDataMode.extractCoin.address })
                     ]),
                     FromDataMode.errorShow.address.show ? m('div.errorToTal body-4', '地址错误') : null
                 ]),
                 m('div.formModule', [
-                    m('div.label has-text-title body-5', [
+                    m('div.topLabel has-text-title body-5', [
                         m('span', l180n.$t('10089') /* '数量' */),
                         m(Tooltip, { label: m('i.iconfont icon-Tooltip'), content: l180n.$t('10406') })
                     ]),

@@ -12,7 +12,8 @@ console.log(require('@/api'));
 const extract = {
     locale: '',
     name: 'FROM_DATA',
-    promptText: '如果您希望将本地数字资产提出至某地址，则该地址及为您的提币地址。 *某些地址可能需要您提供地址的标签，请务必填写，否则有丢失币的风险 *填写错误可能导致资产损失，请仔细核对 *完成LV3身份认证后，24h提币额度提升至100BTC，如需更多请联系客服',
+    promptText: l180n.$t('10407'),
+    // promptText: '如果您希望将本地数字资产提出至某地址，则该地址及为您的提币地址。 *某些地址可能需要您提供地址的标签，请务必填写，否则有丢失币的风险 *填写错误可能导致资产损失，请仔细核对 *完成LV3身份认证后，24h提币额度提升至100BTC，如需更多请联系客服',
     UserInfo: {},
     selectList: [],
     linkButtonList: [],
@@ -128,7 +129,7 @@ const extract = {
             BTCNum = Number(usableCoin * price / btcPrice).toFixed(8);
         }
         if (BTCNum > 2) return this.getExtractableNum(BTCNum);
-        this.currentExtractableNum = usableCoin;
+        this.currentExtractableNum = Number(usableCoin).toFixed(8);
     },
     getBTCToCoin: function (BTCNum) {
         const price = wlt.getPrz(this.currentSelect.wType);
@@ -240,7 +241,7 @@ const extract = {
         // m.redraw();
     },
     handleUserCanAction: function () {
-        if (!this.UserInfo.setting2fa.email || (!this.UserInfo.setting2fa.google && !this.UserInfo.setting2fa.phone)) return this.handleTotalShow({ content: l180n.$t('10404') + l180n.$t('10403') /* '提币需邮件确认，请先绑定邮箱 为了您的账户安全，还需绑定手机或谷歌' */, isLinshiErWeiMa: true });
+        if (!this.UserInfo.setting2fa.email || (!this.UserInfo.setting2fa.google && !this.UserInfo.setting2fa.phone)) return this.handleTotalShow({ content: l180n.$t('10404') + l180n.$t('10403') + '。' /* '提币需邮件确认，请先绑定邮箱 为了您的账户安全，还需绑定手机或谷歌' */, isLinshiErWeiMa: true });
         // 二期使用
         if (!this.UserInfo.setting2fa.email) return this.handleTotalShow({ content: l180n.$t('10404') /* '提币需邮件确认，请先绑定邮箱' */, buttonText: l180n.$t('10229') /* '邮箱验证' */, buttonClick: () => { m.route.set("/my"); } });
         const doubleButtonCof = [
