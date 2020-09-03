@@ -2,6 +2,22 @@
     此文件用于放规范内颜色相关公用样式
 */
 /* 主题样式 start */
+
+// 滚动条
+::-webkit-scrollbar-track-piece {
+    background: transparent;
+}
+
+::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--c-background-darken3);
+    border-radius: 20px;
+}
+
 /* 黑夜 */
 .theme--dark {
     background-color: var(--c-background-darken);
@@ -308,6 +324,23 @@
 /* 遮罩层颜色 start */
 .theme--dark .has-mode {
     background-color: var(--c-mode-darken);
+}
+
+// 滚动条
+.theme--dark {
+    ::-webkit-scrollbar-track-piece {
+        background: transparent;
+    }
+
+    ::-webkit-scrollbar {
+        width: 10px;
+        height: 10px;
+    }
+
+    ::-webkit-scrollbar-thumb {
+        background: var(--c-background-darken3);
+        border-radius: 20px;
+    }
 }
 
 /* 遮罩层颜色 end */
@@ -630,6 +663,23 @@
 
 /* 遮罩层颜色 end */
 
+// 滚动条
+.theme--light {
+    ::-webkit-scrollbar-track-piece {
+        background: transparent;
+    }
+
+    ::-webkit-scrollbar {
+        width: 10px;
+        height: 10px;
+    }
+
+    ::-webkit-scrollbar-thumb {
+        background: var(--c-background-lighten3);
+        border-radius: 20px;
+    }
+}
+
 /* light UI库样式覆盖 end */
 
 
@@ -677,21 +727,6 @@ $primary-lighten: #FF8B00;
 /* 阴影 */
 .box-shadow {
     box-shadow: 0 0.5em 1em -0.125em rgba(10, 10, 10, 0.1), 0 0px 0 1px rgba(10, 10, 10, 0.02);
-}
-
-// 滚动条
-::-webkit-scrollbar-track-piece {
-    background: transparent;
-}
-
-::-webkit-scrollbar {
-    width: 10px;
-    height: 10px;
-}
-
-::-webkit-scrollbar-thumb {
-    background: var(--c-background-darken3);
-    border-radius: 20px;
 }
 
 // 透明度
