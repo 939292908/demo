@@ -75,16 +75,15 @@ module.exports = {
             }
         });
 
-        if (Object.keys(that.wltFullName).length < 1) {
-            that.getCoinquanname();
-        }
+        // if (Object.keys(that.wltFullName).length < 1) {
+        //     that.getCoinquanname();
+        // }
         if (Object.keys(that.coinInfo).length < 1) {
-            that.getCoinInfo();
+            that.getCoinquanname();
+        } else {
+            // 更新资产
+            this.updWlt();
         }
-        console.log(that);
-
-        // 更新资产
-        this.updWlt();
     },
     remove: function () {
         broadcast.offMsg({
@@ -235,7 +234,7 @@ module.exports = {
                     that.wltFullName[item.coin] = item;
                 });
             }
-        }).catch(e => { console.log(e, '获取coin全称失败'); });
+        }).catch(e => { console.log(e, '获取coin全称失败'); }).finally(res => { that.getCoinInfo(); });
     },
     getCoinInfo: function () {
         const that = this;
@@ -244,7 +243,7 @@ module.exports = {
             if (res.result.code === 0) {
                 that.coinInfo = res.result.data;
             }
-        });
+        }).finally(res => { that.updWlt(); });
     },
     setWallet(data) {
         this.wallet['01'] = data.assetLists01; // 合约资产
