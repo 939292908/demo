@@ -3,10 +3,14 @@ const broadcast = require('@/broadcast/broadcast');
 const gWsApi = require('@/api').wsApi;
 const utils = require('@/util/utils').default;
 const ActiveLine = require('@/api').ActiveLine;
+const { Conf } = require('@/api');
+const l180n = require('@/languages/I18n').default;
 
 module.exports = {
     name: "modelsForWlt",
     wltItemEx: {}, // 资产数据处理中间量
+    coinInfo: {}, // 币种简介
+    wltFullName: {}, // 币种简介 --- 添加全称使用
     wallet_obj: {
         '01': {}, // 合约账户
         '02': {}, // 币币账户
@@ -71,8 +75,15 @@ module.exports = {
             }
         });
 
-        // 更新资产
-        this.updWlt();
+        // if (Object.keys(that.wltFullName).length < 1) {
+        //     that.getCoinquanname();
+        // }
+        if (Object.keys(that.coinInfo).length < 1) {
+            that.getCoinquanname();
+        } else {
+            // 更新资产
+            this.updWlt();
+        }
     },
     remove: function () {
         broadcast.offMsg({
@@ -215,6 +226,26 @@ module.exports = {
         }).catch(function(err) {
             console.log('ht', 'getWallet error', err);
         });
+    },
+    getCoinquanname: function (arg) {
+        const that = this;
+        const params = { locale: l180n.getLocale(), vp: Conf.exchId };
+        Http.getCurrenciesIntro(params).then(res => {
+            if (res.result.code === 0) {
+                res.result.data.forEach(item => {
+                    that.wltFullName[item.coin] = item;
+                });
+            }
+        }).catch(e => { console.log(e, '获取coin全称失败'); }).finally(res => { that.getCoinInfo(); });
+    },
+    getCoinInfo: function () {
+        const that = this;
+        const params = { locale: l180n.getLocale(), vp: Conf.exchId };
+        Http.getCoinInfo(params).then(res => {
+            if (res.result.code === 0) {
+                that.coinInfo = res.result.data;
+            }
+        }).finally(res => { that.updWlt(); });
     },
     setWallet(data) {
         this.wallet['01'] = data.assetLists01; // 合约资产

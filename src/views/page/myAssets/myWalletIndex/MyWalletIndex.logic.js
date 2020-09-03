@@ -3,6 +3,7 @@ const wlt = require('@/models/wlt/wlt');
 const broadcast = require('@/broadcast/broadcast');
 const table = require('@/views/page/myAssets/myWalletIndex/tradeTable/TradeTable.view');
 const transferLogic = require('@/views/page/myAssets/transfer/transfer.logic.js'); // 划转模块逻辑
+// const I18n = require('@/languages/I18n').default;
 
 const model = {
     currency: 'BTC',
@@ -30,7 +31,7 @@ const model = {
         wType: '' // 当前币种选中值
     },
     // 币种 菜单配置
-    getCurrencyMenuOption() {
+    getCurrencyMenuOption: function () {
         const that = this;
         return {
             evenKey: `myWalletIndex${Math.floor(Math.random() * 10000)}`,
@@ -92,7 +93,6 @@ const model = {
     },
     // 切换我的钱包，交易账户，币币，合约，法币
     switchChange: function (val, type) {
-        // console.log('nzm', val);
         if (val === 'none') {
             return window.$message({ title: '提示', content: '暂未开放', type: 'danger' });
         }
@@ -193,6 +193,7 @@ const model = {
     },
     initFn: function() {
         wlt.init();
+
         this.form.wType = this.selectOp[0].id;
         // 获取当前网址，如：http://localhost:8080/#!/myWalletIndex?id=03
         const currencyIndex = window.document.location.href.toString().split('=')[1];
@@ -203,6 +204,19 @@ const model = {
             this.switchChange('03');
             this.setSwValue('03');
         }
+
+        // const self = this;
+        // if (!wlt.wallet['03'].toString()) {
+        //     broadcast.onMsg({
+        //         key: this.currency,
+        //         cmd: broadcast.MSG_WLT_READY,
+        //         cb: function (arg) {
+        //             console.log(arg, '---------');
+        //         }
+        //     });
+        // } else {
+        //     self.sets();
+        // }
         m.redraw();
     },
     createFn: function() {
@@ -212,7 +226,11 @@ const model = {
         m.redraw();
     },
     removeFn: function() {
-        wlt.remove();
+        broadcast.offMsg({
+            key: this.currency,
+            cmd: broadcast.MSG_WLT_READY,
+            isall: true
+        });
     }
 };
 module.exports = model;

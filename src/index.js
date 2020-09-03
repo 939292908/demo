@@ -31,7 +31,7 @@ import('./views/index').then(arg => {
     m.mount(root, arg.default);
     import('@/router/index');
     models.getFunList();
-    if (utils.getItem('loginState') && utils.getItem('ex-session')) {
+    if (utils.getItem('ex-session')) {
         models.getUserInfo();
     }
 });
