@@ -76,18 +76,12 @@ const extract = {
         /* eslint-disable */
         let selectList = [...wlt.wallet['03']];
         for (let i = 0; i < selectList.length; i ++) {
-            webApi.GetRechargeAddr({
-                wType: selectList[i].wType
-            }).then(function(res) {
-                if (res.result.code ===  0) {
-                    selectList[i].fullNameAddLeez = res.trade.fullName[extract.locale] || res.trade.fullName.en;
-                    m.redraw();
-                }
-            })
+            selectList[i].fullNameAddLeez = wlt.wltFullName[selectList[i].wType].name
         }
         this.selectList = selectList;
         this.currentSelect = this.selectList[0];
         this.getlinkButtonListData();
+        m.redraw();
         /* eslint-enable */
     },
     getlinkButtonListData: function () {
@@ -204,7 +198,6 @@ const extract = {
     readyStartSafetyVerify: function (start) {
         if (start !== 'success') return;
         const funName = extract.UserInfo?.setting2fa.google && extract.UserInfo?.setting2fa.phone ? 'activeSmsAndGoogle' : extract.UserInfo?.setting2fa.google ? 'activeGoogle' : 'activeSms';
-        console.log(validate[funName], funName);
         if ((extract.UserInfo?.setting2fa.google && extract.UserInfo?.setting2fa.phone) || extract.UserInfo?.setting2fa.phone) {
             validate[funName]({
                 securePhone: utils.hideMobileInfo(extract.UserInfo.phone),
