@@ -200,7 +200,7 @@ module.exports = {
                                     });
                                 }
                             }, [
-                                '币币账号'
+                                '币币账户'
                             ]),
                             m('a', {
                                 class: `navbar-item columns has-text-primary-hover min-width-200 ma-0 px-6 py-4 body-5`,

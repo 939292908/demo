@@ -7,7 +7,8 @@ const l180n = require('@/languages/I18n').default;
 
 module.exports = {
     oninit () {
-        FromDataMode.oninit();
+        const initWType = m.parseQueryString(m.route.get().split('?')[1])?.wType;
+        FromDataMode.oninit(initWType);
     },
     handleSelectChange: function (e) {
         FromDataMode.currentSelect = FromDataMode.selectList[e.target.selectedIndex];
