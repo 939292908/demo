@@ -94,7 +94,7 @@ module.exports = {
                 },
                 // 弹框关闭
                 onClose () {
-                    model.closeTransferModalHandler();
+                    model.handlerCloseTransferModal();
                 },
                 // 插槽
                 slot: {
