@@ -119,28 +119,16 @@ const extract = {
         this.getExtractableCoinToBTCNum();
     },
     getExtractableCoinToBTCNum: function () {
-        var BTCNum = 0;
         const price = wlt.getPrz(this.currenLinkBut || this.currentSelect.wType);
         const btcPrice = wlt.getPrz('BTC');
         const usableCoin = this.currentSelect.mainBal - this.currentFees.withdrawFee > 0 ? this.currentSelect.mainBal - this.currentFees.withdrawFee : 0;
-        if (this.currentSelect.wType === 'USDT') {
-            BTCNum = Number(usableCoin / price).toFixed(8);
-        } else if (this.currentSelect.wType === 'BTC') {
-            BTCNum = usableCoin.toFixed(8);
-        } else {
-            BTCNum = Number(usableCoin * price / btcPrice).toFixed(8);
-        }
+        const BTCNum = Number(usableCoin * price / btcPrice).toFixed(8);
         if (BTCNum > 2) return this.getExtractableNum(BTCNum);
         this.currentExtractableNum = Number(usableCoin).toFixed(8);
     },
     getBTCToCoin: function (BTCNum) {
         const price = wlt.getPrz(this.currentSelect.wType);
         const btcPrice = wlt.getPrz('BTC');
-        if (this.currentSelect.wType === 'USDT') {
-            return Number(BTCNum * price).toFixed(8);
-        } else if (this.currentSelect.wType === 'BTC') {
-            return Number(BTCNum).toFixed(8);
-        }
         return Number(BTCNum * btcPrice / price).toFixed(8);
     },
     getExtractableNum: function (BTCNum) {
