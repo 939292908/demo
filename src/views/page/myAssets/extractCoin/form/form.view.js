@@ -28,9 +28,9 @@ module.exports = {
         if (e.target.value < FromDataMode.currentFees.withdrawMin || e.target.value > FromDataMode.currentExtractableNum) {
             FromDataMode.errorShow.unmber.show = true;
             if (e.target.value < FromDataMode.currentFees.withdrawMin) {
-                FromDataMode.errorShow.unmber.text = '不可小于最小提币量 ';
+                FromDataMode.errorShow.unmber.text = l180n.$t('10397')/* '不可小于最小提币量 ' */;
             } else {
-                FromDataMode.errorShow.unmber.text = '不可超过可提数量';
+                FromDataMode.errorShow.unmber.text = l180n.$t('10398')/* '不可超过可提数量' */;
             }
         } else {
             FromDataMode.errorShow.unmber.show = false;
@@ -61,7 +61,7 @@ module.exports = {
                 FromDataMode.currentSelect.Setting && FromDataMode.currentSelect.Setting.memo ? m('div.formModule', [
                     m('div.label has-text-title body-5', [
                         m('span', l180n.$t('10098') /* '标签' */),
-                        m(Tooltip, { label: m('i.iconfont icon-Tooltip'), content: '填写错误可能导致资产丢失，请仔细核对' })
+                        m(Tooltip, { label: m('i.iconfont icon-Tooltip'), content: l180n.$t('10399') /* 填写错误可能导致资产丢失，请仔细核对 */ })
                     ]),
                     m('div.control line-label', [
                         m('input.input body-5 border-radius-small', { type: 'text', placeholder: l180n.$t('10098'), onchange: this.handleLabelVal, value: FromDataMode.extractCoin.linkName })
@@ -84,9 +84,9 @@ module.exports = {
                     FromDataMode.errorShow.address.show ? m('div.errorToTal body-4', '地址错误') : null
                 ]),
                 m('div.formModule', [
-                    m('div.label toolLable has-text-title body-5', [
+                    m('div.label has-text-title body-5', [
                         m('span', l180n.$t('10089') /* '数量' */),
-                        m(Tooltip, { label: m('i.iconfont icon-Tooltip'), content: '限额提示' })
+                        m(Tooltip, { label: m('i.iconfont icon-Tooltip'), content: l180n.$t('10406') })
                     ]),
                     m('div.control extract-num', [
                         m('input.input body-5 border-radius-small', { type: 'number', placeholder: `${l180n.$t('10105') /* '最小提币量' */}：${FromDataMode.currentFees.withdrawMin}`, onchange: this.handleExtractCoinNameVal, value: FromDataMode.extractCoin.coinNum }),

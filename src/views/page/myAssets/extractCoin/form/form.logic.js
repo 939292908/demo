@@ -169,8 +169,8 @@ const extract = {
     },
     handleSubmit: function () {
         if (this.errorShow.unmber.show || this.errorShow.address.show) return false;
-        if (!this.extractCoin.address) return window.$message({ content: '提币地址不能为空', type: 'danger' });
-        if (this.extractCoin.coinNum <= 0) return window.$message({ content: '输入值不能为0', type: 'danger' });
+        if (!this.extractCoin.address) return window.$message({ content: l180n.$t('10397')/* '提币地址不能为空' */, type: 'danger' });
+        if (this.extractCoin.coinNum <= 0) return window.$message({ content: l180n.$t('10402')/* '输入值不能为0' */, type: 'danger' });
         geetest.verify();
     },
     readrSendEmail: function (params, user, seq) {
@@ -240,14 +240,14 @@ const extract = {
         // m.redraw();
     },
     handleUserCanAction: function () {
-        if (!this.UserInfo.setting2fa.email || (!this.UserInfo.setting2fa.google && !this.UserInfo.setting2fa.phone)) return this.handleTotalShow({ content: '提币需邮件确认，请先绑定邮箱 为了您的账户安全，还需绑定手机或谷歌', isLinshiErWeiMa: true });
+        if (!this.UserInfo.setting2fa.email || (!this.UserInfo.setting2fa.google && !this.UserInfo.setting2fa.phone)) return this.handleTotalShow({ content: l180n.$t('10404') + l180n.$t('10403') /* '提币需邮件确认，请先绑定邮箱 为了您的账户安全，还需绑定手机或谷歌' */, isLinshiErWeiMa: true });
         // 二期使用
-        if (!this.UserInfo.setting2fa.email) return this.handleTotalShow({ content: '提币需邮件确认，请先绑定邮箱', buttonText: l180n.$t('10229') /* '邮箱验证' */, buttonClick: () => { m.route.set("/my"); } });
+        if (!this.UserInfo.setting2fa.email) return this.handleTotalShow({ content: l180n.$t('10404') /* '提币需邮件确认，请先绑定邮箱' */, buttonText: l180n.$t('10229') /* '邮箱验证' */, buttonClick: () => { m.route.set("/my"); } });
         const doubleButtonCof = [
             { text: l180n.$t('10227') /* '谷歌验证' */, issolid: false, click: () => { m.route.set("/my"); } },
             { text: l180n.$t('10228') /* '手机验证' */, issolid: true, click: () => { m.route.set("/my"); } }
         ];
-        if (!this.UserInfo.setting2fa.google && !this.UserInfo.setting2fa.phone) return this.handleTotalShow({ content: '为了您的账户安全，请先绑定手机或谷歌', doubleButton: true, doubleButtonCof });
+        if (!this.UserInfo.setting2fa.google && !this.UserInfo.setting2fa.phone) return this.handleTotalShow({ content: l180n.$t('10405')/* '为了您的账户安全，请先绑定手机或谷歌' */, doubleButton: true, doubleButtonCof });
     },
     oninit: function () {
         const self = this;
