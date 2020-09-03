@@ -119,5 +119,6 @@ module.exports = {
         ]);
     },
     onremove: () => {
+        rechargeIndex.removeFn();
     }
 };
