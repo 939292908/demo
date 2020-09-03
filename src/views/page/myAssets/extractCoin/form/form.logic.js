@@ -8,9 +8,10 @@ const errCode = require('@/util/errCode').default;
 const utils = require('@/util/utils').default;
 const validate = require('@/models/validate/validate').default;
 const l180n = require('@/languages/I18n').default;
-console.log(require('@/api'));
+
 const extract = {
     locale: '',
+    initWType: '',
     name: 'FROM_DATA',
     promptText: l180n.$t('10407'),
     // promptText: '如果您希望将本地数字资产提出至某地址，则该地址及为您的提币地址。 *某些地址可能需要您提供地址的标签，请务必填写，否则有丢失币的风险 *填写错误可能导致资产损失，请仔细核对 *完成LV3身份认证后，24h提币额度提升至100BTC，如需更多请联系客服',
@@ -75,12 +76,13 @@ const extract = {
     },
     getSelectListData: function () {
         /* eslint-disable */
-        let selectList = [...wlt.wallet['03']];
+        let selectList = [...wlt.wallet['03']], index = 0;
         for (let i = 0; i < selectList.length; i ++) {
             selectList[i].fullNameAddLeez = wlt.wltFullName[selectList[i].wType].name
+            if (this.initWType === selectList[i].wType) index = i;
         }
         this.selectList = selectList;
-        this.currentSelect = this.selectList[0];
+        this.currentSelect = this.selectList[index];
         this.getlinkButtonListData();
         m.redraw();
         /* eslint-enable */
@@ -250,10 +252,11 @@ const extract = {
         ];
         if (!this.UserInfo.setting2fa.google && !this.UserInfo.setting2fa.phone) return this.handleTotalShow({ content: l180n.$t('10405')/* '为了您的账户安全，请先绑定手机或谷歌' */, doubleButton: true, doubleButtonCof });
     },
-    oninit: function () {
+    oninit: function (initWType) {
         const self = this;
         wlt.init();
         this.initGeetest();
+        this.initWType = initWType;
         this.locale = l180n.getLocale();
         self.UserInfo = UserInfo.getAccount();
         if (!Object.keys(self.UserInfo).length) {
