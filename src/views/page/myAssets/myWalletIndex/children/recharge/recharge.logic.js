@@ -133,7 +133,9 @@ module.exports = {
         this.labelTips = '充值' + this.form.selectCheck + '同时需要一个充币地址和' + this.form.selectCheck + '标签；警告：如果未遵守正确的' + this.form.selectCheck + '充币步骤，币会有丢失风险！';
     },
     setQrCodeImg() {
-        document.getElementsByClassName('QrCodeImg')[0].innerHTML = '';
+        if (document.getElementsByClassName('QrCodeImg')[0].innerHTML !== '') {
+            document.getElementsByClassName('QrCodeImg')[0].innerHTML = '';
+        }
         Qrcode.toCanvas(this.rechargeAddr || '暂无地址', {
             errorCorrectionLevel: "L", // 容错率L（低）H(高)
             margin: 1, // 二维码内边距，默认为4。单位px
@@ -204,17 +206,14 @@ module.exports = {
         }
         this.nameTips = 'USDT-ERC20是Tether泰达公司基于ETH网络发行的USDT，充币地址是ETH地址，充提币走ETH网络，USDT-ERC20使用的是ERC20协议。USDT-TRC20(USDT-TRON)是Tether泰达公司基于TRON网络发行的USDT，充币地址是TRON地址，充提币走TRON网络，USDT-TRC20(USDT-TRON)使用的是TRC20协议。USDT-Omni是Tether泰达公司基于BTC网络发行的USDT，充币地址是BTC地址，充提币走BTC网络，USDT-Omni使用的协议是建立在BTC区块链网络上的omni layer 议。';
         wlt.init();
-        if (!wlt.wallet['03'].toString()) {
-            broadcast.onMsg({
-                key: 'index',
-                cmd: broadcast.MSG_WLT_READY,
-                cb: () => {
-                    this.setPageData();
-                }
-            });
-        } else {
-            this.setPageData();
-        }
+        broadcast.onMsg({
+            key: 'index',
+            cmd: broadcast.MSG_WLT_READY,
+            cb: () => {
+                this.setPageData();
+            }
+        });
+        this.setPageData();
     },
     updateFn: function (vnode) {
     },

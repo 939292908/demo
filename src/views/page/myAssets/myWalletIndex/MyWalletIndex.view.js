@@ -94,9 +94,9 @@ module.exports = {
                                         m('span.mb-1 cursor-pointer', `合约账户`),
                                         m('a.mb-5 has-text-level-3', { class: myWalletIndex.swValue === '01' || myWalletIndex.swValue === '03' ? 'has-text-primary' : '', onclick: () => { myWalletIndex.switchChange('01', 'small'); } }, myWalletIndex.contractTotal + ` ` + myWalletIndex.currency),
                                         m('span.mb-1 cursor-pointer', `币币账户`),
-                                        m('a.mb-5 has-text-level-3', { class: myWalletIndex.swValue === '02' ? 'has-text-primary' : '', onclick: () => { myWalletIndex.switchChange('02', 'small'); } }, myWalletIndex.coinTotal + ` ` + myWalletIndex.currency),
-                                        m('span.mb-1 cursor-pointer', `法币账户`),
-                                        m('a.has-text-level-3', { class: myWalletIndex.swValue === '04' ? 'has-text-primary' : '', onclick: () => { myWalletIndex.switchChange('04', 'small'); } }, myWalletIndex.legalTotal + ` ` + myWalletIndex.currency)
+                                        m('a.has-text-level-3', { class: myWalletIndex.swValue === '02' ? 'has-text-primary' : '', onclick: () => { myWalletIndex.switchChange('02', 'small'); } }, myWalletIndex.coinTotal + ` ` + myWalletIndex.currency)
+                                        // m('span.mb-1 cursor-pointer', `法币账户`),
+                                        // m('a.has-text-level-3', { class: myWalletIndex.swValue === '04' ? 'has-text-primary' : '', onclick: () => { myWalletIndex.switchChange('04', 'small'); } }, myWalletIndex.legalTotal + ` ` + myWalletIndex.currency)
                                     ])
                                 ])
                             ]),
