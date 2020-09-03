@@ -21,7 +21,7 @@ module.exports = {
                 m('div', { class: `content-width`, style: { margin: `auto` } }, [
                     m(Header, {
                         highlightFlag: 0,
-                        navList: [{ to: '/myWalletIndex', title: '我的资产' }, { to: '/assetRecords', title: '资金记录' }]
+                        navList: [{ to: '/myWalletIndex', title: l180n.$t('10052') /* '我的资产' */ }, { to: '/assetRecords', title: l180n.$t('10053') /* '资金记录' */ }]
                     })
                 ])
             ]),
@@ -76,7 +76,7 @@ module.exports = {
                     ]),
                     m('div', { class: `currencyAddr border-radius-medium mt-2 mb-7` }, [
                         m('div', { class: `currencyAddr-text ml-3` }, [
-                            m('input', { class: `addrText`, type: 'text', readOnly: `readOnly`, value: rechargeIndex.rechargeAddr })
+                            m('input', { class: `addrText body-5`, type: 'text', readOnly: `readOnly`, value: rechargeIndex.rechargeAddr })
                         ]),
                         m('div', { class: `currencyAddr-Operation ml-3` }, [
                             m('div', { class: `iImg mt-2` }, [

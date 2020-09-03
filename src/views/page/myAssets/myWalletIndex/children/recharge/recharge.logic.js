@@ -39,16 +39,17 @@ module.exports = {
                 item.openChains = walletI.Setting.openChains;
                 item.wType = walletI.wType; // 币种
                 item.memo = walletI.Setting.memo; // 是否显示标签
-                if (walletI.wType === 'USDT') {
-                    for (const i in walletI.Setting) {
-                        if (i.search('-') !== -1) {
-                            // 去掉为false的链名称
-                            if (!walletI.Setting[i]) {
-                                that.USDTLabel.pop(i.split('-')[1]);
-                            }
-                        }
-                    }
-                }
+                // if (walletI.wType === 'USDT') {
+                //     for (const i in walletI.Setting) {
+                //         if (i.search('-') !== -1) {
+                //             // 去掉为false的链名称
+                //             if (!walletI.Setting[i]) {
+                //                 console.log(i, '------', walletI.Setting[i], that.USDTLabel, i.split('-')[1]);
+                //                 that.USDTLabel.pop(i.split('-')[1]);
+                //             }
+                //         }
+                //     }
+                // }
                 Http.GetRechargeAddr({
                     wType: walletI.wType
                 }).then(function(arg) {
@@ -85,6 +86,10 @@ module.exports = {
     setUSDTLabel() {
         const params = { locale: 'zh', vp: Conf.exchId };
         webApi.getCoinInfo(params).then(res => {
+            console.log(wlt.wallet['03']);
+            if (wlt.wallet['03'].wType === 'USDT') {
+                console.log(wlt.wallet['03']);
+            }
             if (res.result.code === 0) {
                 this.USDTLabel = Array.from(res.result.data.USDT.chains);
                 const ary = [];
@@ -92,7 +97,8 @@ module.exports = {
                     ary.push(this.USDTLabel[i].name);
                 }
                 this.USDTLabel = ary;
-                // console.log('nzm', this.USDTLabel);
+                this.USDTLabel.pop('ERC20');
+                console.log('nzm', this.USDTLabel);
             }
         });
     },
@@ -178,12 +184,13 @@ module.exports = {
         if (title !== 'Omni') {
             wType = wType + title;
         }
+        console.log(wType);
         Http.GetRechargeAddr({
             wType: wType
         }).then(function(arg) {
-            // console.log('nzm', 'GetRechargeAddr success', arg);
-            this.rechargeAddr = arg.rechargeAddr;
-            m.redraw();
+            console.log('nzm', 'GetRechargeAddr success', arg);
+            // this.rechargeAddr = arg.rechargeAddr;
+            // m.redraw();
         }).catch(function(err) {
             console.log('nzm', 'GetRechargeAddr error', err);
         });
