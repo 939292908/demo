@@ -118,12 +118,12 @@ module.exports = {
             });
         } else if (item.operation === '充值') {
             if (row.Setting.canRecharge) {
-                window.router.push(item.to + '?wType=' + row.wType);
+                window.router.set(item.to + '?wType=' + row.wType);
             } else {
                 return window.$message({ title: '提示', content: '暂未开启', type: 'primary' });
             }
         } else if (item.operation === '提现') {
-            window.router.push(item.to + '?wType=' + row.wType);
+            window.router.set(item.to + '?wType=' + row.wType);
         } else if (item.operation === '去交易') {
             return window.$message({ title: '提示', content: '暂未开放', type: 'danger' });
         }
@@ -160,8 +160,12 @@ module.exports = {
             that.search(index);
         }, 50);
     },
-    // oldAry: [],
+    oldAry: [],
     search: function (ary) {
+        this.oldAry = ary;
+        if (this.oldAry !== ary) {
+            console.log(1);
+        }
         const tbody = document.getElementsByTagName('table')[0].childNodes[1];
         const searchContent = document.getElementsByClassName('coinSearch')[0].value;
         for (const i of ary) {

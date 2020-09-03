@@ -205,25 +205,18 @@ const model = {
             this.setSwValue('03');
         }
 
-        // const self = this;
-        // if (!wlt.wallet['03'].toString()) {
-        //     broadcast.onMsg({
-        //         key: this.currency,
-        //         cmd: broadcast.MSG_WLT_READY,
-        //         cb: function (arg) {
-        //             console.log(arg, '---------');
-        //         }
-        //     });
-        // } else {
-        //     self.sets();
-        // }
-        m.redraw();
+        const self = this;
+        broadcast.onMsg({
+            key: this.currency,
+            cmd: broadcast.MSG_WLT_READY,
+            cb: function () {
+                self.sets();
+            }
+        });
+        self.sets();
     },
     createFn: function() {
-        setTimeout(() => {
-            this.sets();
-        }, 200);
-        m.redraw();
+        this.sets();
     },
     removeFn: function() {
         broadcast.offMsg({

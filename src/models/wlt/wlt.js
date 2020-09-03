@@ -197,19 +197,19 @@ module.exports = {
 
         this.totalCNYValue = utils.toFixedForFloor(this.totalCNYValue, 2);
 
-        console.log('nzm', 'this.wallet', this.wallet);
-        console.log('\n');
-        console.log('nzm', 'totalCNYValue', this.totalCNYValue, 'totalValueForUSDT', this.totalValueForUSDT);
-        console.log('\n');
-        console.log('nzm', 'tradingAccountTotalValueForBTC', this.tradingAccountTotalValueForBTC, 'tradingAccountTotalValueForUSDT', this.tradingAccountTotalValueForUSDT);
-        console.log('\n');
-        console.log('nzm', 'legalTotalValueForBTC', this.legalTotalValueForBTC, 'legalTotalValueForUSDT', this.legalTotalValueForUSDT);
-        console.log('\n');
-        console.log('nzm', 'coinTotalValueForBTC', this.coinTotalValueForBTC, 'coinTotalValueForUSDT', this.coinTotalValueForUSDT);
-        console.log('\n');
-        console.log('nzm', 'contractTotalValueForBTC', this.contractTotalValueForBTC, 'contractTotalValueForUSDT', this.contractTotalValueForUSDT);
-        console.log('\n');
-        console.log('nzm', 'walletTotalValueForBTC', this.walletTotalValueForBTC, 'walletTotalValueForUSDT', this.walletTotalValueForUSDT);
+        // console.log('nzm', 'this.wallet', this.wallet);
+        // console.log('\n');
+        // console.log('nzm', 'totalCNYValue', this.totalCNYValue, 'totalValueForUSDT', this.totalValueForUSDT);
+        // console.log('\n');
+        // console.log('nzm', 'tradingAccountTotalValueForBTC', this.tradingAccountTotalValueForBTC, 'tradingAccountTotalValueForUSDT', this.tradingAccountTotalValueForUSDT);
+        // console.log('\n');
+        // console.log('nzm', 'legalTotalValueForBTC', this.legalTotalValueForBTC, 'legalTotalValueForUSDT', this.legalTotalValueForUSDT);
+        // console.log('\n');
+        // console.log('nzm', 'coinTotalValueForBTC', this.coinTotalValueForBTC, 'coinTotalValueForUSDT', this.coinTotalValueForUSDT);
+        // console.log('\n');
+        // console.log('nzm', 'contractTotalValueForBTC', this.contractTotalValueForBTC, 'contractTotalValueForUSDT', this.contractTotalValueForUSDT);
+        // console.log('\n');
+        // console.log('nzm', 'walletTotalValueForBTC', this.walletTotalValueForBTC, 'walletTotalValueForUSDT', this.walletTotalValueForUSDT);
     },
     updWlt: function() {
         const that = this;
@@ -370,17 +370,21 @@ module.exports = {
         // const coinSym = utils.getSpotName(AssetD, this.wltItemEx.wType, 'USDT');
         // const coinPrz = (AssetD[coinSym] && AssetD[coinSym].PrzLatest) || coinInitValue;
         const coinPrz = this.getPrz(this.wltItemEx.wType);
-        // console.log('ht', 'value', coinInitValue, coinSym, AssetD[coinSym] && AssetD[coinSym].PrzLatest, coinPrz);
+        // console.log('ht', 'value', coinPrz);
         // 当前币种价格 end
         // USDT估值
         valueForUSDT = TOTAL * coinPrz;
-        // console.log('ht', 'value', TOTAL, coinPrz, TOTAL * coinPrz);
+        // console.log('ht', 'usdt value', TOTAL, coinPrz, TOTAL * coinPrz);
         this.wltItemEx.valueForUSDT = utils.toFixedForFloor(valueForUSDT, 8);
         // BTC估值
         valueForBTC = TOTAL * coinPrz / btcPrz;
-        // console.log('ht', 'value', TOTAL, coinPrz, btcPrz, TOTAL * coinPrz);
+        // console.log('ht', 'btc value', TOTAL, coinPrz, btcPrz, TOTAL * coinPrz);
         this.wltItemEx.valueForBTC = utils.toFixedForFloor(valueForBTC, 8);
-        // console.log('ht', 'value', valueForUSDT, valueForBTC);
+        // console.log('ht', 'btc value', valueForUSDT, valueForBTC);
+        // 币种价格
+        this.wltItemEx.coinPrz = coinPrz;
+        // btc价格
+        this.wltItemEx.btcPrz = btcPrz;
         // 图标
         this.wltItemEx.icon = ActiveLine.WebAPI + this.wltItemEx.icon;
 
@@ -394,7 +398,7 @@ module.exports = {
     getPrz(coin) {
         const AssetD = gWsApi.AssetD;
         const SymName = utils.getSpotName(AssetD, coin, 'USDT');
-        const InitValue = (this.wallet_obj['03'] && this.wallet_obj['03'].BTC && this.wallet_obj['03'].BTC.initValue) || 0;
+        const InitValue = (this.wallet_obj['03'] && this.wallet_obj['03'][coin] && this.wallet_obj['03'][coin].initValue) || 0;
         const Prz = (AssetD[SymName] && AssetD[SymName].PrzLatest) || InitValue;
         return Prz;
     }

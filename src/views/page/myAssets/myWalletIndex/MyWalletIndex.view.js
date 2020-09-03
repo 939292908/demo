@@ -12,7 +12,6 @@ module.exports = {
     view() {
         return m('div', { class: `views-pages-myassets-myWalletIndex theme--light` }, [
             m('div', {}, [
-                myWalletIndex.totalCNY + '--',
                 m('div.top mb-8', { style: { height: `344px`, width: `100%`, backgroundColor: `#0E1C33` } }, [
                     m('div', { class: `myWalletIndex-warpper container content-width` }, [
                         // highlightFlag:哪个高亮   0：我的资产  1：资产记录
