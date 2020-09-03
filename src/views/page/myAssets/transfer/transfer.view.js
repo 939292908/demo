@@ -1,6 +1,6 @@
 var m = require("mithril");
 require('./transfer.scss');
-// const I18n = require('@/languages/I18n').default;
+const I18n = require('@/languages/I18n').default;
 // const Modal = require('@/views/components/common/Modal');
 const Dropdown = require('@/views/components/common/Dropdown');
 const Modal = require('@/views/components/common/Modal');
@@ -17,9 +17,10 @@ module.exports = {
         const body = m('div', { class: `my-form my-transfer` }, [
             // 币种 (下拉)
             m('div', { class: `form-item` }, [
-                m('div', { class: `form-item-title` }, ['币种']),
+                m('div', { class: `form-item-title` }, [
+                    I18n.$t('10063') // '币种'
+                ]),
                 m('div', { class: `form-item-content` }, [
-                    // m(Dropdown, model.getCurrencyMenuOption())
                     m('div', { class: `my-dropdown dropdown ${model.showCurrencyMenu ? " is-active" : ''}` }, [
                         // btn
                         m('div', { class: "dropdown-trigger has-text-1" }, [
@@ -27,7 +28,10 @@ module.exports = {
                                 class: `button`,
                                 onclick: (e) => {
                                     // 进入下一次事件队列，先让body事件关闭所有下拉，再开启自己
-                                    setTimeout(() => (model.showCurrencyMenu = true), 0);
+                                    const type = model.showCurrencyMenu;
+                                    setTimeout(() => {
+                                        model.showCurrencyMenu = !type;
+                                    }, 0);
                                 }
                             }, [
                                 m('p', { class: `my-trigger-text` }, [
