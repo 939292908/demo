@@ -22,27 +22,37 @@ module.exports = {
                         m('div', { class: `myWalletIndex-head columns-flex mt-7` }, [
                             m('div', { class: `myWalletIndex-head-left column` }, [
                                 m('div', { class: `myWalletIndex-head-left-total columns pt-3` }, [
-                                    m('span', { class: `body-6 pt-2`, style: `color:white` }, [`总资产估值`]),
+                                    m('span', { class: `body-6 pt-2 has-text-white` }, [`总资产估值`]),
                                     m('div', { class: `form-item-content border-radius-medium mt-2 mb-7` }, [
                                         m(Dropdown, myWalletIndex.getCurrencyMenuOption())
                                     ])
                                 ]),
-                                m('div', { class: `number-hide`, style: `color:white;` }, [
+                                m('div', { class: `number-hide has-text-white` }, [
                                     m('span', { class: `title-large` }, [myWalletIndex.hideMoneyFlag ? '******' : myWalletIndex.totalValue]),
                                     m('span', { class: `title-large` }, [` ` + myWalletIndex.currency]),
-                                    m('i', { class: (myWalletIndex.hideMoneyFlag ? `iconfont icon-zichanzhengyan` : `iconfont icon-yincang`) + ` changeMoneyImg pl-2 cursor-pointer`, onclick: () => { myWalletIndex.hideValue(); }, style: { color: '#585E71' } }),
+                                    m('i', { class: (myWalletIndex.hideMoneyFlag ? `iconfont icon-zichanzhengyan` : `iconfont icon-yincang`) + ` changeMoneyImg pl-2 cursor-pointer has-text-level-3`, onclick: () => { myWalletIndex.hideValue(); } }),
                                     m('br'),
-                                    m('span', { style: `color:#9A9EAC` }, [`≈ `]),
-                                    m('span', { style: `color:#9A9EAC` }, [myWalletIndex.hideMoneyFlag ? '******' : myWalletIndex.totalCNY]),
-                                    m('span', { style: `color:#9A9EAC` }, [` CNY`])
+                                    m('span', { class: `has-text-level-4` }, [`≈ `]),
+                                    m('span', { class: `has-text-level-4` }, [myWalletIndex.hideMoneyFlag ? '******' : myWalletIndex.totalCNY]),
+                                    m('span', { class: `has-text-level-4` }, [` CNY`])
                                 ])
                             ]),
                             m('div', { class: `myWalletIndex-head-right column pa-5` }, [
                                 // 充币  提币  内部转账  资金划转
                                 m('div', { class: `is-between  pt-8` }, [
+                                    // myWalletIndex.Nav.firstNav.map((item, index) => {
+                                    //     return m(`button.column button-large mx-3 border-radius-small cursor-pointer Operation${index} has-line-level-2`, {
+                                    //         class: item.title === `充币` ? `has-bg-primary` : `has-text-primary bgNone`,
+                                    //         key: item.title,
+                                    //         onclick: () => { myWalletIndex.handlerClickNavBtn(item); },
+                                    //         onmouseover: () => { myWalletIndex.changeBtnSty(index, `show`); },
+                                    //         onmouseleave: () => { myWalletIndex.changeBtnSty(index, `hide`); }
+                                    //     },
+                                    //     [item.title]);
+                                    // })
                                     myWalletIndex.Nav.firstNav.map((item, index) => {
-                                        return m(`button.column button-large mx-3 border-radius-small cursor-pointer Operation${index} has-line-level-2`, {
-                                            class: item.title === `充币` ? `has-bg-primary` : `has-text-primary bgNone`,
+                                        return m(`button.column mr-3 button-large button is-primary Operation${index}`, {
+                                            class: item.title === `充币` ? `` : `is-outlined`,
                                             key: item.title,
                                             onclick: () => { myWalletIndex.handlerClickNavBtn(item); },
                                             onmouseover: () => { myWalletIndex.changeBtnSty(index, `show`); },
@@ -91,11 +101,11 @@ module.exports = {
                                     m('div.tradeCard body-2 border-radius-medium pa-7 has-bg-level-2 box-shadow', {
                                         style: { display: `none` }
                                     }, [
-                                        m('span.mb-1 cursor-pointer', `合约账户`),
+                                        m('span.mb-1 cursor-pointer has-text-level-4', `合约账户`),
                                         m('a.mb-5 has-text-level-3', { class: myWalletIndex.swValue === '01' || myWalletIndex.swValue === '03' ? 'has-text-primary' : '', onclick: () => { myWalletIndex.switchChange('01', 'small'); } }, myWalletIndex.contractTotal + ` ` + myWalletIndex.currency),
-                                        m('span.mb-1 cursor-pointer', `币币账户`),
-                                        m('a.mb-5 has-text-level-3', { class: myWalletIndex.swValue === '02' ? 'has-text-primary' : '', onclick: () => { myWalletIndex.switchChange('02', 'small'); } }, myWalletIndex.coinTotal + ` ` + myWalletIndex.currency),
-                                        m('span.mb-1 cursor-pointer', `法币账户`),
+                                        m('span.mb-1 cursor-pointer has-text-level-4', `币币账户`),
+                                        m('a.mb-5.has-text-level-3', { class: myWalletIndex.swValue === '02' ? 'has-text-primary' : '', onclick: () => { myWalletIndex.switchChange('02', 'small'); } }, myWalletIndex.coinTotal + ` ` + myWalletIndex.currency),
+                                        m('span.mb-1 cursor-pointer has-text-level-4', `法币账户`),
                                         m('a.has-text-level-3', { class: myWalletIndex.swValue === '04' ? 'has-text-primary' : '', onclick: () => { myWalletIndex.switchChange('04', 'small'); } }, myWalletIndex.legalTotal + ` ` + myWalletIndex.currency)
                                     ])
                                 ])

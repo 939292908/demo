@@ -24,7 +24,7 @@ const openGView = {
         }
     ],
     // 当前选中哪个步骤
-    checkFlag: 4,
+    checkFlag: 2,
     // 上一步 下一步
     modifyCheckFlag(type) {
         type === 'prev' ? this.checkFlag = this.checkFlag - 1 : this.checkFlag = this.checkFlag + 1;
@@ -51,10 +51,10 @@ const openGView = {
                 m('i', { class: `iconfont icon-Return has-text-title mr-7` }),
                 m('span', { class: `has-text-title my-4 ml-4 title-medium` }, l180n.$t('10250') /* '您正在绑定谷歌验证' */)
             ]),
-            m('div', { class: `center content-width` }, [
+            m('div', { class: `center content-width has-bg-level-2` }, [
                 m('div', { class: `center-top mt-7` }, [
                     openGView.nav.map(item => {
-                        return m('div', { class: `column my-7 pb-7 ` + (item.id <= openGView.checkFlag ? 'is-active' : ''), key: item.id }, [
+                        return m('div', { class: `column my-7 pb-7 ` + (item.id <= openGView.checkFlag ? 'is-active has-text-primary' : ''), key: item.id }, [
                             m('span', { class: `title-small` }, item.id),
                             m('span', { class: `body-5` }, item.title)
                         ]);
@@ -78,10 +78,10 @@ const openGView = {
                     m('div', { class: `stepTwo pt-7`, style: { display: (openGView.checkFlag === 2 ? '' : 'none') } }, [
                         m('div', { class: `desc1 body-5` }, l180n.$t('10256') /* '用谷歌验证App扫描以下二维码' */),
                         m('div', { class: `stepTwo-qrcode my-7` }),
-                        m('div', { class: `desc2 body-5 mb-3` }, l180n.$t('10257') /* '如果您无法扫描这个二维码，请在App中手动输入这串字符' */),
+                        m('div', { class: `desc2 body-5 mb-3 has-text-level-4` }, l180n.$t('10257') /* '如果您无法扫描这个二维码，请在App中手动输入这串字符' */),
                         m('div', { class: `key` }, [
                             m('input', { class: `keyText title-small`, type: 'text', readOnly: `readOnly`, value: openGLogic.secret }),
-                            m('i', { class: `iconfont icon-copy`, onclick: () => { openGView.copyText('one'); } })
+                            m('i', { class: `iconfont icon-copy has-text-primary cursor-pointer`, onclick: () => { openGView.copyText('one'); } })
                         ])
                     ]),
                     m('div', { class: `stepThree pt-7`, style: { display: (openGView.checkFlag === 3 ? '' : 'none') } }, [
@@ -89,7 +89,7 @@ const openGView = {
                         m('div', { class: `mb-7` }, l180n.$t('10260') /* '如果该密钥丢失，需要联系客服处理，这通常需要一定的时间' */),
                         m('div', { class: `key` }, [
                             m('input', { class: `keyText title-small`, type: 'text', readOnly: `readOnly`, value: openGLogic.secret }),
-                            m('i', { class: `iconfont icon-copy`, onclick: () => { openGView.copyText('two'); } })
+                            m('i', { class: `iconfont icon-copy has-text-primary`, onclick: () => { openGView.copyText('two'); } })
                         ])
                     ]),
                     m('div', { class: `stepFour pt-7`, style: { display: (openGView.checkFlag === 4 ? '' : 'none') } }, [
@@ -111,7 +111,7 @@ const openGView = {
                 ]),
                 m('div', { class: `center-btn px-7`, style: { display: (openGView.checkFlag !== 4 ? '' : 'none') } }, [
                     m('button', {
-                        class: `prev mt-6 border-radius-small cursor-pointer`,
+                        class: `prev mt-6 border-radius-small cursor-pointer has-bg-level-2`,
                         style: { display: (openGView.checkFlag === 1 || openGView.checkFlag === 4 ? 'none' : '') },
                         onclick: () => { openGView.modifyCheckFlag('prev'); }
                     }, l180n.$t('10258') /* '上一步' */),

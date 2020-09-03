@@ -31,7 +31,7 @@ module.exports = {
                     m('span', { class: `has-text-title my-4 ml-4 title-medium` }, l180n.$t('10056') /* '充币' */)
                 ])
             ]),
-            m('div', { class: `bottom content-width mb-9` }, [
+            m('div', { class: `bottom content-width mb-9 border-radius-medium` }, [
                 m('div', { class: `bottom-upper has-bg-level-2 pl-8 pt-7` }, [
                     m('div', { class: `form-item-title` }, l180n.$t('10063') /* '币种' */),
                     m('div', { class: `form-item-content border-radius-medium mt-2 mb-7`, style: { width: `384px` } }, [
@@ -48,7 +48,8 @@ module.exports = {
                                 })
                             ])
                         ]),
-                        m('div', { class: `mt-2 px-2 has-text-primary border-radius-small uid` }, rechargeIndex.uId)
+                        // m('div', { class: `mt-2 px-2 has-text-primary border-radius-small uid` }, rechargeIndex.uId)
+                        m('div', { class: `mt-2 px-2 has-text-primary border-radius-small tag is-primary is-light uid` }, rechargeIndex.uId)
                     ]),
                     m('div', { class: `usdtLable mb-7`, style: { display: rechargeIndex.openChains ? (rechargeIndex.form.selectCheck === 'USDT' ? '' : 'none') : 'none' } }, [
                         m('div', { class: `labeltip` }, [
@@ -95,13 +96,13 @@ module.exports = {
                             m('div', { class: `QrCodeImg`, style: { display: rechargeIndex.qrcodeDisplayFlag ? `` : `none` } })
                         ])
                     ]),
-                    m('div', { class: `tips` }, [
+                    m('div', { class: `tips pb-6` }, [
                         m('span', { class: `body-5` }, l180n.$t('10082') /* '温馨提示' */),
                         m('br'),
-                        rechargeIndex.tips.split('*').map((item, index) => m(`span.pb-1 body-4`, { class: index === 0 ? `has-text-primary` : ``, key: item }, '*' + item))
+                        rechargeIndex.tips.split('*').map((item, index) => m(`span.pb-1 body-4`, { class: index === 0 ? `has-text-primary` : `has-text-level-4`, key: item }, '*' + item))
                     ])
                 ]),
-                m('div.bottom-tab.has-bg-level-2.mt-5.pt-3', {}, [
+                m('div.bottom-tab.has-bg-level-2.mt-5.pt-3.border-radius-medium', {}, [
                     m('div.pa-5', {}, [
                         m('span.title-small', {}, l180n.$t('10086') /* '近期充币记录' */),
                         m(Tooltip, {

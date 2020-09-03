@@ -26,6 +26,7 @@ module.exports = {
         contractData: [],
         legalData: []
     },
+    // navAry: [{ idx: '01', val: '合约账户' }, { idx: '02', val: '币币账户' }],
     navAry: [{ idx: '01', val: '合约账户' }, { idx: '02', val: '币币账户' }, { idx: '04', val: '法币账户' }],
     coinType: 'wallet',
     tableDateList: 'walletData',
@@ -48,11 +49,11 @@ module.exports = {
             this.coinType = 'wallet';
             this.tableDateList = 'walletData';
         }
-        this.setAccountBanlance();
+        this.initAccountBanlance();
         this.setDataLength(this.tableData[this.tableDateList].length);
         this.searchTableData();
     },
-    setAccountBanlance: function() {
+    initAccountBanlance: function() {
         this.accountBanlance = this.currency === 'BTC' ? wlt[this.coinType + 'TotalValueForBTC'] : wlt[this.coinType + 'TotalValueForUSDT'];
     },
     setCurrency: function(param) {
@@ -118,12 +119,12 @@ module.exports = {
             });
         } else if (item.operation === '充值') {
             if (row.Setting.canRecharge) {
-                window.router.set(item.to + '?wType=' + row.wType);
+                window.router.push(item.to + '?wType=' + row.wType);
             } else {
                 return window.$message({ title: '提示', content: '暂未开启', type: 'primary' });
             }
         } else if (item.operation === '提现') {
-            window.router.set(item.to + '?wType=' + row.wType);
+            window.router.push(item.to + '?wType=' + row.wType);
         } else if (item.operation === '去交易') {
             return window.$message({ title: '提示', content: '暂未开放', type: 'danger' });
         }
@@ -140,25 +141,25 @@ module.exports = {
     },
     searchTableData: function () {
         const that = this;
-        setTimeout(() => {
-            const tbody = document.getElementsByTagName('table')[0].childNodes[1];
-            const rowsLength = tbody.rows.length - 1; // tbody.rows.length - 1：最后一行是暂无数据
-            const index = [];
-            if (that.hideZeroFlag) {
-                for (let i = 0; i < rowsLength; i++) {
-                    if (tbody.rows[i].style.display !== 'none') {
-                        index.push(i);
-                    } else {
-                        continue;
-                    }
-                }
-            } else {
-                for (let i = 0; i < rowsLength; i++) {
+        // setTimeout(() => {
+        const tbody = document.getElementsByTagName('table')[0].childNodes[1];
+        const rowsLength = tbody.rows.length - 1; // tbody.rows.length - 1：最后一行是暂无数据
+        const index = [];
+        if (that.hideZeroFlag) {
+            for (let i = 0; i < rowsLength; i++) {
+                if (tbody.rows[i].style.display !== 'none') {
                     index.push(i);
+                } else {
+                    continue;
                 }
             }
-            that.search(index);
-        }, 50);
+        } else {
+            for (let i = 0; i < rowsLength; i++) {
+                index.push(i);
+            }
+        }
+        that.search(index);
+        // }, 50);
     },
     oldAry: [],
     search: function (ary) {
@@ -181,7 +182,9 @@ module.exports = {
             }
         }
     },
-    createFn: function () {
+    createFn: function (vnode) {
+        const self = this;
+        this.vnode = vnode;
         broadcast.onMsg({
             key: 'view-pages-Myassets-TablegB',
             cmd: broadcast.CHANGE_SW_CURRENCY,
@@ -189,27 +192,35 @@ module.exports = {
                 this.setCurrency(arg);
             }
         });
-        setTimeout(() => {
-            this.initColumnData();
-            this.initTableData();
-            // 获取当前网址，如：http://localhost:8080/#!/myWalletIndex?id=03
-            const currencyIndex = window.document.location.href.toString().split('=')[1];
-            if (currencyIndex === '03' || currencyIndex === '02' || currencyIndex === '01' || currencyIndex === '04') {
-                this.setPageFlag(currencyIndex);
-            } else {
-                this.setPageFlag('03');
-            }
-            this.setAccountBanlance();
-            if (this.dataLength === 0) {
-                document.getElementsByTagName('table')[0].rows[document.getElementsByTagName('table')[0].rows.length - 1].style.display = '';
-            } else {
-                document.getElementsByTagName('table')[0].rows[document.getElementsByTagName('table')[0].rows.length - 1].style.display = 'none';
-            }
-        }, 200);
-    },
-    initFn: function (vnode) {
-        this.vnode = vnode;
         this.oldHideMoneyFlag = vnode.attrs.hideMoneyFlag;
+        // 初始化表头
+        this.initColumnData();
+        // 初始化表格数据（表身）
+        this.initTableData();
+        // 初始化交易账户各账户名称与估值
+        this.initAccountBanlance();
+        broadcast.onMsg({
+            key: 'view-pages-Myassets-TablegB',
+            cmd: broadcast.MSG_WLT_UPD,
+            cb: function () {
+                self.initTableData();
+            }
+        });
+
+        // 获取当前网址，如：http://localhost:8080/#!/myWalletIndex?id=03
+        const currencyIndex = window.document.location.href.toString().split('=')[1];
+        if (currencyIndex === '03' || currencyIndex === '02' || currencyIndex === '01' || currencyIndex === '04') {
+            this.setPageFlag(currencyIndex);
+        } else {
+            this.setPageFlag('03');
+        }
+
+        // 判断暂无数据是否显示
+        if (this.dataLength === 0) {
+            document.getElementsByTagName('table')[0].rows[document.getElementsByTagName('table')[0].rows.length - 1].style.display = '';
+        } else {
+            document.getElementsByTagName('table')[0].rows[document.getElementsByTagName('table')[0].rows.length - 1].style.display = 'none';
+        }
     },
     updateFn: function(vnode) {
         if (this.oldValue !== vnode.attrs.swValue) {
