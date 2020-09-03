@@ -198,7 +198,6 @@ const extract = {
     readyStartSafetyVerify: function (start) {
         if (start !== 'success') return;
         const funName = extract.UserInfo?.setting2fa.google && extract.UserInfo?.setting2fa.phone ? 'activeSmsAndGoogle' : extract.UserInfo?.setting2fa.google ? 'activeGoogle' : 'activeSms';
-        console.log(validate[funName], funName);
         if ((extract.UserInfo?.setting2fa.google && extract.UserInfo?.setting2fa.phone) || extract.UserInfo?.setting2fa.phone) {
             validate[funName]({
                 securePhone: utils.hideMobileInfo(extract.UserInfo.phone),
