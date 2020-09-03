@@ -90,7 +90,9 @@ module.exports = {
                                 type: AssetRecords.type,
                                 onSelectType(type) {
                                     AssetRecords.onSelectType(type);
-                                }
+                                },
+                                dateStr: AssetRecords.dateStr,
+                                setDateStr(str) { AssetRecords.dateStr = str; }
                             }),
                             m(assetTable, { class: 'mt-7', list: AssetRecords.showList })
                         ])
