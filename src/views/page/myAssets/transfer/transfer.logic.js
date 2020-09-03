@@ -4,13 +4,14 @@
  * transferFrom: 默认选中 从xx钱包 ('01': 合约账户, '02': 币币账户, '03': 我的钱包, '04': 法币账户)
  * coin: 默认选中 币种 (USDT)
  */
-var m = require("mithril");
 const wlt = require('@/models/wlt/wlt');
 const I18n = require('@/languages/I18n').default;
 const Http = require('@/api').webApi;
+const broadcast = require('@/broadcast/broadcast');
 
 const model = {
     vnode: {},
+    curItem: {}, // 币种下拉
     isShowTransferModal: false, // 划转弹框 显示/隐藏
     showCurrencyMenu: false, // show币种菜单
     showFromMenu: false, // show from菜单
@@ -113,16 +114,17 @@ const model = {
                 // 币种是否重复
                 if (hasMore && !this.canTransferCoin.some(item3 => item3.wType === item.wType)) {
                     item.id = item.wType;
-                    item.label = [
-                        m('span', { class: `mr-2` }, [item.wType]),
-                        m('span', { class: `has-text-level-4` }, "比特币")
-                    ];
                     item.label = item.wType;
+                    item.coinName = wlt.coinInfo[item.wType].name;
                     this.canTransferCoin.push(item); // push
                 }
             });
         });
-        console.log("币种下拉", this.canTransferCoin);
+        // 初始化 币种默认选中
+        if (this.canTransferCoin[0]) {
+            this.curItem = this.canTransferCoin.find(item => item.id === this.form.coin) || this.canTransferCoin[0];
+        }
+        console.log("币种下拉", this.canTransferCoin, wlt);
     },
     // 初始化 币种下拉value
     initCoinValue() {
@@ -230,22 +232,24 @@ const model = {
         }
     },
     // 配置 币种菜单
-    getCurrencyMenuOption() {
-        return {
-            evenKey: `myDropdown${Math.floor(Math.random() * 10000)}`,
-            activeId: cb => cb(model.form, 'coin'),
-            showMenu: model.showCurrencyMenu,
-            setShowMenu: type => {
-                model.showCurrencyMenu = type;
-            },
-            onClick (itme) {
-                model.setMaxTransfer(); // 设置 最大划转
-            },
-            getList () {
-                return model.canTransferCoin;
-            }
-        };
-    },
+    // getCurrencyMenuOption() {
+    //     return {
+    //         evenKey: `myDropdown${Math.floor(Math.random() * 10000)}`,
+    //         activeId: cb => cb(model.form, 'coin'),
+    //         showMenu: model.showCurrencyMenu,
+    //         curId: "",
+    //         curItem: {},
+    //         setShowMenu: type => {
+    //             model.showCurrencyMenu = type;
+    //         },
+    //         onClick (itme) {
+    //             model.setMaxTransfer(); // 设置 最大划转
+    //         },
+    //         getList () {
+    //             return model.canTransferCoin;
+    //         }
+    //     };
+    // },
     // 配置 从xx钱包菜单
     getFromMenuOption() {
         return {
@@ -335,8 +339,21 @@ const model = {
         this.form.maxTransfer = ""; // 最大划转
     },
     initEVBUS () {
+        // 订阅 body点击事件广播
+        broadcast.onMsg({
+            key: "transferClickBody",
+            cmd: broadcast.EV_ClICKBODY,
+            cb: function () {
+                model.showCurrencyMenu = false;
+            }
+        });
     },
     rmEVBUS () {
+        // 删除 body点击事件广播
+        broadcast.offMsg({
+            key: "transferClickBody",
+            isall: true
+        });
     },
     oninit (vnode) {
         this.vnode = vnode;
