@@ -62,8 +62,15 @@ module.exports = {
     contractTotalValueForUSDT: 0,
     // 合约交易总BTC估值
     contractTotalValueForBTC: 0,
+
     // 获取资产的接口是否正在请求
     isWltReq: false,
+
+    // 获取币种全称是否正在请求
+    isCoinFullNameReq: false,
+
+    // 获取币种简介是否正在请求
+    isCoinInfoReq: false,
 
     init: function () {
         // 初始化
@@ -248,6 +255,10 @@ module.exports = {
         });
     },
     getCoinquanname: function (arg) {
+        if (this.isCoinFullNameReq) {
+            return;
+        }
+        this.isCoinFullNameReq = true;
         const that = this;
         const params = { locale: l180n.getLocale(), vp: Conf.exchId };
         Http.getCurrenciesIntro(params).then(res => {
@@ -256,15 +267,21 @@ module.exports = {
                     that.wltFullName[item.coin] = item;
                 });
             }
+            that.isCoinFullNameReq = false;
         }).catch(e => { console.log(e, '获取coin全称失败'); }).finally(res => { that.getCoinInfo(); });
     },
     getCoinInfo: function () {
+        if (this.isCoinInfoReq) {
+            return;
+        }
+        this.isCoinInfoReq = true;
         const that = this;
         const params = { locale: l180n.getLocale(), vp: Conf.exchId };
         Http.getCoinInfo(params).then(res => {
             if (res.result.code === 0) {
                 that.coinInfo = res.result.data;
             }
+            that.isCoinInfoReq = false;
         }).finally(res => { that.updWlt(); });
     },
     setWallet(data) {

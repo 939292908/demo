@@ -222,6 +222,8 @@ const model = {
             }
         });
         self.sets();
+
+        console.log(this.swValue);
     },
     createFn: function() {
         this.sets();

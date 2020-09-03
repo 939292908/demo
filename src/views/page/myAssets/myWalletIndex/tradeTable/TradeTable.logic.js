@@ -50,7 +50,6 @@ module.exports = {
             this.tableDateList = 'walletData';
         }
         this.initAccountBanlance();
-        this.setDataLength(this.tableData[this.tableDateList].length);
         this.searchTableData();
     },
     initAccountBanlance: function() {
@@ -68,6 +67,18 @@ module.exports = {
         this.tableData.walletData = wlt.wallet['03'];
         this.tableData.contractData = wlt.wallet['01'];
         this.tableData.coinData = wlt.wallet['02'];
+
+        this.setDataLength(this.tableData[this.tableDateList].length);
+
+        // console.log('this.dataLength', this.dataLength);
+        // console.log('this.tableDateList', this.tableDateList);
+        // console.log('this.tableData', this.tableData);
+        // 判断暂无数据是否显示
+        if (this.dataLength === 0) {
+            document.getElementsByTagName('table')[0].rows[document.getElementsByTagName('table')[0].rows.length - 1].style.display = '';
+        } else {
+            document.getElementsByTagName('table')[0].rows[document.getElementsByTagName('table')[0].rows.length - 1].style.display = 'none';
+        }
     },
     initColumnData: function () {
         this.columnData = {
@@ -138,6 +149,20 @@ module.exports = {
     },
     setHideZeroFlag: function () {
         this.hideZeroFlag = !this.hideZeroFlag;
+        console.log(this.tableDateList);
+        if (this.tableDateList === 'contractData') {
+            for (let i = 0; i < this.tableData[this.tableDateList].length; i++) {
+                if (this.tableData[this.tableDateList][i].MgnBal === '0.00000000' || this.tableData[this.tableDateList][i].MgnBal === '0.0000') {
+                    console.log(1);
+                }
+            }
+        } else {
+            for (let i = 0; i < this.tableData[this.tableDateList].length; i++) {
+                if (this.tableData[this.tableDateList][i].TOTAL === '0.00000000' || this.tableData[this.tableDateList][i].TOTAL === '0.0000') {
+                    console.log(1);
+                }
+            }
+        }
     },
     searchTableData: function () {
         const that = this;
@@ -213,13 +238,6 @@ module.exports = {
             this.setPageFlag(currencyIndex);
         } else {
             this.setPageFlag('03');
-        }
-
-        // 判断暂无数据是否显示
-        if (this.dataLength === 0) {
-            document.getElementsByTagName('table')[0].rows[document.getElementsByTagName('table')[0].rows.length - 1].style.display = '';
-        } else {
-            document.getElementsByTagName('table')[0].rows[document.getElementsByTagName('table')[0].rows.length - 1].style.display = 'none';
         }
     },
     updateFn: function(vnode) {
