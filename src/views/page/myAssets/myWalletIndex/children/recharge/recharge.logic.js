@@ -24,6 +24,7 @@ module.exports = {
     openChains: null, // 是否显示链名称
     showCurrencyMenu: false, // show币种菜单
     coinParam: null, // 传过来的币种
+    chains: null, // 链名称
     setPageData() {
         const that = this;
         this.pageData = []; // 初始化
@@ -39,17 +40,6 @@ module.exports = {
                 item.openChains = walletI.Setting.openChains;
                 item.wType = walletI.wType; // 币种
                 item.memo = walletI.Setting.memo; // 是否显示标签
-                // if (walletI.wType === 'USDT') {
-                //     for (const i in walletI.Setting) {
-                //         if (i.search('-') !== -1) {
-                //             // 去掉为false的链名称
-                //             if (!walletI.Setting[i]) {
-                //                 console.log(i, '------', walletI.Setting[i], that.USDTLabel, i.split('-')[1]);
-                //                 that.USDTLabel.pop(i.split('-')[1]);
-                //             }
-                //         }
-                //     }
-                // }
                 Http.GetRechargeAddr({
                     wType: walletI.wType
                 }).then(function(arg) {
@@ -85,20 +75,29 @@ module.exports = {
     },
     setUSDTLabel() {
         const params = { locale: 'zh', vp: Conf.exchId };
+        const that = this;
         webApi.getCoinInfo(params).then(res => {
-            console.log(wlt.wallet['03']);
-            if (wlt.wallet['03'].wType === 'USDT') {
-                console.log(wlt.wallet['03']);
-            }
+            // console.log('nzm', 'getCoinInfo success', res);
             if (res.result.code === 0) {
-                this.USDTLabel = Array.from(res.result.data.USDT.chains);
+                that.chains = Array.from(res.result.data.USDT.chains);
+                that.USDTLabel = Array.from(res.result.data.USDT.chains);
                 const ary = [];
-                for (let i = 0; i < this.USDTLabel.length; i++) {
-                    ary.push(this.USDTLabel[i].name);
+                for (let i = 0; i < that.USDTLabel.length; i++) {
+                    ary.push(that.USDTLabel[i].name);
                 }
-                this.USDTLabel = ary;
-                this.USDTLabel.pop('ERC20');
-                console.log('nzm', this.USDTLabel);
+                that.USDTLabel = ary;
+                // 需按顺序显示
+                for (const i of wlt.wallet['03']) {
+                    if (i.wType === 'USDT') {
+                        for (const j in i.Setting) {
+                            if (j.search('canRechargeUSDT-') > -1) {
+                                if (!i.Setting[j]) {
+                                    that.USDTLabel = that.USDTLabel.filter((x) => x !== j.split('canRechargeUSDT-')[1]);
+                                }
+                            }
+                        }
+                    }
+                }
             }
         });
     },
@@ -180,17 +179,18 @@ module.exports = {
     },
     changeBtnflag(index, title) {
         this.btnCheckFlag = index;
-        let wType = 'USDT';
-        if (title !== 'Omni') {
-            wType = wType + title;
+        let wType = null;
+        for (const i of this.chains) {
+            if (i.name === title) {
+                wType = i.attr;
+            }
         }
-        console.log(wType);
         Http.GetRechargeAddr({
             wType: wType
         }).then(function(arg) {
-            console.log('nzm', 'GetRechargeAddr success', arg);
-            // this.rechargeAddr = arg.rechargeAddr;
-            // m.redraw();
+            // console.log('nzm', 'GetRechargeAddr success', arg);
+            this.rechargeAddr = arg.rechargeAddr;
+            m.redraw();
         }).catch(function(err) {
             console.log('nzm', 'GetRechargeAddr error', err);
         });
