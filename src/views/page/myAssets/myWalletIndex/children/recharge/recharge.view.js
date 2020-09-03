@@ -6,6 +6,7 @@ require('@/views/page/myAssets/myWalletIndex/children/recharge/recharge.scss');
 const Tooltip = require('@/views/components/common/Tooltip/Tooltip.view');
 const Dropdown = require('@/views/components/common/Dropdown');
 const l180n = require('@/languages/I18n').default;
+const Header = require('@/views/components/indexHeader/indexHeader.view');
 
 module.exports = {
     oninit: () => {
@@ -16,9 +17,19 @@ module.exports = {
     },
     view: () => {
         return m('div', { class: `views-page-myAssets-myWalletIndex-childer-recharge theme--light pb-7` }, [
+            m('div', { style: { backgroundColor: `#0E1C33`, width: `100%` } }, [
+                m('div', { class: `content-width`, style: { margin: `auto` } }, [
+                    m(Header, {
+                        highlightFlag: 0,
+                        navList: [{ to: '/myWalletIndex', title: '我的资产' }, { to: '/assetRecords', title: '资金记录' }]
+                    })
+                ])
+            ]),
             m('div', { class: `top mb-7 has-bg-level-2 ` }, [
-                m('i', { class: `iconfont icon-Return has-text-title`, onclick: () => { window.router.go(-1); } }),
-                m('span', { class: `has-text-title my-4 ml-4 title-medium` }, l180n.$t('10056') /* '充币' */)
+                m('div', { class: `content-width`, style: { margin: `auto` } }, [
+                    m('i', { class: `iconfont icon-Return has-text-title`, onclick: () => { window.router.go(-1); } }),
+                    m('span', { class: `has-text-title my-4 ml-4 title-medium` }, l180n.$t('10056') /* '充币' */)
+                ])
             ]),
             m('div', { class: `bottom content-width mb-9` }, [
                 m('div', { class: `bottom-upper has-bg-level-2 pl-8 pt-7` }, [
