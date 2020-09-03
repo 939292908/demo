@@ -144,6 +144,7 @@ const model = {
     },
     // 按钮事件
     handlerClickNavBtn (item) {
+        const that = this;
         if (item.id === 4) { // 点击资金划转
             // transferLogic.isShow = true;
             transferLogic.setTransferModalOption({
@@ -151,7 +152,7 @@ const model = {
                 transferFrom: model.swValue,
                 coin: "",
                 successCallback() { // 划转成功回调
-                    this.sets();
+                    that.sets();
                 }
             });
         }
