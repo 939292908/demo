@@ -350,9 +350,6 @@ module.exports = {
             // 设备信息
             m(modal, {
                 isShow: deviceInfo.modalOpen, // 显示隐藏
-                onOk () {
-                    deviceInfo.closeModal();
-                }, // 确认事件 // 使用默认确认按钮
                 onClose () {
                     deviceInfo.closeModal();
                 }, // 关闭事件
