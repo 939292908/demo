@@ -27,7 +27,10 @@ module.exports = {
                                 class: `button`,
                                 onclick: (e) => {
                                     // 进入下一次事件队列，先让body事件关闭所有下拉，再开启自己
-                                    setTimeout(() => (model.showCurrencyMenu = true), 0);
+                                    const type = model.showCurrencyMenu;
+                                    setTimeout(() => {
+                                        model.showCurrencyMenu = !type;
+                                    }, 0);
                                 }
                             }, [
                                 m('p', { class: `my-trigger-text` }, [
