@@ -35,32 +35,34 @@ module.exports = {
         "05": '算力账户',
         "06": '跟单账户'
     },
-    recordTypeName: {
-        '02': {
-            all: I18n.$t('10135'), /* '全部类型' */
-            gift: I18n.$t('10142'), /* '合约赠金 */
-            transfer: '资产划转'/* '资产划转' */
-        },
-        '01': {
-            all: I18n.$t('10135'), /* '全部类型 */
-            transfer: '资产划转', /* '资产划转 */
-            other: I18n.$t('10140')/* '其他类型' */
-        },
-        '03': {
-            all: I18n.$t('10135'), /* '全部类型  */
-            recharge: I18n.$t('10136'), /* '钱包充币 */
-            withdraw: I18n.$t('10137'), /* '钱包提币 */
-            transfer: '资产划转', /* '资产划转  */
-            paymentTransfer: I18n.$t('10058'), /* '内部转账 */
-            active: I18n.$t('10138'), /* '活动出入金 */
-            exchange: I18n.$t('10139'), /* '系统兑换 */
-            other: I18n.$t('10140')/* '其他类型' */
-        },
-        '04': {
-            all: I18n.$t('10135'), /* '全部类型  */
-            transfer: '资产划转', /* '资产划转  */
-            otcSell: I18n.$t('10001')/* '法币交易' */
-        }
+    recordTypeName() {
+        return {
+            '02': {
+                all: I18n.$t('10135'), /* '全部类型' */
+                gift: I18n.$t('10142'), /* '合约赠金 */
+                transfer: '资产划转'/* '资产划转' */
+            },
+            '01': {
+                all: I18n.$t('10135'), /* '全部类型 */
+                transfer: '资产划转', /* '资产划转 */
+                other: I18n.$t('10140')/* '其他类型' */
+            },
+            '03': {
+                all: I18n.$t('10135'), /* '全部类型  */
+                recharge: I18n.$t('10136'), /* '钱包充币 */
+                withdraw: I18n.$t('10137'), /* '钱包提币 */
+                transfer: '资产划转', /* '资产划转  */
+                paymentTransfer: I18n.$t('10058'), /* '内部转账 */
+                active: I18n.$t('10138'), /* '活动出入金 */
+                exchange: I18n.$t('10139'), /* '系统兑换 */
+                other: I18n.$t('10140')/* '其他类型' */
+            },
+            '04': {
+                all: I18n.$t('10135'), /* '全部类型  */
+                transfer: '资产划转', /* '资产划转  */
+                otcSell: I18n.$t('10001')/* '法币交易' */
+            }
+        };
     },
     showList: [], // 显示的列表
     tradeAccount: ['01', '02', '04'], // 交易账户
@@ -74,9 +76,13 @@ module.exports = {
     },
     coin: 'all',
     type: 'all',
+    dateStr: '',
     init(aType, type = 'all') {
         this.aType = aType;
         this.type = type;
+        this.coin = 'all';
+        this.dateStr = '';
+        this.filterTime = [];
         this.getCoinList();
         this.getATypeRecords();
     },
@@ -192,7 +198,7 @@ module.exports = {
                     timestamp: item.timestamp,
                     status: utils.getTransferInfo(item.stat),
                     // stat: item.stat,
-                    // seq: item.seq,
+                    seq: item.seq,
                     des: I18n.$t('10056'), /* '充币' */
                     info: [
                         {
@@ -229,7 +235,7 @@ module.exports = {
                     timestamp: item.timestamp,
                     status: utils.getWithdrawArr(item.stat),
                     // stat: item.stat,
-                    // seq: item.seq,
+                    seq: item.seq,
                     des: I18n.$t('10057'), /* '提币' */
                     info: [
                         {
@@ -392,7 +398,7 @@ module.exports = {
                         timestamp: item.timestamp,
                         status: utils.getTransferInfo(item.stat),
                         // stat: item.stat,
-                        // seq: item.seq,
+                        seq: item.seq,
                         des: des,
                         info: info
                         // addrLink: item.addrLink,
@@ -434,7 +440,7 @@ module.exports = {
                         timestamp: item.timestamp,
                         status: utils.getTransferInfo(item.stat),
                         // stat: item.stat,
-                        // seq: item.seq,
+                        seq: item.seq,
                         des: item.addr === 'to' ? '买入' : '卖出'
                     });
                 }
@@ -575,7 +581,7 @@ module.exports = {
                     timestamp: item.timestamp,
                     status: utils.getTransferInfo(item.stat),
                     // stat: item.stat,
-                    // seq: item.seq,
+                    seq: item.seq,
                     des: des,
                     fee: item.fee
                 };

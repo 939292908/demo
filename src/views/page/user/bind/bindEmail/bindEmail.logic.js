@@ -57,7 +57,7 @@ const model = {
         Http.queryUserInfo(params).then(res => {
             if (res.result.code === 0) {
                 if (res.exists === 1) {
-                    window.$message({ content: I18n.$t('10281'), type: 'danger' }); // 用户已存在
+                    window.$message({ content: '用户已存在', type: 'danger' }); // 用户已存在
                 } else {
                     m.redraw();
                     this.initSafetyVerifyModal();// 初始化 安全验证弹框

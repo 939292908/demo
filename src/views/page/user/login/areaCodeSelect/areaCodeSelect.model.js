@@ -59,7 +59,7 @@ module.exports = {
      */
     itemClick(vnode, item) {
         if (item.support === '0') {
-            window.$message({ content: '改地区暂未开放，请选择其他区号', type: 'danger' });
+            window.$message({ content: '该地区暂未开放，请选择其他区号', type: 'danger' });
         } else {
             vnode.attrs.onSelect(item.code);
             this.search = '';

@@ -38,6 +38,7 @@ module.exports = {
         vNode.attrs.isHandleVerify && Validate.oninit();
     },
     onremove(vNode) {
+        linShiToApp.showErCode = false;
         vNode.attrs.isHandleVerify && Validate.onremove();
     },
     handlecloseDialog: function () {
@@ -68,7 +69,6 @@ module.exports = {
         ]);
     },
     promptText: function () {
-        this.showErWeiMa = false; // 临时
         if (this.props.isLinshiErWeiMa) return this.isLinshiErWeiMaVnode(); // 临时
         return m('div.mainPrompt', [
             m('div.promptText', this.props.content || '已提交提币申请，请前往邮件进行提币确认，邮件确认 后才能进入出金环节。'),
@@ -78,11 +78,11 @@ module.exports = {
     verifyContentTitle: function () { // 验证 title
         return m('.dis-flex verifyContentTitle', [
             m('.has-text-level-2.body-3.mb-2', Validate.selectName),
-            Validate.anotherType.length && m('div.has-text-right.mt-2', {}, [
+            Validate.anotherType.length ? m('div.has-text-right.mt-2', {}, [
                 m('a.has-text-primary', {
                     onclick: () => { Validate.changeValidate(); }
                 }, [Validate.anotherName])
-            ])
+            ]) : null
         ]);
     },
     smsVerifyContent: function () {
@@ -98,8 +98,9 @@ module.exports = {
     },
     doubleButtonVnode: function () {
         return m('div.butBox dis-flex', [
-            m('div.itemBut', '谷歌验证'),
-            m('div.itemBut bgBut', '手机验证')
+            this.props.doubleButtonCof.map(item => m('div.itemBut', { class: item.issolid ? 'bgBut' : '' }, item.text))
+            // m('div.itemBut', '谷歌验证'),
+            // m('div.itemBut bgBut', '手机验证')
         ]);
     },
     verifyVnode: function () {

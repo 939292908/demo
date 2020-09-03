@@ -109,7 +109,7 @@ module.exports = {
                     m('', {
                         class: "navbar-item has-text-primary-hover cursor-pointer ",
                         onclick: function () {
-                            window.router.push('/accountSecurity');
+                            window.open('/accountSecurity');
                         }
                     }, [
                         '新手帮助'
@@ -158,7 +158,7 @@ module.exports = {
                         })
                     ]),
                     // 资产
-                    m('div.navbar-item.has-dropdown.is-hoverable', {}, [
+                    m('div.navbar-item.has-dropdown.is-hoverable' + (utils.getItem('loginState') ? '' : '.is-hidden'), {}, [
                         m('a.navbar-item.ma-0.has-text-primary-hover', {}, [
                             "资产"
                         ]),
@@ -168,7 +168,7 @@ module.exports = {
                                 onclick: function () {
                                     window.router.push({
                                         path: '/myWalletIndex',
-                                        params: {
+                                        data: {
                                             id: '03'
                                         }
                                     });
@@ -181,7 +181,7 @@ module.exports = {
                                 onclick: function () {
                                     window.router.push({
                                         path: '/myWalletIndex',
-                                        params: {
+                                        data: {
                                             id: '01'
                                         }
                                     });
@@ -194,7 +194,7 @@ module.exports = {
                                 onclick: function () {
                                     window.router.push({
                                         path: '/myWalletIndex',
-                                        params: {
+                                        data: {
                                             id: '02'
                                         }
                                     });
@@ -207,7 +207,7 @@ module.exports = {
                                 onclick: function () {
                                     window.router.push({
                                         path: '/myWalletIndex',
-                                        params: {
+                                        data: {
                                             id: '04'
                                         }
                                     });
@@ -218,7 +218,7 @@ module.exports = {
                         ])
                     ]),
                     // 我的
-                    m('div.navbar-item.has-dropdown.is-hoverable', {}, [
+                    m('div.navbar-item.has-dropdown.is-hoverable' + (utils.getItem('loginState') ? '' : '.is-hidden'), {}, [
                         m('a.navbar-item.ma-0.has-text-primary-hover', {}, [
                             m('i.iconfont.icon-Personal')
                         ]),
@@ -230,7 +230,7 @@ module.exports = {
                                             utils.hideMobileInfo(globalModels.getAccount().accountName || '--')
                                         ]),
                                         m('p', { class: `body-4 has-text-level-2` }, [
-                                            'UID:' + globalModels.getAccount().uid
+                                            'UID:' + (globalModels.getAccount().uid || '--')
                                         ])
                                     ])
                                 ])
@@ -250,11 +250,11 @@ module.exports = {
                             }, [
                                 'API管理'
                             ]),
-                            m('a', {
-                                class: `navbar-item columns has-text-primary-hover min-width-200 ma-0 px-6 py-4 body-5`
-                            }, [
-                                '邀请返佣'
-                            ]),
+                            // m('a', {
+                            //     class: `navbar-item columns has-text-primary-hover min-width-200 ma-0 px-6 py-4 body-5`
+                            // }, [
+                            //     '邀请返佣'
+                            // ]),
                             m('a', {
                                 class: `navbar-item columns has-text-primary-hover min-width-200 ma-0 px-6 py-4 body-5`,
                                 onclick: () => {
@@ -274,7 +274,7 @@ module.exports = {
                             m('article', { class: `media is-align-items-center` }, [
                                 m('div.media-left', {}, [
                                     m('figure.image.is-64x64', {}, [
-                                        m('img', { class: '', src: require("@/assets/img/home/Rectangle_530.png").default })
+                                        m('img', { class: '', src: require("@/assets/img/home/download.png").default })
                                     ])
                                 ]),
                                 m('div', { class: `media-content` }, [
@@ -350,16 +350,13 @@ module.exports = {
             // 设备信息
             m(modal, {
                 isShow: deviceInfo.modalOpen, // 显示隐藏
-                onOk () {
-                    deviceInfo.closeModal();
-                }, // 确认事件 // 使用默认确认按钮
                 onClose () {
                     deviceInfo.closeModal();
                 }, // 关闭事件
                 slot: { // 插槽
                     header: m('div.w100', {}, [
                         m('div', {}, [
-                            'Web网络监测'
+                            `Web网络监测(${globalModels.getAccount().uid})`
                         ]),
                         m('article.body-4.has-text-level-3.message.is-warning.mt-4.mr-4', {}, [
                             m('div.message-body.border-1', {}, [

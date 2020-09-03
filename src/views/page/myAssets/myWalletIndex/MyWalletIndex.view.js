@@ -1,16 +1,15 @@
 const m = require('mithril');
-const Header = require('../../../components/indexHeader/indexHeader.view');
+const Header = require('@/views/components/indexHeader/indexHeader.view');
 const Transfer = require('@/views/page/myAssets/transfer/transfer.view.js');
 const myWalletIndex = require('@/views/page/myAssets/myWalletIndex/MyWalletIndex.logic');
 require('@/views/page/myAssets/myWalletIndex/MyWalletIndex.scss');
 const Dropdown = require('@/views/components/common/Dropdown');
 
 module.exports = {
-    oninit: () => {
+    oninit() {
         myWalletIndex.initFn();
-        m.redraw();
     },
-    view: () => {
+    view() {
         return m('div', { class: `views-pages-myassets-myWalletIndex theme--light` }, [
             m('div', {}, [
                 m('div.top mb-8', { style: { height: `344px`, width: `100%`, backgroundColor: `#0E1C33` } }, [
@@ -44,6 +43,7 @@ module.exports = {
                                     myWalletIndex.Nav.firstNav.map((item, index) => {
                                         return m(`button.column button-large mx-3 border-radius-small cursor-pointer Operation${index} has-line-level-2`, {
                                             class: item.title === `充币` ? `has-bg-primary` : `has-text-primary bgNone`,
+                                            key: item.title,
                                             onclick: () => { myWalletIndex.handlerClickNavBtn(item); },
                                             onmouseover: () => { myWalletIndex.changeBtnSty(index, `show`); },
                                             onmouseleave: () => { myWalletIndex.changeBtnSty(index, `hide`); }
@@ -120,10 +120,10 @@ module.exports = {
             m(Transfer)
         ]);
     },
-    oncreate: () => {
+    oncreate() {
         myWalletIndex.createFn();
     },
-    onremove: () => {
+    onremove() {
         myWalletIndex.removeFn();
     }
 };

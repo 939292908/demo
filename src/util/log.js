@@ -1,7 +1,7 @@
-const LOG = window.console.log;
+// const LOG = window.console.log;
 
-const openStr = 'nzm';
+// const openStr = '';
 
-window.console.log = function (str, ...text) {
-    if (openStr === str) LOG(...text);
-};
+// window.console.log = function (str, ...text) {
+//     if (openStr === str) LOG(...text);
+// };

@@ -63,10 +63,10 @@ module.exports = {
         this.dataLength = param;
     },
     initTableData: function () {
-        this.tableData.legalData = this.copyAry(wlt.wallet['04']);
-        this.tableData.walletData = this.copyAry(wlt.wallet['03']);
-        this.tableData.contractData = this.copyAry(wlt.wallet['01']);
-        this.tableData.coinData = this.copyAry(wlt.wallet['02']);
+        this.tableData.legalData = wlt.wallet['04'];
+        this.tableData.walletData = wlt.wallet['03'];
+        this.tableData.contractData = wlt.wallet['01'];
+        this.tableData.coinData = wlt.wallet['02'];
     },
     initColumnData: function () {
         this.columnData = {
@@ -104,7 +104,7 @@ module.exports = {
             ]
         };
     },
-    jump(row, item) {
+    jump: function (row, item) {
         const that = this;
         transferLogic.initTransferInfo(); // 初始化弹框
         if (item.operation === '划转') {
@@ -116,8 +116,14 @@ module.exports = {
                     that.setPageFlag();
                 }
             });
-        } else if (item.to) {
-            window.router.push(item.to);
+        } else if (item.operation === '充值') {
+            if (row.Setting.canRecharge) {
+                window.router.set(item.to + '?wType=' + row.wType);
+            } else {
+                return window.$message({ title: '提示', content: '暂未开启', type: 'primary' });
+            }
+        } else if (item.operation === '提现') {
+            window.router.set(item.to + '?wType=' + row.wType);
         } else if (item.operation === '去交易') {
             return window.$message({ title: '提示', content: '暂未开放', type: 'danger' });
         }
@@ -154,8 +160,12 @@ module.exports = {
             that.search(index);
         }, 50);
     },
-    // oldAry: [],
+    oldAry: [],
     search: function (ary) {
+        this.oldAry = ary;
+        if (this.oldAry !== ary) {
+            console.log(1);
+        }
         const tbody = document.getElementsByTagName('table')[0].childNodes[1];
         const searchContent = document.getElementsByClassName('coinSearch')[0].value;
         for (const i of ary) {
@@ -195,13 +205,13 @@ module.exports = {
             } else {
                 document.getElementsByTagName('table')[0].rows[document.getElementsByTagName('table')[0].rows.length - 1].style.display = 'none';
             }
-        }, '100');
+        }, 200);
     },
     initFn: function (vnode) {
         this.vnode = vnode;
         this.oldHideMoneyFlag = vnode.attrs.hideMoneyFlag;
     },
-    updateFn(vnode) {
+    updateFn: function(vnode) {
         if (this.oldValue !== vnode.attrs.swValue) {
             this.setPageFlag(vnode.attrs.swValue);
         }

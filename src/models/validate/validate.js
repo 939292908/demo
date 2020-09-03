@@ -33,10 +33,9 @@ export default {
     },
     /**
      * 激活谷歌验证弹窗
-     * @param params
      * @callback callback
      */
-    activeGoogle(params, callback) {
+    activeGoogle(callback) {
         this.validateType = 'google';
         if (callback) {
             this.callbackHandler = callback;
@@ -76,7 +75,7 @@ export default {
     checkGoogleCode(code) {
         if (!code) {
             window.$message({
-                content: I18n.$t('10015') /* '该字段不能为空' */,
+                content: '该字段不能为空' /* '该字段不能为空' */,
                 type: 'danger'
             });
             return;
@@ -105,7 +104,7 @@ export default {
         });
         if (!code) {
             window.$message({
-                content: I18n.$t('10015') /* '该字段不能为空' */,
+                content: '该字段不能为空' /* '该字段不能为空' */,
                 type: 'danger'
             });
             return;
@@ -131,7 +130,7 @@ export default {
     checkEmailCode(code) {
         if (!code) {
             window.$message({
-                content: I18n.$t('10015') /* '该字段不能为空' */,
+                content: '该字段不能为空' /* '该字段不能为空' */,
                 type: 'danger'
             });
             return;

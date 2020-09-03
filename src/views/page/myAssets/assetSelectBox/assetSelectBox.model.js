@@ -1,11 +1,25 @@
 // const m = require('mithril');
 const Lightpick = require('lightpick');
 const I18n = require('@/languages/I18n').default;
+const broadcast = require('@/broadcast/broadcast');
 
 module.exports = {
-    date: '',
     picker: null,
     oncreate(vnode) {
+        this.initPicker(vnode);
+        broadcast.onMsg({
+            key: 'assetSelectBox',
+            cmd: 'setLanguage',
+            cb: lang => {
+                if (this.picker) {
+                    this.picker.destroy();
+                }
+                this.picker = null;
+                this.initPicker(vnode);
+            }
+        });
+    },
+    initPicker(vnode) {
         const self = this;
         this.picker = new Lightpick({
             field: document.getElementById('asset-select-box-time-selector'),
@@ -51,11 +65,16 @@ module.exports = {
         time[0] = start / 1000;
         time[1] = end / 1000 + 24 * 60 * 60;
         vnode.attrs.onSelectTime(time);
-        this.date = str;
+        vnode.attrs.setDateStr(str);
     },
     onremove() {
         this.picker.destroy();
         this.picker = null;
         this.date = '';
+        broadcast.offMsg({
+            key: 'assetSelectBox',
+            cmd: 'setLanguage',
+            isall: true
+        });
     }
 };
