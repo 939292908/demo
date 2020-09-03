@@ -41,7 +41,11 @@ module.exports = {
                                     }, [I18n.$t('10060')/* '交易账户' */])
                                 ]),
                                 m('li', {}, [
-                                    m('a', {}, [I18n.$t('10061')/* '其他账户' */])
+                                    m('a', {
+                                        onclick: e => {
+                                            window.$message({ title: '提示', content: '暂未开放', type: 'danger' });
+                                        }
+                                    }, [I18n.$t('10061')/* '其他账户' */])
                                 ])
                             ])
                         ]),
