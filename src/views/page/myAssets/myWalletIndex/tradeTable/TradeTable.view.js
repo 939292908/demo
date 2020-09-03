@@ -27,13 +27,13 @@ module.exports = {
                         oninput: function () {
                             t.searchTableData();
                         }
-                    })
+                    }),
+                    m('i', { class: `iconfont icon-Search` })
                 ]),
                 m('div.hideZeroAsset mr-7', {}, [
-                    m('label.checkbox', {}, [
-                        m('input[type=checkbox].mr-1', { checked: t.hideZeroFlag, onchange: () => { t.setHideZeroFlag(); } }),
-                        `隐藏0资产`
-                    ])
+                    m('input', { id: `color-input-gray`, class: `color-input-gray`, type: `checkbox`, checked: t.hideZeroFlag, onchange: () => { t.setHideZeroFlag(); } }),
+                    m('label', { for: `color-input-gray` }),
+                    m('span', { class: `ml-2` }, `隐藏0资产`)
                 ]),
                 m('div.fundRecords mr-7', {}, [
                     m('i', { class: 'iconfont icon-AssetRecord' }),
