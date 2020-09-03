@@ -11,9 +11,6 @@ import('./styles/bluma.scss');
 // import('./styles/common_color.scss');
 // import('./styles/common_other.scss');
 
-// iconfont
-import('./assets/iconfont/iconfont.js');
-import('./assets/iconfont/iconfont.css');
 // 轮播
 import('swiper/swiper-bundle.css');
 // 极验
@@ -29,6 +26,9 @@ window.onresize = function (arg) {
 import('./views/index').then(arg => {
     const root = document.body;
     m.mount(root, arg.default);
+    // iconfont
+    import('./assets/iconfont/iconfont.js');
+    import('./assets/iconfont/iconfont.css');
     import('@/router/index');
     models.getFunList();
     if (utils.getItem('ex-session')) {
