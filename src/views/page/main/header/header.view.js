@@ -230,7 +230,7 @@ module.exports = {
                                             utils.hideMobileInfo(globalModels.getAccount().accountName || '--')
                                         ]),
                                         m('p', { class: `body-4 has-text-level-2` }, [
-                                            'UID:' + globalModels.getAccount().uid
+                                            'UID:' + (globalModels.getAccount().uid || '--')
                                         ])
                                     ])
                                 ])
@@ -274,7 +274,7 @@ module.exports = {
                             m('article', { class: `media is-align-items-center` }, [
                                 m('div.media-left', {}, [
                                     m('figure.image.is-64x64', {}, [
-                                        m('img', { class: '', src: require("@/assets/img/home/Rectangle_530.png").default })
+                                        m('img', { class: '', src: require("@/assets/img/home/download.png").default })
                                     ])
                                 ]),
                                 m('div', { class: `media-content` }, [
@@ -350,9 +350,6 @@ module.exports = {
             // 设备信息
             m(modal, {
                 isShow: deviceInfo.modalOpen, // 显示隐藏
-                onOk () {
-                    deviceInfo.closeModal();
-                }, // 确认事件 // 使用默认确认按钮
                 onClose () {
                     deviceInfo.closeModal();
                 }, // 关闭事件

@@ -77,23 +77,21 @@
     }
 
     .modal-card-head {
-        padding: var(--c-padding-level7);
-
         .modal-card-title {
             .modal-card-title-log {
                 opacity: .12;
             }
         }
-    }
 
-    .modal-card-body {
-        padding: var(--c-padding-level7);
+        .icomBox {
+            width: var(--c-iconsz-level3);
+            height: var(--c-iconsz-level3);
+            border-radius: 50%;
+          }
     }
 
     .modal-card-foot {
-        padding: var(--c-padding-level7);
         border: none;
-
         .button {
             width: 100%;
         }
