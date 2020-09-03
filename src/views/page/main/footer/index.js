@@ -170,7 +170,9 @@ module.exports = {
                 // 左边width
                 m('div', { class: `footer-left column is-6` }, [
                     // logo
-                    m('img', { class: '', src: require("@/assets/img/logo/title-logo.png").default, style: "width: 112;height:28px;" }),
+                    m('svg.icon.footer-logo', { "aria-hidden": true }, [
+                        m('use', { "xlink:href": "#icon-white-logo" })
+                    ]),
                     m('p', { class: `footer-title ${utils.isMobile() ? 'ml-6' : ''}` }, ["全球区块链资产衍生品交易平台"]),
                     // 社区
                     m('div', { class: `is-flex mt-7 is-between is-hidden-mobile`, style: "width: 300px" }, [
