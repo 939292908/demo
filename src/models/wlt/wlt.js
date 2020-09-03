@@ -3,10 +3,14 @@ const broadcast = require('@/broadcast/broadcast');
 const gWsApi = require('@/api').wsApi;
 const utils = require('@/util/utils').default;
 const ActiveLine = require('@/api').ActiveLine;
+const { Conf } = require('@/api');
+const l180n = require('@/languages/I18n').default;
 
 module.exports = {
     name: "modelsForWlt",
     wltItemEx: {}, // 资产数据处理中间量
+    coinInfo: {}, // 币种简介
+    wltFullName: {}, // 币种简介 --- 添加全称使用
     wallet_obj: {
         '01': {}, // 合约账户
         '02': {}, // 币币账户
@@ -71,8 +75,15 @@ module.exports = {
             }
         });
 
-        // 更新资产
-        this.updWlt();
+        // if (Object.keys(that.wltFullName).length < 1) {
+        //     that.getCoinquanname();
+        // }
+        if (Object.keys(that.coinInfo).length < 1) {
+            that.getCoinquanname();
+        } else {
+            // 更新资产
+            this.updWlt();
+        }
     },
     remove: function () {
         broadcast.offMsg({
@@ -186,6 +197,8 @@ module.exports = {
 
         this.totalCNYValue = utils.toFixedForFloor(this.totalCNYValue, 2);
 
+        // console.log('nzm', 'this.wallet', this.wallet);
+        // console.log('\n');
         // console.log('nzm', 'totalCNYValue', this.totalCNYValue, 'totalValueForUSDT', this.totalValueForUSDT);
         // console.log('\n');
         // console.log('nzm', 'tradingAccountTotalValueForBTC', this.tradingAccountTotalValueForBTC, 'tradingAccountTotalValueForUSDT', this.tradingAccountTotalValueForUSDT);
@@ -213,6 +226,26 @@ module.exports = {
         }).catch(function(err) {
             console.log('ht', 'getWallet error', err);
         });
+    },
+    getCoinquanname: function (arg) {
+        const that = this;
+        const params = { locale: l180n.getLocale(), vp: Conf.exchId };
+        Http.getCurrenciesIntro(params).then(res => {
+            if (res.result.code === 0) {
+                res.result.data.forEach(item => {
+                    that.wltFullName[item.coin] = item;
+                });
+            }
+        }).catch(e => { console.log(e, '获取coin全称失败'); }).finally(res => { that.getCoinInfo(); });
+    },
+    getCoinInfo: function () {
+        const that = this;
+        const params = { locale: l180n.getLocale(), vp: Conf.exchId };
+        Http.getCoinInfo(params).then(res => {
+            if (res.result.code === 0) {
+                that.coinInfo = res.result.data;
+            }
+        }).finally(res => { that.updWlt(); });
     },
     setWallet(data) {
         this.wallet['01'] = data.assetLists01; // 合约资产
@@ -337,17 +370,21 @@ module.exports = {
         // const coinSym = utils.getSpotName(AssetD, this.wltItemEx.wType, 'USDT');
         // const coinPrz = (AssetD[coinSym] && AssetD[coinSym].PrzLatest) || coinInitValue;
         const coinPrz = this.getPrz(this.wltItemEx.wType);
-        // console.log('ht', 'value', coinInitValue, coinSym, AssetD[coinSym] && AssetD[coinSym].PrzLatest, coinPrz);
+        // console.log('ht', 'value', coinPrz);
         // 当前币种价格 end
         // USDT估值
         valueForUSDT = TOTAL * coinPrz;
-        // console.log('ht', 'value', TOTAL, coinPrz, TOTAL * coinPrz);
+        // console.log('ht', 'usdt value', TOTAL, coinPrz, TOTAL * coinPrz);
         this.wltItemEx.valueForUSDT = utils.toFixedForFloor(valueForUSDT, 8);
         // BTC估值
         valueForBTC = TOTAL * coinPrz / btcPrz;
-        // console.log('ht', 'value', TOTAL, coinPrz, btcPrz, TOTAL * coinPrz);
+        // console.log('ht', 'btc value', TOTAL, coinPrz, btcPrz, TOTAL * coinPrz);
         this.wltItemEx.valueForBTC = utils.toFixedForFloor(valueForBTC, 8);
-        // console.log('ht', 'value', valueForUSDT, valueForBTC);
+        // console.log('ht', 'btc value', valueForUSDT, valueForBTC);
+        // 币种价格
+        this.wltItemEx.coinPrz = coinPrz;
+        // btc价格
+        this.wltItemEx.btcPrz = btcPrz;
         // 图标
         this.wltItemEx.icon = ActiveLine.WebAPI + this.wltItemEx.icon;
 
@@ -359,10 +396,15 @@ module.exports = {
      * @returns {*|number}
      */
     getPrz(coin) {
-        const AssetD = gWsApi.AssetD;
-        const SymName = utils.getSpotName(AssetD, coin, 'USDT');
-        const InitValue = (this.wallet_obj['03'] && this.wallet_obj['03'].BTC && this.wallet_obj['03'].BTC.initValue) || 0;
-        const Prz = (AssetD[SymName] && AssetD[SymName].PrzLatest) || InitValue;
-        return Prz;
+        if (coin === 'USDT') {
+            const InitValue = (this.wallet_obj['03'] && this.wallet_obj['03'][coin] && this.wallet_obj['03'][coin].initValue) || 0;
+            return InitValue;
+        } else {
+            const AssetD = gWsApi.AssetD;
+            const SymName = utils.getSpotName(AssetD, coin, 'USDT');
+            const InitValue = (this.wallet_obj['03'] && this.wallet_obj['03'][coin] && this.wallet_obj['03'][coin].initValue) || 0;
+            const Prz = (AssetD[SymName] && AssetD[SymName].PrzLatest) || InitValue;
+            return Prz;
+        }
     }
 };

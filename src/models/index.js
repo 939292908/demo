@@ -31,9 +31,10 @@ module.exports = {
             self.loading = false;
             if (data.result.code === 0) {
             // 获取个人信息成功
-                broadcast.emit({ cmd: broadcast.GET_USER_INFO_READY, data: data.account });
                 globalModels.setAccount(data.account);
                 utils.setItem('userAccount', data.account.accountName);
+                utils.setItem('loginState', true);
+                broadcast.emit({ cmd: broadcast.GET_USER_INFO_READY, data: data.account });
                 // window.router.push('/home');
             } else {
                 window.$message({

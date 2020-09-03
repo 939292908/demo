@@ -1,10 +1,12 @@
 .views-page-myAssets-myWalletIndex-childer-recharge{
+    .nav{
+        background-color: white;
+    }
     .top{
         height: 66px;
         i{
             width: 24px;
             height: 24px;
-            margin-left: 361.02px;
         }
         span{
             display: inline-block;
@@ -66,19 +68,11 @@
                         display: inline;
                     }
                 }
-                button{
-                    height: 28px;
-                    outline: none;
-                    border: 1px solid #FF8B00;
-                }
-                .noneBG{
-                    color: #FF8B00;
-                    background-color: white;
-                }
             }
             .tips{
                 display: flex;
                 flex-direction: column;
+                width: 673px;
             }
         }
         .bottom-tab{

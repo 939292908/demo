@@ -4,13 +4,13 @@ const t = require('@/views/page/myAssets/myWalletIndex/tradeTable/TradeTable.log
 require('@/views/page/myAssets/myWalletIndex/tradeTable/TradeTable.scss');
 
 module.exports = {
-    oninit: (vnode) => {
+    oninit(vnode) {
         t.initFn(vnode);
     },
     oncreate: (vnode) => {
         t.createFn(vnode);
     },
-    view: (vnode) => {
+    view(vnode) {
         return m('div', { class: `views-pages-Myassets-Table pt-7 px-5` }, [
             m('div.tradingAccount mb-8 tabs', { style: { display: vnode.attrs.swValue === '01' || vnode.attrs.swValue === '02' || vnode.attrs.swValue === '04' ? '' : 'none' } }, [
                 m('ul.tradingAccount_nav mx-5', { }, [
@@ -92,10 +92,10 @@ module.exports = {
             )
         ]);
     },
-    onupdate: (vnode) => {
+    onupdate(vnode) {
         t.updateFn(vnode);
     },
-    onremove: () => {
+    onremove() {
         t.removeFn();
     }
 };

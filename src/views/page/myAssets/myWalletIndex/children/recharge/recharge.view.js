@@ -6,6 +6,7 @@ require('@/views/page/myAssets/myWalletIndex/children/recharge/recharge.scss');
 const Tooltip = require('@/views/components/common/Tooltip/Tooltip.view');
 const Dropdown = require('@/views/components/common/Dropdown');
 const l180n = require('@/languages/I18n').default;
+const Header = require('@/views/components/indexHeader/indexHeader.view');
 
 module.exports = {
     oninit: () => {
@@ -17,9 +18,19 @@ module.exports = {
     },
     view: () => {
         return m('div', { class: `views-page-myAssets-myWalletIndex-childer-recharge theme--light pb-7` }, [
+            m('div', { style: { backgroundColor: `#0E1C33`, width: `100%` } }, [
+                m('div', { class: `content-width`, style: { margin: `auto` } }, [
+                    m(Header, {
+                        highlightFlag: 0,
+                        navList: [{ to: '/myWalletIndex', title: l180n.$t('10052') /* '我的资产' */ }, { to: '/assetRecords', title: l180n.$t('10053') /* '资金记录' */ }]
+                    })
+                ])
+            ]),
             m('div', { class: `top mb-7 has-bg-level-2 ` }, [
-                m('i', { class: `iconfont icon-Return has-text-title`, onclick: () => { window.router.go(-1); } }),
-                m('span', { class: `has-text-title my-4 ml-4 title-medium` }, l180n.$t('10056') /* '充币' */)
+                m('div', { class: `content-width`, style: { margin: `auto` } }, [
+                    m('i', { class: `iconfont icon-Return has-text-title`, onclick: () => { window.router.go(-1); } }),
+                    m('span', { class: `has-text-title my-4 ml-4 title-medium` }, l180n.$t('10056') /* '充币' */)
+                ])
             ]),
             m('div', { class: `bottom content-width mb-9` }, [
                 m('div', { class: `bottom-upper has-bg-level-2 pl-8 pt-7` }, [
@@ -42,11 +53,12 @@ module.exports = {
                     ]),
                     m('div', { class: `usdtLable mb-7`, style: { display: rechargeIndex.openChains ? (rechargeIndex.form.selectCheck === 'USDT' ? '' : 'none') : 'none' } }, [
                         m('div', { class: `labeltip` }, [
-                            m('span', {}, l180n.$t('10110') /* '链名称' */),
+                            m('span', {}, l180n.$t('10100') /* '链名称' */),
                             m('div.navbar-item.cursor-pointer', { class: `has-text-primary-hover` }, [
                                 m(Tooltip, {
                                     label: m('i', { class: `iconfont icon-Tooltip` }),
-                                    content: rechargeIndex.labelTips,
+                                    content: rechargeIndex.nameTips,
+                                    width: `240px`,
                                     position: 'top'
                                 })
                             ])
@@ -54,7 +66,8 @@ module.exports = {
                         m('div', { class: `mt-2` }, [
                             rechargeIndex.USDTLabel.map((item, index) => {
                                 return m('button', {
-                                    class: `mr-6 cursor-pointer ` + (rechargeIndex.btnCheckFlag === index ? `has-bg-primary` : `noneBG`),
+                                    class: `mr-6 button button-small is-primary` + (rechargeIndex.btnCheckFlag === index ? `` : ` is-outlined`),
+                                    key: item,
                                     onclick: () => { rechargeIndex.changeBtnflag(index, item); }
                                 }, item);
                             })
@@ -65,7 +78,7 @@ module.exports = {
                     ]),
                     m('div', { class: `currencyAddr border-radius-medium mt-2 mb-7` }, [
                         m('div', { class: `currencyAddr-text ml-3` }, [
-                            m('input', { class: `addrText`, type: 'text', readOnly: `readOnly`, value: rechargeIndex.rechargeAddr })
+                            m('input', { class: `addrText body-5`, type: 'text', readOnly: `readOnly`, value: rechargeIndex.rechargeAddr })
                         ]),
                         m('div', { class: `currencyAddr-Operation ml-3` }, [
                             m('div', { class: `iImg mt-2` }, [
@@ -86,7 +99,7 @@ module.exports = {
                     m('div', { class: `tips` }, [
                         m('span', { class: `body-5` }, l180n.$t('10082') /* '温馨提示' */),
                         m('br'),
-                        rechargeIndex.tips.split('*').map((item, index) => m(`span.pb-1 body-4`, { class: index === 0 ? `has-text-primary` : `` }, '*' + item))
+                        rechargeIndex.tips.split('*').map((item, index) => m(`span.pb-1 body-4`, { class: index === 0 ? `has-text-primary` : ``, key: item }, '*' + item))
                     ])
                 ]),
                 m('div.bottom-tab.has-bg-level-2.mt-5.pt-3', {}, [
