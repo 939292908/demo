@@ -176,7 +176,7 @@ module.exports = {
                 if (res) {
                     this.loading = false;
                     utils.setItem('loginState', true);
-                    window.router.push('/home');
+                    window.router.push(window.router.defaultRoutePath);
                 } else {
                     this.loading = false;
                     m.redraw();
