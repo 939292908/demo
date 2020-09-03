@@ -62,6 +62,8 @@ module.exports = {
     contractTotalValueForUSDT: 0,
     // 合约交易总BTC估值
     contractTotalValueForBTC: 0,
+    // 获取资产的接口是否正在请求
+    isWltReq: false,
 
     init: function () {
         // 初始化
@@ -197,7 +199,7 @@ module.exports = {
 
         this.totalCNYValue = utils.toFixedForFloor(this.totalCNYValue, 2);
 
-        // console.log('nzm', 'this.wallet', this.wallet);
+        console.log('nzm', 'this.wallet', this.wallet);
         // console.log('\n');
         // console.log('nzm', 'totalCNYValue', this.totalCNYValue, 'totalValueForUSDT', this.totalValueForUSDT);
         // console.log('\n');
@@ -210,9 +212,20 @@ module.exports = {
         // console.log('nzm', 'contractTotalValueForBTC', this.contractTotalValueForBTC, 'contractTotalValueForUSDT', this.contractTotalValueForUSDT);
         // console.log('\n');
         // console.log('nzm', 'walletTotalValueForBTC', this.walletTotalValueForBTC, 'walletTotalValueForUSDT', this.walletTotalValueForUSDT);
+        broadcast.emit({
+            cmd: broadcast.MSG_WLT_UPD,
+            data: {
+                wallet_obj: this.wallet_obj, // 资产
+                wallet: this.wallet
+            }
+        });
     },
     updWlt: function() {
         const that = this;
+        if (this.isWltReq) {
+            return;
+        }
+        this.isWltReq = true;
         Http.getWallet({
             exChannel: window.exchId
         }).then(function(arg) {
@@ -221,7 +234,14 @@ module.exports = {
                 // 初始化资产数据
                 that.setWallet(arg);
                 that.initWlt();
-                broadcast.emit({ cmd: broadcast.MSG_WLT_READY, data: null });
+                broadcast.emit({
+                    cmd: broadcast.MSG_WLT_READY,
+                    data: {
+                        wallet_obj: that.wallet_obj, // 资产
+                        wallet: that.wallet
+                    }
+                });
+                that.isWltReq = false;
             }
         }).catch(function(err) {
             console.log('ht', 'getWallet error', err);

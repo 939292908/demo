@@ -28,6 +28,8 @@ module.exports = {
     EV_ClICKBODY: 'EV_ClICKBODY',
     // 资产获取完成
     MSG_WLT_READY: 'MSG_WLT_READY',
+    // 资产更新
+    MSG_WLT_UPD: 'MSG_WLT_UPD',
     // 资产界面切换估值币种
     CHANGE_SW_CURRENCY: 'CHANGE_SW_CURRENCY',
     /**

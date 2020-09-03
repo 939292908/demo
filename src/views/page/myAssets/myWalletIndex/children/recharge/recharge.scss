@@ -1,7 +1,4 @@
 .views-page-myAssets-myWalletIndex-childer-recharge{
-    .nav{
-        background-color: white;
-    }
     .top{
         height: 66px;
         i{
@@ -15,7 +12,6 @@
     .bottom{
         margin: 0 auto;
         .bottom-upper{
-            height: 480px;
             .currencySel{
                 width: 384px;
                 height: 44px;
@@ -59,7 +55,6 @@
                     height: 20px;
                     text-align: center;
                     line-height: 20px;
-                    background-color: rgba(255, 139, 0, 0.12);
                 }
             }
             .usdtLable{

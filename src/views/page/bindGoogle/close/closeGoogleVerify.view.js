@@ -15,10 +15,10 @@ const closeGView = {
             ]),
             m('div', { class: `center content-width` }, [
                 m('div', { class: `warning mb-3 pl-7` }, [
-                    m('i', { class: `iconfont icon-Tooltip pr-2` }),
-                    m('span', { style: `color:#585E71;` }, l180n.$t('10263') /* '出于安全考虑，修改账户安全项之后，24h内禁止提币' */)
+                    m('i', { class: `iconfont icon-Tooltip pr-2 has-text-primary` }),
+                    m('span', { class: `has-text-level-3` }, l180n.$t('10263') /* '出于安全考虑，修改账户安全项之后，24h内禁止提币' */)
                 ]),
-                m('div', { class: `closeOperation pt-8` }, [
+                m('div', { class: `closeOperation pt-8 has-bg-level-2` }, [
                     m('div', { class: `pwdDiv` }, [
                         m('span', { class: `body-5` }, '登录密码'),
                         m('br'),

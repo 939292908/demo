@@ -7,7 +7,7 @@ module.exports = {
         const list = [];
         for (const i in vnode.attrs.navList) {
             list.push(m('div.header-my.mr-5.pt-3.cursor-pointer', {
-                class: (vnode.attrs.highlightFlag === Number(i) ? 'header-highlight ' : ''),
+                class: (vnode.attrs.highlightFlag === Number(i) ? 'header-highlight has-text-primary' : 'has-text-level-4'),
                 onclick: function () {
                     window.router.push(vnode.attrs.navList[i].to);
                 }
