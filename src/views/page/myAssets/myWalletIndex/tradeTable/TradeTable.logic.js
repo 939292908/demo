@@ -63,13 +63,12 @@ module.exports = {
         this.dataLength = param;
     },
     initTableData: function () {
-        this.tableData.legalData = this.copyAry(wlt.wallet['04']);
-        this.tableData.walletData = this.copyAry(wlt.wallet['03']);
-        this.tableData.contractData = this.copyAry(wlt.wallet['01']);
-        this.tableData.coinData = this.copyAry(wlt.wallet['02']);
+        this.tableData.legalData = wlt.wallet['04'];
+        this.tableData.walletData = wlt.wallet['03'];
+        this.tableData.contractData = wlt.wallet['01'];
+        this.tableData.coinData = wlt.wallet['02'];
     },
     initColumnData: function () {
-        // fssfd
         this.columnData = {
             wallet: [
                 { col: '币种', val: 'wType' },
@@ -105,7 +104,7 @@ module.exports = {
             ]
         };
     },
-    jump(row, item) {
+    jump: function (row, item) {
         const that = this;
         transferLogic.initTransferInfo(); // 初始化弹框
         if (item.operation === '划转') {
@@ -196,13 +195,13 @@ module.exports = {
             } else {
                 document.getElementsByTagName('table')[0].rows[document.getElementsByTagName('table')[0].rows.length - 1].style.display = 'none';
             }
-        }, '100');
+        }, 200);
     },
     initFn: function (vnode) {
         this.vnode = vnode;
         this.oldHideMoneyFlag = vnode.attrs.hideMoneyFlag;
     },
-    updateFn(vnode) {
+    updateFn: function(vnode) {
         if (this.oldValue !== vnode.attrs.swValue) {
             this.setPageFlag(vnode.attrs.swValue);
         }
