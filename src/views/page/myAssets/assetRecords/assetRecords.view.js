@@ -100,7 +100,12 @@ module.exports = {
                                     AssetRecords.onSelectType(type);
                                 }
                             }),
-                            m(assetTable, { class: 'mt-7', list: AssetRecords.showList, loading: AssetRecords.loading })
+                            m(assetTable, {
+                                class: 'mt-7',
+                                list: AssetRecords.showList,
+                                loading: AssetRecords.loading,
+                                aType: AssetRecords.aType
+                            })
                         ])
                     ])
                 ])
