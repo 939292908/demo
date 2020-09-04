@@ -28,7 +28,7 @@ module.exports = {
         if (!password2) {
             return '该字段不能为空'; /* '该字段不能为空' */
         } else if (password1 !== password2) {
-            return I18n.$t('10173'); /* '两次输入密码不一致!' */
+            return '两次输入密码不一致!'; /* '两次输入密码不一致!' */
         } else {
             return '';
         }
