@@ -32,7 +32,7 @@ module.exports = {
                     m('span', { class: `has-text-title my-4 ml-4 title-medium` }, l180n.$t('10056') /* '充币' */)
                 ])
             ]),
-            m('div', { class: `bottom content-width mb-9 border-radius-medium` }, [
+            m('div', { class: `bottom content-width mb-7 border-radius-medium` }, [
                 m('div', { class: `bottom-upper has-bg-level-2 pl-8 pt-7` }, [
                     m('div', { class: `form-item-title` }, l180n.$t('10063') /* '币种' */),
                     m('div', { class: `form-item-content border-radius-medium mt-2 mb-7`, style: { width: `384px` } }, [
@@ -49,7 +49,6 @@ module.exports = {
                                 })
                             ])
                         ]),
-                        // m('div', { class: `mt-2 px-2 has-text-primary border-radius-small uid` }, rechargeIndex.uId)
                         m('div', { class: `mt-2 px-2 has-text-primary border-radius-small tag is-primary is-light uid` }, rechargeIndex.uId)
                     ]),
                     m('div', { class: `usdtLable mb-7`, style: { display: rechargeIndex.openChains ? (rechargeIndex.form.selectCheck === 'USDT' ? '' : 'none') : 'none' } }, [
@@ -61,8 +60,8 @@ module.exports = {
                                     content: rechargeIndex.nameTips.map(item => {
                                         return m('span', { key: item, class: `mt-1` }, item);
                                     }),
-                                    width: `350px`,
-                                    position: 'top'
+                                    width: `200px`,
+                                    position: 'bottom'
                                 })
                             ])
                         ]),
@@ -85,7 +84,7 @@ module.exports = {
                         ]),
                         m('div', { class: `currencyAddr-Operation ml-3` }, [
                             m('div', { class: `iImg mt-2` }, [
-                                m('i', { class: `iconfont icon-copy has-text-primary cursor-pointer mr-4`, onclick: () => { rechargeIndex.copyText(); } }),
+                                m('i', { class: `iconfont icon-copy has-text-primary cursor-pointer mr-2`, onclick: () => { rechargeIndex.copyText(); } }),
                                 m('i', {
                                     class: `iconfont icon-QrCode has-text-primary cursor-pointer`,
                                     onmouseover: () => {

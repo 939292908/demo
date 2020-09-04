@@ -12,7 +12,7 @@ module.exports = {
     view(vnode) {
         return m('div', { class: `views-pages-Myassets-Table pt-3 px-5 has-bg-level-2` }, [
             m('div.tradingAccount mb-7 tabs', { style: { display: vnode.attrs.swValue === '01' || vnode.attrs.swValue === '02' || vnode.attrs.swValue === '04' ? '' : 'none' } }, [
-                m('ul.tradingAccount_nav mx-5', { }, [
+                m('ul.tradingAccount_nav', { }, [
                     t.navAry.map((item) => {
                         return m('li', { class: '' + (t.pageFlag === item.idx ? "is-active" : ''), onclick: () => { window.router.push('/myWalletIndex?id=' + item.idx); } }, m('a', {}, item.val));
                     })
@@ -21,7 +21,7 @@ module.exports = {
             m('div', { class: `nav pr-5` }, [
                 m('div.search mr-7 has-line-level-3', {}, [
                     m('input', {
-                        class: `border-radius-small py-1 pl-1 coinSearch`,
+                        class: `coinSearch`,
                         placeholder: `币种搜索`,
                         oninput: function () {
                             t.setTableNewAry();

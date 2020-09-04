@@ -23,7 +23,7 @@ module.exports = {
                             m('div', { class: `myWalletIndex-head-left column` }, [
                                 m('div', { class: `myWalletIndex-head-left-total columns pt-3` }, [
                                     m('span', { class: `body-6 pt-2 has-text-white` }, [`总资产估值`]),
-                                    m('div', { class: `form-item-content border-radius-medium mt-2 mb-7` }, [
+                                    m('div', { class: `form-item-content border-radius-medium mt-2` }, [
                                         m(Dropdown, myWalletIndex.getCurrencyMenuOption())
                                     ])
                                 ]),
