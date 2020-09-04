@@ -75,7 +75,7 @@ export default {
     checkGoogleCode(code) {
         if (!code) {
             window.$message({
-                content: '该字段不能为空' /* '该字段不能为空' */,
+                content: I18n.$t('10416') /* '该字段不能为空' */,
                 type: 'danger'
             });
             return;
@@ -104,7 +104,7 @@ export default {
         });
         if (!code) {
             window.$message({
-                content: '该字段不能为空' /* '该字段不能为空' */,
+                content: I18n.$t('10416') /* '该字段不能为空' */,
                 type: 'danger'
             });
             return;
@@ -130,7 +130,7 @@ export default {
     checkEmailCode(code) {
         if (!code) {
             window.$message({
-                content: '该字段不能为空' /* '该字段不能为空' */,
+                content: I18n.$t('10416') /* '该字段不能为空' */,
                 type: 'danger'
             });
             return;
