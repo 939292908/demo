@@ -15,70 +15,14 @@
 // menuWidth 菜单 宽 (选填)
 
 var m = require("mithril");
-const broadcast = require('@/broadcast/broadcast');
-
+require('./Dropdown.scss');
+const model = require('./Dropdown.logic.js');
+console.log(model);
 module.exports = {
-    // ============= 状态 =============
-    showMenu: false,
-    curItem: {},
-    curId: "", // 临时保存id
-    openClickBody: true, // body事件 节流
-
-    // ============= 方法 =============
-    // 初始化 选中item
-    initCurItem (vnode) {
-        // 临时保存 当前选中id
-        vnode.attrs.activeId && vnode.attrs.activeId((p, k) => {
-            return (vnode.state.curId = p[k]);
-        });
-        // 当前选中item
-        const item = vnode.attrs.getList().find(item => {
-            return item.id === vnode.state.curId;
-        });
-        vnode.state.curItem = item || {};
-
-        // console.log(vnode.state.curId, vnode.state.curItem, 66);
-        // if (curItem) {
-        //     vnode.state.btnText = curItem.label;
-        // } else {
-        //     vnode.state.btnText = vnode.attrs.placeholder || "--";
-        // }
-        // console.log(curItem, vnode.state.btnText, 77777777777);
-        m.redraw();
-    },
-    // 初始化 全局广播
-    initEVBUS (vnode) {
-        // 订阅 body点击事件广播
-        broadcast.onMsg({
-            key: vnode.attrs.evenKey,
-            cmd: broadcast.EV_ClICKBODY,
-            cb: function () {
-                vnode.attrs.setShowMenu(false);
-            }
-        });
-        // this.EV_ClICKBODY_unbinder = window.gEVBUS.on(gEVBUS.EV_ClICKBODY, arg => {
-        //     if (vnode.state.openClickBody) vnode.attrs.showMenu((p, k) => p[k] = false) // body事件 节流
-        //     vnode.state.openClickBody = true
-        // })
-    },
-    // 删除全局广播
-    rmEVBUS (vnode) {
-        broadcast.offMsg({
-            key: vnode.attrs.evenKey,
-            isall: true
-        }); // 删除 body点击事件广播
-    },
-
-    // ============= 生命周期 =============
-    oninit (vnode) {
-        this.initCurItem(vnode);
-        this.initEVBUS(vnode);
-    },
-    oncreate (vnode) {
-    },
-    onupdate (vnode) {
-        this.initCurItem(vnode);
-    },
+    oninit: vnode => model.oninit(vnode),
+    oncreate: vnode => model.oncreate(vnode),
+    onupdate: vnode => model.onupdate(vnode),
+    onremove: vnode => model.onremove(vnode),
     view (vnode) {
         return m('div', { class: `${vnode.attrs.class || ''} my-dropdown dropdown ${vnode.attrs.type === 'hover' ? " is-hoverable" : vnode.attrs.showMenu ? " is-active" : ''}` }, [
             // btn
@@ -100,7 +44,7 @@ module.exports = {
             // menu
             m('div', { class: "dropdown-menu ", style: vnode.attrs.menuWidth ? `width:${vnode.attrs.menuWidth}px` : '' }, [
                 m('div', { class: "dropdown-content", style: "max-height: 400px; overflow: auto;" },
-                    vnode.attrs.getList().map((item, index) => {
+                    model.menuList.map((item, index) => {
                         return m('a', {
                             class: `dropdown-item has-hover ${vnode.state.curId === item.id ? 'has-active' : ''}`,
                             key: item.label + index,
@@ -121,8 +65,5 @@ module.exports = {
                 )
             ])
         ]);
-    },
-    onremove: function (vnode) {
-        this.rmEVBUS(vnode);
     }
 };

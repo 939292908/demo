@@ -1,0 +1,32 @@
+// 下拉组件
+.my-dropdown {
+    width: 100%;
+
+    .dropdown-trigger {
+        width: 100%;
+
+        .button {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+    }
+
+    .dropdown-menu {
+        width: 100%;
+        min-width: 10rem;
+
+        .dropdown-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px !important;
+
+            &.has-hover:hover,
+            &.has-active {
+                color: var(--c-primary-lighten);
+            }
+        }
+    }
+}

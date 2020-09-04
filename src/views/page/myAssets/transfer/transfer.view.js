@@ -3,6 +3,7 @@ require('./transfer.scss');
 const I18n = require('@/languages/I18n').default;
 // const Modal = require('@/views/components/common/Modal');
 const Dropdown = require('@/views/components/common/Dropdown');
+// const Dropdown = require('@/views/components/common/DropdownNew/Dropdown.view');
 const Modal = require('@/views/components/common/Modal');
 
 const model = require('./transfer.logic.js');
