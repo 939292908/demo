@@ -3,7 +3,7 @@ const wlt = require('@/models/wlt/wlt');
 const broadcast = require('@/broadcast/broadcast');
 const table = require('@/views/page/myAssets/myWalletIndex/tradeTable/TradeTable.view');
 const transferLogic = require('@/views/page/myAssets/transfer/transfer.logic.js'); // 划转模块逻辑
-// const I18n = require('@/languages/I18n').default;
+const I18n = require('@/languages/I18n').default;
 
 const model = {
     currency: 'BTC',
@@ -94,7 +94,7 @@ const model = {
     // 切换我的钱包，交易账户，币币，合约，法币
     switchChange: function (val, type) {
         if (val === 'none') {
-            return window.$message({ title: '提示', content: '暂未开放', type: 'primary' });
+            return window.$message({ title: I18n.$t('10410') /* '提示' */, content: '暂未开放', type: 'primary' });
         }
         // console.log(val);
         // window.router.push('/myWalletIndex?id=' + val);
@@ -118,25 +118,25 @@ const model = {
         firstNav: [
             {
                 id: 1,
-                title: '充币',
+                title: I18n.$t('10056') /* '充币' */,
                 // 跳转至哪个链接 例如：to: 'http://www.baidu.com || /chargeMoney'
                 to: '/recharge'
             },
             {
                 id: 2,
-                title: '提币',
+                title: I18n.$t('10057') /* '提币' */,
                 // 跳转至哪个链接
                 to: '/extractCoin'
             },
             // {
             //     id: 3,
-            //     title: '内部转账',
+            //     title: I18n.$t('10058') '内部转账',
             //     // 跳转至哪个链接
             //     to: ''
             // },
             {
                 id: 4,
-                title: '资金划转',
+                title: I18n.$t('10059') /* '资金划转' */,
                 // 跳转至哪个链接
                 to: ''
             }

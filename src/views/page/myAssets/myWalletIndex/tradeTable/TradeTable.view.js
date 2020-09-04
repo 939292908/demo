@@ -1,6 +1,7 @@
 const m = require('mithril');
 const t = require('@/views/page/myAssets/myWalletIndex/tradeTable/TradeTable.logic');
 require('@/views/page/myAssets/myWalletIndex/tradeTable/TradeTable.scss');
+const I18n = require('@/languages/I18n').default;
 
 module.exports = {
     oninit(vnode) {
@@ -31,15 +32,15 @@ module.exports = {
                 ]),
                 m('div.hideZeroAsset mr-7', {}, [
                     m('i', { class: t.hideZeroFlag ? `iconfont icon-u_check-square cursor-pointer` : `iconfont icon-Unselected cursor-pointer`, onclick: () => { t.setHideZeroFlag(); } }),
-                    m('span', { class: `ml-2` }, `隐藏0资产`)
+                    m('span', { class: `ml-2` }, I18n.$t('10062') /* `隐藏0资产` */)
                 ]),
                 m('div.fundRecords mr-7', {}, [
                     m('i', { class: 'iconfont icon-AssetRecord' }),
-                    m('span', { onclick: function () { window.router.push('/assetRecords'); } }, [`资金记录`])
+                    m('span', { onclick: function () { window.router.push('/assetRecords'); } }, I18n.$t('10053') /* `资金记录` */)
                 ]),
                 m('div.profit', { style: { display: t.coinType === `contract` ? `none` : `none` } }, [
                     m('i', { class: 'iconfont icon-Analysis' }),
-                    m('span', [`盈亏分析`])
+                    m('span', I18n.$t('10075') /* `盈亏分析` */)
                 ]),
                 m('div.account', { style: { display: t.coinType !== `wallet` ? `` : `none` } }, [
                     m('span', {}, t.accountTitle),
@@ -67,7 +68,7 @@ module.exports = {
                                         // 操作列
                                         return m('td.pt-7 has-text-level-1', {}, [
                                             item.val.map(aHref => {
-                                                return m('a.mr-4 has-text-primary', { onclick: () => { t.jump(row, aHref); } }, aHref.operation);
+                                                return m('a.mr-4 has-text-primary', { onclick: () => { t.jump(row, aHref); }, key: aHref.operation }, aHref.operation);
                                             })
                                         ]);
                                     } else if (i === t.columnData[t.coinType].length - 2) { // 估值列

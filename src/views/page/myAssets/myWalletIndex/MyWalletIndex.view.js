@@ -4,6 +4,7 @@ const Transfer = require('@/views/page/myAssets/transfer/transfer.view.js');
 const myWalletIndex = require('@/views/page/myAssets/myWalletIndex/MyWalletIndex.logic');
 require('@/views/page/myAssets/myWalletIndex/MyWalletIndex.scss');
 const Dropdown = require('@/views/components/common/Dropdown');
+const I18n = require('@/languages/I18n').default;
 
 module.exports = {
     oninit() {
@@ -17,12 +18,12 @@ module.exports = {
                         // highlightFlag:哪个高亮   0：我的资产  1：资产记录
                         m(Header, {
                             highlightFlag: 0,
-                            navList: [{ to: '/myWalletIndex', title: '我的资产' }, { to: '/assetRecords', title: '资金记录' }]
+                            navList: [{ to: '/myWalletIndex', title: I18n.$t('10052') /* '我的资产' */ }, { to: '/assetRecords', title: I18n.$t('10053') /* '资金记录' */ }]
                         }),
                         m('div', { class: `myWalletIndex-head columns-flex mt-7` }, [
                             m('div', { class: `myWalletIndex-head-left column` }, [
                                 m('div', { class: `myWalletIndex-head-left-total columns pt-3` }, [
-                                    m('span', { class: `body-6 pt-2 has-text-white` }, [`总资产估值`]),
+                                    m('span', { class: `body-6 pt-2 has-text-white` }, I18n.$t('10054') /* `总资产估值` */),
                                     m('div', { class: `form-item-content border-radius-medium mt-2` }, [
                                         m(Dropdown, myWalletIndex.getCurrencyMenuOption())
                                     ])
@@ -42,7 +43,7 @@ module.exports = {
                                 m('div', { class: `is-between  pt-8` }, [
                                     myWalletIndex.Nav.firstNav.map((item, index) => {
                                         return m(`button.column mr-3 button-large button is-primary Operation${index}`, {
-                                            class: item.title === `充币` ? `` : `is-outlined`,
+                                            class: item.title === I18n.$t('10056') /* `充币` */ ? `` : `is-outlined`,
                                             key: item.title,
                                             onclick: () => { myWalletIndex.handlerClickNavBtn(item); },
                                             onmouseover: () => { myWalletIndex.changeBtnSty(index, `show`); },
@@ -60,7 +61,7 @@ module.exports = {
                                 onclick: () => { window.router.push('/myWalletIndex?id=03'); }
                             }, [
                                 m('div', { class: `body-5 mb-1` }, [
-                                    m('span', { }, `我的钱包`)
+                                    m('span', { }, I18n.$t('10055') /* `我的钱包` */)
                                 ]),
                                 m('div', { class: `title-small ` }, [
                                     m('span', {}, myWalletIndex.hideMoneyFlag ? '******' : myWalletIndex.walletTotalValue),
@@ -73,7 +74,7 @@ module.exports = {
                             }, [
                                 m('div.left', {}, [
                                     m('div', { class: `body-5 mb-1` }, [
-                                        m('span', { }, `交易账户`)
+                                        m('span', { }, I18n.$t('10060') /* `交易账户` */)
                                     ]),
                                     m('div', { class: `title-small ` }, [
                                         m('span', {}, myWalletIndex.hideMoneyFlag ? '******' : myWalletIndex.tradingAccountTotalValue),
@@ -91,18 +92,18 @@ module.exports = {
                                     m('div.tradeCard body-2 border-radius-medium pa-7 has-bg-level-2 box-shadow', {
                                         style: { display: `none` }
                                     }, [
-                                        m('span.mb-1 cursor-pointer has-text-level-4', `合约账户`),
+                                        m('span.mb-1 cursor-pointer has-text-level-4', I18n.$t('10072') /* `合约账户` */),
                                         m('a.mb-5 has-text-level-3', { class: myWalletIndex.swValue === '01' || myWalletIndex.swValue === '03' ? 'has-text-primary' : '', onclick: () => { myWalletIndex.switchChange('01', 'small'); } }, (myWalletIndex.hideMoneyFlag ? '******' : myWalletIndex.contractTotal) + ` ` + myWalletIndex.currency),
-                                        m('span.mb-1 cursor-pointer has-text-level-4', `币币账户`),
+                                        m('span.mb-1 cursor-pointer has-text-level-4', I18n.$t('10073') /* `币币账户` */),
                                         m('a.mb-5.has-text-level-3', { class: myWalletIndex.swValue === '02' ? 'has-text-primary' : '', onclick: () => { myWalletIndex.switchChange('02', 'small'); } }, (myWalletIndex.hideMoneyFlag ? '******' : myWalletIndex.coinTotal) + ` ` + myWalletIndex.currency),
-                                        m('span.mb-1 cursor-pointer has-text-level-4', `法币账户`),
+                                        m('span.mb-1 cursor-pointer has-text-level-4', I18n.$t('10074') /* `法币账户` */),
                                         m('a.has-text-level-3', { class: myWalletIndex.swValue === '04' ? 'has-text-primary' : '', onclick: () => { myWalletIndex.switchChange('04', 'small'); } }, (myWalletIndex.hideMoneyFlag ? '******' : myWalletIndex.legalTotal) + ` ` + myWalletIndex.currency)
                                     ])
                                 ])
                             ]),
                             m('div.other border-radius-medium px-7 py-7 column cursor-pointer has-bg-level-2', { onclick: () => { myWalletIndex.switchChange('none'); } }, [
                                 m('div', { class: `body-5 mb-1` }, [
-                                    m('span', {}, `其他账户`)
+                                    m('span', {}, I18n.$t('10061') /* `其他账户` */)
                                 ]),
                                 m('div', { class: `title-small` }, [
                                     m('span', {}, myWalletIndex.hideMoneyFlag ? '******' : myWalletIndex.otherTotalValue),

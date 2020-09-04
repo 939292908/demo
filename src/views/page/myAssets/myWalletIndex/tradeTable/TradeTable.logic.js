@@ -1,7 +1,7 @@
 const broadcast = require('@/broadcast/broadcast');
 const wlt = require('@/models/wlt/wlt');
 const transferLogic = require('@/views/page/myAssets/transfer/transfer.logic.js'); // 划转模块逻辑
-// const I18n = require('@/languages/I18n').default;
+const I18n = require('@/languages/I18n').default;
 // const m = require('mithril');
 
 module.exports = {
@@ -25,8 +25,8 @@ module.exports = {
         contractData: [],
         legalData: []
     },
-    // navAry: [{ idx: '01', val: '合约账户' }, { idx: '02', val: '币币账户' }],
-    navAry: [{ idx: '01', val: '合约账户' }, { idx: '02', val: '币币账户' }, { idx: '04', val: '法币账户' }],
+    // navAry: [{ idx: '01', val: I18n.$t('10072') /* '合约账户' */ }, { idx: '02', val: I18n.$t('10073') /* '币币账户' */ }],
+    navAry: [{ idx: '01', val: I18n.$t('10072') /* '合约账户' */ }, { idx: '02', val: I18n.$t('10073') /* '币币账户' */ }, { idx: '04', val: I18n.$t('10074') /* '法币账户' */ }],
     coinType: 'wallet',
     tableDateList: 'walletData',
     isShowNoneData: false, // 表格是否有数据
@@ -36,15 +36,15 @@ module.exports = {
         if (param === '01') {
             this.coinType = 'contract';
             this.tableDateList = 'contractData';
-            this.accountTitle = '合约账户';
+            this.accountTitle = I18n.$t('10072'); /* '合约账户' */
         } else if (param === '02') {
             this.coinType = 'coin';
             this.tableDateList = 'coinData';
-            this.accountTitle = '币币账户';
+            this.accountTitle = I18n.$t('10073'); /* '币币账户' */
         } else if (param === '04') {
             this.coinType = 'legal';
             this.tableDateList = 'legalData';
-            this.accountTitle = '法币账户';
+            this.accountTitle = I18n.$t('10074'); /* '法币账户' */
         } else if (param === '03') {
             this.coinType = 'wallet';
             this.tableDateList = 'walletData';
@@ -68,43 +68,43 @@ module.exports = {
     initColumnData: function () {
         this.columnData = {
             wallet: [
-                { col: '币种', val: 'wType' },
-                { col: '总额', val: 'TOTAL' },
-                { col: '可用', val: 'NL' },
-                { col: '锁定', val: 'depositLock' },
+                { col: I18n.$t('10063') /* '币种' */, val: 'wType' },
+                { col: I18n.$t('10064') /* '总额' */, val: 'TOTAL' },
+                { col: I18n.$t('10065') /* '可用' */, val: 'NL' },
+                { col: I18n.$t('10066') /* '锁定' */, val: 'depositLock' },
                 { col: this.currency + '估值', val: this.currency === 'BTC' ? 'valueForBTC' : 'valueForUSDT' },
-                { col: '操作', val: [{ operation: '充值', to: '/recharge' }, { operation: '提现', to: '/extractCoin' }, { operation: '划转', to: '地址' }] }
+                { col: I18n.$t('10068') /* '操作' */, val: [{ operation: I18n.$t('10069') /* '充值' */, to: '/recharge' }, { operation: I18n.$t('10070') /* '提现' */, to: '/extractCoin' }, { operation: I18n.$t('10071') /* '划转' */, to: '' }] }
             ],
             coin: [
-                { col: '币种', val: 'wType' },
-                { col: '总额', val: 'TOTAL' },
-                { col: '可用', val: 'NL' },
-                { col: '冻结', val: 'Frz' },
+                { col: I18n.$t('10063') /* '币种' */, val: 'wType' },
+                { col: I18n.$t('10064') /* '总额' */, val: 'TOTAL' },
+                { col: I18n.$t('10065') /* '可用' */, val: 'NL' },
+                { col: I18n.$t('10080') /* '冻结' */, val: 'Frz' },
                 { col: this.currency + '估值', val: this.currency === 'BTC' ? 'valueForBTC' : 'valueForUSDT' },
-                { col: '操作', val: [{ operation: '划转', to: '' }, { operation: '去交易', to: '' }] }
+                { col: I18n.$t('10068') /* '操作' */, val: [{ operation: I18n.$t('10071') /* '划转' */, to: '' }, { operation: I18n.$t('10079') /* '去交易' */, to: '' }] }
             ],
             contract: [
-                { col: '币种', val: 'wType' },
-                { col: '账户权益', val: 'MgnBal' },
-                { col: '未实现盈亏', val: 'UPNL' },
-                { col: '可用保证金', val: 'NL' },
+                { col: I18n.$t('10063') /* '币种' */, val: 'wType' },
+                { col: I18n.$t('10076') /* '账户权益' */, val: 'MgnBal' },
+                { col: I18n.$t('10077') /* '未实现盈亏' */, val: 'UPNL' },
+                { col: I18n.$t('10078') /* '可用保证金' */, val: 'NL' },
                 { col: this.currency + '估值', val: this.currency === 'BTC' ? 'valueForBTC' : 'valueForUSDT' },
-                { col: '操作', val: [{ operation: '划转', to: '' }, { operation: '去交易', to: '' }] }
+                { col: I18n.$t('10068') /* '操作' */, val: [{ operation: I18n.$t('10071') /* '划转' */, to: '' }, { operation: I18n.$t('10079') /* '去交易' */, to: '' }] }
             ],
             legal: [
-                { col: '币种', val: 'wType' },
-                { col: '总额', val: 'TOTAL' },
-                { col: '可用', val: 'NL' },
-                { col: '冻结', val: 'otcLock' },
+                { col: I18n.$t('10063') /* '币种' */, val: 'wType' },
+                { col: I18n.$t('10064') /* '总额' */, val: 'TOTAL' },
+                { col: I18n.$t('10065') /* '可用' */, val: 'NL' },
+                { col: I18n.$t('10080') /* '冻结' */, val: 'otcLock' },
                 { col: this.currency + '估值', val: this.currency === 'BTC' ? 'valueForBTC' : 'valueForUSDT' },
-                { col: '操作', val: [{ operation: '划转', to: '' }, { operation: '去交易', to: '' }] }
+                { col: I18n.$t('10068') /* '操作' */, val: [{ operation: I18n.$t('10071') /* '划转' */, to: '' }, { operation: I18n.$t('10079') /* '去交易' */, to: '' }] }
             ]
         };
     },
     jump: function (row, item) {
         const that = this;
         transferLogic.initTransferInfo(); // 初始化弹框
-        if (item.operation === '划转') {
+        if (item.operation === I18n.$t('10071') /* '划转' */) {
             transferLogic.setTransferModalOption({
                 isShow: true,
                 coin: row.wType, // 币种 默认选中
@@ -114,16 +114,16 @@ module.exports = {
                     that.initAccountBanlance();
                 }
             });
-        } else if (item.operation === '充值') {
+        } else if (item.operation === I18n.$t('10069') /* '充值' */) {
             if (row.Setting.canRecharge) {
                 window.router.push(item.to + '?wType=' + row.wType);
             } else {
-                return window.$message({ title: '提示', content: '该币暂未开放充值功能', type: 'primary' });
+                return window.$message({ title: I18n.$t('10410') /* '提示' */, content: '该币暂未开放充值功能', type: 'primary' });
             }
-        } else if (item.operation === '提现') {
+        } else if (item.operation === I18n.$t('10070') /* '提现' */) {
             window.router.push(item.to + '?wType=' + row.wType);
-        } else if (item.operation === '去交易') {
-            return window.$message({ title: '提示', content: '暂未开放', type: 'primary' });
+        } else if (item.operation === I18n.$t('10079') /* '去交易' */) {
+            return window.$message({ title: I18n.$t('10410') /* '提示' */, content: '暂未开放', type: 'primary' });
         }
     },
     setHideZeroFlag: function () {
