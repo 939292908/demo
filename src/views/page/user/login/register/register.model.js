@@ -69,6 +69,7 @@ const register = {
         const that = this;
         if (this.valid()) {
             this.loading = true;
+            this.geetestCallBackType = '';
             geetest.verify(() => {
                 that.loading = false;
             });
@@ -142,6 +143,9 @@ const register = {
                 // 注册成功
                 window.$message({ content: '注册成功', type: 'success' });
                 window.router.push('/login');
+            } else if (res.result.code === -1) {
+                this.geetestCallBackType = 'register';
+                geetest.verify();
             } else {
                 // 输入信息有误
                 window.$message({ content: errCode.getWebApiErrorCode(res.result.code), type: 'danger' });
@@ -249,6 +253,7 @@ const register = {
                 if (res === 'success') {
                     if (self.geetestCallBackType === 'sms') self.sendSmsCode();
                     else if (self.geetestCallBackType === 'email') self.sendEmailCode();
+                    else if (self.geetestCallBackType === 'register') self.register();
                     else self.queryUserInfo();
                 } else {
                     self.loading = false;

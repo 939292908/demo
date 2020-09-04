@@ -38,7 +38,7 @@ module.exports = {
                                         item.showInfo = !item.showInfo;
                                     }
                                 },
-                                [I18n.$t('10096')/* '详情' */, m('i.iconfont', { class: item.showInfo ? 'icon-xiala' : 'icon-xiala' }, [])])
+                                [I18n.$t('10096')/* '详情' */, m('i.iconfont.iconfont-small', { class: item.showInfo ? 'icon-xiala' : 'icon-xiala' }, [])])
                                 : '─ ─'
                         ])
                     ])
