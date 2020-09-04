@@ -33,11 +33,14 @@ module.exports = {
                 utils.setItem('loginState', true);
                 broadcast.emit({ cmd: broadcast.GET_USER_INFO_READY, data: data.account });
                 // window.router.push('/home');
-            } else if (needTip) {
-                window.$message({
-                    content: errCode.getWebApiErrorCode(data.result.code),
-                    type: 'danger'
-                });
+            } else {
+                utils.setItem('loginState', false);
+                if (needTip) {
+                    window.$message({
+                        content: errCode.getWebApiErrorCode(data.result.code),
+                        type: 'danger'
+                    });
+                }
                 // 获取个人信息不成功
             }
         }).catch(err => {
