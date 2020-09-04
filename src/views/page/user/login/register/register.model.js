@@ -69,6 +69,7 @@ const register = {
         const that = this;
         if (this.valid()) {
             this.loading = true;
+            this.geetestCallBackType = '';
             geetest.verify(() => {
                 that.loading = false;
             });
