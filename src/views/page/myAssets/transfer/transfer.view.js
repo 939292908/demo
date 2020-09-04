@@ -134,9 +134,6 @@ module.exports = {
                 // 弹框确认
                 onOk() {
                     model.submit(); // 提交
-                    model.setTransferModalOption({
-                        isShow: false // 弹框隐藏
-                    });
                 },
                 // 弹框关闭
                 onClose () {

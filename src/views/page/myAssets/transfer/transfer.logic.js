@@ -310,6 +310,9 @@ const model = {
             num: this.form.num
         };
         Http.postTransfer(params).then(res => {
+            model.setTransferModalOption({
+                isShow: false // 弹框隐藏
+            });
             this.reset(); // 重置
             if (res.result.code === 0) {
                 wlt.init(); // 更新数据
