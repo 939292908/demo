@@ -4,7 +4,6 @@ const broadcast = require('@/broadcast/broadcast');
 const table = require('@/views/page/myAssets/myWalletIndex/tradeTable/TradeTable.view');
 const transferLogic = require('@/views/page/myAssets/transfer/transfer.logic.js'); // 划转模块逻辑
 // const I18n = require('@/languages/I18n').default;
-console.log(wlt);
 
 const model = {
     currency: 'BTC',
@@ -97,7 +96,9 @@ const model = {
         if (val === 'none') {
             return window.$message({ title: '提示', content: '暂未开放，敬请期待', type: 'primary' });
         }
-        this.swValue = val;
+        // console.log(val);
+        // window.router.push('/myWalletIndex?id=' + val);
+        // this.swValue = val;
         transferLogic.setTransferModalOption({
             transferFrom: val // from钱包默认选中
         });
@@ -127,12 +128,12 @@ const model = {
                 // 跳转至哪个链接
                 to: '/extractCoin'
             },
-            {
-                id: 3,
-                title: '内部转账',
-                // 跳转至哪个链接
-                to: ''
-            },
+            // {
+            //     id: 3,
+            //     title: '内部转账',
+            //     // 跳转至哪个链接
+            //     to: ''
+            // },
             {
                 id: 4,
                 title: '资金划转',

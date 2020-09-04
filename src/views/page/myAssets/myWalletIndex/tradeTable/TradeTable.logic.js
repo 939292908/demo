@@ -111,6 +111,7 @@ module.exports = {
                 transferFrom: that.pageFlag,
                 successCallback() { // 划转成功回调
                     that.setPageFlag();
+                    that.initAccountBanlance();
                 }
             });
         } else if (item.operation === '充值') {

@@ -61,7 +61,7 @@ module.exports = {
                                     content: rechargeIndex.nameTips.map(item => {
                                         return m('span', { key: item, class: `mt-1` }, item);
                                     }),
-                                    width: `240px`,
+                                    width: `350px`,
                                     position: 'top'
                                 })
                             ])
@@ -85,7 +85,7 @@ module.exports = {
                         ]),
                         m('div', { class: `currencyAddr-Operation ml-3` }, [
                             m('div', { class: `iImg mt-2` }, [
-                                m('i', { class: `iconfont icon-copy has-text-primary cursor-pointer`, onclick: () => { rechargeIndex.copyText(); } }),
+                                m('i', { class: `iconfont icon-copy has-text-primary cursor-pointer mr-4`, onclick: () => { rechargeIndex.copyText(); } }),
                                 m('i', {
                                     class: `iconfont icon-QrCode has-text-primary cursor-pointer`,
                                     onmouseover: () => {
