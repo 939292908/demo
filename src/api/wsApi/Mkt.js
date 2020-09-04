@@ -448,5 +448,22 @@ class Mkt {
         }
         return aArray;
     }
+
+    // 设置地址
+    setSocketUrl(url) {
+        const s = this;
+        s.Conf.baseUrl = url;
+        s.close();
+    }
+
+    close() {
+        const s = this;
+        if (s.ws) {
+            s.ws.close();
+            s.clearConf();
+        }
+    }
+
+    clearConf() {}
 }
 module.exports = Mkt;
