@@ -72,7 +72,7 @@ module.exports = {
                 // 从 (下拉)
                 m('div', { class: `form-item column is-5` }, [
                     m('div', { class: `form-item-title has-text-level-4` }, [
-                        '从'
+                        I18n.$t('10130') // '从'
                     ]),
                     m('div', { class: `form-item-content` }, [
                         m(Dropdown, model.getFromMenuOption())
@@ -90,7 +90,7 @@ module.exports = {
                 // 到 (下拉)
                 m('div', { class: `form-item column is-5` }, [
                     m('div', { class: `form-item-title has-text-level-4` }, [
-                        '到'
+                        I18n.$t('10131') // '到'
                     ]),
                     m('div', { class: `form-item-content` }, [
                         m(Dropdown, model.getToMenuOption())
@@ -100,12 +100,12 @@ module.exports = {
             // 数量
             m('div', { class: `form-item` }, [
                 m('div', { class: `form-item-title` }, [
-                    '数量'
+                    I18n.$t('10089') // '数量'
                 ]),
                 m('div', { class: `form-item-content form-item-content-btns` }, [
                     m('input', {
                         class: `input`,
-                        placeholder: '请输入划转数量',
+                        placeholder: I18n.$t('10408'), // '请输入划转数量',
                         value: model.form.num,
                         oninput(e) {
                             model.handlerNumOnInput(e);
@@ -118,11 +118,12 @@ module.exports = {
                             onclick() {
                                 model.handlerSetAllNumClick();
                             }
-                        }, '全部')
+                        }, I18n.$t('10106') // '全部'
+                        )
                     ])
                 ]),
                 m('div', { class: `has-text-level-4 pt-2` }, [
-                    `可用: ${model.form.maxTransfer} ${model.form.coin}`
+                    `${I18n.$t('10065' /** 可用 */)}: ${model.form.maxTransfer} ${model.form.coin}`
                 ])
             ])
         ]);
@@ -133,9 +134,6 @@ module.exports = {
                 // 弹框确认
                 onOk() {
                     model.submit(); // 提交
-                    model.setTransferModalOption({
-                        isShow: false // 弹框隐藏
-                    });
                 },
                 // 弹框关闭
                 onClose () {
@@ -143,7 +141,7 @@ module.exports = {
                 },
                 // 插槽
                 slot: {
-                    header: "资金划转",
+                    header: I18n.$t('10059'), // "资金划转",
                     body
                 }
             }),
@@ -154,8 +152,12 @@ module.exports = {
                     model.showlegalTenderModal = false;
                 }, // 关闭事件
                 slot: {
-                    header: m('div', { class: `` }, ["法币审核提示"]),
-                    body: m('div', { class: `` }, [`为防止大额资金流动,您划转至法币账户的${model.form.num + model.form.coin}需进行人工审核,请耐心等候.`]),
+                    header: m('div', { class: `` }, [
+                        I18n.$t('10132') // "法币审核提示"
+                    ]),
+                    body: m('div', { class: `` }, [
+                        I18n.$t('10409', { value: model.form.num + model.form.coin }) // `为防止大额资金流动,您划转至法币账户的${model.form.num + model.form.coin}需进行人工审核,请耐心等候.`
+                    ]),
                     footer: [
                         m('.spacer'),
                         m("button", {
@@ -164,7 +166,7 @@ module.exports = {
                                 model.showlegalTenderModal = false;
                             }
                         }, [
-                            "我知道了"
+                            I18n.$t('10134') // "我知道了"
                         ])
                     ]
                 }

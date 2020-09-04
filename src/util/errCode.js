@@ -1,5 +1,5 @@
 const methods = {};
-const I18n = require('../languages/I18n').default;
+// const I18n = require('../languages/I18n').default;
 
 //  资金中心及node提示错误码
 methods.getWebApiErrorCode = function (code) {
@@ -45,7 +45,7 @@ methods.getWebApiErrorCode = function (code) {
         9019: "手机号已存在",
         9020: "谷歌已存在",
         9021: "谷歌已存在",
-        9022: "密码修改,密码重置 或 2FA解绑后，24h内禁止提币",
+        9022: "密码修改,密码重置或2FA解绑后,24h内禁止提币",
         9023: "状态错误",
         9024: "配置错误",
         9025: "超出购买数量限制",
@@ -79,7 +79,7 @@ methods.getWebApiErrorCode = function (code) {
         "-1": "极验验证异常"
     };
 
-    return obj[code] || I18n.$t('10203' /* '未知错误' */) + `(${code})`;
+    return obj[code] || '未知错误' + `(${code})`;
 };
 
 export default methods;

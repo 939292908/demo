@@ -32,6 +32,7 @@ const register = {
     exchInfo: config.exchInfo, // 渠道信息
     int: null,
     checkbox: false, // 条款同意
+    geetestCallBackType: '',
     /**
      * 必须填写邀请码
      * @returns {boolean}
@@ -68,6 +69,7 @@ const register = {
         const that = this;
         if (this.valid()) {
             this.loading = true;
+            this.geetestCallBackType = '';
             geetest.verify(() => {
                 that.loading = false;
             });
@@ -141,6 +143,9 @@ const register = {
                 // 注册成功
                 window.$message({ content: '注册成功', type: 'success' });
                 window.router.push('/login');
+            } else if (res.result.code === -1) {
+                this.geetestCallBackType = 'register';
+                geetest.verify();
             } else {
                 // 输入信息有误
                 window.$message({ content: errCode.getWebApiErrorCode(res.result.code), type: 'danger' });
@@ -160,8 +165,8 @@ const register = {
                 if (!this.int) {
                     this.setSmsCd();
                 }
-            } else if (res.data.result.code === -1) {
-                // this.geetestCallBackType = 'sms'
+            } else if (res.result.code === -1) {
+                this.geetestCallBackType = 'sms';
                 geetest.verify();
             } else {
                 window.$message({ content: errCode.getWebApiErrorCode(res.result.code), type: 'danger' });
@@ -182,7 +187,7 @@ const register = {
                     this.setSmsCd();
                 }
             } else if (res.result.code === -1) {
-                // self.geetestCallBackType = 'email'
+                self.geetestCallBackType = 'email';
                 geetest.verify();
             } else {
                 window.$message({ content: errCode.getWebApiErrorCode(res.result.code), type: 'danger' });
@@ -246,7 +251,10 @@ const register = {
             cmd: 'geetestMsg',
             cb: res => {
                 if (res === 'success') {
-                    self.queryUserInfo();
+                    if (self.geetestCallBackType === 'sms') self.sendSmsCode();
+                    else if (self.geetestCallBackType === 'email') self.sendEmailCode();
+                    else if (self.geetestCallBackType === 'register') self.register();
+                    else self.queryUserInfo();
                 } else {
                     self.loading = false;
                     m.redraw();

@@ -94,7 +94,7 @@ const model = {
     // 切换我的钱包，交易账户，币币，合约，法币
     switchChange: function (val, type) {
         if (val === 'none') {
-            return window.$message({ title: '提示', content: '暂未开放，敬请期待', type: 'primary' });
+            return window.$message({ title: '提示', content: '暂未开放', type: 'primary' });
         }
         // console.log(val);
         // window.router.push('/myWalletIndex?id=' + val);

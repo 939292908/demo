@@ -1,4 +1,4 @@
-const I18n = require('@/languages/I18n').default;
+// const I18n = require('@/languages/I18n').default;
 module.exports = {
     email: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
     phone: /^[0-9]{5,11}$/,
@@ -28,7 +28,7 @@ module.exports = {
         if (!password2) {
             return '该字段不能为空'; /* '该字段不能为空' */
         } else if (password1 !== password2) {
-            return I18n.$t('10173'); /* '两次输入密码不一致!' */
+            return '两次输入密码不一致!'; /* '两次输入密码不一致!' */
         } else {
             return '';
         }

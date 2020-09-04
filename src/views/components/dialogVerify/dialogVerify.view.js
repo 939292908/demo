@@ -61,7 +61,7 @@ module.exports = {
     isLinshiErWeiMaVnode: function () { // 临时
         return m('div.mainPrompt', [
             m('div.promptText', this.props.content),
-            m('div.butBox', { onclick: () => { linShiToApp.showErCode = !linShiToApp.showErCode; } }, m('button.button is-info is-fullwidth', '请前往APP完成')),
+            m('div.butBox', { onclick: () => { linShiToApp.showErCode = !linShiToApp.showErCode; } }, m('button.button is-info is-fullwidth', I18n.$t('10395')/* '请前往APP完成' */)),
             linShiToApp.showErCode ? m('div', { style: ' position: absolute; left: 50%; top: 100%; transform: translate(-50%, -1px);border-radius: 2px;width: 152px; height: 160px; padding: 20px 32px; box-sizing: border-box;background-color: #fff;' }, [
                 m('img', { src: linShiToApp.base64Url }),
                 m('div', 'iOS&Android')
@@ -71,8 +71,8 @@ module.exports = {
     promptText: function () {
         if (this.props.isLinshiErWeiMa) return this.isLinshiErWeiMaVnode(); // 临时
         return m('div.mainPrompt', [
-            m('div.promptText', this.props.content || '已提交提币申请，请前往邮件进行提币确认，邮件确认 后才能进入出金环节。'),
-            !this.props.doubleButton ? m('div.butBox', { onclick: this.props.buttonClick || this.handlecloseDialog.bind(this) }, m('button.button is-info is-fullwidth', this.props.buttonText || '知道了')) : this.doubleButtonVnode()
+            m('div.promptText', this.props.content || I18n.$t('10396')/* '已提交提币申请，请前往邮件进行提币确认，邮件确认 后才能进入出金环节。' */),
+            !this.props.doubleButton ? m('div.butBox', { onclick: this.props.buttonClick || this.handlecloseDialog.bind(this) }, m('button.button is-info is-fullwidth', this.props.buttonText || I18n.$t('10415')/* '知道了' */)) : this.doubleButtonVnode()
         ]);
     },
     verifyContentTitle: function () { // 验证 title
@@ -145,7 +145,7 @@ module.exports = {
             break;
         }
 
-        validInput.push(m('div.butBox', { onclick: () => { Validate.check(); } }, m('button.button is-info is-fullwidth', this.props.buttonText || '确定')));
+        validInput.push(m('div.butBox', { onclick: () => { Validate.check(); } }, m('button.button is-info is-fullwidth', this.props.buttonText || I18n.$t('10337')/* '确定' */)));
         return m('div.mainPrompt', validInput);
     },
     view: function (vNode) {

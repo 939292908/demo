@@ -3,6 +3,7 @@ require('./index.scss');
 const FromDataMode = require('./form.logic');
 const VerifyView = require('@/views/components/dialogVerify/dialogVerify.view');
 const Tooltip = require('@/views/components/common/Tooltip/Tooltip.view');
+// const Dropdown = require('@/views/components/common/Dropdown');
 const l180n = require('@/languages/I18n').default;
 
 module.exports = {
@@ -23,12 +24,15 @@ module.exports = {
     },
     handleAddressVal: function (e) {
         FromDataMode.extractCoin.address = e.target.value;
+        FromDataMode.errorShow.address.show = !e.target.value.toString();
+        FromDataMode.errorShow.address.text = l180n.$t('10401')/* '提币地址不能为空' */;
     },
     handleExtractCoinNameVal: function (e) {
+        console.log(e);
         FromDataMode.extractCoin.coinNum = e.target.value;
-        if (e.target.value < FromDataMode.currentFees.withdrawMin || e.target.value > FromDataMode.currentExtractableNum) {
+        if (e.target.value - FromDataMode.currentFees.withdrawMin < 0 || e.target.value - FromDataMode.currentExtractableNum > 0) {
             FromDataMode.errorShow.unmber.show = true;
-            if (e.target.value < FromDataMode.currentFees.withdrawMin) {
+            if (e.target.value - FromDataMode.currentFees.withdrawMin < 0) {
                 FromDataMode.errorShow.unmber.text = l180n.$t('10397')/* '不可小于最小提币量 ' */;
             } else {
                 FromDataMode.errorShow.unmber.text = l180n.$t('10398')/* '不可超过可提数量' */;
@@ -53,9 +57,43 @@ module.exports = {
                 m('div.formModule', [
                     m('div.topLabel has-text-title body-5', l180n.$t('10063') /* '币种' */),
                     m('div.control changeCoin', [
-                        m('div.select is-fullwidth', m('select.border-radius-small body-5', { onchange: this.handleSelectChange }, [
-                            FromDataMode.selectList && FromDataMode.selectList.map(item => m('option', { selected: item.wType === FromDataMode.currentSelect.wType }, `${item.wType} | ${item.fullNameAddLeez}`))
-                        ]))
+                        m('div', { class: `my-dropdown dropdown ${FromDataMode.showCurrencyMenu ? " is-active" : ''}` }, [
+                            m('div', { class: "dropdown-trigger has-text-1" }, [
+                                m('button', {
+                                    class: `button`,
+                                    onclick: (e) => {
+                                        FromDataMode.showCurrencyMenu = !FromDataMode.showCurrencyMenu;
+                                    }
+                                }, [
+                                    m('p', { class: `my-trigger-text` }, [
+                                        m('span', { class: `has-text-level-4` }, FromDataMode.currentSelect.label)
+                                    ]),
+                                    m('i', { class: "my-trigger-icon iconfont icon-xiala has-text-primary" }) // icon
+                                ])
+                            ]),
+                            m('div', { class: "dropdown-menu " }, [
+                                m('div', { class: "dropdown-content", style: "max-height: 400px; overflow: auto;" },
+                                    FromDataMode.selectList.map((item, index) => {
+                                        return m('a', {
+                                            class: `dropdown-item has-hover ${FromDataMode.selectActiveId.wType === item.id ? 'has-active' : ''}`,
+                                            key: item.id + index,
+                                            onclick () {
+                                                FromDataMode.selectActiveId.wType = item.id; // 修改选中id
+                                                FromDataMode.currentSelect = item;
+                                                FromDataMode.showCurrencyMenu = false; // 关闭菜单
+                                                FromDataMode.getlinkButtonListData();
+                                            }
+                                        }, [
+                                            m('span', { class: `my-menu-label` }, [
+                                                m('span', { class: `mr-2` }, item.label),
+                                                m('span', { class: `has-text-level-4` }, item.coinName)
+                                            ]),
+                                            m('i', { class: `my-menu-icon iconfont icon-fabijiaoyiwancheng ${FromDataMode.selectActiveId.wType === item.id ? '' : 'is-hidden'}` }) // icon
+                                        ]);
+                                    })
+                                )
+                            ])
+                        ])
                     ])
                 ]),
                 FromDataMode.currentSelect.Setting && FromDataMode.currentSelect.Setting.memo ? m('div.formModule', [
@@ -81,7 +119,7 @@ module.exports = {
                     m('div.control address', [
                         m('input.input body-5 border-radius-small', { type: 'text', placeholder: '', onchange: this.handleAddressVal, value: FromDataMode.extractCoin.address })
                     ]),
-                    FromDataMode.errorShow.address.show ? m('div.errorToTal body-4', '地址错误') : null
+                    FromDataMode.errorShow.address.show ? m('div.errorToTal body-4', FromDataMode.errorShow.address.text) : null
                 ]),
                 m('div.formModule', [
                     m('div.topLabel has-text-title body-5', [
@@ -101,12 +139,13 @@ module.exports = {
                         m('div', `${l180n.$t('10099') /* '手续费' */}：${FromDataMode.currentFees.withdrawFee}${FromDataMode.currentSelect.wType}`)
                     ])
                 ]),
-                m('button.button is-info is-fullwidth', { onclick: () => { FromDataMode.handleSubmit(); } }, '确定')
+                m('button.button is-info is-fullwidth', { onclick: () => { FromDataMode.handleSubmit(); } }, l180n.$t('10337') /* '确定' */)
             ]),
             FromDataMode.popUpData.show ? m(VerifyView, { close: FromDataMode.isChangeClose ? this.handleBack : this.handleCloseDialog, ...FromDataMode.popUpData }) : null,
             m('div.promptText', [
                 m('div.promptTitle body-5', l180n.$t('10082') /* '温馨提示' */),
-                FromDataMode.promptText.split('*').map(item => m('div.rulesText body-4', '*' + item))
+                // FromDataMode.promptText.split('*').map(item => m('div.rulesText body-4', '*' + item))
+                l180n.$t('10407').split('*').map(item => m('div.rulesText body-4', '*' + item))
             ])
         ]);
     }

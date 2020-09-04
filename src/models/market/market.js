@@ -188,9 +188,9 @@ module.exports = {
         if (ass) {
             if (ass.TrdCls === 3) {
                 if ((ass.Flag & 1) === 1) {
-                    return I18n.$t('10002', { value: ass.ToC });// ass.ToC + ' 永续'
+                    return I18n.$t('10048', { value: ass.ToC });// ass.ToC + ' 永续'
                 } else {
-                    return I18n.$t('10104', { value1: ass.ToC, value2: ass.SettleCoin });// ass.ToC + '/' + ass.SettleCoin + ' 永续'
+                    return I18n.$t('10048', { value1: ass.ToC, value2: ass.SettleCoin });// ass.ToC + '/' + ass.SettleCoin + ' 永续'
                 }
             } else if (ass.TrdCls === 1) {
                 if (Sym && Sym.includes(`@`)) {

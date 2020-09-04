@@ -41,8 +41,9 @@ module.exports = {
                 // 获取个人信息不成功
             }
         }).catch(err => {
+            console.log(err);
             window.$message({
-                content: `网络异常，请稍后重试 ${err}`,
+                content: `网络异常，请稍后重试`,
                 type: 'danger'
             });
         });

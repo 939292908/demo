@@ -47,7 +47,7 @@ module.exports = {
                                 m('li', {}, [
                                     m('a', {
                                         onclick: e => {
-                                            window.$message({ title: '提示', content: '暂未开放', type: 'danger' });
+                                            window.$message({ title: '提示', content: '暂未开放', type: 'primary' });
                                         }
                                     }, [I18n.$t('10061')/* '其他账户' */])
                                 ])
