@@ -58,8 +58,10 @@ module.exports = {
                             m('div.navbar-item.cursor-pointer', { class: `has-text-primary-hover` }, [
                                 m(Tooltip, {
                                     label: m('i', { class: `iconfont icon-Tooltip` }),
-                                    content: rechargeIndex.nameTips,
-                                    width: `240px`,
+                                    content: rechargeIndex.nameTips.map(item => {
+                                        return m('span', { key: item, class: `mt-1` }, item);
+                                    }),
+                                    width: `350px`,
                                     position: 'top'
                                 })
                             ])
@@ -78,12 +80,12 @@ module.exports = {
                         m('span', { class: `body-5` }, l180n.$t('10081') /* '充币地址' */)
                     ]),
                     m('div', { class: `currencyAddr border-radius-medium mt-2 mb-7` }, [
-                        m('div', { class: `currencyAddr-text ml-3` }, [
-                            m('input', { class: `addrText body-5`, type: 'text', readOnly: `readOnly`, value: rechargeIndex.rechargeAddr })
+                        m('div', { class: `currencyAddr-text ml-3 has-bg-level-3` }, [
+                            m('input', { class: `addrText body-5 has-bg-level-3`, type: 'text', readOnly: `readOnly`, value: rechargeIndex.rechargeAddr })
                         ]),
                         m('div', { class: `currencyAddr-Operation ml-3` }, [
                             m('div', { class: `iImg mt-2` }, [
-                                m('i', { class: `iconfont icon-copy has-text-primary cursor-pointer`, onclick: () => { rechargeIndex.copyText(); } }),
+                                m('i', { class: `iconfont icon-copy has-text-primary cursor-pointer mr-4`, onclick: () => { rechargeIndex.copyText(); } }),
                                 m('i', {
                                     class: `iconfont icon-QrCode has-text-primary cursor-pointer`,
                                     onmouseover: () => {

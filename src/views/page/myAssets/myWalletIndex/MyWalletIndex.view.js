@@ -40,16 +40,6 @@ module.exports = {
                             m('div', { class: `myWalletIndex-head-right column pa-5` }, [
                                 // 充币  提币  内部转账  资金划转
                                 m('div', { class: `is-between  pt-8` }, [
-                                    // myWalletIndex.Nav.firstNav.map((item, index) => {
-                                    //     return m(`button.column button-large mx-3 border-radius-small cursor-pointer Operation${index} has-line-level-2`, {
-                                    //         class: item.title === `充币` ? `has-bg-primary` : `has-text-primary bgNone`,
-                                    //         key: item.title,
-                                    //         onclick: () => { myWalletIndex.handlerClickNavBtn(item); },
-                                    //         onmouseover: () => { myWalletIndex.changeBtnSty(index, `show`); },
-                                    //         onmouseleave: () => { myWalletIndex.changeBtnSty(index, `hide`); }
-                                    //     },
-                                    //     [item.title]);
-                                    // })
                                     myWalletIndex.Nav.firstNav.map((item, index) => {
                                         return m(`button.column mr-3 button-large button is-primary Operation${index}`, {
                                             class: item.title === `充币` ? `` : `is-outlined`,
@@ -67,7 +57,7 @@ module.exports = {
                         m('div', { class: `myWalletIndex-switch columns-flex mt-7 is-between` }, [
                             m('div.wallet border-radius-medium px-7 py-7 column cursor-pointer', {
                                 class: (myWalletIndex.swValue === '03' ? `has-bg-primary` : ` has-bg-level-2`),
-                                onclick: () => { myWalletIndex.switchChange('03'); }
+                                onclick: () => { window.router.push('/myWalletIndex?id=03'); }
                             }, [
                                 m('div', { class: `body-5 mb-1` }, [
                                     m('span', { }, `我的钱包`)
@@ -79,7 +69,7 @@ module.exports = {
                             ]),
                             m('div.trade border-radius-medium px-7 py-7 mx-5 column cursor-pointer', {
                                 class: (myWalletIndex.swValue !== '03' ? `has-bg-primary` : `has-bg-level-2`),
-                                onclick: () => { myWalletIndex.switchChange('01'); }
+                                onclick: () => { window.router.push('/myWalletIndex?id=01'); }
                             }, [
                                 m('div.left', {}, [
                                     m('div', { class: `body-5 mb-1` }, [
@@ -102,11 +92,11 @@ module.exports = {
                                         style: { display: `none` }
                                     }, [
                                         m('span.mb-1 cursor-pointer has-text-level-4', `合约账户`),
-                                        m('a.mb-5 has-text-level-3', { class: myWalletIndex.swValue === '01' || myWalletIndex.swValue === '03' ? 'has-text-primary' : '', onclick: () => { myWalletIndex.switchChange('01', 'small'); } }, myWalletIndex.contractTotal + ` ` + myWalletIndex.currency),
+                                        m('a.mb-5 has-text-level-3', { class: myWalletIndex.swValue === '01' || myWalletIndex.swValue === '03' ? 'has-text-primary' : '', onclick: () => { myWalletIndex.switchChange('01', 'small'); } }, (myWalletIndex.hideMoneyFlag ? '******' : myWalletIndex.contractTotal) + ` ` + myWalletIndex.currency),
                                         m('span.mb-1 cursor-pointer has-text-level-4', `币币账户`),
-                                        m('a.mb-5.has-text-level-3', { class: myWalletIndex.swValue === '02' ? 'has-text-primary' : '', onclick: () => { myWalletIndex.switchChange('02', 'small'); } }, myWalletIndex.coinTotal + ` ` + myWalletIndex.currency),
+                                        m('a.mb-5.has-text-level-3', { class: myWalletIndex.swValue === '02' ? 'has-text-primary' : '', onclick: () => { myWalletIndex.switchChange('02', 'small'); } }, (myWalletIndex.hideMoneyFlag ? '******' : myWalletIndex.coinTotal) + ` ` + myWalletIndex.currency),
                                         m('span.mb-1 cursor-pointer has-text-level-4', `法币账户`),
-                                        m('a.has-text-level-3', { class: myWalletIndex.swValue === '04' ? 'has-text-primary' : '', onclick: () => { myWalletIndex.switchChange('04', 'small'); } }, myWalletIndex.legalTotal + ` ` + myWalletIndex.currency)
+                                        m('a.has-text-level-3', { class: myWalletIndex.swValue === '04' ? 'has-text-primary' : '', onclick: () => { myWalletIndex.switchChange('04', 'small'); } }, (myWalletIndex.hideMoneyFlag ? '******' : myWalletIndex.legalTotal) + ` ` + myWalletIndex.currency)
                                     ])
                                 ])
                             ]),

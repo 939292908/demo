@@ -206,7 +206,7 @@ module.exports = {
 
         this.totalCNYValue = utils.toFixedForFloor(this.totalCNYValue, 2);
 
-        console.log('nzm', 'this.wallet', this.wallet);
+        // console.log('nzm', 'this.wallet', this.wallet);
         // console.log('\n');
         // console.log('nzm', 'totalCNYValue', this.totalCNYValue, 'totalValueForUSDT', this.totalValueForUSDT);
         // console.log('\n');

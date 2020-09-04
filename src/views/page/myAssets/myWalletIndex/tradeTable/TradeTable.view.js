@@ -10,15 +10,15 @@ module.exports = {
         t.createFn(vnode);
     },
     view(vnode) {
-        return m('div', { class: `views-pages-Myassets-Table pt-7 px-5 has-bg-level-2` }, [
-            m('div.tradingAccount mb-8 tabs', { style: { display: vnode.attrs.swValue === '01' || vnode.attrs.swValue === '02' || vnode.attrs.swValue === '04' ? '' : 'none' } }, [
+        return m('div', { class: `views-pages-Myassets-Table pt-3 px-5 has-bg-level-2` }, [
+            m('div.tradingAccount mb-7 tabs', { style: { display: vnode.attrs.swValue === '01' || vnode.attrs.swValue === '02' || vnode.attrs.swValue === '04' ? '' : 'none' } }, [
                 m('ul.tradingAccount_nav mx-5', { }, [
                     t.navAry.map((item) => {
-                        return m('li', { class: '' + (t.pageFlag === item.idx ? "is-active" : ''), onclick: () => { t.setPageFlag(item.idx); } }, m('a', {}, item.val));
+                        return m('li', { class: '' + (t.pageFlag === item.idx ? "is-active" : ''), onclick: () => { window.router.push('/myWalletIndex?id=' + item.idx); } }, m('a', {}, item.val));
                     })
                 ])
             ]),
-            m('div', { class: `nav mb-3 pr-5` }, [
+            m('div', { class: `nav pr-5` }, [
                 m('div.search mr-7 has-line-level-3', {}, [
                     m('input', {
                         class: `border-radius-small py-1 pl-1 coinSearch`,
@@ -30,16 +30,12 @@ module.exports = {
                     m('i', { class: `iconfont icon-Search has-text-level-4` })
                 ]),
                 m('div.hideZeroAsset mr-7', {}, [
-                    m('input', { id: `color-input-gray`, class: `color-input-gray`, type: `checkbox`, checked: t.hideZeroFlag, onchange: () => { t.setHideZeroFlag(); } }),
-                    m('label', { for: `color-input-gray` }),
-                    // m('label', { class: `checkbox` }, [
-                    // m('input、', { type: `checkbox` }),
-                    // ]),
+                    m('i', { class: t.hideZeroFlag ? `iconfont icon-u_check-square cursor-pointer` : `iconfont icon-Unselected cursor-pointer`, onclick: () => { t.setHideZeroFlag(); } }),
                     m('span', { class: `ml-2` }, `隐藏0资产`)
                 ]),
                 m('div.fundRecords mr-7', {}, [
                     m('i', { class: 'iconfont icon-AssetRecord' }),
-                    m('span', [`资金记录`])
+                    m('span', { onclick: function () { window.router.push('/assetRecords'); } }, [`资金记录`])
                 ]),
                 m('div.profit', { style: { display: t.coinType === `contract` ? `none` : `none` } }, [
                     m('i', { class: 'iconfont icon-Analysis' }),
@@ -57,7 +53,7 @@ module.exports = {
                         // 循环表头
                         m('tr', {}, [
                             t.columnData[t.coinType].map((item, index) => {
-                                return m('td.pt-7', { class: `` }, item.col);
+                                return m('td.pt-7 has-text-level-4', { class: `` }, item.col);
                             })
                         ])
                     ]),

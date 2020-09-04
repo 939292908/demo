@@ -61,6 +61,9 @@
                 .labeltip{
                     .navbar-item{
                         display: inline;
+                        span{
+                            display: block;
+                        }
                     }
                 }
             }

@@ -96,6 +96,8 @@ const model = {
         if (val === 'none') {
             return window.$message({ title: '提示', content: '暂未开放', type: 'primary' });
         }
+        // console.log(val);
+        // window.router.push('/myWalletIndex?id=' + val);
         this.swValue = val;
         transferLogic.setTransferModalOption({
             transferFrom: val // from钱包默认选中
@@ -126,12 +128,12 @@ const model = {
                 // 跳转至哪个链接
                 to: '/extractCoin'
             },
-            {
-                id: 3,
-                title: '内部转账',
-                // 跳转至哪个链接
-                to: ''
-            },
+            // {
+            //     id: 3,
+            //     title: '内部转账',
+            //     // 跳转至哪个链接
+            //     to: ''
+            // },
             {
                 id: 4,
                 title: '资金划转',
@@ -193,6 +195,7 @@ const model = {
     },
     initFn: function() {
         wlt.init();
+
         // 获取当前网址，如：http://localhost:8080/#!/myWalletIndex?id=03
         const currencyIndex = window.document.location.href.toString().split('=')[1];
         if (currencyIndex === '03' || currencyIndex === '02' || currencyIndex === '01' || currencyIndex === '04') {
