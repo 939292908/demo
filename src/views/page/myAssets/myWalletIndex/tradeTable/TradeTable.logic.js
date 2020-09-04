@@ -137,7 +137,7 @@ module.exports = {
         } else if (item.operation === '提现') {
             window.router.push(item.to + '?wType=' + row.wType);
         } else if (item.operation === '去交易') {
-            return window.$message({ title: '提示', content: '暂未开放', type: 'danger' });
+            return window.$message({ title: '提示', content: '暂未开放', type: 'primary' });
         }
     },
     copyAry: function (ary) {
