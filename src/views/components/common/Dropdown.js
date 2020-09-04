@@ -16,6 +16,7 @@
 
 var m = require("mithril");
 const broadcast = require('@/broadcast/broadcast');
+require('./Dropdown.scss');
 
 module.exports = {
     // ============= 状态 =============
@@ -80,7 +81,7 @@ module.exports = {
         this.initTriggerText(vnode);
     },
     view (vnode) {
-        return m('div', { class: `${vnode.attrs.class || ''} my-dropdown dropdown ${vnode.attrs.type === 'hover' ? " is-hoverable" : vnode.attrs.showMenu ? " is-active" : ''}` }, [
+        return m('div.Dropdown', { class: `${vnode.attrs.class || ''} my-dropdown dropdown ${vnode.attrs.type === 'hover' ? " is-hoverable" : vnode.attrs.showMenu ? " is-active" : ''}` }, [
             // btn
             m('div', { class: "dropdown-trigger has-text-1" }, [
                 m('button', {
@@ -99,9 +100,9 @@ module.exports = {
             ]),
             // menu
             m('div', { class: "dropdown-menu ", style: vnode.attrs.menuWidth ? `width:${vnode.attrs.menuWidth}px` : '' }, [
-                m('div', { class: "dropdown-content", style: "max-height: 400px; overflow: auto;" },
+                m('div.pa-0', { class: "dropdown-content", style: "max-height: 400px; overflow: auto;" },
                     vnode.attrs.getList().map((item, index) => {
-                        return m('a', {
+                        return m('a.px-7.py-3', {
                             class: `dropdown-item has-hover ${vnode.state.activeId === item.id ? 'has-active' : ''}`,
                             key: item.label + index,
                             onclick () {
@@ -113,8 +114,8 @@ module.exports = {
                                 vnode.attrs.setShowMenu(false); // 关闭菜单
                             }
                         }, [
-                            m('span', { class: `my-menu-label` }, item.label),
-                            m('i', { class: `my-menu-icon iconfont icon-fabijiaoyiwancheng ${vnode.state.activeId === item.id ? '' : 'is-hidden'}` }) // icon
+                            m('span.body-5', { class: `my-menu-label` }, item.label)
+                            // m('i', { class: `my-menu-icon iconfont icon-fabijiaoyiwancheng ${vnode.state.activeId === item.id ? '' : 'is-hidden'}` }) // icon
                         ]);
                     })
                 )
