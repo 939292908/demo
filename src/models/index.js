@@ -2,7 +2,7 @@ const webApi = require('../api/webApi');
 const globalModels = require('./globalModels');
 const config = require('../config');
 const broadcast = require('../broadcast/broadcast');
-const errCode = require('../util/errCode');
+const errCode = require('../util/errCode').default;
 const utils = require('../util/utils').default;
 
 module.exports = {
