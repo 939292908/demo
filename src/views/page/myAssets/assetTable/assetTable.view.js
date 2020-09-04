@@ -1,5 +1,6 @@
 const m = require('mithril');
 const I18n = require('@/languages/I18n').default;
+const Loading = require('@/views/components/loading/loading.view');
 module.exports = {
     view(vnode) {
         const table = [];
@@ -14,11 +15,10 @@ module.exports = {
                 m('div.column.is-1.has-text-right', {}, [I18n.$t('10092')/* '备注' */])
             ])
         );
-        if (!vnode.attrs.list.length) {
+        if (vnode.attrs.loading) {
+            table.push(m('div.is-align-items-center.py-8', {}, [m(Loading)]));
+        } else if (!vnode.attrs.list.length) {
             table.push(m('div.is-align-items-center', {}, [
-                // vnode.attrs.loading
-                //     ? m('div.mt-8.is-loading')
-                //     :
                 m('img', { class: `my-8`, src: require(`@/assets/img/myAssets/noneData.png`).default, style: { height: `120px`, width: `88px` } })])
             );
         } else {
