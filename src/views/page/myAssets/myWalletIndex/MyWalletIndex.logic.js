@@ -193,8 +193,6 @@ const model = {
     },
     initFn: function() {
         wlt.init();
-
-        this.form.wType = this.selectOp[0].id;
         // 获取当前网址，如：http://localhost:8080/#!/myWalletIndex?id=03
         const currencyIndex = window.document.location.href.toString().split('=')[1];
         if (currencyIndex === '03' || currencyIndex === '02' || currencyIndex === '01' || currencyIndex === '04') {
@@ -223,7 +221,7 @@ const model = {
         });
         self.sets();
 
-        console.log(this.swValue);
+        self.form.wType = self.currency;
     },
     createFn: function() {
         this.sets();

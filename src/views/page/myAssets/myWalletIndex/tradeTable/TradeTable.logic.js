@@ -131,7 +131,6 @@ module.exports = {
     },
     tableNewAry: [], // 表格显示的数组
     setTableNewAry: function () {
-        window.console.clear();
         const value = document.getElementsByClassName('coinSearch')[0].value;
         this.tableNewAry = []; // 初始化
         if (this.hideZeroFlag === true && value === '') { // 只隐藏
@@ -159,7 +158,7 @@ module.exports = {
             // console.log('nzm', '无操作');
             this.tableNewAry = this.tableData[this.tableDateList];
         }
-        console.log(this.tableNewAry, '----------');
+        // console.log(this.tableNewAry, '----------');
         this.tableNewAry.length === 0 ? this.isShowNoneData = true : this.isShowNoneData = false;
     },
     createFn: function (vnode) {
