@@ -6,7 +6,7 @@
         width: 25%;
     }
     ul{
-        border: none;
+        border:none;
     }
     .nav{
         display: flex;
@@ -24,38 +24,7 @@
             clear: both;
         }
         .hideZeroAsset{
-            // margin: auto 0px;
-            // input{
-            //     width: 20px;
-            //     height: 20px;
-            // }
-			// label{
-            //     float: left;
-            // }
-            // span{
-            //     float: left;
-            // }
-            // clear: both;
-            margin: auto 0px;
-            .color-input-gray+label {
-				display: block;
-				width: 20px;
-				height: 20px;
-				cursor: pointer;
-			}
-			.color-input-gray:checked+label::before {
-				display: block;
-				content: "\2714";
-				text-align: center;
-				font-size: 8px;
-				color: white;
-				background: #9A9EAC;
-			}
-			input[type=checkbox] {
-				visibility: hidden;
-			}
-			label{
-                border: 1px solid #9A9EAC;
+            i{
                 float: left;
             }
             span{
@@ -84,10 +53,6 @@
     .tab{
         min-height: 598px;
         table{
-            thead{
-                // 规范未找到单独设置颜色！！！
-                color: rgba(83, 83, 83, 0.555);
-            }
             td{
                 width: 190px;
             }

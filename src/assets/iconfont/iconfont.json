@@ -1,10 +1,24 @@
 {
   "id": "2027406",
-  "name": "ex30-pc",
+  "name": "ex30-pc-new",
   "font_family": "iconfont",
   "css_prefix_text": "icon-",
   "description": "",
   "glyphs": [
+    {
+      "icon_id": "16982503",
+      "name": "Unselected",
+      "font_class": "Unselected",
+      "unicode": "e726",
+      "unicode_decimal": 59174
+    },
+    {
+      "icon_id": "16982504",
+      "name": "u_check-square",
+      "font_class": "u_check-square",
+      "unicode": "e727",
+      "unicode_decimal": 59175
+    },
     {
       "icon_id": "16930439",
       "name": "fi_file-text",
@@ -344,7 +358,7 @@
     {
       "icon_id": "13717500",
       "name": "vbit-Homepage",
-      "font_class": "vbit-Homepage",
+      "font_class": "logo",
       "unicode": "e615",
       "unicode_decimal": 58901
     },
