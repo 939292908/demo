@@ -116,7 +116,12 @@ module.exports = {
                         m('span.all', { class: `has-text-primary cursor-pointer`, onclick: () => { window.router.push('/assetRecords'); } }, l180n.$t('10087') /* '全部记录' */)
                     ]),
                     m('hr.ma-0'),
-                    m(assetTable, { class: 'pa-5', list: AssetRecords.showList, loading: AssetRecords.loading })
+                    m(assetTable, {
+                        class: 'pa-5',
+                        list: AssetRecords.showList,
+                        loading: AssetRecords.loading,
+                        aType: AssetRecords.aType
+                    })
                 ])
             ])
         ]);
