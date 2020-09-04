@@ -58,7 +58,9 @@ module.exports = {
                             m('div.navbar-item.cursor-pointer', { class: `has-text-primary-hover` }, [
                                 m(Tooltip, {
                                     label: m('i', { class: `iconfont icon-Tooltip` }),
-                                    content: rechargeIndex.nameTips,
+                                    content: rechargeIndex.nameTips.map(item => {
+                                        return m('span', { key: item, class: `mt-1` }, item);
+                                    }),
                                     width: `240px`,
                                     position: 'top'
                                 })

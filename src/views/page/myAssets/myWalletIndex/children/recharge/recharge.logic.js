@@ -119,7 +119,7 @@ module.exports = {
                     this.tips = '您只能向此地址充值' + this.form.selectCheck + '，其他资产充入' + this.form.selectCheck + '地址将无法找回' +
                     /* 使用{value1}地址充币需要{value2}个网络确认才能到账 */
                     '*' + l180n.$t('10084', { value1: this.form.selectCheck, value2: networkNum }) +
-                    (this.form.selectCheck === 'EOS' || this.form.selectCheck === 'XRP' ? '*关于标签{value}充币时同时需要一个充币地址和{value}标签。标签是一种保证您的充币地址唯一性的数字串，与充币地址成对出现并一一对应。请您务必遵守正确的{value}充币步骤，在提币时输入完整的信息，否则将面临丢失币的风险！' : '') +
+                    (this.form.selectCheck === 'EOS' || this.form.selectCheck === 'XRP' ? '*关于标签' + this.form.selectCheck + '充币时同时需要一个充币地址和' + this.form.selectCheck + '标签。标签是一种保证您的充币地址唯一性的数字串，与充币地址成对出现并一一对应。请您务必遵守正确的' + this.form.selectCheck + '充币步骤，在提币时输入完整的信息，否则将面临丢失币的风险！' : '') +
                     /* '默认充入我的钱包，您可以通过“资金划转”将资金转至交易账户或者其他账户' */
                     '*' + l180n.$t('10085');
                 }
@@ -206,7 +206,10 @@ module.exports = {
             this.coinParam = currencyType;
             this.setPageData();
         }
-        this.nameTips = 'USDT-ERC20是Tether泰达公司基于ETH网络发行的USDT，充币地址是ETH地址，充提币走ETH网络，USDT-ERC20使用的是ERC20协议。USDT-TRC20(USDT-TRON)是Tether泰达公司基于TRON网络发行的USDT，充币地址是TRON地址，充提币走TRON网络，USDT-TRC20(USDT-TRON)使用的是TRC20协议。USDT-Omni是Tether泰达公司基于BTC网络发行的USDT，充币地址是BTC地址，充提币走BTC网络，USDT-Omni使用的协议是建立在BTC区块链网络上的omni layer 议。';
+        this.nameTips =
+        ['USDT-ERC20是Tether泰达公司基于ETH网络发行的USDT，充币地址是ETH地址，充提币走ETH网络，USDT-ERC20使用的是ERC20协议。',
+            'USDT-TRC20(USDT-TRON)是Tether泰达公司基于TRON网络发行的USDT，充币地址是TRON地址，充提币走TRON网络，USDT-TRC20(USDT-TRON)使用的是TRC20协议。',
+            'USDT-Omni是Tether泰达公司基于BTC网络发行的USDT，充币地址是BTC地址，充提币走BTC网络，USDT-Omni使用的协议是建立在BTC区块链网络上的omni layer协议。'];
         wlt.init();
         broadcast.onMsg({
             key: 'index',

@@ -4,6 +4,7 @@ const broadcast = require('@/broadcast/broadcast');
 const table = require('@/views/page/myAssets/myWalletIndex/tradeTable/TradeTable.view');
 const transferLogic = require('@/views/page/myAssets/transfer/transfer.logic.js'); // 划转模块逻辑
 // const I18n = require('@/languages/I18n').default;
+console.log(wlt);
 
 const model = {
     currency: 'BTC',
