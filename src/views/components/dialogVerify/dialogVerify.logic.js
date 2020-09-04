@@ -2,6 +2,7 @@ const m = require('mithril');
 const geetest = require('@/models/validate/geetest').default;
 const validate = require('@/models/validate/validate').default;
 const broadcast = require('@/broadcast/broadcast');
+const I18n = require('@/languages/I18n').default;
 
 module.exports = {
     smsCd: 0,
@@ -123,25 +124,25 @@ module.exports = {
     setName() {
         switch (this.selectType) {
         case 'sms':
-            this.selectName = '短信验证码';
+            this.selectName = I18n.$t('10118')/* '短信验证码' */;
             break;
         case 'email':
-            this.selectName = '邮箱验证码';
+            this.selectName = I18n.$t('10116')/* '邮箱验证码' */;
             break;
         case 'google':
-            this.selectName = '谷歌验证码';
+            this.selectName = I18n.$t('10119')/* '谷歌验证码' */;
             break;
         }
         if (!this.anotherType.length) return;
         switch (this.anotherType) {
         case 'sms':
-            this.anotherName = '切换短信验证';
+            this.anotherName = I18n.$t('10207', { value: I18n.$t('10417') })/* '切换短信验证' */;
             break;
         case 'email':
-            this.anotherName = '切换邮箱验证';
+            this.anotherName = I18n.$t('10207', { value: I18n.$t('10194') })/* '切换邮箱验证' */;
             break;
         case 'google':
-            this.anotherName = '切换谷歌验证';
+            this.anotherName = I18n.$t('10207', { value: I18n.$t('10418') })/* '切换谷歌验证' */;
             break;
         }
     },
