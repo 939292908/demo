@@ -125,7 +125,7 @@ const model = {
         if (this.canTransferCoin[0]) {
             this.curItem = this.canTransferCoin.find(item => item.id === this.form.coin) || this.canTransferCoin[0];
         }
-        console.log("币种下拉", this.canTransferCoin, wlt.wltFullName.BTC, wlt.wltFullName);
+        // console.log("币种下拉", this.canTransferCoin);
     },
     // 初始化 币种下拉value
     initCoinValue() {
@@ -310,6 +310,9 @@ const model = {
             num: this.form.num
         };
         Http.postTransfer(params).then(res => {
+            model.setTransferModalOption({
+                isShow: false // 弹框隐藏
+            });
             this.reset(); // 重置
             if (res.result.code === 0) {
                 wlt.init(); // 更新数据
