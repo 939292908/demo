@@ -22,7 +22,10 @@ module.exports = {
         FromDataMode.getCurrentFeesChange(true);
     },
     handleAddressVal: function (e) {
+        console.log(e.target.value);
         FromDataMode.extractCoin.address = e.target.value;
+        FromDataMode.errorShow.address.show = !e.target.value.toString();
+        FromDataMode.errorShow.address.text = l180n.$t('10401')/* '提币地址不能为空' */;
     },
     handleExtractCoinNameVal: function (e) {
         FromDataMode.extractCoin.coinNum = e.target.value;
@@ -81,7 +84,7 @@ module.exports = {
                     m('div.control address', [
                         m('input.input body-5 border-radius-small', { type: 'text', placeholder: '', onchange: this.handleAddressVal, value: FromDataMode.extractCoin.address })
                     ]),
-                    FromDataMode.errorShow.address.show ? m('div.errorToTal body-4', '地址错误') : null
+                    FromDataMode.errorShow.address.show ? m('div.errorToTal body-4', FromDataMode.errorShow.address.text) : null
                 ]),
                 m('div.formModule', [
                     m('div.topLabel has-text-title body-5', [
