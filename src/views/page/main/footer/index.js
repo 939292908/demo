@@ -168,7 +168,7 @@ module.exports = {
             // 底部
             m('div', { class: `pub-footer columns pt-7 pb-6 mt-7` }, [
                 // 左边width
-                m('div', { class: `footer-left column is-6` }, [
+                m('div', { class: `footer-left column is-6 pr-9` }, [
                     // logo
                     m('svg.icon.footer-logo', { "aria-hidden": true }, [
                         m('use', { "xlink:href": "#icon-white-logo" })
