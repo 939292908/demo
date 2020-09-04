@@ -40,7 +40,6 @@ const openGView = {
         // 选择对象
         ele.select();
         document.execCommand("copy", false, null);
-        alert('复制成功');
     },
     oninit: () => {
         openGLogic.initFn();
