@@ -163,7 +163,7 @@ const extract = {
             if (res.result.code === 0) return extract.readrSendEmail(params, user, res.seq);
             window.$message({ content: errCode.getWebApiErrorCode(res.result.code), type: 'danger' });
         }).catch(e => {
-            window.$message({ content: l180n.$t('10419')/* '参数有误' */, type: 'danger' });
+            window.$message({ content: l180n.$t('10338')/* '系统繁忙' */, type: 'danger' });
         });
     },
     handleSubmit: function () {
@@ -197,7 +197,7 @@ const extract = {
         webApi.sendEmailV2(emailParms).then(res => {
             if (res.result.code === 0) return extract.handleChangeShow(false); // 打开 b
             window.$message({ content: errCode.getWebApiErrorCode(res.result.code), type: 'danger' });
-        }).catch(e => { window.$message({ content: l180n.$t('10419')/* '参数有误' */, type: 'danger' }); });
+        }).catch(e => { window.$message({ content: l180n.$t('10338')/* '系统繁忙' */, type: 'danger' }); });
     },
     readyStartSafetyVerify: function (start) {
         if (start !== 'success') return;
