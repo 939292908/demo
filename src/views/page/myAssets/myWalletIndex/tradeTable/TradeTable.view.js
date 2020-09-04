@@ -21,7 +21,7 @@ module.exports = {
             m('div', { class: `nav pr-5` }, [
                 m('div.search mr-7 has-line-level-3', {}, [
                     m('input', {
-                        class: `border-radius-small py-1 pl-1 coinSearch`,
+                        class: `coinSearch`,
                         placeholder: `币种搜索`,
                         oninput: function () {
                             t.setTableNewAry();

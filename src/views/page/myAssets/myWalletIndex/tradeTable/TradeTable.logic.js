@@ -173,6 +173,7 @@ module.exports = {
                 this.initAccountBanlance();
             }
         });
+
         this.oldHideMoneyFlag = vnode.attrs.hideMoneyFlag;
         // 初始化表头
         this.initColumnData();
@@ -189,8 +190,7 @@ module.exports = {
             }
         });
 
-        // 获取当前网址，如：http://localhost:8080/#!/myWalletIndex?id=03
-        const currencyIndex = window.document.location.href.toString().split('=')[1];
+        const currencyIndex = window.router.getUrlInfo().params.id;
         if (currencyIndex === '03' || currencyIndex === '02' || currencyIndex === '01' || currencyIndex === '04') {
             this.setPageFlag(currencyIndex);
         } else {
@@ -198,14 +198,14 @@ module.exports = {
         }
     },
     updateFn: function(vnode) {
-        // if (this.oldValue !== vnode.attrs.swValue) {
-        //     this.setPageFlag(vnode.attrs.swValue);
-        // }
-        // if (this.oldHideMoneyFlag !== vnode.attrs.hideMoneyFlag) {
-        //     this.oldHideMoneyFlag = vnode.attrs.hideMoneyFlag;
-        // }
-        // this.oldValue = vnode.attrs.swValue;
-        // this.oldHideMoneyFlag = vnode.attrs.hideMoneyFlag;
+        if (this.oldValue !== vnode.attrs.swValue) {
+            this.setPageFlag(vnode.attrs.swValue);
+        }
+        if (this.oldHideMoneyFlag !== vnode.attrs.hideMoneyFlag) {
+            this.oldHideMoneyFlag = vnode.attrs.hideMoneyFlag;
+        }
+        this.oldValue = vnode.attrs.swValue;
+        this.oldHideMoneyFlag = vnode.attrs.hideMoneyFlag;
     },
     removeFn: function () {
         broadcast.offMsg({
