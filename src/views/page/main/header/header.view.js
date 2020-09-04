@@ -1,5 +1,5 @@
 const m = require('mithril');
-const titleLogo = require("@/assets/img/logo/title-logo.png").default;
+// const titleLogo = require("@/assets/img/logo/title-logo.png").default;
 const I18n = require("../../../../languages/I18n").default;
 const Tooltip = require('@/views/components/common/Tooltip/Tooltip.view.js');
 const utils = require('@/util/utils').default;
@@ -18,7 +18,7 @@ module.exports = {
         apiLines.initLines();
     },
     view: function () {
-        return m('nav.navbar.is-fixed-top.theme--light.body-5', {
+        return m('nav.navbar.is-fixed-top.theme--darken.body-5', {
             role: "navigation",
             "aria-label": "main navigation",
             class: "has-bg-sub-level-1"
@@ -29,11 +29,9 @@ module.exports = {
                         window.router.push('/');
                     }
                 }, [
-                    m('img', {
-                        src: titleLogo,
-                        width: "112",
-                        height: "28"
-                    })
+                    m('svg.icon.header-logo', { "aria-hidden": true }, [
+                        m('use', { "xlink:href": "#icon-white-logo" })
+                    ])
                 ]),
                 m('a.navbar-burger.burger', {
                     class: "" + (header.openNavbarDropdown ? " is-active" : ""),
@@ -64,27 +62,29 @@ module.exports = {
                         m('a.navbar-item.ma-0.has-text-primary-hover', {}, [
                             "合约交易"
                         ]),
-                        m('div.navbar-dropdown.has-bg-level-2.border-radius-medium.pa-0', {}, [
-                            m('a', { class: `navbar-item media is-align-items-center pa-5 ma-0` }, [
-                                m('div.media-left.pa-3', {}, [
-                                    m('div', { class: `header-navbar-item-icon has-line-level-3 mr-2` })
-                                ]),
-                                m('div', { class: `media-content` }, [
-                                    m('div', { class: `content` }, [
-                                        m('p', { class: `title-small` }, "USDT永续合约"),
-                                        m('p', { class: `body-4 has-text-level-3` }, [" 最高百倍杠杆，交易简单"])
+                        m('div.theme--light', { }, [
+                            m('div.navbar-dropdown.has-bg-level-2.border-radius-medium.pa-0', {}, [
+                                m('a', { class: `navbar-item media is-align-items-center pa-5 ma-0` }, [
+                                    m('div.media-left.pa-3', {}, [
+                                        m('div', { class: `header-navbar-item-icon has-line-level-3 mr-2` })
+                                    ]),
+                                    m('div', { class: `media-content` }, [
+                                        m('div', { class: `content` }, [
+                                            m('p', { class: `title-small` }, "USDT永续合约"),
+                                            m('p', { class: `body-4 has-text-level-3` }, [" 最高百倍杠杆，交易简单"])
+                                        ])
                                     ])
-                                ])
-                            ]),
-                            m('a', { class: `navbar-item media is-align-items-center pa-5 ma-0` }, [
-                                m('div.media-left.pa-3', {}, [
-                                    m('div', { class: `header-navbar-item-icon has-line-level-3 mr-2` })
                                 ]),
-                                m('div', { class: `media-content` }, [
-                                    m('div', { class: `content` }, [
-                                        m('span', { class: `title-small` }, "全币种合约"),
-                                        m('span', { class: `header-new-info has-bg-primary px-3 ml-2` }, ["NEW"]),
-                                        m('p', { class: `body-4 has-text-level-3` }, [" 小币种开仓，统一价格标的"])
+                                m('a', { class: `navbar-item media is-align-items-center pa-5 ma-0` }, [
+                                    m('div.media-left.pa-3', {}, [
+                                        m('div', { class: `header-navbar-item-icon has-line-level-3 mr-2` })
+                                    ]),
+                                    m('div', { class: `media-content` }, [
+                                        m('div', { class: `content` }, [
+                                            m('span', { class: `title-small` }, "全币种合约"),
+                                            m('span', { class: `header-new-info has-bg-primary px-3 ml-2` }, ["NEW"]),
+                                            m('p', { class: `body-4 has-text-level-3` }, [" 小币种开仓，统一价格标的"])
+                                        ])
                                     ])
                                 ])
                             ])
@@ -162,58 +162,60 @@ module.exports = {
                         m('a.navbar-item.ma-0.has-text-primary-hover', {}, [
                             "资产"
                         ]),
-                        m('div.navbar-dropdown.is-right.has-bg-level-2.border-radius-medium', {}, [
-                            m('a', {
-                                class: `navbar-item columns has-text-primary-hover min-width-200 ma-0 px-6 py-4 body-5`,
-                                onclick: function () {
-                                    window.router.push({
-                                        path: '/myWalletIndex',
-                                        data: {
-                                            id: '03'
-                                        }
-                                    });
-                                }
-                            }, [
-                                '我的钱包'
-                            ]),
-                            m('a', {
-                                class: `navbar-item columns has-text-primary-hover min-width-200 ma-0 px-6 py-4 body-5`,
-                                onclick: function () {
-                                    window.router.push({
-                                        path: '/myWalletIndex',
-                                        data: {
-                                            id: '01'
-                                        }
-                                    });
-                                }
-                            }, [
-                                '合约账户'
-                            ]),
-                            m('a', {
-                                class: `navbar-item columns has-text-primary-hover min-width-200 ma-0 px-6 py-4 body-5`,
-                                onclick: function () {
-                                    window.router.push({
-                                        path: '/myWalletIndex',
-                                        data: {
-                                            id: '02'
-                                        }
-                                    });
-                                }
-                            }, [
-                                '币币账户'
-                            ]),
-                            m('a', {
-                                class: `navbar-item columns has-text-primary-hover min-width-200 ma-0 px-6 py-4 body-5`,
-                                onclick: function () {
-                                    window.router.push({
-                                        path: '/myWalletIndex',
-                                        data: {
-                                            id: '04'
-                                        }
-                                    });
-                                }
-                            }, [
-                                '法币账户'
+                        m('div.theme--light', { }, [
+                            m('div.navbar-dropdown.is-right.has-bg-level-2.border-radius-medium', {}, [
+                                m('a', {
+                                    class: `navbar-item columns has-text-primary-hover min-width-200 ma-0 px-6 py-4 body-5`,
+                                    onclick: function () {
+                                        window.router.push({
+                                            path: '/myWalletIndex',
+                                            data: {
+                                                id: '03'
+                                            }
+                                        });
+                                    }
+                                }, [
+                                    '我的钱包'
+                                ]),
+                                m('a', {
+                                    class: `navbar-item columns has-text-primary-hover min-width-200 ma-0 px-6 py-4 body-5`,
+                                    onclick: function () {
+                                        window.router.push({
+                                            path: '/myWalletIndex',
+                                            data: {
+                                                id: '01'
+                                            }
+                                        });
+                                    }
+                                }, [
+                                    '合约账户'
+                                ]),
+                                m('a', {
+                                    class: `navbar-item columns has-text-primary-hover min-width-200 ma-0 px-6 py-4 body-5`,
+                                    onclick: function () {
+                                        window.router.push({
+                                            path: '/myWalletIndex',
+                                            data: {
+                                                id: '02'
+                                            }
+                                        });
+                                    }
+                                }, [
+                                    '币币账户'
+                                ]),
+                                m('a', {
+                                    class: `navbar-item columns has-text-primary-hover min-width-200 ma-0 px-6 py-4 body-5`,
+                                    onclick: function () {
+                                        window.router.push({
+                                            path: '/myWalletIndex',
+                                            data: {
+                                                id: '04'
+                                            }
+                                        });
+                                    }
+                                }, [
+                                    '法币账户'
+                                ])
                             ])
                         ])
                     ]),
@@ -222,46 +224,48 @@ module.exports = {
                         m('a.navbar-item.ma-0.has-text-primary-hover', {}, [
                             m('i.iconfont.icon-Personal')
                         ]),
-                        m('div.navbar-dropdown.is-right.has-bg-level-2.border-radius-medium.pt-0', {}, [
-                            m('div', { class: ` pa-6`, style: `background: url(${require("@/assets/img/home/background.png").default}) no-repeat center center / 100% 100%; width:"200px"` }, [
-                                m('div', { class: `header-my-tooltip-top has-text-level-1` }, [
-                                    m('p', { class: `` }, [
-                                        m('p', { class: `title-small` }, [
-                                            utils.hideMobileInfo(globalModels.getAccount().accountName || '--')
-                                        ]),
-                                        m('p', { class: `body-4 has-text-level-2` }, [
-                                            'UID:' + (globalModels.getAccount().uid || '--')
+                        m('div.theme--light', { }, [
+                            m('div.navbar-dropdown.is-right.has-bg-level-2.border-radius-medium.pt-0', {}, [
+                                m('div', { class: ` pa-6`, style: `background: url(${require("@/assets/img/home/background.png").default}) no-repeat center center / 100% 100%; width:"200px"` }, [
+                                    m('div', { class: `header-my-tooltip-top has-text-level-1` }, [
+                                        m('p', { class: `` }, [
+                                            m('p', { class: `title-small` }, [
+                                                utils.hideAccountNameInfo(globalModels.getAccount().accountName || '--')
+                                            ]),
+                                            m('p', { class: `body-4 has-text-level-2` }, [
+                                                'UID:' + (globalModels.getAccount().uid || '--')
+                                            ])
                                         ])
                                     ])
+                                ]),
+                                m('a', {
+                                    class: `navbar-item columns has-text-primary-hover min-width-200 ma-0 px-6 py-4 body-5`
+                                }, [
+                                    '账户安全'
+                                ]),
+                                m('a', {
+                                    class: `navbar-item columns has-text-primary-hover min-width-200 ma-0 px-6 py-4 body-5`
+                                }, [
+                                    '身份认证'
+                                ]),
+                                m('a', {
+                                    class: `navbar-item columns has-text-primary-hover min-width-200 ma-0 px-6 py-4 body-5`
+                                }, [
+                                    'API管理'
+                                ]),
+                                // m('a', {
+                                //     class: `navbar-item columns has-text-primary-hover min-width-200 ma-0 px-6 py-4 body-5`
+                                // }, [
+                                //     '邀请返佣'
+                                // ]),
+                                m('a', {
+                                    class: `navbar-item columns has-text-primary-hover min-width-200 ma-0 px-6 py-4 body-5`,
+                                    onclick: () => {
+                                        header.loginOut();
+                                    }
+                                }, [
+                                    '退出登录'
                                 ])
-                            ]),
-                            m('a', {
-                                class: `navbar-item columns has-text-primary-hover min-width-200 ma-0 px-6 py-4 body-5`
-                            }, [
-                                '账户安全'
-                            ]),
-                            m('a', {
-                                class: `navbar-item columns has-text-primary-hover min-width-200 ma-0 px-6 py-4 body-5`
-                            }, [
-                                '身份认证'
-                            ]),
-                            m('a', {
-                                class: `navbar-item columns has-text-primary-hover min-width-200 ma-0 px-6 py-4 body-5`
-                            }, [
-                                'API管理'
-                            ]),
-                            // m('a', {
-                            //     class: `navbar-item columns has-text-primary-hover min-width-200 ma-0 px-6 py-4 body-5`
-                            // }, [
-                            //     '邀请返佣'
-                            // ]),
-                            m('a', {
-                                class: `navbar-item columns has-text-primary-hover min-width-200 ma-0 px-6 py-4 body-5`,
-                                onclick: () => {
-                                    header.loginOut();
-                                }
-                            }, [
-                                '退出登录'
                             ])
                         ])
                     ]),
@@ -270,17 +274,19 @@ module.exports = {
                         m('a.navbar-item.ma-0.has-text-primary-hover', {}, [
                             m('i.iconfont.icon-xiazai')
                         ]),
-                        m('div.navbar-dropdown.is-right.has-bg-level-2.border-radius-medium.box.min-width-250.pa-5', {}, [
-                            m('article', { class: `media is-align-items-center` }, [
-                                m('div.media-left', {}, [
-                                    m('figure.image.is-64x64', {}, [
-                                        m('img', { class: '', src: require("@/assets/img/home/download.png").default })
-                                    ])
-                                ]),
-                                m('div', { class: `media-content` }, [
-                                    m('div', { class: `content` }, [
-                                        m('p', { class: `title-small` }, "扫码下载APP"),
-                                        m('p', { class: `title-small` }, "iOS&Android")
+                        m('div.theme--light', { }, [
+                            m('div.navbar-dropdown.is-right.has-bg-level-2.border-radius-medium.box.min-width-250.pa-5', {}, [
+                                m('article', { class: `media is-align-items-center` }, [
+                                    m('div.media-left', {}, [
+                                        m('figure.image.is-64x64', {}, [
+                                            m('img', { class: '', src: require("@/assets/img/home/download.png").default })
+                                        ])
+                                    ]),
+                                    m('div', { class: `media-content` }, [
+                                        m('div', { class: `content` }, [
+                                            m('p', { class: `title-small` }, "扫码下载APP"),
+                                            m('p', { class: `title-small` }, "iOS&Android")
+                                        ])
                                     ])
                                 ])
                             ])
@@ -291,36 +297,38 @@ module.exports = {
                         m('a.navbar-item.ma-0.has-text-primary-hover', {}, [
                             m('i.iconfont.icon-signal')
                         ]),
-                        m('div.navbar-dropdown.is-right.has-bg-level-2.border-radius-medium', {}, [
-                            m('div', {
-                                class: "navbar-item px-6 ma-0 pa-0 title-small is-flex"
-                            }, [
-                                `线路切换(${apiLines.netLines.length})`,
-                                m('div.spacer'),
-                                m('button.button.is-light.pa-0', {
-                                    onclick: function() {
-                                        deviceInfo.openModal();
-                                    }
+                        m('div.theme--light', { }, [
+                            m('div.navbar-dropdown.is-right.has-bg-level-2.border-radius-medium', {}, [
+                                m('div', {
+                                    class: "navbar-item px-6 ma-0 pa-0 title-small is-flex"
                                 }, [
-                                    m('i.iconfont.icon-fi_file-text.iconfont-x-large-1')
-                                ])
-                            ]),
-                            m('hr.navbar-divider'),
-                            apiLines.netLines.map((item, i) => {
-                                return m('a', {
-                                    class: `navbar-item columns has-text-primary-hover min-width-200 ma-0 px-6 py-4 body-5 ${item.Id === apiLines.activeLine.Id ? 'is-active' : ''}`,
-                                    onclick: function() {
-                                        apiLines.setLinesActive(item.Id);
-                                    }
-                                }, [
-                                    m('span.column.pr-8', {}, [
-                                        item.Name
-                                    ]),
-                                    m('span.column.has-text-left', {}, [
-                                        '延迟 ' + apiLines.apiResponseSpeed[i] + 'ms'
+                                    `线路切换(${apiLines.netLines.length})`,
+                                    m('div.spacer'),
+                                    m('button.button.is-light.pa-0', {
+                                        onclick: function() {
+                                            deviceInfo.openModal();
+                                        }
+                                    }, [
+                                        m('i.iconfont.icon-fi_file-text.iconfont-x-large-1')
                                     ])
-                                ]);
-                            })
+                                ]),
+                                m('hr.navbar-divider'),
+                                apiLines.netLines.map((item, i) => {
+                                    return m('a', {
+                                        class: `navbar-item columns has-text-primary-hover min-width-200 ma-0 px-6 py-4 body-5 ${item.Id === apiLines.activeLine.Id ? 'is-active' : ''}`,
+                                        onclick: function() {
+                                            apiLines.setLinesActive(item.Id);
+                                        }
+                                    }, [
+                                        m('span.column.pr-8', {}, [
+                                            item.Name
+                                        ]),
+                                        m('span.column.has-text-left', {}, [
+                                            '延迟 ' + apiLines.apiResponseSpeed[i] + 'ms'
+                                        ])
+                                    ]);
+                                })
+                            ])
                         ])
                     ]),
                     // 语言
@@ -328,21 +336,23 @@ module.exports = {
                         m('a.navbar-item.ma-0.has-text-primary-hover', {}, [
                             I18n.langList[I18n.getLocale()].language
                         ]),
-                        m('div.navbar-dropdown.is-right.has-bg-level-2.border-radius-medium', {}, [
-                            Object.keys(I18n.langList).map((item, i) => {
-                                if (I18n.langList[item].open) {
-                                    return m('a', {
-                                        class: `navbar-item has-text-primary-hover min-width-200 ma-0 px-6 py-4 body-5 ${item === I18n.getLocale() ? 'is-active' : ''}`,
-                                        onclick: function() {
-                                            I18n.setLocale(item, res => {
-                                                // window._console.log('header setLocale', res);
-                                            });
-                                        }
-                                    }, [
-                                        I18n.langList[item].language
-                                    ]);
-                                }
-                            })
+                        m('div.theme--light', { }, [
+                            m('div.navbar-dropdown.is-right.has-bg-level-2.border-radius-medium', {}, [
+                                Object.keys(I18n.langList).map((item, i) => {
+                                    if (I18n.langList[item].open) {
+                                        return m('a', {
+                                            class: `navbar-item has-text-primary-hover min-width-200 ma-0 px-6 py-4 body-5 ${item === I18n.getLocale() ? 'is-active' : ''}`,
+                                            onclick: function() {
+                                                I18n.setLocale(item, res => {
+                                                    // window._console.log('header setLocale', res);
+                                                });
+                                            }
+                                        }, [
+                                            I18n.langList[item].language
+                                        ]);
+                                    }
+                                })
+                            ])
                         ])
                     ])
                 ])

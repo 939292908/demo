@@ -8,6 +8,10 @@ require('./assetRecord.scss');
 module.exports = {
     oninit() {
         AssetRecords.init('03');
+        AssetRecords.setLanguageListen();
+    },
+    onremove() {
+        AssetRecords.destroy();
     },
     view() {
         return m('div', {}, [
@@ -41,7 +45,11 @@ module.exports = {
                                     }, [I18n.$t('10060')/* '交易账户' */])
                                 ]),
                                 m('li', {}, [
-                                    m('a', {}, [I18n.$t('10061')/* '其他账户' */])
+                                    m('a', {
+                                        onclick: e => {
+                                            window.$message({ title: '提示', content: '暂未开放', type: 'primary' });
+                                        }
+                                    }, [I18n.$t('10061')/* '其他账户' */])
                                 ])
                             ])
                         ]),
@@ -90,11 +98,9 @@ module.exports = {
                                 type: AssetRecords.type,
                                 onSelectType(type) {
                                     AssetRecords.onSelectType(type);
-                                },
-                                dateStr: AssetRecords.dateStr,
-                                setDateStr(str) { AssetRecords.dateStr = str; }
+                                }
                             }),
-                            m(assetTable, { class: 'mt-7', list: AssetRecords.showList })
+                            m(assetTable, { class: 'mt-7', list: AssetRecords.showList, loading: AssetRecords.loading })
                         ])
                     ])
                 ])

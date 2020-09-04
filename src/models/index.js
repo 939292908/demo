@@ -2,7 +2,7 @@ const webApi = require('../api/webApi');
 const globalModels = require('./globalModels');
 const config = require('../config');
 const broadcast = require('../broadcast/broadcast');
-const errCode = require('../util/errCode');
+const errCode = require('../util/errCode').default;
 const utils = require('../util/utils').default;
 
 module.exports = {
@@ -23,7 +23,7 @@ module.exports = {
             }
         );
     },
-    getUserInfo() {
+    getUserInfo(needTip = false) {
         webApi.getUserInfo({}).then(data => {
             self.loading = false;
             if (data.result.code === 0) {
@@ -33,7 +33,7 @@ module.exports = {
                 utils.setItem('loginState', true);
                 broadcast.emit({ cmd: broadcast.GET_USER_INFO_READY, data: data.account });
                 // window.router.push('/home');
-            } else {
+            } else if (needTip) {
                 window.$message({
                     content: errCode.getWebApiErrorCode(data.result.code),
                     type: 'danger'

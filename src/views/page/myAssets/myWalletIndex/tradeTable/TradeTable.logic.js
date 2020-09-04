@@ -8,7 +8,6 @@ module.exports = {
     vnode: {},
     currency: 'BTC',
     hideZeroFlag: false, // 是否隐藏0资产 默认为false，
-    dataLength: 0, // 初始化时暂无数据
     pageFlag: '01', // 01：合约账户，02：币币账户，04：法币账户
     accountTitle: '', // 交易账户中表格右上角的币种
     accountBanlance: 0, // 交易账户中表格右上角的币种总额
@@ -30,6 +29,7 @@ module.exports = {
     navAry: [{ idx: '01', val: '合约账户' }, { idx: '02', val: '币币账户' }, { idx: '04', val: '法币账户' }],
     coinType: 'wallet',
     tableDateList: 'walletData',
+    isShowNoneData: false, // 表格是否有数据
     setPageFlag: function (param) {
         this.pageFlag = param;
         this.vnode.attrs.setIdx(param);
@@ -50,8 +50,7 @@ module.exports = {
             this.tableDateList = 'walletData';
         }
         this.initAccountBanlance();
-        this.setDataLength(this.tableData[this.tableDateList].length);
-        this.searchTableData();
+        this.setTableNewAry();
     },
     initAccountBanlance: function() {
         this.accountBanlance = this.currency === 'BTC' ? wlt[this.coinType + 'TotalValueForBTC'] : wlt[this.coinType + 'TotalValueForUSDT'];
@@ -59,9 +58,6 @@ module.exports = {
     setCurrency: function(param) {
         this.currency = param;
         this.initColumnData();
-    },
-    setDataLength: function (param) {
-        this.dataLength = param;
     },
     initTableData: function () {
         this.tableData.legalData = wlt.wallet['04'];
@@ -121,66 +117,49 @@ module.exports = {
             if (row.Setting.canRecharge) {
                 window.router.push(item.to + '?wType=' + row.wType);
             } else {
-                return window.$message({ title: '提示', content: '暂未开启', type: 'primary' });
+                return window.$message({ title: '提示', content: '该币暂未开放充值功能', type: 'primary' });
             }
         } else if (item.operation === '提现') {
             window.router.push(item.to + '?wType=' + row.wType);
         } else if (item.operation === '去交易') {
-            return window.$message({ title: '提示', content: '暂未开放', type: 'danger' });
+            return window.$message({ title: '提示', content: '暂未开放', type: 'primary' });
         }
-    },
-    copyAry: function (ary) {
-        const res = [];
-        for (let i = 0; i < ary.length; i++) {
-            res.push(ary[i]);
-        }
-        return res;
     },
     setHideZeroFlag: function () {
         this.hideZeroFlag = !this.hideZeroFlag;
+        this.setTableNewAry();
     },
-    searchTableData: function () {
-        const that = this;
-        // setTimeout(() => {
-        const tbody = document.getElementsByTagName('table')[0].childNodes[1];
-        const rowsLength = tbody.rows.length - 1; // tbody.rows.length - 1：最后一行是暂无数据
-        const index = [];
-        if (that.hideZeroFlag) {
-            for (let i = 0; i < rowsLength; i++) {
-                if (tbody.rows[i].style.display !== 'none') {
-                    index.push(i);
-                } else {
-                    continue;
+    tableNewAry: [], // 表格显示的数组
+    setTableNewAry: function () {
+        const value = document.getElementsByClassName('coinSearch')[0].value;
+        this.tableNewAry = []; // 初始化
+        if (this.hideZeroFlag === true && value === '') { // 只隐藏
+            // console.log('nzm', '只隐藏');
+            for (const i of this.tableData[this.tableDateList]) {
+                if ((this.coinType !== 'contract' ? (i.TOTAL !== '0.00000000' && i.TOTAL !== '0.0000') : (i.MgnBal !== '0.00000000' && i.MgnBal !== '0.0000'))) {
+                    this.tableNewAry.push(i);
                 }
             }
-        } else {
-            for (let i = 0; i < rowsLength; i++) {
-                index.push(i);
-            }
-        }
-        that.search(index);
-        // }, 50);
-    },
-    oldAry: [],
-    search: function (ary) {
-        this.oldAry = ary;
-        if (this.oldAry !== ary) {
-            console.log(1);
-        }
-        const tbody = document.getElementsByTagName('table')[0].childNodes[1];
-        const searchContent = document.getElementsByClassName('coinSearch')[0].value;
-        for (const i of ary) {
-            if (searchContent) {
-                const searchText = tbody.rows[i].cells[0].innerHTML;
-                if (searchText.toUpperCase().indexOf(searchContent.toUpperCase()) !== -1) {
-                    tbody.rows[i].style.display = ''; // 显示行操作
-                } else {
-                    tbody.rows[i].style.display = 'none'; // 隐藏行操作
+        } else if (this.hideZeroFlag === false && value !== '') { // 只输入
+            // console.log('nzm', '只输入');
+            for (const i of this.tableData[this.tableDateList]) {
+                if (i.wType.toUpperCase().search(value.toUpperCase()) > -1) {
+                    this.tableNewAry.push(i);
                 }
-            } else {
-                tbody.rows[i].style.display = '';
             }
+        } else if (this.hideZeroFlag === true && value !== '') { // 输入且隐藏
+            // console.log('nzm', '输入且隐藏');
+            for (const i of this.tableData[this.tableDateList]) {
+                if ((this.coinType !== 'contract' ? (i.TOTAL !== '0.00000000' && i.TOTAL !== '0.0000') : (i.MgnBal !== '0.00000000' && i.MgnBal !== '0.0000')) && i.wType.toUpperCase().search(value.toUpperCase()) > -1) {
+                    this.tableNewAry.push(i);
+                }
+            }
+        } else if (!this.hideZeroFlag && value === '') { // 无操作
+            // console.log('nzm', '无操作');
+            this.tableNewAry = this.tableData[this.tableDateList];
         }
+        // console.log(this.tableNewAry, '----------');
+        this.tableNewAry.length === 0 ? this.isShowNoneData = true : this.isShowNoneData = false;
     },
     createFn: function (vnode) {
         const self = this;
@@ -204,6 +183,7 @@ module.exports = {
             cmd: broadcast.MSG_WLT_UPD,
             cb: function () {
                 self.initTableData();
+                self.setTableNewAry();
             }
         });
 
@@ -213,13 +193,6 @@ module.exports = {
             this.setPageFlag(currencyIndex);
         } else {
             this.setPageFlag('03');
-        }
-
-        // 判断暂无数据是否显示
-        if (this.dataLength === 0) {
-            document.getElementsByTagName('table')[0].rows[document.getElementsByTagName('table')[0].rows.length - 1].style.display = '';
-        } else {
-            document.getElementsByTagName('table')[0].rows[document.getElementsByTagName('table')[0].rows.length - 1].style.display = 'none';
         }
     },
     updateFn: function(vnode) {

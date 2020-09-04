@@ -11,7 +11,8 @@ const Header = require('@/views/components/indexHeader/indexHeader.view');
 module.exports = {
     oninit: () => {
         rechargeIndex.initFn();
-        AssetRecords.init('03', 'recharge');
+        AssetRecords.init('03', 'recharge', 10);
+        AssetRecords.setLanguageListen();
     },
     oncreate: () => {
     },
@@ -25,8 +26,8 @@ module.exports = {
                     })
                 ])
             ]),
-            m('div', { class: `top mb-7 has-bg-level-2 ` }, [
-                m('div', { class: `content-width`, style: { margin: `auto` } }, [
+            m('div', { class: `top mb-7 has-bg-level-2 cursor-pointer` }, [
+                m('div', { class: `content-width `, style: { margin: `auto` } }, [
                     m('i', { class: `iconfont icon-Return has-text-title`, onclick: () => { window.router.go(-1); } }),
                     m('span', { class: `has-text-title my-4 ml-4 title-medium` }, l180n.$t('10056') /* '充币' */)
                 ])
@@ -113,11 +114,13 @@ module.exports = {
                         m('span.all', { class: `has-text-primary cursor-pointer`, onclick: () => { window.router.push('/assetRecords'); } }, l180n.$t('10087') /* '全部记录' */)
                     ]),
                     m('hr.ma-0'),
-                    m(assetTable, { class: 'pa-5', list: AssetRecords.showList })
+                    m(assetTable, { class: 'pa-5', list: AssetRecords.showList, loading: AssetRecords.loading })
                 ])
             ])
         ]);
     },
     onremove: () => {
+        rechargeIndex.removeFn();
+        AssetRecords.destroy();
     }
 };

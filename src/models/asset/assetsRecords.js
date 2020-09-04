@@ -2,6 +2,7 @@ const m = require('mithril');
 const Http = require('@/api').webApi;
 const utils = require('@/util/utils').default;
 const I18n = require('@/languages/I18n').default;
+const broadcast = require('@/broadcast/broadcast');
 
 module.exports = {
     recordObj: {
@@ -26,6 +27,12 @@ module.exports = {
             transfer: [], // 资产划转
             otcSell: [] // 法币交易
         }
+    },
+    walletLog: { // 原始数据
+        '01': {},
+        '02': {},
+        '03': {},
+        '04': {}
     },
     recordName: {
         "01": I18n.$t('10072')/* '合约账户' */,
@@ -68,21 +75,67 @@ module.exports = {
     tradeAccount: ['01', '02', '04'], // 交易账户
     aType: '03', // 子账户 默认为钱包
     filterTime: [],
-    coinList: {
+    coinList: { // 币种列表
         '01': [],
         '02': [],
         '03': [],
         '04': []
     },
-    coin: 'all',
-    type: 'all',
-    dateStr: '',
-    init(aType, type = 'all') {
+    coin: 'all', // 币种
+    type: 'all', // 类型
+    loading: false,
+    length: -1, // 显示条数
+    setLanguageListen() {
+        broadcast.onMsg({
+            key: 'assetRecords',
+            cmd: 'setLanguage',
+            cb: lang => {
+                this.fillDataAll();
+            }
+        });
+    },
+    destroy() {
+        broadcast.offMsg({
+            key: 'assetRecords',
+            cmd: 'setLanguage',
+            isall: true
+        });
+        this.recordObj = {
+            '01': { // 合约账户
+                gift: [], // 合约赠金
+                transfer: [] // 资产划转
+            },
+            '02': { // 币币账户
+                transfer: [], // 资产划转
+                other: [] // 其他类型
+            },
+            '03': { // 我的钱包
+                recharge: [], // 钱包充币
+                withdraw: [], // 钱包提币
+                transfer: [], // 资产划转
+                paymentTransfer: [], // 内部转账
+                active: [], // 活动出入金
+                exchange: [], // 系统兑换
+                other: [] // 其他类型
+            },
+            '04': { // 法币账户
+                transfer: [], // 资产划转
+                otcSell: [] // 法币交易
+            }
+        };
+        this.aType = '03';
+        this.type = 'all';
+        this.coin = 'all';
+        this.filterTime = [];
+        this.showList = [];
+    },
+    init(aType, type = 'all', length = -1) {
         this.aType = aType;
         this.type = type;
+        this.length = length;
         this.coin = 'all';
-        this.dateStr = '';
         this.filterTime = [];
+        broadcast.emit({ cmd: 'assetsRecordOnInit' });
         this.getCoinList();
         this.getATypeRecords();
     },
@@ -116,7 +169,7 @@ module.exports = {
      * 获取子账户记录
      */
     getATypeRecords() {
-        const walletLog = {};
+        this.loading = true;
         switch (this.aType) {
         case '03' :
             Http.assetRecordsAll([
@@ -125,16 +178,14 @@ module.exports = {
                 Http.assetRecords({ aType: this.aType, mhType: 4 }), // 划转
                 Http.assetRecords({ aType: this.aType, mhType: 5 }) // 其他
             ]).then(res => {
-                walletLog['1'] = res[0].result.code === 0 ? res[0].history : [];
-                this.fillData(walletLog['1'], this.aType, '1');
-                walletLog['2'] = res[1].result.code === 0 ? res[1].history : [];
-                this.fillData(walletLog['2'], this.aType, '2');
-                walletLog['4'] = res[2].result.code === 0 ? res[2].history : [];
-                this.fillData(walletLog['4'], this.aType, '4');
-                walletLog['5'] = res[3].result.code === 0 ? res[3].history : [];
-                this.fillData(walletLog['5'], this.aType, '5');
-                this.filterList();
+                this.loading = false;
+                this.walletLog[this.aType]['1'] = res[0].result.code === 0 ? res[0].history : [];
+                this.walletLog[this.aType]['2'] = res[1].result.code === 0 ? res[1].history : [];
+                this.walletLog[this.aType]['4'] = res[2].result.code === 0 ? res[2].history : [];
+                this.walletLog[this.aType]['5'] = res[3].result.code === 0 ? res[3].history : [];
+                this.fillDataAll();
             }).catch(err => {
+                this.loading = false;
                 console.log('error ', err);
             });
             break;
@@ -143,10 +194,11 @@ module.exports = {
             Http.assetRecordsAll([
                 Http.assetRecords({ aType: this.aType, mhType: 4 }) // 划转
             ]).then(res => {
-                walletLog['4'] = res[0].result.code === 0 ? res[0].history : [];
-                this.fillData(walletLog['4'], this.aType, '4');
-                this.filterList();
+                this.loading = false;
+                this.walletLog[this.aType]['4'] = res[0].result.code === 0 ? res[0].history : [];
+                this.fillDataAll();
             }).catch(err => {
+                this.loading = false;
                 console.log('error ', err);
             });
             break;
@@ -155,12 +207,12 @@ module.exports = {
                 Http.assetRecords({ aType: this.aType, mhType: 4 }), // 划转
                 Http.assetRecords({ aType: this.aType, mhType: 5 }) // 其他
             ]).then(res => {
-                walletLog['4'] = res[0].result.code === 0 ? res[0].history : [];
-                this.fillData(walletLog['4'], this.aType, '4');
-                walletLog['5'] = res[1].result.code === 0 ? res[1].history : [];
-                this.fillData(walletLog['5'], this.aType, '5');
-                this.filterList();
+                this.loading = false;
+                this.walletLog[this.aType]['4'] = res[0].result.code === 0 ? res[0].history : [];
+                this.walletLog[this.aType]['5'] = res[1].result.code === 0 ? res[1].history : [];
+                this.fillDataAll();
             }).catch(err => {
+                this.loading = false;
                 console.log('error ', err);
             });
             break;
@@ -172,6 +224,14 @@ module.exports = {
         } else {
             return value;
         }
+    },
+    fillDataAll() {
+        for (const aType in this.walletLog) {
+            for (const mhType in this.walletLog[aType]) {
+                this.fillData(this.walletLog[aType][mhType], aType, mhType);
+            }
+        }
+        this.filterList();
     },
     /**
      * 数据填充
@@ -641,6 +701,9 @@ module.exports = {
         this.showList.sort((a, b) => {
             return b.timestamp - a.timestamp;
         });
+        if (this.length !== -1) {
+            this.showList.splice(this.length);
+        }
         m.redraw();
     }
 };

@@ -94,7 +94,7 @@ const model = {
     // 切换我的钱包，交易账户，币币，合约，法币
     switchChange: function (val, type) {
         if (val === 'none') {
-            return window.$message({ title: '提示', content: '暂未开放，敬请期待', type: 'primary' });
+            return window.$message({ title: '提示', content: '暂未开放', type: 'primary' });
         }
         this.swValue = val;
         transferLogic.setTransferModalOption({
@@ -193,8 +193,6 @@ const model = {
     },
     initFn: function() {
         wlt.init();
-
-        this.form.wType = this.selectOp[0].id;
         // 获取当前网址，如：http://localhost:8080/#!/myWalletIndex?id=03
         const currencyIndex = window.document.location.href.toString().split('=')[1];
         if (currencyIndex === '03' || currencyIndex === '02' || currencyIndex === '01' || currencyIndex === '04') {
@@ -222,6 +220,8 @@ const model = {
             }
         });
         self.sets();
+
+        self.form.wType = self.currency;
     },
     createFn: function() {
         this.sets();

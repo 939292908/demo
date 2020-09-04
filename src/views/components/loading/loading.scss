@@ -1,0 +1,32 @@
+.components-loading {
+    width: var(--c-fontsz-level9);
+    height: var(--c-fontsz-level9);
+    border-radius: 50%;
+    display: inline-block;
+    border-top: 3px solid var(--c-sub-lighten2);
+    border-right: 3px solid transparent;
+    box-sizing: border-box;
+    animation: components-loading-rotation 1s linear infinite;
+}
+
+.components-loading::after {
+    content: '';
+    box-sizing: border-box;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: var(--c-fontsz-level9);
+    height: var(--c-fontsz-level9);
+    border-radius: 50%;
+    border-bottom: 3px solid var(--c-primary-lighten);
+    border-left: 3px solid transparent;
+}
+
+@keyframes components-loading-rotation {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
