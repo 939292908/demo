@@ -230,7 +230,7 @@ module.exports = {
                                     m('div', { class: `header-my-tooltip-top has-text-level-1` }, [
                                         m('p', { class: `` }, [
                                             m('p', { class: `title-small` }, [
-                                                utils.hideMobileInfo(globalModels.getAccount().accountName || '--')
+                                                utils.hideAccountNameInfo(globalModels.getAccount().accountName || '--')
                                             ]),
                                             m('p', { class: `body-4 has-text-level-2` }, [
                                                 'UID:' + (globalModels.getAccount().uid || '--')
