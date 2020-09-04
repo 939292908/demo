@@ -96,11 +96,11 @@ const extract = {
         /* eslint-enable */
     },
     getlinkButtonListData: function () {
-        this.getCurrentFeesChange();
         this.currenLinkBut = '';
         this.extractCoin.address = '';
         this.extractCoin.coinNum = '';
         this.extractCoin.linkName = '';
+        this.getCurrentFeesChange();
         if (this.currentSelect.wType !== 'USDT') {
             this.linkButtonList = [];
             return;
@@ -244,7 +244,7 @@ const extract = {
         m.redraw();
     },
     handleUserCanAction: function () {
-        if (this.UserInfo.setting2fa.email || (!this.UserInfo.setting2fa.google && !this.UserInfo.setting2fa.phone)) return this.handleTotalShow({ content: l180n.$t('10404') + l180n.$t('10403') + '。' /* '提币需邮件确认，请先绑定邮箱 为了您的账户安全，还需绑定手机或谷歌' */, isLinshiErWeiMa: true });
+        if (!this.UserInfo.setting2fa.email || (!this.UserInfo.setting2fa.google && !this.UserInfo.setting2fa.phone)) return this.handleTotalShow({ content: l180n.$t('10404') + l180n.$t('10403') + '。' /* '提币需邮件确认，请先绑定邮箱 为了您的账户安全，还需绑定手机或谷歌' */, isLinshiErWeiMa: true });
         // 二期使用
         if (!this.UserInfo.setting2fa.email) return this.handleTotalShow({ content: l180n.$t('10404') /* '提币需邮件确认，请先绑定邮箱' */, buttonText: l180n.$t('10229') /* '邮箱验证' */, buttonClick: () => { m.route.set("/my"); } });
         const doubleButtonCof = [
@@ -257,6 +257,9 @@ const extract = {
         const self = this;
         wlt.init();
         this.initGeetest();
+        this.initWType = initWType;
+        this.locale = l180n.getLocale();
+        self.UserInfo = UserInfo.getAccount();
         if (!Object.keys(self.UserInfo).length) {
             broadcast.onMsg({
                 key: this.name,
@@ -266,9 +269,6 @@ const extract = {
         } else {
             self.handleUserCanAction();
         }
-        this.initWType = initWType;
-        this.locale = l180n.getLocale();
-        self.UserInfo = UserInfo.getAccount();
         if (!wlt.wallet['01'].toString()) {
             broadcast.onMsg({
                 key: this.name,
