@@ -144,7 +144,7 @@ const extract = {
             token: user.token,
             wType: this.currenLinkBut || this.currentSelect.wType,
             money: this.extractCoin.coinNum,
-            aid: user.uid + '06',
+            aid: user.uid + '01',
             addr: this.extractCoin.address,
             op: 0
         };
