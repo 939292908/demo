@@ -17,49 +17,49 @@
 var m = require("mithril");
 require('./Dropdown.scss');
 const model = require('./Dropdown.logic.js');
-console.log(model);
+console.log(model.menuList);
 module.exports = {
     oninit: vnode => model.oninit(vnode),
     oncreate: vnode => model.oncreate(vnode),
     onupdate: vnode => model.onupdate(vnode),
     onremove: vnode => model.onremove(vnode),
     view (vnode) {
-        return m('div', { class: `${vnode.attrs.class || ''} my-dropdown dropdown ${vnode.attrs.type === 'hover' ? " is-hoverable" : vnode.attrs.showMenu ? " is-active" : ''}` }, [
+        return m('div', { class: `${model.class || ''} my-dropdown dropdown ${model.type === 'hover' ? " is-hoverable" : model.showMenu ? " is-active" : ''}` }, [
             // btn
             m('div', { class: "dropdown-trigger has-text-1" }, [
                 m('button', {
-                    class: `button ${vnode.attrs.btnClass || ''}`,
-                    style: (vnode.attrs.btnWidth ? `width:${vnode.attrs.btnWidth}px;` : '') +
-                        (vnode.attrs.btnHeight ? `height:${vnode.attrs.btnHeight}px;` : ''),
+                    class: `button ${model.btnClass || ''}`,
+                    style: (model.btnWidth ? `width:${model.btnWidth}px;` : '') +
+                        (model.btnHeight ? `height:${model.btnHeight}px;` : ''),
                     onclick: (e) => {
-                        setTimeout(() => vnode.attrs.setShowMenu(!vnode.attrs.showMenu), 0); // 进入下一次事件队列，先让body事件关闭所有下拉，再开启自己
-                        // vnode.attrs.setBodyEven(false)
+                        setTimeout(() => model.setShowMenu(!model.showMenu), 0); // 进入下一次事件队列，先让body事件关闭所有下拉，再开启自己
+                        // model.setBodyEven(false)
                         // window.stopBubble(e)
                     }
                 }, [
-                    m('p', { class: `my-trigger-text` }, vnode.state.curItem.label), // btnText
+                    m('p', { class: `my-trigger-text` }, model.curItem.label), // btnText
                     m('i', { class: "my-trigger-icon iconfont icon-xiala has-text-primary" }) // icon
                 ])
             ]),
             // menu
-            m('div', { class: "dropdown-menu ", style: vnode.attrs.menuWidth ? `width:${vnode.attrs.menuWidth}px` : '' }, [
+            m('div', { class: "dropdown-menu ", style: model.menuWidth ? `width:${model.menuWidth}px` : '' }, [
                 m('div', { class: "dropdown-content", style: "max-height: 400px; overflow: auto;" },
                     model.menuList.map((item, index) => {
                         return m('a', {
-                            class: `dropdown-item has-hover ${vnode.state.curId === item.id ? 'has-active' : ''}`,
+                            class: `dropdown-item has-hover ${model.curId === item.id ? 'has-active' : ''}`,
                             key: item.label + index,
                             onclick () {
-                                vnode.state.curItem = item; // 同步显示文字
-                                console.log(vnode.state.curItem, item.label);
-                                vnode.attrs.activeId((p, k) => {
+                                model.curItem = item; // 同步显示文字
+                                console.log(model.curItem, item.label);
+                                model.activeId((p, k) => {
                                     return (p[k] = item.id);
                                 }); // 修改选中id
-                                vnode.attrs.onClick && vnode.attrs.onClick(item); // 传递数据
-                                vnode.attrs.setShowMenu(false); // 关闭菜单
+                                model.onClick && model.onClick(item); // 传递数据
+                                model.setShowMenu(false); // 关闭菜单
                             }
                         }, [
                             m('span', { class: `my-menu-label` }, item.label),
-                            m('i', { class: `my-menu-icon iconfont icon-fabijiaoyiwancheng ${vnode.state.curId === item.id ? '' : 'is-hidden'}` }) // icon
+                            m('i', { class: `my-menu-icon iconfont icon-fabijiaoyiwancheng ${model.curId === item.id ? '' : 'is-hidden'}` }) // icon
                         ]);
                     })
                 )

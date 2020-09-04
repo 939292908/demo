@@ -46,6 +46,11 @@ class Dropdown {
         };
     }
 
+    setShowMenu (type) {
+        this.showMenu = type;
+        console.log(type);
+    }
+
     menuClick () {
         console.log(this.curItem);
     }
