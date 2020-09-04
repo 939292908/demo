@@ -57,7 +57,7 @@ module.exports = {
                         m('div', { class: `myWalletIndex-switch columns-flex mt-7 is-between` }, [
                             m('div.wallet border-radius-medium px-7 py-7 column cursor-pointer', {
                                 class: (myWalletIndex.swValue === '03' ? `has-bg-primary` : ` has-bg-level-2`),
-                                onclick: () => { myWalletIndex.switchChange('03'); }
+                                onclick: () => { window.router.push('/myWalletIndex?id=03'); }
                             }, [
                                 m('div', { class: `body-5 mb-1` }, [
                                     m('span', { }, `我的钱包`)
@@ -69,7 +69,7 @@ module.exports = {
                             ]),
                             m('div.trade border-radius-medium px-7 py-7 mx-5 column cursor-pointer', {
                                 class: (myWalletIndex.swValue !== '03' ? `has-bg-primary` : `has-bg-level-2`),
-                                onclick: () => { myWalletIndex.switchChange('01'); }
+                                onclick: () => { window.router.push('/myWalletIndex?id=01'); }
                             }, [
                                 m('div.left', {}, [
                                     m('div', { class: `body-5 mb-1` }, [

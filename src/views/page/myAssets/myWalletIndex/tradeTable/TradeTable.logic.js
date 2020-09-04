@@ -32,7 +32,7 @@ module.exports = {
     isShowNoneData: false, // 表格是否有数据
     setPageFlag: function (param) {
         this.pageFlag = param;
-        this.vnode.attrs.setIdx(param);
+        // this.vnode.attrs.setIdx(param);
         if (param === '01') {
             this.coinType = 'contract';
             this.tableDateList = 'contractData';
@@ -170,6 +170,7 @@ module.exports = {
             cmd: broadcast.CHANGE_SW_CURRENCY,
             cb: (arg) => {
                 this.setCurrency(arg);
+                this.initAccountBanlance();
             }
         });
         this.oldHideMoneyFlag = vnode.attrs.hideMoneyFlag;
@@ -197,14 +198,14 @@ module.exports = {
         }
     },
     updateFn: function(vnode) {
-        if (this.oldValue !== vnode.attrs.swValue) {
-            this.setPageFlag(vnode.attrs.swValue);
-        }
-        if (this.oldHideMoneyFlag !== vnode.attrs.hideMoneyFlag) {
-            this.oldHideMoneyFlag = vnode.attrs.hideMoneyFlag;
-        }
-        this.oldValue = vnode.attrs.swValue;
-        this.oldHideMoneyFlag = vnode.attrs.hideMoneyFlag;
+        // if (this.oldValue !== vnode.attrs.swValue) {
+        //     this.setPageFlag(vnode.attrs.swValue);
+        // }
+        // if (this.oldHideMoneyFlag !== vnode.attrs.hideMoneyFlag) {
+        //     this.oldHideMoneyFlag = vnode.attrs.hideMoneyFlag;
+        // }
+        // this.oldValue = vnode.attrs.swValue;
+        // this.oldHideMoneyFlag = vnode.attrs.hideMoneyFlag;
     },
     removeFn: function () {
         broadcast.offMsg({

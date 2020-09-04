@@ -14,7 +14,7 @@ module.exports = {
             m('div.tradingAccount mb-7 tabs', { style: { display: vnode.attrs.swValue === '01' || vnode.attrs.swValue === '02' || vnode.attrs.swValue === '04' ? '' : 'none' } }, [
                 m('ul.tradingAccount_nav mx-5', { }, [
                     t.navAry.map((item) => {
-                        return m('li', { class: '' + (t.pageFlag === item.idx ? "is-active" : ''), onclick: () => { t.setPageFlag(item.idx); } }, m('a', {}, item.val));
+                        return m('li', { class: '' + (t.pageFlag === item.idx ? "is-active" : ''), onclick: () => { window.router.push('/myWalletIndex?id=' + item.idx); } }, m('a', {}, item.val));
                     })
                 ])
             ]),
