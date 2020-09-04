@@ -129,6 +129,8 @@ module.exports = {
     setHideZeroFlag: function () {
         this.hideZeroFlag = !this.hideZeroFlag;
         this.setTableNewAry();
+        console.log(this.hideZeroFlag);
+        localStorage.setItem("isHideZeroFlag", this.hideZeroFlag);
     },
     tableNewAry: [], // 表格显示的数组
     setTableNewAry: function () {
@@ -195,6 +197,13 @@ module.exports = {
             this.setPageFlag(currencyIndex);
         } else {
             this.setPageFlag('03');
+        }
+
+        // 本地存储 隐藏0资产标识 （刷新保留值）
+        if (localStorage.getItem("isHideZeroFlag") !== null) {
+            // console.log(localStorage.getItem("isHideZeroFlag"));
+            localStorage.getItem("isHideZeroFlag") === 'true' ? this.hideZeroFlag = true : this.hideZeroFlag = false;
+            this.setTableNewAry();
         }
     },
     updateFn: function(vnode) {

@@ -32,7 +32,7 @@ module.exports = {
                     m('span', { class: `has-text-title my-4 ml-4 title-medium` }, l180n.$t('10056') /* '充币' */)
                 ])
             ]),
-            m('div', { class: `bottom content-width mb-9 border-radius-medium` }, [
+            m('div', { class: `bottom content-width mb-7 border-radius-medium` }, [
                 m('div', { class: `bottom-upper has-bg-level-2 pl-8 pt-7` }, [
                     m('div', { class: `form-item-title` }, l180n.$t('10063') /* '币种' */),
                     m('div', { class: `form-item-content border-radius-medium mt-2 mb-7`, style: { width: `384px` } }, [
