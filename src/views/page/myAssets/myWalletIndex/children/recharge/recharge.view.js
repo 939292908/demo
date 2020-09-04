@@ -26,8 +26,8 @@ module.exports = {
                     })
                 ])
             ]),
-            m('div', { class: `top mb-7 has-bg-level-2 ` }, [
-                m('div', { class: `content-width`, style: { margin: `auto` } }, [
+            m('div', { class: `top mb-7 has-bg-level-2 cursor-pointer` }, [
+                m('div', { class: `content-width `, style: { margin: `auto` } }, [
                     m('i', { class: `iconfont icon-Return has-text-title`, onclick: () => { window.router.go(-1); } }),
                     m('span', { class: `has-text-title my-4 ml-4 title-medium` }, l180n.$t('10056') /* '充币' */)
                 ])

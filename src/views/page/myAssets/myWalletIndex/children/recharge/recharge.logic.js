@@ -154,7 +154,7 @@ module.exports = {
         const that = this;
         return {
             evenKey: `rechargeSelect${Math.floor(Math.random() * 10000)}`,
-            menuWidth: 384,
+            // menuWidth: 384,
             showMenu: that.showCurrencyMenu,
             setShowMenu: type => {
                 that.showCurrencyMenu = type;
