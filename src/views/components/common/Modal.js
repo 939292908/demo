@@ -10,7 +10,8 @@
 //     width: '50%' // px 或 %
 // }
 
-var m = require("mithril");
+const m = require("mithril");
+const config = require('@/config.js');
 
 module.exports = {
     oninit (vnode) {
@@ -28,7 +29,9 @@ module.exports = {
                 m("header", { class: "modal-card-head has-bg-level-2 has-line-level-1 pa-7" }, [
                     // 标题
                     m("p", { class: "modal-card-title title-medium" }, [
-                        m('p', { class: `modal-card-title-log pb-3` }, "Vbit"),
+                        m('p', { class: `modal-card-title-log pb-3` }, [
+                            config.exchName
+                        ]),
                         vnode.attrs.slot ? vnode.attrs.slot.header ? vnode.attrs.slot.header : ['头部标题'] : ['头部标题']
                     ]),
                     // 关闭按钮

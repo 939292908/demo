@@ -166,6 +166,30 @@ utils.hideMobileInfo = mobile => {
         return mobile;
     }
 };
+
+// 账号信息隐藏，可针对邮箱和手机
+utils.hideAccountNameInfo = val => {
+    if (val.includes('@')) {
+        const arr = val.split('@');
+        if (arr[0].length > 4) {
+            return arr[0].substr(0, 4) + '****@' + arr[1];
+        } else {
+            return val;
+        }
+    } else {
+        let newMobile = '';
+        if (val.length > 11) {
+            newMobile = val.substr(0, 8) + '****' + val.substr(12);
+            return newMobile;
+        } else if (val.length === 11) {
+            newMobile = val.substr(0, 3) + '****' + val.substr(7);
+            return newMobile;
+        } else {
+            return val;
+        }
+    }
+};
+
 utils.totalNumSub = function (number, n) {
     var str = this.getFullNum(Number(number).toFixed(12)).toString();
     var arr = str.split('.');

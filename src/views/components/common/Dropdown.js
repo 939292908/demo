@@ -20,29 +20,29 @@ const broadcast = require('@/broadcast/broadcast');
 module.exports = {
     // ============= 状态 =============
     showMenu: false,
-    btnText: "",
-    activeId: "", // 内部临时保存id
+    curItem: {},
+    curId: "", // 临时保存id
     openClickBody: true, // body事件 节流
 
     // ============= 方法 =============
-    // 内部临时保存id
-    initId (vnode) {
+    // 初始化 选中item
+    initCurItem (vnode) {
+        // 临时保存 当前选中id
         vnode.attrs.activeId && vnode.attrs.activeId((p, k) => {
-            return (vnode.state.activeId = p[k]);
+            return (vnode.state.curId = p[k]);
         });
-    },
-    // 初始化 选中文字
-    initTriggerText (vnode) {
-        this.initId(vnode); // id
-        let curItem = null; // 当前选中元素
-        curItem = vnode.attrs.getList().find(item => {
-            return item.id === vnode.state.activeId;
-        }); // 根据 id
-        if (curItem) { // 文字
-            vnode.state.btnText = curItem.label;
-        } else {
-            vnode.state.btnText = vnode.attrs.placeholder || "--";
-        }
+        // 当前选中item
+        const item = vnode.attrs.getList().find(item => {
+            return item.id === vnode.state.curId;
+        });
+        vnode.state.curItem = item || {};
+
+        // console.log(vnode.state.curId, vnode.state.curItem, 66);
+        // if (curItem) {
+        //     vnode.state.btnText = curItem.label;
+        // } else {
+        //     vnode.state.btnText = vnode.attrs.placeholder || "--";
+        // }
         // console.log(curItem, vnode.state.btnText, 77777777777);
         m.redraw();
     },
@@ -71,13 +71,13 @@ module.exports = {
 
     // ============= 生命周期 =============
     oninit (vnode) {
-        this.initTriggerText(vnode);
+        this.initCurItem(vnode);
         this.initEVBUS(vnode);
     },
     oncreate (vnode) {
     },
     onupdate (vnode) {
-        this.initTriggerText(vnode);
+        this.initCurItem(vnode);
     },
     view (vnode) {
         return m('div', { class: `${vnode.attrs.class || ''} my-dropdown dropdown ${vnode.attrs.type === 'hover' ? " is-hoverable" : vnode.attrs.showMenu ? " is-active" : ''}` }, [
@@ -93,7 +93,7 @@ module.exports = {
                         // window.stopBubble(e)
                     }
                 }, [
-                    m('p', { class: `my-trigger-text` }, vnode.state.btnText), // btnText
+                    m('p', { class: `my-trigger-text` }, vnode.state.curItem.label), // btnText
                     m('i', { class: "my-trigger-icon iconfont icon-xiala has-text-primary" }) // icon
                 ])
             ]),
@@ -102,10 +102,11 @@ module.exports = {
                 m('div', { class: "dropdown-content", style: "max-height: 400px; overflow: auto;" },
                     vnode.attrs.getList().map((item, index) => {
                         return m('a', {
-                            class: `dropdown-item has-hover ${vnode.state.activeId === item.id ? 'has-active' : ''}`,
+                            class: `dropdown-item has-hover ${vnode.state.curId === item.id ? 'has-active' : ''}`,
                             key: item.label + index,
                             onclick () {
-                                vnode.state.btnText = item.label; // 同步显示文字
+                                vnode.state.curItem = item; // 同步显示文字
+                                console.log(vnode.state.curItem, item.label);
                                 vnode.attrs.activeId((p, k) => {
                                     return (p[k] = item.id);
                                 }); // 修改选中id
@@ -114,7 +115,7 @@ module.exports = {
                             }
                         }, [
                             m('span', { class: `my-menu-label` }, item.label),
-                            m('i', { class: `my-menu-icon iconfont icon-fabijiaoyiwancheng ${vnode.state.activeId === item.id ? '' : 'is-hidden'}` }) // icon
+                            m('i', { class: `my-menu-icon iconfont icon-fabijiaoyiwancheng ${vnode.state.curId === item.id ? '' : 'is-hidden'}` }) // icon
                         ]);
                     })
                 )

@@ -43,6 +43,10 @@ Http.interceptors.response.use(function (response) {
     return Promise.reject(error);
 });
 
+Http.setBaseUrl = function(url) {
+    Http.defaults.baseURL = url;
+};
+
 module.exports = {
     Http,
     API: APITEXTLIST

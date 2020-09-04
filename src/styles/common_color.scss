@@ -343,6 +343,23 @@
     }
 }
 
+// 修改placeholder字体颜色 start
+.theme--dark{ 
+    input::-webkit-input-placeholder{
+        /* WebKit browsers */
+        color: var(--c-font-darken3);
+    }
+    /* Mozilla Firefox 4 to 18 */ /* Mozilla Firefox 19+ */
+    input:-moz-placeholder,input::-moz-placeholder{
+        color: var(--c-font-darken3);
+    }
+    input:-ms-input-placeholder{
+        /* Internet Explorer 10+ */
+        color: var(--c-font-darken3);
+    }
+}
+
+
 /* 遮罩层颜色 end */
 /* dark UI库样式覆盖 end */
 /* 白天 */
@@ -400,19 +417,19 @@
 }
 
 /* 辅助色 */
-.theme--dark .has-bg-sub-level-1 {
-    background-color: var(--c-sub-darken);
-    border-color: var(--c-sub-darken);
+.theme--light .has-bg-sub-level-1 {
+    background-color: var(--c-sub-light);
+    border-color: var(--c-sub-light);
 }
 
-.theme--dark .has-bg-sub-level-2 {
-    background-color: var(--c-sub-darken1);
-    border-color: var(--c-sub-darken1);
+.theme--light .has-bg-sub-level-2 {
+    background-color: var(--c-sub-light1);
+    border-color: var(--c-sub-light1);
 }
 
-.theme--dark .has-bg-sub-level-3 {
-    background-color: var(--c-sub-darken2);
-    border-color: var(--c-sub-darken2);
+.theme--light .has-bg-sub-level-3 {
+    background-color: var(--c-sub-light2);
+    border-color: var(--c-sub-light2);
 }
 
 /* 跌红 */
@@ -660,9 +677,40 @@
 .theme--light .has-mode {
     background-color: var(--c-mode-lighten);
 }
+// 修改placeholder字体颜色 start
+.theme--light{ 
+    input::-webkit-input-placeholder{
+        /* WebKit browsers */
+        color: var(--c-font-lighten3);
+    }
+    /* Mozilla Firefox 4 to 18 */ /* Mozilla Firefox 19+ */
+    input:-moz-placeholder,input::-moz-placeholder{
+        color: var(--c-font-lighten3);
+    }
+    input:-ms-input-placeholder{
+        /* Internet Explorer 10+ */
+        color: var(--c-font-lighten3);
+    }
+}
+
 
 /* 遮罩层颜色 end */
+// 滚动条
+.theme--dark {
+    ::-webkit-scrollbar-track-piece {
+        background: transparent;
+    }
 
+    ::-webkit-scrollbar {
+        width: 10px;
+        height: 10px;
+    }
+
+    ::-webkit-scrollbar-thumb {
+        background: var(--c-background-darken3);
+        border-radius: 20px;
+    }
+}
 // 滚动条
 .theme--light {
     ::-webkit-scrollbar-track-piece {
@@ -683,7 +731,7 @@
 /* light UI库样式覆盖 end */
 
 
-$primary-lighten: #FF8B00;
+$primary-lighten: var(--c-primary-lighten);
 
 .input:focus,
 .textarea:focus,

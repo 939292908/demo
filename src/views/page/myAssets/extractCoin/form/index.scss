@@ -69,7 +69,7 @@
             line-height: 20px;
           }
         }
-        .butItem.butItemActive {
+        .butItem:hover , .butItem.butItemActive {
           background-color: var(--c-primary-lighten);
           color: #ffffff;
         }
@@ -85,8 +85,9 @@
       .extract-num { // 提取数量
         //margin-bottom: 4px;
 
-        .input {
+        input.input {
           padding-right: 80px;
+          box-sizing: border-box;
         }
 
         .icon-right-all {
@@ -94,6 +95,7 @@
           top: 50%;
           transform: translateY(-50%);
           right: 12px;
+          z-index: 10;
 
           .clickAll {
             margin-left: 12px;
@@ -112,6 +114,8 @@
         }
       }
 
+
+
       .charge { //  手续费
         color: var(--c-font-lighten3);
         height: 17px;
@@ -124,6 +128,7 @@
         padding-top: 8px;
       }
     }
+
   }
 
   .promptText {

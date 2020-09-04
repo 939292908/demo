@@ -134,7 +134,7 @@ module.exports = {
      * 获取用户信息
      */
     getUserInfo() {
-        models.getUserInfo();
+        models.getUserInfo(true);
     },
     // 判断是否设置资产密码
     checkAccountPwd(self) {
@@ -161,7 +161,7 @@ module.exports = {
     },
     oninit() {
         if (utils.getItem('loginState') && utils.getItem('ex-session')) {
-            window.router.push('/home');
+            window.router.push(window.router.defaultRoutePath);
             return;
         }
         if (utils.getItem('userAccount')) {

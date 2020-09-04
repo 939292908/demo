@@ -16,7 +16,10 @@ module.exports = {
         );
         if (!vnode.attrs.list.length) {
             table.push(m('div.is-align-items-center', {}, [
-                m('img', { class: `mt-8`, src: require(`@/assets/img/myAssets/noneData.svg`).default, style: { height: `120px`, width: `88px` } })])
+                // vnode.attrs.loading
+                //     ? m('div.mt-8.is-loading')
+                //     :
+                m('img', { class: `my-8`, src: require(`@/assets/img/myAssets/noneData.svg`).default, style: { height: `120px`, width: `88px` } })])
             );
         } else {
             for (const item of vnode.attrs.list) {
