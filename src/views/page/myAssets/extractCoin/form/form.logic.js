@@ -230,7 +230,7 @@ const extract = {
     handleChangeShow: function (isHandleVerify) {
         extract.isChangeClose = false;
         extract.popUpData = {
-            show: !extract.popUpData.show,
+            show: false,
             isHandleVerify,
             title: { text: isHandleVerify ? l180n.$t('10113')/* 安全验证 */ : l180n.$t('10082') /* '温馨提示' */ }
         };
@@ -252,14 +252,19 @@ const extract = {
         m.redraw();
     },
     handleUserCanAction: function () {
-        if (!this.UserInfo.setting2fa.email || (!this.UserInfo.setting2fa.google && !this.UserInfo.setting2fa.phone)) return this.handleTotalShow({ content: l180n.$t('10404') + l180n.$t('10403') + '。' /* '提币需邮件确认，请先绑定邮箱 为了您的账户安全，还需绑定手机或谷歌' */, isLinshiErWeiMa: true });
-        // 二期使用
-        // if (!this.UserInfo.setting2fa.email) return this.handleTotalShow({ content: l180n.$t('10404') /* '提币需邮件确认，请先绑定邮箱' */, buttonText: l180n.$t('10229') /* '邮箱验证' */, buttonClick: () => { m.route.set("/my"); } });
+        if (this.UserInfo.setting2fa.email !== 1 || (this.UserInfo.setting2fa.google !== 1 && this.UserInfo.setting2fa.phone !== 1)) {
+            return this.handleTotalShow({ content: l180n.$t('10404') + l180n.$t('10403') + '。' /* '提币需邮件确认，请先绑定邮箱 为了您的账户安全，还需绑定手机或谷歌' */, isLinshiErWeiMa: true });
+        }
+        // if (this.UserInfo.setting2fa.email !== 1) {
+        //     return this.handleTotalShow({ content: l180n.$t('10404') /* '提币需邮件确认，请先绑定邮箱' */, buttonText: l180n.$t('10229') /* '邮箱验证' */, buttonClick: () => { m.route.set("/my"); } });
+        // }
         // const doubleButtonCof = [
         //     { text: l180n.$t('10227') /* '谷歌验证' */, issolid: false, click: () => { m.route.set("/my"); } },
         //     { text: l180n.$t('10228') /* '手机验证' */, issolid: true, click: () => { m.route.set("/my"); } }
         // ];
-        // if (!this.UserInfo.setting2fa.google && !this.UserInfo.setting2fa.phone) return this.handleTotalShow({ content: l180n.$t('10405')/* '为了您的账户安全，请先绑定手机或谷歌' */, doubleButton: true, doubleButtonCof });
+        // if (this.UserInfo.setting2fa.google !== 1 && this.UserInfo.setting2fa.phone !== 1) {
+        //     return this.handleTotalShow({ content: l180n.$t('10405')/* '为了您的账户安全，请先绑定手机或谷歌' */, doubleButton: true, doubleButtonCof });
+        // }
     },
     oninit: function (initWType) {
         const self = this;
@@ -268,16 +273,14 @@ const extract = {
         this.initWType = initWType;
         this.locale = l180n.getLocale();
         self.UserInfo = UserInfo.getAccount();
-        console.log(self.UserInfo);
-        if (!Object.keys(self.UserInfo).length) {
+        if (Object.keys(self.UserInfo).length > 0) {
+            self.handleUserCanAction();
+        } else {
             broadcast.onMsg({
                 key: this.name,
                 cmd: broadcast.GET_USER_INFO_READY,
                 cb: (data) => { self.UserInfo = data; self.handleUserCanAction(); console.log(self.UserInfo, 2); }
             });
-        } else {
-            self.handleUserCanAction();
-            console.log(self.UserInfo, 3);
         }
         broadcast.onMsg({
             key: this.name,
@@ -300,16 +303,6 @@ const extract = {
         broadcast.offMsg({
             key: this.name,
             cmd: broadcast.GET_USER_INFO_READY,
-            isall: true
-        });
-        broadcast.offMsg({
-            key: this.name,
-            cmd: broadcast.MSG_WLT_READY,
-            isall: true
-        });
-        broadcast.offMsg({
-            key: this.name,
-            cmd: 'getUserInfo',
             isall: true
         });
     }

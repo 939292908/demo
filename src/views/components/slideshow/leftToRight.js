@@ -54,7 +54,7 @@ module.exports = {
     view: function (vnode) {
         if (swiper.Loadingnumber < 10) swiper.Loadingnumber += 1;
         if (swiper.Loadingnumber === 5) {
-            this.mySwiper.destroy();
+            this.mySwiper?.destroy();
             horizontal.loop = true;
             this.mySwiper = new Swiper('#slideShowLTR', horizontal);
             // this.mySwiper.removeSlide(0);
