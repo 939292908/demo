@@ -2,6 +2,7 @@ const m = require('mithril');
 const AssetSelectBox = require('./assetSelectBox.model');
 const InputWithComponent = require('../../../components/inputWithComponent/inputWithComponent.view');
 const I18n = require('@/languages/I18n').default;
+const Dropdown = require('@/views/components/common/newDropdown/dropdown.view');
 require('./assetSelectBox.scss');
 
 module.exports = {
@@ -10,13 +11,25 @@ module.exports = {
     },
     view(vnode) {
         const coinList = [];
-        coinList.push(m('option', { value: 'all' }, ['全部币种']));
+        coinList.push({
+            isActive: vnode.attrs.coin === 'all',
+            value: I18n.$t('10343')/* '全部币种' */,
+            key: 'all'
+        });
         for (const item of vnode.attrs.coinList) {
-            coinList.push(m('option', {}, [item]));
+            coinList.push({
+                isActive: vnode.attrs.coin === item,
+                value: item,
+                key: item
+            });
         }
         const typeList = [];
         for (const k in vnode.attrs.typeList) {
-            typeList.push(m('option', { value: k }, [vnode.attrs.typeList[k]]));
+            typeList.push({
+                isActive: vnode.attrs.type === k,
+                value: vnode.attrs.typeList[k],
+                key: k
+            });
         }
         return m('div.assetSelectBox', {
             class: vnode.attrs.class
@@ -54,24 +67,36 @@ module.exports = {
                     })
                 ]),
                 m('div.column.is-3', {}, [
-                    m('div.select.w100', {}, [
-                        m('select.w100', {
-                            onchange: e => {
-                                vnode.attrs.onSelectCoin(e.target.value);
-                            },
-                            value: vnode.attrs.coin
-                        }, coinList)
-                    ])
+                    m(Dropdown, {
+                        id: 'assetSelectBox-icon-dropdown-list',
+                        class: 'w100',
+                        isActive: AssetSelectBox.iconIsActive,
+                        list: coinList,
+                        onchange: item => {
+                            AssetSelectBox.iconIsActive = false;
+                            vnode.attrs.onSelectCoin(item.key);
+                        },
+                        onActive: () => {
+                            AssetSelectBox.typeIsActive = false;
+                            AssetSelectBox.iconIsActive = !AssetSelectBox.iconIsActive;
+                        }
+                    })
                 ]),
                 m('div.column.is-3', {}, [
-                    m('div.select.w100', {}, [
-                        m('select.w100', {
-                            onchange: e => {
-                                vnode.attrs.onSelectType(e.target.value);
-                            },
-                            value: vnode.attrs.type
-                        }, typeList)
-                    ])
+                    m(Dropdown, {
+                        id: 'assetSelectBox-type-dropdown-list',
+                        class: 'w100',
+                        isActive: AssetSelectBox.typeIsActive,
+                        list: typeList,
+                        onchange: item => {
+                            AssetSelectBox.typeIsActive = false;
+                            vnode.attrs.onSelectType(item.key);
+                        },
+                        onActive: () => {
+                            AssetSelectBox.iconIsActive = false;
+                            AssetSelectBox.typeIsActive = !AssetSelectBox.typeIsActive;
+                        }
+                    })
                 ]),
                 m('div.column', {}, [])
             ])

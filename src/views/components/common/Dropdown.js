@@ -102,12 +102,11 @@ module.exports = {
             m('div', { class: "dropdown-menu ", style: vnode.attrs.menuWidth ? `width:${vnode.attrs.menuWidth}px` : '' }, [
                 m('div.pa-0', { class: "dropdown-content", style: "max-height: 400px; overflow: auto;" },
                     vnode.attrs.getList().map((item, index) => {
-                        return m('a.px-7.py-3', {
+                        return m('a.pl-7.pr-0.py-3', {
                             class: `dropdown-item has-hover ${vnode.state.activeId === item.id ? 'has-active' : ''}`,
                             key: item.label + index,
                             onclick () {
                                 vnode.state.curItem = item; // 同步显示文字
-                                console.log(vnode.state.curItem, item.label);
                                 vnode.attrs.activeId((p, k) => {
                                     return (p[k] = item.id);
                                 }); // 修改选中id

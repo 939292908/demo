@@ -7,15 +7,9 @@ module.exports = {
         table.push(
             m('div.columns.body-4.has-text-level-3', {}, [
                 m('div.column.is-1', {}, [I18n.$t('10063')/* '币种' */]),
-                m('div.column', {
-                    class: `${vnode.attrs.aType !== '03' ? 'is-3' : 'is-2'}`
-                }, [I18n.$t('10088')/* '类型' */]),
-                m('div.column', {
-                    class: `${vnode.attrs.aType !== '03' ? 'is-3' : 'is-2'}`
-                }, [I18n.$t('10089')/* '数量' */]),
-                m('div.column.is-2', {
-                    style: `display:${vnode.attrs.aType !== '03' ? 'none' : 'flex'}`
-                }, [I18n.$t('10099')/* '手续费' */]),
+                m('div.column.is-3', {}, [I18n.$t('10088')/* '类型' */]),
+                m('div.column.is-3', {}, [I18n.$t('10089')/* '数量' */]),
+                // m('div.column.is-2', {}, [I18n.$t('10099')/* '手续费' */]),
                 m('div.column.is-2', {}, [I18n.$t('10090')/* '状态' */]),
                 m('div.column.is-2', {}, [I18n.$t('10091')/* '时间' */]),
                 m('div.column.is-1.has-text-right', {}, [I18n.$t('10092')/* '备注' */])
@@ -24,23 +18,23 @@ module.exports = {
         if (vnode.attrs.loading) {
             table.push(m('div.is-align-items-center.py-8', {}, [m(Loading)]));
         } else if (!vnode.attrs.list.length) {
-            table.push(m('div.is-align-items-center', {}, [
-                m('img', { class: `my-8`, src: require(`@/assets/img/myAssets/noneData.svg`).default, style: { height: `120px`, width: `88px` } })])
-            );
+            table.push(m('div.is-align-items-center.mt-8', {}, [
+                m('img', {
+                    src: require(`@/assets/img/myAssets/noneData.svg`).default,
+                    style: { height: `120px`, width: `88px` }
+                })
+            ]));
+            table.push(m('div.is-align-items-center.mb-8', {}, [
+                m('div.has-text-level-4', {}, '暂无数据')
+            ]));
         } else {
             for (const item of vnode.attrs.list) {
                 table.push(
                     m('div.columns.body-4.has-text-level-3.my-7', {}, [
                         m('div.column.is-1', {}, [item.coin]),
-                        m('div.column', {
-                            class: `${vnode.attrs.aType !== '03' ? 'is-3' : 'is-2'}`
-                        }, [item.des]),
-                        m('div.column', {
-                            class: `${vnode.attrs.aType !== '03' ? 'is-3' : 'is-2'}`
-                        }, [item.num + ' ' + item.coin]),
-                        m('div.column.is-2', {
-                            style: `display:${vnode.attrs.aType !== '03' ? 'none' : 'flex'}`
-                        }, [(item.fee || 0) + ' ' + item.coin]),
+                        m('div.column.is-3', {}, [item.des]),
+                        m('div.column.is-3', {}, [item.num + ' ' + item.coin]),
+                        // m('div.column.is-2', {}, [(item.fee || 0) + ' ' + item.coin]),
                         m('div.column.is-2', {}, [item.status]),
                         m('div.column.is-2', {}, [item.time]),
                         m('div.column.is-1.has-text-right', {}, [

@@ -6,27 +6,19 @@
         display: flex;
         flex-direction: row;
         .search{
+            border-width: 1px;
+            border-style: solid;
             input{
-                width: 128px;
-                outline:none;
                 float: left;
                 border: none;
+                height: 100%;
             }
             i{
                 float: left;
             }
             clear: both;
         }
-        .hideZeroAsset{
-            i{
-                float: left;
-            }
-            span{
-                float: left;
-            }
-            clear: both;
-        }
-        .fundRecords{
+        .hideZeroAsset,.fundRecords{
             i,span{
                 vertical-align:middle;
             }

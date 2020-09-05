@@ -1,9 +1,13 @@
 .views-pages-myassets-header{
-    display: flex;
-    height: 52px;
-    .header-highlight{
-        border-top: none;
-        border-left: none;
-        border-right: none;
+    a{
+        height: 52px;
+        border: none;
+    }
+    ul{
+        border: none;
+        li{
+            border-bottom-width: 1px;
+            border-bottom-style: solid !important;
+        }
     }
 }

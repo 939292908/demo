@@ -14,6 +14,10 @@ module.exports = {
             }, [vnode.attrs.navList[i].title])
             );
         }
-        return m('div.views-pages-myassets-header.pl-3', { }, list);
+        return m('div.views-pages-myassets-header.tabs', {}, [
+            m('ul', {}, [
+                list
+            ])
+        ]);
     }
 };

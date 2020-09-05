@@ -754,6 +754,7 @@ $primary-lighten: var(--c-primary-lighten);
     box-shadow: none !important;
 }
 
+.dropdown-trigger .button:hover,
 .input:hover,
 .select select:hover {
     border-color: var(--c-primary-lighten) !important;
