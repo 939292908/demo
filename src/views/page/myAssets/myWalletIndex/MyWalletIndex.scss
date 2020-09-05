@@ -4,6 +4,9 @@
         display: flex;
         flex-wrap: wrap;
     }
+    .head{
+        border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+    }
     .myWalletIndex-head{
         .myWalletIndex-head-left{
             .myWalletIndex-head-left-total{
@@ -50,16 +53,5 @@
         //     background-color: rgba(255, 255, 255, 0.85);
         //     backdrop-filter: blur(30px);
         // }
-    }
-    .myWalletIndex-head-right div{
-        button{
-            outline: none;
-            // border: none;
-            // border: 1px solid #FF8B00;
-            &.bgNone{
-                // 边框主色 规范未找到！！！
-                background:none;
-            }
-        }
     }
 }

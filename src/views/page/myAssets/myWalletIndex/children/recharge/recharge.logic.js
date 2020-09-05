@@ -163,7 +163,7 @@ module.exports = {
         if (ele.value) {
             ele.select(); // 选择对象
             document.execCommand("copy", false, null);
-            alert('复制成功');
+            return window.$message({ title: I18n.$t('10410') /* '提示' */, content: '复制成功', type: 'success' });
         }
     },
     changeBtnflag(index, title) {
