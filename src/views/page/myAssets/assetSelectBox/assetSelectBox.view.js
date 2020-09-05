@@ -13,7 +13,7 @@ module.exports = {
         const coinList = [];
         coinList.push({
             isActive: vnode.attrs.coin === 'all',
-            value: '全部币种',
+            value: I18n.$t('10343')/* '全部币种' */,
             key: 'all'
         });
         for (const item of vnode.attrs.coinList) {
