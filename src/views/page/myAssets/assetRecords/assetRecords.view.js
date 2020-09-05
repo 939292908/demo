@@ -25,11 +25,11 @@ module.exports = {
             ]),
             m('div.theme--light.page-myAssets-assetRecord', {}, [
                 m('div.has-bg-level-1.is-align-items-center.py-7', {}, [
-                    m('div.has-bg-level-2.content-width.pa-5', {}, [
+                    m('div.has-bg-level-2.content-width', {}, [
                         m('div.tabs.mb-0', {}, [
                             m('ul', {}, [
                                 m('li', { class: AssetRecords.aType === '03' ? 'is-active' : '' }, [
-                                    m('a', {
+                                    m('a.pa-0.mx-4', {
                                         onclick: e => {
                                             if (AssetRecords.aType === '03') return;
                                             AssetRecords.init('03');
@@ -37,7 +37,7 @@ module.exports = {
                                     }, [I18n.$t('10055')/* '我的钱包' */])
                                 ]),
                                 m('li', { class: AssetRecords.tradeAccount.includes(AssetRecords.aType) ? 'is-active' : '' }, [
-                                    m('a', {
+                                    m('a.pa-0.mx-4', {
                                         onclick: e => {
                                             if (AssetRecords.tradeAccount.includes(AssetRecords.aType)) return;
                                             AssetRecords.init('01');
@@ -45,7 +45,7 @@ module.exports = {
                                     }, [I18n.$t('10060')/* '交易账户' */])
                                 ]),
                                 m('li', {}, [
-                                    m('a', {
+                                    m('a.pa-0.mx-4', {
                                         onclick: e => {
                                             window.$message({ title: '提示', content: '暂未开放', type: 'primary' });
                                         }
@@ -58,7 +58,7 @@ module.exports = {
                         }, [
                             m('ul', {}, [
                                 m('li', { class: AssetRecords.aType === '01' ? 'is-active' : '' }, [
-                                    m('a', {
+                                    m('a.pa-0.mx-4', {
                                         onclick: e => {
                                             if (AssetRecords.aType === '01') return;
                                             AssetRecords.init('01');
@@ -66,7 +66,7 @@ module.exports = {
                                     }, [I18n.$t('10072')/* '合约账户' */])
                                 ]),
                                 m('li', { class: AssetRecords.aType === '02' ? 'is-active' : '' }, [
-                                    m('a', {
+                                    m('a.pa-0.mx-4', {
                                         onclick: e => {
                                             if (AssetRecords.aType === '02') return;
                                             AssetRecords.init('02');
@@ -74,7 +74,7 @@ module.exports = {
                                     }, [I18n.$t('10073')/* '币币账户' */])
                                 ]),
                                 m('li', { class: AssetRecords.aType === '04' ? 'is-active' : '' }, [
-                                    m('a', {
+                                    m('a.pa-0.mx-4', {
                                         onclick: e => {
                                             if (AssetRecords.aType === '04') return;
                                             AssetRecords.init('04');
@@ -83,7 +83,7 @@ module.exports = {
                                 ])
                             ])
                         ]),
-                        m('div.table-bg', {}, [
+                        m('div.table-bg.px-5', {}, [
                             m(assetSelectBox, {
                                 class: 'mt-7',
                                 coinList: AssetRecords.coinList[AssetRecords.aType],
