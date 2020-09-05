@@ -72,7 +72,7 @@ module.exports = {
                         t.tableNewAry.map((row) => {
                             return m('tr', {}, [
                                 t.columnData[t.coinType].map((item, i) => {
-                                    if (i === t.columnData[t.coinType].length - 2) { // 估值列
+                                    if (i === t.columnData[t.coinType].length - 1) { // 估值列
                                         return m('td.py-4 has-text-level-1', {}, t.oldHideMoneyFlag ? '******' : row[item.val] + ` ` + t.currency);
                                     } else if (i === 0) { // 第一列币种不需要隐藏
                                         return m('td.py-4 has-text-level-1', {}, row[item.val]);
