@@ -12,11 +12,18 @@ module.exports = {
     },
     view(vnode) {
         return m('div', { class: `views-pages-Myassets-Table pt-3 px-5 has-bg-level-2` }, [
-            m('div.tradingAccount mb-7 tabs', { style: { display: vnode.attrs.swValue === '01' || vnode.attrs.swValue === '02' || vnode.attrs.swValue === '04' ? '' : 'none' } }, [
+            m('div.tradingAccount mb-7 tabs mb-0', { style: { display: vnode.attrs.swValue === '01' || vnode.attrs.swValue === '02' || vnode.attrs.swValue === '04' ? '' : 'none' } }, [
                 m('ul.tradingAccount_nav', { }, [
                     t.navAry.map((item) => {
-                        return m('li', { class: '' + (t.pageFlag === item.idx ? "is-active" : ''), onclick: () => { window.router.push('/myWalletIndex?id=' + item.idx); } }, m('a', {}, item.val));
+                        return m('li', { class: t.pageFlag === item.idx ? 'is-active' : '' }, [
+                            m('a', {
+                                onclick: e => {
+                                    window.router.push('/myWalletIndex?id=' + item.idx);
+                                }
+                            }, item.val)
+                        ]);
                     })
+
                 ])
             ]),
             m('div', { class: `nav pr-5` }, [
@@ -34,7 +41,7 @@ module.exports = {
                     m('i', { class: t.hideZeroFlag ? `iconfont icon-u_check-square cursor-pointer` : `iconfont icon-Unselected cursor-pointer`, onclick: () => { t.setHideZeroFlag(); } }),
                     m('span', { class: `ml-2` }, I18n.$t('10062') /* `隐藏0资产` */)
                 ]),
-                m('div.fundRecords mr-7', {}, [
+                m('div.fundRecords mr-7 cursor-pointer', {}, [
                     m('i', { class: 'iconfont icon-AssetRecord' }),
                     m('span', { onclick: function () { window.router.push('/assetRecords'); } }, I18n.$t('10053') /* `资金记录` */)
                 ]),

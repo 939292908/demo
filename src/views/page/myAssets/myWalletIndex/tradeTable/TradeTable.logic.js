@@ -73,7 +73,7 @@ module.exports = {
                 { col: I18n.$t('10065') /* '可用' */, val: 'NL' },
                 { col: I18n.$t('10066') /* '锁定' */, val: 'depositLock' },
                 { col: this.currency + '估值', val: this.currency === 'BTC' ? 'valueForBTC' : 'valueForUSDT' },
-                { col: I18n.$t('10068') /* '操作' */, val: [{ operation: I18n.$t('10069') /* '充值' */, to: '/recharge' }, { operation: I18n.$t('10070') /* '提现' */, to: '/extractCoin' }, { operation: I18n.$t('10071') /* '划转' */, to: '' }] }
+                { col: I18n.$t('10068') /* '操作' */, val: [{ operation: I18n.$t('10056') /* '充币' */, to: '/recharge' }, { operation: I18n.$t('10057') /* '提币' */, to: '/extractCoin' }, { operation: I18n.$t('10071') /* '划转' */, to: '' }] }
             ],
             coin: [
                 { col: I18n.$t('10063') /* '币种' */, val: 'wType' },
@@ -114,13 +114,13 @@ module.exports = {
                     that.initAccountBanlance();
                 }
             });
-        } else if (item.operation === I18n.$t('10069') /* '充值' */) {
+        } else if (item.operation === I18n.$t('10056') /* '充币' */) {
             if (row.Setting.canRecharge) {
                 window.router.push(item.to + '?wType=' + row.wType);
             } else {
                 return window.$message({ title: I18n.$t('10410') /* '提示' */, content: '该币暂未开放充值功能', type: 'primary' });
             }
-        } else if (item.operation === I18n.$t('10070') /* '提现' */) {
+        } else if (item.operation === I18n.$t('10057') /* '提币' */) {
             window.router.push(item.to + '?wType=' + row.wType);
         } else if (item.operation === I18n.$t('10079') /* '去交易' */) {
             return window.$message({ title: I18n.$t('10410') /* '提示' */, content: '暂未开放', type: 'primary' });
