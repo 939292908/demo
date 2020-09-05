@@ -1,9 +1,30 @@
-.common-dropdown{
+.common-dropdown {
     .dropdown-menu {
         width: inherit;
     }
+
     a.dropdown-item.is-active, button.dropdown-item.is-active {
         background-color: initial;
         color: var(--c-primary-lighten);
+    }
+
+    .dropdown-content {
+        height: 300px;
+        overflow-y: auto;
+    }
+
+    .dropdown-content::-webkit-scrollbar { /*滚动条整体样式*/
+        width: 10px;
+        height: 1px;
+    }
+
+    .dropdown-content::-webkit-scrollbar-thumb { /*滚动条里面小方块*/
+        border-radius: var(--c-radius-level2);
+        background: var(--c-primary-lighten);
+    }
+
+    .dropdown-content::-webkit-scrollbar-track { /*滚动条里面轨道*/
+        border-radius: var(--c-radius-level2);
+        background: var(--c-background-lighten3);
     }
 }
