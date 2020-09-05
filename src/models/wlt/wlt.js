@@ -329,7 +329,7 @@ module.exports = {
         case '01':
             // 合约账户
             // console.log('ht', type, this.wltItemEx);
-            TOTAL = Number(this.wltItemEx.Num || 0) + Number(this.wltItemEx.PNL || 0) + Number(this.wltItemEx.PNLISO || 0) + Number(this.wltItemEx.UPNL || 0);
+            TOTAL = Number(this.wltItemEx.Num || 0) + Number(this.wltItemEx.PNL || 0) + Number(this.wltItemEx.PNLISO || 0) + Number(this.wltItemEx.UPNL || 0) + Number(this.wltItemEx.Gift || 0);
             // 账户权益
             this.wltItemEx.MgnBal = utils.toFixedForFloor(TOTAL, 8);
             // 可用赠金

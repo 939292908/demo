@@ -21,18 +21,18 @@ export default {
     EV_DI18N_UPD: 'EV_DI18N_UPD',
     EV_CHANGELOCALE_UPD: 'EV_CHANGELOCALE_UPD',
     langList: {
-        en: {
-            英文: "注释",
-            key: "en",
-            language: "English",
-            imgName: "English_icon",
-            open: 1
-        },
         zh: {
             简体中文: "注释",
             key: "zh",
             language: "简体中文",
             imgName: "china_icon",
+            open: 1
+        },
+        en: {
+            英文: "注释",
+            key: "en",
+            language: "English",
+            imgName: "English_icon",
             open: 1
         },
         tw: {

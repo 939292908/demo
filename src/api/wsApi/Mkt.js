@@ -121,7 +121,7 @@ class Mkt {
                 do: (aObj) => {
                     switch (aObj.Conf.Typ) {
                     case "mkt":
-                        aObj.ReqAssetD({ vp: window.exchId });
+                        aObj.ReqAssetD({ vp: aObj.Conf.vp });
                         return 'WORKING';
                     case "trd":
 

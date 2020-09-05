@@ -3,6 +3,7 @@ const model = require('./bindPhone.logic.js');
 const VerifyView = require('@/views/components/dialogVerify/dialogVerify.view');
 const InputWithComponent = require('@/views/components/inputWithComponent/inputWithComponent.view');
 const AreaCodeSelect = require('@/views/page/user/login/areaCodeSelect/areaCodeSelect.view');
+const config = require('@/config.js');
 require('@/views/page/user/bind/bind.scss');
 require('./bindPhone.scss');
 // const Modal = require('@/views/components/common/Modal');
@@ -84,7 +85,7 @@ module.exports = {
                 close: () => model.switchSafetyVerifyModal(false),
                 isHandleVerify: true,
                 title: {
-                    logo: "Vbit",
+                    logo: config.exchName,
                     text: "安全验证"
                 }
             }) : null

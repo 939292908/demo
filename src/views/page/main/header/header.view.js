@@ -24,7 +24,7 @@ module.exports = {
             class: "has-bg-sub-level-1"
         }, [
             m('.navbar-brand', {}, [
-                m('a.navbar-item', {
+                m('div.navbar-item.cursor-pointer', {
                     onclick: function () {
                         window.router.push('/');
                     }
@@ -49,7 +49,7 @@ module.exports = {
             // 未登录样式  pc
             m('div#navbarBasicExample.navbar-menu', { class: '' + (header.openNavbarDropdown ? " is-active" : "") }, [
                 m('div.navbar-start', {}, [
-                    m('', {
+                    m('div', {
                         class: "navbar-item has-text-primary-hover cursor-pointer ",
                         onclick: function () {
                             window.router.push('/');
@@ -59,7 +59,7 @@ module.exports = {
                     ]),
                     // 合约交易
                     m('div.navbar-item.has-dropdown.is-hoverable', {}, [
-                        m('a.navbar-item.ma-0.has-text-primary-hover', {}, [
+                        m('div.navbar-item.ma-0.has-text-primary-hover.cursor-pointer', {}, [
                             "合约交易"
                         ]),
                         m('div.theme--light', { }, [
@@ -90,7 +90,7 @@ module.exports = {
                             ])
                         ])
                     ]),
-                    m('', {
+                    m('div', {
                         class: "navbar-item has-text-primary-hover cursor-pointer ",
                         onclick: function () {
                             window.router.push('/');
@@ -98,7 +98,7 @@ module.exports = {
                     }, [
                         '币币交易'
                     ]),
-                    m('', {
+                    m('div', {
                         class: "navbar-item has-text-primary-hover cursor-pointer ",
                         onclick: function () {
                             window.router.push('/');
@@ -106,10 +106,10 @@ module.exports = {
                     }, [
                         'ETF专区'
                     ]),
-                    m('', {
+                    m('div', {
                         class: "navbar-item has-text-primary-hover cursor-pointer ",
                         onclick: function () {
-                            window.open('/accountSecurity');
+                            window.open('https://vbithelp.zendesk.com/hc/zh-cn/sections/360007960273');
                         }
                     }, [
                         '新手帮助'
@@ -159,7 +159,7 @@ module.exports = {
                     ]),
                     // 资产
                     m('div.navbar-item.has-dropdown.is-hoverable' + (utils.getItem('loginState') ? '' : '.is-hidden'), {}, [
-                        m('a.navbar-item.ma-0.has-text-primary-hover', {}, [
+                        m('div.navbar-item.ma-0.has-text-primary-hover.cursor-pointer', {}, [
                             "资产"
                         ]),
                         m('div.theme--light', { }, [
@@ -221,7 +221,7 @@ module.exports = {
                     ]),
                     // 我的
                     m('div.navbar-item.has-dropdown.is-hoverable' + (utils.getItem('loginState') ? '' : '.is-hidden'), {}, [
-                        m('a.navbar-item.ma-0.has-text-primary-hover', {}, [
+                        m('div.navbar-item.ma-0.has-text-primary-hover.cursor-pointer', {}, [
                             m('i.iconfont.icon-Personal')
                         ]),
                         m('div.theme--light', { }, [
@@ -271,7 +271,7 @@ module.exports = {
                     ]),
                     // 下载
                     m('div.navbar-item.has-dropdown.is-hoverable', {}, [
-                        m('a.navbar-item.ma-0.has-text-primary-hover', {}, [
+                        m('div.navbar-item.ma-0.has-text-primary-hover.cursor-pointer', {}, [
                             m('i.iconfont.icon-xiazai')
                         ]),
                         m('div.theme--light', { }, [
@@ -294,7 +294,7 @@ module.exports = {
                     ]),
                     // 线路切换
                     m('div.navbar-item.has-dropdown.is-hoverable', {}, [
-                        m('a.navbar-item.ma-0.has-text-primary-hover', {}, [
+                        m('div.navbar-item.ma-0.has-text-primary-hover.cursor-pointer', {}, [
                             m('i.iconfont.icon-signal')
                         ]),
                         m('div.theme--light', { }, [
@@ -334,7 +334,7 @@ module.exports = {
                     ]),
                     // 语言
                     m('div.navbar-item.has-dropdown.is-hoverable', {}, [
-                        m('a.navbar-item.ma-0.has-text-primary-hover', {}, [
+                        m('div.navbar-item.ma-0.has-text-primary-hover.cursor-pointer', {}, [
                             I18n.langList[I18n.getLocale()].language
                         ]),
                         m('div.theme--light', { }, [

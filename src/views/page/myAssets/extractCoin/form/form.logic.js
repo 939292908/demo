@@ -8,6 +8,7 @@ const errCode = require('@/util/errCode').default;
 const utils = require('@/util/utils').default;
 const validate = require('@/models/validate/validate').default;
 const l180n = require('@/languages/I18n').default;
+const globalModels = require('@/models/globalModels');
 
 const extract = {
     locale: '',
@@ -87,21 +88,22 @@ const extract = {
         });
     },
     getSelectListData: function () {
-        /* eslint-disable */
-        let selectList = [...wlt.wallet['03']], index = 0;
-        for (let i = 0; i < selectList.length; i ++) {
+        const selectList = [...wlt.wallet['03']];
+        let index = 0;
+        for (let i = 0; i < selectList.length; i++) {
             selectList[i].label = selectList[i].wType + ' | ' + wlt.wltFullName[selectList[i].wType].name;
             selectList[i].id = selectList[i].wType;
             if (this.initWType === selectList[i].wType) {
                 index = i;
-                this.selectActiveId.wType = selectList[i].wType
+                this.selectActiveId.wType = selectList[i].wType;
             }
         }
+        this.selectActiveId.wType = selectList.id;
         this.selectList = selectList;
         this.currentSelect = this.selectList[index];
+        this.checkIdcardVerify();
         this.getlinkButtonListData();
         m.redraw();
-        /* eslint-enable */
     },
     getlinkButtonListData: function () {
         this.currenLinkBut = '';
@@ -137,7 +139,7 @@ const extract = {
     getExtractableCoinToBTCNum: function () {
         const price = wlt.getPrz(this.currenLinkBut || this.currentSelect.wType);
         const btcPrice = wlt.getPrz('BTC');
-        const usableCoin = this.currentSelect.mainBal - this.currentFees.withdrawFee > 0 ? this.currentSelect.mainBal - this.currentFees.withdrawFee : 0;
+        const usableCoin = this.currentSelect.wdrawable - this.currentFees.withdrawFee > 0 ? this.currentSelect.wdrawable - this.currentFees.withdrawFee : 0;
         const BTCNum = Number(usableCoin * price / btcPrice).toFixed(8);
         if (BTCNum > 2) return this.getExtractableNum(BTCNum);
         this.currentExtractableNum = Number(usableCoin).toFixed(8);
@@ -213,7 +215,7 @@ const extract = {
         if ((extract.UserInfo?.setting2fa.google && extract.UserInfo?.setting2fa.phone) || extract.UserInfo?.setting2fa.phone) {
             validate[funName]({
                 securePhone: utils.hideMobileInfo(extract.UserInfo.phone),
-                phoneNum: extract.UserInfo.phone
+                phoneNum: extract.UserInfo.nationNo + '-' + extract.UserInfo.phone
             }, res => {
                 extract.sendExtractCoin();
                 extract.handleChangeShow(); // 关闭 a
@@ -230,7 +232,7 @@ const extract = {
     handleChangeShow: function (isHandleVerify) {
         extract.isChangeClose = false;
         extract.popUpData = {
-            show: false,
+            show: !extract.popUpData.show,
             isHandleVerify,
             title: { text: isHandleVerify ? l180n.$t('10113')/* 安全验证 */ : l180n.$t('10082') /* '温馨提示' */ }
         };
@@ -305,6 +307,21 @@ const extract = {
             cmd: broadcast.GET_USER_INFO_READY,
             isall: true
         });
+        // 生命周期结束清空列表选中字段并关闭列表
+        this.showCurrencyMenu = false;
+        this.selectActiveId.wType = '';
+    },
+    // 检查当前币种提现是否需要身份认证
+    checkIdcardVerify: function() {
+        console.log('checkIdcardVerify', this.currentSelect);
+        if (this.currentSelect.Setting.idcardVerifyWithdraw === true) {
+            const account = globalModels.getAccount();
+            if (account.iStatus === 0 || account.iStatus === 2) {
+                this.handleTotalShow({ content: '为了您的账户安全，请按照提示实名认证！', isLinshiErWeiMa: true });
+            } else if (account.iStatus === 1) {
+                this.handleTotalShow({ content: '为了您的账户安全，实名认证通过后才可提现！', isLinshiErWeiMa: false });
+            }
+        }
     }
 };
 

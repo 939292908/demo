@@ -1,10 +1,8 @@
 .views-pages-myassets-myWalletIndex{
     margin: auto;
     .head{
-        border-top: none;
-        border-left: none;
-        border-right: none;
-        // border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+        border-bottom-width: 1px;
+        border-bottom-style: solid;
     }
     .myWalletIndex-head{
         .myWalletIndex-head-left{
@@ -17,7 +15,6 @@
                         background:none;
                         outline: none;
                         border: none;
-                        // color: #FF8B00;
                         height: 30px;
                         border-color: transparent;
                         box-shadow:none;
