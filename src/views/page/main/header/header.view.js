@@ -315,11 +315,12 @@ module.exports = {
                                 m('hr.navbar-divider'),
                                 apiLines.netLines.map((item, i) => {
                                     return m('a', {
-                                        class: `navbar-item columns has-text-primary-hover min-width-200 ma-0 px-6 py-4 body-5 ${item.Id === apiLines.activeLine.Id ? 'is-active' : ''}`,
+                                        class: `navbar-item columns has-text-primary-hover min-width-200 ma-0 px-6 py-4 body-5`,
                                         onclick: function() {
                                             apiLines.setLinesActive(item.Id);
                                         }
                                     }, [
+                                        m('i.iconfont.icon-dot' + (item.Id !== apiLines.activeLine.Id ? '.opacity-0' : '.has-text-primary')),
                                         m('span.column.pr-8', {}, [
                                             item.Name
                                         ]),
@@ -341,13 +342,14 @@ module.exports = {
                                 Object.keys(I18n.langList).map((item, i) => {
                                     if (I18n.langList[item].open) {
                                         return m('a', {
-                                            class: `navbar-item has-text-primary-hover min-width-200 ma-0 px-6 py-4 body-5 ${item === I18n.getLocale() ? 'is-active' : ''}`,
+                                            class: `navbar-item has-text-primary-hover min-width-200 ma-0 px-6 py-4 body-5`,
                                             onclick: function() {
                                                 I18n.setLocale(item, res => {
                                                     // window._console.log('header setLocale', res);
                                                 });
                                             }
                                         }, [
+                                            m('i.iconfont.icon-dot' + (item !== I18n.getLocale() ? '.opacity-0' : '.has-text-primary')),
                                             I18n.langList[item].language
                                         ]);
                                     }
