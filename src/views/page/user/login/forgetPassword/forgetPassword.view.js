@@ -56,13 +56,13 @@ module.exports = {
                         },
                         class: ForgetPassword.loading ? 'is-loading' : '',
                         disabled: regExp.validPassword(ForgetPassword.password1) || regExp.validTwoPassword(ForgetPassword.password1, ForgetPassword.password2)
-                    }, ['确定'])
+                    }, [I18n.$t('10337')/* '确定' */])
                 ] : ForgetPassword.is2fa ? m(Validate, {})
                     : [
                         m('div.mb-2.title-large.has-text-title', {},
                             [I18n.$t('10204')/* '忘记密码' */]),
                         m('p.body-3.has-text-primary.mb-7', {},
-                            ['出于安全考虑，修改账户安全项之后，24h内禁止提币、内部转出与卖币操作']),
+                            [I18n.$t('10205')/* '出于安全考虑，修改账户安全项之后，24h内禁止提币、内部转出与卖币操作' */]),
                         m('div.body-3.mb-6', {}, [
                             m('a.mr-7.has-text-level-1', {
                                 class: ForgetPassword.loginType === 'phone' ? 'has-text-primary' : '',
