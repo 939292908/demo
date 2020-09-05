@@ -62,30 +62,32 @@ module.exports = {
                         m('tr', {}, [
                             t.columnData[t.coinType].map((item, index) => {
                                 return m('td.has-text-level-4', { class: `` }, item.col);
-                            })
+                            }),
+                            m('td.has-text-level-4', { class: `` }, '操作')
                         ])
                     ]),
                     m('tbody', {}, [
-                        // JSON.stringify(t.tableNewAry),
+                        // JSON.stringify(t.coinType),
                         // 循环表身
                         t.tableNewAry.map((row) => {
                             return m('tr', {}, [
                                 t.columnData[t.coinType].map((item, i) => {
-                                    if (i === t.columnData[t.coinType].length - 1) {
-                                        // 操作列
-                                        return m('td.py-4 has-text-level-1', {}, [
-                                            item.val.map(aHref => {
-                                                return m('a.mr-4 has-text-primary', { onclick: () => { t.jump(row, aHref); }, key: aHref.operation }, aHref.operation);
-                                            })
-                                        ]);
-                                    } else if (i === t.columnData[t.coinType].length - 2) { // 估值列
+                                    if (i === t.columnData[t.coinType].length - 2) { // 估值列
                                         return m('td.py-4 has-text-level-1', {}, t.oldHideMoneyFlag ? '******' : row[item.val] + ` ` + t.currency);
                                     } else if (i === 0) { // 第一列币种不需要隐藏
                                         return m('td.py-4 has-text-level-1', {}, row[item.val]);
                                     } else {
                                         return m('td.py-4 has-text-level-1', {}, t.oldHideMoneyFlag ? '******' : row[item.val]);
                                     }
-                                })
+                                }),
+                                t.coinType === 'wallet' ? m('td.py-4 has-text-level-1', {}, [
+                                    t.rechargeFlag === 1 && row.Setting.canRecharge ? m('a.mr-4 has-text-primary', {}, '充币') : [],
+                                    t.withdrawFlag === 1 && row.Setting.canWithdraw ? m('a.mr-4 has-text-primary', {}, '提币') : [],
+                                    t.transferFlag === 1 && row.Setting.canTransfer ? m('a.mr-4 has-text-primary', {}, '划转') : []
+                                ]) : m('td.py-4 has-text-level-1', {}, [
+                                    t.transferFlag === 1 && row.Setting.canTransfer ? m('a.mr-4 has-text-primary', {}, '划转') : [],
+                                    m('a.mr-4 has-text-primary', {}, '去交易')
+                                ])
                             ]);
                         }),
                         m('tr', { style: { display: t.isShowNoneData ? '' : 'none' } }, [
