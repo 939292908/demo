@@ -162,5 +162,9 @@ module.exports = {
                 l180n.$t('10407').split('*').map(item => m('div.rulesText body-4', '*' + item))
             ])
         ]);
+    },
+    onremove: function() {
+        FromDataMode.onremove();
+        this.handleCloseDialog();
     }
 };

@@ -344,7 +344,7 @@
 }
 
 // 修改placeholder字体颜色 start
-.theme--dark{ 
+.theme--dark{
     input::-webkit-input-placeholder{
         /* WebKit browsers */
         color: var(--c-font-darken3);
@@ -678,7 +678,7 @@
     background-color: var(--c-mode-lighten);
 }
 // 修改placeholder字体颜色 start
-.theme--light{ 
+.theme--light{
     input::-webkit-input-placeholder{
         /* WebKit browsers */
         color: var(--c-font-lighten3);
@@ -746,17 +746,33 @@ $primary-lighten: var(--c-primary-lighten);
 .is-active.textarea,
 .select select.is-active {
     border-color: var(--c-primary-lighten) !important;
-    box-shadow: none;
+    box-shadow: none !important;
+}
+
+.input, .textarea, .select select{
+    border-color: var(--c-line-lighten2) !important;
+    box-shadow: none !important;
+}
+
+.input:hover,
+.select select:hover {
+    border-color: var(--c-primary-lighten) !important;
+    box-shadow: none !important;
 }
 
 .has-bg-primary.button:focus:not(:active),
 .has-bg-primary.button.is-focused:not(:active) {
-    box-shadow: none;
+    box-shadow: none !important;
 }
 
 .tabs li.is-active a {
     border-bottom-color: $primary-lighten;
     color: $primary-lighten;
+    font-weight: var(--c-fontweight-level3);
+}
+
+.tabs ul {
+    border-bottom-color: var(--c-line-lighten) !important;
 }
 
 .button:focus,
