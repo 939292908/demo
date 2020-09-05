@@ -81,6 +81,8 @@ module.exports = {
                                                 FromDataMode.selectActiveId.wType = item.id; // 修改选中id
                                                 FromDataMode.currentSelect = item;
                                                 FromDataMode.showCurrencyMenu = false; // 关闭菜单
+                                                // 检查是否需要身份认证
+                                                FromDataMode.checkIdcardVerify();
                                                 FromDataMode.getlinkButtonListData();
                                             }
                                         }, [
@@ -112,13 +114,16 @@ module.exports = {
                             label: m('i.iconfont icon-Tooltip'),
                             content: m('div.min-width-250', {}, [
                                 m('p', {}, [
-                                    'USDT-ERC20是Tether泰达公司基于ETH网络发行的USDT，充币地址是ETH地址，充提币走ETH网络，USDT-ERC20使用的是ERC20协议。'
+                                    // 'USDT-ERC20是Tether泰达公司基于ETH网络发行的USDT，充币地址是ETH地址，充提币走ETH网络，USDT-ERC20使用的是ERC20协议。'
+                                    l180n.$t('10400')
                                 ]),
                                 m('p', {}, [
-                                    'USDT-TRC20(USDT-TRON)是Tether泰达公司基于TRON网络发行的USDT，充币地址是TRON地址，充提币走TRON网络，USDT-TRC20(USDT-TRON)使用的是TRC20协议。USDT-Omni是Tether泰达公司基于BTC网络发行的USDT，充币地址是BTC地址，充提币走BTC网络，USDT-Omni使用的协议是建立在BTC区块链网络上的omni layer 协议。'
+                                    // 'USDT-TRC20(USDT-TRON)是Tether泰达公司基于TRON网络发行的USDT，充币地址是TRON地址，充提币走TRON网络，USDT-TRC20(USDT-TRON)使用的是TRC20协议。USDT-Omni是Tether泰达公司基于BTC网络发行的USDT，充币地址是BTC地址，充提币走BTC网络，USDT-Omni使用的协议是建立在BTC区块链网络上的omni layer 协议。'
+                                    l180n.$t('10507')
                                 ]),
                                 m('p', {}, [
-                                    'USDT-Omni是Tether泰达公司基于BTC网络发行的USDT，充币地址是BTC地址，充提币走BTC网络，USDT-Omni使用的协议是建立在BTC区块链网络上的omni layer 协议。'
+                                    // 'USDT-Omni是Tether泰达公司基于BTC网络发行的USDT，充币地址是BTC地址，充提币走BTC网络，USDT-Omni使用的协议是建立在BTC区块链网络上的omni layer 协议。'
+                                    l180n.$t('10508')
                                 ])
                             ])
                             // `USDT-ERC20是Tether泰达公司基于ETH网络发行的USDT，充币地址是ETH地址，充提币走ETH网络，USDT-ERC20使用的是ERC20协议。'USDT-TRC20(USDT-TRON)是Tether泰达公司基于TRON网络发行的USDT，充币地址是TRON地址，充提币走TRON网络，USDT-TRC20(USDT-TRON)使用的是TRC20协议。'USDT-Omni是Tether泰达公司基于BTC网络发行的USDT，充币地址是BTC地址，充提币走BTC网络，USDT-Omni使用的协议是建立在BTC区块链网络上的omni layer 协议。`
