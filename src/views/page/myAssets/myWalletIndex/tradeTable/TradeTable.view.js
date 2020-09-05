@@ -27,7 +27,7 @@ module.exports = {
                 ])
             ]),
             m('div', { class: `nav pr-5` }, [
-                m('div.search mr-7 has-line-level-3', {}, [
+                m('div.search mr-7 has-line-level-3 py-1 px-3', {}, [
                     m('input', {
                         class: `coinSearch`,
                         placeholder: `币种搜索`,

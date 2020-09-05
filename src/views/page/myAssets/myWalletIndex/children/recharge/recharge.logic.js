@@ -45,7 +45,6 @@ module.exports = {
                     item.rechargeAddr = arg.rechargeAddr; // 充币地址
                     item.networkNum = arg.trade.networkNum; // 网络数
                     that.pageData.push(item);
-                    that.coinParam ? that.form.selectCheck = that.coinParam : that.form.selectCheck = that.pageData[0].wType;
                     that.setTipsAndAddrAndCode();
                     m.redraw();
                 }).catch(function(err) {
@@ -80,6 +79,7 @@ module.exports = {
         for (const i of wlt.wallet['03']) {
             if (i.Setting.canRecharge) {
                 this.selectList.push({ label: i.wType + ' | ' + wlt.coinInfo[i.wType].name, id: i.wType });
+                this.coinParam ? this.form.selectCheck = this.coinParam : this.form.selectCheck = this.selectList[0].id;
             }
         }
     },
@@ -187,7 +187,7 @@ module.exports = {
     initFn: function () {
         // 获取当前网址，如：http://localhost:8080/#!/recharge?wType=USDT
         const currencyType = window.document.location.href.toString().split('=')[1];
-        if (currencyType) {
+        if (currencyType !== undefined) {
             this.coinParam = currencyType;
             this.setPageData();
         }
