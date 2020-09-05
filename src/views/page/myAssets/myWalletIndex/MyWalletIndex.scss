@@ -1,15 +1,14 @@
 .views-pages-myassets-myWalletIndex{
     margin: auto;
-    .columns-flex{
-        display: flex;
-        flex-wrap: wrap;
-    }
     .head{
-        border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+        // border-bottom: 1px solid rgba(255, 255, 255, 0.04);
     }
     .myWalletIndex-head{
         .myWalletIndex-head-left{
+            width: 32%;
             .myWalletIndex-head-left-total{
+                display: flex;
+                flex-direction: row;
                 .myCoinSelect{
                     button{
                         background:none;
@@ -21,8 +20,22 @@
                         box-shadow:none;
                     }
                 }
+                clear: both;
             }
         }
+        .myWalletIndex-head-center{
+            width: 25%;
+        }
+        .myWalletIndex-head-right{
+            width: 43%;
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-end;
+        }
+    }
+    .columns-flex{
+        display: flex;
+        flex-wrap: wrap;
     }
     .myWalletIndex-switch{
         .wallet{
