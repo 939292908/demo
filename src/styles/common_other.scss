@@ -236,7 +236,17 @@
     right: 20px;
 }
 
-/* Start 日期选择控件 */
+/* Start Tabs控件 */
+.tabs li:not(.is-active) a {
+    border: none;
+}
+
+.tabs li:not(.is-active) a:hover {
+    border: none;
+}
+/* End Tabs控件 */
+
+/*  */
 $lightpick-action-apply-background-color: $primary-lighten !default;
 $lightpick-selected-date-background-color: $primary-lighten !default;
 $lightpick-today-color: $primary-lighten !default;
