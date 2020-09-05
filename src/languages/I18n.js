@@ -140,7 +140,7 @@ export default {
             di18n.setLocale(lang, res => {
                 locale = lang;
                 localStorage.setItem('language', lang);
-                broadcast.emit({cmd:'setLanguage',data:lang});
+                broadcast.emit({cmd:broadcast.MSG_LANGUAGE_UPD,data:lang});
                 m.redraw();
             });
         });

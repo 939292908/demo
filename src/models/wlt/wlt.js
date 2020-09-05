@@ -83,6 +83,13 @@ module.exports = {
                 that.initWlt();
             }
         });
+        broadcast.onMsg({
+            key: this.name,
+            cmd: broadcast.MSG_LANGUAGE_UPD,
+            cb: function () {
+                that.getCoinquanname();
+            }
+        });
 
         // if (Object.keys(that.wltFullName).length < 1) {
         //     that.getCoinquanname();
