@@ -224,6 +224,10 @@
 .break-word {
     word-wrap: break-word!important;
 }
+// 
+.modal-card-title {
+    flex-shrink: initial;
+}
 // 全局修改下拉框图标样式
 .select:not(.is-multiple):not(.is-loading)::after {
     font-family: "iconfont", serif;
