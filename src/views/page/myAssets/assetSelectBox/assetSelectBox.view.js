@@ -77,6 +77,7 @@ module.exports = {
                             vnode.attrs.onSelectCoin(item.key);
                         },
                         onActive: () => {
+                            AssetSelectBox.typeIsActive = false;
                             AssetSelectBox.iconIsActive = !AssetSelectBox.iconIsActive;
                         }
                     })
@@ -92,6 +93,7 @@ module.exports = {
                             vnode.attrs.onSelectType(item.key);
                         },
                         onActive: () => {
+                            AssetSelectBox.iconIsActive = false;
                             AssetSelectBox.typeIsActive = !AssetSelectBox.typeIsActive;
                         }
                     })

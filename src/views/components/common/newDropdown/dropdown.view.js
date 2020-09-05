@@ -52,7 +52,7 @@ module.exports = {
                 }, [
                     m('span.w100', {}, [activeValue]),
                     m('span.icon.is-small', { 'aria-hidden': true }, [
-                        m('i.iconfont.icon-xiala')
+                        m('i.iconfont.icon-xiala.iconfont-small')
                     ])
                 ])
             ]),
