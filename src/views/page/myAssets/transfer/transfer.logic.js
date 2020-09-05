@@ -106,6 +106,7 @@ const model = {
     },
     // 初始化 币种下拉列表
     initCoinList () {
+        this.canTransferCoin = [];
         // this.canTransferCoin：逻辑：每一项至少出现在2个钱包 且 列表去重
         this.allWalletList.forEach((data, index) => {
             // 遍历每个钱包的币种
