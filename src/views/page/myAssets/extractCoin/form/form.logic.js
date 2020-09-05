@@ -57,20 +57,28 @@ const extract = {
         address: '',
         linkName: ''
     }, // 提币数据
+    isReqFees: false,
     getCoinInfo: function () {
-        const params = { locale: extract.locale, vp: Conf.exchId };
-        webApi.getCoinInfo(params).then(res => {
-            if (res.result.code === 0) {
-                extract.coinInfo = res.result.data;
-                return extract.getCurrentCoinFees();
-                // return extract.getSelectListData();
-            }
-            window.$message({ content: errCode.getWebApiErrorCode(res.result.code), type: 'danger' });
-        });
+        extract.coinInfo = wlt.coinInfo;
+        extract.getCurrentCoinFees();
+        // const params = { locale: extract.locale, vp: Conf.exchId };
+        // webApi.getCoinInfo(params).then(res => {
+        //     if (res.result.code === 0) {
+        //         extract.coinInfo = res.result.data;
+        //         return extract.getCurrentCoinFees();
+        //         // return extract.getSelectListData();
+        //     }
+        //     window.$message({ content: errCode.getWebApiErrorCode(res.result.code), type: 'danger' });
+        // });
     },
     getCurrentCoinFees: function () {
         const self = this;
+        if (self.isReqFees) {
+            return;
+        }
+        self.isReqFees = true;
         webApi.getCoinFees().then(res => {
+            self.isReqFees = false;
             if (res.result.code === 0) {
                 self.feesList = res.feeList;
                 return extract.getSelectListData();
@@ -269,13 +277,12 @@ const extract = {
         } else {
             self.handleUserCanAction();
         }
-        if (!wlt.wallet['01'].toString()) {
-            broadcast.onMsg({
-                key: this.name,
-                cmd: broadcast.MSG_WLT_READY,
-                cb: self.getCoinInfo
-            });
-        } else {
+        broadcast.onMsg({
+            key: this.name,
+            cmd: broadcast.MSG_WLT_READY,
+            cb: self.getCoinInfo
+        });
+        if (wlt.wallet['01'].toString()) {
             self.getCoinInfo();
         }
     },
