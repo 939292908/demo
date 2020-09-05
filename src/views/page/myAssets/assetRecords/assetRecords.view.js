@@ -14,7 +14,7 @@ module.exports = {
         AssetRecords.destroy();
     },
     view() {
-        return m('div', {}, [
+        return m('div.theme--light', {}, [
             m('div.px-3.has-bg-sub-level-1.is-align-items-center', {}, [
                 m('div.content-width', {}, [
                     m(header, {

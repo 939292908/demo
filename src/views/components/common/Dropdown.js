@@ -83,7 +83,7 @@ module.exports = {
     view (vnode) {
         return m('div.Dropdown', { class: `${vnode.attrs.class || ''} my-dropdown dropdown ${vnode.attrs.type === 'hover' ? " is-hoverable" : vnode.attrs.showMenu ? " is-active" : ''}` }, [
             // btn
-            m('div', { class: "dropdown-trigger has-text-1" }, [
+            m('div', { class: "dropdown-trigger has-text-level-1" }, [
                 m('button', {
                     class: `button ${vnode.attrs.btnClass || ''}`,
                     style: (vnode.attrs.btnWidth ? `width:${vnode.attrs.btnWidth}px;` : '') +
@@ -94,7 +94,7 @@ module.exports = {
                         // window.stopBubble(e)
                     }
                 }, [
-                    m('p', { class: `my-trigger-text` }, vnode.state.curItem.label), // btnText
+                    m('p.has-text-level-4', { class: `my-trigger-text` }, vnode.state.curItem.label), // btnText
                     m('i', { class: "my-trigger-icon iconfont icon-xiala has-text-primary" }) // icon
                 ])
             ]),
