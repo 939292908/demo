@@ -3,6 +3,7 @@ require('./transfer.scss');
 const I18n = require('@/languages/I18n').default;
 // const Modal = require('@/views/components/common/Modal');
 const Dropdown = require('@/views/components/common/Dropdown');
+// const newDropdown = require('@/views/components/common/DropdownNew/Dropdown.view');
 const Modal = require('@/views/components/common/Modal');
 
 const model = require('./transfer.logic.js');
@@ -15,6 +16,8 @@ module.exports = {
     view (vnode) {
         // 资金划转 内容
         const body = m('div', { class: `my-form my-transfer` }, [
+            // m('div', { class: `` }, "newDropdown"),
+            // m(newDropdown),
             // 币种 (下拉)
             m('div', { class: `form-item` }, [
                 m('div', { class: `form-item-title` }, [
@@ -163,7 +166,7 @@ module.exports = {
                         m("button", {
                             class: "button is-primary font-size-2 has-text-white modal-default-btn button-large",
                             onclick () {
-                                model.showlegalTenderModal = false;
+                                model.handlerLegalTenderModalClick();
                             }
                         }, [
                             I18n.$t('10134') // "我知道了"
