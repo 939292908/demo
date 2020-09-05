@@ -47,7 +47,7 @@ module.exports = {
                                 m('li', {}, [
                                     m('a.pa-0.mx-4', {
                                         onclick: e => {
-                                            window.$message({ title: '提示', content: '暂未开放', type: 'primary' });
+                                            window.$message({ title: I18n.$t('10410')/* '提示' */, content: I18n.$t('10513')/* '暂未开放' */, type: 'primary' });
                                         }
                                     }, [I18n.$t('10061')/* '其他账户' */])
                                 ])
@@ -83,7 +83,7 @@ module.exports = {
                                 ])
                             ])
                         ]),
-                        m('div.table-bg.px-5', {}, [
+                        m('div.table-bg.px-5.pb-5', {}, [
                             m(assetSelectBox, {
                                 class: 'mt-7',
                                 coinList: AssetRecords.coinList[AssetRecords.aType],

@@ -93,11 +93,23 @@ module.exports = {
                 this.fillDataAll();
             }
         });
+        broadcast.onMsg({
+            key: 'assetRecords',
+            cmd: broadcast.MSG_ASSET_RECORD_UPD,
+            cb: () => {
+                this.getATypeRecords();
+            }
+        });
     },
     destroy() {
         broadcast.offMsg({
             key: 'assetRecords',
             cmd: broadcast.MSG_LANGUAGE_UPD,
+            isall: true
+        });
+        broadcast.offMsg({
+            key: 'assetRecords',
+            cmd: broadcast.MSG_ASSET_RECORD_UPD,
             isall: true
         });
         this.recordObj = {
@@ -257,7 +269,7 @@ module.exports = {
                     // icon: `${this.$params.baseURL + this.removeGIFT(item.icon)}`,//item.icon,
                     timestamp: item.timestamp,
                     status: utils.getTransferInfo(item.stat),
-                    // stat: item.stat,
+                    stat: item.stat,
                     seq: item.seq,
                     des: I18n.$t('10056'), /* '充币' */
                     info: [
@@ -294,7 +306,7 @@ module.exports = {
                     // icon: `${this.$params.baseURL + this.removeGIFT(item.icon)}`,//item.icon,
                     timestamp: item.timestamp,
                     status: utils.getWithdrawArr(item.stat),
-                    // stat: item.stat,
+                    stat: item.stat,
                     seq: item.seq,
                     des: I18n.$t('10057'), /* '提币' */
                     info: [
@@ -459,7 +471,7 @@ module.exports = {
                         // icon: `${this.$params.baseURL + this.removeGIFT(item.icon)}`, // item.icon,
                         timestamp: item.timestamp,
                         status: utils.getTransferInfo(item.stat),
-                        // stat: item.stat,
+                        stat: item.stat,
                         seq: item.seq,
                         des: des,
                         info: info
@@ -501,7 +513,7 @@ module.exports = {
                         // icon: `${this.$params.baseURL + this.removeGIFT(item.icon)}`,//item.icon,
                         timestamp: item.timestamp,
                         status: utils.getTransferInfo(item.stat),
-                        // stat: item.stat,
+                        stat: item.stat,
                         seq: item.seq,
                         // des: item.addr === 'to' ? '买入' : '卖出'
                         des: item.addr === 'to' ? I18n.$t('10367') : I18n.$t('10368')
@@ -648,7 +660,7 @@ module.exports = {
                     // icon: `${this.$params.baseURL + this.removeGIFT(item.icon)}`, // item.icon,
                     timestamp: item.timestamp,
                     status: utils.getTransferInfo(item.stat),
-                    // stat: item.stat,
+                    stat: item.stat,
                     seq: item.seq,
                     des: des,
                     fee: item.fee

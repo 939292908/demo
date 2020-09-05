@@ -9,8 +9,8 @@ module.exports = {
             // return '该字段不能为空'; /* '该字段不能为空' */
             return I18n.$t('10416');
         } else if (loginType === 'phone' && !this.phone.test(account)) {
-            return '手机号码不正确'; /* '手机号码不正确' */
-            // return I18n.$t('');
+            // return '手机号码不正确'; /* '手机号码不正确' */
+            return I18n.$t('10533');
         } else if (loginType === 'email' && !this.email.test(account)) {
             // return '邮箱格式不正确'; /* '邮箱格式不正确' */
             return I18n.$t('10441');
@@ -23,8 +23,8 @@ module.exports = {
             // return '该字段不能为空'; /* '该字段不能为空' */
             return I18n.$t('10416');
         } else if (!this.password.test(password)) {
-            return '至少6个字符，必须是字母和数字';
-            // return I18n.$t('');
+            // return '至少6个字符，必须是字母和数字';
+            return I18n.$t('10532');
         } else {
             return '';
         }

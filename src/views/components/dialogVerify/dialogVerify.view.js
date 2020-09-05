@@ -3,6 +3,8 @@ require('./index.scss');
 const InputWithComponent = require('../inputWithComponent/inputWithComponent.view.js');
 const Validate = require('./dialogVerify.logic');
 const I18n = require('@/languages/I18n').default;
+const utils = require('@/util/utils').default;
+const validateModel = require('@/models/validate/validate').default;
 const QRCode = require('qrcode');
 const config = require('@/config.js');
 const { ActiveLine } = require('../../../api/config/index.js');
@@ -78,7 +80,14 @@ module.exports = {
     },
     verifyContentTitle: function () { // 验证 title
         return m('.dis-flex verifyContentTitle', [
-            m('.has-text-level-2.body-3.mb-2', Validate.selectName),
+            m('.has-text-level-2.body-5.mb-2', [
+                Validate.selectName,
+                m('span.ml-2.body-2.has-text-level-4', {}, [
+                    Validate.selectType === 'sms' ? `(${utils.hideAccountNameInfo(validateModel.smsConfig.phoneNum)})`
+                        : Validate.selectType === 'email' ? `(${utils.hideAccountNameInfo(validateModel.emailConfig.secureEmail)})`
+                            : ''
+                ])
+            ]),
             Validate.anotherType.length ? m('div.has-text-right.mt-2', {}, [
                 m('a.has-text-primary', {
                     onclick: () => { Validate.changeValidate(); }

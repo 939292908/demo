@@ -4,7 +4,7 @@ const config = require('../config');
 
 const { ActiveLine, APITEXTLIST } = config;
 
-const { globalModels } = require('@/models/globalModels');
+const globalModels = require('@/models/globalModels');
 
 const utils = require('@/util/utils').default;
 const qs = require('qs');
