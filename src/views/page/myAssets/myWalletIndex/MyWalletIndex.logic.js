@@ -233,6 +233,15 @@ const model = {
         });
         self.sets();
 
+        broadcast.onMsg({
+            key: 'view-pages-Myassets-TablegB',
+            cmd: broadcast.MSG_LANGUAGE_UPD,
+            cb: (arg) => {
+                console.log('切换中英文');
+                self.setFirstNav();
+            }
+        });
+
         self.form.wType = self.currency;
     },
     createFn: function() {

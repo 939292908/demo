@@ -81,12 +81,12 @@ module.exports = {
                                     }
                                 }),
                                 t.coinType === 'wallet' ? m('td.py-4 has-text-level-1', {}, [
-                                    t.rechargeFlag === 1 && row.Setting.canRecharge ? m('a.mr-4 has-text-primary', {}, '充币') : [],
-                                    t.withdrawFlag === 1 && row.Setting.canWithdraw ? m('a.mr-4 has-text-primary', {}, '提币') : [],
-                                    t.transferFlag === 1 && row.Setting.canTransfer ? m('a.mr-4 has-text-primary', {}, '划转') : []
+                                    t.rechargeFlag === 1 && row.Setting.canRecharge ? m('a.mr-4 has-text-primary', {}, I18n.$t('10056') /* '充币' */) : [],
+                                    t.withdrawFlag === 1 && row.Setting.canWithdraw ? m('a.mr-4 has-text-primary', {}, I18n.$t('10057') /* '提币' */) : [],
+                                    t.transferFlag === 1 && row.Setting.canTransfer ? m('a.mr-4 has-text-primary', {}, I18n.$t('10071') /* '划转' */) : []
                                 ]) : m('td.py-4 has-text-level-1', {}, [
-                                    t.transferFlag === 1 && row.Setting.canTransfer ? m('a.mr-4 has-text-primary', {}, '划转') : [],
-                                    m('a.mr-4 has-text-primary', {}, '去交易')
+                                    t.transferFlag === 1 && row.Setting.canTransfer ? m('a.mr-4 has-text-primary', {}, I18n.$t('10071') /* '划转' */) : [],
+                                    m('a.mr-4 has-text-primary', {}, I18n.$t('10079') /* '去交易' */)
                                 ])
                             ]);
                         }),
