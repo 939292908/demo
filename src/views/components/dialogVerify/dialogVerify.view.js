@@ -5,7 +5,7 @@ const Validate = require('./dialogVerify.logic');
 const I18n = require('@/languages/I18n').default;
 const QRCode = require('qrcode');
 const config = require('@/config.js');
-
+const { ActiveLine } = require('../../../api/config/index.js');
 /**
  * @param: props: {
  *   close: [function|必传] 关闭组件函数
@@ -55,7 +55,7 @@ module.exports = {
         ]);
     },
     handleBase64Url: function () { // 临时 二维码
-        QRCode.toDataURL('https://vbit.me/m#/downloadApp', (err, url) => {
+        QRCode.toDataURL(ActiveLine.WEBSITE + '/m/#/downloadApp', (err, url) => {
             if (!err) linShiToApp.base64Url = url;
         });
     },
