@@ -8,6 +8,7 @@ const errCode = require('@/util/errCode').default;
 const utils = require('@/util/utils').default;
 const validate = require('@/models/validate/validate').default;
 const l180n = require('@/languages/I18n').default;
+const globalModels = require('@/models/globalModels');
 
 const extract = {
     locale: '',
@@ -138,7 +139,7 @@ const extract = {
     getExtractableCoinToBTCNum: function () {
         const price = wlt.getPrz(this.currenLinkBut || this.currentSelect.wType);
         const btcPrice = wlt.getPrz('BTC');
-        const usableCoin = this.currentSelect.mainBal - this.currentFees.withdrawFee > 0 ? this.currentSelect.mainBal - this.currentFees.withdrawFee : 0;
+        const usableCoin = this.currentSelect.wdrawable - this.currentFees.withdrawFee > 0 ? this.currentSelect.wdrawable - this.currentFees.withdrawFee : 0;
         const BTCNum = Number(usableCoin * price / btcPrice).toFixed(8);
         if (BTCNum > 2) return this.getExtractableNum(BTCNum);
         this.currentExtractableNum = Number(usableCoin).toFixed(8);
@@ -314,7 +315,12 @@ const extract = {
     checkIdcardVerify: function() {
         console.log('checkIdcardVerify', this.currentSelect);
         if (this.currentSelect.Setting.idcardVerifyWithdraw === true) {
-            this.handleTotalShow({ content: '为了您的账户安全，请按照提示实名认证！', isLinshiErWeiMa: true });
+            const account = globalModels.getAccount();
+            if (account.iStatus === 0 || account.iStatus === 2) {
+                this.handleTotalShow({ content: '为了您的账户安全，请按照提示实名认证！', isLinshiErWeiMa: true });
+            } else if (account.iStatus === 1) {
+                this.handleTotalShow({ content: '为了您的账户安全，实名认证通过后才可提现！', isLinshiErWeiMa: false });
+            }
         }
     }
 };
