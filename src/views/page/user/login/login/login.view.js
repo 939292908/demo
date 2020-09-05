@@ -72,7 +72,8 @@ module.exports = {
                             class: Login.loading ? 'is-loading' : ''
                         }, [I18n.$t('10006')/* '登录' */]),
                         m('div.has-text-centered.body-3.has-text-level-2', {}, [
-                            '还没账号？去',
+                            // '还没账号？去',
+                            I18n.$t('10203'),
                             m('a.has-text-primary', {
                                 onclick: () => {
                                     window.router.push('/register');
