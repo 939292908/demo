@@ -1,6 +1,7 @@
 var m = require("mithril");
 
 import('@/styles/pages/message.css');
+const l180n = require('@/languages/I18n').default;
 
 // const Table = require('@/pages/components/common/Table.js');
 // const market = require('@/models/market/market');
@@ -12,7 +13,7 @@ const msg = {
     initMsg: function() {
         // 全局message事件
         const that = this;
-        window.$message = function({ title = '提示', content = '', type = 'dark' }) {
+        window.$message = function({ title = l180n.$t('10410'), content = '', type = 'dark' }) {
             if (that.DBG_MESSAGE) { window.console.log('MSG', __filename, "MESSAGE", { title, content }); }
             that.addMessageDom({ title, content, type });
         };

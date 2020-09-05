@@ -315,16 +315,17 @@ module.exports = {
                                 m('hr.navbar-divider'),
                                 apiLines.netLines.map((item, i) => {
                                     return m('a', {
-                                        class: `navbar-item columns has-text-primary-hover min-width-200 ma-0 px-6 py-4 body-5 ${item.Id === apiLines.activeLine.Id ? 'is-active' : ''}`,
+                                        class: `navbar-item columns has-text-primary-hover min-width-200 ma-0 px-6 py-4 body-5`,
                                         onclick: function() {
                                             apiLines.setLinesActive(item.Id);
                                         }
                                     }, [
+                                        m('i.iconfont.icon-dot' + (item.Id !== apiLines.activeLine.Id ? '.opacity-0' : '.has-text-primary')),
                                         m('span.column.pr-8', {}, [
                                             item.Name
                                         ]),
                                         m('span.column.has-text-left', {}, [
-                                            '延迟 ' + apiLines.apiResponseSpeed[i] + 'ms'
+                                            '延迟 ' + apiLines.wsResponseSpeed[i] + '/' + apiLines.apiResponseSpeed[i] + 'ms'
                                         ])
                                     ]);
                                 })
@@ -341,13 +342,14 @@ module.exports = {
                                 Object.keys(I18n.langList).map((item, i) => {
                                     if (I18n.langList[item].open) {
                                         return m('a', {
-                                            class: `navbar-item has-text-primary-hover min-width-200 ma-0 px-6 py-4 body-5 ${item === I18n.getLocale() ? 'is-active' : ''}`,
+                                            class: `navbar-item has-text-primary-hover min-width-200 ma-0 px-6 py-4 body-5`,
                                             onclick: function() {
                                                 I18n.setLocale(item, res => {
                                                     // window._console.log('header setLocale', res);
                                                 });
                                             }
                                         }, [
+                                            m('i.iconfont.icon-dot' + (item !== I18n.getLocale() ? '.opacity-0' : '.has-text-primary')),
                                             I18n.langList[item].language
                                         ]);
                                     }
@@ -368,7 +370,7 @@ module.exports = {
                         m('div', {}, [
                             `Web网络监测(${globalModels.getAccount().uid})`
                         ]),
-                        m('article.body-4.has-text-level-3.message.is-warning.mt-4.mr-4', {}, [
+                        m('article.body-4.has-text-level-3.message.is-warning.mt-4.mr-4.flex-shrink-initial', {}, [
                             m('div.message-body.border-1', {}, [
                                 '此页面仅用于定位您的浏览器和网络信息，不涉及您的隐私信息， 请放心使用。'
                             ])

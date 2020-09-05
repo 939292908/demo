@@ -108,7 +108,21 @@ module.exports = {
                 FromDataMode.linkButtonList.length > 0 ? m('div.formModule', [
                     m('div.topLabel has-text-title body-5', [
                         m('span', l180n.$t('10100') /* '链名称' */),
-                        m(Tooltip, { label: m('i.iconfont icon-Tooltip'), content: `USDT-ERC20是Tether泰达公司基于ETH网络发行的USDT，充币地址是ETH地址，充提币走ETH网络，USDT-ERC20使用的是ERC20协议。'USDT-TRC20(USDT-TRON)是Tether泰达公司基于TRON网络发行的USDT，充币地址是TRON地址，充提币走TRON网络，USDT-TRC20(USDT-TRON)使用的是TRC20协议。'USDT-Omni是Tether泰达公司基于BTC网络发行的USDT，充币地址是BTC地址，充提币走BTC网络，USDT-Omni使用的协议是建立在BTC区块链网络上的omni layer 协议。` })
+                        m(Tooltip, {
+                            label: m('i.iconfont icon-Tooltip'),
+                            content: m('div.min-width-250', {}, [
+                                m('p', {}, [
+                                    'USDT-ERC20是Tether泰达公司基于ETH网络发行的USDT，充币地址是ETH地址，充提币走ETH网络，USDT-ERC20使用的是ERC20协议。'
+                                ]),
+                                m('p', {}, [
+                                    'USDT-TRC20(USDT-TRON)是Tether泰达公司基于TRON网络发行的USDT，充币地址是TRON地址，充提币走TRON网络，USDT-TRC20(USDT-TRON)使用的是TRC20协议。USDT-Omni是Tether泰达公司基于BTC网络发行的USDT，充币地址是BTC地址，充提币走BTC网络，USDT-Omni使用的协议是建立在BTC区块链网络上的omni layer 协议。'
+                                ]),
+                                m('p', {}, [
+                                    'USDT-Omni是Tether泰达公司基于BTC网络发行的USDT，充币地址是BTC地址，充提币走BTC网络，USDT-Omni使用的协议是建立在BTC区块链网络上的omni layer 协议。'
+                                ])
+                            ])
+                            // `USDT-ERC20是Tether泰达公司基于ETH网络发行的USDT，充币地址是ETH地址，充提币走ETH网络，USDT-ERC20使用的是ERC20协议。'USDT-TRC20(USDT-TRON)是Tether泰达公司基于TRON网络发行的USDT，充币地址是TRON地址，充提币走TRON网络，USDT-TRC20(USDT-TRON)使用的是TRC20协议。'USDT-Omni是Tether泰达公司基于BTC网络发行的USDT，充币地址是BTC地址，充提币走BTC网络，USDT-Omni使用的协议是建立在BTC区块链网络上的omni layer 协议。`
+                        })
                     ]),
                     m('div.control dis-flex', [
                         FromDataMode.linkButtonList.map(item => m(`div.butItem`, { class: item.attr === FromDataMode.currenLinkBut ? 'butItemActive' : '', onclick: this.handleLinNameButClick.bind(this, item) }, m('div', item.name)))
@@ -148,5 +162,9 @@ module.exports = {
                 l180n.$t('10407').split('*').map(item => m('div.rulesText body-4', '*' + item))
             ])
         ]);
+    },
+    onremove: function() {
+        FromDataMode.onremove();
+        this.handleCloseDialog();
     }
 };

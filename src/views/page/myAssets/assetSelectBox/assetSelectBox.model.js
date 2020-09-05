@@ -12,7 +12,7 @@ module.exports = {
         this.initPicker(vnode);
         broadcast.onMsg({
             key: 'assetSelectBox',
-            cmd: 'setLanguage',
+            cmd: broadcast.MSG_LANGUAGE_UPD,
             cb: lang => {
                 if (this.picker) {
                     this.picker.destroy();
@@ -98,7 +98,7 @@ module.exports = {
         this.date = '';
         broadcast.offMsg({
             key: 'assetSelectBox',
-            cmd: 'setLanguage',
+            cmd: broadcast.MSG_LANGUAGE_UPD,
             isall: true
         });
         broadcast.offMsg({

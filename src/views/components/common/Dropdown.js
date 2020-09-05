@@ -3,7 +3,7 @@
 // evenKey body事件key (必填)
 
 // onClick(item) {} 点击事件 可获取item (选填)
-// activeId 默认选中id (选填)
+// activeId 默认选中id(fn) (必填)
 // type 触发类型：active / hover (选填)默认active
 
 // placeholder 提示文字 (选填)

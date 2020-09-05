@@ -106,6 +106,7 @@ const model = {
     },
     // 初始化 币种下拉列表
     initCoinList () {
+        this.canTransferCoin = [];
         // this.canTransferCoin：逻辑：每一项至少出现在2个钱包 且 列表去重
         this.allWalletList.forEach((data, index) => {
             // 遍历每个钱包的币种
@@ -215,6 +216,11 @@ const model = {
         this.setTransferModalOption({ isShow: false }); // 弹框隐藏
         this.reset(); // 重置
     },
+    // handler 法币弹框确认click
+    handlerLegalTenderModalClick() {
+        this.showlegalTenderModal = false; // 弹框隐藏
+        this.reset(); // 重置
+    },
     // 钱包value切换
     switchTransfer () {
         [this.form.transferFrom, this.form.transferTo] = [this.form.transferTo, this.form.transferFrom];
@@ -310,21 +316,17 @@ const model = {
             num: this.form.num
         };
         Http.postTransfer(params).then(res => {
-            model.setTransferModalOption({
-                isShow: false // 弹框隐藏
-            });
-            this.reset(); // 重置
             if (res.result.code === 0) {
+                model.setTransferModalOption({ isShow: false }); // 划转弹框隐藏
+                this.reset(); // 重置
                 wlt.init(); // 更新数据
                 window.$message({ title: I18n.$t('10410' /** 提示 */), content: I18n.$t('10414' /** 资金划转成功！ */), type: 'success' });
                 model.initFromAndToValueByAuthWalletList(); // 2. 钱包value  初始化
             } else {
                 // 往法币划转
                 if (Number(res.result.code) === 9040) {
-                    // 划转弹框隐藏
-                    model.setTransferModalOption({ isShow: false });
-                    // 法币弹框显示
-                    model.showlegalTenderModal = true;
+                    model.setTransferModalOption({ isShow: false }); // 划转弹框隐藏
+                    model.showlegalTenderModal = true; // 法币弹框显示
                 }
                 window.$message({ title: I18n.$t('10410' /** 提示 */), content: res.result.msg, type: 'danger' });
             }

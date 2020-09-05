@@ -84,6 +84,9 @@ class Router {
 
         this.route(document.querySelector('body .route-box'), this.defaultRoutePath, this.routerList);
         // 获取地址栏参数，并验证路由
+        const info = this.getUrlInfo();
+        this.path = info.path;
+        this.params = info.params;
         this.checkRoute(this.getUrlInfo());
     }
 
@@ -158,6 +161,7 @@ class Router {
      * @param {Object} param 路由对象
      */
     checkRoute(param) {
+        // console.log('ht', 'checkRoute ', param, this.routerList[param.path], !utils.getItem('loginState'));
         if (this.routerList[param.path] && this.routerList[param.path].requireAuth && !utils.getItem('loginState')) {
             this.route.set('/login');
             return true;

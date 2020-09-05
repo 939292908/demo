@@ -49,7 +49,8 @@ const model = {
             },
             getList () {
                 return that.selectOp;
-            }
+            },
+            btnClass: `has-text-primary`
         };
     },
     // 设置币种

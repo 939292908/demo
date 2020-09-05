@@ -2,7 +2,8 @@
     display: flex;
     height: 52px;
     .header-highlight{
-        // 后随规范更改！！！
-        border-bottom: 2px solid var(--c-primary-lighten);
+        border-top: none;
+        border-left: none;
+        border-right: none;
     }
 }

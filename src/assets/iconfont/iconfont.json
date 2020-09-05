@@ -6,6 +6,20 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "16990869",
+      "name": "Ellipse 157",
+      "font_class": "dot",
+      "unicode": "e728",
+      "unicode_decimal": 59176
+    },
+    {
+      "icon_id": "16988408",
+      "name": "？",
+      "font_class": "icon-test",
+      "unicode": "e670",
+      "unicode_decimal": 58992
+    },
+    {
       "icon_id": "16982503",
       "name": "Unselected",
       "font_class": "Unselected",

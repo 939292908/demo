@@ -45,7 +45,8 @@ module.exports = {
                                 m(Tooltip, {
                                     label: m('i', { class: `iconfont icon-Tooltip` }),
                                     content: rechargeIndex.labelTips,
-                                    position: 'top'
+                                    position: 'bottom',
+                                    direction: 'right'
                                 })
                             ])
                         ]),
@@ -60,8 +61,9 @@ module.exports = {
                                     content: rechargeIndex.nameTips.map(item => {
                                         return m('span', { key: item, class: `mt-1` }, item);
                                     }),
-                                    width: `200px`,
-                                    position: 'bottom'
+                                    width: `240px`,
+                                    position: 'bottom',
+                                    direction: 'right'
                                 })
                             ])
                         ]),

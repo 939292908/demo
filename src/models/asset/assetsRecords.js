@@ -88,7 +88,7 @@ module.exports = {
     setLanguageListen() {
         broadcast.onMsg({
             key: 'assetRecords',
-            cmd: 'setLanguage',
+            cmd: broadcast.MSG_LANGUAGE_UPD,
             cb: lang => {
                 this.fillDataAll();
             }
@@ -97,7 +97,7 @@ module.exports = {
     destroy() {
         broadcast.offMsg({
             key: 'assetRecords',
-            cmd: 'setLanguage',
+            cmd: broadcast.MSG_LANGUAGE_UPD,
             isall: true
         });
         this.recordObj = {
