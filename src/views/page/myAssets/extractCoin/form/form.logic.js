@@ -57,20 +57,28 @@ const extract = {
         address: '',
         linkName: ''
     }, // 提币数据
+    isReqFees: false,
     getCoinInfo: function () {
-        const params = { locale: extract.locale, vp: Conf.exchId };
-        webApi.getCoinInfo(params).then(res => {
-            if (res.result.code === 0) {
-                extract.coinInfo = res.result.data;
-                return extract.getCurrentCoinFees();
-                // return extract.getSelectListData();
-            }
-            window.$message({ content: errCode.getWebApiErrorCode(res.result.code), type: 'danger' });
-        });
+        extract.coinInfo = wlt.coinInfo;
+        extract.getCurrentCoinFees();
+        // const params = { locale: extract.locale, vp: Conf.exchId };
+        // webApi.getCoinInfo(params).then(res => {
+        //     if (res.result.code === 0) {
+        //         extract.coinInfo = res.result.data;
+        //         return extract.getCurrentCoinFees();
+        //         // return extract.getSelectListData();
+        //     }
+        //     window.$message({ content: errCode.getWebApiErrorCode(res.result.code), type: 'danger' });
+        // });
     },
     getCurrentCoinFees: function () {
         const self = this;
+        if (self.isReqFees) {
+            return;
+        }
+        self.isReqFees = true;
         webApi.getCoinFees().then(res => {
+            self.isReqFees = false;
             if (res.result.code === 0) {
                 self.feesList = res.feeList;
                 return extract.getSelectListData();
@@ -96,11 +104,11 @@ const extract = {
         /* eslint-enable */
     },
     getlinkButtonListData: function () {
-        this.getCurrentFeesChange();
         this.currenLinkBut = '';
         this.extractCoin.address = '';
         this.extractCoin.coinNum = '';
         this.extractCoin.linkName = '';
+        this.getCurrentFeesChange();
         if (this.currentSelect.wType !== 'USDT') {
             this.linkButtonList = [];
             return;
@@ -163,7 +171,7 @@ const extract = {
             if (res.result.code === 0) return extract.readrSendEmail(params, user, res.seq);
             window.$message({ content: errCode.getWebApiErrorCode(res.result.code), type: 'danger' });
         }).catch(e => {
-            window.$message({ content: l180n.$t('10419')/* '参数有误' */, type: 'danger' });
+            window.$message({ content: l180n.$t('10338')/* '系统繁忙' */, type: 'danger' });
         });
     },
     handleSubmit: function () {
@@ -197,7 +205,7 @@ const extract = {
         webApi.sendEmailV2(emailParms).then(res => {
             if (res.result.code === 0) return extract.handleChangeShow(false); // 打开 b
             window.$message({ content: errCode.getWebApiErrorCode(res.result.code), type: 'danger' });
-        }).catch(e => { window.$message({ content: l180n.$t('10419')/* '参数有误' */, type: 'danger' }); });
+        }).catch(e => { window.$message({ content: l180n.$t('10338')/* '系统繁忙' */, type: 'danger' }); });
     },
     readyStartSafetyVerify: function (start) {
         if (start !== 'success') return;
@@ -244,38 +252,39 @@ const extract = {
         m.redraw();
     },
     handleUserCanAction: function () {
-        if (this.UserInfo.setting2fa.email || (!this.UserInfo.setting2fa.google && !this.UserInfo.setting2fa.phone)) return this.handleTotalShow({ content: l180n.$t('10404') + l180n.$t('10403') + '。' /* '提币需邮件确认，请先绑定邮箱 为了您的账户安全，还需绑定手机或谷歌' */, isLinshiErWeiMa: true });
+        if (!this.UserInfo.setting2fa.email || (!this.UserInfo.setting2fa.google && !this.UserInfo.setting2fa.phone)) return this.handleTotalShow({ content: l180n.$t('10404') + l180n.$t('10403') + '。' /* '提币需邮件确认，请先绑定邮箱 为了您的账户安全，还需绑定手机或谷歌' */, isLinshiErWeiMa: true });
         // 二期使用
-        if (!this.UserInfo.setting2fa.email) return this.handleTotalShow({ content: l180n.$t('10404') /* '提币需邮件确认，请先绑定邮箱' */, buttonText: l180n.$t('10229') /* '邮箱验证' */, buttonClick: () => { m.route.set("/my"); } });
-        const doubleButtonCof = [
-            { text: l180n.$t('10227') /* '谷歌验证' */, issolid: false, click: () => { m.route.set("/my"); } },
-            { text: l180n.$t('10228') /* '手机验证' */, issolid: true, click: () => { m.route.set("/my"); } }
-        ];
-        if (!this.UserInfo.setting2fa.google && !this.UserInfo.setting2fa.phone) return this.handleTotalShow({ content: l180n.$t('10405')/* '为了您的账户安全，请先绑定手机或谷歌' */, doubleButton: true, doubleButtonCof });
+        // if (!this.UserInfo.setting2fa.email) return this.handleTotalShow({ content: l180n.$t('10404') /* '提币需邮件确认，请先绑定邮箱' */, buttonText: l180n.$t('10229') /* '邮箱验证' */, buttonClick: () => { m.route.set("/my"); } });
+        // const doubleButtonCof = [
+        //     { text: l180n.$t('10227') /* '谷歌验证' */, issolid: false, click: () => { m.route.set("/my"); } },
+        //     { text: l180n.$t('10228') /* '手机验证' */, issolid: true, click: () => { m.route.set("/my"); } }
+        // ];
+        // if (!this.UserInfo.setting2fa.google && !this.UserInfo.setting2fa.phone) return this.handleTotalShow({ content: l180n.$t('10405')/* '为了您的账户安全，请先绑定手机或谷歌' */, doubleButton: true, doubleButtonCof });
     },
     oninit: function (initWType) {
         const self = this;
         wlt.init();
         this.initGeetest();
+        this.initWType = initWType;
+        this.locale = l180n.getLocale();
+        self.UserInfo = UserInfo.getAccount();
+        console.log(self.UserInfo);
         if (!Object.keys(self.UserInfo).length) {
             broadcast.onMsg({
                 key: this.name,
                 cmd: broadcast.GET_USER_INFO_READY,
-                cb: (data) => { self.UserInfo = data; self.handleUserCanAction(); }
+                cb: (data) => { self.UserInfo = data; self.handleUserCanAction(); console.log(self.UserInfo, 2); }
             });
         } else {
             self.handleUserCanAction();
+            console.log(self.UserInfo, 3);
         }
-        this.initWType = initWType;
-        this.locale = l180n.getLocale();
-        self.UserInfo = UserInfo.getAccount();
-        if (!wlt.wallet['01'].toString()) {
-            broadcast.onMsg({
-                key: this.name,
-                cmd: broadcast.MSG_WLT_READY,
-                cb: self.getCoinInfo
-            });
-        } else {
+        broadcast.onMsg({
+            key: this.name,
+            cmd: broadcast.MSG_WLT_READY,
+            cb: self.getCoinInfo
+        });
+        if (wlt.wallet['01'].toString()) {
             self.getCoinInfo();
         }
     },

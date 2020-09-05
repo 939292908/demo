@@ -93,7 +93,7 @@ module.exports = {
                 maxlength: '6',
                 value: Validate.code
             }),
-            m('.right-click-but', { onclick: () => { Validate.smsCd <= 0 && Validate.sendSmsCode(); } }, m('div', Validate.smsCd > 0 ? `${Validate.smsCd}` : I18n.$t('10117')/* '获取验证码' */))
+            m('.right-click-but', { onclick: () => { Validate.smsCd <= 0 && Validate.sendSmsCode(); } }, m('div', Validate.smsCd > 0 ? `${Validate.smsCd} s` : I18n.$t('10117')/* '获取验证码' */))
         ]);
     },
     doubleButtonVnode: function () {

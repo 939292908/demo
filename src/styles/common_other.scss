@@ -224,6 +224,10 @@
 .break-word {
     word-wrap: break-word!important;
 }
+// 
+.modal-card-title {
+    flex-shrink: initial;
+}
 // 全局修改下拉框图标样式
 .select:not(.is-multiple):not(.is-loading)::after {
     font-family: "iconfont", serif;
@@ -236,21 +240,47 @@
     right: 20px;
 }
 
-/* Start 日期选择控件颜色 */
+/* Start 日期选择控件 */
 $lightpick-action-apply-background-color: $primary-lighten !default;
 $lightpick-selected-date-background-color: $primary-lighten !default;
-$lightpick-day-hover-background-image-color: rgba($primary-lighten,0.99) !default;
-$lightpick-day-hover-background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle fill='#{$lightpick-day-hover-background-image-color}' cx='16' cy='16' r='16'/%3E%3C/svg%3E") !default;
+$lightpick-today-color: $primary-lighten !default;
 
 @import "@/../node_modules/lightpick/scss/lightpick.scss";
 
 .lightpick {
     &__day {
+        &.is-today {
+            background-size: 10% auto;
+            &:hover {
+                color: #000;
+            }
+        }
         &.is-in-range {
             &:hover {
-                background-image: $lightpick-day-hover-background-image ;
+                background-image: none ;
+                background-color: $lightpick-selected-date-background-color;
             }
+        }
+        &:not(.is-disabled):hover {
+            border-radius: 50%;
+            background-image: none;
+            background-color: $lightpick-selected-date-background-color;
+        }
+        &.is-in-range:not(.is-end-date):not(.is-start-date):hover {
+            border-radius: initial;
+        }
+        &.is-end-date.is-in-range,
+        &.is-start-date.is-in-range.is-flipped {
+            border-radius: 0 50% 50% 0;
+            background-color: $lightpick-selected-date-background-color;
+            background-image: none;
+        }
+        &.is-start-date.is-in-range,
+        &.is-end-date.is-in-range.is-flipped {
+            border-radius: 50% 0 0 50%;
+            background-color: $lightpick-selected-date-background-color;
+            background-image: none;
         }
     }
 }
-/* End 日期选择控件颜色 */
+/* End 日期选择控件 */
