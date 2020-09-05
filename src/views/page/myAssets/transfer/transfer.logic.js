@@ -219,6 +219,7 @@ const model = {
     // handler 法币弹框确认click
     handlerLegalTenderModalClick() {
         this.showlegalTenderModal = false; // 弹框隐藏
+        wlt.init(); // 更新数据
         this.reset(); // 重置
     },
     // 钱包value切换
