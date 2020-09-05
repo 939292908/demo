@@ -27,10 +27,12 @@ module.exports = {
                             m('div.title-large.views-page-login-title.opacity',
                                 {}, [config.exchName]),
                             m('div.title-large.has-text-title', {},
-                                ['注册验证']),
+                                // ['注册验证']
+                                I18n.$t('10199')
+                            ),
                             m('div.py-0.mb-7.body-3.has-text-level-3', {}, [I18n.$t('10200')/* '您正在注册账户，请完成以下验证' */]),
                             m('div.py-0.mb-2.has-text-level-1.body-3', {},
-                                [Register.type === 'phone' ? '手机验证码' : I18n.$t('10116')/* '邮箱验证码' */]),
+                                [Register.type === 'phone' ? I18n.$t('10388')/* '手机验证码' */ : I18n.$t('10116')/* '邮箱验证码' */]),
                             m('div.control.has-icons-right.mb-6', {}, [
                                 m(InputWithComponent, {
                                     options: {
@@ -150,7 +152,7 @@ module.exports = {
                                 hidden: !Register.showPasswordValidate
                             }, [regExp.validPassword(Register.password)]),
                             m('div.py-0.mb-2.has-text-level-1.body-3.mt-5', {},
-                                [Register.mustInvited() ? '邀请码(必填)' : I18n.$t('10196')/* '邀请码(选填)' */]),
+                                [Register.mustInvited() ? I18n.$t('10394')/* '邀请码(必填)' */ : I18n.$t('10196')/* '邀请码(选填)' */]),
                             m('input.input.mb-6', {
                                 oninput: e => {
                                     Register.refereeId = e.target.value;
@@ -178,20 +180,24 @@ module.exports = {
                                         Register.exchInfo.helpCenter.termsServiceId &&
                                         Register.exchInfo.helpCenter.privacyPolicyId)
                                 }, [
-                                    `接受${config.exchName}的`,
+                                    // `接受${config.exchName}的`,
+                                    I18n.$t(I18n.$t('10390'), { value: config.exchName }),
                                     m('a.has-text-primary', {
                                         onclick: () => {
                                             Register.toHelpService(
                                                 'termsServiceId');
                                         }
-                                    }, ['《服务条款》']),
-                                    '及',
+                                    // }, ['《服务条款》']),
+                                    }, [I18n.$t('10391')]),
+                                    // '及',
+                                    I18n.$t('10392'),
                                     m('a.has-text-primary', {
                                         onclick: () => {
                                             Register.toHelpService(
                                                 'privacyPolicyId');
                                         }
-                                    }, ['《隐私保护政策》'])
+                                    // }, ['《隐私保护政策》'])
+                                    }, [I18n.$t('10393')])
                                 ])
                             ]),
                             m('button.button.my-3.has-bg-primary.button-medium.is-fullwidth.has-text-white.mb-2',
@@ -204,7 +210,8 @@ module.exports = {
                                 }, [I18n.$t('10007')/* '注册' */]),
                             m('div.has-text-centered.body-3.has-text-level-2',
                                 {}, [
-                                    '已有账号？去',
+                                    // '已有账号？去',
+                                    I18n.$t('10389'),
                                     m('a.has-text-primary', {
                                         onclick: () => {
                                             window.router.push('/login');
