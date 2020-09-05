@@ -4,6 +4,7 @@ const InputWithComponent = require('../inputWithComponent/inputWithComponent.vie
 const Validate = require('./dialogVerify.logic');
 const I18n = require('@/languages/I18n').default;
 const QRCode = require('qrcode');
+const config = require('@/config.js');
 
 /**
  * @param: props: {
@@ -47,7 +48,7 @@ module.exports = {
     headerVnode: function () {
         return m('div.headerPrompt dis-flex', [
             m('div.title-medium', [
-                m('div.logotext', this.props.title.logo || 'Vbit'),
+                m('div.logotext', this.props.title.logo || config.exchName),
                 m('div.promptTitle', this.props.title.text)
             ]),
             m('div.icomBox', { onclick: this.handlecloseDialog.bind(this) }, m('i.iconfont icon-TurnOff'))

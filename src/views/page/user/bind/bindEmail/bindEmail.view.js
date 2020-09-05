@@ -1,6 +1,7 @@
 const m = require('mithril');
 const model = require('./bindEmail.logic.js');
 const VerifyView = require('@/views/components/dialogVerify/dialogVerify.view');
+const config = require('@/config.js');
 require('@/views/page/user/bind/bind.scss');
 require('./bindEmail.scss');
 // const Modal = require('@/views/components/common/Modal');
@@ -75,7 +76,7 @@ module.exports = {
                 close: () => model.switchSafetyVerifyModal(false),
                 isHandleVerify: true,
                 title: {
-                    logo: "Vbit",
+                    logo: config.exchName,
                     text: "安全验证"
                 }
             }) : null
