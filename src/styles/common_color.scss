@@ -746,12 +746,12 @@ $primary-lighten: var(--c-primary-lighten);
 .is-active.textarea,
 .select select.is-active {
     border-color: var(--c-primary-lighten) !important;
-    box-shadow: 0 0 0 0.125em rgba($primary-lighten, 0.25) !important;
+    box-shadow: none;
 }
 
 .has-bg-primary.button:focus:not(:active),
 .has-bg-primary.button.is-focused:not(:active) {
-    box-shadow: 0 0 0 0.125em rgba($primary-lighten, 0.25) !important;
+    box-shadow: none;
 }
 
 .tabs li.is-active a {
@@ -766,7 +766,7 @@ $primary-lighten: var(--c-primary-lighten);
 
 .button:focus:not(:active),
 .button.is-focused:not(:active) {
-    box-shadow: 0 0 0 0.125em rgba($primary-lighten, 0.25);
+    box-shadow: none;
 }
 
 /* 主题样式 end */
