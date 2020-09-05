@@ -24,9 +24,14 @@ module.exports = {
         if (vnode.attrs.loading) {
             table.push(m('div.is-align-items-center.py-8', {}, [m(Loading)]));
         } else if (!vnode.attrs.list.length) {
-            table.push(m('div.is-align-items-center', {}, [
-                m('img', { class: `my-8`, src: require(`@/assets/img/myAssets/noneData.svg`).default, style: { height: `120px`, width: `88px` } }),
-                m('div', { class: `has-text-level-4` }, '暂无数据')
+            table.push(m('div.is-align-items-center.mt-8', {}, [
+                m('img', {
+                    src: require(`@/assets/img/myAssets/noneData.svg`).default,
+                    style: { height: `120px`, width: `88px` }
+                })
+            ]));
+            table.push(m('div.is-align-items-center.mb-8', {}, [
+                m('div.has-text-level-4', {}, '暂无数据')
             ]));
         } else {
             for (const item of vnode.attrs.list) {
