@@ -240,19 +240,22 @@
 $lightpick-action-apply-background-color: $primary-lighten !default;
 $lightpick-selected-date-background-color: $primary-lighten !default;
 $lightpick-today-color: $primary-lighten !default;
+$lightpick-selected-range-background-color: $primary-lighten !default;
 
 @import "@/../node_modules/lightpick/scss/lightpick.scss";
 
 .lightpick {
     &__day {
         &.is-today {
-            background-size: 10% auto;
+            background-size: 0 auto;
             &:hover {
                 color: #000;
             }
         }
         &.is-in-range {
+            color: #000;
             &:hover {
+                color: #FFF;
                 background-image: none ;
                 background-color: $lightpick-selected-date-background-color;
             }
