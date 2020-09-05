@@ -4,6 +4,7 @@ const broadcast = require('@/broadcast/broadcast');
 const table = require('@/views/page/myAssets/myWalletIndex/tradeTable/TradeTable.view');
 const transferLogic = require('@/views/page/myAssets/transfer/transfer.logic.js'); // 划转模块逻辑
 const I18n = require('@/languages/I18n').default;
+const gM = require('@/models/globalModels');
 
 const model = {
     currency: 'BTC',
@@ -17,6 +18,9 @@ const model = {
     legalTotal: 0, // 法币
     contractTotal: 0, // 合约
     swValue: '03', // 03:我的钱包 01:交易账户(01币币，02法币，04合约) 2:其他账户
+    rechargeFlag: null, // 充币总开关
+    transferFlag: null, // 划转总开关
+    withdrawFlag: null, // 提币总开关
     // 切换我的钱包。交易账户
     setSwValue(value) {
         model.swValue = value;
@@ -98,7 +102,6 @@ const model = {
             return window.$message({ title: I18n.$t('10410') /* '提示' */, content: '暂未开放', type: 'primary' });
         }
         // console.log(val);
-        // window.router.push('/myWalletIndex?id=' + val);
         this.swValue = val;
         transferLogic.setTransferModalOption({
             transferFrom: val // from钱包默认选中
@@ -116,18 +119,23 @@ const model = {
         return m(table, { swValue: this.swValue, setIdx: this.setSwValue, hideMoneyFlag: this.hideMoneyFlag });
     },
     Nav: {
-        firstNav: [
+        firstNav: []
+    },
+    setFirstNav() {
+        this.Nav.firstNav = [
             {
                 id: 1,
                 title: I18n.$t('10056') /* '充币' */,
                 // 跳转至哪个链接 例如：to: 'http://www.baidu.com || /chargeMoney'
-                to: '/recharge'
+                to: '/recharge',
+                flag: this.rechargeFlag
             },
             {
                 id: 2,
                 title: I18n.$t('10057') /* '提币' */,
                 // 跳转至哪个链接
-                to: '/extractCoin'
+                to: '/extractCoin',
+                flag: this.withdrawFlag
             },
             // {
             //     id: 3,
@@ -139,9 +147,10 @@ const model = {
                 id: 4,
                 title: I18n.$t('10059') /* '资金划转' */,
                 // 跳转至哪个链接
-                to: ''
+                to: '',
+                flag: this.transferFlag
             }
-        ]
+        ];
     },
     // 按钮事件
     handlerClickNavBtn (item) {
@@ -227,6 +236,10 @@ const model = {
         self.form.wType = self.currency;
     },
     createFn: function() {
+        this.transferFlag = gM.getFunctions().transfer;
+        this.rechargeFlag = gM.getFunctions().recharge;
+        this.withdrawFlag = gM.getFunctions().withdraw;
+        this.setFirstNav();
         this.sets();
     },
     removeFn: function() {

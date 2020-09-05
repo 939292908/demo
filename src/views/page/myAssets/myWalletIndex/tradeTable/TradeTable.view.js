@@ -18,7 +18,7 @@ module.exports = {
                         return m('li', { class: t.pageFlag === item.idx ? 'is-active' : '' }, [
                             m('a', {
                                 onclick: e => {
-                                    window.router.push('/myWalletIndex?id=' + item.idx);
+                                    window.router.push({ path: '/myWalletIndex', data: { id: item.idx } }, true);
                                 }
                             }, item.val)
                         ]);

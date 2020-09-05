@@ -50,6 +50,7 @@ module.exports = {
                                 myWalletIndex.Nav.firstNav.map((item, index) => {
                                     return m(`button.button is-primary Operation${index} px-7 ml-6 py-3`, {
                                         class: item.title === I18n.$t('10056') /* `充币` */ ? `` : `is-outlined`,
+                                        style: { display: item.flag === 1 ? `` : `none` },
                                         key: item.title,
                                         onclick: () => { myWalletIndex.handlerClickNavBtn(item); },
                                         onmouseover: () => { myWalletIndex.changeBtnSty(index, `show`); },
@@ -63,7 +64,7 @@ module.exports = {
                         m('div', { class: `myWalletIndex-switch columns-flex mt-7 is-between` }, [
                             m('div.wallet border-radius-medium px-7 py-7 column cursor-pointer', {
                                 class: (myWalletIndex.swValue === '03' ? `has-bg-primary` : ` has-bg-level-2`),
-                                onclick: () => { window.router.push('/myWalletIndex?id=03'); }
+                                onclick: () => { window.router.push({ path: '/myWalletIndex', data: { id: "03" } }, true); }
                             }, [
                                 m('div', { class: `body-5 mb-1` }, [
                                     m('span', { }, I18n.$t('10055') /* `我的钱包` */)
@@ -75,7 +76,7 @@ module.exports = {
                             ]),
                             m('div.trade border-radius-medium px-7 py-7 mx-5 column cursor-pointer', {
                                 class: (myWalletIndex.swValue !== '03' ? `has-bg-primary` : `has-bg-level-2`),
-                                onclick: () => { window.router.push('/myWalletIndex?id=01'); }
+                                onclick: () => { window.router.push({ path: '/myWalletIndex', data: { id: "01" } }, true); }
                             }, [
                                 m('div.left', {}, [
                                     m('div', { class: `body-5 mb-1` }, [
