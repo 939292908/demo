@@ -324,7 +324,7 @@ module.exports = {
                                             item.Name
                                         ]),
                                         m('span.column.has-text-left', {}, [
-                                            '延迟 ' + apiLines.apiResponseSpeed[i] + 'ms'
+                                            '延迟 ' + apiLines.wsResponseSpeed[i] + '/' + apiLines.apiResponseSpeed[i] + 'ms'
                                         ])
                                     ]);
                                 })
@@ -368,7 +368,7 @@ module.exports = {
                         m('div', {}, [
                             `Web网络监测(${globalModels.getAccount().uid})`
                         ]),
-                        m('article.body-4.has-text-level-3.message.is-warning.mt-4.mr-4', {}, [
+                        m('article.body-4.has-text-level-3.message.is-warning.mt-4.mr-4.flex-shrink-initial', {}, [
                             m('div.message-body.border-1', {}, [
                                 '此页面仅用于定位您的浏览器和网络信息，不涉及您的隐私信息， 请放心使用。'
                             ])
