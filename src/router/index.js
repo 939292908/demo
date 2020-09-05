@@ -80,7 +80,7 @@ class Router {
         this.path = this.defaultRoutePath;
         this.params = {};
         this.route = m.route;
-        this.historyRouteList = new Array([]);
+        this.historyRouteList = [];
 
         this.route(document.querySelector('body .route-box'), this.defaultRoutePath, this.routerList);
         // 获取地址栏参数，并验证路由
@@ -113,7 +113,7 @@ class Router {
                 this.historyRouteList.unshift({ path: this.path, data: this.params });
             }
             this.path = param;
-            this.route.set(param);
+            this.route.set(param, {}, { replace });
         } else {
             if (this.checkRoute(param)) {
                 return;
@@ -133,9 +133,10 @@ class Router {
     back() {
         let routeData = this.historyRouteList.splice(0, 1);
         routeData = routeData[0] || { path: this.defaultRoutePath };
-        this.path = null;
-        this.params = {};
-        this.push(routeData, false);
+        this.path = routeData.path;
+        this.params = routeData.data || {};
+        // this.push(routeData, false);
+        history.back();
     }
 
     /**
@@ -151,9 +152,10 @@ class Router {
         if (!route) {
             return;
         }
-        this.path = null;
-        this.params = {};
-        this.push(route, false);
+        this.path = route.path;
+        this.params = route.data || {};
+        // this.push(route, false);
+        history.go(param);
     }
 
     /**
