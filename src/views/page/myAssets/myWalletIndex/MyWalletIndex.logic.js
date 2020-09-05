@@ -34,6 +34,7 @@ const model = {
     getCurrencyMenuOption: function () {
         const that = this;
         return {
+            menuWidth: 102,
             evenKey: `myWalletIndex${Math.floor(Math.random() * 10000)}`,
             showMenu: that.showCurrencyMenu,
             setShowMenu: type => {

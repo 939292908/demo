@@ -1,4 +1,4 @@
-// const m = require('mithril');
+const m = require('mithril');
 const Lightpick = require('lightpick');
 const I18n = require('@/languages/I18n').default;
 const broadcast = require('@/broadcast/broadcast');
@@ -6,6 +6,8 @@ const broadcast = require('@/broadcast/broadcast');
 module.exports = {
     picker: null,
     date: '',
+    iconIsActive: false,
+    typeIsActive: false,
     oncreate(vnode) {
         this.initPicker(vnode);
         broadcast.onMsg({
@@ -31,6 +33,11 @@ module.exports = {
                 this.initPicker(vnode);
             }
         });
+        window.onclick = e => {
+            this.iconIsActive = false;
+            this.typeIsActive = false;
+            m.redraw();
+        };
     },
     initPicker(vnode) {
         const self = this;
@@ -99,5 +106,6 @@ module.exports = {
             cmd: 'assetsRecordOnInit',
             isall: true
         });
+        window.onclick = null;
     }
 };
