@@ -94,7 +94,7 @@ module.exports = {
                 Validate.check();
             },
             class: Validate.loading ? 'is-loading' : ''
-        }, ['确定']));
+        }, [I18n.$t('10337')/* '确定' */]));
 
         return m('div', {}, validInput);
     }

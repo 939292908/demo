@@ -1,0 +1,9 @@
+.common-dropdown{
+    .dropdown-menu {
+        width: inherit;
+    }
+    a.dropdown-item.is-active, button.dropdown-item.is-active {
+        background-color: initial;
+        color: var(--c-primary-lighten);
+    }
+}
