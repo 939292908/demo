@@ -14,21 +14,21 @@ module.exports = {
         return m('div', { class: `views-pages-myassets-myWalletIndex theme--light` }, [
             m('div', {}, [
                 m('div.top mb-8', { style: { height: `344px`, width: `100%`, backgroundColor: `#0E1C33` } }, [
+                    m('div', { class: `head has-line-level-1` }, [
+                        m('div', { class: `container content-width` }, [
+                            // highlightFlag:哪个高亮   0：我的资产  1：资产记录
+                            m(Header, {
+                                highlightFlag: 0,
+                                navList: [{ to: '/myWalletIndex', title: I18n.$t('10052') /* '我的资产' */ }, { to: '/assetRecords', title: I18n.$t('10053') /* '资金记录' */ }]
+                            })
+                        ])
+                    ]),
                     m('div', { class: `myWalletIndex-warpper container content-width` }, [
-                        m('div', { class: `head` }, [
-                            m('div', { class: `container content-width` }, [
-                                // highlightFlag:哪个高亮   0：我的资产  1：资产记录
-                                m(Header, {
-                                    highlightFlag: 0,
-                                    navList: [{ to: '/myWalletIndex', title: I18n.$t('10052') /* '我的资产' */ }, { to: '/assetRecords', title: I18n.$t('10053') /* '资金记录' */ }]
-                                })
-                            ])
-                        ]),
-                        m('div', { class: `myWalletIndex-head columns-flex mt-7` }, [
-                            m('div', { class: `myWalletIndex-head-left column` }, [
-                                m('div', { class: `myWalletIndex-head-left-total columns pt-3` }, [
-                                    m('span', { class: `body-6 pt-2 has-text-white` }, I18n.$t('10054') /* `总资产估值` */),
-                                    m('div', { class: `form-item-content border-radius-medium mt-2` }, [
+                        m('div', { class: `myWalletIndex-head columns-flex` }, [
+                            m('div', { class: `myWalletIndex-head-left mt-8` }, [
+                                m('div', { class: `myWalletIndex-head-left-total` }, [
+                                    m('span', { class: `body-6 has-text-white` }, I18n.$t('10054') /* `总资产估值` */),
+                                    m('div', { class: `form-item-content border-radius-medium` }, [
                                         m(Dropdown, myWalletIndex.getCurrencyMenuOption())
                                     ])
                                 ]),
@@ -42,20 +42,21 @@ module.exports = {
                                     m('span', { class: `has-text-level-4` }, [` CNY`])
                                 ])
                             ]),
-                            m('div', { class: `myWalletIndex-head-right column pa-5` }, [
+                            m('div', { class: `myWalletIndex-head-center mt-8` }, [
+                                // 估值扇形图
+                            ]),
+                            m('div', { class: `myWalletIndex-head-right mt-8 pt-8` }, [
                                 // 充币  提币  内部转账  资金划转
-                                m('div', { class: `is-between  pt-8` }, [
-                                    myWalletIndex.Nav.firstNav.map((item, index) => {
-                                        return m(`button.column mr-3 button-large button is-primary Operation${index}`, {
-                                            class: item.title === I18n.$t('10056') /* `充币` */ ? `` : `is-outlined`,
-                                            key: item.title,
-                                            onclick: () => { myWalletIndex.handlerClickNavBtn(item); },
-                                            onmouseover: () => { myWalletIndex.changeBtnSty(index, `show`); },
-                                            onmouseleave: () => { myWalletIndex.changeBtnSty(index, `hide`); }
-                                        },
-                                        [item.title]);
-                                    })
-                                ])
+                                myWalletIndex.Nav.firstNav.map((item, index) => {
+                                    return m(`button.button is-primary Operation${index} px-7 ml-6 py-3`, {
+                                        class: item.title === I18n.$t('10056') /* `充币` */ ? `` : `is-outlined`,
+                                        key: item.title,
+                                        onclick: () => { myWalletIndex.handlerClickNavBtn(item); },
+                                        onmouseover: () => { myWalletIndex.changeBtnSty(index, `show`); },
+                                        onmouseleave: () => { myWalletIndex.changeBtnSty(index, `hide`); }
+                                    },
+                                    [item.title]);
+                                })
                             ])
                         ]),
                         // 我的钱包  交易账户  其他账户

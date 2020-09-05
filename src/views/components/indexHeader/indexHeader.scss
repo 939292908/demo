@@ -1,4 +1,9 @@
 .views-pages-myassets-header{
     display: flex;
     height: 52px;
+    .header-highlight{
+        border-top: none;
+        border-left: none;
+        border-right: none;
+    }
 }
