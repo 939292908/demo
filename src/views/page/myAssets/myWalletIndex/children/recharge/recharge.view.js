@@ -18,7 +18,7 @@ module.exports = {
     },
     view: () => {
         return m('div', { class: `views-page-myAssets-myWalletIndex-childer-recharge theme--light pb-7` }, [
-            m('div', { style: { backgroundColor: `#0E1C33`, width: `100%` } }, [
+            m('div.has-bg-sub-level-1', { style: { width: `100%` } }, [
                 m('div', { class: `content-width`, style: { margin: `auto` } }, [
                     m(Header, {
                         highlightFlag: 0,
