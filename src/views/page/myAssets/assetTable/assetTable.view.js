@@ -27,7 +27,7 @@ module.exports = {
                 })
             ]));
             table.push(m('div.is-align-items-center.mb-8', {}, [
-                m('div.has-text-level-4', {}, '暂无数据')
+                m('div.has-text-level-4', {}, I18n.$t('10515')/* '暂无数据' */)
             ]));
         } else {
             for (const item of vnode.attrs.list) {
