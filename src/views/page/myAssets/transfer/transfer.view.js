@@ -166,7 +166,7 @@ module.exports = {
                         m("button", {
                             class: "button is-primary font-size-2 has-text-white modal-default-btn button-large",
                             onclick () {
-                                model.showlegalTenderModal = false;
+                                model.handlerLegalTenderModalClick();
                             }
                         }, [
                             I18n.$t('10134') // "我知道了"
