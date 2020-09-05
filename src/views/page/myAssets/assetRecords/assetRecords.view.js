@@ -83,7 +83,7 @@ module.exports = {
                                 ])
                             ])
                         ]),
-                        m('div.table-bg.px-5', {}, [
+                        m('div.table-bg.px-5.pb-5', {}, [
                             m(assetSelectBox, {
                                 class: 'mt-7',
                                 coinList: AssetRecords.coinList[AssetRecords.aType],
