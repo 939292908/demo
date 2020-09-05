@@ -11,7 +11,7 @@ module.exports = {
         t.createFn(vnode);
     },
     view(vnode) {
-        return m('div', { class: `views-pages-Myassets-Table pt-3 px-5 has-bg-level-2` }, [
+        return m('div', { class: `views-pages-Myassets-Table pt-7 px-5 has-bg-level-2` }, [
             m('div.tradingAccount mb-7 tabs mb-0', { style: { display: vnode.attrs.swValue === '01' || vnode.attrs.swValue === '02' || vnode.attrs.swValue === '04' ? '' : 'none' } }, [
                 m('ul.tradingAccount_nav', { }, [
                     t.navAry.map((item) => {
@@ -55,13 +55,13 @@ module.exports = {
                     m('span', {}, t.oldHideMoneyFlag ? '******' : t.accountBanlance + t.currency)
                 ])
             ]),
-            m('div.tab', { class: `pb-7 border-radius-medium` },
+            m('div.tab', { class: `pb-7 mt-7 border-radius-medium` },
                 m('table', {}, [
                     m('thead', {}, [
                         // 循环表头
                         m('tr', {}, [
                             t.columnData[t.coinType].map((item, index) => {
-                                return m('td.pt-7 has-text-level-4', { class: `` }, item.col);
+                                return m('td.has-text-level-4', { class: `` }, item.col);
                             })
                         ])
                     ]),
@@ -73,17 +73,17 @@ module.exports = {
                                 t.columnData[t.coinType].map((item, i) => {
                                     if (i === t.columnData[t.coinType].length - 1) {
                                         // 操作列
-                                        return m('td.pt-7 has-text-level-1', {}, [
+                                        return m('td.py-4 has-text-level-1', {}, [
                                             item.val.map(aHref => {
                                                 return m('a.mr-4 has-text-primary', { onclick: () => { t.jump(row, aHref); }, key: aHref.operation }, aHref.operation);
                                             })
                                         ]);
                                     } else if (i === t.columnData[t.coinType].length - 2) { // 估值列
-                                        return m('td.pt-7 has-text-level-1', {}, t.oldHideMoneyFlag ? '******' : row[item.val] + ` ` + t.currency);
+                                        return m('td.py-4 has-text-level-1', {}, t.oldHideMoneyFlag ? '******' : row[item.val] + ` ` + t.currency);
                                     } else if (i === 0) { // 第一列币种不需要隐藏
-                                        return m('td.pt-7 has-text-level-1', {}, row[item.val]);
+                                        return m('td.py-4 has-text-level-1', {}, row[item.val]);
                                     } else {
-                                        return m('td.pt-7 has-text-level-1', {}, t.oldHideMoneyFlag ? '******' : row[item.val]);
+                                        return m('td.py-4 has-text-level-1', {}, t.oldHideMoneyFlag ? '******' : row[item.val]);
                                     }
                                 })
                             ]);

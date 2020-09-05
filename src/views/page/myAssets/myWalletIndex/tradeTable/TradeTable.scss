@@ -47,12 +47,14 @@
     .tab{
         min-height: 598px;
         table{
-            // border: 1px solid red;
+            thead{
+                td{
+                    height: 20px;
+                }
+            }
             td{
                 width: 190px;
-                // border: 1px solid red;
-                // height: 52px;
-                // line-height: 52px;
+                height: 52px;
             }
             .noneData{
                 div{
