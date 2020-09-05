@@ -1,6 +1,8 @@
 const m = require('mithril');
 const I18n = require('@/languages/I18n').default;
 const Loading = require('@/views/components/loading/loading.view');
+const Modal = require('@/views/components/common/Modal');
+const AssetTable = require('./assetTable.model');
 module.exports = {
     view(vnode) {
         const table = [];
@@ -29,6 +31,28 @@ module.exports = {
             ]));
         } else {
             for (const item of vnode.attrs.list) {
+                const other = [];
+                if (item.stat === 110) {
+                    other.push(m('a.has-text-primary', {
+                        onclick: e => {
+                            AssetTable.cancelTransferModel = item;
+                            AssetTable.isShowCancel = true;
+                        }
+                    }, ['撤销申请']));
+                } else if (item.info ? item.info.length : false) {
+                    other.push(m('a.has-text-primary', {
+                        onclick: e => {
+                            item.showInfo = !item.showInfo;
+                        }
+                    }, [
+                        I18n.$t('10096')/* '详情' */,
+                        m('i.iconfont.iconfont-small', {
+                            class: item.showInfo ? 'icon-xiala' : 'icon-xiala'
+                        }, [])
+                    ]));
+                } else {
+                    other.push('─ ─');
+                }
                 table.push(
                     m('div.columns.body-4.has-text-level-3.my-7', {}, [
                         m('div.column.is-1', {}, [item.coin]),
@@ -37,16 +61,7 @@ module.exports = {
                         // m('div.column.is-2', {}, [(item.fee || 0) + ' ' + item.coin]),
                         m('div.column.is-2', {}, [item.status]),
                         m('div.column.is-2', {}, [item.time]),
-                        m('div.column.is-1.has-text-right', {}, [
-                            (item.info ? item.info.length : false)
-                                ? m('a.has-text-primary', {
-                                    onclick: e => {
-                                        item.showInfo = !item.showInfo;
-                                    }
-                                },
-                                [I18n.$t('10096')/* '详情' */, m('i.iconfont.iconfont-small', { class: item.showInfo ? 'icon-xiala' : 'icon-xiala' }, [])])
-                                : '─ ─'
-                        ])
+                        m('div.column.is-1.has-text-right', {}, other)
                     ])
                 );
                 if (item.info ? item.info.length : false) {
@@ -63,6 +78,40 @@ module.exports = {
                 }
             }
         }
-        return m('div', { class: vnode.attrs.class }, table);
+        return m('div', { class: vnode.attrs.class }, [
+            m(Modal, {
+                isShow: AssetTable.isShowCancel,
+                onClose () {
+                    AssetTable.isShowCancel = false;
+                }, // 关闭事件
+                slot: {
+                    header: m('div', {}, [
+                        '撤销申请法币划转'
+                    ]),
+                    body: m('div.columns', {}, [
+                        m('div.column', {}, ['审核金额']),
+                        m('div.column.has-text-right', {}, [AssetTable.cancelTransferModel.num + ' ' + AssetTable.cancelTransferModel.coin])
+                    ]),
+                    footer: [
+                        m("button", {
+                            class: "button is-primary is-outlined font-size-2 has-text-white modal-default-btn button-large has-text-primary",
+                            onclick () {
+                                AssetTable.isShowCancel = false;
+                            }
+                        }, ['取消']),
+                        m('.spacer'),
+                        m("button.button.is-primary.font-size-2.has-text-white.modal-default-btn.button-large", {
+                            class: AssetTable.isLoading ? 'is-loading' : '',
+                            onclick () {
+                                AssetTable.cancelTransfer();
+                            }
+                        }, [I18n.$t('10337')/* "确定" */])
+                    ]
+                }
+            }),
+            m('div', {}, [
+                table
+            ])
+        ]);
     }
 };

@@ -34,6 +34,8 @@ module.exports = {
     CHANGE_SW_CURRENCY: 'CHANGE_SW_CURRENCY',
     // 资产界面切换估值币种
     MSG_LANGUAGE_UPD: 'MSG_LANGUAGE_UPD',
+    // 刷新资产记录
+    MSG_ASSET_RECORD_UPD: 'MSG_ASSET_RECORD_UPD',
     /**
      * 发送广播
      * @param {string} cmd
