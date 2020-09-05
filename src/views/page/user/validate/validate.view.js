@@ -1,7 +1,9 @@
 const m = require('mithril');
 const InputWithComponent = require('../../../components/inputWithComponent/inputWithComponent.view');
 const Validate = require('./validate.model');
+const validateModel = require('@/models/validate/validate').default;
 const I18n = require('@/languages/I18n').default;
+const utils = require('@/util/utils').default;
 console.log(Validate);
 /**
  * 验证码
@@ -16,8 +18,15 @@ module.exports = {
     view() {
         const validInput = [];
         validInput.push(m('div.title-large.has-text-title', {}, [I18n.$t('10113')/* '安全验证' */]));
-        validInput.push(m('div.py-0.mb-7.body-3.has-text-level-2', {}, ['为了您的账户安全，请完成以下验证']));
-        validInput.push(m('div.has-text-level-2.body-3.mb-2', {}, [Validate.selectName[Validate.selectType]]));
+        validInput.push(m('div.py-0.mb-7.body-5.has-text-level-4', {}, ['为了您的账户安全，请完成以下验证']));
+        validInput.push(m('div.has-text-level-2.body-5.mb-2', {}, [
+            Validate.selectName[Validate.selectType],
+            m('span.ml-2.body-2.has-text-level-4', {}, [
+                Validate.selectType === 'sms' ? `(${utils.hideAccountNameInfo(validateModel.smsConfig.phoneNum)})`
+                    : Validate.selectType === 'sms' ? `(${utils.hideAccountNameInfo(validateModel.emailConfig.secureEmail)})`
+                        : ''
+            ])
+        ]));
         switch (Validate.selectType) {
         case 'sms':
             validInput.push(m(InputWithComponent, {
