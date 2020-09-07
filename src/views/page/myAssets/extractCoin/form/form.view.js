@@ -20,6 +20,7 @@ module.exports = {
     },
     handleLinNameButClick: function (e) {
         FromDataMode.currenLinkBut = e.attr;
+        FromDataMode.errCodeToNull();
         FromDataMode.getCurrentFeesChange(true);
     },
     handleAddressVal: function (e) {
