@@ -92,11 +92,15 @@ module.exports = {
                         }),
                         m('tr', { style: { display: t.isShowNoneData ? '' : 'none' } }, [
                             m('td', { colspan: 6, style: { textAlign: `center` } }, [
-                                m('div', { class: `noneData mt-8` }, [
-                                    m('div', { class: `has-bg-level-1 mb-3` }, [
-                                        m('img', { class: `mt-4`, src: require(`@/assets/img/myAssets/noneData.svg`).default })
-                                    ]),
-                                    m('span', { class: `has-text-level-4` }, I18n.$t('10515') /* '暂无数据' */)
+                                m('div', { class: `noneData` }, [
+                                    m('div', { class: `noneDataDiv` }, [
+                                        m('div', { class: `has-bg-level-1 mb-3 imgDiv` }, [
+                                            m('img', { class: `mt-4`, src: require(`@/assets/img/myAssets/noneData.svg`).default })
+                                        ]),
+                                        m('div', { class: `spanDiv` }, [
+                                            m('span', { class: `has-text-level-4` }, I18n.$t('10515') /* '暂无数据' */)
+                                        ])
+                                    ])
                                 ])
                             ])
                         ])

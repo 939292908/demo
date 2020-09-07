@@ -28,6 +28,7 @@ module.exports = {
         const that = this;
         this.pageData = []; // 初始化
         this.selectList = []; // 初始化
+        this.setUSDTLabelAndSelectList();
         for (const i in wlt.wallet['03']) {
             if (wlt.wallet['03'][i].Setting.canRecharge) { // 能否充值
                 const item = {};
@@ -52,11 +53,23 @@ module.exports = {
                 });
             }
         }
-        this.setUSDTLabelAndSelectList();
     },
+    chainAry: [],
     setUSDTLabelAndSelectList() {
+        const that = this;
         if (wlt.coinInfo.USDT !== undefined) {
             this.chains = wlt.coinInfo.USDT.chains;
+            for (const i of this.chains) {
+                Http.GetRechargeAddr({
+                    wType: i.attr
+                }).then(function(arg) {
+                    // console.log('nzm', 'GetRechargeAddr success', arg);
+                    that.chainAry.push(arg);
+                    m.redraw();
+                }).catch(function(err) {
+                    console.log('nzm', 'GetRechargeAddr error', err);
+                });
+            }
             this.USDTLabel = Array.from(wlt.coinInfo.USDT.chains);
             const ary = [];
             for (let i = 0; i < this.USDTLabel.length; i++) {
@@ -83,15 +96,22 @@ module.exports = {
                 this.coinParam ? this.form.selectCheck = this.coinParam : this.form.selectCheck = this.selectList[0].id;
             }
         }
-        if (this.form.selectCheck === "USDT") {
-            console.log(111);
-        }
     },
     // 切换币种时的操作
     setTipsAndAddrAndCode() {
         for (const i in this.pageData) {
             if (this.pageData[i].wType === this.form.selectCheck) {
-                const networkNum = this.pageData[i].networkNum;
+                let networkNum = null;
+                if (this.form.selectCheck === 'USDT') {
+                    for (const i of this.chainAry) {
+                        if ((this.btnCheckFlag !== 'OMNI' ? 'USDT' + this.btnCheckFlag : 'USDT') === i.wType) {
+                            networkNum = i.trade.networkNum;
+                        }
+                    }
+                } else {
+                    networkNum = this.pageData[i].networkNum;
+                }
+
                 this.tips = this.pageData[i].promptRecharge !== 0 ? this.pageData[i].promptRecharge : '' +
 
                 // this.tips = '您只能向此地址充值' + this.form.selectCheck + '，其他资产充入' + this.form.selectCheck + '地址将无法找回' +
@@ -103,6 +123,7 @@ module.exports = {
 
                 /* '默认充入我的钱包，您可以通过“资金划转”将资金转至交易账户或者其他账户' */
                 '*' + I18n.$t('10085');
+
                 this.memo = this.pageData[i].memo; // 当前选中币种的标签是否显示
                 this.openChains = this.pageData[i].openChains; // 当前选中币种的链名称是否显示
                 this.rechargeAddr = this.pageData[i].rechargeAddr; // 当前选中币种的充币地址
@@ -163,22 +184,14 @@ module.exports = {
     },
     changeBtnflag(title) {
         this.btnCheckFlag = title;
-        let wType = null;
-        for (const i of this.chains) {
-            if (i.name === title) {
-                wType = i.attr;
+        console.log(this.chainAry);
+        console.log(this.chains);
+        for (const i of this.chainAry) {
+            if ((this.btnCheckFlag !== 'OMNI' ? 'USDT' + this.btnCheckFlag : 'USDT') === i.wType) {
+                this.rechargeAddr = i.rechargeAddr;
             }
         }
-        const that = this;
-        Http.GetRechargeAddr({
-            wType: wType
-        }).then(function(arg) {
-            // console.log('nzm', 'GetRechargeAddr success', arg);
-            that.rechargeAddr = arg.rechargeAddr;
-            m.redraw();
-        }).catch(function(err) {
-            console.log('nzm', 'GetRechargeAddr error', err);
-        });
+        this.setTipsAndAddrAndCode();
     },
     initFn: function () {
         const currencyType = window.router.getUrlInfo().params.wType;
