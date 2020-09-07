@@ -103,7 +103,7 @@ module.exports = {
                 m('div.pa-0', { class: "dropdown-content", style: "max-height: 400px; overflow: auto;" },
                     vnode.attrs.getList().map((item, index) => {
                         return m('a.pl-7.pr-0.py-3', {
-                            class: `dropdown-item has-hover ${vnode.state.activeId === item.id ? 'has-active' : ''}`,
+                            class: `dropdown-item has-hover ${vnode.state.curId === item.id ? 'has-active' : ''}`,
                             key: item.label + index,
                             onclick () {
                                 vnode.state.curItem = item; // 同步显示文字
