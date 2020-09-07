@@ -11,10 +11,10 @@ module.exports = {
         const initWType = m.parseQueryString(m.route.get().split('?')[1])?.wType;
         FromDataMode.oninit(initWType);
     },
-    handleSelectChange: function (e) {
-        FromDataMode.currentSelect = FromDataMode.selectList[e.target.selectedIndex];
-        FromDataMode.getlinkButtonListData();
-    },
+    // handleSelectChange: function (e) {
+    //     FromDataMode.currentSelect = FromDataMode.selectList[e.target.selectedIndex];
+    //     FromDataMode.getlinkButtonListData();
+    // },
     handleLabelVal: function (e) {
         FromDataMode.extractCoin.linkName = e.target.value;
     },
@@ -28,7 +28,6 @@ module.exports = {
         FromDataMode.errorShow.address.text = l180n.$t('10401')/* '提币地址不能为空' */;
     },
     handleExtractCoinNameVal: function (e) {
-        console.log(e);
         FromDataMode.extractCoin.coinNum = e.target.value;
         if (e.target.value - FromDataMode.currentFees.withdrawMin < 0 || e.target.value - FromDataMode.currentExtractableNum > 0) {
             FromDataMode.errorShow.unmber.show = true;
