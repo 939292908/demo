@@ -170,6 +170,7 @@ utils.hideMobileInfo = mobile => {
 
 // 账号信息隐藏，可针对邮箱和手机
 utils.hideAccountNameInfo = val => {
+    if (!val) return '';
     if (val.includes('@')) {
         const arr = val.split('@');
         if (arr[0].length > 4) {

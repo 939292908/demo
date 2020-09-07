@@ -18,7 +18,7 @@ module.exports = {
     view() {
         const validInput = [];
         validInput.push(m('div.title-large.has-text-title', {}, [I18n.$t('10113')/* '安全验证' */]));
-        validInput.push(m('div.py-0.mb-7.body-5.has-text-level-4', {}, ['为了您的账户安全，请完成以下验证']));
+        validInput.push(m('div.py-0.mb-7.body-5.has-text-level-4', {}, [I18n.$t('10534')/* '为了您的账户安全，请完成以下验证' */]));
         validInput.push(m('div.has-text-level-2.body-5.mb-2', {}, [
             Validate.selectName[Validate.selectType],
             m('span.ml-2.body-2.has-text-level-4', {}, [
