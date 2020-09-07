@@ -78,7 +78,7 @@ module.exports = {
     oncreate (vnode) {
     },
     onupdate (vnode) {
-        this.initCurItem(vnode);
+        // this.initCurItem(vnode);
     },
     view (vnode) {
         return m('div.Dropdown', { class: `${vnode.attrs.class || ''} my-dropdown dropdown ${vnode.attrs.type === 'hover' ? " is-hoverable" : vnode.attrs.showMenu ? " is-active" : ''}` }, [
