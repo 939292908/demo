@@ -11,7 +11,7 @@ const obj = {
         showMenu: false,
         setOption (option) {
             this.showMenu = option.showMenu;
-            if (option.currentId) this.currentId = option.currentId;
+            this.currentId = option.currentId ? option.currentId : this.currentId;
         },
         menuList() {
             return [
@@ -36,7 +36,7 @@ const obj = {
         showMenu: false,
         setOption (option) {
             this.showMenu = option.showMenu;
-            if (option.currentId) this.currentId = option.currentId;
+            this.currentId = option.currentId ? option.currentId : this.currentId;
         },
         menuList() {
             return [
@@ -67,7 +67,9 @@ module.exports = {
     oncreate() {},
     view (vnode) {
         return m('div', { class: `is-flex` }, [
+            m('div', { class: `px-5` }, obj.option1.currentId),
             m(Dropdown, obj.option1),
+            m('div', { class: `px-5` }, obj.option2.currentId),
             m(Dropdown, obj.option2)
         ]);
     }

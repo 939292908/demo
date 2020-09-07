@@ -29,46 +29,37 @@ module.exports = {
     onremove: vnode => logic.onremove(vnode),
     view (vnode) {
         return m('div', { class: `${vnode.attrs.class || ''} my-dropdown dropdown ${vnode.attrs.type === 'hover' ? " is-hoverable" : vnode.attrs.showMenu ? " is-active" : ''}` }, [
-            // btn
+            // 选中content
             m('div', { class: "dropdown-trigger has-text-1" }, [
                 m('button', {
                     class: `button ${vnode.attrs.btnClass || ''}`,
                     style: (vnode.attrs.btnWidth ? `width:${vnode.attrs.btnWidth}px;` : '') +
                         (vnode.attrs.btnHeight ? `height:${vnode.attrs.btnHeight}px;` : ''),
-                    onclick: e => {
-                        // 进入下一次事件队列，先让body事件关闭所有下拉，再开启自己
-                        const type = vnode.attrs.showMenu;
-                        setTimeout(() => {
-                            vnode.attrs.setOption({ showMenu: !type });
-                        }, 0);
+                    onclick() {
+                        logic.currentContentClick(vnode); // click
                     }
                 }, [
-                    vnode.attrs.menuList().find(item => item.id === vnode.attrs.currentId)?.render
-                        ? vnode.attrs.menuList().find(item => item.id === vnode.attrs.currentId)?.render()
-                        : vnode.attrs.menuList().find(item => item.id === vnode.attrs.currentId)?.label,
-                    m('i', { class: `my-trigger-icon iconfont icon-xiala has-text-primary` })
+                    logic.getCurrentContent(vnode.attrs.menuList(), vnode.attrs.currentId), // 内容
+                    m('i', { class: `my-trigger-icon iconfont icon-xiala has-text-primary` }) // icon
                 ])
             ]),
-            // menu
+            // 菜单menu
             m('div', {
-                class: "dropdown-menu ",
+                class: "dropdown-menu",
                 style: (vnode.attrs.menuWidth ? `width:${vnode.attrs.menuWidth}px;` : '')
             }, [
-                m('div', { class: "dropdown-content", style: (vnode.attrs.menuHeight ? `max-height:${vnode.attrs.menuHeight}px;` : '400px') + "overflow: auto;" },
+                m('div', { class: "dropdown-content", style: (vnode.attrs.menuHeight ? `max-height:${vnode.attrs.menuHeight}px;` : '') },
+                    // list
                     vnode.attrs.menuList().map((item, index) => {
                         return m('a', {
                             class: `dropdown-item has-hover ${vnode.attrs.currentId === item.id ? 'has-active' : ''}`,
                             key: item.id + index,
                             onclick () {
-                                vnode.attrs.onClick && vnode.attrs.onClick(item); // 传递数据
-                                vnode.attrs.setOption({
-                                    showMenu: false,
-                                    currentId: item.id
-                                });
+                                logic.menuClick(item, vnode); // click
                             }
                         }, [
-                            m('span', { class: `my-menu-label` }, item.render ? item.render() : item.label),
-                            vnode.attrs.showMenuIcon ? m('i', { class: `my-menu-icon iconfont icon-fabijiaoyiwancheng ${vnode.attrs.currentId === item.id ? '' : 'is-hidden'}` }) : ""
+                            m('div', { class: `my-menu-label` }, item.render ? item.render() : item.label), // 内容
+                            vnode.attrs.showMenuIcon ? m('i', { class: `my-menu-icon iconfont icon-fabijiaoyiwancheng ${vnode.attrs.currentId === item.id ? '' : 'is-hidden'}` }) : "" // icon
                         ]);
                     })
                 )

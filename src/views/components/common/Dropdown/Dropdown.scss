@@ -17,15 +17,20 @@
         width: 100%;
         min-width: 10rem;
 
-        .dropdown-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 12px !important;
+        .dropdown-content {
+            overflow: auto;
+            max-height: 400px;
 
-            &.has-hover:hover,
-            &.has-active {
-                color: var(--c-primary-lighten);
+            .dropdown-item {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 12px !important;
+    
+                &.has-hover:hover,
+                &.has-active {
+                    color: var(--c-primary-lighten);
+                }
             }
         }
     }

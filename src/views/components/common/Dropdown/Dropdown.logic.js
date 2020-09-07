@@ -1,23 +1,33 @@
-// 参数说明
-// getList() {return [{ id:xxx, label:xxx,... }, { id:xxx, label:xxx,... }]} 菜单数据 (id, label必须项) (必填)
-// evenKey body事件key (必填)
-
-// onClick(item) {} 点击事件 可获取item (选填)
-// activeId 默认选中id(fn) (必填)
-// type 触发类型：active / hover (选填)默认active
-
-// placeholder 提示文字 (选填)
-// class 类名 (选填)
-// btnClass 按钮 类名 (选填)
-
-// btnWidth 按钮 宽 (选填)
-// btnHeight 按钮 高 (选填)
-// menuWidth 菜单 宽 (选填)
 const broadcast = require('@/broadcast/broadcast');
+
 module.exports = {
+    // 获取 选中显示内容 / menuList: 菜单列表 currentId: 当前选中id
+    getCurrentContent (menuList, currentId) {
+        const currentItem = menuList.find(item => item.id === currentId);
+        return currentItem?.render ? currentItem.render() : currentItem.label;
+    },
+    // 选中内容 click
+    currentContentClick(vnode) {
+        // 进入下一次事件队列，先让body事件关闭所有下拉，再开启自己
+        console.log(vnode.attrs.currentId);
+        const type = vnode.attrs.showMenu;
+        setTimeout(() => {
+            vnode.attrs.setOption({
+                showMenu: !type
+            });
+        }, 0);
+    },
+    // 菜单 click
+    menuClick(item, vnode) {
+        vnode.attrs.onClick && vnode.attrs.onClick(item); // 传递数据
+        vnode.attrs.setOption({
+            showMenu: false,
+            currentId: item.id
+        });
+    },
     // 初始化 全局广播
     initEVBUS (vnode) {
-        // 订阅 body点击事件广播
+        // 点击body广播
         broadcast.onMsg({
             key: vnode.attrs.evenKey,
             cmd: broadcast.EV_ClICKBODY,
@@ -30,7 +40,7 @@ module.exports = {
     },
     // 删除全局广播
     rmEVBUS (vnode) {
-        // 删除 body点击事件广播
+        // 点击body广播
         broadcast.offMsg({
             key: vnode.attrs.evenKey,
             isall: true
