@@ -58,7 +58,7 @@ module.exports = {
                                 m('i.iconfont.icon-Search', {}, [])
                             ]),
                             m('input.input', {
-                                placeholder: '搜索',
+                                placeholder: I18n.$t('10342')/* '搜索' */,
                                 oninput: e => {
                                     AreaCodeSelect.search = e.target.value;
                                     AreaCodeSelect.showList = AreaCodeSelect.showList = vnode.attrs.selectList.filter(

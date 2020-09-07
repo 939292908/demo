@@ -40,8 +40,8 @@ module.exports = {
             "02": I18n.$t('10073')/* '币币账户' */,
             "03": I18n.$t('10055')/* '我的钱包' */,
             "04": I18n.$t('10074')/* '法币账户' */,
-            "05": '算力账户',
-            "06": '跟单账户'
+            "05": I18n.$t('10547')/* '算力账户' */,
+            "06": I18n.$t('10548')/* '跟单账户' */
         };
     },
     recordTypeName() {
@@ -582,11 +582,11 @@ module.exports = {
                     des = I18n.$t('10377');
                 } else if (aType === '03' && item.addr.search("foltra-1") !== -1) {
                     // des = '跟单账户转入';
-                    des = I18n.$t('10145', { value: '跟单账户' }); // 跟单账户
+                    des = I18n.$t('10145', { value: I18n.$t('10548') }); // 跟单账户
                     toType.transfer = true;
                 } else if (aType === '03' && item.addr.search("foltra") !== -1) {
                     // des = '划至跟单账户';
-                    des = I18n.$t('10149', { value: I18n.$t('跟单账户') }); // 跟单账户
+                    des = I18n.$t('10149', { value: I18n.$t('10548') }); // 跟单账户
                     toType.transfer = true;
                 } else if (aType === '06' && item.addr.search("foltra-1") !== -1) {
                     // des = '划至我的钱包';
