@@ -152,7 +152,7 @@ class Conf {
                 CallBack && CallBack();
             }
         }).catch((err) => {
-            window.console.log('ht', 'reqest.racerequest err', err);
+            console.log('ht', 'reqest.racerequest err', err);
         });
     }
 }
