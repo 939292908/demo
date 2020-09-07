@@ -173,9 +173,11 @@ module.exports = {
             }
         };
     },
+    // 是否显示二维码
     changeQrcodeDisplay(type) {
         type === 'show' ? this.qrcodeDisplayFlag = true : this.qrcodeDisplayFlag = false;
     },
+    // 复制文本
     copyText() {
         const ele = document.getElementsByClassName('addrText')[0];
         if (ele.value) {
@@ -184,6 +186,7 @@ module.exports = {
             return window.$message({ title: I18n.$t('10410') /* '提示' */, content: '复制成功', type: 'success' });
         }
     },
+    // 连名称切换
     changeBtnflag(title) {
         this.btnCheckFlag = title;
         console.log(this.chainAry);
