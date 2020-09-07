@@ -109,10 +109,14 @@ class Conf {
         return this.M[this.BUILD_ENV];
     }
 
-    SetActive(idx) {
+    SetActive(Id) {
         const newCfg = this.M[this.BUILD_ENV];
         if (newCfg) {
-            this.Active = newCfg.netLines[idx];
+            for (const item of newCfg.netLines) {
+                if (item.Id === Id) {
+                    this.Active = item;
+                }
+            }
             window.localStorage.setItem('net_lines_active', JSON.stringify(this.Active));
         }
     }
