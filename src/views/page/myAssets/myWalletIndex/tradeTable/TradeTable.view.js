@@ -30,7 +30,7 @@ module.exports = {
                 m('div.search mr-7 has-line-level-3 py-1 px-3', {}, [
                     m('input', {
                         class: `coinSearch`,
-                        placeholder: `币种搜索`,
+                        placeholder: I18n.$t('10514') /* `币种搜索` */,
                         oninput: function () {
                             t.setTableNewAry();
                         }
@@ -96,7 +96,7 @@ module.exports = {
                                     m('div', { class: `has-bg-level-1 mb-3` }, [
                                         m('img', { class: `mt-4`, src: require(`@/assets/img/myAssets/noneData.svg`).default })
                                     ]),
-                                    m('span', { class: `has-text-level-4` }, '暂无数据')
+                                    m('span', { class: `has-text-level-4` }, I18n.$t('10515') /* '暂无数据' */)
                                 ])
                             ])
                         ])

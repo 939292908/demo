@@ -76,7 +76,7 @@ module.exports = {
                 { col: I18n.$t('10064') /* '总额' */, val: 'TOTAL' },
                 { col: I18n.$t('10065') /* '可用' */, val: 'NL' },
                 { col: I18n.$t('10066') /* '锁定' */, val: 'depositLock' },
-                { col: this.currency + '估值', val: this.currency === 'BTC' ? 'valueForBTC' : 'valueForUSDT' },
+                { col: this.currency + I18n.$t('10516') /* '估值' */, val: this.currency === 'BTC' ? 'valueForBTC' : 'valueForUSDT' },
                 { col: I18n.$t('10068') /* '操作' */, val: [{ operation: I18n.$t('10056') /* '充币' */, to: '/recharge' }, { operation: I18n.$t('10057') /* '提币' */, to: '/extractCoin' }, { operation: I18n.$t('10071') /* '划转' */, to: '' }] }
             ],
             coin: [
@@ -84,7 +84,7 @@ module.exports = {
                 { col: I18n.$t('10064') /* '总额' */, val: 'TOTAL' },
                 { col: I18n.$t('10065') /* '可用' */, val: 'NL' },
                 { col: I18n.$t('10080') /* '冻结' */, val: 'Frz' },
-                { col: this.currency + '估值', val: this.currency === 'BTC' ? 'valueForBTC' : 'valueForUSDT' },
+                { col: this.currency + I18n.$t('10516') /* '估值' */, val: this.currency === 'BTC' ? 'valueForBTC' : 'valueForUSDT' },
                 { col: I18n.$t('10068') /* '操作' */, val: [{ operation: I18n.$t('10071') /* '划转' */, to: '' }, { operation: I18n.$t('10079') /* '去交易' */, to: '' }] }
             ],
             contract: [
@@ -92,7 +92,7 @@ module.exports = {
                 { col: I18n.$t('10076') /* '账户权益' */, val: 'MgnBal' },
                 { col: I18n.$t('10077') /* '未实现盈亏' */, val: 'UPNL' },
                 { col: I18n.$t('10078') /* '可用保证金' */, val: 'NL' },
-                { col: this.currency + '估值', val: this.currency === 'BTC' ? 'valueForBTC' : 'valueForUSDT' },
+                { col: this.currency + I18n.$t('10516') /* '估值' */, val: this.currency === 'BTC' ? 'valueForBTC' : 'valueForUSDT' },
                 { col: I18n.$t('10068') /* '操作' */, val: [{ operation: I18n.$t('10071') /* '划转' */, to: '' }, { operation: I18n.$t('10079') /* '去交易' */, to: '' }] }
             ],
             legal: [
@@ -100,7 +100,7 @@ module.exports = {
                 { col: I18n.$t('10064') /* '总额' */, val: 'TOTAL' },
                 { col: I18n.$t('10065') /* '可用' */, val: 'NL' },
                 { col: I18n.$t('10080') /* '冻结' */, val: 'otcLock' },
-                { col: this.currency + '估值', val: this.currency === 'BTC' ? 'valueForBTC' : 'valueForUSDT' },
+                { col: this.currency + I18n.$t('10516') /* '估值' */, val: this.currency === 'BTC' ? 'valueForBTC' : 'valueForUSDT' },
                 { col: I18n.$t('10068') /* '操作' */, val: [{ operation: I18n.$t('10071') /* '划转' */, to: '' }, { operation: I18n.$t('10079') /* '去交易' */, to: '' }] }
             ]
         };
@@ -121,22 +121,22 @@ module.exports = {
                     }
                 });
             } else {
-                return window.$message({ title: I18n.$t('10410') /* '提示' */, content: '暂未开放，敬请期待', type: 'primary' });
+                return window.$message({ title: I18n.$t('10410') /* '提示' */, content: I18n.$t('10513') /* '暂未开放，敬请期待' */, type: 'primary' });
             }
         } else if (item.operation === I18n.$t('10056') /* '充币' */) {
             if (this.rechargeFlag === 1 && row.Setting.canRecharge) {
                 window.router.push({ path: item.to, data: { wType: row.wType } });
             } else {
-                return window.$message({ title: I18n.$t('10410') /* '提示' */, content: '暂未开放，敬请期待', type: 'primary' });
+                return window.$message({ title: I18n.$t('10410') /* '提示' */, content: I18n.$t('10513') /* '暂未开放，敬请期待' */, type: 'primary' });
             }
         } else if (item.operation === I18n.$t('10057') /* '提币' */) {
             if (this.withdrawFlag === 1 && row.Setting.canWithdraw) {
                 window.router.push({ path: item.to, data: { wType: row.wType } });
             } else {
-                return window.$message({ title: I18n.$t('10410') /* '提示' */, content: '暂未开放，敬请期待', type: 'primary' });
+                return window.$message({ title: I18n.$t('10410') /* '提示' */, content: I18n.$t('10513') /* '暂未开放，敬请期待' */, type: 'primary' });
             }
         } else if (item.operation === I18n.$t('10079') /* '去交易' */) {
-            return window.$message({ title: I18n.$t('10410') /* '提示' */, content: '暂未开放，敬请期待', type: 'primary' });
+            return window.$message({ title: I18n.$t('10410') /* '提示' */, content: I18n.$t('10513') /* '暂未开放，敬请期待' */, type: 'primary' });
         }
     },
     setHideZeroFlag: function () {
