@@ -62,17 +62,17 @@ module.exports = {
                                         return m('span', { key: item, class: `mt-1` }, item);
                                     }),
                                     width: `240px`,
-                                    position: 'bottom',
-                                    direction: 'right'
+                                    position: `bottom`,
+                                    direction: `right`
                                 })
                             ])
                         ]),
                         m('div', { class: `mt-2` }, [
                             rechargeIndex.USDTLabel.map((item, index) => {
                                 return m('button', {
-                                    class: `mr-6 button button-small is-primary` + (rechargeIndex.btnCheckFlag === index ? `` : ` is-outlined`),
+                                    class: `mr-6 button button-small is-primary` + (rechargeIndex.btnCheckFlag === item ? `` : ` is-outlined`),
                                     key: item,
-                                    onclick: () => { rechargeIndex.changeBtnflag(index, item); }
+                                    onclick: () => { rechargeIndex.changeBtnflag(item); }
                                 }, item);
                             })
                         ])
@@ -111,7 +111,7 @@ module.exports = {
                         m('span.title-small', {}, I18n.$t('10086') /* '近期充币记录' */),
                         m(Tooltip, {
                             label: m('i.iconfont.icon-Tooltip.iconfont-large'),
-                            content: '只展示近期十条记录',
+                            content: I18n.$t('10509') /* '只展示近期十条记录' */,
                             hiddenArrows: false
                         }),
                         m('span.all', { class: `has-text-primary cursor-pointer`, onclick: () => { window.router.push('/assetRecords'); } }, I18n.$t('10087') /* '全部记录' */)

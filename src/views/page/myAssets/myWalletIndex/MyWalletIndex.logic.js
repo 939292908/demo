@@ -53,8 +53,7 @@ const model = {
             },
             getList () {
                 return that.selectOp;
-            },
-            btnClass: `has-text-primary`
+            }
         };
     },
     // 设置币种
@@ -100,7 +99,7 @@ const model = {
     // 切换我的钱包，交易账户，币币，合约，法币
     switchChange: function (val, type) {
         if (val === 'none') {
-            return window.$message({ title: I18n.$t('10410') /* '提示' */, content: '暂未开放', type: 'primary' });
+            return window.$message({ title: I18n.$t('10410') /* '提示' */, content: I18n.$t('10513') /* '暂未开放，敬请期待' */, type: 'primary' });
         }
         // console.log(val);
         this.swValue = val;
@@ -155,6 +154,9 @@ const model = {
     },
     // 按钮事件
     handlerClickNavBtn (item) {
+        if (!item.flag) {
+            return window.$message({ title: I18n.$t('10410') /* '提示' */, content: I18n.$t('10513') /* '暂未开放，敬请期待' */, type: 'primary' });
+        }
         const that = this;
         if (item.id === 4) { // 点击资金划转
             // transferLogic.isShow = true;
@@ -238,8 +240,16 @@ const model = {
             key: 'view-pages-Myassets-TablegB',
             cmd: broadcast.MSG_LANGUAGE_UPD,
             cb: (arg) => {
-                console.log('切换中英文');
+                // console.log('切换中英文');
                 self.setFirstNav();
+            }
+        });
+
+        broadcast.onMsg({
+            key: 'view-pages-Myassets-TablegB',
+            cmd: broadcast.GET_FUNLIST_READY,
+            cb: (arg) => {
+                console.log('123', arg);
             }
         });
 
