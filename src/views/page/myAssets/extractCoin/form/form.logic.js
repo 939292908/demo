@@ -302,7 +302,6 @@ const extract = {
         });
     },
     onremove: function () {
-        console.log(999999);
         broadcast.offMsg({
             key: this.name,
             cmd: broadcast.GET_USER_INFO_READY,
