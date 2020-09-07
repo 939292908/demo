@@ -50,7 +50,6 @@ module.exports = {
                                 myWalletIndex.Nav.firstNav.map((item, index) => {
                                     return m(`button.button is-primary Operation${index} px-7 ml-6 py-3`, {
                                         class: item.title === I18n.$t('10056') /* `充币` */ ? `` : `is-outlined`,
-                                        style: { display: item.flag === 1 ? `` : `none` },
                                         key: item.title,
                                         onclick: () => { myWalletIndex.handlerClickNavBtn(item); },
                                         onmouseover: () => { myWalletIndex.changeBtnSty(index, `show`); },

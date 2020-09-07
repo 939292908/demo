@@ -53,8 +53,7 @@ const model = {
             },
             getList () {
                 return that.selectOp;
-            },
-            btnClass: `has-text-primary`
+            }
         };
     },
     // 设置币种
@@ -155,6 +154,9 @@ const model = {
     },
     // 按钮事件
     handlerClickNavBtn (item) {
+        if (!item.flag) {
+            return window.$message({ title: I18n.$t('10410') /* '提示' */, content: '暂未开放，敬请期待', type: 'primary' });
+        }
         const that = this;
         if (item.id === 4) { // 点击资金划转
             // transferLogic.isShow = true;
