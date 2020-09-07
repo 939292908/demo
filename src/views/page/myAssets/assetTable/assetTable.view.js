@@ -8,7 +8,7 @@ module.exports = {
     view(vnode) {
         const table = [];
         table.push(
-            m('div.columns.body-4.has-text-level-3', {}, [
+            m('div.columns.body-4.has-text-level-4', {}, [
                 m('div.column.is-1', {}, [I18n.$t('10063')/* '币种' */]),
                 m('div.column.is-3', {}, [I18n.$t('10088')/* '类型' */]),
                 m('div.column.is-3', {}, [I18n.$t('10089')/* '数量' */]),
@@ -54,7 +54,7 @@ module.exports = {
                     other.push('─ ─');
                 }
                 table.push(
-                    m('div.columns.body-4.has-text-level-3.my-7', {}, [
+                    m('div.columns.body-4.has-text-level-1.my-7', {}, [
                         m('div.column.is-1', {}, [item.coin]),
                         m('div.column.is-3', {}, [item.des]),
                         m('div.column.is-3', {}, [item.num + ' ' + item.coin]),

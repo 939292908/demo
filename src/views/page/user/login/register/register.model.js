@@ -29,7 +29,7 @@ const register = {
     isvalidate: false, // 验证状态
     waiting: false, // 等待状态
     smsCd: 0, // 激活短信按钮倒计时
-    exchInfo: config.exchInfo, // 渠道信息
+    exchInfo: {}, // 渠道信息
     int: null,
     checkbox: false, // 条款同意
     geetestCallBackType: '',
@@ -51,7 +51,7 @@ const register = {
         if (this.mustInvited()) {
             valid = valid && !(uid <= 1000000 || uid > 100000000) && /^\d+$/.test(uid);
         }
-        if (this.exchInfo.helpCenter.website && this.exchInfo.helpCenter.termsServiceId && this.exchInfo.helpCenter.privacyPolicyId) {
+        if (config.exchInfo.helpCenter.website && config.exchInfo.helpCenter.termsServiceId && config.exchInfo.helpCenter.privacyPolicyId) {
             return this.checkbox && valid;
         } else {
             return valid;
@@ -62,7 +62,7 @@ const register = {
      * @param id 方法名
      */
     toHelpService(id) {
-        helpCenter.openArticle(this.exchInfo.helpCenter[id]);
+        helpCenter.openArticle(config.exchInfo.helpCenter[id]);
     },
     // 注册
     submit() {
@@ -274,7 +274,7 @@ const register = {
     oninit() {
         this.initGeetest();
         this.getCountryList();
-        helpCenter.init(this.exchInfo);
+        helpCenter.init(config.exchInfo);
         this.getExchInfo();
     },
     onremove() {
