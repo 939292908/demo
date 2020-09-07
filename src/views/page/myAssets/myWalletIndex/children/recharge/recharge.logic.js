@@ -128,7 +128,13 @@ module.exports = {
 
                 this.memo = this.pageData[i].memo; // 当前选中币种的标签是否显示
                 this.openChains = this.pageData[i].openChains; // 当前选中币种的链名称是否显示
-                this.rechargeAddr = this.pageData[i].rechargeAddr; // 当前选中币种的充币地址
+
+                if (this.form.selectCheck !== 'USDT') {
+                    this.rechargeAddr = this.pageData[i].rechargeAddr; // 当前选中币种的充币地址
+                } else {
+                    this.changeBtnflag(this.btnCheckFlag);
+                }
+
                 this.setQrCodeImg(); // 当前选中币种的二维码
                 this.setLabelTips(); // 当前选中币种的标签提示语句
             }
@@ -189,14 +195,12 @@ module.exports = {
     // 连名称切换
     changeBtnflag(title) {
         this.btnCheckFlag = title;
-        console.log(this.chainAry);
-        console.log(this.chains);
         for (const i of this.chainAry) {
             if ((this.btnCheckFlag !== 'OMNI' ? 'USDT' + this.btnCheckFlag : 'USDT') === i.wType) {
                 this.rechargeAddr = i.rechargeAddr;
             }
         }
-        this.setTipsAndAddrAndCode();
+        m.redraw();
     },
     initFn: function () {
         const currencyType = window.router.getUrlInfo().params.wType;
