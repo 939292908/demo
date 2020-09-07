@@ -10,8 +10,10 @@ const closeGView = {
     view: () => {
         return m('div', { class: `views-page-accountSecurity-bindGoogle-close theme--light pb-7` }, [
             m('div', { class: `operation mb-7 has-bg-level-2` }, [
-                m('i', { class: `iconfont icon-Return has-text-title mr-7` }),
-                m('span', { class: `has-text-title my-4 ml-4 title-medium` }, I18n.$t('10262') /* '您正在解绑谷歌验证' */)
+                m('div', { class: `content-width container` }, [
+                    m('i', { class: `iconfont icon-Return has-text-title` }),
+                    m('span', { class: `has-text-title my-4 ml-4 title-medium` }, I18n.$t('10262') /* '您正在解绑谷歌验证' */)
+                ])
             ]),
             m('div', { class: `center content-width` }, [
                 m('div', { class: `warning mb-3 pl-7` }, [
@@ -20,7 +22,7 @@ const closeGView = {
                 ]),
                 m('div', { class: `closeOperation pt-8 has-bg-level-2` }, [
                     m('div', { class: `pwdDiv` }, [
-                        m('span', { class: `body-5` }, '登录密码'),
+                        m('span', { class: `body-5` }, I18n.$t('10512') /* '登录密码' */),
                         m('br'),
                         m('input', { class: `border-radius-small mb-5 mt-2 pwd`, type: `text` })
                     ]),
