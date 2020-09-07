@@ -79,7 +79,7 @@ const model = {
                 window.$message({ content: errCode.getWebApiErrorCode(res.result.code), type: 'danger' });
             }
         }).catch(() => {
-            window.$message({ content: '网络异常，请稍后重试', type: 'danger' });
+            window.$message({ content: I18n.$t('10340')/* '网络异常，请稍后重试' */, type: 'danger' });
             m.redraw();
         });
     },
@@ -115,7 +115,7 @@ const model = {
                 window.$message({ content: errCode.getWebApiErrorCode(res.result.code), type: 'danger' });
             }
         }).catch(() => {
-            window.$message({ content: '网络异常，请稍后重试', type: 'danger' });
+            window.$message({ content: I18n.$t('10340')/* '网络异常，请稍后重试' */, type: 'danger' });
             m.redraw();
         });
     },

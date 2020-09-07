@@ -92,7 +92,7 @@ module.exports = {
             }
         }).catch(() => {
             window.$message({
-                content: '网络异常，请稍后重试',
+                content: I18n.$t('10340')/* '网络异常，请稍后重试' */,
                 type: 'danger'
             });
             this.loading = false;
