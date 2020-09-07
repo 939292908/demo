@@ -94,7 +94,7 @@ module.exports = {
                         // window.stopBubble(e)
                     }
                 }, [
-                    m('p.has-text-level-4', { class: `my-trigger-text` }, vnode.state.curItem.label), // btnText
+                    m('p', { class: `my-trigger-text` }, vnode.state.curItem.label), // btnText
                     m('i', { class: "my-trigger-icon iconfont icon-xiala has-text-primary" }) // icon
                 ])
             ]),

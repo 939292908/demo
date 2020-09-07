@@ -45,6 +45,7 @@ const model = {
                 that.showCurrencyMenu = type;
             },
             class: `myCoinSelect`,
+            btnClass: 'has-text-level-4',
             activeId: cb => cb(that.form, 'wType'),
             onClick (item) {
                 broadcast.emit({ cmd: broadcast.CHANGE_SW_CURRENCY, data: item.id });

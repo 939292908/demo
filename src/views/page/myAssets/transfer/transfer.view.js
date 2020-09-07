@@ -71,7 +71,7 @@ module.exports = {
             m('div', { class: `columns` }, [
                 // 从 (下拉)
                 m('div', { class: `form-item column is-5` }, [
-                    m('div', { class: `form-item-title has-text-level-4` }, [
+                    m('div', { class: `form-item-title` }, [
                         I18n.$t('10130') // '从'
                     ]),
                     m('div', { class: `form-item-content` }, [
@@ -89,7 +89,7 @@ module.exports = {
                 ]),
                 // 到 (下拉)
                 m('div', { class: `form-item column is-5` }, [
-                    m('div', { class: `form-item-title has-text-level-4` }, [
+                    m('div', { class: `form-item-title` }, [
                         I18n.$t('10131') // '到'
                     ]),
                     m('div', { class: `form-item-content` }, [
