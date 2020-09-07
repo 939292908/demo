@@ -46,29 +46,24 @@ const model = {
             this.currentId = option.currentId ? option.currentId : this.currentId;
         },
         onClick(item) {
-            broadcast.emit({ cmd: broadcast.CHANGE_SW_CURRENCY, data: item.text });
-            model.setCurrency(item.text);
+            broadcast.emit({ cmd: broadcast.CHANGE_SW_CURRENCY, data: item.label });
+            model.setCurrency(item.label);
             model.sets();
+        },
+        renderHeader(item) {
+            return m('div', { class: `selectDiv` }, [
+                m('span', { class: `has-text-primary` }, item.label)
+            ]);
         },
         menuList() {
             return [
                 {
                     id: 1,
-                    text: 'BTC',
-                    render() {
-                        return m('div', { class: `selectDiv` }, [
-                            m('span', { class: `has-text-primary` }, 'BTC')
-                        ]);
-                    }
+                    label: 'BTC'
                 },
                 {
                     id: 2,
-                    text: 'USDT',
-                    render() {
-                        return m('div', { class: `selectDiv` }, [
-                            m('span', { class: `has-text-primary` }, 'USDT')
-                        ]);
-                    }
+                    label: 'USDT'
                 }
             ];
         }
@@ -265,19 +260,23 @@ const model = {
         self.form.wType = self.currency;
     },
     createFn: function() {
+        const that = this;
         broadcast.onMsg({
             key: this.currency,
             cmd: broadcast.GET_FUNLIST_READY,
             cb: (arg) => {
-                console.log('123', arg);
+                that.setFlag();
                 m.redraw();
             }
         });
-        this.transferFlag = gM.getFunctions().transfer;
-        this.rechargeFlag = gM.getFunctions().recharge;
-        this.withdrawFlag = gM.getFunctions().withdraw;
-        this.setFirstNav();
+        this.setFlag();
         this.sets();
+    },
+    setFlag() {
+        model.transferFlag = gM.getFunctions().transfer;
+        model.rechargeFlag = gM.getFunctions().recharge;
+        model.withdrawFlag = gM.getFunctions().withdraw;
+        model.setFirstNav();
     },
     removeFn: function() {
         broadcast.offMsg({
