@@ -38,7 +38,7 @@ module.exports = {
                             AssetTable.cancelTransferModel = item;
                             AssetTable.isShowCancel = true;
                         }
-                    }, ['撤销申请']));
+                    }, [I18n.$t('10544')/* '撤销申请' */]));
                 } else if (item.info ? item.info.length : false) {
                     other.push(m('a.has-text-primary', {
                         onclick: e => {
