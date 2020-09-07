@@ -75,6 +75,18 @@
                         outline: none;
                         border: none;
                     }
+                    ::-moz-selection{/*Mozilla Firefox 4 to 8*/
+                        background-color: none;
+                    }
+                    ::-webkit-selection{/*Webkit browsers*/
+                        background-color: none;
+                    }
+                    ::-ms-selection{/*Internet Explorer 10+*/
+                        background-color: none;
+                    }
+                    input::selection{
+                        background-color: none;
+                    }
                 }
             }   
             .stepThree{
