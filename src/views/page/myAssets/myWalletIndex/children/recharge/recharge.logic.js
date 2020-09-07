@@ -121,6 +121,8 @@ module.exports = {
                 /* 使用{value1}地址充币需要{value2}个网络确认才能到账 */
                 '*' + I18n.$t('10084', { value1: this.form.selectCheck, value2: networkNum }) +
 
+                (this.form.selectCheck === 'EOS' || this.form.selectCheck === 'XRP' ? '*关于标签' + this.form.selectCheck + '充币时同时需要一个充币地址和' + this.form.selectCheck + '标签。标签是一种保证您的充币地址唯一性的数字串，与充币地址成对出现并一一对应。请您务必遵守正确的' + this.form.selectCheck + '充币步骤，在提币时输入完整的信息，否则将面临丢失币的风险！' : '') +
+
                 /* '默认充入我的钱包，您可以通过“资金划转”将资金转至交易账户或者其他账户' */
                 '*' + I18n.$t('10085');
 
