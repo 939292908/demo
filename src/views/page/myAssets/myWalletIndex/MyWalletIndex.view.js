@@ -3,7 +3,7 @@ const Header = require('@/views/components/indexHeader/indexHeader.view');
 const Transfer = require('@/views/page/myAssets/transfer/transfer.view.js');
 const myWalletIndex = require('@/views/page/myAssets/myWalletIndex/MyWalletIndex.logic');
 require('@/views/page/myAssets/myWalletIndex/MyWalletIndex.scss');
-const Dropdown = require('@/views/components/common/Dropdown');
+const Dropdown = require('@/views/components/common/Dropdown/Dropdown.view');
 const I18n = require('@/languages/I18n').default;
 
 module.exports = {
@@ -29,7 +29,7 @@ module.exports = {
                                 m('div', { class: `myWalletIndex-head-left-total` }, [
                                     m('span', { class: `body-6 has-text-white` }, I18n.$t('10054') /* `总资产估值` */),
                                     m('div', { class: `form-item-content border-radius-medium` }, [
-                                        m(Dropdown, myWalletIndex.getCurrencyMenuOption())
+                                        m(Dropdown, myWalletIndex.option)
                                     ])
                                 ]),
                                 m('div', { class: `number-hide has-text-white` }, [

@@ -35,27 +35,43 @@ const model = {
         wType: '' // 当前币种选中值
     },
     // 币种 菜单配置
-    getCurrencyMenuOption: function () {
-        const that = this;
-        return {
-            menuWidth: 102,
-            evenKey: `myWalletIndex${Math.floor(Math.random() * 10000)}`,
-            showMenu: that.showCurrencyMenu,
-            setShowMenu: type => {
-                that.showCurrencyMenu = type;
-            },
-            class: `myCoinSelect`,
-            btnClass: 'has-text-level-4',
-            activeId: cb => cb(that.form, 'wType'),
-            onClick (item) {
-                broadcast.emit({ cmd: broadcast.CHANGE_SW_CURRENCY, data: item.id });
-                that.setCurrency(item.id);
-                that.sets();
-            },
-            getList () {
-                return that.selectOp;
-            }
-        };
+    option: {
+        evenKey: "optionkey",
+        currentId: 1,
+        btnWidth: 70,
+        menuWidth: 70,
+        showMenu: false,
+        setOption (option) {
+            this.showMenu = option.showMenu;
+            this.currentId = option.currentId ? option.currentId : this.currentId;
+        },
+        onClick(item) {
+            broadcast.emit({ cmd: broadcast.CHANGE_SW_CURRENCY, data: item.text });
+            model.setCurrency(item.text);
+            model.sets();
+        },
+        menuList() {
+            return [
+                {
+                    id: 1,
+                    text: 'BTC',
+                    render() {
+                        return m('div', { class: `selectDiv` }, [
+                            m('span', { class: `has-text-primary` }, 'BTC')
+                        ]);
+                    }
+                },
+                {
+                    id: 2,
+                    text: 'USDT',
+                    render() {
+                        return m('div', { class: `selectDiv` }, [
+                            m('span', { class: `has-text-primary` }, 'USDT')
+                        ]);
+                    }
+                }
+            ];
+        }
     },
     // 设置币种
     setCurrency: function (param) {
