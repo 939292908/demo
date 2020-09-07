@@ -11,15 +11,19 @@ module.exports = {
     geetestCallBackType: '', // 极验回调类型 用于判断是邮箱还是短信的回调
     selectType: '', // 当前验证类型
     anotherType: '', // 另一种验证类型
-    selectName: {
-        sms: I18n.$t('10118')/* '短信验证码' */,
-        email: I18n.$t('10116')/* '邮箱验证码' */,
-        google: I18n.$t('10119')/* '谷歌验证码' */
+    selectName() {
+        return {
+            sms: I18n.$t('10118')/* '短信验证码' */,
+            email: I18n.$t('10116')/* '邮箱验证码' */,
+            google: I18n.$t('10119')/* '谷歌验证码' */
+        };
     }, // 选择验证类型的显示文字
-    anotherName: {
-        sms: I18n.$t('10541')/* '切换短信验证', */,
-        email: I18n.$t('10542')/* '切换邮箱验证', */,
-        google: I18n.$t('10543')/* '切换谷歌验证' */
+    anotherName() {
+        return {
+            sms: I18n.$t('10541')/* '切换短信验证', */,
+            email: I18n.$t('10542')/* '切换邮箱验证', */,
+            google: I18n.$t('10543')/* '切换谷歌验证' */
+        };
     }, // 切换选择验证类型显示的文字
     code: '', // 验证码
     smsInt: null,
