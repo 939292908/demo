@@ -52,10 +52,7 @@ module.exports = {
                                         class: `dropdown-item has-hover ${model.form.coin === item.id ? 'has-active' : ''}`,
                                         key: item.id + index,
                                         onclick () {
-                                            model.form.coin = item.id; // 修改选中id
-                                            model.curItem = item;
-                                            model.setMaxTransfer(); // 设置 最大划转
-                                            model.showCurrencyMenu = false; // 关闭菜单
+                                            model.handlerCurrencyMenuClick(item);
                                         }
                                     }, [
                                         m('span', { class: `my-menu-label` }, [
