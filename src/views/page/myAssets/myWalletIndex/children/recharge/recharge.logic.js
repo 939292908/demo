@@ -16,7 +16,7 @@ module.exports = {
     uId: '', // 用户uId
     rechargeAddr: '', // 充币地址
     qrcodeDisplayFlag: false,
-    btnCheckFlag: 'ERC20', // 默认选中第一个
+    btnCheckFlag: null, // 默认选中第一个
     labelTips: '', // 标签提示
     nameTips: null,
     memo: null, // 是否显示标签
@@ -24,7 +24,6 @@ module.exports = {
     showCurrencyMenu: false, // show币种菜单
     coinParam: null, // 传过来的币种
     chains: null, // 链名称
-    networkNum: null, // 当前选中值的网络数
     setPageData() {
         const that = this;
         this.pageData = []; // 初始化
@@ -84,37 +83,26 @@ module.exports = {
                 this.coinParam ? this.form.selectCheck = this.coinParam : this.form.selectCheck = this.selectList[0].id;
             }
         }
+        if (this.form.selectCheck === "USDT") {
+            console.log(111);
+        }
     },
     // 切换币种时的操作
     setTipsAndAddrAndCode() {
         for (const i in this.pageData) {
             if (this.pageData[i].wType === this.form.selectCheck) {
                 const networkNum = this.pageData[i].networkNum;
-                if (this.pageData[i].promptRecharge) {
-                    this.tips = this.pageData[i].promptRecharge +
+                this.tips = this.pageData[i].promptRecharge !== 0 ? this.pageData[i].promptRecharge : '' +
 
-                    // this.tips = '您只能向此地址充值' + this.form.selectCheck + '，其他资产充入' + this.form.selectCheck + '地址将无法找回' +
-                    /* 禁止向{value}地址充币除{value}之外的资产,任何充入{value}地址的非{value}资产将不可找回 */
-                    I18n.$t('10085', { value: this.form.selectCheck }) +
+                // this.tips = '您只能向此地址充值' + this.form.selectCheck + '，其他资产充入' + this.form.selectCheck + '地址将无法找回' +
+                /* 禁止向{value}地址充币除{value}之外的资产,任何充入{value}地址的非{value}资产将不可找回 */
+                I18n.$t('10085', { value: this.form.selectCheck }) +
 
-                    /* 使用{value1}地址充币需要{value2}个网络确认才能到账 */
-                    '*' + I18n.$t('10084', { value1: this.form.selectCheck, value2: networkNum }) +
+                /* 使用{value1}地址充币需要{value2}个网络确认才能到账 */
+                '*' + I18n.$t('10084', { value1: this.form.selectCheck, value2: networkNum }) +
 
-                    /* '默认充入我的钱包，您可以通过“资金划转”将资金转至交易账户或者其他账户' */
-                    '*' + I18n.$t('10085');
-                } else {
-                    // this.tips = '您只能向此地址充值' + this.form.selectCheck + '，其他资产充入' + this.form.selectCheck + '地址将无法找回' +
-                    /* 禁止向{value}地址充币除{value}之外的资产,任何充入{value}地址的非{value}资产将不可找回 */
-                    this.tips = I18n.$t('10085', { value: this.form.selectCheck }) +
-
-                    /* 使用{value1}地址充币需要{value2}个网络确认才能到账 */
-                    '*' + I18n.$t('10084', { value1: this.form.selectCheck, value2: networkNum }) +
-
-                    (this.form.selectCheck === 'EOS' || this.form.selectCheck === 'XRP' ? '*关于标签' + this.form.selectCheck + '充币时同时需要一个充币地址和' + this.form.selectCheck + '标签。标签是一种保证您的充币地址唯一性的数字串，与充币地址成对出现并一一对应。请您务必遵守正确的' + this.form.selectCheck + '充币步骤，在提币时输入完整的信息，否则将面临丢失币的风险！' : '') +
-
-                    /* '默认充入我的钱包，您可以通过“资金划转”将资金转至交易账户或者其他账户' */
-                    '*' + I18n.$t('10085');
-                }
+                /* '默认充入我的钱包，您可以通过“资金划转”将资金转至交易账户或者其他账户' */
+                '*' + I18n.$t('10085');
                 this.memo = this.pageData[i].memo; // 当前选中币种的标签是否显示
                 this.openChains = this.pageData[i].openChains; // 当前选中币种的链名称是否显示
                 this.rechargeAddr = this.pageData[i].rechargeAddr; // 当前选中币种的充币地址
@@ -185,7 +173,7 @@ module.exports = {
         Http.GetRechargeAddr({
             wType: wType
         }).then(function(arg) {
-            console.log('nzm', 'GetRechargeAddr success', arg);
+            // console.log('nzm', 'GetRechargeAddr success', arg);
             that.rechargeAddr = arg.rechargeAddr;
             m.redraw();
         }).catch(function(err) {
