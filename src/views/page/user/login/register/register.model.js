@@ -141,7 +141,7 @@ const register = {
         }).then(res => {
             if (res.result.code === 0) {
                 // 注册成功
-                window.$message({ content: '注册成功', type: 'success' });
+                window.$message({ content: I18n.$t('10539')/* '注册成功' */, type: 'success' });
                 window.router.push('/login');
             } else if (res.result.code === -1) {
                 this.geetestCallBackType = 'register';
