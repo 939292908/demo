@@ -310,6 +310,16 @@ const extract = {
         // 生命周期结束清空列表选中字段并关闭列表
         this.showCurrencyMenu = false;
         this.selectActiveId.wType = '';
+        this.errorShow = {
+            address: {
+                show: false,
+                text: ''
+            },
+            unmber: {
+                show: false,
+                text: ''
+            }
+        };
     },
     // 检查当前币种提现是否需要身份认证
     checkIdcardVerify: function() {
