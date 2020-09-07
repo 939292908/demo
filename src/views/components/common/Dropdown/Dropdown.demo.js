@@ -34,6 +34,13 @@ const obj = {
         menuWidth: 200,
         // menuHeight: 100,
         showMenu: false,
+        type: "hover",
+        renderHeader(item) {
+            return m('div', { class: `has-text-primary` }, [
+                "我是自定义",
+                item.id
+            ]);
+        },
         setOption (option) {
             this.showMenu = option.showMenu;
             this.currentId = option.currentId ? option.currentId : this.currentId;
@@ -44,7 +51,7 @@ const obj = {
                     id: 1,
                     render() {
                         return m('div', { class: `` }, [
-                            m('span', { class: `has-text-primary` }, I18n.$t('10063')),
+                            m('span', { class: `` }, I18n.$t('10063')),
                             m('span', { class: `` }, " | option1-1")
                         ]);
                     }
@@ -53,7 +60,7 @@ const obj = {
                     id: 2,
                     render() {
                         return m('div', { class: `` }, [
-                            m('span', { class: `has-text-primary` }, I18n.$t('10063')),
+                            m('span', { class: `` }, I18n.$t('10063')),
                             m('span', { class: `` }, " | option1-2")
                         ]);
                     }
