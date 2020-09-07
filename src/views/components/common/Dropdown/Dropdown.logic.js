@@ -2,9 +2,14 @@ const broadcast = require('@/broadcast/broadcast');
 
 module.exports = {
     // 获取 选中显示内容 / menuList: 菜单列表 currentId: 当前选中id
-    getCurrentContent (menuList, currentId) {
-        const currentItem = menuList.find(item => item.id === currentId);
-        return currentItem?.render ? currentItem.render() : currentItem.label;
+    getCurrentContent (vnode) {
+        const currentItem = vnode.attrs.menuList().find(item => item.id === vnode.attrs.currentId);
+        // renderHeader
+        if (vnode.attrs.renderHeader) {
+            return vnode.attrs.renderHeader(currentItem);
+        } else {
+            return currentItem?.render ? currentItem.render() : currentItem.label;
+        }
     },
     // 选中内容 click
     currentContentClick(vnode) {

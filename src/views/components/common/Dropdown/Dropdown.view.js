@@ -39,7 +39,7 @@ module.exports = {
                         logic.currentContentClick(vnode); // click
                     }
                 }, [
-                    logic.getCurrentContent(vnode.attrs.menuList(), vnode.attrs.currentId), // 内容
+                    logic.getCurrentContent(vnode), // 内容
                     m('i', { class: `my-trigger-icon iconfont icon-xiala has-text-primary` }) // icon
                 ])
             ]),
