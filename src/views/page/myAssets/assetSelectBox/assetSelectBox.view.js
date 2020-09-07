@@ -1,6 +1,6 @@
 const m = require('mithril');
 const AssetSelectBox = require('./assetSelectBox.model');
-const InputWithComponent = require('../../../components/inputWithComponent/inputWithComponent.view');
+// const InputWithComponent = require('../../../components/inputWithComponent/inputWithComponent.view');
 const I18n = require('@/languages/I18n').default;
 const Dropdown = require('@/views/components/common/newDropdown/dropdown.view');
 require('./assetSelectBox.scss');
@@ -42,43 +42,54 @@ module.exports = {
             ]),
             m('div.columns.is-variable.is-6', {}, [
                 m('div.column.is-3', {}, [
-                    m(InputWithComponent, {
-                        hiddenLine: true,
-                        options: {
-                            id: 'asset-select-box-time-selector',
-                            autocomplete: "off",
-                            oninput: e => {},
-                            value: AssetSelectBox.date
-                        },
-                        rightComponents: m('div..date-picker-icon', {
-                            onclick: () => {
-                                if (AssetSelectBox.date) {
-                                    AssetSelectBox.date = '';
-                                    AssetSelectBox.picker.reset();
-                                } else {
-                                    AssetSelectBox.picker.show();
+                    m('div.dropdown.w100', {
+                        class: AssetSelectBox.dateIsActive ? 'is-active' : ''
+                    }, [
+                        m('div.dropdown-trigger.w100', {}, [
+                            m('button.button.has-text-left.w100', {
+                                'aria-haspopup': true,
+                                'aria-controls': 'assetSelectBox-date-dropdown-list',
+                                onclick: e => {
+                                    AssetSelectBox.openDate(vnode, e);
                                 }
-                            }
+                            }, [
+                                m('span.w100', {}, [AssetSelectBox.date]),
+                                m('span.icon.is-small', { 'aria-hidden': true }, [
+                                    m('i.iconfont.icon-xiala.iconfont-small')
+                                ])
+                            ])
+                        ]),
+                        m('div.dropdown-menu', {
+                            id: 'assetSelectBox-date-dropdown-list',
+                            role: 'menu'
                         }, [
-                            m('i.iconfont.pr-2.iconfont-small', {
-                                class: AssetSelectBox.date ? 'icon-Close' : 'icon-xiala'
-                            })
+                            m('div.dropdown-content.pa-0', {}, [
+                                m('input', {
+                                    id: 'asset-select-box-time-selector',
+                                    style: 'display:none',
+                                    autocomplete: "off",
+                                    oninput: e => {},
+                                    value: AssetSelectBox.date
+                                }, [])
+                            ])
                         ])
-                    })
+                    ])
                 ]),
                 m('div.column.is-3', {}, [
                     m(Dropdown, {
-                        id: 'assetSelectBox-icon-dropdown-list',
+                        id: 'assetSelectBox-coin-dropdown-list',
                         class: 'w100',
-                        isActive: AssetSelectBox.iconIsActive,
+                        isActive: AssetSelectBox.coinIsActive,
                         list: coinList,
                         onchange: item => {
-                            AssetSelectBox.iconIsActive = false;
+                            AssetSelectBox.coinIsActive = false;
+                            AssetSelectBox.dateIsActive = false;
                             vnode.attrs.onSelectCoin(item.key);
                         },
                         onActive: () => {
                             AssetSelectBox.typeIsActive = false;
-                            AssetSelectBox.iconIsActive = !AssetSelectBox.iconIsActive;
+                            AssetSelectBox.dateIsActive = false;
+                            AssetSelectBox.coinIsActive = !AssetSelectBox.coinIsActive;
                         }
                     })
                 ]),
@@ -90,10 +101,12 @@ module.exports = {
                         list: typeList,
                         onchange: item => {
                             AssetSelectBox.typeIsActive = false;
+                            AssetSelectBox.dateIsActive = false;
                             vnode.attrs.onSelectType(item.key);
                         },
                         onActive: () => {
-                            AssetSelectBox.iconIsActive = false;
+                            AssetSelectBox.coinIsActive = false;
+                            AssetSelectBox.dateIsActive = false;
                             AssetSelectBox.typeIsActive = !AssetSelectBox.typeIsActive;
                         }
                     })
