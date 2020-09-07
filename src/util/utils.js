@@ -388,4 +388,31 @@ utils.createScript = function({ src, type = 'text/javascript', id, async = true,
     document.getElementsByTagName('head')[0].appendChild(script);
 };
 
+utils.getTransferHisStr = function(p, coin) {
+    const obj = {
+        inCoin: '买权证扣本金',
+        inFee: '买权证扣手续费',
+        renewFee: '续期扣手续费',
+        outProCoin: '买权证划拨权证币',
+        outFangzhou: '方舟计划派发' + coin,
+        outInterest: '合约派息',
+        outCoin: '合约本金出金',
+        inProCoin: '合约权证出金',
+        teamCoin: '团队奖励',
+        groupCoin: '社区分红',
+        productCoin: '权证结算',
+        plateCoin: '平台分红',
+        powCoin: 'POW释放奖励',
+        userActiveAward: '新会员推荐奖金',
+        x_pocbuy: '矿机购买',
+        x_pochandlingfee: '交易手续费',
+        x_poccashback: '直推返利',
+        x_teamback: '团队返利',
+        fangzhouLock: '方舟余币锁仓',
+        fangzhouRelease: '方舟余币释放',
+        incomeRelease: '派息锁仓释放'
+    };
+    return obj[p] || '';
+};
+
 export default utils;
