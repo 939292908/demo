@@ -111,7 +111,7 @@ module.exports = {
                         m('span.title-small', {}, I18n.$t('10086') /* '近期充币记录' */),
                         m(Tooltip, {
                             label: m('i.iconfont.icon-Tooltip.iconfont-large'),
-                            content: I18n.$t('10509') /* '只展示近期十条记录' */,
+                            content: I18n.$t('10509')/* '只展示近期十条记录' */,
                             hiddenArrows: false
                         }),
                         m('span.all', { class: `has-text-primary cursor-pointer`, onclick: () => { window.router.push('/assetRecords'); } }, I18n.$t('10087') /* '全部记录' */)

@@ -10,12 +10,12 @@ module.exports = {
         table.push(
             m('div.columns.body-4.has-text-level-4', {}, [
                 m('div.column.is-1', {}, [I18n.$t('10063')/* '币种' */]),
-                m('div.column.is-3', {}, [I18n.$t('10088')/* '类型' */]),
+                m('div.column.is-2', {}, [I18n.$t('10088')/* '类型' */]),
                 m('div.column.is-3', {}, [I18n.$t('10089')/* '数量' */]),
                 // m('div.column.is-2', {}, [I18n.$t('10099')/* '手续费' */]),
                 m('div.column.is-2', {}, [I18n.$t('10090')/* '状态' */]),
                 m('div.column.is-2', {}, [I18n.$t('10091')/* '时间' */]),
-                m('div.column.is-1.has-text-right', {}, [I18n.$t('10092')/* '备注' */])
+                m('div.column.is-2.has-text-right', {}, [I18n.$t('10092')/* '备注' */])
             ])
         );
         if (vnode.attrs.loading) {
@@ -56,12 +56,12 @@ module.exports = {
                 table.push(
                     m('div.columns.body-4.has-text-level-1.my-7', {}, [
                         m('div.column.is-1', {}, [item.coin]),
-                        m('div.column.is-3', {}, [item.des]),
+                        m('div.column.is-2', {}, [item.des]),
                         m('div.column.is-3', {}, [item.num + ' ' + item.coin]),
                         // m('div.column.is-2', {}, [(item.fee || 0) + ' ' + item.coin]),
                         m('div.column.is-2', {}, [item.status]),
                         m('div.column.is-2', {}, [item.time]),
-                        m('div.column.is-1.has-text-right', {}, other)
+                        m('div.column.is-2.has-text-right', {}, other)
                     ])
                 );
                 if (item.info ? item.info.length : false) {
