@@ -28,7 +28,7 @@ module.exports = {
         return m('div', { class: `page-extract-Coin-index` }, [
             m('nav.has-bg-sub-level-1', m('div.content-width marg-auto', m(Header, {
                 highlightFlag: 0,
-                navList: [{ to: '/myWalletIndex', title: '我的资产' }, { to: '/assetRecords', title: '资金记录' }]
+                navList: [{ to: '/myWalletIndex', title: I18n.$t('10052')/* '我的资产' */ }, { to: '/assetRecords', title: I18n.$t('10053')/* '资金记录' */ }]
             }))),
             m('div.theme--light extract-coin-contont', [
                 m(LeveL3),
@@ -36,10 +36,10 @@ module.exports = {
                     m('div.extract-coin-from', m(From)),
                     m('div.w100.has-bg-level-2', {}, [
                         m('div.pa-5', {}, [
-                            m('span.title-small', {}, ['近期提币记录']),
+                            m('span.title-small', {}, [I18n.$t('10112')/* '近期提币记录' */]),
                             m(Tooltip, {
                                 label: m('i.iconfont.icon-Tooltip.iconfont-large'),
-                                content: '只展示近期十条记录',
+                                content: I18n.$t('10509')/* '只展示近期十条记录' */,
                                 hiddenArrows: false
                             }),
                             m('span.all-records', {
