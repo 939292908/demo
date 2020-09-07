@@ -272,6 +272,16 @@ const extract = {
         const self = this;
         wlt.init();
         this.initGeetest();
+        self.errorShow = {
+            address: {
+                show: false,
+                text: ''
+            },
+            unmber: {
+                show: false,
+                text: ''
+            }
+        };
         this.initWType = initWType;
         this.locale = l180n.getLocale();
         self.UserInfo = UserInfo.getAccount();
