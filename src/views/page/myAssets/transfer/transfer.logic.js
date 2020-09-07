@@ -328,8 +328,9 @@ const model = {
                 if (Number(res.result.code) === 9040) {
                     model.setTransferModalOption({ isShow: false }); // 划转弹框隐藏
                     model.showlegalTenderModal = true; // 法币弹框显示
+                } else {
+                    window.$message({ title: I18n.$t('10410' /** 提示 */), content: res.result.msg, type: 'danger' });
                 }
-                window.$message({ title: I18n.$t('10410' /** 提示 */), content: res.result.msg, type: 'danger' });
             }
             this.successCallback(); // 成功回调
         }).catch(err => {
