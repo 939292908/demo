@@ -586,7 +586,7 @@ module.exports = {
                     toType.transfer = true;
                 } else if (aType === '03' && item.addr.search("foltra") !== -1) {
                     // des = '划至跟单账户';
-                    des = I18n.$t('10149', { value: I18n.$t('跟单账户') }); // 跟单账户
+                    des = I18n.$t('10149', { value: I18n.$t('10074') }); // 跟单账户
                     toType.transfer = true;
                 } else if (aType === '06' && item.addr.search("foltra-1") !== -1) {
                     // des = '划至我的钱包';
