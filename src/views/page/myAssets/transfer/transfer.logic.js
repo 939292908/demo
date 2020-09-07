@@ -4,24 +4,22 @@
  * transferFrom: 默认选中 从xx钱包 ('01': 合约账户, '02': 币币账户, '03': 我的钱包, '04': 法币账户)
  * coin: 默认选中 币种 (USDT)
  */
+var m = require("mithril");
 const wlt = require('@/models/wlt/wlt');
 const I18n = require('@/languages/I18n').default;
 const Http = require('@/api').webApi;
-const broadcast = require('@/broadcast/broadcast');
 
 const model = {
     vnode: {},
-    curItem: {}, // 币种下拉
     isShowTransferModal: false, // 划转弹框 显示/隐藏
-    showCurrencyMenu: false, // show币种菜单
     showFromMenu: false, // show from菜单
     showMenuTo: false, // show to菜单
     showlegalTenderModal: false, // show 法币提示弹框
     wallets: wlt.wallet, // all数据
     form: {
-        coin: "", // 币种 value
-        transferFrom: "", // 从xx钱包 value
-        transferTo: "", // 到xx钱包 value
+        // coin: "", // 币种 value
+        // transferFrom: "", // 从xx钱包 value
+        // transferTo: "", // 到xx钱包 value
         num: '', // 数量
         maxTransfer: 0 // 最大划转
     },
@@ -48,8 +46,8 @@ const model = {
     setTransferModalOption(option) {
         model.isShowTransferModal = option.isShow;
         if (option.successCallback) model.successCallback = option.successCallback;
-        if (option.transferFrom) model.form.transferFrom = option.transferFrom;
-        if (option.coin) model.form.coin = option.coin;
+        if (option.transferFrom) model.fromMenuOption.currentId = option.transferFrom;
+        if (option.coin) model.coinMenuOption.currentId = option.coin;
         this.initTransferInfo(); // 初始化 划转信息
     },
     // 初始化语言
@@ -101,7 +99,7 @@ const model = {
         ];
         this.initCoinList(); // 初始化 币种下拉列表
         this.initCoinValue();// 初始化 币种下拉value
-        this.initWalletListByWTypeAndValue(this.form.coin); // 初始化钱包 list和value
+        this.initWalletListByWTypeAndValue(this.coinMenuOption.currentId); // 初始化钱包 list和value
         this.setMaxTransfer(); // 设置 最大划转
     },
     // 初始化 币种下拉列表
@@ -119,20 +117,26 @@ const model = {
                     item.id = item.wType;
                     item.label = item.wType;
                     item.coinName = wlt.wltFullName[item.wType].name;
+                    item.render = params => {
+                        return m('div', { class: `` }, [
+                            m('span', { class: `mr-2` }, item.label),
+                            m('span', { class: `has-text-level-4` }, item.coinName)
+                        ]);
+                    };
                     this.canTransferCoin.push(item); // push
                 }
             });
         });
         // 初始化 币种默认选中
         if (this.canTransferCoin[0]) {
-            this.curItem = this.canTransferCoin.find(item => item.id === this.form.coin) || this.canTransferCoin[0];
+            this.curItem = this.canTransferCoin.find(item => item.id === this.coinMenuOption.currentId) || this.canTransferCoin[0];
         }
         // console.log("币种下拉", this.canTransferCoin);
     },
     // 初始化 币种下拉value
     initCoinValue() {
         if (this.canTransferCoin[0]) { // 有币种下拉
-            this.form.coin = this.form.coin ? this.form.coin : this.canTransferCoin[0].wType; // 默认选中第1个
+            this.coinMenuOption.currentId = this.coinMenuOption.currentId ? this.coinMenuOption.currentId : this.canTransferCoin[0].wType; // 默认选中第1个
         }
     },
     // 初始化 钱包list和value
@@ -169,25 +173,26 @@ const model = {
         // to钱包value
         const buildToWalletValue = value => {
             // 有权限 且 不等于from钱包value
-            if (this.authWltList.some(item => item.id === value) && value !== this.form.transferFrom) {
+            if (this.authWltList.some(item => item.id === value) && value !== this.fromMenuOption.currentId) {
                 return value;
             } else {
                 // 无权限 默认除不能和from钱包value相同的第1条
-                const toWlt = this.authWltList.filter(item => item.id !== this.form.transferFrom);
+                const toWlt = this.authWltList.filter(item => item.id !== this.fromMenuOption.currentId);
                 return toWlt[0] && toWlt[0].id;
             }
         };
 
         // 从xx钱包
-        this.form.transferFrom = buildFromWalletValue(this.form.transferFrom || '03');
+        this.fromMenuOption.currentId = buildFromWalletValue(this.fromMenuOption.currentId || '03');
         // 到xx钱包
-        this.form.transferTo = buildToWalletValue(this.form.transferTo);
+        this.toMenuOption.currentId = buildToWalletValue(this.toMenuOption.currentId);
+        // console.log(this.fromMenuOption.currentId, this.toMenuOption.currentId);
     },
     // 初始化 2个钱包list （依赖钱包value 和 coin）
     initFromAndToWalletListByValue () {
-        // this.fromWltList = this.authWltList.filter(item => item.id !== this.form.transferTo);
+        // this.fromWltList = this.authWltList.filter(item => item.id !== this.toMenuOption.currentId);
         this.fromWltList = this.authWltList;
-        this.toWltList = this.authWltList.filter(item => item.id !== this.form.transferFrom);
+        this.toWltList = this.authWltList.filter(item => item.id !== this.fromMenuOption.currentId);
         // console.log("this.authWltList", this.authWltList, "this.fromWltList", this.fromWltList, "this.toWltList", this.toWltList);
     },
     // handler 切换按钮click
@@ -217,25 +222,16 @@ const model = {
         wlt.init(); // 更新数据
         this.reset(); // 重置
     },
-    // handler 币种下拉菜单click
-    handlerCurrencyMenuClick(item) {
-        console.log(this.allWalletList);
-        this.form.coin = item.id; // 修改选中id
-        this.curItem = item;
-        this.setMaxTransfer(); // 设置 最大划转
-        this.showCurrencyMenu = false; // 关闭菜单
-        this.initWalletListByWTypeAndValue(this.form.coin); // 初始化钱包 list和value
-    },
     // 钱包value切换
     switchTransfer () {
-        [this.form.transferFrom, this.form.transferTo] = [this.form.transferTo, this.form.transferFrom];
+        [this.fromMenuOption.currentId, this.toMenuOption.currentId] = [this.toMenuOption.currentId, this.fromMenuOption.currentId];
     },
     // 设置 最大划转 (依赖钱包名称, 币种)
     setMaxTransfer () {
-        if (wlt.wallet && this.form.transferFrom) { // 所有钱包 和 从xx钱包id 都存在
-            const wallet = wlt.wallet[this.form.transferFrom]; // 对应钱包
+        if (wlt.wallet && this.fromMenuOption.currentId) { // 所有钱包 和 从xx钱包id 都存在
+            const wallet = wlt.wallet[this.fromMenuOption.currentId]; // 对应钱包
             for (const item of wallet) {
-                if (item.wType === this.form.coin) { // 找到对应币种
+                if (item.wType === this.coinMenuOption.currentId) { // 找到对应币种
                     this.form.maxTransfer = item.wdrawable || 0; // 设置最大可以金额
                 }
             }
@@ -244,61 +240,60 @@ const model = {
         }
     },
     // 配置 币种菜单
-    // getCurrencyMenuOption() {
-    //     return {
-    //         evenKey: `myDropdown${Math.floor(Math.random() * 10000)}`,
-    //         activeId: cb => cb(model.form, 'coin'),
-    //         showMenu: model.showCurrencyMenu,
-    //         curId: "",
-    //         curItem: {},
-    //         setShowMenu: type => {
-    //             model.showCurrencyMenu = type;
-    //         },
-    //         onClick (itme) {
-    //             model.setMaxTransfer(); // 设置 最大划转
-    //         },
-    //         getList () {
-    //             return model.canTransferCoin;
-    //         }
-    //     };
-    // },
+    coinMenuOption: {
+        evenKey: "coinMenuOption",
+        showMenu: false,
+        currentId: "",
+        menuHeight: 260,
+        setOption (option) {
+            this.showMenu = option.showMenu;
+            this.currentId = option.currentId ? option.currentId : this.currentId;
+        },
+        menuClick (item) {
+            model.setMaxTransfer(); // 设置 最大划转
+            model.initWalletListByWTypeAndValue(this.currentId); // 初始化钱包 list和value
+        },
+        menuList() {
+            return model.canTransferCoin;
+        }
+    },
     // 配置 从xx钱包菜单
-    getFromMenuOption() {
-        return {
-            evenKey: `myDropdown${Math.floor(Math.random() * 10000)}`,
-            activeId: cb => cb(model.form, 'transferFrom'),
-            showMenu: model.showFromMenu,
-            setShowMenu: type => {
-                model.showFromMenu = type;
-            },
-            onClick (itme) {
-                // console.log(model.form.transferFrom, model.form.transferTo);
-                model.initWalletListByWTypeAndValue(model.form.coin); // 初始化 2个钱包value/下拉列表
-                model.setMaxTransfer(); // 设置 最大划转
-            },
-            getList () {
-                return model.fromWltList;
-            }
-        };
+    fromMenuOption: {
+        evenKey: "fromMenuOption",
+        showMenu: false,
+        currentId: "",
+        menuHeight: 180,
+        setOption (option) {
+            this.showMenu = option.showMenu;
+            this.currentId = option.currentId ? option.currentId : this.currentId;
+        },
+        menuClick (item) {
+            console.log(model.fromMenuOption.currentId, model.toMenuOption.currentId);
+            model.initWalletListByWTypeAndValue(model.coinMenuOption.currentId); // 初始化 2个钱包value/下拉列表
+            model.setMaxTransfer(); // 设置 最大划转
+        },
+        menuList() {
+            return model.fromWltList;
+        }
     },
     // 配置 到xx钱包菜单
-    getToMenuOption() {
-        return {
-            evenKey: `myDropdown${Math.floor(Math.random() * 10000)}`,
-            activeId: cb => cb(model.form, 'transferTo'),
-            showMenu: model.showMenuTo,
-            setShowMenu: type => {
-                model.showMenuTo = type;
-            },
-            onClick (itme) {
-                // console.log(model.form.transferFrom, model.form.transferTo);
-                model.initWalletListByWTypeAndValue(model.form.coin); // 初始化 2个钱包value/下拉列表
-                model.setMaxTransfer(); // 设置 最大划转
-            },
-            getList () {
-                return model.toWltList;
-            }
-        };
+    toMenuOption: {
+        evenKey: "toMenuOption",
+        showMenu: false,
+        currentId: "",
+        menuHeight: 180,
+        setOption (option) {
+            this.showMenu = option.showMenu;
+            this.currentId = option.currentId ? option.currentId : this.currentId;
+        },
+        menuClick (item) {
+            // console.log(model.fromMenuOption.currentId, model.toMenuOption.currentId);
+            model.initWalletListByWTypeAndValue(model.coinMenuOption.currentId); // 初始化 2个钱包value/下拉列表
+            model.setMaxTransfer(); // 设置 最大划转
+        },
+        menuList() {
+            return model.toWltList;
+        }
     },
     // 提交
     submit () {
@@ -315,9 +310,9 @@ const model = {
         model.setMaxTransfer(); // 设置 最大划转
         // api
         const params = {
-            aTypeFrom: this.form.transferFrom,
-            aTypeTo: this.form.transferTo,
-            wType: this.form.coin,
+            aTypeFrom: this.fromMenuOption.currentId,
+            aTypeTo: this.toMenuOption.currentId,
+            wType: this.coinMenuOption.currentId,
             num: this.form.num
         };
         Http.postTransfer(params).then(res => {
@@ -332,6 +327,7 @@ const model = {
                 if (Number(res.result.code) === 9040) {
                     model.setTransferModalOption({ isShow: false }); // 划转弹框隐藏
                     model.showlegalTenderModal = true; // 法币弹框显示
+                    m.redraw();
                 } else {
                     window.$message({ title: I18n.$t('10410' /** 提示 */), content: res.result.msg, type: 'danger' });
                 }
@@ -344,28 +340,15 @@ const model = {
     },
     // 重置
     reset() {
-        this.form.coin = ""; // 币种 value
-        this.form.transferFrom = ""; // 从xx钱包 value
-        this.form.transferTo = ""; // 到xx钱包 value
+        this.coinMenuOption.currentId = ""; // 币种 value
+        this.fromMenuOption.currentId = ""; // 从xx钱包 value
+        this.toMenuOption.currentId = ""; // 到xx钱包 value
         this.form.num = ""; // 数量
         this.form.maxTransfer = ""; // 最大划转
     },
     initEVBUS () {
-        // 订阅 body点击事件广播
-        broadcast.onMsg({
-            key: "transferClickBody",
-            cmd: broadcast.EV_ClICKBODY,
-            cb: function () {
-                model.showCurrencyMenu = false;
-            }
-        });
     },
     rmEVBUS () {
-        // 删除 body点击事件广播
-        broadcast.offMsg({
-            key: "transferClickBody",
-            isall: true
-        });
     },
     oninit (vnode) {
         this.vnode = vnode;
