@@ -237,25 +237,25 @@ const model = {
         self.sets();
 
         broadcast.onMsg({
-            key: 'view-pages-Myassets-TablegB',
+            key: this.currency,
             cmd: broadcast.MSG_LANGUAGE_UPD,
             cb: (arg) => {
-                // console.log('切换中英文');
+                // console.log('切换语言');
                 self.setFirstNav();
-            }
-        });
-
-        broadcast.onMsg({
-            key: 'view-pages-Myassets-TablegB',
-            cmd: broadcast.GET_FUNLIST_READY,
-            cb: (arg) => {
-                console.log('123', arg);
             }
         });
 
         self.form.wType = self.currency;
     },
     createFn: function() {
+        broadcast.onMsg({
+            key: this.currency,
+            cmd: broadcast.GET_FUNLIST_READY,
+            cb: (arg) => {
+                console.log('123', arg);
+                m.redraw();
+            }
+        });
         this.transferFlag = gM.getFunctions().transfer;
         this.rechargeFlag = gM.getFunctions().recharge;
         this.withdrawFlag = gM.getFunctions().withdraw;
