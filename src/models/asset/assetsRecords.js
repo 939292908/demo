@@ -448,6 +448,8 @@ module.exports = {
                     } else if (item.addr.search("TASK-SIGN") !== -1) {
                         // des = '签到赠金';
                         des = I18n.$t('10366');// 签到赠金
+                    } else if (item.addr.search('toutl_03') !== -1) {
+                        des = I18n.$t('10149', { value: I18n.$t('10055') });// "划至我的钱包"
                     } else {
                         des = utils.getTransferHisStr(item.addr, item.wType);
                     }
