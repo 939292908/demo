@@ -1,5 +1,5 @@
 import { webApi } from '../../api';
-
+import errCode from '@/util/errCode';
 import I18n from '../../languages/I18n';
 import config from '@/config';
 
@@ -85,7 +85,7 @@ export default {
                 this.finished();
             } else {
                 window.$message({
-                    content: res.result.msg,
+                    content: errCode.getWebApiErrorCode(res.result.code),
                     type: 'danger'
                 });
             }
@@ -117,7 +117,7 @@ export default {
                 this.finished();
             } else {
                 window.$message({
-                    content: res.result.msg,
+                    content: errCode.getWebApiErrorCode(res.result.code),
                     type: 'danger'
                 });
             }
@@ -140,7 +140,7 @@ export default {
                 this.finished();
             } else {
                 window.$message({
-                    content: res.result.msg,
+                    content: errCode.getWebApiErrorCode(res.result.code),
                     type: 'danger'
                 });
             }
