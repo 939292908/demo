@@ -12,7 +12,7 @@
 
 const m = require("mithril");
 const config = require('@/config.js');
-
+const I18n = require('@/languages/I18n').default;
 module.exports = {
     oninit (vnode) {
 
@@ -42,7 +42,7 @@ module.exports = {
                 // 底部
                 m("footer", { class: "modal-card-foot has-bg-level-2 pa-7" + ((vnode.attrs.slot?.footer || vnode.attrs.onOk) ? '' : ' is-hidden') }, vnode.attrs.slot?.footer ? vnode.attrs.slot.footer : vnode.attrs.onOk ? [
                     m("button", { class: "button is-primary font-size-2 has-text-white modal-default-btn button-large", onclick: vnode.attrs.onOk }, [
-                        '确定'
+                        I18n.$t('10337') // '确定'
                     ])
                 ] : [])
             ])

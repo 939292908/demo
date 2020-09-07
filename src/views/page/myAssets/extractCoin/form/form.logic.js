@@ -255,7 +255,7 @@ const extract = {
     },
     handleUserCanAction: function () {
         if (this.UserInfo.setting2fa.email !== 1 || (this.UserInfo.setting2fa.google !== 1 && this.UserInfo.setting2fa.phone !== 1)) {
-            return this.handleTotalShow({ content: l180n.$t('10404') + l180n.$t('10403') + '。' /* '提币需邮件确认，请先绑定邮箱 为了您的账户安全，还需绑定手机或谷歌' */, isLinshiErWeiMa: true });
+            return this.handleTotalShow({ content: l180n.$t('10540') /* '提币需邮件确认，请先绑定邮箱 为了您的账户安全，还需绑定手机或谷歌' */, isLinshiErWeiMa: true });
         }
         // if (this.UserInfo.setting2fa.email !== 1) {
         //     return this.handleTotalShow({ content: l180n.$t('10404') /* '提币需邮件确认，请先绑定邮箱' */, buttonText: l180n.$t('10229') /* '邮箱验证' */, buttonClick: () => { m.route.set("/my"); } });
@@ -313,9 +313,10 @@ const extract = {
     },
     // 检查当前币种提现是否需要身份认证
     checkIdcardVerify: function() {
-        console.log('checkIdcardVerify', this.currentSelect);
         if (this.currentSelect.Setting.idcardVerifyWithdraw === true) {
             const account = globalModels.getAccount();
+            console.log('checkIdcardVerify', this.currentSelect, account);
+            if (extract.popUpData.show) return;
             if (account.iStatus === 0 || account.iStatus === 2) {
                 this.handleTotalShow({ content: l180n.$t('10534') /* ' 为了您的账户安全，请按照提示实名认证！' */, isLinshiErWeiMa: true });
             } else if (account.iStatus === 1) {

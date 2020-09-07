@@ -112,9 +112,10 @@ const model = {
             // 遍历每个钱包的币种
             data.list.forEach(item => {
                 // 币种是否出现在2个钱包
-                const hasMore = this.allWalletList.some((data2, index2) => index !== index2 && data2.list.some(item2 => item2.wType === item.wType));
+                // const hasMore = this.allWalletList.some((data2, index2) => index !== index2 && data2.list.some(item2 => item2.wType === item.wType));
                 // 币种是否重复
-                if (hasMore && !this.canTransferCoin.some(item3 => item3.wType === item.wType)) {
+                // if (hasMore && !this.canTransferCoin.some(item3 => item3.wType === item.wType)) {
+                if (!this.canTransferCoin.some(item3 => item3.wType === item.wType)) {
                     item.id = item.wType;
                     item.label = item.wType;
                     item.coinName = wlt.wltFullName[item.wType].name;
@@ -131,11 +132,6 @@ const model = {
     // 初始化 币种下拉value
     initCoinValue() {
         if (this.canTransferCoin[0]) { // 有币种下拉
-            // if (this.canTransferCoin.some(item => item.wType === this.vnode.attrs.coin)) { // 有传value
-            //     this.form.coin = this.vnode.attrs.coin;
-            // } else { // 没传
-            //     this.form.coin = this.canTransferCoin[0].wType; // 默认选中第1个
-            // }
             this.form.coin = this.form.coin ? this.form.coin : this.canTransferCoin[0].wType; // 默认选中第1个
         }
     },
@@ -183,15 +179,14 @@ const model = {
         };
 
         // 从xx钱包
-        // this.form.transferFrom = buildFromWalletValue(this.vnode.attrs.transferFrom || '03');
         this.form.transferFrom = buildFromWalletValue(this.form.transferFrom || '03');
         // 到xx钱包
-        // this.form.transferTo = buildToWalletValue(this.vnode.attrs.transferTo);
         this.form.transferTo = buildToWalletValue(this.form.transferTo);
     },
-    // 初始化 2个钱包list （依赖钱包value）
+    // 初始化 2个钱包list （依赖钱包value 和 coin）
     initFromAndToWalletListByValue () {
-        this.fromWltList = this.authWltList.filter(item => item.id !== this.form.transferTo);
+        // this.fromWltList = this.authWltList.filter(item => item.id !== this.form.transferTo);
+        this.fromWltList = this.authWltList;
         this.toWltList = this.authWltList.filter(item => item.id !== this.form.transferFrom);
         // console.log("this.authWltList", this.authWltList, "this.fromWltList", this.fromWltList, "this.toWltList", this.toWltList);
     },
@@ -221,6 +216,15 @@ const model = {
         this.showlegalTenderModal = false; // 弹框隐藏
         wlt.init(); // 更新数据
         this.reset(); // 重置
+    },
+    // handler 币种下拉菜单click
+    handlerCurrencyMenuClick(item) {
+        console.log(this.allWalletList);
+        this.form.coin = item.id; // 修改选中id
+        this.curItem = item;
+        this.setMaxTransfer(); // 设置 最大划转
+        this.showCurrencyMenu = false; // 关闭菜单
+        this.initWalletListByWTypeAndValue(this.form.coin); // 初始化钱包 list和value
     },
     // 钱包value切换
     switchTransfer () {
@@ -268,8 +272,8 @@ const model = {
                 model.showFromMenu = type;
             },
             onClick (itme) {
-                console.log(itme, model.form.transferFrom);
-                model.initFromAndToWalletListByValue(); // 初始化 2个钱包下拉列表 （依赖钱包value）
+                // console.log(model.form.transferFrom, model.form.transferTo);
+                model.initWalletListByWTypeAndValue(model.form.coin); // 初始化 2个钱包value/下拉列表
                 model.setMaxTransfer(); // 设置 最大划转
             },
             getList () {
@@ -287,8 +291,8 @@ const model = {
                 model.showMenuTo = type;
             },
             onClick (itme) {
-                console.log(itme, model.form.transferTo);
-                model.initFromAndToWalletListByValue(); // 初始化 2个钱包下拉列表 （依赖钱包value）
+                // console.log(model.form.transferFrom, model.form.transferTo);
+                model.initWalletListByWTypeAndValue(model.form.coin); // 初始化 2个钱包value/下拉列表
                 model.setMaxTransfer(); // 设置 最大划转
             },
             getList () {
@@ -328,8 +332,9 @@ const model = {
                 if (Number(res.result.code) === 9040) {
                     model.setTransferModalOption({ isShow: false }); // 划转弹框隐藏
                     model.showlegalTenderModal = true; // 法币弹框显示
+                } else {
+                    window.$message({ title: I18n.$t('10410' /** 提示 */), content: res.result.msg, type: 'danger' });
                 }
-                window.$message({ title: I18n.$t('10410' /** 提示 */), content: res.result.msg, type: 'danger' });
             }
             this.successCallback(); // 成功回调
         }).catch(err => {

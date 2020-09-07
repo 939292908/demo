@@ -6,8 +6,9 @@ const broadcast = require('@/broadcast/broadcast');
 module.exports = {
     picker: null,
     date: '',
-    iconIsActive: false,
+    coinIsActive: false,
     typeIsActive: false,
+    dateIsActive: false,
     oncreate(vnode) {
         this.initPicker(vnode);
         broadcast.onMsg({
@@ -34,8 +35,9 @@ module.exports = {
             }
         });
         window.onclick = e => {
-            this.iconIsActive = false;
+            this.coinIsActive = false;
             this.typeIsActive = false;
+            this.dateIsActive = false;
             m.redraw();
         };
     },
@@ -45,18 +47,19 @@ module.exports = {
             field: document.getElementById('asset-select-box-time-selector'),
             singleDate: false,
             numberOfMonths: 2,
+            inline: true,
             lang: I18n.getLocale(),
             locale: {
                 buttons: {
                     prev: '←',
                     next: '→',
                     close: '×',
-                    reset: '清除',
-                    apply: '确定'
+                    reset: I18n.$t('10345')/* '清除' */,
+                    apply: I18n.$t('10337')/* '确定' */
                 },
                 tooltip: {
-                    one: '天',
-                    other: '天'
+                    one: I18n.$t('10344')/* '天', */,
+                    other: I18n.$t('10344')/* '天' */
                 },
                 tooltipOnDisabled: null,
                 pluralize: function(i, locale) {
@@ -91,6 +94,7 @@ module.exports = {
         time[0] = start / 1000;
         time[1] = end / 1000 + 24 * 60 * 60;
         vnode.attrs.onSelectTime(time);
+        this.dateIsActive = false;
     },
     onremove() {
         this.picker.destroy();
@@ -107,5 +111,18 @@ module.exports = {
             isall: true
         });
         window.onclick = null;
+    },
+    openDate(vnode, e) {
+        const time = [];
+        this.date = '';
+        this.picker.setDateRange(0, 0);
+        vnode.attrs.onSelectTime(time);
+        this.typeIsActive = false;
+        this.coinIsActive = false;
+        this.dateIsActive = !this.dateIsActive;
+        this.stopFunc(e);
+    },
+    stopFunc(e) {
+        e.stopPropagation ? e.stopPropagation() : e.cancelBubble = true;
     }
 };

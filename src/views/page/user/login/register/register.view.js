@@ -166,39 +166,37 @@ module.exports = {
                             }, []),
                             m('label.checkbox.body-3', {}, [
                                 m('input.mr-2', {
-                                    hidden: !(Register.exchInfo.helpCenter.website &&
-                                        Register.exchInfo.helpCenter.termsServiceId &&
-                                        Register.exchInfo.helpCenter.privacyPolicyId),
+                                    hidden: !(config.exchInfo.helpCenter.website &&
+                                        config.exchInfo.helpCenter.termsServiceId &&
+                                        config.exchInfo.helpCenter.privacyPolicyId),
                                     type: 'checkbox',
                                     onclick: e => {
-                                        Register.checkbox = e.target.value;
+                                        Register.checkbox = e.target.checked;
                                     },
-                                    value: Register.checkbox
-                                }, []),
-                                m('div', {
-                                    hidden: !(Register.exchInfo.helpCenter.website &&
-                                        Register.exchInfo.helpCenter.termsServiceId &&
-                                        Register.exchInfo.helpCenter.privacyPolicyId)
-                                }, [
-                                    // `接受${config.exchName}的`,
-                                    I18n.$t(I18n.$t('10390'), { value: config.exchName }),
-                                    m('a.has-text-primary', {
-                                        onclick: () => {
-                                            Register.toHelpService(
-                                                'termsServiceId');
-                                        }
+                                    checked: Register.checkbox
+                                }, [])
+                            ]),
+                            m('span.body-3', {
+                                hidden: !(config.exchInfo.helpCenter.website &&
+                                    config.exchInfo.helpCenter.termsServiceId &&
+                                    config.exchInfo.helpCenter.privacyPolicyId)
+                            }, [
+                                // `接受${config.exchName}的`,
+                                I18n.$t('10390', { value: config.exchName }),
+                                m('a.has-text-primary', {
+                                    onclick: () => {
+                                        Register.toHelpService('termsServiceId');
+                                    }
                                     // }, ['《服务条款》']),
-                                    }, [I18n.$t('10391')]),
-                                    // '及',
-                                    I18n.$t('10392'),
-                                    m('a.has-text-primary', {
-                                        onclick: () => {
-                                            Register.toHelpService(
-                                                'privacyPolicyId');
-                                        }
+                                }, [I18n.$t('10391')]),
+                                // '及',
+                                I18n.$t('10392'),
+                                m('a.has-text-primary', {
+                                    onclick: () => {
+                                        Register.toHelpService('privacyPolicyId');
+                                    }
                                     // }, ['《隐私保护政策》'])
-                                    }, [I18n.$t('10393')])
-                                ])
+                                }, [I18n.$t('10393')])
                             ]),
                             m('button.button.my-3.has-bg-primary.button-medium.is-fullwidth.has-text-white.mb-2',
                                 {

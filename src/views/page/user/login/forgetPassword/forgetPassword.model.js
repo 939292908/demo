@@ -40,7 +40,7 @@ module.exports = {
             if (res.result.code === 0) {
                 // '您的密码已修改成功，现在为您跳转登录界面'
                 window.$message({
-                    content: '修改成功',
+                    content: I18n.$t('10341')/* '修改成功' */,
                     type: 'success'
                 });
                 window.router.push('/login');
@@ -80,7 +80,7 @@ module.exports = {
                     this.check(res);
                 } else {
                     window.$message({
-                        content: '用户不存在',
+                        content: I18n.$t('10339')/* '用户不存在' */,
                         type: 'danger'
                     });// 用户不存在
                 }
