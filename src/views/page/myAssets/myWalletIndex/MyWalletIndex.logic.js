@@ -45,7 +45,7 @@ const model = {
             this.showMenu = option.showMenu;
             this.currentId = option.currentId ? option.currentId : this.currentId;
         },
-        onClick(item) {
+        menuClick(item) {
             broadcast.emit({ cmd: broadcast.CHANGE_SW_CURRENCY, data: item.label });
             model.setCurrency(item.label);
             model.sets();

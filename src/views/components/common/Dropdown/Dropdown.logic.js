@@ -24,7 +24,7 @@ module.exports = {
     },
     // 菜单 click
     menuClick(item, vnode) {
-        vnode.attrs.onClick && vnode.attrs.onClick(item); // 传递数据
+        vnode.attrs.menuClick && vnode.attrs.menuClick(item); // 传递数据
         vnode.attrs.setOption({
             showMenu: false,
             currentId: item.id

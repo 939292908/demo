@@ -5,7 +5,7 @@
 // setOption (设置currentId和showMenu) (必填)
 // menuList() {return [{ id:xxx, label:xxx,... }, { id:xxx, label:xxx,... }]} 菜单数据 (id, label) (必填) (render(){} 自定义内容)
 
-// onClick(item) {} 点击事件 可获取item (选填)
+// menuClick(item) {} 点击事件 可获取item (选填)
 // class 类名 (选填)
 // placeholder 提示文字 (选填)
 // btnClass 按钮 类名 (选填)
