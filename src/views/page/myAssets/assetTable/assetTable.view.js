@@ -3,6 +3,7 @@ const I18n = require('@/languages/I18n').default;
 const Loading = require('@/views/components/loading/loading.view');
 const Modal = require('@/views/components/common/Modal');
 const AssetTable = require('./assetTable.model');
+require('./assetTable.scss');
 module.exports = {
     view(vnode) {
         const table = [];
@@ -20,11 +21,10 @@ module.exports = {
         if (vnode.attrs.loading) {
             table.push(m('div.is-align-items-center.py-8', {}, [m(Loading)]));
         } else if (!vnode.attrs.list.length) {
-            table.push(m('div.is-align-items-center.mt-8', {}, [
-                m('img', {
-                    src: require(`@/assets/img/myAssets/noneData.svg`).default,
-                    style: { height: `120px`, width: `88px` }
-                })
+            table.push(m('div.is-align-items-center.mt-8.nodata-icon', {}, [
+                m('div.has-bg-level-1.mb-3.is-align-items-center', {}, [
+                    m('img', { src: require(`@/assets/img/myAssets/noneData.svg`).default })
+                ])
             ]));
             table.push(m('div.is-align-items-center.mb-8', {}, [
                 m('div.has-text-level-4', {}, I18n.$t('10515')/* '暂无数据' */)
@@ -86,10 +86,11 @@ module.exports = {
                 }, // 关闭事件
                 slot: {
                     header: m('div', {}, [
-                        '撤销申请法币划转'
+                        // '撤销申请法币划转'
+                        I18n.$t('10536')
                     ]),
                     body: m('div.columns', {}, [
-                        m('div.column', {}, ['审核金额']),
+                        m('div.column', {}, [I18n.$t('10537')/* '审核金额' */]),
                         m('div.column.has-text-right', {}, [AssetTable.cancelTransferModel.num + ' ' + AssetTable.cancelTransferModel.coin])
                     ]),
                     footer: [
@@ -98,7 +99,7 @@ module.exports = {
                             onclick () {
                                 AssetTable.isShowCancel = false;
                             }
-                        }, ['取消']),
+                        }, [I18n.$t('10538')/* '取消' */]),
                         m('.spacer'),
                         m("button.button.is-primary.font-size-2.has-text-white.modal-default-btn.button-large", {
                             class: AssetTable.isLoading ? 'is-loading' : '',
@@ -109,7 +110,7 @@ module.exports = {
                     ]
                 }
             }),
-            m('div', {}, [
+            m('div.assetTable', {}, [
                 table
             ])
         ]);
