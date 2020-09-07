@@ -32,23 +32,23 @@ module.exports = {
      * 发送验证码
      */
     sendSmsCode() {
+        if (!this.smsInt) {
+            this.setSmsCd();
+        }
         validate.sendSmsCode().then(res => {
-            if (res.result.code === 0) {
-                this.waiting = false;
-                if (!this.smsInt) {
-                    this.setSmsCd();
-                }
-            } else if (res.result.code === -1) {
+            if (res.result.code === -1) {
+                this.cleanSmsCd();
                 this.geetestCallBackType = 'sms';
                 geetest.verify();
-            } else {
+            } else if (res.result.code !== 0) {
+                this.cleanSmsCd();
                 window.$message({
                     content: errCode.getWebApiErrorCode(res.result.code),
                     type: 'danger'
                 });
             }
         }).catch(err => {
-            this.waiting = false;
+            this.cleanSmsCd();
             console.log(err);
         });
     },
@@ -56,23 +56,23 @@ module.exports = {
      * 发送邮箱验证码
      */
     sendEmailCode() {
+        if (!this.emailInt) {
+            this.setEmailCd();
+        }
         validate.sendEmailCode().then(res => {
-            if (res.result.code === 0) {
-                this.waiting = false;
-                if (!this.emailInt) {
-                    this.setEmailCd();
-                }
-            } else if (res.result.code === -1) {
+            if (res.result.code === -1) {
+                this.cleanEmailCd();
                 self.geetestCallBackType = 'email';
                 geetest.verify();
-            } else {
+            } else if (res.result.code !== 0) {
+                this.cleanEmailCd();
                 window.$message({
                     content: errCode.getWebApiErrorCode(res.result.code),
                     type: 'danger'
                 });
             }
         }).catch(err => {
-            this.waiting = false;
+            this.cleanEmailCd();
             console.log(err);
         });
     },
@@ -92,6 +92,13 @@ module.exports = {
             }
         }, 1000);
     },
+    cleanSmsCd() {
+        this.smsCd = 0;
+        if (this.smsInt) {
+            clearInterval(this.smsInt);
+            this.smsInt = null;
+        }
+    },
     /**
      * 设置发送邮箱冷却
      */
@@ -107,6 +114,13 @@ module.exports = {
                 m.redraw();
             }
         }, 1000);
+    },
+    cleanEmailCd() {
+        this.emailCd = 0;
+        if (this.emailInt) {
+            clearInterval(this.emailInt);
+            this.emailInt = null;
+        }
     },
     /**
      * 加载极验
