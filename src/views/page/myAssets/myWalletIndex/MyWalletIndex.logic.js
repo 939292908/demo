@@ -245,6 +245,14 @@ const model = {
             }
         });
 
+        broadcast.onMsg({
+            key: 'view-pages-Myassets-TablegB',
+            cmd: broadcast.GET_FUNLIST_READY,
+            cb: (arg) => {
+                console.log('123', arg);
+            }
+        });
+
         self.form.wType = self.currency;
     },
     createFn: function() {
