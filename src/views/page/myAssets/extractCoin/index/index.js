@@ -28,7 +28,8 @@ module.exports = {
         return m('div', { class: `page-extract-Coin-index` }, [
             m('nav.has-bg-sub-level-1', m('div.content-width marg-auto', m(Header, {
                 highlightFlag: 0,
-                navList: [{ to: '/myWalletIndex', title: I18n.$t('10052')/* '我的资产' */ }, { to: '/assetRecords', title: I18n.$t('10053')/* '资金记录' */ }]
+                // navList: [{ to: '/myWalletIndex', title: '我的资产' }, { to: '/assetRecords', title: '资金记录' }]
+                navList: [{ to: '/myWalletIndex', title: I18n.$t('10052') /* '我的资产' */ }, { to: '/assetRecords', title: I18n.$t('10053') /* '资金记录' */ }]
             }))),
             m('div.theme--light extract-coin-contont', [
                 m(LeveL3),
