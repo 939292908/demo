@@ -314,14 +314,14 @@ const extract = {
     // 检查当前币种提现是否需要身份认证
     checkIdcardVerify: function() {
         if (this.currentSelect.Setting.idcardVerifyWithdraw === true) {
-            this.handleUserCanAction();
             const account = globalModels.getAccount();
             console.log('checkIdcardVerify', this.currentSelect, account);
-            // if (account.iStatus === 0 || account.iStatus === 2) {
-            //     this.handleTotalShow({ content: l180n.$t('10534') /* ' 为了您的账户安全，请按照提示实名认证！' */, isLinshiErWeiMa: true });
-            // } else if (account.iStatus === 1) {
-            //     this.handleTotalShow({ content: l180n.$t('10535') /* '为了您的账户安全，实名认证通过后才可提现！' */, isLinshiErWeiMa: false });
-            // }
+            if (extract.popUpData.show) return;
+            if (account.iStatus === 0 || account.iStatus === 2) {
+                this.handleTotalShow({ content: l180n.$t('10534') /* ' 为了您的账户安全，请按照提示实名认证！' */, isLinshiErWeiMa: true });
+            } else if (account.iStatus === 1) {
+                this.handleTotalShow({ content: l180n.$t('10535') /* '为了您的账户安全，实名认证通过后才可提现！' */, isLinshiErWeiMa: false });
+            }
         }
     }
 };
