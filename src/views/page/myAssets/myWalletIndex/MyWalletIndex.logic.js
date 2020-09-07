@@ -46,29 +46,24 @@ const model = {
             this.currentId = option.currentId ? option.currentId : this.currentId;
         },
         onClick(item) {
-            broadcast.emit({ cmd: broadcast.CHANGE_SW_CURRENCY, data: item.text });
-            model.setCurrency(item.text);
+            broadcast.emit({ cmd: broadcast.CHANGE_SW_CURRENCY, data: item.label });
+            model.setCurrency(item.label);
             model.sets();
+        },
+        renderHeader(item) {
+            return m('div', { class: `selectDiv` }, [
+                m('span', { class: `has-text-primary` }, item.label)
+            ]);
         },
         menuList() {
             return [
                 {
                     id: 1,
-                    text: 'BTC',
-                    render() {
-                        return m('div', { class: `selectDiv` }, [
-                            m('span', { class: `has-text-primary` }, 'BTC')
-                        ]);
-                    }
+                    label: 'BTC'
                 },
                 {
                     id: 2,
-                    text: 'USDT',
-                    render() {
-                        return m('div', { class: `selectDiv` }, [
-                            m('span', { class: `has-text-primary` }, 'USDT')
-                        ]);
-                    }
+                    label: 'USDT'
                 }
             ];
         }
