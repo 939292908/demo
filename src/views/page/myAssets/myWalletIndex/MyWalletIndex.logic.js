@@ -260,19 +260,23 @@ const model = {
         self.form.wType = self.currency;
     },
     createFn: function() {
+        const that = this;
         broadcast.onMsg({
             key: this.currency,
             cmd: broadcast.GET_FUNLIST_READY,
             cb: (arg) => {
-                console.log('123', arg);
+                that.setFlag();
                 m.redraw();
             }
         });
-        this.transferFlag = gM.getFunctions().transfer;
-        this.rechargeFlag = gM.getFunctions().recharge;
-        this.withdrawFlag = gM.getFunctions().withdraw;
-        this.setFirstNav();
+        this.setFlag();
         this.sets();
+    },
+    setFlag() {
+        model.transferFlag = gM.getFunctions().transfer;
+        model.rechargeFlag = gM.getFunctions().recharge;
+        model.withdrawFlag = gM.getFunctions().withdraw;
+        model.setFirstNav();
     },
     removeFn: function() {
         broadcast.offMsg({
