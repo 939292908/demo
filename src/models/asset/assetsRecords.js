@@ -558,8 +558,9 @@ module.exports = {
                 } else if (item.addr.search("adm") !== -1) {
                     toType.other = true;
                     // eslint-disable-next-line prefer-const
-                    let num = item.addr.split('_')[1];
-                    des = utils.getOtherStr(num, item.wType);
+                    // let num = item.addr.split('_')[1];
+                    // des = utils.getOtherStr(num, item.wType);
+                    des = I18n.$t('10140'); // 其他类型
                     // this.allType['other'].show = true
                 } else if (item.addr.search("VOTE") !== -1) {
                     toType.other = true;
