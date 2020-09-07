@@ -34,13 +34,15 @@ module.exports = {
         '03': {},
         '04': {}
     },
-    recordName: {
-        "01": I18n.$t('10072')/* '合约账户' */,
-        "02": I18n.$t('10073')/* '币币账户' */,
-        "03": I18n.$t('10055')/* '我的钱包' */,
-        "04": I18n.$t('10074')/* '法币账户' */,
-        "05": '算力账户',
-        "06": '跟单账户'
+    recordName() {
+        return {
+            "01": I18n.$t('10072')/* '合约账户' */,
+            "02": I18n.$t('10073')/* '币币账户' */,
+            "03": I18n.$t('10055')/* '我的钱包' */,
+            "04": I18n.$t('10074')/* '法币账户' */,
+            "05": '算力账户',
+            "06": '跟单账户'
+        };
     },
     recordTypeName() {
         return {
@@ -386,14 +388,14 @@ module.exports = {
                             value: I18n.$t('10074')
                         });
                     } else if (item.addr.search("tin_") !== -1) {
-                        des = this.recordName[item.addr.split("_")[1]] + '转入';
+                        des = this.recordName()[item.addr.split("_")[1]] + '转入';
                         des = I18n.$t('10145', {
-                            value: this.recordName[item.addr.split("_")[1]]
+                            value: this.recordName()[item.addr.split("_")[1]]
                         }); // XX账户转入
                     } else if (item.addr.search("tout_") !== -1) {
-                        // des = '划至' + this.recordName[item.addr.split("_")[1]];
+                        // des = '划至' + this.recordName()[item.addr.split("_")[1]];
                         des = I18n.$t('10149', {
-                            value: this.recordName[item.addr.split("_")[1]]
+                            value: this.recordName()[item.addr.split("_")[1]]
                         }); // 划至xx账户
                     } else if (item.addr.search("gf->btc") !== -1) {
                         // des = 'GF兑换BTC';
