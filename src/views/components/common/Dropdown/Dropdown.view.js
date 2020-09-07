@@ -13,6 +13,7 @@
 // btnWidth 按钮 宽 (选填)
 // btnHeight 按钮 高 (选填)
 // menuWidth 菜单 宽 (选填)
+// menuHeight 菜单 高 (选填)
 
 // type 触发类型：active / hover (选填)(默认active)
 // showMenuIcon 菜单 icon (选填)(默认false)
@@ -49,8 +50,11 @@ module.exports = {
                 ])
             ]),
             // menu
-            m('div', { class: "dropdown-menu ", style: vnode.attrs.menuWidth ? `width:${vnode.attrs.menuWidth}px` : '' }, [
-                m('div', { class: "dropdown-content", style: "max-height: 400px; overflow: auto;" },
+            m('div', {
+                class: "dropdown-menu ",
+                style: (vnode.attrs.menuWidth ? `width:${vnode.attrs.menuWidth}px;` : '')
+            }, [
+                m('div', { class: "dropdown-content", style: (vnode.attrs.menuHeight ? `max-height:${vnode.attrs.menuHeight}px;` : '400px') + "overflow: auto;" },
                     vnode.attrs.menuList().map((item, index) => {
                         return m('a', {
                             class: `dropdown-item has-hover ${vnode.attrs.currentId === item.id ? 'has-active' : ''}`,

@@ -30,6 +30,9 @@ const obj = {
     option2: {
         evenKey: "option1key",
         currentId: 2,
+        btnWidth: 200,
+        menuWidth: 200,
+        // menuHeight: 100,
         showMenu: false,
         setOption (option) {
             this.showMenu = option.showMenu;
