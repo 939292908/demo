@@ -89,7 +89,7 @@ module.exports = {
             self.initCurItem(vnode);
             clearTimeout(self.onUpdTimer);
             self.onUpdTimer = null;
-        }, 1000);
+        }, 200);
     },
     view (vnode) {
         return m('div.Dropdown', { class: `${vnode.attrs.class || ''} my-dropdown dropdown ${vnode.attrs.type === 'hover' ? " is-hoverable" : vnode.attrs.showMenu ? " is-active" : ''}` }, [
