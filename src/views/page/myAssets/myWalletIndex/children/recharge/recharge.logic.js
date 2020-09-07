@@ -16,7 +16,7 @@ module.exports = {
     uId: '', // 用户uId
     rechargeAddr: '', // 充币地址
     qrcodeDisplayFlag: false,
-    btnCheckFlag: 0, // 默认选中第一个
+    btnCheckFlag: 'ERC20', // 默认选中第一个
     labelTips: '', // 标签提示
     nameTips: null,
     memo: null, // 是否显示标签
@@ -24,10 +24,11 @@ module.exports = {
     showCurrencyMenu: false, // show币种菜单
     coinParam: null, // 传过来的币种
     chains: null, // 链名称
+    networkNum: null, // 当前选中值的网络数
     setPageData() {
         const that = this;
         this.pageData = []; // 初始化
-        that.selectList = []; // 初始化
+        this.selectList = []; // 初始化
         for (const i in wlt.wallet['03']) {
             if (wlt.wallet['03'][i].Setting.canRecharge) { // 能否充值
                 const item = {};
@@ -75,6 +76,7 @@ module.exports = {
                     }
                 }
             }
+            this.btnCheckFlag = this.USDTLabel[0];
         }
         for (const i of wlt.wallet['03']) {
             if (i.Setting.canRecharge) {
@@ -145,7 +147,6 @@ module.exports = {
         const that = this;
         return {
             evenKey: `rechargeSelect${Math.floor(Math.random() * 10000)}`,
-            // menuWidth: 384,
             showMenu: that.showCurrencyMenu,
             setShowMenu: type => {
                 that.showCurrencyMenu = type;
@@ -172,36 +173,39 @@ module.exports = {
             return window.$message({ title: I18n.$t('10410') /* '提示' */, content: '复制成功', type: 'success' });
         }
     },
-    changeBtnflag(index, title) {
-        this.btnCheckFlag = index;
+    changeBtnflag(title) {
+        this.btnCheckFlag = title;
         let wType = null;
         for (const i of this.chains) {
             if (i.name === title) {
                 wType = i.attr;
             }
         }
+        const that = this;
         Http.GetRechargeAddr({
             wType: wType
         }).then(function(arg) {
-            // console.log('nzm', 'GetRechargeAddr success', arg);
-            this.rechargeAddr = arg.rechargeAddr;
+            console.log('nzm', 'GetRechargeAddr success', arg);
+            that.rechargeAddr = arg.rechargeAddr;
             m.redraw();
         }).catch(function(err) {
             console.log('nzm', 'GetRechargeAddr error', err);
         });
     },
     initFn: function () {
-        // 获取当前网址，如：http://localhost:8080/#!/recharge?wType=USDT
-        const currencyType = window.document.location.href.toString().split('=')[1];
+        const currencyType = window.router.getUrlInfo().params.wType;
         if (currencyType !== undefined) {
             this.coinParam = currencyType;
             this.setPageData();
         }
+
         this.nameTips =
         [I18n.$t('10400') /* 'USDT-ERC20是Tether泰达公司基于ETH网络发行的USDT，充币地址是ETH地址，充提币走ETH网络，USDT-ERC20使用的是ERC20协议。' */,
             I18n.$t('10507') /* 'USDT-TRC20(USDT-TRON)是Tether泰达公司基于TRON网络发行的USDT，充币地址是TRON地址，充提币走TRON网络，USDT-TRC20(USDT-TRON)使用的是TRC20协议。' */,
             I18n.$t('10508')/* 'USDT-Omni是Tether泰达公司基于BTC网络发行的USDT，充币地址是BTC地址，充提币走BTC网络，USDT-Omni使用的协议是建立在BTC区块链网络上的omni layer协议。' */];
+
         wlt.init();
+
         broadcast.onMsg({
             key: 'index',
             cmd: broadcast.MSG_WLT_READY,
@@ -217,6 +221,7 @@ module.exports = {
                 this.setTipsAndAddrAndCode();
             }
         });
+
         this.setPageData();
     },
     updateFn: function (vnode) {
