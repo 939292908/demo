@@ -30,13 +30,15 @@ module.exports = {
         legalData: []
     },
     // navAry: [{ idx: '01', val: I18n.$t('10072') /* '合约账户' */ }, { idx: '02', val: I18n.$t('10073') /* '币币账户' */ }],
-    navAry: [{ idx: '01', val: I18n.$t('10072') /* '合约账户' */ }, { idx: '02', val: I18n.$t('10073') /* '币币账户' */ }, { idx: '04', val: I18n.$t('10074') /* '法币账户' */ }],
+    navAry: [],
+    setNavAry() {
+        this.navAry = [{ idx: '01', val: I18n.$t('10072') /* '合约账户' */ }, { idx: '02', val: I18n.$t('10073') /* '币币账户' */ }, { idx: '04', val: I18n.$t('10074') /* '法币账户' */ }];
+    },
     coinType: 'wallet',
     tableDateList: 'walletData',
     isShowNoneData: false, // 表格是否有数据
     setPageFlag: function (param) {
         this.pageFlag = param;
-        // this.vnode.attrs.setIdx(param);
         if (param === '01') {
             this.coinType = 'contract';
             this.tableDateList = 'contractData';
@@ -191,7 +193,6 @@ module.exports = {
                 this.initAccountBanlance();
             }
         });
-
         this.oldHideMoneyFlag = vnode.attrs.hideMoneyFlag;
         // 初始化表头
         this.initColumnData();
@@ -199,6 +200,8 @@ module.exports = {
         this.initTableData();
         // 初始化交易账户各账户名称与估值
         this.initAccountBanlance();
+
+        // 资产数据变化
         broadcast.onMsg({
             key: 'view-pages-Myassets-TablegB',
             cmd: broadcast.MSG_WLT_UPD,
@@ -221,6 +224,17 @@ module.exports = {
             localStorage.getItem("isHideZeroFlag") === 'true' ? this.hideZeroFlag = true : this.hideZeroFlag = false;
             this.setTableNewAry();
         }
+
+        broadcast.onMsg({
+            key: 'view-pages-Myassets-TablegB',
+            cmd: broadcast.MSG_LANGUAGE_UPD,
+            cb: (arg) => {
+                // console.log('切换语言');
+                self.setNavAry();
+                self.setPageFlag(currencyIndex);
+            }
+        });
+        this.setNavAry();
     },
     updateFn: function(vnode) {
         if (this.oldValue !== vnode.attrs.swValue) {

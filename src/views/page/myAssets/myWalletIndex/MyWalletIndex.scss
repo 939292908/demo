@@ -22,6 +22,17 @@
                 }
                 clear: both;
             }
+            .dropdown-trigger{
+                button{
+                    height: 25px;
+                    background: none;
+                    border: none;
+                    outline: none;
+                }
+            }
+            .dropdown-menu {
+                min-width: 70px !important;
+            }
         }
         .myWalletIndex-head-center{
             width: 25%;
