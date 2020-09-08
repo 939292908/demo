@@ -646,7 +646,6 @@ class CAPI {
                 url: s.CTX.Conf.WebAPI + "/v1/markets/historyData",
                 body: aData,
             }, function (result) {
-                console.log(result,88888888888)
                 if (DBG_REQUEST) {
                     console.debug(DBG_TAG, "ReqGoogleVerify Rsp", result)
                 }
@@ -660,6 +659,38 @@ class CAPI {
                 }
             })
             console.log(aData,s.CTX.Conf.WebAPI + "v1/stat/contract/record/daily_stm",'url---------------------');
+    }
+
+    //一键平仓
+    ReqClosePosition(aData, aOnSuccess, aOnError){
+        /**
+         * aData : {
+         *      Sym:    //如果不填就是所有合约，如果需要平单个合约的仓位的sym
+         *      Wid:    //用户的合约钱包ID
+         *      Mode：  //默认传1
+         * }
+        */
+        let s = this;
+        if (DBG_REQUEST) {
+            console.debug(DBG_TAG, "ReqClosePosition Req", aData)
+        }
+        RequestWarp({
+            method: "get",
+            url: s.CTX.Conf.WebAPI + "/admin/fast/closepositions",
+            body: aData,
+        }, function (result) {
+            if (DBG_REQUEST) {
+                console.debug(DBG_TAG, "ReqClosePosition Rsp", result)
+            }
+            if (aOnSuccess) {
+                aOnSuccess(result)
+            }
+        }
+        , function (e) {
+            if (aOnError) {
+                aOnError(e)
+            }
+        })
     }
 
 }
