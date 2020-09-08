@@ -73,6 +73,7 @@ module.exports = {
                                 key: row.wType
                             }, [
                                 t.columnData[t.coinType].map((item, i) => {
+                                    // console.log(isNaN(row[item.val]), row[item.val]);
                                     if (i === t.columnData[t.coinType].length - 1) {
                                         // 操作列
                                         return m('td.py-4 has-text-level-1', {}, [

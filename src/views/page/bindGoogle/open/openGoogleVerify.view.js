@@ -3,6 +3,8 @@ require('@/views/page/bindGoogle/bindGoogle.scss');
 const openGLogic = require('@/views/page/bindGoogle/open/openGoogleVerify.logic');
 const I18n = require('@/languages/I18n').default;
 const broadcast = require('@/broadcast/broadcast');
+const VerifyView = require('@/views/components/dialogVerify/dialogVerify.view');
+const config = require('@/config.js');
 
 const openGView = {
     // 上方导航（下载App，扫描二维码，备份密钥，开启谷歌验证）
@@ -137,7 +139,15 @@ const openGView = {
                         onclick: () => { openGView.modifyCheckFlag('next'); }
                     }, I18n.$t('10206') /* '下一步') */)
                 ])
-            ])
+            ]),
+            openGView.isShowVerifyView ? m(VerifyView, {
+                close: () => openGView.switchSafetyVerifyModal(false),
+                isHandleVerify: true,
+                title: {
+                    logo: config.exchName,
+                    text: "安全验证"
+                }
+            }) : null
         ]);
     },
     onremove: () => {
