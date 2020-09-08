@@ -1,6 +1,6 @@
 const m = require('mithril');
 require('@/views/page/bindGoogle/bindGoogle.scss');
-const openGLogic = require('@/views/page/bindGoogle/open/openGoogleVerify.logic');
+const openGLogic = require('@/views/page/bindGoogle/bindGoogle.logic');
 const I18n = require('@/languages/I18n').default;
 const broadcast = require('@/broadcast/broadcast');
 const VerifyView = require('@/views/components/dialogVerify/dialogVerify.view');
@@ -59,7 +59,7 @@ const openGView = {
             }
         });
         openGView.initNav();
-        openGView.checkFlag = 2;
+        openGView.checkFlag = 4;
     },
     view: () => {
         return m('div', { class: `views-page-accountSecurity-bindGoogle-open theme--light pb-8` }, [
@@ -115,14 +115,18 @@ const openGView = {
                         m('div', { class: `pwdDiv margin-LRauto` }, [
                             m('span', { class: `body-5` }, I18n.$t('10512') /* '登录密码' */),
                             m('br'),
-                            m('input', { class: `border-radius-small mb-5 mt-2 pwd`, type: `text` })
+                            m('input', { class: `border-radius-small mb-5 mt-2 pwd`, type: `text`, oninput: function() { openGLogic.check('pwd', this.value); } })
                         ]),
                         m('div', { class: `codeDiv margin-LRauto` }, [
                             m('span', { class: `body-5 mb-2` }, I18n.$t('10119') /* '谷歌验证码' */),
                             m('br'),
-                            m('input', { class: `border-radius-small mt-2 code`, type: `text` })
+                            m('input', { class: `border-radius-small mt-2 code`, type: `text`, oninput: function() { openGLogic.check('code', this.value); } })
                         ]),
-                        m('div', { class: `btn mt-8 margin-LRauto` }, [
+                        m('div', { class: `tips mt-3` }, [
+                            m('span', { class: ``, style: { display: openGLogic.pwdTipFlag ? `` : `none` } }, '登录密码错误请重新输入!'),
+                            m('span', { class: ``, style: { display: openGLogic.codeTipFlag ? `` : `none` } }, '谷歌验证码输入错误或已过期，请重新输入!')
+                        ]),
+                        m('div', { class: `btn mt-3 margin-LRauto` }, [
                             m('button', { class: `has-bg-primary cursor-pointer`, onclick: () => { openGLogic.confirmBtn(); } }, I18n.$t('10337') /* '确定' */)
                         ])
                     ])
@@ -140,8 +144,8 @@ const openGView = {
                     }, I18n.$t('10206') /* '下一步') */)
                 ])
             ]),
-            openGView.isShowVerifyView ? m(VerifyView, {
-                close: () => openGView.switchSafetyVerifyModal(false),
+            openGLogic.isShowVerifyView ? m(VerifyView, {
+                close: () => openGLogic.switchSafetyVerifyModal(false),
                 isHandleVerify: true,
                 title: {
                     logo: config.exchName,

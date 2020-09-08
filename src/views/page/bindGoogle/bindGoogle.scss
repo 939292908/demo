@@ -107,6 +107,11 @@
                 .desc1{
                     text-align: center;
                 }
+                .tips{
+                    display: flex;
+                    flex-direction: column;
+                    text-align: center;
+                }
             }
         }
         .center-btn{
@@ -128,7 +133,6 @@
 }
 .views-page-accountSecurity-bindGoogle-close{
     .center{
-        margin: 0 auto;
         .warning{
             height: 36px;
             background: rgba(255, 139, 0, 0.08);
