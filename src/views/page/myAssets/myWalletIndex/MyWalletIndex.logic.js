@@ -284,6 +284,21 @@ const model = {
             cmd: broadcast.MSG_WLT_READY,
             isall: true
         });
+        broadcast.offMsg({
+            key: this.currency,
+            cmd: broadcast.MSG_WLT_UPD,
+            isall: true
+        });
+        broadcast.offMsg({
+            key: this.currency,
+            cmd: broadcast.MSG_LANGUAGE_UPD,
+            isall: true
+        });
+        broadcast.offMsg({
+            key: this.currency,
+            cmd: broadcast.GET_FUNLIST_READY,
+            isall: true
+        });
     }
 };
 module.exports = model;

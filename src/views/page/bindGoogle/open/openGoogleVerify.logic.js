@@ -2,7 +2,7 @@ const Http = require('@/api').webApi;
 const m = require('mithril');
 const Qrcode = require('qrcode');
 const geetest = require('@/models/validate/geetest').default;
-// const validate = require('@/models/validate/validate').default;
+const validate = require('@/models/validate/validate').default;
 const broadcast = require('@/broadcast/broadcast');
 
 module.exports = {
@@ -88,16 +88,14 @@ module.exports = {
             }
         });
     },
+    // 安全验证弹框 初始化
     initSafetyVerifyModal() {
-        // const params = {
-        // };
+        const params = {
+        };
         // 初始化 校验弹框
-        // validate.activeGoogle(params, callback){
-        //     this.validateType = 'google';
-        //     if (callback) {
-        //         this.callbackHandler = callback;
-        //     }
-        // };
+        validate.activeSmsAndEmail(params, () => {
+            console.log(666);
+        });
     },
     removeFn: function() {
 
