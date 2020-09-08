@@ -51,13 +51,13 @@ module.exports = {
                                         'a.body-1.views-page-login-send-code.px-2',
                                         {
                                             onclick: () => {
-                                                if (Register.smsCd > 0) { return; }
+                                                if (Register.cd > 0) { return; }
                                                 Register.type === 'phone'
                                                     ? Register.sendSmsCode()
                                                     : Register.sendEmailCode();
                                             }
                                         },
-                                        [Register.smsCd > 0 ? `${Register.smsCd} s` : I18n.$t('10117')/* '获取验证码' */]
+                                        [Register.cd > 0 ? `${Register.cd} s` : I18n.$t('10117')/* '获取验证码' */]
                                     )
                                 })
                             ]),

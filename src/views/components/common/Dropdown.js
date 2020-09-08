@@ -24,6 +24,7 @@ module.exports = {
     curItem: {},
     curId: "", // 临时保存id
     openClickBody: true, // body事件 节流
+    onUpdTimer: null,
 
     // ============= 方法 =============
     // 初始化 选中item
@@ -78,7 +79,17 @@ module.exports = {
     oncreate (vnode) {
     },
     onupdate (vnode) {
-        this.initCurItem(vnode);
+        const self = this;
+        // 临时加timer，降低刷新频率
+        if (self.onUpdTimer) {
+            clearTimeout(self.onUpdTimer);
+            self.onUpdTimer = null;
+        }
+        self.onUpdTimer = setTimeout(() => {
+            self.initCurItem(vnode);
+            clearTimeout(self.onUpdTimer);
+            self.onUpdTimer = null;
+        }, 200);
     },
     view (vnode) {
         return m('div.Dropdown', { class: `${vnode.attrs.class || ''} my-dropdown dropdown ${vnode.attrs.type === 'hover' ? " is-hoverable" : vnode.attrs.showMenu ? " is-active" : ''}` }, [

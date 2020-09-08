@@ -107,9 +107,7 @@ const extract = {
     },
     getlinkButtonListData: function () {
         this.currenLinkBut = '';
-        this.extractCoin.address = '';
-        this.extractCoin.coinNum = '';
-        this.extractCoin.linkName = '';
+        this.errCodeToNull();
         this.getCurrentFeesChange();
         if (this.currentSelect.wType !== 'USDT') {
             this.linkButtonList = [];
@@ -310,6 +308,12 @@ const extract = {
         // 生命周期结束清空列表选中字段并关闭列表
         this.showCurrencyMenu = false;
         this.selectActiveId.wType = '';
+        this.errCodeToNull();
+    },
+    errCodeToNull: function () {
+        this.extractCoin.address = '';
+        this.extractCoin.coinNum = '';
+        this.extractCoin.linkName = '';
         this.errorShow = {
             address: {
                 show: false,
@@ -325,7 +329,6 @@ const extract = {
     checkIdcardVerify: function() {
         if (this.currentSelect.Setting.idcardVerifyWithdraw === true) {
             const account = globalModels.getAccount();
-            console.log('checkIdcardVerify', this.currentSelect, account);
             if (extract.popUpData.show) return;
             if (account.iStatus === 0 || account.iStatus === 2) {
                 this.handleTotalShow({ content: l180n.$t('10534') /* ' 为了您的账户安全，请按照提示实名认证！' */, isLinshiErWeiMa: true });
