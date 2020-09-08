@@ -214,52 +214,13 @@ let obj = {
     
 
     initLanguage: function(){
-        this.tabsList = [
-            {
-                id: 0,
-                key: 'pos',
-                name: gDI18n.$t('10074'),//'持有仓位',
-                class: '',
-                listNumber: 0
-            },{
-                id: 1,
-                key: 'ord',
-                name: gDI18n.$t('10075'),//'当前委托',
-                class: '',
-                listNumber: 0
-            },{
-                id: 2,
-                key: 'plan',
-                name: gDI18n.$t('10076'),//'当前计划',
-                class: '',
-                listNumber: 0
-            },{
-                id: 3,
-                key: 'historyOrd',
-                name: gDI18n.$t('10077'),//'历史委托',
-                class: ' is-hidden-touch',
-                listNumber: ''
-            },{
-                id: 4,
-                key: 'historyTrd',
-                name: gDI18n.$t('10078'),//'成交记录',
-                class: ' is-hidden-touch',
-                listNumber: ''
-            },{
-                id: 5,
-                key: 'wlt',
-                name: gDI18n.$t('10079'),//'合约账单',
-                class: ' is-hidden-touch',
-                listNumber: ''
-            },
-            {
-                id: 6,
-                key: 'myInsurance',
-                name: '我的保险', //'我的保险',
-                class: ' is-hidden-touch',
-                listNumber: ''
-            }
-        ]
+        this.tabsList[0].name = gDI18n.$t('10074')//'持有仓位',
+        this.tabsList[1].name = gDI18n.$t('10075')//'当前委托',
+        this.tabsList[2].name = gDI18n.$t('10076')//'当前计划',
+        this.tabsList[3].name = gDI18n.$t('10077')//'历史委托',
+        this.tabsList[4].name = gDI18n.$t('10078')//'成交记录',
+        this.tabsList[5].name = gDI18n.$t('10079')//'合约账单',
+        this.tabsList[6].name = '我的保险' //'我的保险',
     },
 
     myclickType(item) {
