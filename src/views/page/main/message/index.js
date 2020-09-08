@@ -14,14 +14,14 @@ const msg = {
         // 全局message事件
         const that = this;
         window.$message = function({ title = l180n.$t('10410'), content = '', type = 'dark' }) {
-            if (that.DBG_MESSAGE) { window.console.log('MSG', __filename, "MESSAGE", { title, content }); }
+            if (that.DBG_MESSAGE) { console.log('MSG', __filename, "MESSAGE", { title, content }); }
             that.addMessageDom({ title, content, type });
         };
     },
     addMessageDom: function (arg) {
         const that = this;
         const msg = this.createMsg(arg);
-        window.window.console.log('MSG', msg);
+        window.console.log('MSG', msg);
         msg.delTimer = setTimeout(function () {
             that.delMsg(msg.key);
         }, that.DEL_INTERVAL);

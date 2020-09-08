@@ -35,27 +35,38 @@ const model = {
         wType: '' // 当前币种选中值
     },
     // 币种 菜单配置
-    getCurrencyMenuOption: function () {
-        const that = this;
-        return {
-            menuWidth: 102,
-            evenKey: `myWalletIndex${Math.floor(Math.random() * 10000)}`,
-            showMenu: that.showCurrencyMenu,
-            setShowMenu: type => {
-                that.showCurrencyMenu = type;
-            },
-            class: `myCoinSelect`,
-            activeId: cb => cb(that.form, 'wType'),
-            onClick (item) {
-                broadcast.emit({ cmd: broadcast.CHANGE_SW_CURRENCY, data: item.id });
-                that.setCurrency(item.id);
-                that.sets();
-            },
-            getList () {
-                return that.selectOp;
-            },
-            btnClass: `has-text-primary`
-        };
+    option: {
+        evenKey: "optionkey",
+        currentId: 1,
+        btnWidth: 70,
+        menuWidth: 70,
+        showMenu: false,
+        setOption (option) {
+            this.showMenu = option.showMenu;
+            this.currentId = option.currentId ? option.currentId : this.currentId;
+        },
+        menuClick(item) {
+            broadcast.emit({ cmd: broadcast.CHANGE_SW_CURRENCY, data: item.label });
+            model.setCurrency(item.label);
+            model.sets();
+        },
+        renderHeader(item) {
+            return m('div', { class: `selectDiv` }, [
+                m('span', { class: `has-text-primary` }, item.label)
+            ]);
+        },
+        menuList() {
+            return [
+                {
+                    id: 1,
+                    label: 'BTC'
+                },
+                {
+                    id: 2,
+                    label: 'USDT'
+                }
+            ];
+        }
     },
     // 设置币种
     setCurrency: function (param) {
@@ -100,7 +111,7 @@ const model = {
     // 切换我的钱包，交易账户，币币，合约，法币
     switchChange: function (val, type) {
         if (val === 'none') {
-            return window.$message({ title: I18n.$t('10410') /* '提示' */, content: '暂未开放', type: 'primary' });
+            return window.$message({ title: I18n.$t('10410') /* '提示' */, content: I18n.$t('10513') /* '暂未开放，敬请期待' */, type: 'primary' });
         }
         // console.log(val);
         this.swValue = val;
@@ -155,6 +166,9 @@ const model = {
     },
     // 按钮事件
     handlerClickNavBtn (item) {
+        if (!item.flag) {
+            return window.$message({ title: I18n.$t('10410') /* '提示' */, content: I18n.$t('10513') /* '暂未开放，敬请期待' */, type: 'primary' });
+        }
         const that = this;
         if (item.id === 4) { // 点击资金划转
             // transferLogic.isShow = true;
@@ -235,10 +249,10 @@ const model = {
         self.sets();
 
         broadcast.onMsg({
-            key: 'view-pages-Myassets-TablegB',
+            key: this.currency,
             cmd: broadcast.MSG_LANGUAGE_UPD,
             cb: (arg) => {
-                console.log('切换中英文');
+                // console.log('切换语言');
                 self.setFirstNav();
             }
         });
@@ -246,11 +260,23 @@ const model = {
         self.form.wType = self.currency;
     },
     createFn: function() {
-        this.transferFlag = gM.getFunctions().transfer;
-        this.rechargeFlag = gM.getFunctions().recharge;
-        this.withdrawFlag = gM.getFunctions().withdraw;
-        this.setFirstNav();
+        const that = this;
+        broadcast.onMsg({
+            key: this.currency,
+            cmd: broadcast.GET_FUNLIST_READY,
+            cb: (arg) => {
+                that.setFlag();
+                m.redraw();
+            }
+        });
+        this.setFlag();
         this.sets();
+    },
+    setFlag() {
+        model.transferFlag = gM.getFunctions().transfer;
+        model.rechargeFlag = gM.getFunctions().recharge;
+        model.withdrawFlag = gM.getFunctions().withdraw;
+        model.setFirstNav();
     },
     removeFn: function() {
         broadcast.offMsg({

@@ -1,7 +1,7 @@
-// const LOG = window.console.log;
+// const LOG = console.log;
 
 // const openStr = '';
 
-// window.console.log = function (str, ...text) {
+// console.log = function (str, ...text) {
 //     if (openStr === str) LOG(...text);
 // };

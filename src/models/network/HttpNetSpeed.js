@@ -17,11 +17,11 @@ class HttpNetSpeed extends NetSpeedBase {
             this.startTime = (new Date()).getTime();
             this.instance.get(this.url
             ).then(res => {
-                // window.console.log("request 数据已接收...: ", this.name);
+                // console.log("request 数据已接收...: ", this.name);
                 this.duration = Math.floor(((new Date()).getTime() - this.startTime) / 2);
                 resolve(this);
             }).catch(err => {
-                window.console.log("request 连接失败: ", this.name, err);
+                console.log("request 连接失败: ", this.name, err);
                 this.duration = Number.MAX_SAFE_INTEGER;
                 reject(err);
             });

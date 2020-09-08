@@ -24,6 +24,7 @@ module.exports = {
     curItem: {},
     curId: "", // 临时保存id
     openClickBody: true, // body事件 节流
+    onUpdTimer: null,
 
     // ============= 方法 =============
     // 初始化 选中item
@@ -78,7 +79,17 @@ module.exports = {
     oncreate (vnode) {
     },
     onupdate (vnode) {
-        this.initCurItem(vnode);
+        const self = this;
+        // 临时加timer，降低刷新频率
+        if (self.onUpdTimer) {
+            clearTimeout(self.onUpdTimer);
+            self.onUpdTimer = null;
+        }
+        self.onUpdTimer = setTimeout(() => {
+            self.initCurItem(vnode);
+            clearTimeout(self.onUpdTimer);
+            self.onUpdTimer = null;
+        }, 200);
     },
     view (vnode) {
         return m('div.Dropdown', { class: `${vnode.attrs.class || ''} my-dropdown dropdown ${vnode.attrs.type === 'hover' ? " is-hoverable" : vnode.attrs.showMenu ? " is-active" : ''}` }, [
@@ -94,7 +105,7 @@ module.exports = {
                         // window.stopBubble(e)
                     }
                 }, [
-                    m('p.has-text-level-4', { class: `my-trigger-text` }, vnode.state.curItem.label), // btnText
+                    m('p', { class: `my-trigger-text` }, vnode.state.curItem.label), // btnText
                     m('i', { class: "my-trigger-icon iconfont icon-xiala has-text-primary" }) // icon
                 ])
             ]),
@@ -103,7 +114,7 @@ module.exports = {
                 m('div.pa-0', { class: "dropdown-content", style: "max-height: 400px; overflow: auto;" },
                     vnode.attrs.getList().map((item, index) => {
                         return m('a.pl-7.pr-0.py-3', {
-                            class: `dropdown-item has-hover ${vnode.state.activeId === item.id ? 'has-active' : ''}`,
+                            class: `dropdown-item has-hover ${vnode.state.curId === item.id ? 'has-active' : ''}`,
                             key: item.label + index,
                             onclick () {
                                 vnode.state.curItem = item; // 同步显示文字

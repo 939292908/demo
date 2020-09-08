@@ -12,6 +12,7 @@
                 float: left;
                 border: none;
                 height: 100%;
+                outline: none;
             }
             i{
                 float: left;
@@ -49,7 +50,11 @@
                 height: 52px;
             }
             .noneData{
-                div{
+                height: 510px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                .imgDiv{
                     margin: 0 auto;
                     width: 88px;
                     height: 88px;

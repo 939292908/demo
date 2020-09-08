@@ -45,7 +45,7 @@ class TradeNetSpeed extends NetSpeedBase {
             };
 
             this.ws.onerror = evt => {
-                window.console.log("WebSocket连接错误: ", this.name, evt);
+                console.log("WebSocket连接错误: ", this.name, evt);
                 this.duration = Number.MAX_SAFE_INTEGER;
                 reject(evt);
             };

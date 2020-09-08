@@ -20,11 +20,11 @@ const openGView = {
         },
         {
             id: 4,
-            title: '开启谷歌验证'
+            title: I18n.$t('10510') /* '开启谷歌验证' */
         }
     ],
     // 当前选中哪个步骤
-    checkFlag: 2,
+    checkFlag: 1,
     // 上一步 下一步
     modifyCheckFlag(type) {
         type === 'prev' ? this.checkFlag = this.checkFlag - 1 : this.checkFlag = this.checkFlag + 1;
@@ -46,10 +46,12 @@ const openGView = {
         openGLogic.initFn();
     },
     view: () => {
-        return m('div', { class: `views-page-accountSecurity-bindGoogle-open theme--light` }, [
+        return m('div', { class: `views-page-accountSecurity-bindGoogle-open theme--light pb-8` }, [
             m('div', { class: `operation mb-7 has-bg-level-2` }, [
-                m('i', { class: `iconfont icon-Return has-text-title mr-7` }),
-                m('span', { class: `has-text-title my-4 ml-4 title-medium` }, I18n.$t('10250') /* '您正在绑定谷歌验证' */)
+                m('div', { class: `content-width container` }, [
+                    m('i', { class: `iconfont icon-Return has-text-title` }),
+                    m('span', { class: `has-text-title my-4 ml-4 title-medium` }, I18n.$t('10250') /* '您正在绑定谷歌验证' */)
+                ])
             ]),
             m('div', { class: `center content-width has-bg-level-2` }, [
                 m('div', { class: `center-top mt-7` }, [
@@ -63,7 +65,7 @@ const openGView = {
                 m('div', { class: `center-center` }, [
                     m('div', { class: `stepOne pt-7`, style: { display: (openGView.checkFlag === 1 ? '' : 'none') } }, [
                         m('div', { class: `desc1 body-5 mb-3` }, I18n.$t('10255') /* '下载谷歌验证器' */),
-                        m('div', { class: `desc2 body-5` }, '扫码下载或者在应用商店中搜索“Google Authentication”应用'),
+                        m('div', { class: `desc2 body-5` }, I18n.$t('10511') /* '扫码下载或者在应用商店中搜索“Google Authentication”应用' */),
                         m('div', { class: `stepOne-qrcode mt-6` }, [
                             m('div', { class: `stepOne-qrcode-left mr-8` }, [
                                 m('div', { class: `qrcodeIOS mb-3` }),
@@ -95,7 +97,7 @@ const openGView = {
                     m('div', { class: `stepFour pt-7`, style: { display: (openGView.checkFlag === 4 ? '' : 'none') } }, [
                         m('div', { class: `desc1 title-small mb-7` }, I18n.$t('10261') /* '完成以下验证，开启谷歌验证' */),
                         m('div', { class: `pwdDiv` }, [
-                            m('span', { class: `body-5` }, '登录密码'),
+                            m('span', { class: `body-5` }, I18n.$t('10512') /* '登录密码' */),
                             m('br'),
                             m('input', { class: `border-radius-small mb-5 mt-2 pwd`, type: `text` })
                         ]),
@@ -105,7 +107,7 @@ const openGView = {
                             m('input', { class: `border-radius-small mt-2 code`, type: `text` })
                         ]),
                         m('div', { class: `btn mt-8` }, [
-                            m('button', { class: `has-bg-primary cursor-pointer`, onclick: () => { openGLogic.confirmBtn(); } }, '确定')
+                            m('button', { class: `has-bg-primary cursor-pointer`, onclick: () => { openGLogic.confirmBtn(); } }, I18n.$t('10337') /* '确定' */)
                         ])
                     ])
                 ]),

@@ -95,7 +95,7 @@ module.exports = {
                 });
             }
         }).catch(err => {
-            window.console.log('tlh', err);
+            console.log('tlh', err);
             window.$message({
                 content: '系统繁忙请稍后再试(请求异常)',
                 type: 'danger'
@@ -121,7 +121,7 @@ module.exports = {
                 m.redraw();
             }
         }).catch(err => {
-            window.console.log('tlh', err);
+            console.log('tlh', err);
             window.$message({
                 content: '系统繁忙请稍后再试(请求异常)',
                 type: 'danger'

@@ -52,10 +52,7 @@ module.exports = {
                                         class: `dropdown-item has-hover ${model.form.coin === item.id ? 'has-active' : ''}`,
                                         key: item.id + index,
                                         onclick () {
-                                            model.form.coin = item.id; // 修改选中id
-                                            model.curItem = item;
-                                            model.setMaxTransfer(); // 设置 最大划转
-                                            model.showCurrencyMenu = false; // 关闭菜单
+                                            model.handlerCurrencyMenuClick(item);
                                         }
                                     }, [
                                         m('span', { class: `my-menu-label` }, [
@@ -74,7 +71,7 @@ module.exports = {
             m('div', { class: `columns` }, [
                 // 从 (下拉)
                 m('div', { class: `form-item column is-5` }, [
-                    m('div', { class: `form-item-title has-text-level-4` }, [
+                    m('div', { class: `form-item-title` }, [
                         I18n.$t('10130') // '从'
                     ]),
                     m('div', { class: `form-item-content` }, [
@@ -92,7 +89,7 @@ module.exports = {
                 ]),
                 // 到 (下拉)
                 m('div', { class: `form-item column is-5` }, [
-                    m('div', { class: `form-item-title has-text-level-4` }, [
+                    m('div', { class: `form-item-title` }, [
                         I18n.$t('10131') // '到'
                     ]),
                     m('div', { class: `form-item-content` }, [

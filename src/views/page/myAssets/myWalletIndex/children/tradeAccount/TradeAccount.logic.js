@@ -1,6 +1,7 @@
 const m = require('mithril');
 const broadcast = require('@/broadcast/broadcast');
 const wlt = require('@/models/wlt/wlt');
+const I18n = require('@/languages/I18n').default;
 
 module.exports = {
     vnode: {},
@@ -20,16 +21,16 @@ module.exports = {
     setOldValue: function (param) {
         this.oldValue = param;
     },
-    navAry: [{ idx: '01', val: '合约账户' }, { idx: '02', val: '币币账户' }, { idx: '04', val: '法币账户' }],
+    navAry: [{ idx: '01', val: I18n.$t('10072') /* '合约账户' */ }, { idx: '02', val: I18n.$t('10073') /* '币币账户' */ }, { idx: '04', val: I18n.$t('10074') /* '法币账户' */ }],
     setAccountBanlanceAndTitle: function() {
         if (this.pageFlag === '01') {
-            this.accountTitle = '合约账户';
+            this.accountTitle = I18n.$t('10072'); /* '合约账户' */
             this.accountBanlance = this.currency === 'BTC' ? wlt.contractTotalValueForBTC : wlt.contractTotalValueForUSDT;
         } else if (this.pageFlag === '02') {
-            this.accountTitle = '币币账户';
+            this.accountTitle = I18n.$t('10073'); /* '币币账户' */
             this.accountBanlance = this.currency === 'BTC' ? wlt.coinTotalValueForBTC : wlt.coinTotalValueForUSDT;
         } else if (this.pageFlag === '04') {
-            this.accountTitle = '法币账户';
+            this.accountTitle = I18n.$t('10074'); /* '法币账户' */
             this.accountBanlance = this.currency === 'BTC' ? wlt.legalTotalValueForBTC : wlt.legalTotalValueForUSDT;
         }
     },

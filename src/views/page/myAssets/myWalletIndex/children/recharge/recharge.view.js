@@ -18,6 +18,7 @@ module.exports = {
     },
     view: () => {
         return m('div', { class: `views-page-myAssets-myWalletIndex-childer-recharge theme--light pb-7` }, [
+            // rechargeIndex.rechargeAddr,
             m('div.has-bg-sub-level-1', { style: { width: `100%` } }, [
                 m('div', { class: `content-width`, style: { margin: `auto` } }, [
                     m(Header, {
@@ -62,17 +63,17 @@ module.exports = {
                                         return m('span', { key: item, class: `mt-1` }, item);
                                     }),
                                     width: `240px`,
-                                    position: 'bottom',
-                                    direction: 'right'
+                                    position: `bottom`,
+                                    direction: `right`
                                 })
                             ])
                         ]),
                         m('div', { class: `mt-2` }, [
                             rechargeIndex.USDTLabel.map((item, index) => {
                                 return m('button', {
-                                    class: `mr-6 button button-small is-primary` + (rechargeIndex.btnCheckFlag === index ? `` : ` is-outlined`),
+                                    class: `mr-6 button button-small is-primary` + (rechargeIndex.btnCheckFlag === item ? `` : ` is-outlined`),
                                     key: item,
-                                    onclick: () => { rechargeIndex.changeBtnflag(index, item); }
+                                    onclick: () => { rechargeIndex.changeBtnflag(item); }
                                 }, item);
                             })
                         ])
