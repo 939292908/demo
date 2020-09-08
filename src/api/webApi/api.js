@@ -165,11 +165,15 @@ export function loginWebV2 (params = {}, options = { withCredentials: true }) {
             "code":0 // code为0则是成功，其他失败
         },
         aType: "Normal", // 用户类型 "Normal":普通用户，"Business"：商户
-        email: "",
+        email: "", // 绑定的手机，如果为空则没有绑定
         exists: 2, //用户是否存在 1:用户已存在， 2: 用户不存在
-        ga: "",
-        phone: "",
-        setting2fa: 0,
+        ga: "", // 绑定的谷歌，如果为空则没有绑定
+        phone: "", // 绑定的邮箱，如果为空则没有绑定
+        setting2fa: {
+            email: 0, // 邮箱，2fa安全验证开启状态 1：开启 0：关闭
+            phone: 1, // 手机，2fa安全验证开启状态 1：开启 0：关闭
+            google: 1 // 谷歌，2fa安全验证开启状态 1：开启 0：关闭
+        }
         uid: "" // 用户唯一id
     }
  */

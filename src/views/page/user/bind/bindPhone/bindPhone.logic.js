@@ -13,7 +13,7 @@ const model = {
     form: {
         password: "",
         phone: "",
-        areaCode: ""
+        areaCode: "86"
     },
     // 地区列表
     selectList: [],
