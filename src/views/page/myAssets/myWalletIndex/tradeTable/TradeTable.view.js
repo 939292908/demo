@@ -52,7 +52,7 @@ module.exports = {
                 m('div.account', { style: { display: t.coinType !== `wallet` ? `` : `none` } }, [
                     m('span', {}, t.accountTitle),
                     m('span', {}, `  `),
-                    m('span', {}, t.oldHideMoneyFlag ? '******' : t.accountBanlance + t.currency)
+                    m('span', {}, isNaN(Number(t.accountBanlance)) ? '--' : t.oldHideMoneyFlag ? '******' : t.accountBanlance + t.currency)
                 ])
             ]),
             m('div.tab', { class: `pb-7 mt-7 border-radius-medium` },
@@ -73,7 +73,6 @@ module.exports = {
                                 key: row.wType
                             }, [
                                 t.columnData[t.coinType].map((item, i) => {
-                                    // console.log(isNaN(row[item.val]), row[item.val]);
                                     if (i === t.columnData[t.coinType].length - 1) {
                                         // 操作列
                                         return m('td.py-4 has-text-level-1', {}, [
@@ -82,11 +81,11 @@ module.exports = {
                                             })
                                         ]);
                                     } else if (i === t.columnData[t.coinType].length - 2) { // 估值列
-                                        return m('td.py-4 has-text-level-1', {}, t.oldHideMoneyFlag ? '******' : row[item.val] + ` ` + t.currency);
+                                        return m('td.py-4 has-text-level-1', {}, isNaN(Number(row[item.val])) ? '--' : t.oldHideMoneyFlag ? '******' : row[item.val] + ` ` + t.currency);
                                     } else if (i === 0) { // 第一列币种不需要隐藏
                                         return m('td.py-4 has-text-level-1', {}, row[item.val]);
                                     } else {
-                                        return m('td.py-4 has-text-level-1', {}, t.oldHideMoneyFlag ? '******' : row[item.val]);
+                                        return m('td.py-4 has-text-level-1', {}, isNaN(Number(row[item.val])) ? '--' : t.oldHideMoneyFlag ? '******' : row[item.val]);
                                     }
                                 })
                             ]);

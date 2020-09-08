@@ -3,7 +3,7 @@ const wlt = require('@/models/wlt/wlt');
 const transferLogic = require('@/views/page/myAssets/transfer/transfer.logic.js'); // 划转模块逻辑
 const I18n = require('@/languages/I18n').default;
 const gM = require('@/models/globalModels');
-// const m = require('mithril');
+const m = require('mithril');
 
 module.exports = {
     vnode: {},
@@ -242,6 +242,7 @@ module.exports = {
         }
         if (this.oldHideMoneyFlag !== vnode.attrs.hideMoneyFlag) {
             this.oldHideMoneyFlag = vnode.attrs.hideMoneyFlag;
+            m.redraw();
         }
         this.oldValue = vnode.attrs.swValue;
         this.oldHideMoneyFlag = vnode.attrs.hideMoneyFlag;

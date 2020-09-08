@@ -95,6 +95,7 @@ const model = {
     // 隐藏资产
     hideValue: function () {
         this.hideMoneyFlag = !this.hideMoneyFlag;
+        m.redraw();
     },
     // 设置币币总值
     setCoinTotal: function (param) {
