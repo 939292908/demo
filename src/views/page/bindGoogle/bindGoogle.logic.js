@@ -70,8 +70,8 @@ module.exports = {
         if (this.check()) {
             // return;
         }
-        // geetest.verify(); // 极验
-        this.ChooseVerify();
+        geetest.verify(); // 极验
+        // this.ChooseVerify();
     },
     // 校验密码与谷歌码
     check() {
@@ -110,6 +110,7 @@ module.exports = {
             console.log('未绑定手机与邮箱');
             return;
         }
+        m.redraw();
         if (this.setting2fa.email === 1 && this.setting2fa.phone === 0) {
             console.log('已绑定邮箱');
             this.initSecurityVerification(1);
