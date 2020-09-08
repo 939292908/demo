@@ -7,7 +7,8 @@ let obj = {
     {
       title: '一键平仓',
       tooltipContent: '',
-      class: "position-buttons pub-table-11 cursor-pointer"
+      class: "position-buttons pub-table-11",
+      // tooltipCloss: "cursor-pointer"
     },
     {
       title: gDI18n.$t('10067'),//'仓位ID',
@@ -121,7 +122,8 @@ let obj = {
         {
           title: '一键平仓',
           tooltipContent: '',
-          class: "position-buttons pub-table-11 cursor-pointer"
+          class: "position-buttons pub-table-11",
+          // tooltipCloss: "cursor-pointer"
         },
         {
           title: gDI18n.$t('10067'),//'仓位ID',
@@ -217,15 +219,26 @@ let obj = {
     }
     this.posList = posList
   },
+
+  //一键平仓
+  ClosePosition:function(){
+    console.log(111111111111)
+  },
   
   getTheadList: function(){
     return this.theadList.map(function(item, i){
       return m("th",{key: "positiontHeadItem"+i, class:" "+item.class},[
-        m(Tooltip, {
+          m(Tooltip, {
             dashed: !!item.tooltipContent,
-            label: item.title,
-            content: item.tooltipContent
-        })
+            label: m('div',{class:"" + (i == 0 ? " cursor-pointer" : ""),onclick:function(){
+              if(i == 0){
+                obj.ClosePosition()
+              }
+            }},[
+              item.title
+            ]),
+            content: item.tooltipContent,
+        }) 
       ])
     })
   },
