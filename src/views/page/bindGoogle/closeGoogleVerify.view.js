@@ -2,6 +2,8 @@ const m = require('mithril');
 require('@/views/page/bindGoogle/bindGoogle.scss');
 const closeGLogic = require('@/views/page/bindGoogle/bindGoogle.logic');
 const I18n = require('@/languages/I18n').default;
+const VerifyView = require('@/views/components/dialogVerify/dialogVerify.view');
+const config = require('@/config.js');
 
 const closeGView = {
     oninit: () => {
@@ -32,10 +34,18 @@ const closeGView = {
                         m('input', { class: `border-radius-small mt-2 code`, type: `text` })
                     ]),
                     m('div', { class: `btn mt-8 margin-LRauto` }, [
-                        m('button', { class: `has-bg-primary cursor-pointer`, onclick: () => { closeGLogic.confirmBtn(); } }, '确定')
+                        m('button', { class: `has-bg-primary cursor-pointer`, onclick: () => { closeGLogic.confirmBtn('unbind'); } }, '确定')
                     ])
                 ])
-            ])
+            ]),
+            closeGLogic.isShowVerifyView ? m(VerifyView, {
+                close: () => closeGLogic.switchSafetyVerifyModal(false),
+                isHandleVerify: true,
+                title: {
+                    logo: config.exchName,
+                    text: I18n.$t('10113') /* "安全验证" */
+                }
+            }) : null
         ]);
     },
     onremove: () => {

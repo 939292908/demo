@@ -127,7 +127,7 @@ const openGView = {
                             m('span', { class: ``, style: { display: openGLogic.codeTipFlag ? `` : `none` } }, '谷歌验证码输入错误或已过期，请重新输入!')
                         ]),
                         m('div', { class: `btn mt-3 margin-LRauto` }, [
-                            m('button', { class: `has-bg-primary cursor-pointer`, onclick: () => { openGLogic.confirmBtn(); } }, I18n.$t('10337') /* '确定' */)
+                            m('button', { class: `has-bg-primary cursor-pointer`, onclick: () => { openGLogic.confirmBtn('bind'); } }, I18n.$t('10337') /* '确定' */)
                         ])
                     ])
                 ]),

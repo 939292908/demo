@@ -18,6 +18,7 @@ module.exports = {
     nationNo: null, // 区号
     phoneNum: null, // 手机号码
     isShowVerifyView: false, // 安全校验弹框 show
+    CurrentOperation: 'bind', // 当前为解绑/绑定操作
     // 安全校验弹框 显示/隐藏
     switchSafetyVerifyModal (type) {
         this.isShowVerifyView = type;
@@ -64,7 +65,8 @@ module.exports = {
     },
     // 生成IOS，Android，密钥二维码 end
 
-    confirmBtn: function () {
+    confirmBtn: function (type) {
+        this.CurrentOperation = type;
         if (this.check()) {
             // return;
         }
@@ -102,22 +104,23 @@ module.exports = {
             }
         });
     },
+    // 选择验证方式
     ChooseVerify() {
+        if (this.setting2fa.email === 0 && this.setting2fa.phone === 0) {
+            console.log('未绑定手机与邮箱');
+            return;
+        }
         if (this.setting2fa.email === 1 && this.setting2fa.phone === 0) {
             console.log('已绑定邮箱');
             this.initSecurityVerification(1);
-            this.switchSafetyVerifyModal(true); // 打开弹框
         } else if (this.setting2fa.email === 0 && this.setting2fa.phone === 1) {
             console.log('已绑定手机');
             this.initSecurityVerification(2);
-            this.switchSafetyVerifyModal(true); // 打开弹框
         } else if (this.setting2fa.email === 1 && this.setting2fa.phone === 1) {
             console.log('已绑定手机和邮箱');
             this.initSecurityVerification(3);
-            this.switchSafetyVerifyModal(true); // 打开弹框
-        } else if (this.setting2fa.email === 0 && this.setting2fa.phone === 0) {
-            console.log('未绑定手机与邮箱');
         }
+        this.switchSafetyVerifyModal(true); // 打开弹框
     },
     // 初始化安全验证          typeFlag: 1：邮箱 2：手机 3：邮箱收集双切换验证
     initSecurityVerification(typeFlag) {
@@ -131,7 +134,7 @@ module.exports = {
                 lang: I18n.getLocale()
             };
             validate.activeEmail(params, function() {
-                console.log('succsese');
+                that.CurrentOperation === 'bind' ? that.bindGoogle() : that.unbindGoogle();
             });
         } else if (typeFlag === 2) {
             params = {
@@ -142,10 +145,10 @@ module.exports = {
                 mustCheckFn: "" // 验证类型
             };
             validate.activeSms(params, function() {
-                that.bindGoogle();
+                that.CurrentOperation === 'bind' ? that.bindGoogle() : that.unbindGoogle();
             });
         } else if (typeFlag === 3) {
-            const params = {
+            params = {
                 emailConfig: {
                     secureEmail: that.email,
                     host: config.official,
@@ -161,9 +164,8 @@ module.exports = {
                     mustCheckFn: "" // 验证类型
                 }
             };
-            console.log(params);
             validate.activeSmsAndEmail(params, function() {
-                console.log('succsese');
+                that.CurrentOperation === 'bind' ? that.bindGoogle() : that.unbindGoogle();
             });
         }
     },
@@ -177,7 +179,6 @@ module.exports = {
         // google验证码
         const code = document.getElementsByClassName('code')[0].value;
 
-        console.log(opInfo, password, code);
         Http.bindGoogleAuth({
             opInfo: opInfo,
             password: password,
@@ -193,7 +194,8 @@ module.exports = {
         });
     },
     // 解绑谷歌验证
-    unbind: function() {
+    unbindGoogle: function() {
+        const that = this;
         // 用户密码
         const password = document.getElementsByClassName('pwd')[0].value;
         // google验证码
@@ -206,6 +208,7 @@ module.exports = {
             if (arg.result.code === 0) {
                 console.log('success');
             }
+            that.switchSafetyVerifyModal(false); // 关闭安全验证弹框
         }).catch(function(err) {
             console.log('nzm', 'relieveGoogleAuth error', err);
         });
