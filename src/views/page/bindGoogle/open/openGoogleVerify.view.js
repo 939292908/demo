@@ -145,7 +145,7 @@ const openGView = {
                 isHandleVerify: true,
                 title: {
                     logo: config.exchName,
-                    text: "安全验证"
+                    text: I18n.$t('10113') /* "安全验证" */
                 }
             }) : null
         ]);
