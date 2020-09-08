@@ -59,7 +59,7 @@ module.exports = {
                             m('div', { class: `form-item-content` }, [
                                 m('input', {
                                     class: `input`,
-                                    placeholder: '请输入登录密码',
+                                    placeholder: I18n.$t('10571')/* '请输入登录密码' */,
                                     type: 'password',
                                     value: model.form.password,
                                     oninput(e) {
@@ -86,7 +86,7 @@ module.exports = {
                                         },
                                         onblur: e => {
                                         },
-                                        placeholder: '请输入手机号',
+                                        placeholder: I18n.$t('10573')/* '请输入手机号' */,
                                         value: model.phone
                                     }
                                 })
