@@ -308,6 +308,8 @@ export default {
         obj.initEVBUS()
         obj.initLanguage()
         window.$dropdownType = 1
+        obj.getOrderList()
+        obj.getPosList()
     },
     oncreate: function(vnode){
         
