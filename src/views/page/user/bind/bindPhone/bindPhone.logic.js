@@ -9,6 +9,8 @@ const I18n = require('@/languages/I18n').default;
 const validate = require('@/models/validate/validate').default;
 
 const model = {
+    showPhoneValidate: false,
+    showPasswordValidate: false,
     // 表单
     form: {
         password: "",
