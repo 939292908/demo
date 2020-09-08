@@ -1179,7 +1179,7 @@ export default {
                         id: 'item4',
                         label: gDI18n.$t('10527'), //'被动委托',
                         tooltipContent: gDI18n.$t('10573'), //'被动委托（Post Only）订单不会立刻在市场上成交，保证用户始终为Maker，如果委托会立即成交，那么该委托会被取消。',
-                        tooltipDirection: 'right',
+                        tooltipDirection: 'left',
                         type: 'OrdFlag',
                         value: 1
                     },

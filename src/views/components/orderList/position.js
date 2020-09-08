@@ -1,13 +1,13 @@
 var m = require("mithril")
-import Tooltip from "../common/Tooltip"
+import Tooltip from "../common/Tooltip/Tooltip.view"
 
 let obj = {
   posList: [],
   theadList: [
     {
-      title: gDI18n.$t('10092'),//'策略',
+      title: '一键平仓',
       tooltipContent: '',
-      class: "position-buttons pub-table-11"
+      class: "position-buttons pub-table-11 cursor-pointer"
     },
     {
       title: gDI18n.$t('10067'),//'仓位ID',
@@ -119,9 +119,9 @@ let obj = {
   initLanguage: function(){
     this.theadList = [
         {
-          title: gDI18n.$t('10092'),//'策略',
+          title: '一键平仓',
           tooltipContent: '',
-          class: "position-buttons pub-table-11"
+          class: "position-buttons pub-table-11 cursor-pointer"
         },
         {
           title: gDI18n.$t('10067'),//'仓位ID',

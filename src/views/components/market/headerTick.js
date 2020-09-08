@@ -1,5 +1,5 @@
 var m = require("mithril")
-import Tooltip from "../common/Tooltip"
+import Tooltip from "../common/Tooltip/Tooltip.view"
 
 
 let spotTick = {
