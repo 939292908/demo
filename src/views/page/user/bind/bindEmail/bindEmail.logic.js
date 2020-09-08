@@ -127,6 +127,13 @@ const model = {
     },
     onremove (vnode) {
         this.rmEVBUS();
+        this.showEmailValidate = false;
+        this.showPasswordValidate = false;
+        this.isShowVerifyView = false;
+        this.form = {
+            password: "",
+            email: ""
+        };
     }
 };
 
