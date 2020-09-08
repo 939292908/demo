@@ -1,13 +1,15 @@
-.views-pages-myassets-header{
-    a{
-        height: 52px;
-        border: none;
-    }
+.views-components-indexHeader{
+    height: 52px;
+    border-width: 1px;
+    border-style: solid;
+    margin: 0 !important;
     ul{
-        border: none;
         li{
             border-bottom-width: 1px;
             border-bottom-style: solid !important;
+            a{
+                height: 50px;
+            }
         }
     }
 }

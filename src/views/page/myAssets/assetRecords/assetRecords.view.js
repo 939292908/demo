@@ -15,14 +15,10 @@ module.exports = {
     },
     view() {
         return m('div.theme--light', {}, [
-            m('div.px-3.has-bg-sub-level-1.is-align-items-center', {}, [
-                m('div.content-width', {}, [
-                    m(header, {
-                        highlightFlag: 1,
-                        navList: [{ to: '/myWalletIndex', title: I18n.$t('10052')/* '我的资产' */ }, { to: '/assetRecords', title: I18n.$t('10053')/* '资金记录' */ }]
-                    })
-                ])
-            ]),
+            m(header, {
+                highlightFlag: 1,
+                navList: [{ to: '/myWalletIndex', title: I18n.$t('10052') /* '我的资产' */ }, { to: '/assetRecords', title: I18n.$t('10053') /* '资金记录' */ }]
+            }),
             m('div.theme--light.page-myAssets-assetRecord', {}, [
                 m('div.has-bg-level-1.is-align-items-center.py-7', {}, [
                     m('div.has-bg-level-2.content-width', {}, [
