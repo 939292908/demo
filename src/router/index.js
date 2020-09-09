@@ -54,7 +54,7 @@ class Router {
         },
         '/closeGoogleVerify': {
             requireAuth: true,
-            onmatch: () => import('@/views/page/bindGoogle/close/closeGoogleVerify.view')
+            onmatch: () => import('@/views/page/bindGoogle/closeGoogleVerify.view')
         },
         '/accountSecurity': {
             requireAuth: true,
@@ -70,7 +70,7 @@ class Router {
         },
         '/openGoogleVerify': {
             requireAuth: true,
-            onmatch: () => import('@/views/page/bindGoogle/open/openGoogleVerify.view')
+            onmatch: () => import('@/views/page/bindGoogle/openGoogleVerify.view')
         }
     };
 

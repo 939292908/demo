@@ -14,15 +14,11 @@ module.exports = {
         return m('div', { class: `views-pages-myassets-myWalletIndex theme--light` }, [
             m('div', {}, [
                 m('div.top mb-8 has-bg-sub-level-1', { style: { height: `344px`, width: `100%` } }, [
-                    m('div', { class: `head` }, [
-                        m('div', { class: `container content-width` }, [
-                            // highlightFlag:哪个高亮   0：我的资产  1：资产记录
-                            m(Header, {
-                                highlightFlag: 0,
-                                navList: [{ to: '/myWalletIndex', title: I18n.$t('10052') /* '我的资产' */ }, { to: '/assetRecords', title: I18n.$t('10053') /* '资金记录' */ }]
-                            })
-                        ])
-                    ]),
+                    // highlightFlag:哪个高亮   0：我的资产  1：资产记录
+                    m(Header, {
+                        highlightFlag: 0,
+                        navList: [{ to: '/myWalletIndex', title: I18n.$t('10052') /* '我的资产' */ }, { to: '/assetRecords', title: I18n.$t('10053') /* '资金记录' */ }]
+                    }),
                     m('div', { class: `myWalletIndex-warpper container content-width` }, [
                         m('div', { class: `myWalletIndex-head columns-flex` }, [
                             m('div', { class: `myWalletIndex-head-left mt-8` }, [
@@ -33,12 +29,12 @@ module.exports = {
                                     ])
                                 ]),
                                 m('div', { class: `number-hide has-text-white` }, [
-                                    m('span', { class: `title-large` }, [myWalletIndex.hideMoneyFlag ? '******' : myWalletIndex.totalValue]),
+                                    m('span', { class: `title-large` }, [isNaN(Number(myWalletIndex.totalValue)) ? '--' : myWalletIndex.hideMoneyFlag ? '******' : myWalletIndex.totalValue]),
                                     m('span', { class: `title-large` }, [` ` + myWalletIndex.currency]),
                                     m('i', { class: (myWalletIndex.hideMoneyFlag ? `iconfont icon-zichanzhengyan` : `iconfont icon-yincang`) + ` changeMoneyImg pl-2 cursor-pointer has-text-level-3`, onclick: () => { myWalletIndex.hideValue(); } }),
                                     m('br'),
                                     m('span', { class: `has-text-level-4` }, [`≈ `]),
-                                    m('span', { class: `has-text-level-4` }, [myWalletIndex.hideMoneyFlag ? '******' : myWalletIndex.totalCNY]),
+                                    m('span', { class: `has-text-level-4` }, [isNaN(Number(myWalletIndex.totalCNY)) ? '--' : myWalletIndex.hideMoneyFlag ? '******' : myWalletIndex.totalCNY]),
                                     m('span', { class: `has-text-level-4` }, [` CNY`])
                                 ])
                             ]),
@@ -69,7 +65,7 @@ module.exports = {
                                     m('span', { }, I18n.$t('10055') /* `我的钱包` */)
                                 ]),
                                 m('div', { class: `title-small ` }, [
-                                    m('span', {}, myWalletIndex.hideMoneyFlag ? '******' : myWalletIndex.walletTotalValue),
+                                    m('span', {}, isNaN(Number(myWalletIndex.walletTotalValue)) ? '--' : myWalletIndex.hideMoneyFlag ? '******' : myWalletIndex.walletTotalValue),
                                     m('span', {}, [` ` + myWalletIndex.currency])
                                 ])
                             ]),
@@ -82,7 +78,7 @@ module.exports = {
                                         m('span', { }, I18n.$t('10060') /* `交易账户` */)
                                     ]),
                                     m('div', { class: `title-small ` }, [
-                                        m('span', {}, myWalletIndex.hideMoneyFlag ? '******' : myWalletIndex.tradingAccountTotalValue),
+                                        m('span', {}, isNaN(Number(myWalletIndex.tradingAccountTotalValue)) ? '--' : myWalletIndex.hideMoneyFlag ? '******' : myWalletIndex.tradingAccountTotalValue),
                                         m('span', {}, [` ` + myWalletIndex.currency])
                                     ])
                                 ]),
@@ -98,11 +94,11 @@ module.exports = {
                                         style: { display: `none` }
                                     }, [
                                         m('span.mb-1 cursor-pointer has-text-level-4', I18n.$t('10072') /* `合约账户` */),
-                                        m('a.mb-5 has-text-level-3', { class: myWalletIndex.swValue === '01' || myWalletIndex.swValue === '03' ? 'has-text-primary' : '', onclick: () => { myWalletIndex.switchChange('01', 'small'); } }, (myWalletIndex.hideMoneyFlag ? '******' : myWalletIndex.contractTotal) + ` ` + myWalletIndex.currency),
+                                        m('a.mb-5 has-text-level-3', { class: myWalletIndex.swValue === '01' || myWalletIndex.swValue === '03' ? 'has-text-primary' : '', onclick: () => { myWalletIndex.switchChange('01', 'small'); } }, (isNaN(Number(myWalletIndex.contractTotal)) ? '--' : myWalletIndex.hideMoneyFlag ? '******' : myWalletIndex.contractTotal) + ` ` + myWalletIndex.currency),
                                         m('span.mb-1 cursor-pointer has-text-level-4', I18n.$t('10073') /* `币币账户` */),
-                                        m('a.mb-5.has-text-level-3', { class: myWalletIndex.swValue === '02' ? 'has-text-primary' : '', onclick: () => { myWalletIndex.switchChange('02', 'small'); } }, (myWalletIndex.hideMoneyFlag ? '******' : myWalletIndex.coinTotal) + ` ` + myWalletIndex.currency),
+                                        m('a.mb-5.has-text-level-3', { class: myWalletIndex.swValue === '02' ? 'has-text-primary' : '', onclick: () => { myWalletIndex.switchChange('02', 'small'); } }, (isNaN(Number(myWalletIndex.coinTotal)) ? '--' : myWalletIndex.hideMoneyFlag ? '******' : myWalletIndex.coinTotal) + ` ` + myWalletIndex.currency),
                                         m('span.mb-1 cursor-pointer has-text-level-4', I18n.$t('10074') /* `法币账户` */),
-                                        m('a.has-text-level-3', { class: myWalletIndex.swValue === '04' ? 'has-text-primary' : '', onclick: () => { myWalletIndex.switchChange('04', 'small'); } }, (myWalletIndex.hideMoneyFlag ? '******' : myWalletIndex.legalTotal) + ` ` + myWalletIndex.currency)
+                                        m('a.has-text-level-3', { class: myWalletIndex.swValue === '04' ? 'has-text-primary' : '', onclick: () => { myWalletIndex.switchChange('04', 'small'); } }, (isNaN(Number(myWalletIndex.legalTotal)) ? '--' : myWalletIndex.hideMoneyFlag ? '******' : myWalletIndex.legalTotal) + ` ` + myWalletIndex.currency)
                                     ])
                                 ])
                             ]),
@@ -111,7 +107,7 @@ module.exports = {
                                     m('span', {}, I18n.$t('10061') /* `其他账户` */)
                                 ]),
                                 m('div', { class: `title-small` }, [
-                                    m('span', {}, myWalletIndex.hideMoneyFlag ? '******' : myWalletIndex.otherTotalValue),
+                                    m('span', {}, isNaN(Number(myWalletIndex.otherTotalValue)) ? '--' : myWalletIndex.hideMoneyFlag ? '******' : myWalletIndex.otherTotalValue),
                                     m('span', {}, [` ` + myWalletIndex.currency])
                                 ])
                             ])

@@ -95,6 +95,7 @@ const model = {
     // 隐藏资产
     hideValue: function () {
         this.hideMoneyFlag = !this.hideMoneyFlag;
+        m.redraw();
     },
     // 设置币币总值
     setCoinTotal: function (param) {
@@ -217,6 +218,7 @@ const model = {
         this.currency === 'BTC' ? this.setLegalTotal(wlt.legalTotalValueForBTC) : this.setLegalTotal(wlt.legalTotalValueForUSDT);
         this.currency === 'BTC' ? this.setContractTotal(wlt.contractTotalValueForBTC) : this.setContractTotal(wlt.contractTotalValueForUSDT);
         this.setTotalCNY(wlt.totalCNYValue);
+        m.redraw();
     },
     initFn: function() {
         wlt.init();
@@ -282,6 +284,21 @@ const model = {
         broadcast.offMsg({
             key: this.currency,
             cmd: broadcast.MSG_WLT_READY,
+            isall: true
+        });
+        broadcast.offMsg({
+            key: this.currency,
+            cmd: broadcast.MSG_WLT_UPD,
+            isall: true
+        });
+        broadcast.offMsg({
+            key: this.currency,
+            cmd: broadcast.MSG_LANGUAGE_UPD,
+            isall: true
+        });
+        broadcast.offMsg({
+            key: this.currency,
+            cmd: broadcast.GET_FUNLIST_READY,
             isall: true
         });
     }

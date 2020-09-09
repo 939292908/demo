@@ -66,6 +66,7 @@ export default {
             this.emailConfig = { exChannel: config.exchId };
         }
 
+        console.log(this.emailConfig);
         return webApi.sendEmailV2(this.emailConfig);
     },
     /**
