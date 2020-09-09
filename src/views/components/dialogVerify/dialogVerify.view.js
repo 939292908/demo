@@ -83,7 +83,7 @@ module.exports = {
                 Validate.selectName,
                 m('span.ml-2.body-2.has-text-level-4', {}, [
                     Validate.selectType === 'sms' ? `(${utils.hideAccountNameInfo(validateModel.smsConfig.phoneNum || validateModel.smsConfig.phone || validateModel.smsConfig.securePhone)})`
-                        : Validate.selectType === 'email' ? `(${utils.hideAccountNameInfo(validateModel.smsConfig.email || validateModel.emailConfig.secureEmail)})`
+                        : Validate.selectType === 'email' ? `(${utils.hideAccountNameInfo(validateModel.emailConfig.email || validateModel.emailConfig.secureEmail)})`
                             : ''
                 ])
             ]),
