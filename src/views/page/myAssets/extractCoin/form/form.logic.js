@@ -176,7 +176,6 @@ const extract = {
     },
     handleSubmit: function () {
         if (this.errorShow.unmber.show || this.errorShow.address.show) return false;
-        // if (!this.extractCoin.address) return window.$message({ content: l180n.$t('10397')/* '提币地址不能为空' */, type: 'danger' });
         if (!this.extractCoin.address) {
             this.errorShow.address.show = true;
             this.errorShow.address.text = l180n.$t('10401')/* '提币地址不能为空' */;

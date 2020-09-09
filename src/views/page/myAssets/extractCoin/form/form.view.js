@@ -89,8 +89,8 @@ module.exports = {
                                             m('span', { class: `my-menu-label` }, [
                                                 m('span', { class: `mr-2` }, item.label),
                                                 m('span', { class: `has-text-level-4` }, item.coinName)
-                                            ]),
-                                            m('i', { class: `my-menu-icon iconfont icon-fabijiaoyiwancheng ${FromDataMode.selectActiveId.wType === item.id ? '' : 'is-hidden'}` }) // icon
+                                            ])
+                                            // m('i', { class: `my-menu-icon iconfont icon-fabijiaoyiwancheng ${FromDataMode.selectActiveId.wType === item.id ? '' : 'is-hidden'}` }) // icon
                                         ]);
                                     })
                                 )
