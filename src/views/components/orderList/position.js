@@ -222,7 +222,7 @@ let obj = {
 
   //一键平仓
   ClosePosition:function(){
-    console.log('一键平仓')
+    gEVBUS.emit(gEVBUS.EV_OPENCLOSEPOSITION_UPD, { Ev: gEVBUS.EV_OPENCLOSEPOSITION_UPD ,data:{posList : this.posList}})
   },
   
   getTheadList: function(){

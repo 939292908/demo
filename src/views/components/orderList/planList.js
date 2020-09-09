@@ -238,7 +238,7 @@ let obj = {
     },
     //全删
     ClosePlan:function(){
-        console.log('全删')
+        gEVBUS.emit(gEVBUS.EV_ALL_CLOSE_LIST_UPD, { Ev: gEVBUS.EV_ALL_CLOSE_LIST_UPD ,data:{type :2 , posList : this.posList}})
     },
 
     getTheadList: function () {

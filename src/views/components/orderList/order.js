@@ -250,7 +250,7 @@ let obj = {
 
     //全撤
     CloseOrd:function(){
-        console.log('全撤')
+        gEVBUS.emit(gEVBUS.EV_ALL_CLOSE_LIST_UPD, { Ev: gEVBUS.EV_ALL_CLOSE_LIST_UPD ,data:{type :1 , posList : this.posList}})
     },
 
     getTheadList: function () {
