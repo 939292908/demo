@@ -15,7 +15,6 @@ module.exports = {
     showPasswordValidate: false,
     showEmailValidate: false,
     showValid: false,
-    showNextValid: false,
     password: '',
     bindType: '',
     bind: '',
@@ -52,6 +51,7 @@ module.exports = {
             if (res.result.code === 0) {
                 if (res.exists === 1) {
                     window.$message({ content: I18n.$t('10443'), type: 'danger' }); // 用户已存在
+                    this.showValid = false;
                 } else {
                     this.bindType === 'phone' ? this.nextValidateSms() : this.nextValidateEmail();
                 }
@@ -62,7 +62,6 @@ module.exports = {
             }
         }).catch(() => {
             this.loading = false;
-            m.redraw();
             window.$message({ content: I18n.$t('10340')/* '网络异常，请稍后重试' */, type: 'danger' });
         });
     },
@@ -160,12 +159,10 @@ module.exports = {
                 models.getUserInfo(true);
             } else {
                 this.loading = false;
-                m.redraw();
                 window.$message({ content: errCode.getWebApiErrorCode(res.result.code), type: 'danger' });
             }
         }).catch(() => {
             this.loading = false;
-            m.redraw();
             window.$message({ content: I18n.$t('10340')/* '网络异常，请稍后重试' */, type: 'danger' });
         });
     },
@@ -209,12 +206,12 @@ module.exports = {
             cmd: broadcast.GET_USER_INFO_READY,
             cb: res => {
                 if (res) {
-                    this.loading = false;
-                    window.router.go(-1);
+                    return window.router.go(-1);
                 } else {
-                    this.loading = false;
-                    m.redraw();
+                    window.$message({ content: I18n.$t('10340')/* '网络异常，请稍后重试' */, type: 'danger' });
                 }
+                this.loading = false;
+                m.redraw();
             }
         });
         if (this.bindType === 'phone') {
@@ -227,7 +224,6 @@ module.exports = {
         this.showPhoneValidate = false;
         this.showEmailValidate = false;
         this.showPasswordValidate = false;
-        this.showNextValid = false;
         this.showValid = false;
         this.password = '';
         this.bind = '';

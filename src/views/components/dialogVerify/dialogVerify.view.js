@@ -127,7 +127,7 @@ module.exports = {
             // m('div.itemBut bgBut', '手机验证')
         ]);
     },
-    verifyVnode: function () {
+    verifyVnode: function (vNode) {
         const validInput = [];
         validInput.push(this.verifyContentTitle());
         switch (Validate.selectType) {
@@ -151,7 +151,10 @@ module.exports = {
             break;
         }
 
-        validInput.push(m('div.butBox', { onclick: () => { Validate.check(); } }, m('button.button is-fullwidth has-bg-primary', this.props.buttonText || I18n.$t('10337')/* '确定' */)));
+        validInput.push(m('div.butBox', { onclick: () => { Validate.check(); } },
+            m('button.button is-fullwidth has-bg-primary', {
+                class: vNode.attrs.loading ? 'is-loading' : ''
+            }, this.props.buttonText || I18n.$t('10337')/* '确定' */)));
         return m('div.mainPrompt', validInput);
     },
     view: function (vNode) {
@@ -159,7 +162,7 @@ module.exports = {
         return m('div.components-dialog-verify', [
             m('div.dialog-content warmPrompt', m('div', [
                 vNode.attrs?.title?.text ? this.headerVnode() : null,
-                vNode.attrs.isHandleVerify ? this.verifyVnode() : this.promptText()
+                vNode.attrs.isHandleVerify ? this.verifyVnode(vNode) : this.promptText()
             ]))
         ]);
     }

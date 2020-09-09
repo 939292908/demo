@@ -105,8 +105,8 @@ module.exports = {
                             }, [regExp.validAccount('phone', model.bind)])
                         ]),
                         // 确定按钮
-                        m("button", {
-                            class: "button bind-save-btn is-primary font-size-2 has-text-white button-large mt-8",
+                        m("button.button.bind-save-btn.is-primary.font-size-2.has-text-white.button-large.mt-8", {
+                            class: model.loading ? 'is-loading' : '',
                             onclick () {
                                 model.saveClick();
                             },
@@ -121,6 +121,7 @@ module.exports = {
                 close: () => {
                     model.showValid = false;
                 },
+                loading: model.loading,
                 isHandleVerify: true,
                 title: {
                     logo: config.exchName,
