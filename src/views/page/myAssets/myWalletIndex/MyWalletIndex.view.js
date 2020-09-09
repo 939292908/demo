@@ -96,7 +96,8 @@ module.exports = {
                                         m('div', { class: ``, onclick: () => { myWalletIndex.switchChange('01', 'small'); } }, [
                                             m('span.mb-1 cursor-pointer has-text-level-4', {}, I18n.$t('10072') /* `合约账户` */),
                                             m('a.mb-5 has-text-level-3', {
-                                                class: myWalletIndex.swValue === '01' || myWalletIndex.swValue === '03' ? 'has-text-primary' : ''
+                                                // class: myWalletIndex.swValue === '01' || myWalletIndex.swValue === '03' ? 'has-text-primary' : ''
+                                                class: myWalletIndex.swValue === '01' ? 'has-text-primary' : ''
                                             }, (isNaN(Number(myWalletIndex.contractTotal)) ? '--' : myWalletIndex.hideMoneyFlag ? '******' : myWalletIndex.contractTotal) + ` ` + myWalletIndex.currency)
                                         ]),
                                         m('div', { class: ``, onclick: () => { myWalletIndex.switchChange('02', 'small'); } }, [
