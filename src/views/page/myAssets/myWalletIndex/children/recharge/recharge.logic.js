@@ -5,13 +5,14 @@ const broadcast = require('@/broadcast/broadcast');
 const Qrcode = require('qrcode');
 const I18n = require('@/languages/I18n').default;
 
-module.exports = {
+const model = {
     pageData: [], // 所需数据
     USDTLabel: [], // 链名称
     selectList: [], // 下拉列表
     form: {
         selectCheck: '' // 当前币种选中值
     },
+    selectCheck: '', // 当前币种选中值
     tips: '', // 提示
     uId: '', // 用户uId
     rechargeAddr: '', // 充币地址
@@ -93,16 +94,20 @@ module.exports = {
         for (const i of wlt.wallet['03']) {
             if (i.Setting.canRecharge) {
                 this.selectList.push({ label: i.wType + ' | ' + wlt.coinInfo[i.wType].name, id: i.wType });
-                this.coinParam ? this.form.selectCheck = this.coinParam : this.form.selectCheck = this.selectList[0].id;
+                if (this.coinParam === null) {
+                    if (this.selectCheck === '') {
+                        this.selectCheck = this.selectList[0].id;
+                    }
+                }
             }
         }
     },
     // 切换币种时的操作
     setTipsAndAddrAndCode() {
         for (const i in this.pageData) {
-            if (this.pageData[i].wType === this.form.selectCheck) {
+            if (this.pageData[i].wType === this.selectCheck) {
                 let networkNum = null;
-                if (this.form.selectCheck === 'USDT') {
+                if (this.selectCheck === 'USDT') {
                     for (const i of this.chainAry) {
                         if ((this.btnCheckFlag !== 'OMNI' ? 'USDT' + this.btnCheckFlag : 'USDT') === i.wType) {
                             networkNum = i.trade.networkNum;
@@ -114,16 +119,16 @@ module.exports = {
 
                 this.tips = this.pageData[i].promptRecharge !== 0 ? this.pageData[i].promptRecharge : '' +
 
-                // this.tips = '您只能向此地址充值' + this.form.selectCheck + '，其他资产充入' + this.form.selectCheck + '地址将无法找回' +
+                // this.tips = '您只能向此地址充值' + this.selectCheck + '，其他资产充入' + this.selectCheck + '地址将无法找回' +
 
                 /* 禁止向{value}地址充币除{value}之外的资产,任何充入{value}地址的非{value}资产将不可找回 */
-                I18n.$t('10085', { value: this.form.selectCheck }) +
+                I18n.$t('10085', { value: this.selectCheck }) +
 
                 /* 使用{value1}地址充币需要{value2}个网络确认才能到账 */
-                '*' + I18n.$t('10084', { value1: this.form.selectCheck, value2: networkNum }) +
+                '*' + I18n.$t('10084', { value1: this.selectCheck, value2: networkNum }) +
 
                 /* 关于标签{value}充币时同时需要一个充币地址和{value}标签。标签是一种保证您的充币地址唯一性的数字串，与充币地址成对出现并一一对应。请您务必遵守正确的{value}充币步骤，在提币时输入完整的信息，否则将面临丢失币的风险！ */
-                (this.form.selectCheck === 'EOS' || this.form.selectCheck === 'XRP' ? '*' + I18n.$t('10545', { value: this.form.selectCheck }) : '') +
+                (this.selectCheck === 'EOS' || this.selectCheck === 'XRP' ? '*' + I18n.$t('10545', { value: this.selectCheck }) : '') +
 
                 /* '默认充入我的钱包，您可以通过“资金划转”将资金转至交易账户或者其他账户' */
                 '*' + I18n.$t('10085');
@@ -131,20 +136,19 @@ module.exports = {
                 this.memo = this.pageData[i].memo; // 当前选中币种的标签是否显示
                 this.openChains = this.pageData[i].openChains; // 当前选中币种的链名称是否显示
 
-                if (this.form.selectCheck !== 'USDT') {
+                if (this.selectCheck !== 'USDT') {
                     this.rechargeAddr = this.pageData[i].rechargeAddr; // 当前选中币种的充币地址
                 } else {
                     this.changeBtnflag(this.btnCheckFlag);
                 }
-
                 this.setQrCodeImg(); // 当前选中币种的二维码
                 this.setLabelTips(); // 当前选中币种的标签提示语句
             }
         }
     },
     setLabelTips() {
-        /* '充值' + this.form.selectCheck + '同时需要一个充币地址和' + this.form.selectCheck + '标签；警告：如果未遵守正确的' + this.form.selectCheck + '充币步骤，币会有丢失风险！'; */
-        this.labelTips = I18n.$t('10518', { VALUE: this.form.selectCheck });
+        /* '充值' + this.selectCheck + '同时需要一个充币地址和' + this.selectCheck + '标签；警告：如果未遵守正确的' + this.selectCheck + '充币步骤，币会有丢失风险！'; */
+        this.labelTips = I18n.$t('10518', { VALUE: this.selectCheck });
     },
     setQrCodeImg() {
         if (document.getElementsByClassName('QrCodeImg')[0].innerHTML !== '') {
@@ -204,6 +208,40 @@ module.exports = {
         }
         m.redraw();
     },
+    // 币种 菜单配置
+    option: {
+        evenKey: "optionkey",
+        showMenu: false,
+        currentId: 1,
+        setOption (option) {
+            this.showMenu = option.showMenu;
+            this.currentId = option.currentId ? option.currentId : this.currentId;
+        },
+        menuClick(item) {
+            model.selectCheck = item.id;
+            model.setTipsAndAddrAndCode();
+        },
+        renderHeader(item) {
+            return m('div', { class: `selectDiv` }, [
+                m('span', { class: `has-text-primary` }, item.label)
+            ]);
+        },
+        menuList() {
+            const list = [];
+            for (const i of model.selectList) {
+                const item = {};
+                item.id = i.id;
+                item.label = i.label;
+                item.render = params => {
+                    return m('div', { class: `` }, [
+                        m('span', { class: `mr-2` }, item.label)
+                    ]);
+                };
+                list.push(item);
+            }
+            return list;
+        }
+    },
     initFn: function () {
         const currencyType = window.router.getUrlInfo().params.wType;
         if (currencyType !== undefined) {
@@ -225,6 +263,7 @@ module.exports = {
                 this.setPageData();
             }
         });
+        this.setPageData();
 
         broadcast.onMsg({
             key: 'index',
@@ -233,8 +272,6 @@ module.exports = {
                 this.setTipsAndAddrAndCode();
             }
         });
-
-        this.setPageData();
     },
     updateFn: function (vnode) {
     },
@@ -246,3 +283,4 @@ module.exports = {
         wlt.remove();
     }
 };
+module.exports = model;

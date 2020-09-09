@@ -4,7 +4,7 @@ const AssetRecords = require('@/models/asset/assetsRecords');
 const assetTable = require('../../../assetTable/assetTable.view');
 require('@/views/page/myAssets/myWalletIndex/children/recharge/recharge.scss');
 const Tooltip = require('@/views/components/common/Tooltip/Tooltip.view');
-const Dropdown = require('@/views/components/common/Dropdown');
+const Dropdown = require('@/views/components/common/Dropdown/Dropdown.view');
 const I18n = require('@/languages/I18n').default;
 const Header = require('@/views/components/indexHeader/indexHeader.view');
 
@@ -37,9 +37,9 @@ module.exports = {
                 m('div', { class: `bottom-upper has-bg-level-2 pl-8 pt-7` }, [
                     m('div', { class: `form-item-title` }, I18n.$t('10063') /* '币种' */),
                     m('div', { class: `form-item-content border-radius-medium mt-2 mb-7`, style: { width: `384px` } }, [
-                        m(Dropdown, rechargeIndex.getCurrencyMenuOption())
+                        m(Dropdown, rechargeIndex.option)
                     ]),
-                    m('div', { class: `xrpLable mb-7`, style: { display: rechargeIndex.memo ? (rechargeIndex.form.selectCheck === 'XRP' || rechargeIndex.form.selectCheck === 'EOS' ? '' : 'none') : 'none' } }, [
+                    m('div', { class: `xrpLable mb-7`, style: { display: rechargeIndex.memo ? (rechargeIndex.selectCheck === 'XRP' || rechargeIndex.selectCheck === 'EOS' ? '' : 'none') : 'none' } }, [
                         m('div', { class: `labeltip` }, [
                             m('span', {}, I18n.$t('10098') /* '标签' */),
                             m('div.navbar-item.cursor-pointer', { class: `has-text-primary-hover` }, [
@@ -53,7 +53,7 @@ module.exports = {
                         ]),
                         m('div', { class: `mt-2 px-2 has-text-primary border-radius-small tag is-primary is-light uid` }, rechargeIndex.uId)
                     ]),
-                    m('div', { class: `usdtLable mb-7`, style: { display: rechargeIndex.openChains ? (rechargeIndex.form.selectCheck === 'USDT' ? '' : 'none') : 'none' } }, [
+                    m('div', { class: `usdtLable mb-7`, style: { display: rechargeIndex.openChains ? (rechargeIndex.selectCheck === 'USDT' ? '' : 'none') : 'none' } }, [
                         m('div', { class: `labeltip` }, [
                             m('span', {}, I18n.$t('10100') /* '链名称' */),
                             m('div.navbar-item.cursor-pointer', { class: `has-text-primary-hover` }, [
