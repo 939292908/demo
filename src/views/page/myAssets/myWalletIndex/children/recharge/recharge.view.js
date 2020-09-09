@@ -98,7 +98,9 @@ module.exports = {
                                     }
                                 })
                             ]),
-                            m('div', { class: `QrCodeImg box-shadow`, style: { display: rechargeIndex.qrcodeDisplayFlag ? `` : `none` } })
+                            m('div', { class: `QrCodeImg box-shadow`, style: { display: rechargeIndex.qrcodeDisplayFlag ? `` : `none` } }, [
+                                m('img', { class: ``, src: rechargeIndex.rechargeAddrSrc })
+                            ])
                         ])
                     ]),
                     m('div', { class: `tips pb-6` }, [

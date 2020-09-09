@@ -97,7 +97,7 @@ module.exports = {
         const oldPwd = document.getElementsByClassName('oldPwd')[0].value;
         const newPwd = document.getElementsByClassName('newPwd')[0].value;
         const confirmPwd = document.getElementsByClassName('confirmPWd')[0].value;
-        console.log(oldPwd, newPwd, confirmPwd);
+        // console.log(oldPwd, newPwd, confirmPwd);
         const that = this;
 
         Http.changePasswd({
@@ -111,6 +111,7 @@ module.exports = {
                 // that.switchSafetyVerifyModal(false); // 关闭安全验证弹框
             }
             that.switchSafetyVerifyModal(false); // 关闭安全验证弹框
+            m.redraw();
         }).catch(function(err) {
             console.log('nzm', 'changePasswd error', err);
         });

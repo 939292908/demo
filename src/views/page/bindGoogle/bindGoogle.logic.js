@@ -7,6 +7,7 @@ const validate = require('@/models/validate/validate').default;
 const config = require('@/config');
 const I18n = require('@/languages/I18n').default;
 const md5 = require('md5');
+console.log(Qrcode);
 
 module.exports = {
     // 密钥
@@ -28,12 +29,15 @@ module.exports = {
     pwdTipFlag: false, // 密码错误提示 默认不显示（false）
     codeTipFlag: false, // 谷歌验证码错误提示 默认不显示（false）
 
+    IOSDLAddQrCodeSrc: null, // IOS下载二维码地址
+    AndroidDLAddQrCodeSrc: null, // Android Q下载二维码地址
+    secretQrCodeSrc: null, // 秘钥二维码地址
     // 生成IOS，Android，密钥二维码 begin
     generateQRCode() {
         const that = this;
         // 获取秘钥（用于绑定google验证）
         Http.getGoogleSecret().then(function(arg) {
-            // console.log('nzm', 'getGoogleSecret success', arg);
+            console.log('nzm', 'getGoogleSecret success', arg);
             that.secret = arg.secret;
             // 生成密钥二维码
             that.generatedCodeFN(arg.secret, 'key');
@@ -47,22 +51,28 @@ module.exports = {
         this.generatedCodeFN(this.AndroidDLAdd, 'Android');
     },
     generatedCodeFN: function(text, type) {
-        Qrcode.toCanvas(text || '无', {
-            errorCorrectionLevel: "L", // 容错率L（低）H(高)
-            margin: 1, // 二维码内边距，默认为4。单位px
-            height: 110, // 二维码高度
-            width: 110 // 二维码宽度
-        }).then(canvas => {
-            if (type === 'key') {
-                document.getElementsByClassName('stepTwo-qrcode')[0].appendChild(canvas);
-            } else if (type === 'IOS') {
-                document.getElementsByClassName('qrcodeIOS')[0].appendChild(canvas);
-            } else if (type === 'Android') {
-                document.getElementsByClassName('qrcodeAndroid')[0].appendChild(canvas);
-            }
-        }).catch((err) => {
-            console.log(err);
-        });
+        if (type === 'key') {
+            Qrcode.toDataURL(text || '无')
+                .then(url => {
+                    this.secretQrCodeSrc = url;
+                }).catch(err => {
+                    console.log(err);
+                });
+        } else if (type === 'IOS') {
+            Qrcode.toDataURL(text || '无')
+                .then(url => {
+                    this.IOSDLAddQrCodeSrc = url;
+                }).catch(err => {
+                    console.log(err);
+                });
+        } else if (type === 'Android') {
+            Qrcode.toDataURL(text || '无')
+                .then(url => {
+                    this.AndroidDLAddQrCodeSrc = url;
+                }).catch(err => {
+                    console.log(err);
+                });
+        }
     },
     // 生成IOS，Android，密钥二维码 end
 
@@ -192,6 +202,7 @@ module.exports = {
                 console.log('success');
             }
             that.switchSafetyVerifyModal(false); // 关闭安全验证弹框
+            m.redraw();
         }).catch(function(err) {
             console.log('nzm', 'bindGoogleAuth error', err);
         });
@@ -212,6 +223,7 @@ module.exports = {
                 console.log('success');
             }
             that.switchSafetyVerifyModal(false); // 关闭安全验证弹框
+            m.redraw();
         }).catch(function(err) {
             console.log('nzm', 'relieveGoogleAuth error', err);
         });

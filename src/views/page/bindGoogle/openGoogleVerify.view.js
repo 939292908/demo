@@ -7,6 +7,19 @@ const VerifyView = require('@/views/components/dialogVerify/dialogVerify.view');
 const config = require('@/config.js');
 
 const openGView = {
+    oninit: () => {
+        openGLogic.initFn();
+
+        broadcast.onMsg({
+            key: 'views-page-accountSecurity-bindGoogle-open',
+            cmd: broadcast.MSG_LANGUAGE_UPD,
+            cb: () => {
+                openGView.initNav();
+            }
+        });
+        openGView.initNav();
+        openGView.checkFlag = 1;
+    },
     // 上方导航（下载App，扫描二维码，备份密钥，开启谷歌验证）
     nav: [],
     // 当前选中哪个步骤
@@ -48,19 +61,6 @@ const openGView = {
         document.execCommand("copy", false, null);
         return window.$message({ title: I18n.$t('10410') /* '提示' */, content: I18n.$t('10546') /* '复制成功' */, type: 'success' });
     },
-    oninit: () => {
-        openGLogic.initFn();
-
-        broadcast.onMsg({
-            key: 'views-page-accountSecurity-bindGoogle-open',
-            cmd: broadcast.MSG_LANGUAGE_UPD,
-            cb: () => {
-                openGView.initNav();
-            }
-        });
-        openGView.initNav();
-        openGView.checkFlag = 1;
-    },
     view: () => {
         return m('div', { class: `views-page-accountSecurity-bindGoogle-open theme--light pb-8` }, [
             m('div', { class: `operation mb-7 has-bg-level-2` }, [
@@ -84,18 +84,24 @@ const openGView = {
                         m('div', { class: `desc2 body-5` }, I18n.$t('10511') /* '扫码下载或者在应用商店中搜索“Google Authentication”应用' */),
                         m('div', { class: `stepOne-qrcode mt-6` }, [
                             m('div', { class: `stepOne-qrcode-left mr-8` }, [
-                                m('div', { class: `qrcodeIOS mb-3` }),
+                                m('div', { class: `qrcodeIOS mb-3` }, [
+                                    m('img', { class: ``, src: openGLogic.IOSDLAddQrCodeSrc })
+                                ]),
                                 m('span', {}, 'IOS')
                             ]),
                             m('div', { class: `stepOne-qrcode-right` }, [
-                                m('div', { class: `qrcodeAndroid mb-3` }),
+                                m('div', { class: `qrcodeAndroid mb-3` }, [
+                                    m('img', { class: ``, src: openGLogic.AndroidDLAddQrCodeSrc })
+                                ]),
                                 m('span', {}, 'Android')
                             ])
                         ])
                     ]),
                     m('div', { class: `stepTwo pt-7`, style: { display: (openGView.checkFlag === 2 ? '' : 'none') } }, [
-                        m('div', { class: `desc1 body-5` }, I18n.$t('10256') /* '用谷歌验证App扫描以下二维码' */),
-                        m('div', { class: `stepTwo-qrcode my-7 margin-LRauto` }),
+                        m('div', { class: `desc1 body-5` }, I18n.$t('10256') /* '使用谷歌验证App扫描以下二维码' */),
+                        m('div', { class: `stepTwo-qrcode my-7 margin-LRauto` }, [
+                            m('img', { class: ``, src: openGLogic.secretQrCodeSrc })
+                        ]),
                         m('div', { class: `desc2 body-5 mb-3 has-text-level-4` }, I18n.$t('10257') /* '如果您无法扫描这个二维码，请在App中手动输入这串字符' */),
                         m('div', { class: `key` }, [
                             m('input', { class: `keyText title-small`, type: 'text', readOnly: `readOnly`, value: openGLogic.secret }),

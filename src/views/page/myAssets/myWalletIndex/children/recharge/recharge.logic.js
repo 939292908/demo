@@ -113,21 +113,34 @@ const model = {
                     networkNum = this.pageData[i].networkNum;
                 }
 
-                this.tips = this.pageData[i].promptRecharge !== 0 ? this.pageData[i].promptRecharge : '' +
+                this.tips = this.pageData[i].promptRecharge !== 0
+                    ? this.pageData[i].promptRecharge +
+                        // this.tips = '您只能向此地址充值' + this.option.currentId + '，其他资产充入' + this.option.currentId + '地址将无法找回' +
+                        /* 禁止向{value}地址充币除{value}之外的资产,任何充入{value}地址的非{value}资产将不可找回 */
+                        I18n.$t('10083', { value: this.option.currentId }) +
 
-                // this.tips = '您只能向此地址充值' + this.option.currentId + '，其他资产充入' + this.option.currentId + '地址将无法找回' +
+                        /* 使用{value1}地址充币需要{value2}个网络确认才能到账 */
+                        '*' + I18n.$t('10084', { value1: this.option.currentId, value2: networkNum }) +
 
-                /* 禁止向{value}地址充币除{value}之外的资产,任何充入{value}地址的非{value}资产将不可找回 */
-                I18n.$t('10083', { value: this.option.currentId }) +
+                        /* 关于标签{value}充币时同时需要一个充币地址和{value}标签。标签是一种保证您的充币地址唯一性的数字串，与充币地址成对出现并一一对应。请您务必遵守正确的{value}充币步骤，在提币时输入完整的信息，否则将面临丢失币的风险！ */
+                        (this.option.currentId === 'EOS' || this.option.currentId === 'XRP' ? '*' + I18n.$t('10545', { value: this.option.currentId }) : '') +
 
-                /* 使用{value1}地址充币需要{value2}个网络确认才能到账 */
-                '*' + I18n.$t('10084', { value1: this.option.currentId, value2: networkNum }) +
+                        /* '默认充入我的钱包，您可以通过“资金划转”将资金转至交易账户或者其他账户' */
+                        '*' + I18n.$t('10085')
 
-                /* 关于标签{value}充币时同时需要一个充币地址和{value}标签。标签是一种保证您的充币地址唯一性的数字串，与充币地址成对出现并一一对应。请您务必遵守正确的{value}充币步骤，在提币时输入完整的信息，否则将面临丢失币的风险！ */
-                (this.option.currentId === 'EOS' || this.option.currentId === 'XRP' ? '*' + I18n.$t('10545', { value: this.option.currentId }) : '') +
+                    : '' +
+                        // this.tips = '您只能向此地址充值' + this.option.currentId + '，其他资产充入' + this.option.currentId + '地址将无法找回' +
+                        /* 禁止向{value}地址充币除{value}之外的资产,任何充入{value}地址的非{value}资产将不可找回 */
+                        I18n.$t('10083', { value: this.option.currentId }) +
 
-                /* '默认充入我的钱包，您可以通过“资金划转”将资金转至交易账户或者其他账户' */
-                '*' + I18n.$t('10085');
+                        /* 使用{value1}地址充币需要{value2}个网络确认才能到账 */
+                        '*' + I18n.$t('10084', { value1: this.option.currentId, value2: networkNum }) +
+
+                        /* 关于标签{value}充币时同时需要一个充币地址和{value}标签。标签是一种保证您的充币地址唯一性的数字串，与充币地址成对出现并一一对应。请您务必遵守正确的{value}充币步骤，在提币时输入完整的信息，否则将面临丢失币的风险！ */
+                        (this.option.currentId === 'EOS' || this.option.currentId === 'XRP' ? '*' + I18n.$t('10545', { value: this.option.currentId }) : '') +
+
+                        /* '默认充入我的钱包，您可以通过“资金划转”将资金转至交易账户或者其他账户' */
+                        '*' + I18n.$t('10085');
 
                 this.memo = this.pageData[i].memo; // 当前选中币种的标签是否显示
                 this.openChains = this.pageData[i].openChains; // 当前选中币种的链名称是否显示
@@ -146,20 +159,14 @@ const model = {
         /* '充值' + this.option.currentId + '同时需要一个充币地址和' + this.option.currentId + '标签；警告：如果未遵守正确的' + this.option.currentId + '充币步骤，币会有丢失风险！'; */
         this.labelTips = I18n.$t('10518', { VALUE: this.option.currentId });
     },
+    rechargeAddrSrc: '', // 充币地址二维码
     setQrCodeImg() {
-        if (document.getElementsByClassName('QrCodeImg')[0].innerHTML !== '') {
-            document.getElementsByClassName('QrCodeImg')[0].innerHTML = '';
-        }
-        Qrcode.toCanvas(this.rechargeAddr || '暂无地址', {
-            errorCorrectionLevel: "L", // 容错率L（低）H(高)
-            margin: 1, // 二维码内边距，默认为4。单位px
-            height: 100, // 二维码高度
-            width: 100 // 二维码宽度
-        }).then(canvas => {
-            document.getElementsByClassName('QrCodeImg')[0].appendChild(canvas);
-        }).catch((err) => {
-            console.log('nzm', err);
-        });
+        Qrcode.toDataURL(this.rechargeAddr || '无')
+            .then(url => {
+                this.rechargeAddrSrc = url;
+            }).catch(err => {
+                console.log(err);
+            });
     },
     // 是否显示二维码
     changeQrcodeDisplay(type) {
