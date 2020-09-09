@@ -1147,4 +1147,28 @@ utils.compileStr = function (code){
 utils.uncompileStr = function (code){      
     return window.atob?window.atob(code):code;     
 }
+
+//获取交易类型
+
+utils.getDirByStrType = function(item){
+    if(item.SzCls == 0 && item.SzOpn == 0){
+        if (item.Dir == 1) return gDI18n.$t('10326')//"买入"
+        if (item.Dir == -1) return gDI18n.$t('10327')//"卖出"
+    }else if(item.SzCls == 0 && item.SzOpn != 0){
+        if (item.Dir == 1) return gDI18n.$t('10447')//"买入开多"
+        if (item.Dir == -1) return gDI18n.$t('10448')//"卖出开空"
+    }else if(item.SzCls != 0 && Math.abs(item.QtyF) == Math.abs(item.SzCls)){
+        if (item.Dir == 1) return gDI18n.$t('10449')//"买入平空"
+        if (item.Dir == -1) return gDI18n.$t('10450')//"卖出平多"
+    }else if(item.SzCls != 0 && Math.abs(item.QtyF) != Math.abs(item.SzCls)){
+        if (item.Dir == 1) return gDI18n.$t('10455')//"买入平空并开多"
+        if (item.Dir == -1) return gDI18n.$t('10456')//"卖出平多并开空"
+    }else if(item.via == 4 || item.via == 13){
+        if (item.Dir == 1) return gDI18n.$t('10451')//"买入强制平空"
+        if (item.Dir == -1) return gDI18n.$t('10452')//"卖出强制平多"
+    }else if(item.via == 5){
+        if (item.Dir == 1) return gDI18n.$t('10453')//"买入ADL平空"
+        if (item.Dir == -1) return gDI18n.$t('10454')//"卖出ADL平多"
+    }
+}
 export default utils
