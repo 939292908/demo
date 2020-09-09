@@ -24,7 +24,7 @@ window.onresize = function (arg) {
 };
 
 import('./views/index').then(arg => {
-    const root = document.body;
+    const root = document.querySelector('#app');
     m.mount(root, arg.default);
     // iconfont
     import('./assets/iconfont/iconfont.js');

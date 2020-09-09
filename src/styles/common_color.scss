@@ -18,6 +18,12 @@
     border-radius: 20px;
 }
 
+body,
+#app {
+    background-color: var(--c-background-darken);
+    color: var(--c-font-darken);  
+}
+
 /* 黑夜 */
 .theme--dark {
     background-color: var(--c-background-darken);
