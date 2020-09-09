@@ -4,6 +4,7 @@ const wlt = require('@/models/wlt/wlt');
 const broadcast = require('@/broadcast/broadcast');
 const Qrcode = require('qrcode');
 const I18n = require('@/languages/I18n').default;
+const gM = require('@/models/globalModels');
 
 const model = {
     pageData: [], // 所需数据
@@ -30,7 +31,6 @@ const model = {
             if (wlt.wallet['03'][i].Setting.canRecharge) { // 能否充值
                 const item = {};
                 const walletI = wlt.wallet['03'][i];
-                that.uId = that.uId || walletI.uid;
                 item.canRecharge = walletI.Setting.canRecharge; // 能否充值
                 item.promptRecharge = walletI.promptRecharge; // 充值提示
                 item.openChains = walletI.Setting.openChains;
@@ -215,6 +215,7 @@ const model = {
         }
     },
     initFn: function () {
+        const that = this;
         const currencyType = window.router.getUrlInfo().params.wType;
         if (currencyType !== undefined) {
             this.coinParam = currencyType;
@@ -233,7 +234,7 @@ const model = {
             key: 'index',
             cmd: broadcast.MSG_WLT_READY,
             cb: () => {
-                this.setPageData();
+                that.setPageData();
             }
         });
         this.setPageData();
@@ -242,9 +243,18 @@ const model = {
             key: 'index',
             cmd: broadcast.MSG_LANGUAGE_UPD,
             cb: (arg) => {
-                this.setTipsAndAddrAndCode();
+                that.setTipsAndAddrAndCode();
             }
         });
+
+        broadcast.onMsg({
+            key: 'index',
+            cmd: broadcast.GET_USER_INFO_READY,
+            cb: (arg) => {
+                that.uId = gM.getAccount().uid;
+            }
+        });
+        this.uId = gM.getAccount().uid;
     },
     updateFn: function (vnode) {
     },
