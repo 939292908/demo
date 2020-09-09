@@ -218,6 +218,7 @@ const model = {
         this.currency === 'BTC' ? this.setLegalTotal(wlt.legalTotalValueForBTC) : this.setLegalTotal(wlt.legalTotalValueForUSDT);
         this.currency === 'BTC' ? this.setContractTotal(wlt.contractTotalValueForBTC) : this.setContractTotal(wlt.contractTotalValueForUSDT);
         this.setTotalCNY(wlt.totalCNYValue);
+        m.redraw();
     },
     initFn: function() {
         wlt.init();
