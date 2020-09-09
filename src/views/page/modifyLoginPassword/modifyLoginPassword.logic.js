@@ -29,18 +29,18 @@ module.exports = {
             cb: res => {
                 if (res === 'success') {
                     // 成功则进入安全验证
-                    console.log('success', 11111111111);
+                    console.log('success initGeetest');
                     m.redraw();
                     that.ChooseVerify();
                 } else {
-                    console.log('error');
+                    console.log('error initGeetest');
                 }
             }
         });
     },
     // 选择验证方式
     ChooseVerify: function () {
-        console.log(this.setting2fa);
+        // console.log(this.setting2fa);
         if (this.setting2fa.google === 0 && this.setting2fa.phone === 0) {
             console.log('未绑定手机与谷歌');
             return;

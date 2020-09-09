@@ -57,6 +57,7 @@ module.exports = {
         }
         this.initAccountBanlance();
         this.setTableNewAry();
+        m.redraw();
     },
     initAccountBanlance: function() {
         this.accountBanlance = this.currency === 'BTC' ? wlt[this.coinType + 'TotalValueForBTC'] : wlt[this.coinType + 'TotalValueForUSDT'];

@@ -97,15 +97,8 @@ module.exports = {
                                         rechargeIndex.changeQrcodeDisplay(`hide`);
                                     }
                                 })
-                                // m(Tooltip, {
-                                //     label: m('i', { class: `iconfont icon-copy has-text-primary cursor-pointer mr-2` }),
-                                //     content: rechargeIndex.qrCodeHTML,
-                                //     width: `240px`,
-                                //     position: `bottom`,
-                                //     direction: `right`
-                                // })
                             ]),
-                            m('div', { class: `QrCodeImg`, style: { display: rechargeIndex.qrcodeDisplayFlag ? `` : `none` } })
+                            m('div', { class: `QrCodeImg box-shadow`, style: { display: rechargeIndex.qrcodeDisplayFlag ? `` : `none` } })
                         ])
                     ]),
                     m('div', { class: `tips pb-6` }, [
