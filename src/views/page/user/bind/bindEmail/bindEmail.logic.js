@@ -9,6 +9,8 @@ const I18n = require('@/languages/I18n').default;
 const validate = require('@/models/validate/validate').default;
 
 const model = {
+    showEmailValidate: false,
+    showPasswordValidate: false,
     form: {
         password: "",
         email: ""
@@ -125,6 +127,13 @@ const model = {
     },
     onremove (vnode) {
         this.rmEVBUS();
+        this.showEmailValidate = false;
+        this.showPasswordValidate = false;
+        this.isShowVerifyView = false;
+        this.form = {
+            password: "",
+            email: ""
+        };
     }
 };
 

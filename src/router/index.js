@@ -66,7 +66,7 @@ class Router {
         },
         '/bindPhone': {
             requireAuth: true,
-            onmatch: () => import('@/views/page/user/bind/bindEmail/bindEmail.view')
+            onmatch: () => import('@/views/page/user/bind/bindPhone/bindPhone.view')
         },
         '/openGoogleVerify': {
             requireAuth: true,
