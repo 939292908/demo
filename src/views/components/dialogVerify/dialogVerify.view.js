@@ -1,6 +1,5 @@
 const m = require('mithril');
 require('./index.scss');
-const InputWithComponent = require('../inputWithComponent/inputWithComponent.view.js');
 const Validate = require('./dialogVerify.logic');
 const I18n = require('@/languages/I18n').default;
 const utils = require('@/util/utils').default;
@@ -83,8 +82,8 @@ module.exports = {
             m('.has-text-level-2.body-5.mb-2', [
                 Validate.selectName,
                 m('span.ml-2.body-2.has-text-level-4', {}, [
-                    Validate.selectType === 'sms' ? `(${utils.hideAccountNameInfo(validateModel.smsConfig.phoneNum)})`
-                        : Validate.selectType === 'email' ? `(${utils.hideAccountNameInfo(validateModel.emailConfig.secureEmail)})`
+                    Validate.selectType === 'sms' ? `(${utils.hideAccountNameInfo(validateModel.smsConfig.phoneNum || validateModel.smsConfig.phone || validateModel.smsConfig.securePhone)})`
+                        : Validate.selectType === 'email' ? `(${utils.hideAccountNameInfo(validateModel.smsConfig.email || validateModel.emailConfig.secureEmail)})`
                             : ''
                 ])
             ]),
@@ -106,6 +105,21 @@ module.exports = {
             m('.right-click-but', { onclick: () => { Validate.smsCd <= 0 && Validate.sendSmsCode(); } }, m('div', Validate.smsCd > 0 ? `${Validate.smsCd} s` : I18n.$t('10117')/* '获取验证码' */))
         ]);
     },
+    emailVerifyContent: function () {
+        return m('.control has-icons-right', [
+            m('input.input', {
+                oninput: e => { Validate.code = e.target.value.replace(/[^\d]/g, ''); },
+                onkeyup: e => { if (e.keyCode === 13) Validate.check(); },
+                maxlength: '6',
+                value: Validate.code
+            }),
+            m('.right-click-but', {
+                onclick: () => {
+                    Validate.emailCd <= 0 && Validate.sendEmailCode();
+                }
+            }, m('div', Validate.emailCd > 0 ? `${Validate.emailCd} s` : I18n.$t('10117')/* '获取验证码' */))
+        ]);
+    },
     doubleButtonVnode: function () {
         return m('div.butBox dis-flex', [
             this.props.doubleButtonCof.map(item => m('div.itemBut', { class: item.issolid ? 'bgBut' : '' }, item.text))
@@ -121,25 +135,7 @@ module.exports = {
             validInput.push(this.smsVerifyContent());
             break;
         case 'email':
-            validInput.push(m(InputWithComponent, {
-                options: {
-                    oninput: e => {
-                        Validate.code = e.target.value.replace(/[^\d]/g, '');
-                    },
-                    onkeyup: e => {
-                        if (e.keyCode === 13) Validate.check();
-                    },
-                    maxlength: '6',
-                    value: Validate.code
-                },
-                rightComponents: m('a.body-1.views-page-login-send-code.px-2',
-                    {
-                        onclick: () => {
-                            if (Validate.emailCd > 0) return;
-                            Validate.sendEmailCode();
-                        }
-                    }, [Validate.emailCd > 0 ? `${Validate.emailCd}` : I18n.$t('10117')/* '获取验证码' */])
-            }));
+            validInput.push(this.emailVerifyContent());
             break;
         case 'google':
             validInput.push(m('input.input[type=text]', {

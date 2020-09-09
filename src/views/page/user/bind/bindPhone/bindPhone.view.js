@@ -1,5 +1,5 @@
 const m = require('mithril');
-const model = require('./bindPhone.logic.js');
+const model = require('../bind.logic');
 const VerifyView = require('@/views/components/dialogVerify/dialogVerify.view');
 const InputWithComponent = require('@/views/components/inputWithComponent/inputWithComponent.view');
 const AreaCodeSelect = require('@/views/page/user/login/areaCodeSelect/areaCodeSelect.view');
@@ -12,11 +12,10 @@ const regExp = require('@/models/validate/regExp');
 const I18n = require('@/languages/I18n').default;
 
 module.exports = {
-    oninit: vnode => model.oninit(vnode),
-    oncreate: vnode => model.oncreate(vnode),
+    oninit: vnode => model.oninit('phone'),
     onremove: vnode => model.onremove(vnode),
-    onupdate: vnode => model.onupdate(vnode),
     view(vnode) {
+        console.log(model.showValid);
         return m('div', { class: `theme--light` }, [
             m('div.px-3.has-bg-sub-level-1.is-align-items-center', {}, [
                 m('div.content-width', {}, [
@@ -62,10 +61,10 @@ module.exports = {
                                     class: `input`,
                                     placeholder: I18n.$t('10571')/* '请输入登录密码' */,
                                     type: 'password',
-                                    value: model.form.password,
+                                    value: model.password,
                                     oninput(e) {
                                         model.showPasswordValidate = true;
-                                        model.onInputPassword(e);
+                                        model.password = e.target.value;
                                     },
                                     onblur() {
                                         model.showPasswordValidate = true;
@@ -74,7 +73,7 @@ module.exports = {
                             ]),
                             m('div.body-3.has-text-tip-error', {
                                 hidden: !model.showPasswordValidate
-                            }, [regExp.validPassword(model.form.password)])
+                            }, [regExp.validPassword(model.password)])
                         ]),
                         // 手机号
                         m('div', { class: `form-item pb-0` }, [
@@ -85,25 +84,25 @@ module.exports = {
                                 m(InputWithComponent, {
                                     leftComponents: m(AreaCodeSelect, {
                                         selectList: model.selectList, //
-                                        areaCode: model.form.areaCode, //
-                                        onSelect: areaCode => { model.form.areaCode = areaCode; } //
+                                        areaCode: model.areaCode, //
+                                        onSelect: areaCode => { model.areaCode = areaCode; } //
                                     }),
                                     options: {
                                         oninput: e => {
                                             model.showPhoneValidate = true;
-                                            model.onInputPhone(e);
+                                            model.bind = e.target.value;
                                         },
                                         onblur: e => {
                                             model.showPhoneValidate = true;
                                         },
                                         placeholder: I18n.$t('10573')/* '请输入手机号' */,
-                                        value: model.form.phone
+                                        value: model.bind
                                     }
                                 })
                             ]),
                             m('div.body-3.has-text-tip-error', {
                                 hidden: !model.showPhoneValidate
-                            }, [regExp.validAccount('phone', model.form.phone)])
+                            }, [regExp.validAccount('phone', model.bind)])
                         ]),
                         // 确定按钮
                         m("button", {
@@ -111,15 +110,17 @@ module.exports = {
                             onclick () {
                                 model.saveClick();
                             },
-                            disabled: regExp.validAccount('phone', model.form.phone) || regExp.validPassword(model.form.password)
+                            disabled: regExp.validAccount('phone', model.bind) || regExp.validPassword(model.password)
                         }, [
                             I18n.$t('10337')/* "确定" */
                         ])
                     ])
                 ])
             ]),
-            model.isShowVerifyView ? m(VerifyView, {
-                close: () => model.switchSafetyVerifyModal(false),
+            model.showValid ? m(VerifyView, {
+                close: () => {
+                    model.showValid = false;
+                },
                 isHandleVerify: true,
                 title: {
                     logo: config.exchName,

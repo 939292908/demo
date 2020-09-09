@@ -1,5 +1,5 @@
 const m = require('mithril');
-const model = require('./bindEmail.logic.js');
+const model = require('../bind.logic');
 const VerifyView = require('@/views/components/dialogVerify/dialogVerify.view');
 const config = require('@/config.js');
 const header = require('@/views/components/indexHeader/indexHeader.view');
@@ -10,10 +10,8 @@ const regExp = require('@/models/validate/regExp');
 const I18n = require('@/languages/I18n').default;
 
 module.exports = {
-    oninit: vnode => model.oninit(vnode),
-    oncreate: vnode => model.oncreate(vnode),
+    oninit: () => model.oninit('email'),
     onremove: vnode => model.onremove(vnode),
-    onupdate: vnode => model.onupdate(vnode),
     view(vnode) {
         return m('div', { class: `theme--light` }, [
             m('div.px-3.has-bg-sub-level-1.is-align-items-center', {}, [
@@ -60,10 +58,10 @@ module.exports = {
                                     class: `input`,
                                     placeholder: I18n.$t('10571')/* '请输入登录密码' */,
                                     type: 'password',
-                                    value: model.form.password,
+                                    value: model.password,
                                     oninput(e) {
                                         model.showPasswordValidate = true;
-                                        model.onInputPassword(e);
+                                        model.password = e.target.value;
                                     },
                                     onblur() {
                                         model.showPasswordValidate = true;
@@ -72,7 +70,7 @@ module.exports = {
                             ]),
                             m('div.body-3.has-text-tip-error', {
                                 hidden: !model.showPasswordValidate
-                            }, [regExp.validPassword(model.form.password)])
+                            }, [regExp.validPassword(model.password)])
                         ]),
                         // 邮箱号
                         m('div', { class: `form-item pb-0` }, [
@@ -83,10 +81,10 @@ module.exports = {
                                 m('input', {
                                     class: `input`,
                                     placeholder: I18n.$t('10572')/* '请输入邮箱号' */,
-                                    value: model.form.email,
+                                    value: model.bind,
                                     oninput(e) {
                                         model.showEmailValidate = true;
-                                        model.onInputEmail(e);
+                                        model.bind = e.target.value;
                                     },
                                     onblur() {
                                         model.showEmailValidate = true;
@@ -95,7 +93,7 @@ module.exports = {
                             ]),
                             m('div.body-3.has-text-tip-error', {
                                 hidden: !model.showEmailValidate
-                            }, [regExp.validAccount('email', model.form.email)])
+                            }, [regExp.validAccount('email', model.bind)])
                         ]),
                         // 确定按钮
                         m("button", {
@@ -103,15 +101,17 @@ module.exports = {
                             onclick () {
                                 model.saveClick();
                             },
-                            disabled: regExp.validAccount('email', model.form.email) || regExp.validPassword(model.form.password)
+                            disabled: regExp.validAccount('email', model.bind) || regExp.validPassword(model.password)
                         }, [
                             I18n.$t('10337')/* "确定" */
                         ])
                     ])
                 ])
             ]),
-            model.isShowVerifyView ? m(VerifyView, {
-                close: () => model.switchSafetyVerifyModal(false),
+            model.showValid ? m(VerifyView, {
+                close: () => {
+                    model.showValid = false;
+                },
                 isHandleVerify: true,
                 title: {
                     logo: config.exchName,
