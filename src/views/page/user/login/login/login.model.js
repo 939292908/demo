@@ -50,9 +50,8 @@ module.exports = {
             exChannel: config.exchId
         }).then(res => {
             if (res.result.code === 0) {
-                console.log(res, '[][][][][]');
                 // 2fa 设置: email2fa, phone2fa, ga2fa
-                if (!!res.result.phone && !!res.result.googleId) {
+                if (res.result.setting2fa.phone && res.result.setting2fa.google) {
                     this.loading = false;
                     // 手机和谷歌
                     validate.activeSmsAndGoogle({
@@ -63,7 +62,7 @@ module.exports = {
                     });
                     this.is2fa = true;
                     m.redraw();
-                } else if (res.result.phone) {
+                } else if (res.result.setting2fa.phone) {
                     this.loading = false;
                     // 手机
                     validate.activeSms({
@@ -75,7 +74,7 @@ module.exports = {
                     });
                     this.is2fa = true;
                     m.redraw();
-                } else if (res.result.googleId) {
+                } else if (res.result.setting2fa.google) {
                     this.loading = false;
                     // 谷歌
                     validate.activeGoogle(() => {
