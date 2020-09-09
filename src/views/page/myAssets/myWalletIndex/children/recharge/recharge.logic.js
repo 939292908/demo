@@ -95,8 +95,8 @@ const model = {
             if (i.Setting.canRecharge) {
                 this.selectList.push({ label: i.wType + ' | ' + wlt.coinInfo[i.wType].name, id: i.wType });
                 if (this.coinParam === null) {
-                    if (this.selectCheck === '') {
-                        this.selectCheck = this.selectList[0].id;
+                    if (this.option.currentId === '') {
+                        this.option.currentId = this.selectList[0].id;
                     }
                 }
             }
@@ -105,9 +105,9 @@ const model = {
     // 切换币种时的操作
     setTipsAndAddrAndCode() {
         for (const i in this.pageData) {
-            if (this.pageData[i].wType === this.selectCheck) {
+            if (this.pageData[i].wType === this.option.currentId) {
                 let networkNum = null;
-                if (this.selectCheck === 'USDT') {
+                if (this.option.currentId === 'USDT') {
                     for (const i of this.chainAry) {
                         if ((this.btnCheckFlag !== 'OMNI' ? 'USDT' + this.btnCheckFlag : 'USDT') === i.wType) {
                             networkNum = i.trade.networkNum;
@@ -119,16 +119,16 @@ const model = {
 
                 this.tips = this.pageData[i].promptRecharge !== 0 ? this.pageData[i].promptRecharge : '' +
 
-                // this.tips = '您只能向此地址充值' + this.selectCheck + '，其他资产充入' + this.selectCheck + '地址将无法找回' +
+                // this.tips = '您只能向此地址充值' + this.option.currentId + '，其他资产充入' + this.option.currentId + '地址将无法找回' +
 
                 /* 禁止向{value}地址充币除{value}之外的资产,任何充入{value}地址的非{value}资产将不可找回 */
-                I18n.$t('10085', { value: this.selectCheck }) +
+                I18n.$t('10085', { value: this.option.currentId }) +
 
                 /* 使用{value1}地址充币需要{value2}个网络确认才能到账 */
-                '*' + I18n.$t('10084', { value1: this.selectCheck, value2: networkNum }) +
+                '*' + I18n.$t('10084', { value1: this.option.currentId, value2: networkNum }) +
 
                 /* 关于标签{value}充币时同时需要一个充币地址和{value}标签。标签是一种保证您的充币地址唯一性的数字串，与充币地址成对出现并一一对应。请您务必遵守正确的{value}充币步骤，在提币时输入完整的信息，否则将面临丢失币的风险！ */
-                (this.selectCheck === 'EOS' || this.selectCheck === 'XRP' ? '*' + I18n.$t('10545', { value: this.selectCheck }) : '') +
+                (this.option.currentId === 'EOS' || this.option.currentId === 'XRP' ? '*' + I18n.$t('10545', { value: this.option.currentId }) : '') +
 
                 /* '默认充入我的钱包，您可以通过“资金划转”将资金转至交易账户或者其他账户' */
                 '*' + I18n.$t('10085');
@@ -136,7 +136,7 @@ const model = {
                 this.memo = this.pageData[i].memo; // 当前选中币种的标签是否显示
                 this.openChains = this.pageData[i].openChains; // 当前选中币种的链名称是否显示
 
-                if (this.selectCheck !== 'USDT') {
+                if (this.option.currentId !== 'USDT') {
                     this.rechargeAddr = this.pageData[i].rechargeAddr; // 当前选中币种的充币地址
                 } else {
                     this.changeBtnflag(this.btnCheckFlag);
@@ -147,8 +147,8 @@ const model = {
         }
     },
     setLabelTips() {
-        /* '充值' + this.selectCheck + '同时需要一个充币地址和' + this.selectCheck + '标签；警告：如果未遵守正确的' + this.selectCheck + '充币步骤，币会有丢失风险！'; */
-        this.labelTips = I18n.$t('10518', { VALUE: this.selectCheck });
+        /* '充值' + this.option.currentId + '同时需要一个充币地址和' + this.option.currentId + '标签；警告：如果未遵守正确的' + this.option.currentId + '充币步骤，币会有丢失风险！'; */
+        this.labelTips = I18n.$t('10518', { VALUE: this.option.currentId });
     },
     setQrCodeImg() {
         if (document.getElementsByClassName('QrCodeImg')[0].innerHTML !== '') {
@@ -164,26 +164,6 @@ const model = {
         }).catch((err) => {
             console.log('nzm', err);
         });
-    },
-    // 币种 菜单配置
-    getCurrencyMenuOption() {
-        const that = this;
-        return {
-            evenKey: `rechargeSelect${Math.floor(Math.random() * 10000)}`,
-            showMenu: that.showCurrencyMenu,
-            setShowMenu: type => {
-                that.showCurrencyMenu = type;
-            },
-            activeId: cb => cb(that.form, 'selectCheck'),
-            onClick (item) {
-                that.setTipsAndAddrAndCode();
-                that.setQrCodeImg();
-                m.redraw();
-            },
-            getList () {
-                return that.selectList;
-            }
-        };
     },
     // 是否显示二维码
     changeQrcodeDisplay(type) {
@@ -218,34 +198,23 @@ const model = {
             this.currentId = option.currentId ? option.currentId : this.currentId;
         },
         menuClick(item) {
-            model.selectCheck = item.id;
+            // model.selectCheck = item.id;
             model.setTipsAndAddrAndCode();
         },
         renderHeader(item) {
             return m('div', { class: `selectDiv` }, [
-                m('span', { class: `has-text-primary` }, item.label)
+                m('span', { class: `has-text-primary` }, item?.label)
             ]);
         },
         menuList() {
-            const list = [];
-            for (const i of model.selectList) {
-                const item = {};
-                item.id = i.id;
-                item.label = i.label;
-                item.render = params => {
-                    return m('div', { class: `` }, [
-                        m('span', { class: `mr-2` }, item.label)
-                    ]);
-                };
-                list.push(item);
-            }
-            return list;
+            return model.selectList;
         }
     },
     initFn: function () {
         const currencyType = window.router.getUrlInfo().params.wType;
         if (currencyType !== undefined) {
             this.coinParam = currencyType;
+            this.option.currentId = currencyType;
             this.setPageData();
         }
 

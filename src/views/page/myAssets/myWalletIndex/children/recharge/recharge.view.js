@@ -39,7 +39,7 @@ module.exports = {
                     m('div', { class: `form-item-content border-radius-medium mt-2 mb-7`, style: { width: `384px` } }, [
                         m(Dropdown, rechargeIndex.option)
                     ]),
-                    m('div', { class: `xrpLable mb-7`, style: { display: rechargeIndex.memo ? (rechargeIndex.selectCheck === 'XRP' || rechargeIndex.selectCheck === 'EOS' ? '' : 'none') : 'none' } }, [
+                    m('div', { class: `xrpLable mb-7`, style: { display: rechargeIndex.memo ? (rechargeIndex.option.currentId === 'XRP' || rechargeIndex.option.currentId === 'EOS' ? '' : 'none') : 'none' } }, [
                         m('div', { class: `labeltip` }, [
                             m('span', {}, I18n.$t('10098') /* '标签' */),
                             m('div.navbar-item.cursor-pointer', { class: `has-text-primary-hover` }, [
@@ -53,7 +53,7 @@ module.exports = {
                         ]),
                         m('div', { class: `mt-2 px-2 has-text-primary border-radius-small tag is-primary is-light uid` }, rechargeIndex.uId)
                     ]),
-                    m('div', { class: `usdtLable mb-7`, style: { display: rechargeIndex.openChains ? (rechargeIndex.selectCheck === 'USDT' ? '' : 'none') : 'none' } }, [
+                    m('div', { class: `usdtLable mb-7`, style: { display: rechargeIndex.openChains ? (rechargeIndex.option.currentId === 'USDT' ? '' : 'none') : 'none' } }, [
                         m('div', { class: `labeltip` }, [
                             m('span', {}, I18n.$t('10100') /* '链名称' */),
                             m('div.navbar-item.cursor-pointer', { class: `has-text-primary-hover` }, [
