@@ -27,6 +27,8 @@ module.exports = {
     totalValueForUSDT: 0,
     // 总BTC估值
     totalValueForBTC: 0,
+    // 总人民币总估值
+    totalValueForCNY: 0,
 
     // 人民币总估值
     totalCNYValue: 0,
@@ -37,31 +39,43 @@ module.exports = {
     walletTotalValueForUSDT: 0,
     // 我的钱包总BTC估值
     walletTotalValueForBTC: 0,
+    // 我的钱包总人民币估值
+    walletTotalValueForCNY: 0,
 
     // 交易账户总USDT估值
     tradingAccountTotalValueForUSDT: 0,
     // 交易账户总BTC估值
     tradingAccountTotalValueForBTC: 0,
+    // 交易账户总人民币估值
+    tradingAccountTotalValueForCNY: 0,
 
     // 交易账户总USDT估值
     otherAccountTotalValueForUSDT: 0.0000,
     // 交易账户总BTC估值
     otherAccountTotalValueForBTC: 0.00000000,
+    // 交易账户总人民币估值
+    otherAccountTotalValueForCNY: 0.00000000,
 
     // 币币交易总USDT估值
     coinTotalValueForUSDT: 0,
     // 币币交易总BTC估值
     coinTotalValueForBTC: 0,
+    // 币币交易总人民币估值
+    coinTotalValueForCNY: 0,
 
     // 法币交易总USDT估值
     legalTotalValueForUSDT: 0,
     // 法币交易总BTC估值
     legalTotalValueForBTC: 0,
+    // 法币交易总人民币估值
+    legalTotalValueForCNY: 0,
 
     // 合约交易总USDT估值
     contractTotalValueForUSDT: 0,
     // 合约交易总BTC估值
     contractTotalValueForBTC: 0,
+    // 合约交易总人民币估值
+    contractTotalValueForCNY: 0,
 
     // 获取资产的接口是否正在请求
     isWltReq: false,
@@ -111,21 +125,27 @@ module.exports = {
         // 计算之前先将估值归0
         this.totalValueForUSDT = 0;
         this.totalValueForBTC = 0;
+        this.totalValueForCNY = 0;
 
         this.walletTotalValueForUSDT = 0;
         this.walletTotalValueForBTC = 0;
+        this.walletTotalValueForCNY = 0;
 
         this.tradingAccountTotalValueForUSDT = 0;
         this.tradingAccountTotalValueForBTC = 0;
+        this.tradingAccountTotalValueForCNY = 0;
 
         this.coinTotalValueForUSDT = 0;
         this.coinTotalValueForBTC = 0;
+        this.coinTotalValueForCNY = 0;
 
         this.legalTotalValueForUSDT = 0;
         this.legalTotalValueForBTC = 0;
+        this.legalTotalValueForCNY = 0;
 
         this.contractTotalValueForUSDT = 0;
         this.contractTotalValueForBTC = 0;
+        this.contractTotalValueForCNY = 0;
 
         const wlt = this.wallet_obj;
 
@@ -192,24 +212,31 @@ module.exports = {
 
         this.totalValueForUSDT = utils.toFixedForFloor(this.totalValueForUSDT, 4);
         this.totalValueForBTC = utils.toFixedForFloor(this.totalValueForBTC, 8);
+        this.totalValueForCNY = utils.toFixedForFloor(Number(this.totalValueForUSDT) * this.prz, 2);
 
         this.walletTotalValueForUSDT = utils.toFixedForFloor(this.walletTotalValueForUSDT, 4);
         this.walletTotalValueForBTC = utils.toFixedForFloor(this.walletTotalValueForBTC, 8);
+        this.walletTotalValueForCNY = utils.toFixedForFloor(Number(this.walletTotalValueForUSDT) * this.prz, 2);
 
         this.tradingAccountTotalValueForUSDT = utils.toFixedForFloor(this.tradingAccountTotalValueForUSDT, 4);
         this.tradingAccountTotalValueForBTC = utils.toFixedForFloor(this.tradingAccountTotalValueForBTC, 8);
+        this.tradingAccountTotalValueForCNY = utils.toFixedForFloor(Number(this.tradingAccountTotalValueForUSDT) * this.prz, 2);
 
         this.otherAccountTotalValueForUSDT = utils.toFixedForFloor(this.otherAccountTotalValueForUSDT, 4);
         this.otherAccountTotalValueForBTC = utils.toFixedForFloor(this.otherAccountTotalValueForBTC, 8);
+        this.otherAccountTotalValueForCNY = utils.toFixedForFloor(Number(this.otherAccountTotalValueForUSDT) * this.prz, 2);
 
         this.coinTotalValueForUSDT = utils.toFixedForFloor(this.coinTotalValueForUSDT, 4);
         this.coinTotalValueForBTC = utils.toFixedForFloor(this.coinTotalValueForBTC, 8);
+        this.coinTotalValueForCNY = utils.toFixedForFloor(Number(this.coinTotalValueForUSDT) * this.prz, 2);
 
         this.legalTotalValueForUSDT = utils.toFixedForFloor(this.legalTotalValueForUSDT, 4);
         this.legalTotalValueForBTC = utils.toFixedForFloor(this.legalTotalValueForBTC, 8);
+        this.legalTotalValueForCNY = utils.toFixedForFloor(Number(this.legalTotalValueForUSDT) * this.prz, 2);
 
         this.contractTotalValueForUSDT = utils.toFixedForFloor(this.contractTotalValueForUSDT, 4);
         this.contractTotalValueForBTC = utils.toFixedForFloor(this.contractTotalValueForBTC, 8);
+        this.contractTotalValueForCNY = utils.toFixedForFloor(Number(this.contractTotalValueForUSDT) * this.prz, 2);
 
         this.totalCNYValue = utils.toFixedForFloor(this.totalCNYValue, 2);
 

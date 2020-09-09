@@ -7,10 +7,10 @@ module.exports = {
             // block header
             m('.asset-header dis-flex justify-between align-center', [
                 m('div.asset-title', [
-                    m('span', '资产总览'),
-                    m('i.iconfont icon-xiala')
+                    m('span', '邀请返佣')
+                    // m('i.iconfont icon-xiala')
                 ]),
-                m('div', m('i.iconfont icon-xiala'))
+                m('div' /* m('i.iconfont icon-xiala') */)
             ]),
             m('div.invitattion-qrcode-box py-8', m('.qrCode', [
                 m('img.mb-3', { src: img }),

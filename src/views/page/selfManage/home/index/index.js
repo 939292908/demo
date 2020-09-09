@@ -3,7 +3,7 @@ const I18n = require('@/languages/I18n').default;
 
 const Header = require('../../../../components/indexHeader/indexHeader.view');
 const Layout = require('../layout');
-const User = require('../user/user.logic');
+const User = require('../user/user.view');
 const Skip = require('../skip/skip');
 const Asset = require('../asset/asset.view');
 const Invitation = require('../invitation/invitation');

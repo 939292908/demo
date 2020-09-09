@@ -27,6 +27,7 @@
 
     .asset-tabs, .tab {
       padding: 8px 0px;
+      cursor: pointer;
 
       .circle {
         display: inline-block;
@@ -40,6 +41,9 @@
         font-size: 12px;
         line-height: 20px;
         color: #585E71;
+      }
+      .activeCircle{
+        background: var(--c-primary-lighten);
       }
     }
 

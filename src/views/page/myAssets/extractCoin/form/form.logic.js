@@ -304,6 +304,11 @@ const extract = {
             cmd: broadcast.GET_USER_INFO_READY,
             isall: true
         });
+        // broadcast.offMsg({
+        //     key: this.name,
+        //     cmd: broadcast.MSG_WLT_READY,
+        //     isall: true
+        // });
         // 生命周期结束清空列表选中字段并关闭列表
         this.showCurrencyMenu = false;
         this.selectActiveId.wType = '';

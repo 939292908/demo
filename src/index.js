@@ -15,6 +15,7 @@ import('./styles/bluma.scss');
 import('swiper/swiper-bundle.css');
 // 极验
 import('./libs/gt');
+import('./libs/echarts');
 
 // 重写console.log
 // require('@/util/log');
