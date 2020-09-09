@@ -34,6 +34,11 @@ import planTips from './trade/planTips'
 
 //仓位开仓确认按钮
 import orderCommon from './orderList/orderCommon'
+//一键平仓
+import closePosition from './orderList/closePosition'
+
+//全删/全撤
+import allClose from './orderList/allClose'
 
 let obj = {
 
@@ -242,6 +247,12 @@ let obj = {
   },
   getOrderCommon:function(){
     return m(orderCommon)
+  },
+  getClosePosition:function(){
+    return m(closePosition)
+  },
+  getAllClose:function(){
+    return m(allClose)
   }
   
 }
@@ -295,7 +306,9 @@ export default {
           obj.getImplemented(),
           obj.getOrdTips(),
           obj.getPlanTips(),
-          obj.getOrderCommon()
+          obj.getOrderCommon(),
+          obj.getClosePosition(),
+          obj.getAllClose(),
         ])
     }
 }
