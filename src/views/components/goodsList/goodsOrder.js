@@ -6,7 +6,7 @@ let obj = {
     posList:[],
     theadList: [
         {
-            title: gDI18n.$t('10590'), //'操作',
+            title: '全撤',
             class: ""
         }, {
             title: gDI18n.$t('10614'), //'交易对', //'',
@@ -114,7 +114,7 @@ let obj = {
     initLanguage:function(){
         this.theadList = [
             {
-                title: gDI18n.$t('10590'), //'操作',
+                title: '全撤',
                 class: ""
             }, {
                 title: gDI18n.$t('10614'), //'交易对', //'',
@@ -339,9 +339,18 @@ let obj = {
             ])
         })
     },
+    //全撤
+    CloseOrd:function(){
+        gEVBUS.emit(gEVBUS.EV_ALL_CLOSE_LIST_UPD, { Ev: gEVBUS.EV_ALL_CLOSE_LIST_UPD ,data:{type :1 , posList : this.posList}})
+    },
+    
     getTheadList: function () {
         return this.theadList.map(function (item, i) {
-            return m("th", { key: "goodsOrdertHeadItem" + i, class: "" + item.class }, [
+            return m("th", { key: "goodsOrdertHeadItem" + i, class: "" + item.class  + (i == 0 ? " cursor-pointer" : ""),onclick:function(){
+                if(i == 0){
+                  obj.CloseOrd()
+                }
+              } }, [
                 item.title
             ])
         })
