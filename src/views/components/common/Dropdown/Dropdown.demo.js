@@ -49,19 +49,19 @@ const obj = {
             return [
                 {
                     id: 1,
-                    render() {
+                    render(params) {
                         return m('div', { class: `` }, [
                             m('span', { class: `` }, I18n.$t('10063')),
-                            m('span', { class: `` }, " | option1-1")
+                            m('span', { class: `` }, ` | option1-${params.id}`)
                         ]);
                     }
                 },
                 {
                     id: 2,
-                    render() {
+                    render(params) {
                         return m('div', { class: `` }, [
                             m('span', { class: `` }, I18n.$t('10063')),
-                            m('span', { class: `` }, " | option1-2")
+                            m('span', { class: `` }, ` | option1-${params.id}`)
                         ]);
                     }
                 }
@@ -74,9 +74,7 @@ module.exports = {
     oncreate() {},
     view (vnode) {
         return m('div', { class: `is-flex` }, [
-            m('div', { class: `px-5` }, obj.option1.currentId),
             m(Dropdown, obj.option1),
-            m('div', { class: `px-5` }, obj.option2.currentId),
             m(Dropdown, obj.option2)
         ]);
     }

@@ -79,17 +79,7 @@ module.exports = {
     oncreate (vnode) {
     },
     onupdate (vnode) {
-        const self = this;
-        // 临时加timer，降低刷新频率
-        if (self.onUpdTimer) {
-            clearTimeout(self.onUpdTimer);
-            self.onUpdTimer = null;
-        }
-        self.onUpdTimer = setTimeout(() => {
-            self.initCurItem(vnode);
-            clearTimeout(self.onUpdTimer);
-            self.onUpdTimer = null;
-        }, 200);
+        // this.initCurItem(vnode);
     },
     view (vnode) {
         return m('div.Dropdown', { class: `${vnode.attrs.class || ''} my-dropdown dropdown ${vnode.attrs.type === 'hover' ? " is-hoverable" : vnode.attrs.showMenu ? " is-active" : ''}` }, [
