@@ -7,7 +7,7 @@ const I18n = require('@/languages/I18n').default;
 require('./assetRecord.scss');
 module.exports = {
     oninit() {
-        AssetRecords.init('03');
+        AssetRecords.init(m.route.param().aType || '03');
         AssetRecords.setLanguageListen();
     },
     onremove() {
