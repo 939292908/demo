@@ -59,7 +59,7 @@ const openGView = {
             }
         });
         openGView.initNav();
-        openGView.checkFlag = 4;
+        openGView.checkFlag = 1;
     },
     view: () => {
         return m('div', { class: `views-page-accountSecurity-bindGoogle-open theme--light pb-8` }, [

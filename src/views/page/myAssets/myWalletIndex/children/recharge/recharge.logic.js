@@ -9,10 +9,6 @@ const model = {
     pageData: [], // 所需数据
     USDTLabel: [], // 链名称
     selectList: [], // 下拉列表
-    form: {
-        selectCheck: '' // 当前币种选中值
-    },
-    selectCheck: '', // 当前币种选中值
     tips: '', // 提示
     uId: '', // 用户uId
     rechargeAddr: '', // 充币地址
