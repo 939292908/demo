@@ -71,6 +71,10 @@ class Router {
         '/openGoogleVerify': {
             requireAuth: true,
             onmatch: () => import('@/views/page/bindGoogle/open/openGoogleVerify.view')
+        },
+        '/selfManage': {
+            requireAuth: true,
+            onmatch: () => import('@/views/page/selfManage/home/index')
         }
     };
 
