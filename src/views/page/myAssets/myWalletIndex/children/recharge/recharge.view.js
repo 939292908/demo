@@ -18,15 +18,10 @@ module.exports = {
     },
     view: () => {
         return m('div', { class: `views-page-myAssets-myWalletIndex-childer-recharge theme--light pb-7` }, [
-            // rechargeIndex.rechargeAddr,
-            m('div.has-bg-sub-level-1', { style: { width: `100%` } }, [
-                m('div', { class: `content-width`, style: { margin: `auto` } }, [
-                    m(Header, {
-                        highlightFlag: 0,
-                        navList: [{ to: '/myWalletIndex', title: I18n.$t('10052') /* '我的资产' */ }, { to: '/assetRecords', title: I18n.$t('10053') /* '资金记录' */ }]
-                    })
-                ])
-            ]),
+            m(Header, {
+                highlightFlag: 0,
+                navList: [{ to: '/myWalletIndex', title: I18n.$t('10052') /* '我的资产' */ }, { to: '/assetRecords', title: I18n.$t('10053') /* '资金记录' */ }]
+            }),
             m('div', { class: `top mb-7 has-bg-level-2 cursor-pointer` }, [
                 m('div', { class: `content-width `, style: { margin: `auto` } }, [
                     m('i', { class: `iconfont icon-Return has-text-title`, onclick: () => { window.router.go(-1); } }),
