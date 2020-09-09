@@ -4,7 +4,7 @@ let obj = {
     posList: [],
     theadList: [
         {
-            title: '操作',
+            title: '全撤',
             class: ""
         }, {
             title: gDI18n.$t('10053'),//'合约',
@@ -110,7 +110,7 @@ let obj = {
     initLanguage: function(){
         this.theadList = [
             {
-                title: gDI18n.$t('10590'), //'操作',
+                title: '全撤',
                 class: ""
             }, {
                 title: gDI18n.$t('10053'),//'合约',
@@ -248,9 +248,18 @@ let obj = {
         this.posList = posList
     },
 
+    //全撤
+    CloseOrd:function(){
+        console.log('全撤')
+    },
+
     getTheadList: function () {
         return this.theadList.map(function (item, i) {
-            return m("th", { key: "ordertHeadItem" + i, class: "" + item.class }, [
+            return m("th", { key: "ordertHeadItem" + i, class: "" + item.class  + (i == 0 ? " cursor-pointer" : ""),onclick:function(){
+                if(i == 0){
+                  obj.CloseOrd()
+                }
+              }}, [
                 item.title
             ])
         })

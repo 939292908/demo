@@ -222,7 +222,7 @@ let obj = {
 
   //一键平仓
   ClosePosition:function(){
-    console.log(111111111111)
+    console.log('一键平仓')
   },
   
   getTheadList: function(){
