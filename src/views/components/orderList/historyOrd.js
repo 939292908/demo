@@ -351,7 +351,6 @@ let obj = {
             let ass = window.gMkt.AssetD[order.Sym]
             if (ass) {
                 utils.copyTab(obj, order)
-
                 let PrzMinIncSize = utils.getFloatSize(utils.getFullNum(ass.PrzMinInc || 6));
                 let VolMinValSize = utils.getFloatSize(ass.Mult || 2);
 
@@ -367,7 +366,8 @@ let obj = {
                     obj.displayLever = '--'
                 }
 
-                obj.DirStr = utils.getDirByStr(obj.Dir)
+                // obj.DirStr = utils.getDirByStr(obj.Dir)
+                obj.DirStr = utils.getDirByStrType(obj)
 
                 obj.OTypeStr = utils.getOtypeByStr(obj.OType, ass)
 
@@ -1045,7 +1045,7 @@ let obj = {
             let colgroup = m('colgroup', {}, [
                 m('col', { name: "pub-table-2", width: 160 }),
                 m('col', { name: "pub-table-3", width: 130 }),
-                m('col', { name: "pub-table-4", width: 80 }),
+                m('col', { name: "pub-table-4", width: 200 }),
                 m('col', { name: "pub-table-5", width: 80 }),
                 m('col', { name: "pub-table-5", width: 80 }),
                 m('col', { name: "pub-table-6", width: 100 }),
@@ -1060,18 +1060,18 @@ let obj = {
                 m('col', { name: "pub-table-1", width: 100 }),
             ])
             return m('div', { class: " table-container" }, [
-                m('div', { class: `pub-table-head-box ${window.gWebAPI.isLogin() ? '' : 'is-hidden'}`, style: "width: 1730px" }, [
-                    m("table", { class: "table is-hoverable ", width: '1730px', cellpadding: 0, cellspacing: 0 }, [
+                m('div', { class: `pub-table-head-box ${window.gWebAPI.isLogin() ? '' : 'is-hidden'}`, style: "width: 1850px" }, [
+                    m("table", { class: "table is-hoverable ", width: '1850px', cellpadding: 0, cellspacing: 0 }, [
                         colgroup,
                         m("tr", { class: "" }, [
                             obj.getTheadList()
                         ])
                     ]),
                 ]),
-                m('div', { class: "pub-table-body-box", style: "width: 1730px" ,onscroll:function(e){
+                m('div', { class: "pub-table-body-box", style: "width: 1850px" ,onscroll:function(e){
                     obj.getScroll(e)
                 }}, [
-                    m("table", { class: "table is-hoverable ", width: '1730px', cellpadding: 0, cellspacing: 0 }, [
+                    m("table", { class: "table is-hoverable ", width: '1850px', cellpadding: 0, cellspacing: 0 }, [
                         colgroup,
                         obj.getPosList()
                     ]),
