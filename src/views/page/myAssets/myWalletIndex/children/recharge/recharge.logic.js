@@ -91,7 +91,7 @@ const model = {
             if (i.Setting.canRecharge) {
                 this.selectList.push({ label: i.wType + ' | ' + wlt.coinInfo[i.wType].name, id: i.wType });
                 if (this.coinParam === null) {
-                    if (this.option.currentId === '') {
+                    if (this.option.currentId === 1) {
                         this.option.currentId = this.selectList[0].id;
                     }
                 }
@@ -118,7 +118,7 @@ const model = {
                 // this.tips = '您只能向此地址充值' + this.option.currentId + '，其他资产充入' + this.option.currentId + '地址将无法找回' +
 
                 /* 禁止向{value}地址充币除{value}之外的资产,任何充入{value}地址的非{value}资产将不可找回 */
-                I18n.$t('10085', { value: this.option.currentId }) +
+                I18n.$t('10083', { value: this.option.currentId }) +
 
                 /* 使用{value1}地址充币需要{value2}个网络确认才能到账 */
                 '*' + I18n.$t('10084', { value1: this.option.currentId, value2: networkNum }) +
@@ -196,6 +196,7 @@ const model = {
         menuClick(item) {
             // model.selectCheck = item.id;
             model.setTipsAndAddrAndCode();
+            m.redraw();
         },
         renderHeader(item) {
             return m('div', { class: `selectDiv` }, [

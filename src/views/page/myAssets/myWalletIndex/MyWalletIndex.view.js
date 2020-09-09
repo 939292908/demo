@@ -20,8 +20,8 @@ module.exports = {
                         navList: [{ to: '/myWalletIndex', title: I18n.$t('10052') /* '我的资产' */ }, { to: '/assetRecords', title: I18n.$t('10053') /* '资金记录' */ }]
                     }),
                     m('div', { class: `myWalletIndex-warpper container content-width` }, [
-                        m('div', { class: `myWalletIndex-head columns-flex` }, [
-                            m('div', { class: `myWalletIndex-head-left mt-8` }, [
+                        m('div', { class: `myWalletIndex-head columns-flex mt-3` }, [
+                            m('div', { class: `myWalletIndex-head-left mt-8 pt-3` }, [
                                 m('div', { class: `myWalletIndex-head-left-total` }, [
                                     m('span', { class: `body-6 has-text-white` }, I18n.$t('10054') /* `总资产估值` */),
                                     m('div', { class: `form-item-content border-radius-medium` }, [
