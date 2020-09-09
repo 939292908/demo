@@ -29,17 +29,17 @@ module.exports = {
     onremove: vnode => logic.onremove(vnode),
     view (vnode) {
         return m('div', { class: `${vnode.attrs.class || ''} my-dropdown dropdown ${vnode.attrs.type === 'hover' ? " is-hoverable" : vnode.attrs.showMenu ? " is-active" : ''}` }, [
-            // 选中content
+            // 选中header
             m('div', { class: "dropdown-trigger has-text-1" }, [
                 m('button', {
                     class: `button ${vnode.attrs.btnClass || ''}`,
                     style: (vnode.attrs.btnWidth ? `width:${vnode.attrs.btnWidth}px;` : '') +
                         (vnode.attrs.btnHeight ? `height:${vnode.attrs.btnHeight}px;` : ''),
                     onclick() {
-                        logic.currentContentClick(vnode); // click
+                        logic.headerClick(vnode); // click
                     }
                 }, [
-                    logic.getCurrentContent(vnode), // 内容
+                    logic.getHeader(vnode), // 内容
                     m('i', { class: `my-trigger-icon iconfont icon-xiala has-text-primary` }) // icon
                 ])
             ]),
@@ -58,7 +58,7 @@ module.exports = {
                                 logic.menuClick(item, vnode); // click
                             }
                         }, [
-                            m('div', { class: `my-menu-label` }, item.render ? item.render() : item.label), // 内容
+                            m('div', { class: `my-menu-label` }, item.render ? item.render(item) : item.label), // 内容
                             vnode.attrs.showMenuIcon ? m('i', { class: `my-menu-icon iconfont icon-fabijiaoyiwancheng ${vnode.attrs.currentId === item.id ? '' : 'is-hidden'}` }) : "" // icon
                         ]);
                     })

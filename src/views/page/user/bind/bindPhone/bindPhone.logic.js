@@ -9,11 +9,13 @@ const I18n = require('@/languages/I18n').default;
 const validate = require('@/models/validate/validate').default;
 
 const model = {
+    showPhoneValidate: false,
+    showPasswordValidate: false,
     // 表单
     form: {
         password: "",
         phone: "",
-        areaCode: ""
+        areaCode: "86"
     },
     // 地区列表
     selectList: [],
@@ -89,12 +91,11 @@ const model = {
             securePhone: 123,
             resetPwd: true,
             areaCode: '00' + this.areaCode,
-            phone: 456,
+            phone: this.form.phone,
             lang: I18n.getLocale()
         };
         // 初始化 校验弹框
         validate.activeSmsAndGoogle(params, () => {
-            alert(777);
             this.bindPhoneApi(); // 绑定邮箱 接口
         });
     },
@@ -139,6 +140,14 @@ const model = {
     },
     onremove (vnode) {
         this.rmEVBUS();
+        this.showPhoneValidate = false;
+        this.showPasswordValidate = false;
+        this.isShowVerifyView = false;
+        this.form = {
+            password: "",
+            phone: "",
+            areaCode: "86"
+        };
     }
 };
 

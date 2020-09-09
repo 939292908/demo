@@ -2,8 +2,8 @@ var m = require("mithril");
 require('./transfer.scss');
 const I18n = require('@/languages/I18n').default;
 // const Modal = require('@/views/components/common/Modal');
-const Dropdown = require('@/views/components/common/Dropdown');
-// const newDropdown = require('@/views/components/common/DropdownNew/Dropdown.view');
+// const Dropdown = require('@/views/components/common/Dropdown');
+const Dropdown = require('@/views/components/common/Dropdown/Dropdown.view');
 const Modal = require('@/views/components/common/Modal');
 
 const model = require('./transfer.logic.js');
@@ -16,55 +16,54 @@ module.exports = {
     view (vnode) {
         // 资金划转 内容
         const body = m('div', { class: `my-form my-transfer` }, [
-            // m('div', { class: `` }, "newDropdown"),
-            // m(newDropdown),
             // 币种 (下拉)
             m('div', { class: `form-item` }, [
                 m('div', { class: `form-item-title` }, [
                     I18n.$t('10063') // '币种'
                 ]),
                 m('div', { class: `form-item-content` }, [
-                    m('div', { class: `my-dropdown dropdown ${model.showCurrencyMenu ? " is-active" : ''}` }, [
-                        // btn
-                        m('div', { class: "dropdown-trigger has-text-1" }, [
-                            m('button', {
-                                class: `button`,
-                                onclick: (e) => {
-                                    // 进入下一次事件队列，先让body事件关闭所有下拉，再开启自己
-                                    const type = model.showCurrencyMenu;
-                                    setTimeout(() => {
-                                        model.showCurrencyMenu = !type;
-                                    }, 0);
-                                }
-                            }, [
-                                m('p', { class: `my-trigger-text` }, [
-                                    m('span', { class: `mr-2` }, model.curItem.label),
-                                    m('span', { class: `has-text-level-4` }, model.curItem.coinName)
-                                ]), // btnText
-                                m('i', { class: "my-trigger-icon iconfont icon-xiala has-text-primary" }) // icon
-                            ])
-                        ]),
-                        // menu
-                        m('div', { class: "dropdown-menu " }, [
-                            m('div', { class: "dropdown-content", style: "max-height: 400px; overflow: auto;" },
-                                model.canTransferCoin.map((item, index) => {
-                                    return m('a', {
-                                        class: `dropdown-item has-hover ${model.form.coin === item.id ? 'has-active' : ''}`,
-                                        key: item.id + index,
-                                        onclick () {
-                                            model.handlerCurrencyMenuClick(item);
-                                        }
-                                    }, [
-                                        m('span', { class: `my-menu-label` }, [
-                                            m('span', { class: `mr-2` }, item.label),
-                                            m('span', { class: `has-text-level-4` }, item.coinName)
-                                        ]),
-                                        m('i', { class: `my-menu-icon iconfont icon-fabijiaoyiwancheng ${model.form.coin === item.id ? '' : 'is-hidden'}` }) // icon
-                                    ]);
-                                })
-                            )
-                        ])
-                    ])
+                    m(Dropdown, model.coinMenuOption)
+                    // m('div', { class: `my-dropdown dropdown ${model.showCurrencyMenu ? " is-active" : ''}` }, [
+                    //     // btn
+                    //     m('div', { class: "dropdown-trigger has-text-1" }, [
+                    //         m('button', {
+                    //             class: `button`,
+                    //             onclick: (e) => {
+                    //                 // 进入下一次事件队列，先让body事件关闭所有下拉，再开启自己
+                    //                 const type = model.showCurrencyMenu;
+                    //                 setTimeout(() => {
+                    //                     model.showCurrencyMenu = !type;
+                    //                 }, 0);
+                    //             }
+                    //         }, [
+                    //             m('p', { class: `my-trigger-text` }, [
+                    //                 m('span', { class: `mr-2` }, model.curItem.label),
+                    //                 m('span', { class: `has-text-level-4` }, model.curItem.coinName)
+                    //             ]), // btnText
+                    //             m('i', { class: "my-trigger-icon iconfont icon-xiala has-text-primary" }) // icon
+                    //         ])
+                    //     ]),
+                    //     // menu
+                    //     m('div', { class: "dropdown-menu " }, [
+                    //         m('div', { class: "dropdown-content", style: "max-height: 400px; overflow: auto;" },
+                    //             model.canTransferCoin.map((item, index) => {
+                    //                 return m('a', {
+                    //                     class: `dropdown-item has-hover ${model.coinMenuOption.currentId === item.id ? 'has-active' : ''}`,
+                    //                     key: item.id + index,
+                    //                     onclick () {
+                    //                         model.handlerCurrencyMenuClick(item);
+                    //                     }
+                    //                 }, [
+                    //                     m('span', { class: `my-menu-label` }, [
+                    //                         m('span', { class: `mr-2` }, item.label),
+                    //                         m('span', { class: `has-text-level-4` }, item.coinName)
+                    //                     ]),
+                    //                     m('i', { class: `my-menu-icon iconfont icon-fabijiaoyiwancheng ${model.coinMenuOption.currentId === item.id ? '' : 'is-hidden'}` }) // icon
+                    //                 ]);
+                    //             })
+                    //         )
+                    //     ])
+                    // ])
                 ])
             ]),
             // 账户划转
@@ -75,7 +74,7 @@ module.exports = {
                         I18n.$t('10130') // '从'
                     ]),
                     m('div', { class: `form-item-content` }, [
-                        m(Dropdown, model.getFromMenuOption())
+                        m(Dropdown, model.fromMenuOption)
                     ])
                 ]),
                 // 切换
@@ -93,7 +92,7 @@ module.exports = {
                         I18n.$t('10131') // '到'
                     ]),
                     m('div', { class: `form-item-content` }, [
-                        m(Dropdown, model.getToMenuOption())
+                        m(Dropdown, model.toMenuOption)
                     ])
                 ])
             ]),
@@ -112,7 +111,7 @@ module.exports = {
                         }
                     }),
                     m('div', { class: `btns-box pr-3` }, [
-                        m('span', { class: `pr-2` }, model.form.coin),
+                        m('span', { class: `pr-2` }, model.coinMenuOption.currentId),
                         m('span', {
                             class: `cursor-pointer has-text-primary`,
                             onclick() {
@@ -123,7 +122,7 @@ module.exports = {
                     ])
                 ]),
                 m('div', { class: `has-text-level-4 pt-2` }, [
-                    `${I18n.$t('10065' /** 可用 */)}: ${model.form.maxTransfer} ${model.form.coin}`
+                    `${I18n.$t('10065' /** 可用 */)}: ${model.form.maxTransfer} ${model.coinMenuOption.currentId}`
                 ])
             ])
         ]);
@@ -156,7 +155,7 @@ module.exports = {
                         I18n.$t('10132') // "法币审核提示"
                     ]),
                     body: m('div', { class: `` }, [
-                        I18n.$t('10409', { value: model.form.num + model.form.coin }) // `为防止大额资金流动,您划转至法币账户的${model.form.num + model.form.coin}需进行人工审核,请耐心等候.`
+                        I18n.$t('10409', { value: model.form.num + model.coinMenuOption.currentId }) // `为防止大额资金流动,您划转至法币账户的${model.form.num + model.coinMenuOption.currentId}需进行人工审核,请耐心等候.`
                     ]),
                     footer: [
                         m('.spacer'),

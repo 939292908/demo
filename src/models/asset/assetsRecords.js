@@ -3,6 +3,7 @@ const Http = require('@/api').webApi;
 const utils = require('@/util/utils').default;
 const I18n = require('@/languages/I18n').default;
 const broadcast = require('@/broadcast/broadcast');
+const errCode = require('@/util/errCode').default;
 
 module.exports = {
     recordObj: {
@@ -270,7 +271,7 @@ module.exports = {
                     // img: this.wTypeObj[item.wType] ? this.wTypeObj[item.wType] : `${this.$params.baseURL}/coins/icon-${item.wType}.png`,
                     // icon: `${this.$params.baseURL + this.removeGIFT(item.icon)}`,//item.icon,
                     timestamp: item.timestamp,
-                    status: utils.getTransferInfo(item.stat),
+                    status: errCode.getTransferInfo(item.stat),
                     stat: item.stat,
                     seq: item.seq,
                     des: I18n.$t('10056'), /* '充币' */
@@ -307,7 +308,7 @@ module.exports = {
                     // img: this.wTypeObj[item.wType] ? this.wTypeObj[item.wType] : `${this.$params.baseURL}/coins/icon-${item.wType}.png`,
                     // icon: `${this.$params.baseURL + this.removeGIFT(item.icon)}`,//item.icon,
                     timestamp: item.timestamp,
-                    status: utils.getWithdrawArr(item.stat),
+                    status: errCode.getWithdrawArr(item.stat),
                     stat: item.stat,
                     seq: item.seq,
                     des: I18n.$t('10057'), /* '提币' */
@@ -451,7 +452,7 @@ module.exports = {
                     } else if (item.addr.search('toutl_03') !== -1) {
                         des = I18n.$t('10149', { value: I18n.$t('10055') });// "划至我的钱包"
                     } else {
-                        des = utils.getTransferHisStr(item.addr, item.wType);
+                        des = errCode.getTransferHisStr(item.addr, item.wType);
                     }
                     if (item.addr.indexOf('M2O') !== -1) {
                         // des = '法币账户转入';
@@ -474,7 +475,7 @@ module.exports = {
                         // img: this.wTypeObj[item.wType] ? this.wTypeObj[item.wType] : `${this.$params.baseURL}/coins/icon-${item.wType}.png`,
                         // icon: `${this.$params.baseURL + this.removeGIFT(item.icon)}`, // item.icon,
                         timestamp: item.timestamp,
-                        status: utils.getTransferInfo(item.stat),
+                        status: errCode.getTransferInfo(item.stat),
                         stat: item.stat,
                         seq: item.seq,
                         des: des,
@@ -516,7 +517,7 @@ module.exports = {
                         // img: this.wTypeObj[item.wType] ? this.wTypeObj[item.wType] : `${this.$params.baseURL}/coins/icon-${item.wType}.png`,
                         // icon: `${this.$params.baseURL + this.removeGIFT(item.icon)}`,//item.icon,
                         timestamp: item.timestamp,
-                        status: utils.getTransferInfo(item.stat),
+                        status: errCode.getTransferInfo(item.stat),
                         stat: item.stat,
                         seq: item.seq,
                         // des: item.addr === 'to' ? '买入' : '卖出'
@@ -529,7 +530,7 @@ module.exports = {
             this.recordObj[aType].other = [];
             for (const item of log) {
                 let des = '';
-                let num = 0;
+                const num = 0;
                 const toType = {
                     mineTransfer: false, // 矿池划转
                     transfer: false, // 资产划转
@@ -633,21 +634,22 @@ module.exports = {
                     toType.other = true;
                 } else {
                     // des = utils.getRecordsType5Str(item.addr, item.wType);
-                    switch (item.addr) {
-                    case 'g103wdrw':
-                    case 'g103depo':
-                    case 'g103depo2':
-                    case 'prix':
-                    case 'bonus':
-                    case 'lot':
-                    case 'betfee':
-                        toType.openInfo = true;
-                        break;
-                    case 'bet':
-                        num = Number(item.num || 0) + Number(item.fee || 0);
-                        toType.openInfo = true;
-                        break;
-                    }
+                    des = I18n.$t('10140'); // 其他类型
+                    // switch (item.addr) {
+                    // case 'g103wdrw':
+                    // case 'g103depo':
+                    // case 'g103depo2':
+                    // case 'prix':
+                    // case 'bonus':
+                    // case 'lot':
+                    // case 'betfee':
+                    //     toType.openInfo = true;
+                    //     break;
+                    // case 'bet':
+                    //     num = Number(item.num || 0) + Number(item.fee || 0);
+                    //     toType.openInfo = true;
+                    //     break;
+                    // }
                     toType.other = true;
                     // this.allType['other']?this.allType['other'].show = true:''
                 }
@@ -664,7 +666,7 @@ module.exports = {
                     // img: this.wTypeObj[item.wType] ? this.wTypeObj[item.wType] : `${this.$params.baseURL}/coins/icon-${item.wType}.png`,
                     // icon: `${this.$params.baseURL + this.removeGIFT(item.icon)}`, // item.icon,
                     timestamp: item.timestamp,
-                    status: utils.getTransferInfo(item.stat),
+                    status: errCode.getTransferInfo(item.stat),
                     stat: item.stat,
                     seq: item.seq,
                     des: des,

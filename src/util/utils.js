@@ -1,7 +1,6 @@
-const I18n = require('@/languages/I18n').default;
 const utils = {};
 const DBG_TAG = "UTILS";
-// const I18n = require('@/languages/I18n').default;
+
 utils.setItem = function (key, val) {
     try {
         window.localStorage.setItem(key, JSON.stringify(val));
@@ -203,68 +202,6 @@ utils.totalNumSub = function (number, n) {
     }
     // return new Decimal(Number(number)).toFixed(10).replace(/^(\-)*(\d+)\.(\d{8}).*$/, '$1$2.$3');
 };
-utils.getTransferInfo = function (p) {
-    const obj = {
-        1: I18n.$t('10523'), // '确认中',
-        2: I18n.$t('10094'), // 失败
-        3: I18n.$t('10093'), // 成功
-        11: I18n.$t('10524'), // '邮件确认中',
-        12: I18n.$t('10525'), // '已取消',
-        13: I18n.$t('10526'), // '等待中',
-        14: I18n.$t('10525'), // '已取消',
-        18: I18n.$t('10094'), // 失败
-        19: I18n.$t('10094'), // 失败
-        24: I18n.$t('10093'), // 成功
-        25: I18n.$t('10525'), // '已取消',
-        26: I18n.$t('10523'), // '确认中',
-        30: I18n.$t('10094'), // 失败
-        35: I18n.$t('10094'), // 失败
-        36: I18n.$t('10525'), // '已取消',
-        41: I18n.$t('10093'), // 成功
-        42: I18n.$t('10527'), // '处理中',
-        50: I18n.$t('10527'), // '处理中',
-        51: I18n.$t('10094'), // 失败
-        52: I18n.$t('10527'), // '处理中',
-        101: I18n.$t('10093'), // 成功
-        102: I18n.$t('10094'), // 失败
-        110: I18n.$t('10528'), // '待审核',
-        111: I18n.$t('10529'), // 审核失败
-        112: I18n.$t('10530'), // 已撤销
-        113: I18n.$t('10531') // 审核成功
-    };
-    return obj[p] || '';
-};
-utils.getWithdrawArr = function (p) {
-    const obj = {
-        1: I18n.$t('10523'), // '确认中',
-        2: I18n.$t('10094'), // 失败
-        3: I18n.$t('10093'), // 成功
-        11: I18n.$t('10524'), // '邮件确认中',
-        12: I18n.$t('10525'), // '已取消',
-        13: I18n.$t('10526'), // '等待中',
-        14: I18n.$t('10525'), // '已取消',
-        18: I18n.$t('10094'), // 失败
-        19: I18n.$t('10094'), // 失败
-        24: I18n.$t('10526'), // '等待中',
-        25: I18n.$t('10525'), // '已取消',
-        26: I18n.$t('10523'), // '确认中',
-        30: I18n.$t('10094'), // 失败
-        35: I18n.$t('10094'), // 失败
-        36: I18n.$t('10093'), // 成功
-        41: I18n.$t('10093'), // 成功
-        42: I18n.$t('10527'), // '处理中',
-        50: I18n.$t('10527'), // '处理中',
-        51: I18n.$t('10094'), // 失败
-        52: I18n.$t('10527'), // '处理中',
-        101: I18n.$t('10093'), // 成功
-        102: I18n.$t('10094'), // 失败
-        110: I18n.$t('10528'), // '待审核',
-        111: I18n.$t('10529'), // 审核失败
-        112: I18n.$t('10530'), // 已撤销
-        113: I18n.$t('10531') // 审核成功
-    };
-    return obj[p] || '';
-};
 
 utils.getFullNum = function (num) { // 科学计数法转正常数
     // 处理非数字
@@ -386,33 +323,6 @@ utils.createScript = function({ src, type = 'text/javascript', id, async = true,
         }
     };
     document.getElementsByTagName('head')[0].appendChild(script);
-};
-
-utils.getTransferHisStr = function(p, coin) {
-    const obj = {
-        inCoin: '买权证扣本金',
-        inFee: '买权证扣手续费',
-        renewFee: '续期扣手续费',
-        outProCoin: '买权证划拨权证币',
-        outFangzhou: '方舟计划派发' + coin,
-        outInterest: '合约派息',
-        outCoin: '合约本金出金',
-        inProCoin: '合约权证出金',
-        teamCoin: '团队奖励',
-        groupCoin: '社区分红',
-        productCoin: '权证结算',
-        plateCoin: '平台分红',
-        powCoin: 'POW释放奖励',
-        userActiveAward: '新会员推荐奖金',
-        x_pocbuy: '矿机购买',
-        x_pochandlingfee: '交易手续费',
-        x_poccashback: '直推返利',
-        x_teamback: '团队返利',
-        fangzhouLock: '方舟余币锁仓',
-        fangzhouRelease: '方舟余币释放',
-        incomeRelease: '派息锁仓释放'
-    };
-    return obj[p] || '';
 };
 
 export default utils;
