@@ -354,7 +354,7 @@ class Mkt {
     CtxPlaying = {
         pageTradeStatus: 1, //页面交易类型，1:合约，2:币币，3合约信息
         Sym:"",
-        Typ:"1m",
+        Typ:"15m",
         UId:"",
         AId:"",
         //当前正在编辑的委托
