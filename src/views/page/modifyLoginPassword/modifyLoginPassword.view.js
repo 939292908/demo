@@ -22,17 +22,17 @@ const modifyLPView = {
                     m('div', { class: `oldPwdDiv` }, [
                         m('span', { class: `body-5` }, I18n.$t('10276') /* '原密码' */),
                         m('br'),
-                        m('input', { class: `border-radius-small mb-5 mt-2 oldPwd`, type: `text` })
+                        m('input', { class: `border-radius-small mb-5 mt-2 oldPwd has-line-level-3`, type: `password` })
                     ]),
                     m('div', { class: `newPwdDiv` }, [
                         m('span', { class: `body-5 mb-2` }, I18n.$t('10210') /* '新密码' */),
                         m('br'),
-                        m('input', { class: `border-radius-small mt-2 mb-5 newPwd`, type: `text` })
+                        m('input', { class: `border-radius-small mt-2 mb-5 newPwd has-line-level-3`, type: `password` })
                     ]),
                     m('div', { class: `confirmPWdDiv` }, [
                         m('span', { class: `body-5 mb-2` }, I18n.$t('10211') /* '确认密码' */),
                         m('br'),
-                        m('input', { class: `border-radius-small mt-2 confirmPWd`, type: `text` })
+                        m('input', { class: `border-radius-small mt-2 confirmPWd has-line-level-3`, type: `password` })
                     ]),
                     m('div', { class: `btn mt-8` }, [
                         m('button', { class: `has-bg-primary cursor-pointer`, onclick: () => { modifyLPLogic.confirmBtn('unbind'); } }, I18n.$t('10337') /* '确定' */)

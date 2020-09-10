@@ -121,12 +121,12 @@ const openGView = {
                         m('div', { class: `pwdDiv margin-LRauto` }, [
                             m('span', { class: `body-5` }, I18n.$t('10512') /* '登录密码' */),
                             m('br'),
-                            m('input', { class: `border-radius-small mb-5 mt-2 pwd`, type: `text`, oninput: function() { openGLogic.check('pwd', this.value); } })
+                            m('input', { class: `border-radius-small mb-5 mt-2 pwd has-line-level-3`, type: `password`, oninput: function() { openGLogic.check('pwd', this.value); } })
                         ]),
                         m('div', { class: `codeDiv margin-LRauto` }, [
                             m('span', { class: `body-5 mb-2` }, I18n.$t('10119') /* '谷歌验证码' */),
                             m('br'),
-                            m('input', { class: `border-radius-small mt-2 code`, type: `text`, oninput: function() { openGLogic.check('code', this.value); } })
+                            m('input', { class: `border-radius-small mt-2 code has-line-level-3`, type: `text`, oninput: function() { openGLogic.check('code', this.value); } })
                         ]),
                         m('div', { class: `tips mt-3` }, [
                             m('span', { class: ``, style: { display: openGLogic.pwdTipFlag ? `` : `none` } }, '登录密码错误请重新输入!'),

@@ -26,12 +26,12 @@ const closeGView = {
                     m('div', { class: `pwdDiv margin-LRauto` }, [
                         m('span', { class: `body-5` }, I18n.$t('10512') /* '登录密码' */),
                         m('br'),
-                        m('input', { class: `border-radius-small mb-5 mt-2 pwd`, type: `text` })
+                        m('input', { class: `border-radius-small mb-5 mt-2 pwd has-line-level-3`, type: `password` })
                     ]),
                     m('div', { class: `codeDiv margin-LRauto` }, [
                         m('span', { class: `body-5 mb-2` }, I18n.$t('10264') /* '原谷歌验证码' */),
                         m('br'),
-                        m('input', { class: `border-radius-small mt-2 code`, type: `text` })
+                        m('input', { class: `border-radius-small mt-2 code has-line-level-3`, type: `text` })
                     ]),
                     m('div', { class: `btn mt-8 margin-LRauto` }, [
                         m('button', { class: `has-bg-primary cursor-pointer`, onclick: () => { closeGLogic.confirmBtn('unbind'); } }, I18n.$t('10337') /* '确定' */)
