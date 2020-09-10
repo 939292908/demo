@@ -28,10 +28,10 @@ module.exports = {
     flag: false, // 是否满足要求（码不为空）
     pwdTipFlag: false, // 密码错误提示 默认不显示（false）
     codeTipFlag: false, // 谷歌验证码错误提示 默认不显示（false）
-
     IOSDLAddQrCodeSrc: null, // IOS下载二维码地址
     AndroidDLAddQrCodeSrc: null, // Android Q下载二维码地址
     secretQrCodeSrc: null, // 秘钥二维码地址
+
     // 生成IOS，Android，密钥二维码 begin
     generateQRCode() {
         const that = this;

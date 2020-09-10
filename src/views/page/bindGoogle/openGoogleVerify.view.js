@@ -72,7 +72,7 @@ const openGView = {
             m('div', { class: `center content-width has-bg-level-2 margin-LRauto` }, [
                 m('div', { class: `center-top mt-7` }, [
                     openGView.nav.map(item => {
-                        return m('div', { class: `column my-7 pb-7 ` + (item.id <= openGView.checkFlag ? 'is-active has-text-primary  has-line-primary' : ''), key: item.id }, [
+                        return m('div', { class: `column my-7 pb-7 ` + (item.id <= openGView.checkFlag ? `has-text-primary  has-line-primary` : `has-line-level-4`), key: item.id }, [
                             m('span', { class: `title-small` }, item.id),
                             m('span', { class: `body-5` }, item.title)
                         ]);
