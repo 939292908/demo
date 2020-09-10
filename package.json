@@ -59,6 +59,7 @@
     "axios": "^0.19.2",
     "bulma": "^0.9.0",
     "di18n-translate": "0.0.9",
+    "echarts": "^4.9.0",
     "fingerprintjs2": "^2.1.2",
     "lightpick": "^1.6.2",
     "md5": "^2.2.1",

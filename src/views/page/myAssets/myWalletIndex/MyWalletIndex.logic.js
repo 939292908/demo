@@ -124,7 +124,6 @@ const model = {
             window.event.stopPropagation();
         }
         this.sets();
-        this.switchContent();
     },
     // 切换表格内容
     switchContent: function () {

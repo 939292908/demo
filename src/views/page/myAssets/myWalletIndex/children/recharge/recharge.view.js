@@ -9,24 +9,26 @@ const I18n = require('@/languages/I18n').default;
 const Header = require('@/views/components/indexHeader/indexHeader.view');
 
 module.exports = {
+    nameTips: null, // 链名称提示
     oninit: () => {
         rechargeIndex.initFn();
         AssetRecords.init('03', 'recharge', 10);
         AssetRecords.setLanguageListen();
+
+        this.nameTips =
+        [I18n.$t('10400') /* 'USDT-ERC20是Tether泰达公司基于ETH网络发行的USDT，充币地址是ETH地址，充提币走ETH网络，USDT-ERC20使用的是ERC20协议。' */,
+            I18n.$t('10507') /* 'USDT-TRC20(USDT-TRON)是Tether泰达公司基于TRON网络发行的USDT，充币地址是TRON地址，充提币走TRON网络，USDT-TRC20(USDT-TRON)使用的是TRC20协议。' */,
+            I18n.$t('10508')/* 'USDT-Omni是Tether泰达公司基于BTC网络发行的USDT，充币地址是BTC地址，充提币走BTC网络，USDT-Omni使用的协议是建立在BTC区块链网络上的omni layer协议。' */];
     },
     oncreate: () => {
     },
     view: () => {
         return m('div', { class: `views-page-myAssets-myWalletIndex-childer-recharge theme--light pb-7` }, [
-            // rechargeIndex.rechargeAddr,
-            m('div.has-bg-sub-level-1', { style: { width: `100%` } }, [
-                m('div', { class: `content-width`, style: { margin: `auto` } }, [
-                    m(Header, {
-                        highlightFlag: 0,
-                        navList: [{ to: '/myWalletIndex', title: I18n.$t('10052') /* '我的资产' */ }, { to: '/assetRecords', title: I18n.$t('10053') /* '资金记录' */ }]
-                    })
-                ])
-            ]),
+            m(Header, {
+                highlightFlag: 0,
+                navList: [{ to: '/myWalletIndex', title: I18n.$t('10052') /* '我的资产' */ }, { to: '/assetRecords', title: I18n.$t('10053') /* '资金记录' */ }]
+            }),
+            // JSON.stringify(rechargeIndex.selectList),
             m('div', { class: `top mb-7 has-bg-level-2 cursor-pointer` }, [
                 m('div', { class: `content-width `, style: { margin: `auto` } }, [
                     m('i', { class: `iconfont icon-Return has-text-title`, onclick: () => { window.router.go(-1); } }),
@@ -59,7 +61,7 @@ module.exports = {
                             m('div.navbar-item.cursor-pointer', { class: `has-text-primary-hover` }, [
                                 m(Tooltip, {
                                     label: m('i', { class: `iconfont icon-Tooltip` }),
-                                    content: rechargeIndex.nameTips.map(item => {
+                                    content: this.nameTips.map(item => {
                                         return m('span', { key: item, class: `mt-1` }, item);
                                     }),
                                     width: `240px`,
@@ -88,17 +90,13 @@ module.exports = {
                         m('div', { class: `currencyAddr-Operation ml-3` }, [
                             m('div', { class: `iImg mt-2` }, [
                                 m('i', { class: `iconfont icon-copy has-text-primary cursor-pointer mr-2`, onclick: () => { rechargeIndex.copyText(); } }),
-                                m('i', {
-                                    class: `iconfont icon-QrCode has-text-primary cursor-pointer`,
-                                    onmouseover: () => {
-                                        rechargeIndex.changeQrcodeDisplay(`show`);
-                                    },
-                                    onmouseout: () => {
-                                        rechargeIndex.changeQrcodeDisplay(`hide`);
-                                    }
+                                m(Tooltip, {
+                                    label: m('i', { class: `iconfont icon-QrCode has-text-primary cursor-pointer` }),
+                                    content: m('img', { class: `addressImg`, src: rechargeIndex.rechargeAddrSrc }),
+                                    position: `bottom`,
+                                    direction: `center`
                                 })
-                            ]),
-                            m('div', { class: `QrCodeImg`, style: { display: rechargeIndex.qrcodeDisplayFlag ? `` : `none` } })
+                            ])
                         ])
                     ]),
                     m('div', { class: `tips pb-6` }, [
