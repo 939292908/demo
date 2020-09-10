@@ -59,12 +59,8 @@
             .right{
                 margin-left: auto;
                 position: static;
-                .tradeCard{
-                    display: flex;
-                    flex-direction: column;
-                    z-index: 9999;
-                    position: absolute;
-                    left: 680px;
+                .myTradeCard{
+                    z-index: 999;
                     div{
                         display: flex;
                         flex-direction: column;
@@ -77,9 +73,9 @@
             flex-direction: column;
         }
         /* 背景模糊 */
-        // .fuzzy{
-        //     background-color: rgba(255, 255, 255, 0.85);
-        //     backdrop-filter: blur(30px);
-        // }
+        .fuzzy{
+            background-color: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(30px);
+        }
     }
 }

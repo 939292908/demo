@@ -6,6 +6,18 @@ const config = require('@/config.js');
 const VerifyView = require('@/views/components/dialogVerify/dialogVerify.view');
 
 const modifyLPView = {
+    pwdIsDifferent: false, // 新密码与确认密码是否一致提示是否显示
+    oldAndnewIsDifferent: false, // 原密码与新密码是否一致提示是否显示
+    newPwdCheck() {
+        const oldPwd = document.getElementsByClassName('oldPwd')[0].value;
+        const newPwd = document.getElementsByClassName('newPwd')[0].value;
+        oldPwd === newPwd ? modifyLPView.oldAndnewIsDifferent = true : modifyLPView.oldAndnewIsDifferent = false;
+    },
+    confirmPWdCheck() {
+        const newPwd = document.getElementsByClassName('newPwd')[0].value;
+        const confirmPWd = document.getElementsByClassName('confirmPWd')[0].value;
+        newPwd !== confirmPWd ? modifyLPView.pwdIsDifferent = true : modifyLPView.pwdIsDifferent = false;
+    },
     oninit: () => {
         modifyLPLogic.initFn();
     },
@@ -22,17 +34,30 @@ const modifyLPView = {
                     m('div', { class: `oldPwdDiv` }, [
                         m('span', { class: `body-5` }, I18n.$t('10276') /* '原密码' */),
                         m('br'),
-                        m('input', { class: `border-radius-small mb-5 mt-2 oldPwd has-line-level-3`, type: `password` })
+                        m('input', {
+                            class: `border-radius-small mb-5 mt-2 oldPwd has-line-level-3`,
+                            type: `password`
+                        })
                     ]),
                     m('div', { class: `newPwdDiv` }, [
                         m('span', { class: `body-5 mb-2` }, I18n.$t('10210') /* '新密码' */),
                         m('br'),
-                        m('input', { class: `border-radius-small mt-2 mb-5 newPwd has-line-level-3`, type: `password` })
+                        m('input', {
+                            class: `border-radius-small mt-2 newPwd has-line-level-3 mb-5`,
+                            oninput: () => { modifyLPView.newPwdCheck(); },
+                            type: `password`
+                        }),
+                        m('span', { class: `has-text-tip-error`, style: { display: modifyLPView.oldAndnewIsDifferent ? `` : `none` } }, '原密码与新密码不可相同')
                     ]),
                     m('div', { class: `confirmPWdDiv` }, [
                         m('span', { class: `body-5 mb-2` }, I18n.$t('10211') /* '确认密码' */),
                         m('br'),
-                        m('input', { class: `border-radius-small mt-2 confirmPWd has-line-level-3`, type: `password` })
+                        m('input', {
+                            class: `border-radius-small mt-2 confirmPWd has-line-level-3`,
+                            oninput: () => { modifyLPView.confirmPWdCheck(); },
+                            type: `password`
+                        }),
+                        m('span', { class: `has-text-tip-error`, style: { display: modifyLPView.pwdIsDifferent ? `` : `none` } }, '密码不一致')
                     ]),
                     m('div', { class: `btn mt-8` }, [
                         m('button', { class: `has-bg-primary cursor-pointer`, onclick: () => { modifyLPLogic.confirmBtn('unbind'); } }, I18n.$t('10337') /* '确定' */)

@@ -7,11 +7,11 @@ const validate = require('@/models/validate/validate').default;
 const config = require('@/config');
 const I18n = require('@/languages/I18n').default;
 const md5 = require('md5');
-console.log(Qrcode);
+const gM = require('@/models/globalModels');
+const errCode = require('@/util/errCode').default;
 
 module.exports = {
-    // 密钥
-    secret: '',
+    secret: '', /* 密钥 */
     IOSDLAdd: 'https://apps.apple.com/us/app/google-authenticator/id388497605',
     AndroidDLAdd: 'https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2',
     loginType: null, // 账户类型
@@ -21,8 +21,7 @@ module.exports = {
     phoneNum: null, // 手机号码
     CurrentOperation: 'bind', // 当前为解绑/绑定操作
     isShowVerifyView: false, // 安全校验弹框 show
-    // 安全校验弹框 显示/隐藏
-    switchSafetyVerifyModal (type) {
+    switchSafetyVerifyModal (type) { // 安全校验弹框 显示/隐藏
         this.isShowVerifyView = type;
     },
     flag: false, // 是否满足要求（码不为空）
@@ -32,7 +31,7 @@ module.exports = {
     AndroidDLAddQrCodeSrc: null, // Android Q下载二维码地址
     secretQrCodeSrc: null, // 秘钥二维码地址
 
-    // 生成IOS，Android，密钥二维码 begin
+    /* 生成IOS，Android，密钥二维码 begin */
     generateQRCode() {
         const that = this;
         // 获取秘钥（用于绑定google验证）
@@ -74,9 +73,10 @@ module.exports = {
                 });
         }
     },
-    // 生成IOS，Android，密钥二维码 end
+    /* 生成IOS，Android，密钥二维码 end */
 
     confirmBtn: function (type) {
+        // console.log(this.loginType, this.setting2fa, this.email, this.nationNo, this.phoneNum);
         this.isShowflag = false;
         this.CurrentOperation = type;
         if (this.check()) {
@@ -85,7 +85,7 @@ module.exports = {
         geetest.verify(); // 极验
         // this.ChooseVerify();
     },
-    // 校验密码与谷歌码
+    // 校验密码输入是否符合标准与谷歌码
     check() {
         const pwd = document.getElementsByClassName('pwd')[0].value;
         const code = document.getElementsByClassName('code')[0].value;
@@ -200,6 +200,8 @@ module.exports = {
             console.log('nzm', 'bindGoogleAuth success', arg);
             if (arg.result.code === 0) {
                 console.log('success');
+            } else {
+                window.$message({ content: errCode.getWebApiErrorCode(arg.result.code), type: 'danger' });
             }
             that.switchSafetyVerifyModal(false); // 关闭安全验证弹框
             m.redraw();
@@ -221,6 +223,8 @@ module.exports = {
             console.log('nzm', 'relieveGoogleAuth success', arg);
             if (arg.result.code === 0) {
                 console.log('success');
+            } else {
+                window.$message({ content: errCode.getWebApiErrorCode(arg.result.code), type: 'danger' });
             }
             that.switchSafetyVerifyModal(false); // 关闭安全验证弹框
             m.redraw();
@@ -230,22 +234,23 @@ module.exports = {
     },
     // 获取用户信息
     getUserInfo() {
-        const that = this;
-        Http.getUserInfo().then(function(arg) {
-            console.log('nzm', 'getUserInfo success', arg);
-            if (arg.result.code === 0) {
-                that.loginType = arg.account.loginType; // 账户类型
-                that.setting2fa = arg.account.setting2fa; // 账户绑定状态
-                that.email = arg.account.email; // 用户邮箱
-                that.nationNo = arg.account.nationNo; // 区号
-                that.phoneNum = arg.account.phone; // 用户手机号码
-                m.redraw();
-            }
-        }).catch(function(err) {
-            console.log('nzm', 'getUserInfo error', err);
-        });
+        const account = gM.getAccount();
+        console.log(account);
+        this.loginType = account.loginType; // 账户类型
+        this.setting2fa = account.setting2fa; // 账户绑定状态
+        this.email = account.email; // 用户邮箱
+        this.nationNo = account.nationNo; // 区号
+        this.phoneNum = account.phone; // 用户手机号码
     },
     initFn: function() {
+        broadcast.onMsg({
+            key: 'index',
+            cmd: broadcast.GET_USER_INFO_READY,
+            cb: () => {
+                // console.log(gM.getAccount());
+                this.getUserInfo();
+            }
+        });
         this.getUserInfo();
         this.initGeetest();
         this.generateQRCode();
@@ -254,6 +259,10 @@ module.exports = {
         broadcast.offMsg({
             key: 'BindGoogle',
             cmd: 'geetestMsg',
+            isall: true
+        });
+        broadcast.offMsg({
+            key: 'index',
             isall: true
         });
     }

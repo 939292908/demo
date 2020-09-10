@@ -124,6 +124,9 @@ const model = {
                     networkNum = model.pageData[i].networkNum;
                 }
 
+                /* 清空温馨提示 */
+                model.tips = '';
+
                 // 小部分温馨提示
                 const fractionTip =
                     /* 禁止向{value}地址充币除{value}之外的资产,任何充入{value}地址的非{value}资产将不可找回 */
