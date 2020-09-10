@@ -19,14 +19,11 @@ module.exports = {
     email: null, // 用户邮箱
     nationNo: null, // 区号
     phoneNum: null, // 手机号码
-    CurrentOperation: 'bind', // 当前为解绑/绑定操作
+    currentOperation: 'bind', // 当前为解绑/绑定操作
     isShowVerifyView: false, // 安全校验弹框 show
     switchSafetyVerifyModal (type) { // 安全校验弹框 显示/隐藏
         this.isShowVerifyView = type;
     },
-    flag: false, // 是否满足要求（码不为空）
-    pwdTipFlag: false, // 密码错误提示 默认不显示（false）
-    codeTipFlag: false, // 谷歌验证码错误提示 默认不显示（false）
     IOSDLAddQrCodeSrc: null, // IOS下载二维码地址
     AndroidDLAddQrCodeSrc: null, // Android Q下载二维码地址
     secretQrCodeSrc: null, // 秘钥二维码地址
@@ -38,16 +35,13 @@ module.exports = {
         Http.getGoogleSecret().then(function(arg) {
             // console.log('nzm', 'getGoogleSecret success', arg);
             that.secret = arg.secret;
-            // 生成密钥二维码
-            that.generatedCodeFN(arg.secret, 'key');
+            that.generatedCodeFN(arg.secret, 'key'); /* 生成密钥二维码 */
             m.redraw();
         }).catch(function(err) {
             console.log('nzm', 'getGoogleSecret error', err);
         });
-        // 生成IOS下载地址二维码
-        this.generatedCodeFN(this.IOSDLAdd, 'IOS');
-        // 生成Android下载地址二维码
-        this.generatedCodeFN(this.AndroidDLAdd, 'Android');
+        this.generatedCodeFN(this.IOSDLAdd, 'IOS'); /* 生成IOS下载地址二维码 */
+        this.generatedCodeFN(this.AndroidDLAdd, 'Android'); /* 生成Android下载地址二维码 */
     },
     generatedCodeFN: function(text, type) {
         if (type === 'key') {
@@ -75,27 +69,9 @@ module.exports = {
     },
     /* 生成IOS，Android，密钥二维码 end */
 
-    confirmBtn: function (type) {
+    confirmBtn: function () {
         // console.log(this.loginType, this.setting2fa, this.email, this.nationNo, this.phoneNum);
-        this.isShowflag = false;
-        this.CurrentOperation = type;
-        if (this.check()) {
-            // return;
-        }
-        geetest.verify(); // 极验
-        // this.ChooseVerify();
-    },
-    // 校验密码输入是否符合标准与谷歌码
-    check() {
-        const pwd = document.getElementsByClassName('pwd')[0].value;
-        const code = document.getElementsByClassName('code')[0].value;
-        pwd === '' ? this.pwdTipFlag = true : this.pwdTipFlag = false;
-        code === '' ? this.codeTipFlag = true : this.codeTipFlag = false;
-        if (this.codeTipFlag === true || this.pwdTipFlag === true) {
-            return true;
-        } else {
-            return false;
-        }
+        geetest.verify(); /* 极验 */
     },
     // 加载极验
     initGeetest() {
@@ -147,7 +123,7 @@ module.exports = {
                 lang: I18n.getLocale()
             };
             validate.activeEmail(params, function() {
-                that.CurrentOperation === 'bind' ? that.bindGoogle() : that.unbindGoogle();
+                that.currentOperation === 'bind' ? that.bindGoogle() : that.unbindGoogle();
             });
         } else if (typeFlag === 2) {
             params = {
@@ -158,7 +134,7 @@ module.exports = {
                 mustCheckFn: "" // 验证类型
             };
             validate.activeSms(params, function() {
-                that.CurrentOperation === 'bind' ? that.bindGoogle() : that.unbindGoogle();
+                that.currentOperation === 'bind' ? that.bindGoogle() : that.unbindGoogle();
             });
         } else if (typeFlag === 3) {
             params = {
@@ -178,7 +154,7 @@ module.exports = {
             };
             console.log(params);
             validate.activeSmsAndEmail(params, function() {
-                that.CurrentOperation === 'bind' ? that.bindGoogle() : that.unbindGoogle();
+                that.currentOperation === 'bind' ? that.bindGoogle() : that.unbindGoogle();
             });
         }
     },
@@ -253,7 +229,9 @@ module.exports = {
         });
         this.getUserInfo();
         this.initGeetest();
-        this.generateQRCode();
+        if (this.currentOperation === 'bind') {
+            this.generateQRCode();
+        }
     },
     removeFn: function() {
         broadcast.offMsg({

@@ -7,7 +7,9 @@ const VerifyView = require('@/views/components/dialogVerify/dialogVerify.view');
 const config = require('@/config.js');
 
 const openGView = {
+    // totalFlag: false, /* 是否满足校验  默认false不满足 */
     oninit: () => {
+        openGLogic.currentOperation = 'bind';
         openGLogic.initFn();
 
         broadcast.onMsg({
@@ -133,7 +135,7 @@ const openGView = {
                             m('span', { class: ``, style: { display: openGLogic.codeTipFlag ? `` : `none` } }, '谷歌验证码输入错误或已过期，请重新输入!')
                         ]),
                         m('div', { class: `btn mt-3 margin-LRauto` }, [
-                            m('button', { class: `has-bg-primary cursor-pointer`, onclick: () => { openGLogic.confirmBtn('bind'); } }, I18n.$t('10337') /* '确定' */)
+                            m('button', { class: `has-bg-primary cursor-pointer` }, I18n.$t('10337') /* '确定' */)
                         ])
                     ])
                 ]),
