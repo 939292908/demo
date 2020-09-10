@@ -1,22 +1,18 @@
 const m = require('mithril');
-const I18n = require('@/languages/I18n').default;
-
+const Layout = require('../../home/layout');
 const Header = require('@/views/components/indexHeader/indexHeader.view');
-const Layout = require('../layout');
-const User = require('../user/user.view');
-const Skip = require('../skip/skip');
-const Asset = require('../asset/asset.view');
-const Invitation = require('../invitation/invitation.view');
-const LogSsheet = require('../logSheet/logSheet.view');
+const HeaContent = require('../headerContent/headerContent.view');
+const Main = require('../main/main.view');
+const I18n = require('@/languages/I18n').default;
 require('./index.scss');
 
 module.exports = {
     view: function () {
-        return m('div.theme--light self-manage-home',
+        return m('div.self-manage-safety', [
             m(Layout,
                 {
                     nav: m(Header, {
-                        highlightFlag: 0,
+                        highlightFlag: 2,
                         navList: [
                             { to: '/selfManage', title: I18n.$t('10052') },
                             { to: '/selfManage', title: I18n.$t('10052') },
@@ -25,15 +21,10 @@ module.exports = {
                             { to: '/selfManage', title: I18n.$t('10052') }
                         ]
                     }),
-                    content: m('div', m(User))
+                    content: m(HeaContent)
                 },
-                m('div.liftingBox', m('.lifting', m(Skip))),
-                m(Asset),
-                m('div.dis-flex justify-between align-stretch', [
-                    m(Invitation),
-                    m(LogSsheet)
-                ])
+                m(Main)
             )
-        );
+        ]);
     }
 };

@@ -1,0 +1,19 @@
+.self-manage-safety {
+  .dis-flex {
+    display: flex;
+    flex-flow: nowrap;
+  }
+  .justify-between {
+    justify-content: space-between;
+  }
+  .align-center {
+    align-items: center;
+  }
+  .align-stretch {
+    align-items: stretch;
+  }
+
+  .cur-pri {
+    cursor: pointer;
+  }
+}
