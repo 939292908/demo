@@ -109,7 +109,7 @@ module.exports = {
                 validate.activeEmailAndGoogle({
                     secureEmail: res.email,
                     host: config.official,
-                    fn: 'be',
+                    fn: 'main',
                     lang: I18n.getLocale()
                 }, () => {
                     this.nextPhoneValidate(res.phone);
@@ -118,7 +118,7 @@ module.exports = {
                 validate.activeEmail({
                     secureEmail: res.email,
                     host: config.official,
-                    fn: 'be',
+                    fn: 'main',
                     lang: I18n.getLocale()
                 }, () => {
                     this.nextPhoneValidate(res.phone);

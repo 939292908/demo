@@ -1,0 +1,57 @@
+.self-manage-user {
+  padding: 20px 0px;
+  color: #FFFFFF;
+
+  .userInfo {
+
+    .headPortrait {
+      width: 100px;
+      height: 100px;
+      position: relative;
+      background: url("~./bg.svg") no-repeat center center;
+
+      .imgBox {
+        width: 52px;
+        height: 52px;
+        border-radius: 50%;
+        overflow: hidden;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+    }
+
+    .userMessage {
+      .name {
+        font-weight: 600;
+        font-size: 32px;
+        line-height: 45px;
+        margin-bottom: 4px;
+
+        span {
+          margin-right: 8px;
+        }
+      }
+      .user-uid {
+        cursor: pointer;
+        padding: 0px 8px;
+        border-radius: 50px;
+        display: inline-block;
+        background: linear-gradient(110.35deg, #EFE7DB 7.31%, #CEC6B8 81.37%);
+
+        .span, i {
+          vertical-align: middle;
+        }
+      }
+    }
+  }
+
+  .logInLog {
+    color: #9A9EAC;
+    text-align: right;
+    font-weight: normal;
+    font-size: 12px;
+    line-height: 20px;
+  }
+}

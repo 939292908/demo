@@ -54,7 +54,7 @@ class Router {
         },
         '/closeGoogleVerify': {
             requireAuth: true,
-            onmatch: () => import('@/views/page/bindGoogle/close/closeGoogleVerify.view')
+            onmatch: () => import('@/views/page/bindGoogle/closeGoogleVerify.view')
         },
         '/accountSecurity': {
             requireAuth: true,
@@ -66,11 +66,23 @@ class Router {
         },
         '/bindPhone': {
             requireAuth: true,
-            onmatch: () => import('@/views/page/user/bind/bindEmail/bindEmail.view')
+            onmatch: () => import('@/views/page/user/bind/bindPhone/bindPhone.view')
         },
         '/openGoogleVerify': {
             requireAuth: true,
-            onmatch: () => import('@/views/page/bindGoogle/open/openGoogleVerify.view')
+            onmatch: () => import('@/views/page/bindGoogle/openGoogleVerify.view')
+        },
+        '/modifyLoginPassword': {
+            requireAuth: true,
+            onmatch: () => import('@/views/page/modifyLoginPassword/modifyLoginPassword.view')
+        },
+        '/selfManage': {
+            requireAuth: true,
+            onmatch: () => import('@/views/page/selfManage/home/index')
+        },
+        '/apiManager': {
+            requireAuth: true,
+            onmatch: () => import('@/views/page/user/apiManager/apiManager.view')
         }
     };
 

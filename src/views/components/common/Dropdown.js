@@ -24,6 +24,7 @@ module.exports = {
     curItem: {},
     curId: "", // 临时保存id
     openClickBody: true, // body事件 节流
+    onUpdTimer: null,
 
     // ============= 方法 =============
     // 初始化 选中item

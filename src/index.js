@@ -15,6 +15,7 @@ import('./styles/bluma.scss');
 import('swiper/swiper-bundle.css');
 // 极验
 import('./libs/gt');
+// import('./libs/echarts');
 
 // 重写console.log
 // require('@/util/log');
@@ -24,14 +25,14 @@ window.onresize = function (arg) {
 };
 
 import('./views/index').then(arg => {
-    const root = document.body;
+    const root = document.querySelector('#app');
     m.mount(root, arg.default);
     // iconfont
     import('./assets/iconfont/iconfont.js');
     import('./assets/iconfont/iconfont.css');
     import('@/router/index');
     models.getFunList();
-    if (utils.getItem('loginState') && utils.getItem('ex-session')) {
+    if (utils.getItem('ex-session')) {
         models.getUserInfo();
     }
 });

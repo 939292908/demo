@@ -27,8 +27,7 @@ const register = {
     prom: '',
     os: '', // 系统
     isvalidate: false, // 验证状态
-    waiting: false, // 等待状态
-    smsCd: 0, // 激活短信按钮倒计时
+    cd: 0, // 激活短信按钮倒计时
     exchInfo: {}, // 渠道信息
     int: null,
     checkbox: false, // 条款同意
@@ -158,59 +157,64 @@ const register = {
      * 发送短信验证码
      */
     sendSmsCode() {
-        this.waiting = true;
+        if (!this.int) {
+            this.setCd();
+        }
         validate.sendSmsCode().then(res => {
-            if (res.result.code === 0) {
-                this.waiting = false;
-                if (!this.int) {
-                    this.setSmsCd();
-                }
-            } else if (res.result.code === -1) {
+            if (res.result.code === -1) {
+                this.cleanCd();
                 this.geetestCallBackType = 'sms';
                 geetest.verify();
-            } else {
+            } else if (res.result.code !== 0) {
+                this.cleanCd();
                 window.$message({ content: errCode.getWebApiErrorCode(res.result.code), type: 'danger' });
             }
         }).catch(() => {
-            this.waiting = false;
+            this.cleanCd();
         });
     },
     /**
      * 发送邮箱验证码
      */
     sendEmailCode() {
-        this.waiting = true;
+        if (!this.int) {
+            this.setCd();
+        }
         validate.sendEmailCode().then(res => {
-            if (res.result.code === 0) {
-                this.waiting = false;
-                if (!this.int) {
-                    this.setSmsCd();
-                }
-            } else if (res.result.code === -1) {
+            if (res.result.code === -1) {
+                this.cleanCd();
                 self.geetestCallBackType = 'email';
                 geetest.verify();
-            } else {
+            } else if (res.result.code !== 0) {
+                this.cleanCd();
                 window.$message({ content: errCode.getWebApiErrorCode(res.result.code), type: 'danger' });
             }
         }).catch(() => {
-            this.waiting = false;
+            this.cleanCd();
         });
     },
     /**
      * 设置验证码发送冷却
      */
-    setSmsCd() {
-        this.smsCd = 60;
+    setCd() {
+        this.cd = 60;
         m.redraw();
         this.int = setInterval(() => {
-            this.smsCd--;
+            this.cd--;
             m.redraw();
-            if (this.smsCd === 0) {
+            if (this.cd === 0) {
                 clearInterval(this.int);
                 this.int = null;
                 m.redraw();
             }
         }, 1000);
+    },
+    cleanCd() {
+        this.cd = 0;
+        if (!this.int) {
+            clearInterval(this.int);
+            this.int = null;
+        }
     },
     /**
      * 获取区号列表
@@ -279,7 +283,7 @@ const register = {
     },
     onremove() {
         this.cleanUp();
-        this.smsCd = 0;
+        this.cd = 0;
         if (this.int) {
             clearInterval(this.int);
             this.int = null;

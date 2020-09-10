@@ -107,9 +107,7 @@ const extract = {
     },
     getlinkButtonListData: function () {
         this.currenLinkBut = '';
-        this.extractCoin.address = '';
-        this.extractCoin.coinNum = '';
-        this.extractCoin.linkName = '';
+        this.errCodeToNull();
         this.getCurrentFeesChange();
         if (this.currentSelect.wType !== 'USDT') {
             this.linkButtonList = [];
@@ -137,7 +135,7 @@ const extract = {
         this.getExtractableCoinToBTCNum();
     },
     getExtractableCoinToBTCNum: function () {
-        const price = wlt.getPrz(this.currenLinkBut || this.currentSelect.wType);
+        const price = wlt.getPrz(this.currentSelect.wType);
         const btcPrice = wlt.getPrz('BTC');
         const usableCoin = this.currentSelect.wdrawable - this.currentFees.withdrawFee > 0 ? this.currentSelect.wdrawable - this.currentFees.withdrawFee : 0;
         const BTCNum = Number(usableCoin * price / btcPrice).toFixed(8);
@@ -150,7 +148,7 @@ const extract = {
         return Number(BTCNum * btcPrice / price).toFixed(8);
     },
     getExtractableNum: function (BTCNum) {
-        if (this.currentSelect?.Setting?.idcardVerifyWithdraw && this.UserInfo.iStatus === 9) {
+        if (this.UserInfo.iStatus === 9) {
             this.currentExtractableNum = this.getBTCToCoin(BTCNum > 100 ? 100 : BTCNum);
         } else {
             this.currentExtractableNum = this.getBTCToCoin(2);
@@ -178,7 +176,6 @@ const extract = {
     },
     handleSubmit: function () {
         if (this.errorShow.unmber.show || this.errorShow.address.show) return false;
-        // if (!this.extractCoin.address) return window.$message({ content: l180n.$t('10397')/* '提币地址不能为空' */, type: 'danger' });
         if (!this.extractCoin.address) {
             this.errorShow.address.show = true;
             this.errorShow.address.text = l180n.$t('10401')/* '提币地址不能为空' */;
@@ -307,9 +304,20 @@ const extract = {
             cmd: broadcast.GET_USER_INFO_READY,
             isall: true
         });
+        // broadcast.offMsg({
+        //     key: this.name,
+        //     cmd: broadcast.MSG_WLT_READY,
+        //     isall: true
+        // });
         // 生命周期结束清空列表选中字段并关闭列表
         this.showCurrencyMenu = false;
         this.selectActiveId.wType = '';
+        this.errCodeToNull();
+    },
+    errCodeToNull: function () {
+        this.extractCoin.address = '';
+        this.extractCoin.coinNum = '';
+        this.extractCoin.linkName = '';
         this.errorShow = {
             address: {
                 show: false,
@@ -325,7 +333,6 @@ const extract = {
     checkIdcardVerify: function() {
         if (this.currentSelect.Setting.idcardVerifyWithdraw === true) {
             const account = globalModels.getAccount();
-            console.log('checkIdcardVerify', this.currentSelect, account);
             if (extract.popUpData.show) return;
             if (account.iStatus === 0 || account.iStatus === 2) {
                 this.handleTotalShow({ content: l180n.$t('10534') /* ' 为了您的账户安全，请按照提示实名认证！' */, isLinshiErWeiMa: true });

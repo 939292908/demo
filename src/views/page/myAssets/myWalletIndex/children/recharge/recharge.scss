@@ -33,15 +33,24 @@
                         border: none;
                         font-weight: 600;
                     }
+                    ::-moz-selection{/*Mozilla Firefox 4 to 8*/
+                        background-color: none;
+                    }
+                    ::-webkit-selection{/*Webkit browsers*/
+                        background-color: none;
+                    }
+                    ::-ms-selection{/*Internet Explorer 10+*/
+                        background-color: none;
+                    }
+                    input::selection{
+                        background-color: none;
+                    }
                 }
                 .currencyAddr-Operation{
                     margin: auto 0;
-                    .QrCodeImg{
-                        z-index: 999;
-                        position: absolute;
-                        width: 105px;
-                        height: 105px;
-                        overflow: hidden;
+                    .addressImg{
+                       width: 130px;
+                       height: 130px;
                     }
                 }
             }

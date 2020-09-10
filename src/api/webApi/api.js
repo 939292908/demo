@@ -165,11 +165,15 @@ export function loginWebV2 (params = {}, options = { withCredentials: true }) {
             "code":0 // code为0则是成功，其他失败
         },
         aType: "Normal", // 用户类型 "Normal":普通用户，"Business"：商户
-        email: "",
+        email: "", // 绑定的手机，如果为空则没有绑定
         exists: 2, //用户是否存在 1:用户已存在， 2: 用户不存在
-        ga: "",
-        phone: "",
-        setting2fa: 0,
+        ga: "", // 绑定的谷歌，如果为空则没有绑定
+        phone: "", // 绑定的邮箱，如果为空则没有绑定
+        setting2fa: {
+            email: 0, // 邮箱，2fa安全验证开启状态 1：开启 0：关闭
+            phone: 1, // 手机，2fa安全验证开启状态 1：开启 0：关闭
+            google: 1 // 谷歌，2fa安全验证开启状态 1：开启 0：关闭
+        }
         uid: "" // 用户唯一id
     }
  */
@@ -659,26 +663,7 @@ export function updateLanguage (params = {}, options = { withCredentials: false 
 }
 
 /**
- * 绑定手机请求
- * @param {Object} params {
-        opCode: 1 // 绑定类型，固定填1
-        opInfo: '1111' // 手机号
-        password: '9cbf8a4dcb8e30682b927f352d6559a0' // 用户密码
-        phoneNation: '0086' // 区号
-    }
- * @param {Object} options axios请求配置
- * @returns {Object} {
-        "result":{
-            "code":0 // code为0则是成功，其他失败
-        }
-    }
- */
-export function bindPhoneAuth (params = {}, options = { withCredentials: false }) {
-    return Http.post(API.SET_2FA_V2, params, options);
-}
-
-/**
- * 绑定邮箱请求
+ * 设置2FA
  * @param {Object} params {
         opCode: 5 // 绑定类型，固定填5
         opInfo: '354625@qq.com' // 邮箱
@@ -691,7 +676,7 @@ export function bindPhoneAuth (params = {}, options = { withCredentials: false }
         }
     }
  */
-export function bindEmailAuth (params = {}, options = { withCredentials: false }) {
+export function set2FA (params = {}, options = { withCredentials: false }) {
     return Http.post(API.SET_2FA_V2, params, options);
 }
 
@@ -713,4 +698,23 @@ export function logOut(params = {}, options = { withCredentials: false }) {
 * */
 export function getCurrenciesIntro (params = {}, options = { withCredentials: false }) {
     return Http.get(API.MARKETS_CURRENCY_INTRO_V1, { params }, options);
+}
+/**
+ * 获取历史登录信息
+ * params: {
+ *     infoType: 2 // 1-获取我的邀请和获取我的返佣；2-获取IP登录信息
+ * }
+ * */
+export function getExtListInfo (params = {}, options = { withCredentials: false }) {
+    return Http.post(API.USER_EXT_LIST, params, options);
+}
+
+/**
+ * 获取该IP登录信息
+ * params: {
+ *     ip: [IP地址]
+ * }
+ * */
+export function getExtItemInfo (params = {}, options = { withCredentials: false }) {
+    return Http.post(API.USER_GET_EXTINFO, params, options);
 }

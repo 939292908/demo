@@ -7,7 +7,7 @@ const I18n = require('@/languages/I18n').default;
 require('./assetRecord.scss');
 module.exports = {
     oninit() {
-        AssetRecords.init('03');
+        AssetRecords.init(AssetRecords.recordObj[m.route.param().aType] ? m.route.param().aType : '03');
         AssetRecords.setLanguageListen();
     },
     onremove() {
@@ -15,14 +15,10 @@ module.exports = {
     },
     view() {
         return m('div.theme--light', {}, [
-            m('div.px-3.has-bg-sub-level-1.is-align-items-center', {}, [
-                m('div.content-width', {}, [
-                    m(header, {
-                        highlightFlag: 1,
-                        navList: [{ to: '/myWalletIndex', title: I18n.$t('10052')/* '我的资产' */ }, { to: '/assetRecords', title: I18n.$t('10053')/* '资金记录' */ }]
-                    })
-                ])
-            ]),
+            m(header, {
+                highlightFlag: 1,
+                navList: [{ to: '/myWalletIndex', title: I18n.$t('10052') /* '我的资产' */ }, { to: '/assetRecords', title: I18n.$t('10053') /* '资金记录' */ }]
+            }),
             m('div.theme--light.page-myAssets-assetRecord', {}, [
                 m('div.has-bg-level-1.is-align-items-center.py-7', {}, [
                     m('div.has-bg-level-2.content-width', {}, [
@@ -88,17 +84,13 @@ module.exports = {
                                 class: 'mt-7',
                                 coinList: AssetRecords.coinList[AssetRecords.aType],
                                 coin: AssetRecords.coin,
-                                onSelectCoin(coin) {
-                                    AssetRecords.onSelectCoin(coin);
-                                },
-                                onSelectTime(time) {
-                                    AssetRecords.onSelectTime(time);
-                                },
+                                onSelectCoin(coin) { AssetRecords.onSelectCoin(coin); },
+                                onSelectTime(time) { AssetRecords.onSelectTime(time); },
                                 typeList: AssetRecords.recordTypeName()[AssetRecords.aType],
                                 type: AssetRecords.type,
-                                onSelectType(type) {
-                                    AssetRecords.onSelectType(type);
-                                }
+                                onSelectType(type) { AssetRecords.onSelectType(type); },
+                                onSearch() { AssetRecords.onSearch(); },
+                                onClean() { AssetRecords.onClean(); }
                             }),
                             m(assetTable, {
                                 class: 'mt-7',
