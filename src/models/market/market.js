@@ -14,7 +14,7 @@ module.exports = {
     //  待更新的行情数据
     needUpdTick: {},
     //  限制行情更新时间间隔
-    tickUpdInterval: 5000,
+    tickUpdInterval: 500,
     tickDefault: {
         //  显示的合约名称
         distSym: '--',
@@ -166,6 +166,7 @@ module.exports = {
             tick.TrdCls = AssetD.TrdCls;
             tick.FromC = AssetD.FromC;
             tick.ToC = AssetD.ToC;
+
             return tick;
         } else {
             return false;
@@ -190,7 +191,7 @@ module.exports = {
                 if ((ass.Flag & 1) === 1) {
                     return I18n.$t('10048', { value: ass.ToC });// ass.ToC + ' 永续'
                 } else {
-                    return I18n.$t('10048', { value1: ass.ToC, value2: ass.SettleCoin });// ass.ToC + '/' + ass.SettleCoin + ' 永续'
+                    return I18n.$t('10048', { value: ass.ToC + '/' + ass.SettleCoin });// ass.ToC + '/' + ass.SettleCoin + ' 永续'
                 }
             } else if (ass.TrdCls === 1) {
                 if (Sym && Sym.includes(`@`)) {
