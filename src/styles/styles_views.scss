@@ -123,6 +123,12 @@ hr {
 
 //动画相关 end
 
+//盘口变动过度
+//过渡效果
+.dynamic-effect{
+    transition: width 0.4s;
+}
+
 // 通用类名 start
 
 .opacity-0 {

@@ -261,7 +261,7 @@ let dish = {
                         item[2]
                     ]),
                 ]),
-                m('div', {class:"pub-dish-list-item-mode has-background-danger", style:"width:"+(item[2]/order20ForSell.volumeSumForAsk * 100)+"%"})
+                m('div', {class:"pub-dish-list-item-mode has-background-danger dynamic-effect", style:"width:"+(item[2]/order20ForSell.volumeSumForAsk * 100)+"%"})
             ])
         })
     },
@@ -294,7 +294,7 @@ let dish = {
                         item[2]
                     ]),
                 ]),
-                m('div', {class:"pub-dish-list-item-mode has-background-success", style:"width:"+(item[2]/order20ForBuy.volumeSumForBid * 100)+"%"})
+                m('div', {class:"pub-dish-list-item-mode has-background-success dynamic-effect", style:"width:"+(item[2]/order20ForBuy.volumeSumForBid * 100)+"%"})
             ])
         })
     },
