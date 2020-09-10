@@ -19,7 +19,7 @@ module.exports = {
         const type = vnode.attrs.showMenu;
         setTimeout(() => {
             vnode.attrs.setOption({ showMenu: !type });
-            // m.redraw();
+            // m.redraw(); // body事件中已刷新,此处可省略
         }, 0);
     },
     // 菜单 click
