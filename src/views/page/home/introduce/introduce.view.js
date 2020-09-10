@@ -52,15 +52,33 @@ module.exports = {
                     ]),
                     // 下载按钮
                     m('div', { class: `pl-8 h100` }, [
-                        // Android 按钮
-                        m('a', { class: `border-radius-medium  Android-button button is-info is-inverted is-outlined download-ios mr-4   ${utils.isMobile() ? 'title-small  mb-6 ml-7' : 'pc才有的类名xx'}`, target: "_blank", href: "https://vbit.me/m#/downloadApp" }, [
-                            m('i', { class: "iconfont icon-android-fill mr-2" }),
-                            m('span', { class: `title-small font-weight-regular` }, "Android")
+                        m('div', { class: `dropdown is-hoverable` }, [
+                            m('div', { class: "dropdown-trigger has-text-1" }, [
+                                // Android 按钮
+                                m('a', { class: `border-radius-medium  Android-button button is-info is-inverted is-outlined download-ios mr-4   ${utils.isMobile() ? 'title-small  mb-6 ml-7' : 'pc才有的类名xx'}`, target: "_blank", href: "https://vbit.me/m#/downloadApp" }, [
+                                    m('i', { class: "iconfont icon-android-fill mr-2" }),
+                                    m('span', { class: `title-small font-weight-regular` }, "Android")
+                                ])
+                            ]),
+                            m('div.dropdown-menu', {}, [
+                                m('div', { class: "dropdown-content pa-4" }, [
+                                    m('img', { class: ``, width: "156px", src: require("@/assets/img/home/download.png").default })
+                                ])
+                            ])
                         ]),
-                        // iOS 按钮
-                        m('a', { class: `border-radius-medium  IOS-button button is-info is-inverted is-outlined download-iOS ${utils.isMobile() ? 'title-small  mb-7 ml-7' : 'pc才有的类名xx'} `, target: "_blank", href: "https://vbit.me/m#/downloadApp" }, [
-                            m('i', { class: "iconfont icon-apple mr-2" }),
-                            m('span', { class: `title-small font-weight-regular` }, 'IOS')
+                        m('div', { class: `dropdown is-hoverable` }, [
+                            m('div', { class: "dropdown-trigger has-text-1" }, [
+                                // iOS 按钮
+                                m('a', { class: `border-radius-medium  IOS-button button is-info is-inverted is-outlined download-iOS ${utils.isMobile() ? 'title-small  mb-7 ml-7' : 'pc才有的类名xx'} `, target: "_blank", href: "https://vbit.me/m#/downloadApp" }, [
+                                    m('i', { class: "iconfont icon-apple mr-2" }),
+                                    m('span', { class: `title-small font-weight-regular` }, 'IOS')
+                                ])
+                            ]),
+                            m('div.dropdown-menu', {}, [
+                                m('div', { class: "dropdown-content pa-4" }, [
+                                    m('img', { class: ``, width: "156px", src: require("@/assets/img/home/download.png").default })
+                                ])
+                            ])
                         ])
                     ])
                 ])
