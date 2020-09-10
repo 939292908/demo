@@ -2,8 +2,12 @@ const m = require('mithril');
 const I18n = require('@/languages/I18n').default;
 const Header = require('@/views/components/indexHeader/indexHeader.view');
 const APIManager = require('./apiManager.model');
+const config = require('@/config.js');
+const VerifyView = require('@/views/components/dialogVerify/dialogVerify.view');
 require('./apiManager.scss');
 module.exports = {
+    oninit() { APIManager.oninit(); },
+    onremove() { APIManager.onremove(); },
     view() {
         const tableBody = [];
         for (const item of APIManager.table) {
@@ -45,7 +49,10 @@ module.exports = {
                 m('div.content-width.content-bg.has-bg-level-2.border-radius-medium.columns.pa-8.content-center', {}, [
                     m('div.column.body-5.has-text-level-1', {}, [
                         m('div.mb-2', {}, [I18n.$t('10092')/* '备注' */]),
-                        m('input.input.mb-5', {}),
+                        m('input.input.mb-5', {
+                            oninput(e) { APIManager.mark = e.target.value; },
+                            value: APIManager.mark
+                        }),
                         m('div.mb-2', {}, [I18n.$t('10318')/* '权限设置' */]),
                         m('i.iconfont.mr-7.iconfont-medium.checkbox-label', {
                             class: APIManager.onlyRead ? 'icon-u_check-square' : 'icon-Unselected',
@@ -61,11 +68,14 @@ module.exports = {
                         ]),
                         m('div.mb-2.mt-5', {}, [I18n.$t('10321')/* '绑定的IP地址/IP段（选填）' */]),
                         m('div.control.mb-7', {}, [
-                            m('textarea.textarea.has-fixed-size', {}, [])
+                            m('textarea.textarea.has-fixed-size', {
+                                oninput(e) { APIManager.ip = e.target.value; },
+                                value: APIManager.ip
+                            }, [])
                         ]),
-                        m("button.button.has-bg-primary.button-large.is-fullwidth.has-text-white", {}, [
-                            I18n.$t('10337') // '确定'
-                        ])
+                        m("button.button.has-bg-primary.button-large.is-fullwidth.has-text-white", {
+                            onclick() { APIManager.submit(); }
+                        }, [I18n.$t('10337')/* '确定' */])
                     ]),
                     m('div.column.is-2', {}, []),
                     m('div.column.has-text-level-4.body-4.tips-line-height', {}, [
@@ -103,7 +113,17 @@ module.exports = {
                         ])
                     ])
                 ])
-            ])
+            ]),
+            APIManager.showValid ? m(VerifyView, {
+                close: () => {
+                    APIManager.showValid = false;
+                },
+                isHandleVerify: true,
+                title: {
+                    logo: config.exchName,
+                    text: I18n.$t('10113')/* "安全验证" */
+                }
+            }) : null
         ]);
     }
 };
