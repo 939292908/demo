@@ -295,9 +295,17 @@ let spotTick = {
                             ]),
                             m('td', {class :"" + (pageTradeStatus == 1? "" : " is-hidden")}, [
                                 m('p', {class:""}, [
-                                    m('span', [
-                                        gDI18n.$t('10525'), //"
-                                    ])
+                                    // m('span', [
+                                    //     gDI18n.$t('10525'), //"
+                                    // ])
+                                    m(Tooltip, {
+                                        dashed: true,
+                                        label: gDI18n.$t('10525'),//"资金时间"
+                                        content: [
+                                            m('p', ['到下个资金费率交换的剩余时间。']
+                                            )
+                                        ]
+                                    }),
                                 ]),
                                 m('p', {class:"has-text-1-important"}, [
                                     spotTick.FundingTimeDifference || '--'
