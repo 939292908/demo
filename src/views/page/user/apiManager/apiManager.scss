@@ -1,0 +1,23 @@
+.page-user-api-manager {
+    .header-bg {
+        width: 100%;
+        height: 284px !important;
+    }
+    .content-bg {
+        position: relative;
+        top: -44px;
+        z-index: 1;
+    }
+    .tips-line-height {
+        line-height: 20px;
+    }
+    .checkbox-text {
+        vertical-align: middle;
+    }
+    .checkbox-label {
+        cursor: pointer;
+    }
+    .content-center {
+        margin: 0 auto;
+    }
+}

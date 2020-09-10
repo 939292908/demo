@@ -79,6 +79,10 @@ class Router {
         '/selfManage': {
             requireAuth: true,
             onmatch: () => import('@/views/page/selfManage/home/index')
+        },
+        '/apiManager': {
+            requireAuth: true,
+            onmatch: () => import('@/views/page/user/apiManager/apiManager.view')
         }
     };
 
