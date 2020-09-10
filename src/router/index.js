@@ -75,6 +75,10 @@ class Router {
         '/modifyLoginPassword': {
             requireAuth: true,
             onmatch: () => import('@/views/page/modifyLoginPassword/modifyLoginPassword.view')
+        },
+        '/selfManage': {
+            requireAuth: true,
+            onmatch: () => import('@/views/page/selfManage/home/index')
         }
     };
 

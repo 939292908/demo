@@ -1,10 +1,10 @@
 module.exports = {
-    exchId: 30,
+    exchId: 26,
     official: 'https://www.vbit.one', // 平台官网地址
     exchName: 'Vbit',
     themeDark: true,
     exchInfo: {
-        exchId: 30,
+        exchId: 26,
         exchName: "Vbit",
         exchCoin: "",
         exchLogo: "",

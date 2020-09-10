@@ -1,0 +1,22 @@
+.manageLayOut {
+
+  .marg-auto {
+    margin: auto;
+  }
+  .header {
+    .tabs {
+      margin-bottom: 0;
+    }
+    .pad-bottom {
+      padding-bottom: 56px;
+    }
+  }
+
+  .main {
+    background-color: #F7F7F8;
+
+    .mainBody {
+      position: relative;
+    }
+  }
+}
