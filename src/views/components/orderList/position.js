@@ -222,7 +222,9 @@ let obj = {
 
   //一键平仓
   ClosePosition:function(){
-    gEVBUS.emit(gEVBUS.EV_OPENCLOSEPOSITION_UPD, { Ev: gEVBUS.EV_OPENCLOSEPOSITION_UPD ,data:{posList : this.posList}})
+    if(this.posList.length > 0){
+        gEVBUS.emit(gEVBUS.EV_OPENCLOSEPOSITION_UPD, { Ev: gEVBUS.EV_OPENCLOSEPOSITION_UPD ,data:{posList : this.posList}})
+      }
   },
   
   getTheadList: function(){
