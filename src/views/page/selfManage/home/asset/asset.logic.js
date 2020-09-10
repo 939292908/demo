@@ -2,6 +2,7 @@
 // const UserInfo = require('@/models/globalModels');
 const m = require('mithril');
 const wlt = require('@/models/wlt/wlt');
+const l180n = require('@/languages/I18n').default;
 const broadcast = require('@/broadcast/broadcast');
 
 const manageAssetData = {
@@ -14,23 +15,35 @@ const manageAssetData = {
         { label: '法币账户', activeId: '04' }
     ],
     LBList: [
-        { label: '充币', toUrl: 'all' },
-        { label: '提币', toUrl: '03' },
-        { label: '内部转账', toUrl: '01' },
-        { label: '资金划转', toUrl: '02' }
+        { label: '充币', toUrl: '' },
+        { label: '提币', toUrl: '' },
+        { label: '内部转账', toUrl: '' },
+        { label: '资金划转', toUrl: '' }
     ],
     AssetOverview: {
-        coinToBTC: 0,
-        coinToCNY: 0
+        coinToBTC: 0, // 资产总额 BTC (账户权益 BTC)
+        coinToCNY: 0, // 资产估值 CRN （账户权益 CRN）
+        UPNLToBTC: 0, // 未实现盈亏 BTC
+        UPNLToCRN: 0, // 未实现盈亏 CRN
+        NLToBTC: 0, // 可用保证金 BTC
+        NLToCRN: 0 // 可用保证金 CRN
     },
     handleChangeWallet: function (item) {
         this.walletAcId = item.activeId;
-        this.handleChangeAssetOverview();
+        this.getAssetOverview();
     },
-    handleChangeAssetOverview: function () {
+    handleClickLBItem: function (item) {
+        if (!item.toUrl) return window.$message({ title: l180n.$t('10410') /* '提示' */, content: '功能暂未开放，敬请期待', type: 'success' });
+        window.router.push(item.toUrl);
+    },
+    getAssetOverview: function () {
         var walletAcText = '';
+        var data = {};
         switch (this.walletAcId) {
-        case "01": walletAcText = 'contractTotalValueFor'; break;
+        case "01":
+            walletAcText = 'contractTotalValueFor';
+            data = this.getAssetOverviewReplenish();
+            break;
         case "02": walletAcText = 'coinTotalValueFor'; break;
         case "03": walletAcText = 'walletTotalValueFor'; break;
         case "04": walletAcText = 'legalTotalValueFor'; break;
@@ -38,13 +51,28 @@ const manageAssetData = {
         }
         this.AssetOverview = {
             coinToBTC: wlt[`${walletAcText}BTC`] || 0,
-            coinToCNY: wlt[`${walletAcText}CNY`] || 0
+            coinToCNY: wlt[`${walletAcText}CNY`] || 0,
+            UPNLToBTC: data.UPNLToBTC?.toFixed(8),
+            UPNLToCRN: data.UPNLToCRN?.toFixed(2),
+            NLToBTC: data.NLToBTC?.toFixed(8),
+            NLToCRN: data.NLToCRN?.toFixed(2)
         };
+        console.log(this.AssetOverview);
         m.redraw();
     },
+    getAssetOverviewReplenish: function () {
+        let UPNLToBTC = 0; let UPNLToCRN = 0;
+        let NLToBTC = 0; let NLToCRN = 0;
+        for (let i = 0; i < wlt.wallet['01'].length; i++) {
+            UPNLToBTC += Number(wlt.wallet['01'][i].UPNLToBTC);
+            UPNLToCRN += Number(wlt.wallet['01'][i].UPNLToCRN);
+            NLToBTC += Number(wlt.wallet['01'][i].NLToBTC);
+            NLToCRN += Number(wlt.wallet['01'][i].NLToCRN);
+        }
+        return { UPNLToBTC, UPNLToCRN, NLToBTC, NLToCRN };
+    },
     getWltData: function () {
-        console.log(wlt, 1111);
-        this.handleChangeAssetOverview();
+        this.getAssetOverview();
     },
     oninit: function () {
         const self = this;
@@ -54,7 +82,6 @@ const manageAssetData = {
             cmd: broadcast.MSG_WLT_READY,
             cb: self.getWltData.bind(this)
         });
-        console.log(wlt);
         if (wlt.wallet['01'].toString()) {
             self.getWltData();
         }

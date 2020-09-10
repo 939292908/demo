@@ -1,6 +1,10 @@
 const m = require('mithril');
+const LogSheet = require('./logSheet.logic');
 require('./logSheet.scss');
 module.exports = {
+    oninit: function () {
+        LogSheet.oninit();
+    },
     view: function () { // self-manage-content-block 资产内的样式
         return m('.self-manage-content-block logSheet-block', [
             // block header

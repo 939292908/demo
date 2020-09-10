@@ -6,7 +6,7 @@ const Layout = require('../layout');
 const User = require('../user/user.view');
 const Skip = require('../skip/skip');
 const Asset = require('../asset/asset.view');
-const Invitation = require('../invitation/invitation');
+const Invitation = require('../invitation/invitation.view');
 const LogSsheet = require('../logSheet/logSheet.view');
 require('./index.scss');
 

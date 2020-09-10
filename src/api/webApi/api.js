@@ -718,3 +718,22 @@ export function logOut(params = {}, options = { withCredentials: false }) {
 export function getCurrenciesIntro (params = {}, options = { withCredentials: false }) {
     return Http.get(API.MARKETS_CURRENCY_INTRO_V1, { params }, options);
 }
+/**
+ * 获取历史登录信息
+ * params: {
+ *     infoType: 2 // 1-获取我的邀请和获取我的返佣；2-获取IP登录信息
+ * }
+ * */
+export function getExtListInfo (params = {}, options = { withCredentials: false }) {
+    return Http.post(API.USER_EXT_LIST, params, options);
+}
+
+/**
+ * 获取该IP登录信息
+ * params: {
+ *     ip: [IP地址]
+ * }
+ * */
+export function getExtItemInfo (params = {}, options = { withCredentials: false }) {
+    return Http.post(API.USER_GET_EXTINFO, params, options);
+}

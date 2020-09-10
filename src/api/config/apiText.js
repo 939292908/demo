@@ -79,6 +79,7 @@ module.exports = {
     // 币种全称
     MARKETS_CURRENCY_INTRO_V1: '/v1/markets/currencies/intro',
     // 最近登录 IP
-    USER_GET_EXTINFO: 'wd/users/GetExtInfo'
-
+    USER_GET_EXTINFO: '/users/ipInfo',
+    // 登陆的记录
+    USER_EXT_LIST: '/users/GetExtInfo'
 };

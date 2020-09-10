@@ -344,6 +344,7 @@ module.exports = {
         let NL = 0;
         let valueForUSDT = 0;
         let valueForBTC = 0;
+        const coinPrz = this.getPrz(this.wltItemEx.wType);
         // console.log('ht', AssetD);
         // 取BTC的价格 start
         // const btcSymName = utils.getSpotName(AssetD, 'BTC', 'USDT');
@@ -364,6 +365,11 @@ module.exports = {
             // 可用保证金
             NL = Number(this.wltItemEx.NL || 0) + Number(this.wltItemEx.Gift || 0);
             this.wltItemEx.NL = utils.toFixedForFloor(NL, 8);
+            // 可用保证金人民币估值
+            // const NLToCRN = this.wltItemEx.NL * coinPrz;
+            this.wltItemEx.NLToCRN = utils.toFixedForFloor(Number(this.wltItemEx.NL * coinPrz) * this.prz, 2);
+            // 可用保证金BTC估值
+            this.wltItemEx.NLToBTC = utils.toFixedForFloor(Number(this.wltItemEx.NL * coinPrz / btcPrz) * this.prz || 0, 8);
             // 委托保证金
             this.wltItemEx.MI = utils.toFixedForFloor(this.wltItemEx.MI || 0, 8);
             // 仓位保证金
@@ -372,12 +378,16 @@ module.exports = {
             this.wltItemEx.PNL = utils.toFixedForFloor(this.wltItemEx.PNL || 0, 8);
             // 未实现盈亏
             this.wltItemEx.UPNL = utils.toFixedForFloor(this.wltItemEx.UPNL || 0, 8);
+            // 为实现盈亏人民币估值
+            this.wltItemEx.UPNLToCRN = utils.toFixedForFloor(Number(this.wltItemEx.UPNL * coinPrz) * this.prz, 2);
+            // 为实现盈亏BTC估值
+            this.wltItemEx.UPNLToBTC = utils.toFixedForFloor(Number(this.wltItemEx.UPNL * coinPrz / btcPrz) || 0, 8);
             // 账户可提金额，用于资产划转
             this.wltItemEx.wdrawable = utils.toFixedForFloor(this.wltItemEx.wdrawable || 0, 8);
             break;
         case '02':
             // 币币账户
-            // console.log('ht', type, this.wltItemEx);
+            // console.log('ht', type, this.wltItemEx); c
             TOTAL = Number(this.wltItemEx.wdrawable || 0) + Number(this.wltItemEx.Frz || 0);
             // 账户总额
             this.wltItemEx.TOTAL = utils.toFixedForFloor(TOTAL, 8);
@@ -440,7 +450,6 @@ module.exports = {
         // const coinInitValue = Number(this.wltItemEx.initValue || 1);
         // const coinSym = utils.getSpotName(AssetD, this.wltItemEx.wType, 'USDT');
         // const coinPrz = (AssetD[coinSym] && AssetD[coinSym].PrzLatest) || coinInitValue;
-        const coinPrz = this.getPrz(this.wltItemEx.wType);
         // console.log('ht', 'value', coinPrz);
         // 当前币种价格 end
         // USDT估值

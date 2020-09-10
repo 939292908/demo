@@ -70,13 +70,13 @@ module.exports = {
         m('div.dis-flex align-center', [
             m('div.data-item mr-9', [
                 m('div.data-text mb-1', '保证金余额'),
-                m('div.data-price mb-1', '9.000000 BTC'),
-                m('div.data-text', '≈ ￥0.00')
+                m('div.data-price mb-1', `${AssetData.AssetOverview.NLToBTC}BTC`),
+                m('div.data-text', `≈ ￥${AssetData.AssetOverview.NLToCRN}`)
             ]),
             m('div.data-item', [
                 m('div.data-text mb-1', '未实现盈亏'),
-                m('div.data-price mb-1', '9.000000 BTC'),
-                m('div.data-text', '≈ ￥0.00')
+                m('div.data-price mb-1', `${AssetData.AssetOverview.UPNLToBTC}BTC`),
+                m('div.data-text', `≈ ￥${AssetData.AssetOverview.UPNLToCRN}`)
             ])
         ]));
     },
@@ -102,7 +102,7 @@ module.exports = {
                     m('div.asset-data', [
                         AssetData.walletAcId === '01' ? this.getContractVnode() : this.getallMoneyVnode(),
                         AssetData.walletAcId === 'all' || AssetData.walletAcId === '04' ? m('div.but-list dis-flex align-center mt-5', [
-                            AssetData.LBList.map(item => m('div.but-item mr-3', item.label))
+                            AssetData.LBList.map(item => m('div.but-item mr-3', { onclick: () => { AssetData.handleClickLBItem(item); } }, item.label))
                         ]) : null
                     ]),
                     m('div.data-echarts', m('div#AssetsPie', { style: 'width: 400px;height: 220px' }))

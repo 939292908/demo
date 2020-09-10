@@ -1,27 +1,38 @@
-const m = require('mithril');
-const img = require('./Image.png').default;
-require('./user.scss');
+const broadcast = require('@/broadcast/broadcast');
+const globalModels = require('@/models/globalModels');
+const { webApi } = require('@/api');
 
-module.exports = {
-    view: function () {
-        return m('div.self-manage-user dis-flex justify-between align-center', [
-            m('div.userInfo dis-flex align-center', [
-                m('.headPortrait', m('.imgBox', m('img', { src: img }))),
-                m('.userMessage', [
-                    m('.name', [
-                        m('span', '188388908765'),
-                        m('span', 'VIP8')
-                    ]),
-                    m('.user-uid', [
-                        m('span', '123456789'),
-                        m('i.iconfont icon-xiala')
-                    ])
-                ])
-            ]),
-            m('div.logInLog', [
-                m('div', '上次登录时间 2020-07-13 17：14：42'),
-                m('div', 'IP: 202.79.165.190')
-            ])
-        ]);
+const UserIndo = {
+    name: 'selfManageUser',
+    info: {}, // 身份信息
+    ExtList: [], // 最近登录ip
+    getExtList: function () {
+        const self = this;
+        webApi.getExtListInfo({ infoType: 2 }).then(res => {
+            if (res.result.code === 0) {
+                self.ExtList = res.infos;
+            }
+        });
+    },
+    oninit: function () {
+        const self = this;
+        self.info = globalModels.getAccount();
+        self.getExtList();
+        if (Object.keys(self.info).length < 1) {
+            broadcast.onMsg({
+                key: this.name,
+                cmd: broadcast.GET_USER_INFO_READY,
+                cb: (data) => { self.info = data; }
+            });
+        }
+    },
+    onremove: function () {
+        broadcast.offMsg({
+            key: this.name,
+            cmd: broadcast.GET_USER_INFO_READY,
+            isall: true
+        });
     }
 };
+
+module.exports = UserIndo;
