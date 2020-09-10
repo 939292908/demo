@@ -15,7 +15,7 @@ import('./styles/bluma.scss');
 import('swiper/swiper-bundle.css');
 // 极验
 import('./libs/gt');
-import('./libs/echarts');
+// import('./libs/echarts');
 
 // 重写console.log
 // require('@/util/log');
@@ -32,7 +32,7 @@ import('./views/index').then(arg => {
     import('./assets/iconfont/iconfont.css');
     import('@/router/index');
     models.getFunList();
-    if (utils.getItem('loginState') && utils.getItem('ex-session')) {
+    if (utils.getItem('ex-session')) {
         models.getUserInfo();
     }
 });

@@ -9,7 +9,7 @@ module.exports = {
         return m('div.views-pages-home-advantage theme--light', {}, [
             m('div', { class: `has-bg-level-2` }, [
                 m('div', { class: `container ${utils.isMobile() ? '' : 'advantage-div'}` }, [
-                    m('div', { class: `mt-7 w container py-8 border-1 columns ` }, [
+                    m('div', { class: `mt-8 w container py-9 border-1 columns has-text-centered` }, [
                         // m('div', { class: `advantage-div` }, [
                         // 平台优势
                         // 1

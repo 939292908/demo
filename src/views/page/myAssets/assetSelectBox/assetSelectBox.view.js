@@ -111,7 +111,17 @@ module.exports = {
                         }
                     })
                 ]),
-                m('div.column', {}, [])
+                m('div.column', {}, [
+                    m("button.button.is-primary.font-size-2.has-text-white.modal-default-btn.button-large.mr-4.btn-width", {
+                        onclick () { vnode.attrs.onSearch(); }
+                    }, ['查询'/* "查询" */]),
+                    m("button.button.is-primary.is-outlined.font-size-2.button-large.has-text-primary.btn-width", {
+                        onclick () {
+                            AssetSelectBox.date = '';
+                            vnode.attrs.onClean();
+                        }
+                    }, [I18n.$t('10345')/* '清除' */])
+                ])
             ])
         ]);
     },

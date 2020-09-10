@@ -57,6 +57,7 @@ module.exports = {
         }
         this.initAccountBanlance();
         this.setTableNewAry();
+        m.redraw();
     },
     initAccountBanlance: function() {
         this.accountBanlance = this.currency === 'BTC' ? wlt[this.coinType + 'TotalValueForBTC'] : wlt[this.coinType + 'TotalValueForUSDT'];
@@ -138,7 +139,11 @@ module.exports = {
                 return window.$message({ title: I18n.$t('10410') /* '提示' */, content: I18n.$t('10513') /* '暂未开放，敬请期待' */, type: 'primary' });
             }
         } else if (item.operation === I18n.$t('10079') /* '去交易' */) {
-            return window.$message({ title: I18n.$t('10410') /* '提示' */, content: I18n.$t('10513') /* '暂未开放，敬请期待' */, type: 'primary' });
+            if (this.pageFlag === '01') {
+                window.open('https://beta.xmex.co/w/trd/#!/future');
+            } else {
+                return window.$message({ title: I18n.$t('10410') /* '提示' */, content: I18n.$t('10513') /* '暂未开放，敬请期待' */, type: 'primary' });
+            }
         }
     },
     setHideZeroFlag: function () {

@@ -663,26 +663,7 @@ export function updateLanguage (params = {}, options = { withCredentials: false 
 }
 
 /**
- * 绑定手机请求
- * @param {Object} params {
-        opCode: 1 // 绑定类型，固定填1
-        opInfo: '1111' // 手机号
-        password: '9cbf8a4dcb8e30682b927f352d6559a0' // 用户密码
-        phoneNation: '0086' // 区号
-    }
- * @param {Object} options axios请求配置
- * @returns {Object} {
-        "result":{
-            "code":0 // code为0则是成功，其他失败
-        }
-    }
- */
-export function bindPhoneAuth (params = {}, options = { withCredentials: false }) {
-    return Http.post(API.SET_2FA_V2, params, options);
-}
-
-/**
- * 绑定邮箱请求
+ * 设置2FA
  * @param {Object} params {
         opCode: 5 // 绑定类型，固定填5
         opInfo: '354625@qq.com' // 邮箱
@@ -695,7 +676,7 @@ export function bindPhoneAuth (params = {}, options = { withCredentials: false }
         }
     }
  */
-export function bindEmailAuth (params = {}, options = { withCredentials: false }) {
+export function set2FA (params = {}, options = { withCredentials: false }) {
     return Http.post(API.SET_2FA_V2, params, options);
 }
 

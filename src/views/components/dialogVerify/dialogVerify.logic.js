@@ -2,6 +2,7 @@ const m = require('mithril');
 const geetest = require('@/models/validate/geetest').default;
 const validate = require('@/models/validate/validate').default;
 const broadcast = require('@/broadcast/broadcast');
+const errCode = require('@/util/errCode').default;
 const I18n = require('@/languages/I18n').default;
 
 module.exports = {
@@ -13,46 +14,57 @@ module.exports = {
     selectName: '',
     anotherName: '',
     code: '',
+    /**
+     * 发送验证码
+     */
     sendSmsCode() {
+        if (!this.smsInt) {
+            this.setSmsCd();
+        }
         validate.sendSmsCode().then(res => {
-            if (res.result.code === 0) {
-                this.waiting = false;
-                if (!this.smsInt) {
-                    this.setSmsCd();
-                }
-            } else if (res.result.code === -1) {
+            if (res.result.code === -1) {
+                this.cleanSmsCd();
                 this.geetestCallBackType = 'sms';
                 geetest.verify();
-            } else {
+            } else if (res.result.code !== 0) {
+                this.cleanSmsCd();
                 window.$message({
-                    content: window.errCode.getWebApiErrorCode(res.result.code),
+                    content: errCode.getWebApiErrorCode(res.result.code),
                     type: 'danger'
                 });
             }
-        }).catch(() => {
-            this.waiting = false;
+        }).catch(err => {
+            this.cleanSmsCd();
+            console.log(err);
         });
     },
+    /**
+     * 发送邮箱验证码
+     */
     sendEmailCode() {
+        if (!this.emailInt) {
+            this.setEmailCd();
+        }
         validate.sendEmailCode().then(res => {
-            if (res.result.code === 0) {
-                this.waiting = false;
-                if (!this.emailInt) {
-                    this.setEmailCd();
-                }
-            } else if (res.result.code === -1) {
+            if (res.result.code === -1) {
+                this.cleanEmailCd();
                 self.geetestCallBackType = 'email';
                 geetest.verify();
-            } else {
+            } else if (res.result.code !== 0) {
+                this.cleanEmailCd();
                 window.$message({
-                    content: window.errCode.getWebApiErrorCode(res.result.code),
+                    content: errCode.getWebApiErrorCode(res.result.code),
                     type: 'danger'
                 });
             }
-        }).catch(() => {
-            this.waiting = false;
+        }).catch(err => {
+            this.cleanEmailCd();
+            console.log(err);
         });
     },
+    /**
+     * 设置发送短信冷却
+     */
     setSmsCd() {
         this.smsCd = 60;
         m.redraw();
@@ -66,6 +78,16 @@ module.exports = {
             }
         }, 1000);
     },
+    cleanSmsCd() {
+        this.smsCd = 0;
+        if (this.smsInt) {
+            clearInterval(this.smsInt);
+            this.smsInt = null;
+        }
+    },
+    /**
+     * 设置发送邮箱冷却
+     */
     setEmailCd() {
         this.emailCd = 60;
         m.redraw();
@@ -78,6 +100,13 @@ module.exports = {
                 m.redraw();
             }
         }, 1000);
+    },
+    cleanEmailCd() {
+        this.emailCd = 0;
+        if (this.emailInt) {
+            clearInterval(this.emailInt);
+            this.emailInt = null;
+        }
     },
 
     initGeetest() {

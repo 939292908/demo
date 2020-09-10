@@ -21,7 +21,7 @@
 body,
 #app {
     background-color: var(--c-background-darken);
-    color: var(--c-font-darken);  
+    color: var(--c-font-darken);
 }
 
 /* 黑夜 */
@@ -805,4 +805,13 @@ $primary-lighten: var(--c-primary-lighten);
     .opacity-#{$i}{
         opacity: var(--c-opacity-level#{$i}) !important;
     }
+}
+
+.button.is-primary.is-outlined:hover {
+    color: var(--c-fontwhite-base) !important;
+}
+
+.introduce-box-masking {
+    background-color: transparent;
+    background-image: linear-gradient(transparent, var(--c-background-darken));
 }

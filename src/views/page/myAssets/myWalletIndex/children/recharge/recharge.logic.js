@@ -4,19 +4,15 @@ const wlt = require('@/models/wlt/wlt');
 const broadcast = require('@/broadcast/broadcast');
 const Qrcode = require('qrcode');
 const I18n = require('@/languages/I18n').default;
+const gM = require('@/models/globalModels');
 
 const model = {
     pageData: [], // 所需数据
     USDTLabel: [], // 链名称
     selectList: [], // 下拉列表
-    form: {
-        selectCheck: '' // 当前币种选中值
-    },
-    selectCheck: '', // 当前币种选中值
     tips: '', // 提示
     uId: '', // 用户uId
     rechargeAddr: '', // 充币地址
-    qrcodeDisplayFlag: false,
     btnCheckFlag: null, // 默认选中第一个
     labelTips: '', // 标签提示
     nameTips: null,
@@ -25,78 +21,86 @@ const model = {
     showCurrencyMenu: false, // show币种菜单
     coinParam: null, // 传过来的币种
     chains: null, // 链名称
+    chainAry: [], // 链名称数组
+    flagReq: false, // 优化请求
     setPageData() {
-        const that = this;
-        this.pageData = []; // 初始化
-        this.selectList = []; // 初始化
-        this.setUSDTLabelAndSelectList();
-        for (const i in wlt.wallet['03']) {
-            if (wlt.wallet['03'][i].Setting.canRecharge) { // 能否充值
-                const item = {};
-                const walletI = wlt.wallet['03'][i];
-                that.uId = that.uId || walletI.uid;
-                item.canRecharge = walletI.Setting.canRecharge; // 能否充值
-                item.promptRecharge = walletI.promptRecharge; // 充值提示
-                item.openChains = walletI.Setting.openChains;
-                item.wType = walletI.wType; // 币种
-                item.memo = walletI.Setting.memo; // 是否显示标签
-                Http.GetRechargeAddr({
-                    wType: walletI.wType
-                }).then(function(arg) {
-                    // console.log('nzm', 'GetRechargeAddr success', arg);
-                    item.rechargeAddr = arg.rechargeAddr; // 充币地址
-                    item.networkNum = arg.trade.networkNum; // 网络数
-                    that.pageData.push(item);
-                    that.setTipsAndAddrAndCode();
-                    m.redraw();
-                }).catch(function(err) {
-                    console.log('nzm', 'GetRechargeAddr error', err);
-                });
+        if (JSON.stringify(wlt.wallet['03']) !== '[]') {
+            if (model.flagReq) {
+                return;
             }
+            model.pageData = []; // 初始化
+            model.setUSDTLabelAndSelectList();
+            model.initSelectList();
+            for (const i in wlt.wallet['03']) {
+                if (wlt.wallet['03'][i].Setting.canRecharge) { // 能否充值
+                    const item = {};
+                    const walletI = wlt.wallet['03'][i];
+                    item.canRecharge = walletI.Setting.canRecharge; // 能否充值
+                    item.promptRecharge = walletI.promptRecharge; // 充值提示
+                    item.openChains = walletI.Setting.openChains; // 是否显示链名称
+                    item.wType = walletI.wType; // 币种
+                    item.memo = walletI.Setting.memo; // 是否显示标签
+                    Http.GetRechargeAddr({
+                        wType: walletI.wType
+                    }).then(function(arg) {
+                        // console.log('nzm', 'GetRechargeAddr success', arg);
+                        item.rechargeAddr = arg.rechargeAddr; // 充币地址
+                        item.networkNum = arg.trade.networkNum; // 网络数
+                        model.pageData.push(item);
+                        model.setTipsAndAddrAndCode();
+                        m.redraw();
+                    }).catch(function(err) {
+                        console.log('nzm', 'GetRechargeAddr error', err);
+                    });
+                }
+            }
+            model.flagReq = true;
         }
     },
-    chainAry: [],
     setUSDTLabelAndSelectList() {
-        const that = this;
         if (wlt.coinInfo.USDT !== undefined) {
-            this.chains = wlt.coinInfo.USDT.chains;
-            for (const i of this.chains) {
+            model.chains = wlt.coinInfo.USDT.chains;
+            for (const i of model.chains) {
                 Http.GetRechargeAddr({
                     wType: i.attr
                 }).then(function(arg) {
                     // console.log('nzm', 'GetRechargeAddr success', arg);
-                    that.chainAry.push(arg);
+                    model.chainAry.push(arg);
                     m.redraw();
                 }).catch(function(err) {
                     console.log('nzm', 'GetRechargeAddr error', err);
                 });
             }
-            this.USDTLabel = Array.from(wlt.coinInfo.USDT.chains);
+            model.USDTLabel = Array.from(wlt.coinInfo.USDT.chains);
             const ary = [];
-            for (let i = 0; i < this.USDTLabel.length; i++) {
-                ary.push(this.USDTLabel[i].name);
+            for (let i = 0; i < model.USDTLabel.length; i++) {
+                ary.push(model.USDTLabel[i].name);
             }
-            this.USDTLabel = ary;
+            model.USDTLabel = ary;
             // 需按顺序显示
             for (const i of wlt.wallet['03']) {
                 if (i.wType === 'USDT') {
                     for (const j in i.Setting) {
                         if (j.search('canRechargeUSDT-') > -1) {
                             if (!i.Setting[j]) {
-                                this.USDTLabel = this.USDTLabel.filter((x) => x !== j.split('canRechargeUSDT-')[1]);
+                                model.USDTLabel = model.USDTLabel.filter((x) => x !== j.split('canRechargeUSDT-')[1]);
                             }
                         }
                     }
                 }
             }
-            this.btnCheckFlag = this.USDTLabel[0];
+            model.btnCheckFlag = model.USDTLabel[0];
         }
+    },
+    // 初始化币种
+    initSelectList() {
+        model.selectList = []; // 初始化
         for (const i of wlt.wallet['03']) {
             if (i.Setting.canRecharge) {
-                this.selectList.push({ label: i.wType + ' | ' + wlt.coinInfo[i.wType].name, id: i.wType });
-                if (this.coinParam === null) {
-                    if (this.option.currentId === '') {
-                        this.option.currentId = this.selectList[0].id;
+                model.selectList.push({ label: i.wType + ' | ' + wlt.coinInfo[i.wType].name, id: i.wType });
+                if (model.coinParam === null) {
+                    if (model.option.currentId === 1) {
+                        model.option.currentId = model.selectList[0].id;
                     }
                 }
             }
@@ -104,70 +108,60 @@ const model = {
     },
     // 切换币种时的操作
     setTipsAndAddrAndCode() {
-        for (const i in this.pageData) {
-            if (this.pageData[i].wType === this.option.currentId) {
+        // console.log('setTipsAndAddrAndCode', JSON.stringify(model.pageData));
+        for (const i in model.pageData) {
+            if (model.pageData[i].wType === model.option.currentId) {
                 let networkNum = null;
-                if (this.option.currentId === 'USDT') {
-                    for (const i of this.chainAry) {
-                        if ((this.btnCheckFlag !== 'OMNI' ? 'USDT' + this.btnCheckFlag : 'USDT') === i.wType) {
+                if (model.option.currentId === 'USDT') {
+                    // 链名称与USDT
+                    for (const i of model.chainAry) {
+                        if ((model.btnCheckFlag !== 'OMNI' ? 'USDT' + model.btnCheckFlag : 'USDT') === i.wType) {
                             networkNum = i.trade.networkNum;
                         }
                     }
                 } else {
-                    networkNum = this.pageData[i].networkNum;
+                    // 未点击链名称
+                    networkNum = model.pageData[i].networkNum;
                 }
 
-                this.tips = this.pageData[i].promptRecharge !== 0 ? this.pageData[i].promptRecharge : '' +
+                // 小部分温馨提示
+                const fractionTip =
+                    /* 禁止向{value}地址充币除{value}之外的资产,任何充入{value}地址的非{value}资产将不可找回 */
+                    I18n.$t('10083', { value: model.option.currentId }) +
 
-                // this.tips = '您只能向此地址充值' + this.option.currentId + '，其他资产充入' + this.option.currentId + '地址将无法找回' +
+                    /* 使用{value1}地址充币需要{value2}个网络确认才能到账 */
+                    '*' + I18n.$t('10084', { value1: model.option.currentId, value2: networkNum }) +
 
-                /* 禁止向{value}地址充币除{value}之外的资产,任何充入{value}地址的非{value}资产将不可找回 */
-                I18n.$t('10085', { value: this.option.currentId }) +
+                    /* 关于标签{value}充币时同时需要一个充币地址和{value}标签。标签是一种保证您的充币地址唯一性的数字串，与充币地址成对出现并一一对应。请您务必遵守正确的{value}充币步骤，在提币时输入完整的信息，否则将面临丢失币的风险！ */
+                    (model.option.currentId === 'EOS' || model.option.currentId === 'XRP' ? '*' + I18n.$t('10545', { value: model.option.currentId }) : '') +
 
-                /* 使用{value1}地址充币需要{value2}个网络确认才能到账 */
-                '*' + I18n.$t('10084', { value1: this.option.currentId, value2: networkNum }) +
+                    /* '默认充入我的钱包，您可以通过“资金划转”将资金转至交易账户或者其他账户' */
+                    '*' + I18n.$t('10085');
 
-                /* 关于标签{value}充币时同时需要一个充币地址和{value}标签。标签是一种保证您的充币地址唯一性的数字串，与充币地址成对出现并一一对应。请您务必遵守正确的{value}充币步骤，在提币时输入完整的信息，否则将面临丢失币的风险！ */
-                (this.option.currentId === 'EOS' || this.option.currentId === 'XRP' ? '*' + I18n.$t('10545', { value: this.option.currentId }) : '') +
+                model.tips = model.pageData[i].promptRecharge !== 0 ? model.pageData[i].promptRecharge + '*' + fractionTip : '' + fractionTip;
 
-                /* '默认充入我的钱包，您可以通过“资金划转”将资金转至交易账户或者其他账户' */
-                '*' + I18n.$t('10085');
+                model.memo = model.pageData[i].memo; // 当前选中币种的标签是否显示
+                model.openChains = model.pageData[i].openChains; // 当前选中币种的链名称是否显示
 
-                this.memo = this.pageData[i].memo; // 当前选中币种的标签是否显示
-                this.openChains = this.pageData[i].openChains; // 当前选中币种的链名称是否显示
+                model.option.currentId !== 'USDT' ? model.rechargeAddr = model.pageData[i].rechargeAddr /* 当前选中币种的充币地址 */ : model.changeBtnflag(model.btnCheckFlag); /* USDT选中链名称的充币地址 */
 
-                if (this.option.currentId !== 'USDT') {
-                    this.rechargeAddr = this.pageData[i].rechargeAddr; // 当前选中币种的充币地址
-                } else {
-                    this.changeBtnflag(this.btnCheckFlag);
-                }
-                this.setQrCodeImg(); // 当前选中币种的二维码
-                this.setLabelTips(); // 当前选中币种的标签提示语句
+                model.setQrCodeImg(); // 当前选中币种的二维码
+                model.setLabelTips(); // 当前选中币种的标签提示语句
             }
         }
     },
     setLabelTips() {
-        /* '充值' + this.option.currentId + '同时需要一个充币地址和' + this.option.currentId + '标签；警告：如果未遵守正确的' + this.option.currentId + '充币步骤，币会有丢失风险！'; */
-        this.labelTips = I18n.$t('10518', { VALUE: this.option.currentId });
+        /* '充值{VALUE}同时需要一个充币地址和{VALUE}标签；警告：如果未遵守正确的{VALUE}充币步骤，币会有丢失风险！'; */
+        model.labelTips = I18n.$t('10518', { VALUE: model.option.currentId });
     },
+    rechargeAddrSrc: '', // 充币地址二维码
     setQrCodeImg() {
-        if (document.getElementsByClassName('QrCodeImg')[0].innerHTML !== '') {
-            document.getElementsByClassName('QrCodeImg')[0].innerHTML = '';
-        }
-        Qrcode.toCanvas(this.rechargeAddr || '暂无地址', {
-            errorCorrectionLevel: "L", // 容错率L（低）H(高)
-            margin: 1, // 二维码内边距，默认为4。单位px
-            height: 100, // 二维码高度
-            width: 100 // 二维码宽度
-        }).then(canvas => {
-            document.getElementsByClassName('QrCodeImg')[0].appendChild(canvas);
-        }).catch((err) => {
-            console.log('nzm', err);
-        });
-    },
-    // 是否显示二维码
-    changeQrcodeDisplay(type) {
-        type === 'show' ? this.qrcodeDisplayFlag = true : this.qrcodeDisplayFlag = false;
+        Qrcode.toDataURL(model.rechargeAddr || '无')
+            .then(url => {
+                model.rechargeAddrSrc = url;
+            }).catch(err => {
+                console.log(err);
+            });
     },
     // 复制文本
     copyText() {
@@ -180,10 +174,10 @@ const model = {
     },
     // 链名称切换
     changeBtnflag(title) {
-        this.btnCheckFlag = title;
-        for (const i of this.chainAry) {
-            if ((this.btnCheckFlag !== 'OMNI' ? 'USDT' + this.btnCheckFlag : 'USDT') === i.wType) {
-                this.rechargeAddr = i.rechargeAddr;
+        model.btnCheckFlag = title;
+        for (const i of model.chainAry) {
+            if ((model.btnCheckFlag !== 'OMNI' ? 'USDT' + model.btnCheckFlag : 'USDT') === i.wType) {
+                model.rechargeAddr = i.rechargeAddr;
             }
         }
         m.redraw();
@@ -197,9 +191,9 @@ const model = {
             this.showMenu = option.showMenu;
             this.currentId = option.currentId ? option.currentId : this.currentId;
         },
-        menuClick(item) {
-            // model.selectCheck = item.id;
+        menuClick() {
             model.setTipsAndAddrAndCode();
+            m.redraw();
         },
         renderHeader(item) {
             return m('div', { class: `selectDiv` }, [
@@ -213,15 +207,10 @@ const model = {
     initFn: function () {
         const currencyType = window.router.getUrlInfo().params.wType;
         if (currencyType !== undefined) {
-            this.coinParam = currencyType;
-            this.option.currentId = currencyType;
-            this.setPageData();
+            model.coinParam = currencyType;
+            model.option.currentId = currencyType;
+            model.setPageData();
         }
-
-        this.nameTips =
-        [I18n.$t('10400') /* 'USDT-ERC20是Tether泰达公司基于ETH网络发行的USDT，充币地址是ETH地址，充提币走ETH网络，USDT-ERC20使用的是ERC20协议。' */,
-            I18n.$t('10507') /* 'USDT-TRC20(USDT-TRON)是Tether泰达公司基于TRON网络发行的USDT，充币地址是TRON地址，充提币走TRON网络，USDT-TRC20(USDT-TRON)使用的是TRC20协议。' */,
-            I18n.$t('10508')/* 'USDT-Omni是Tether泰达公司基于BTC网络发行的USDT，充币地址是BTC地址，充提币走BTC网络，USDT-Omni使用的协议是建立在BTC区块链网络上的omni layer协议。' */];
 
         wlt.init();
 
@@ -229,21 +218,29 @@ const model = {
             key: 'index',
             cmd: broadcast.MSG_WLT_READY,
             cb: () => {
-                this.setPageData();
+                model.setPageData();
             }
         });
-        this.setPageData();
+        model.setPageData();
 
         broadcast.onMsg({
             key: 'index',
             cmd: broadcast.MSG_LANGUAGE_UPD,
-            cb: (arg) => {
-                this.setTipsAndAddrAndCode();
+            cb: () => {
+                model.setTipsAndAddrAndCode();
             }
         });
+
+        broadcast.onMsg({
+            key: 'index',
+            cmd: broadcast.GET_USER_INFO_READY,
+            cb: () => {
+                model.uId = gM.getAccount().uid;
+            }
+        });
+        model.uId = gM.getAccount().uid;
     },
-    updateFn: function (vnode) {
-    },
+    updateFn: function (vnode) { },
     removeFn: function () {
         broadcast.offMsg({
             key: 'index',

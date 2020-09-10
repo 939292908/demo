@@ -1,6 +1,5 @@
 const m = require('mithril');
 require('./index.scss');
-const InputWithComponent = require('../inputWithComponent/inputWithComponent.view.js');
 const Validate = require('./dialogVerify.logic');
 const I18n = require('@/languages/I18n').default;
 const utils = require('@/util/utils').default;
@@ -83,8 +82,8 @@ module.exports = {
             m('.has-text-level-2.body-5.mb-2', [
                 Validate.selectName,
                 m('span.ml-2.body-2.has-text-level-4', {}, [
-                    Validate.selectType === 'sms' ? `(${utils.hideAccountNameInfo(validateModel.smsConfig.phoneNum)})`
-                        : Validate.selectType === 'email' ? `(${utils.hideAccountNameInfo(validateModel.emailConfig.secureEmail)})`
+                    Validate.selectType === 'sms' ? `(${utils.hideAccountNameInfo(validateModel.smsConfig.phoneNum || validateModel.smsConfig.phone || validateModel.smsConfig.securePhone)})`
+                        : Validate.selectType === 'email' ? `(${utils.hideAccountNameInfo(validateModel.emailConfig.email || validateModel.emailConfig.secureEmail)})`
                             : ''
                 ])
             ]),
@@ -106,6 +105,21 @@ module.exports = {
             m('.right-click-but', { onclick: () => { Validate.smsCd <= 0 && Validate.sendSmsCode(); } }, m('div', Validate.smsCd > 0 ? `${Validate.smsCd} s` : I18n.$t('10117')/* '获取验证码' */))
         ]);
     },
+    emailVerifyContent: function () {
+        return m('.control has-icons-right', [
+            m('input.input', {
+                oninput: e => { Validate.code = e.target.value.replace(/[^\d]/g, ''); },
+                onkeyup: e => { if (e.keyCode === 13) Validate.check(); },
+                maxlength: '6',
+                value: Validate.code
+            }),
+            m('.right-click-but', {
+                onclick: () => {
+                    Validate.emailCd <= 0 && Validate.sendEmailCode();
+                }
+            }, m('div', Validate.emailCd > 0 ? `${Validate.emailCd} s` : I18n.$t('10117')/* '获取验证码' */))
+        ]);
+    },
     doubleButtonVnode: function () {
         return m('div.butBox dis-flex', [
             this.props.doubleButtonCof.map(item => m('div.itemBut', { class: item.issolid ? 'bgBut' : '' }, item.text))
@@ -113,7 +127,7 @@ module.exports = {
             // m('div.itemBut bgBut', '手机验证')
         ]);
     },
-    verifyVnode: function () {
+    verifyVnode: function (vNode) {
         const validInput = [];
         validInput.push(this.verifyContentTitle());
         switch (Validate.selectType) {
@@ -121,25 +135,7 @@ module.exports = {
             validInput.push(this.smsVerifyContent());
             break;
         case 'email':
-            validInput.push(m(InputWithComponent, {
-                options: {
-                    oninput: e => {
-                        Validate.code = e.target.value.replace(/[^\d]/g, '');
-                    },
-                    onkeyup: e => {
-                        if (e.keyCode === 13) Validate.check();
-                    },
-                    maxlength: '6',
-                    value: Validate.code
-                },
-                rightComponents: m('a.body-1.views-page-login-send-code.px-2',
-                    {
-                        onclick: () => {
-                            if (Validate.emailCd > 0) return;
-                            Validate.sendEmailCode();
-                        }
-                    }, [Validate.emailCd > 0 ? `${Validate.emailCd}` : I18n.$t('10117')/* '获取验证码' */])
-            }));
+            validInput.push(this.emailVerifyContent());
             break;
         case 'google':
             validInput.push(m('input.input[type=text]', {
@@ -155,7 +151,10 @@ module.exports = {
             break;
         }
 
-        validInput.push(m('div.butBox', { onclick: () => { Validate.check(); } }, m('button.button is-fullwidth has-bg-primary', this.props.buttonText || I18n.$t('10337')/* '确定' */)));
+        validInput.push(m('div.butBox', { onclick: () => { Validate.check(); } },
+            m('button.button is-fullwidth has-bg-primary', {
+                class: vNode.attrs.loading ? 'is-loading' : ''
+            }, this.props.buttonText || I18n.$t('10337')/* '确定' */)));
         return m('div.mainPrompt', validInput);
     },
     view: function (vNode) {
@@ -163,7 +162,7 @@ module.exports = {
         return m('div.components-dialog-verify', [
             m('div.dialog-content warmPrompt', m('div', [
                 vNode.attrs?.title?.text ? this.headerVnode() : null,
-                vNode.attrs.isHandleVerify ? this.verifyVnode() : this.promptText()
+                vNode.attrs.isHandleVerify ? this.verifyVnode(vNode) : this.promptText()
             ]))
         ]);
     }

@@ -15,7 +15,7 @@ module.exports = {
                 }, [vnode.attrs.navList[i].title])])
             );
         }
-        return m('div', { class: `views-components-indexHeader tabs has-bg-sub-level-1 theme--light has-line-level-2` }, [
+        return m('div', { class: `views-components-indexHeader tabs has-bg-sub-level-1 theme--light` }, [
             m('div', { class: `container content-width` }, [
                 m('ul', {}, [
                     list
