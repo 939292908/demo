@@ -24,8 +24,7 @@ const openGView = {
     },
     // 导航（下载App，扫描二维码，备份密钥，开启谷歌验证）
     nav: [],
-    // 当前选中哪个步骤
-    checkFlag: 2,
+    checkFlag: 1, /* 当前选中哪个步骤 */
     initNav() {
         openGView.nav = [
             {
@@ -46,18 +45,13 @@ const openGView = {
             }
         ];
     },
-    // 上一步 下一步
-    modifyCheckFlag(type) {
+    modifyCheckFlag(type) { /* 上一步 下一步 */
         type === 'prev' ? openGView.checkFlag = openGView.checkFlag - 1 : openGView.checkFlag = openGView.checkFlag + 1;
     },
-    // 复制文字
+    /* 复制文字 */
     copyText(type) {
         let ele;
-        if (type === 'one') {
-            ele = document.getElementsByClassName('keyText')[0];
-        } else if (type === 'two') {
-            ele = document.getElementsByClassName('keyText')[1];
-        }
+        type === 'one' ? ele = document.getElementsByClassName('keyText')[0] : ele = document.getElementsByClassName('keyText')[1];
         // 选择对象
         ele.select();
         document.execCommand("copy", false, null);
@@ -123,19 +117,19 @@ const openGView = {
                         m('div', { class: `pwdDiv margin-LRauto` }, [
                             m('span', { class: `body-5` }, I18n.$t('10512') /* '登录密码' */),
                             m('br'),
-                            m('input', { class: `border-radius-small mb-5 mt-2 pwd has-line-level-3`, type: `password`, oninput: function() { openGLogic.check('pwd', this.value); } })
+                            m('input', { class: `border-radius-small mb-5 mt-2 pwd has-line-level-3`, type: `password` })
                         ]),
                         m('div', { class: `codeDiv margin-LRauto` }, [
                             m('span', { class: `body-5 mb-2` }, I18n.$t('10119') /* '谷歌验证码' */),
                             m('br'),
-                            m('input', { class: `border-radius-small mt-2 code has-line-level-3`, type: `text`, oninput: function() { openGLogic.check('code', this.value); } })
+                            m('input', { class: `border-radius-small mt-2 code has-line-level-3`, type: `text` })
                         ]),
-                        m('div', { class: `tips mt-3` }, [
+                        /* m('div', { class: `tips mt-3` }, [
                             m('span', { class: ``, style: { display: openGLogic.pwdTipFlag ? `` : `none` } }, '登录密码错误请重新输入!'),
                             m('span', { class: ``, style: { display: openGLogic.codeTipFlag ? `` : `none` } }, '谷歌验证码输入错误或已过期，请重新输入!')
-                        ]),
+                        ]), */
                         m('div', { class: `btn mt-3 margin-LRauto` }, [
-                            m('button', { class: `has-bg-primary cursor-pointer` }, I18n.$t('10337') /* '确定' */)
+                            m('button', { class: `has-bg-primary cursor-pointer`, onclick: () => { openGLogic.confirmBtn(); } }, I18n.$t('10337') /* '确定' */)
                         ])
                     ])
                 ]),

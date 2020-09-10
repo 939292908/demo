@@ -21,21 +21,22 @@ module.exports = {
     phoneNum: null, // 手机号码
     currentOperation: 'bind', // 当前为解绑/绑定操作
     isShowVerifyView: false, // 安全校验弹框 show
-    switchSafetyVerifyModal (type) { // 安全校验弹框 显示/隐藏
-        this.isShowVerifyView = type;
-    },
     IOSDLAddQrCodeSrc: null, // IOS下载二维码地址
     AndroidDLAddQrCodeSrc: null, // Android Q下载二维码地址
     secretQrCodeSrc: null, // 秘钥二维码地址
+    switchSafetyVerifyModal (type) { // 安全校验弹框 显示/隐藏
+        this.isShowVerifyView = type;
+    },
 
     /* 生成IOS，Android，密钥二维码 begin */
     generateQRCode() {
         const that = this;
         // 获取秘钥（用于绑定google验证）
         Http.getGoogleSecret().then(function(arg) {
-            // console.log('nzm', 'getGoogleSecret success', arg);
+            console.log('nzm', 'getGoogleSecret success', arg);
             that.secret = arg.secret;
-            that.generatedCodeFN(arg.secret, 'key'); /* 生成密钥二维码 */
+            // that.generatedCodeFN(arg.secret, 'key'); /* 生成密钥二维码 */
+            that.secretQrCodeSrc = arg.qrcode_url;
             m.redraw();
         }).catch(function(err) {
             console.log('nzm', 'getGoogleSecret error', err);
@@ -44,14 +45,7 @@ module.exports = {
         this.generatedCodeFN(this.AndroidDLAdd, 'Android'); /* 生成Android下载地址二维码 */
     },
     generatedCodeFN: function(text, type) {
-        if (type === 'key') {
-            Qrcode.toDataURL(text || '无')
-                .then(url => {
-                    this.secretQrCodeSrc = url;
-                }).catch(err => {
-                    console.log(err);
-                });
-        } else if (type === 'IOS') {
+        if (type === 'IOS') {
             Qrcode.toDataURL(text || '无')
                 .then(url => {
                     this.IOSDLAddQrCodeSrc = url;
@@ -84,11 +78,11 @@ module.exports = {
             cb: res => {
                 if (res === 'success') {
                     // 成功则进入安全验证
-                    console.log('success', 11111111111);
+                    console.log('success initGeetest');
                     m.redraw();
                     that.ChooseVerify();
                 } else {
-                    console.log('error');
+                    console.log('error initGeetest');
                 }
             }
         });
