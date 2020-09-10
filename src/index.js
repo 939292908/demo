@@ -32,7 +32,7 @@ import('./views/index').then(arg => {
     import('./assets/iconfont/iconfont.css');
     import('@/router/index');
     models.getFunList();
-    if (utils.getItem('loginState') && utils.getItem('ex-session')) {
+    if (utils.getItem('ex-session')) {
         models.getUserInfo();
     }
 });
