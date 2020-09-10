@@ -686,20 +686,26 @@ module.exports = {
      */
     onSelectType(type) {
         this.type = type;
-        this.filterList();
     },
     /**
      * 选择币种
      */
     onSelectCoin(coin) {
         this.coin = coin;
-        this.filterList();
     },
     /**
      * 选择时间
      */
     onSelectTime(time) {
         this.filterTime = time;
+    },
+    onSearch() {
+        this.filterList();
+    },
+    onClean() {
+        this.filterTime = [];
+        this.coin = 'all';
+        this.type = 'all';
         this.filterList();
     },
     /**

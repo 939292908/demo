@@ -84,17 +84,13 @@ module.exports = {
                                 class: 'mt-7',
                                 coinList: AssetRecords.coinList[AssetRecords.aType],
                                 coin: AssetRecords.coin,
-                                onSelectCoin(coin) {
-                                    AssetRecords.onSelectCoin(coin);
-                                },
-                                onSelectTime(time) {
-                                    AssetRecords.onSelectTime(time);
-                                },
+                                onSelectCoin(coin) { AssetRecords.onSelectCoin(coin); },
+                                onSelectTime(time) { AssetRecords.onSelectTime(time); },
                                 typeList: AssetRecords.recordTypeName()[AssetRecords.aType],
                                 type: AssetRecords.type,
-                                onSelectType(type) {
-                                    AssetRecords.onSelectType(type);
-                                }
+                                onSelectType(type) { AssetRecords.onSelectType(type); },
+                                onSearch() { AssetRecords.onSearch(); },
+                                onClean() { AssetRecords.onClean(); }
                             }),
                             m(assetTable, {
                                 class: 'mt-7',
