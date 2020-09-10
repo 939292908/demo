@@ -1,11 +1,13 @@
 const Http = require('@/api').webApi;
 const m = require('mithril');
 const Qrcode = require('qrcode');
+const broadcast = require('@/broadcast/broadcast');
 const geetest = require('@/models/validate/geetest').default;
 const validate = require('@/models/validate/validate').default;
-const broadcast = require('@/broadcast/broadcast');
 const config = require('@/config');
 const I18n = require('@/languages/I18n').default;
+const md5 = require('md5');
+console.log(Qrcode);
 
 module.exports = {
     // 密钥
@@ -17,8 +19,8 @@ module.exports = {
     email: null, // 用户邮箱
     nationNo: null, // 区号
     phoneNum: null, // 手机号码
-    isShowVerifyView: false, // 安全校验弹框 show
     CurrentOperation: 'bind', // 当前为解绑/绑定操作
+    isShowVerifyView: false, // 安全校验弹框 show
     // 安全校验弹框 显示/隐藏
     switchSafetyVerifyModal (type) {
         this.isShowVerifyView = type;
@@ -27,12 +29,15 @@ module.exports = {
     pwdTipFlag: false, // 密码错误提示 默认不显示（false）
     codeTipFlag: false, // 谷歌验证码错误提示 默认不显示（false）
 
+    IOSDLAddQrCodeSrc: null, // IOS下载二维码地址
+    AndroidDLAddQrCodeSrc: null, // Android Q下载二维码地址
+    secretQrCodeSrc: null, // 秘钥二维码地址
     // 生成IOS，Android，密钥二维码 begin
     generateQRCode() {
         const that = this;
         // 获取秘钥（用于绑定google验证）
         Http.getGoogleSecret().then(function(arg) {
-            // console.log('nzm', 'getGoogleSecret success', arg);
+            console.log('nzm', 'getGoogleSecret success', arg);
             that.secret = arg.secret;
             // 生成密钥二维码
             that.generatedCodeFN(arg.secret, 'key');
@@ -46,26 +51,33 @@ module.exports = {
         this.generatedCodeFN(this.AndroidDLAdd, 'Android');
     },
     generatedCodeFN: function(text, type) {
-        Qrcode.toCanvas(text || '无', {
-            errorCorrectionLevel: "L", // 容错率L（低）H(高)
-            margin: 1, // 二维码内边距，默认为4。单位px
-            height: 110, // 二维码高度
-            width: 110 // 二维码宽度
-        }).then(canvas => {
-            if (type === 'key') {
-                document.getElementsByClassName('stepTwo-qrcode')[0].appendChild(canvas);
-            } else if (type === 'IOS') {
-                document.getElementsByClassName('qrcodeIOS')[0].appendChild(canvas);
-            } else if (type === 'Android') {
-                document.getElementsByClassName('qrcodeAndroid')[0].appendChild(canvas);
-            }
-        }).catch((err) => {
-            console.log(err);
-        });
+        if (type === 'key') {
+            Qrcode.toDataURL(text || '无')
+                .then(url => {
+                    this.secretQrCodeSrc = url;
+                }).catch(err => {
+                    console.log(err);
+                });
+        } else if (type === 'IOS') {
+            Qrcode.toDataURL(text || '无')
+                .then(url => {
+                    this.IOSDLAddQrCodeSrc = url;
+                }).catch(err => {
+                    console.log(err);
+                });
+        } else if (type === 'Android') {
+            Qrcode.toDataURL(text || '无')
+                .then(url => {
+                    this.AndroidDLAddQrCodeSrc = url;
+                }).catch(err => {
+                    console.log(err);
+                });
+        }
     },
     // 生成IOS，Android，密钥二维码 end
 
     confirmBtn: function (type) {
+        this.isShowflag = false;
         this.CurrentOperation = type;
         if (this.check()) {
             // return;
@@ -91,12 +103,13 @@ module.exports = {
         geetest.init(() => {
         });
         broadcast.onMsg({
-            key: 'openBindGoogle',
+            key: 'BindGoogle',
             cmd: 'geetestMsg',
             cb: res => {
                 if (res === 'success') {
                     // 成功则进入安全验证
-                    console.log('success');
+                    console.log('success', 11111111111);
+                    m.redraw();
                     that.ChooseVerify();
                 } else {
                     console.log('error');
@@ -110,7 +123,6 @@ module.exports = {
             console.log('未绑定手机与邮箱');
             return;
         }
-        m.redraw();
         if (this.setting2fa.email === 1 && this.setting2fa.phone === 0) {
             console.log('已绑定邮箱');
             this.initSecurityVerification(1);
@@ -157,7 +169,6 @@ module.exports = {
                     lang: I18n.getLocale()
                 },
                 smsConfig: {
-                    securePhone: '0086-233****3233', // 加密手机号带区号
                     areaCode: that.nationNo, // 区号
                     phoneNum: that.phoneNum, // 手机号
                     resetPwd: true, // 是否重置密码
@@ -165,6 +176,7 @@ module.exports = {
                     mustCheckFn: "" // 验证类型
                 }
             };
+            console.log(params);
             validate.activeSmsAndEmail(params, function() {
                 that.CurrentOperation === 'bind' ? that.bindGoogle() : that.unbindGoogle();
             });
@@ -182,7 +194,7 @@ module.exports = {
 
         Http.bindGoogleAuth({
             opInfo: opInfo,
-            password: password,
+            password: md5(password),
             code: code
         }).then(function(arg) {
             console.log('nzm', 'bindGoogleAuth success', arg);
@@ -190,6 +202,7 @@ module.exports = {
                 console.log('success');
             }
             that.switchSafetyVerifyModal(false); // 关闭安全验证弹框
+            m.redraw();
         }).catch(function(err) {
             console.log('nzm', 'bindGoogleAuth error', err);
         });
@@ -202,7 +215,7 @@ module.exports = {
         // google验证码
         const code = document.getElementsByClassName('code')[0].value;
         Http.relieveGoogleAuth({
-            password: password,
+            password: md5(password),
             code: code
         }).then(function(arg) {
             console.log('nzm', 'relieveGoogleAuth success', arg);
@@ -210,6 +223,7 @@ module.exports = {
                 console.log('success');
             }
             that.switchSafetyVerifyModal(false); // 关闭安全验证弹框
+            m.redraw();
         }).catch(function(err) {
             console.log('nzm', 'relieveGoogleAuth error', err);
         });
@@ -238,7 +252,7 @@ module.exports = {
     },
     removeFn: function() {
         broadcast.offMsg({
-            key: 'openBindGoogle',
+            key: 'BindGoogle',
             cmd: 'geetestMsg',
             isall: true
         });
