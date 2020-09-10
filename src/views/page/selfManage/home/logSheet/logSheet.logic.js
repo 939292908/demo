@@ -4,7 +4,10 @@ const LogSheet = {
         const self = this;
         webApi.getExtListInfo({ infoType: 2 }).then(res => {
             if (res.result.code === 0) {
-                res.infos.forEach(item => { self.getLogInLog(item.strs[1]); });
+                res.infos.forEach(item => {
+                    const ip = item.strs[1].indexOf('::ffff:') >= 0 ? item.strs[1].split('::ffff:')[1] : item.strs[1];
+                    self.getLogInLog(ip);
+                });
             }
         });
     },

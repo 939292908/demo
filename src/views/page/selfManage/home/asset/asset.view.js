@@ -1,6 +1,7 @@
 const m = require('mithril');
 const Echarts = require('@/libs/echarts');
 const AssetData = require('./asset.logic');
+const options = require('./pir');
 require('./asset.scss');
 
 module.exports = {
@@ -9,45 +10,8 @@ module.exports = {
     },
     oncreate: function () {
         const myChart = Echarts.init(document.getElementById('AssetsPie'));
-        myChart.setOption({
-            tooltip: {
-                trigger: 'item',
-                formatter: '{a} <br/>{b} : {c} ({d}%)'
-            },
-            toolbox: {
-                show: true,
-                feature: {
-                    mark: { show: true },
-                    dataView: { show: true, readOnly: false },
-                    magicType: {
-                        show: true,
-                        type: ['pie', 'funnel']
-                    },
-                    restore: { show: true },
-                    saveAsImage: { show: true }
-                }
-            },
-            series: [
-                {
-                    type: 'pie',
-                    left: 'center',
-                    top: 'middle',
-                    radius: [20, 110],
-                    center: ['25%', '50%'],
-                    roseType: 'radius',
-                    label: {
-                        show: false
-                    },
-                    data: [
-                        { value: 10, name: 'rose1' },
-                        { value: 5, name: 'rose2' },
-                        { value: 15, name: 'rose3' },
-                        { value: 25, name: 'rose4' },
-                        { value: 20, name: 'rose5' }
-                    ]
-                }
-            ]
-        });
+        myChart.setOption(options);
+        console.log(myChart);
     },
     getallMoneyVnode: function () {
         return m.fragment(m('div.data-item mb-7', [
