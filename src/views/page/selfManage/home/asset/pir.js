@@ -1,37 +1,43 @@
 module.exports = {
-    tooltip: {
-        trigger: 'item',
-        formatter: '{b} : {c} ({d}%)'
-    },
-    toolbox: {
-        show: true,
-        feature: {
-            mark: { show: true },
-            dataView: { show: true, readOnly: false },
-            magicType: {
-                show: true,
-                type: ['pie', 'funnel']
-            },
-            restore: { show: true },
-            saveAsImage: { show: true }
-        }
-    },
+    // tooltip: {
+    //     trigger: 'item',
+    //     formatter: '{b} : {c} BTC ({d}%)'
+    // },
+    // toolbox: {
+    //     show: true,
+    //     feature: {
+    //         mark: { show: true },
+    //         dataView: { show: true, readOnly: false },
+    //         magicType: {
+    //             show: true,
+    //             type: ['pie', 'funnel']
+    //         },
+    //         restore: { show: true },
+    //         saveAsImage: { show: true }
+    //     }
+    // },
+    color: ['#FF8B00', '#FFC700', '#6B7EA0', '#3C4C66'],
     series: [
         {
             type: 'pie',
             left: 'center',
             top: 'middle',
-            radius: [30, 80],
-            center: ['25%', '50%'],
-            roseType: 'radius',
+            radius: [40, 70],
+            center: ['50%', '50%'],
+            avoidLabelOverlap: true,
             label: {
-                show: false
+                show: true,
+                position: 'outer',
+                formatter: '{b} {c} BTC ({d})%',
+                textStyle: {
+                    fontSize: 10
+                }
             },
             data: [
-                { value: 10, name: '我的钱包' },
-                { value: 5, name: '合约钱包' },
-                { value: 15, name: '币币账户' },
-                { value: 25, name: '法币账户' }
+                { value: 6, name: '我的钱包' },
+                { value: 15, name: '合约钱包' },
+                { value: 2, name: '币币账户' },
+                { value: 9, name: '法币账户' }
             ]
         }
     ]

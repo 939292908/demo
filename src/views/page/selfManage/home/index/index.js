@@ -29,7 +29,7 @@ module.exports = {
                 },
                 m('div.liftingBox', m('.lifting', m(Skip))),
                 m(Asset),
-                m('div.dis-flex justify-between align-center', [
+                m('div.dis-flex justify-between align-stretch', [
                     m(Invitation),
                     m(LogSsheet)
                 ])

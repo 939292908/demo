@@ -15,8 +15,8 @@ const manageAssetData = {
         { label: '法币账户', activeId: '04' }
     ],
     LBList: [
-        { label: '充币', toUrl: '' },
-        { label: '提币', toUrl: '' },
+        { label: '充币', toUrl: '/recharge' },
+        { label: '提币', toUrl: '/extractCoin' },
         { label: '内部转账', toUrl: '' },
         { label: '资金划转', toUrl: '' }
     ],
@@ -27,6 +27,19 @@ const manageAssetData = {
         UPNLToCRN: 0, // 未实现盈亏 CRN
         NLToBTC: 0, // 可用保证金 BTC
         NLToCRN: 0 // 可用保证金 CRN
+    },
+    isShow: true,
+    handleEditShow: function () {
+        this.isShow = !this.isShow;
+        if (this.isShow) return this.getAssetOverview();
+        this.AssetOverview = {
+            coinToBTC: '******',
+            coinToCNY: '******',
+            UPNLToBTC: '******',
+            UPNLToCRN: '******',
+            NLToBTC: '******',
+            NLToCRN: '******'
+        };
     },
     handleChangeWallet: function (item) {
         this.walletAcId = item.activeId;
@@ -57,7 +70,6 @@ const manageAssetData = {
             NLToBTC: data.NLToBTC?.toFixed(8),
             NLToCRN: data.NLToCRN?.toFixed(2)
         };
-        console.log(this.AssetOverview);
         m.redraw();
     },
     getAssetOverviewReplenish: function () {

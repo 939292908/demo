@@ -23,6 +23,9 @@
       span, i {
         vertical-align: middle;
       }
+      .icon-copy:before {
+        font-size: var(--c-fontsz-level5);
+      }
     }
   }
 }

@@ -4,14 +4,42 @@ const AssetData = require('./asset.logic');
 const options = require('./pir');
 require('./asset.scss');
 
-module.exports = {
+const assetView = {
+    myChart: null,
+    highlight: 9,
     oninit: function () {
         AssetData.oninit();
     },
     oncreate: function () {
-        const myChart = Echarts.init(document.getElementById('AssetsPie'));
-        myChart.setOption(options);
-        console.log(myChart);
+        this.myChart = Echarts.init(document.getElementById('AssetsPie'));
+        this.myChart.setOption(options);
+        this.myChart.on('mouseout', this.echartMouseout.bind(this));
+    },
+    echartMouseover: function (e) {
+        this.myChart.dispatchAction({
+            type: 'downplay',
+            seriesIndex: 0,
+            dataIndex: this.highlight
+        });
+    },
+    echartMouseout: function (e) {
+        this.myChart.dispatchAction({
+            type: 'highlight',
+            seriesIndex: 0,
+            dataIndex: this.highlight
+        });
+    },
+    handleActivePir: function (item) {
+        if (!item) return;
+        this.echartMouseover();
+        if (item[1] === 0) return AssetData.handleChangeWallet(item[0]);
+        AssetData.handleChangeWallet(item[0]);
+        this.highlight = item[1] - 1;
+        this.myChart.dispatchAction({
+            type: 'highlight',
+            seriesIndex: 0,
+            dataIndex: this.highlight
+        });
     },
     getallMoneyVnode: function () {
         return m.fragment(m('div.data-item mb-7', [
@@ -48,16 +76,16 @@ module.exports = {
         return m('div.self-manage-content-block mb-5', [
             // block header
             m('.asset-header dis-flex justify-between align-center', [
-                m('div.asset-title', [
+                m('div.asset-title', { onclick: () => { AssetData.handleEditShow(); } }, [
                     m('span', '资产总览'),
-                    m('i.iconfont icon-xiala')
+                    AssetData.isShow ? m('i.iconfont icon-yincang  cur-pri') : m('i.iconfont icon-zichanzhengyan  cur-pri')
                 ]),
-                m('div', m('i.iconfont icon-xiala'))
+                m('div.cur-pri', m('i.iconfont icon-arrow-right'))
             ]),
             // 正文
             m('div.asset-content', [
                 m('.asset-tabs dis-flex align-center', [
-                    AssetData.walletList.map(item => m('div.tab mr-7', { onclick: () => { AssetData.handleChangeWallet(item); } }, [
+                    AssetData.walletList.map((item, i) => m('div.tab mr-7', { onclick: this.handleActivePir.bind(this, [item, i]) }, [
                         m('span.circle', { class: AssetData.walletAcId === item.activeId ? 'activeCircle' : '' }),
                         m('span.name', { class: AssetData.walletAcId === item.activeId ? 'has-text-title' : '' }, item.label)
                     ]))
@@ -69,7 +97,7 @@ module.exports = {
                             AssetData.LBList.map(item => m('div.but-item mr-3', { onclick: () => { AssetData.handleClickLBItem(item); } }, item.label))
                         ]) : null
                     ]),
-                    m('div.data-echarts', m('div#AssetsPie', { style: 'width: 400px;height: 220px' }))
+                    m('div.data-echarts', m('div#AssetsPie', { style: 'width: 528px;height: 220px' }))
                 ])
             ])
         ]);
@@ -78,3 +106,5 @@ module.exports = {
         AssetData.onremove();
     }
 };
+
+module.exports = assetView;

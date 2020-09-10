@@ -10,6 +10,13 @@
   .align-center {
     align-items: center;
   }
+  .align-stretch {
+    align-items: stretch;
+  }
+
+  .cur-pri {
+    cursor: pointer;
+  }
   // 页面主要内容
   .liftingBox {
     position: relative;
