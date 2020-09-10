@@ -7,6 +7,7 @@ const config = require('@/config.js');
 
 const closeGView = {
     oninit: () => {
+        closeGLogic.currentOperation = 'unbind';
         closeGLogic.initFn();
     },
     view: () => {
@@ -34,7 +35,7 @@ const closeGView = {
                         m('input', { class: `border-radius-small mt-2 code has-line-level-3`, type: `text` })
                     ]),
                     m('div', { class: `btn mt-8 margin-LRauto` }, [
-                        m('button', { class: `has-bg-primary cursor-pointer`, onclick: () => { closeGLogic.confirmBtn('unbind'); } }, I18n.$t('10337') /* '确定' */)
+                        m('button', { class: `has-bg-primary cursor-pointer` }, I18n.$t('10337') /* '确定' */)
                     ])
                 ])
             ]),
