@@ -117,6 +117,8 @@ import theme from './styles/theme.js'
 
 window.themeColors = theme
 
+//仓位筛选初始值
+window.$dropdownType = 1
 
 //路由
 // require('./route');

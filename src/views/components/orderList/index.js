@@ -268,7 +268,6 @@ export default {
     oninit: function(vnode){
         obj.initEVBUS()
         obj.initLanguage()
-        window.$dropdownType = 1
         obj.getOrderList()
         obj.getPosList()
     },
