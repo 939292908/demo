@@ -6,23 +6,41 @@ const config = require('@/config.js');
 const VerifyView = require('@/views/components/dialogVerify/dialogVerify.view');
 
 const modifyLPView = {
-    pwdIsDifferent: false, // 新密码与确认密码是否一致提示是否显示
-    oldAndnewIsDifferent: false, // 原密码与新密码是否一致提示是否显示
+    pwdIsDifferent: true, // 【密码不一致】提示是否显示
+    oldAndnewIsDifferent: true, // 【原密码与新密码不可相同】提示是否显示
     newPwdCheck() {
         const oldPwd = document.getElementsByClassName('oldPwd')[0].value;
         const newPwd = document.getElementsByClassName('newPwd')[0].value;
-        oldPwd === newPwd ? modifyLPView.oldAndnewIsDifferent = true : modifyLPView.oldAndnewIsDifferent = false;
+        // 是否为空
+        if (!oldPwd) {
+            modifyLPView.oldAndnewIsDifferent = true;
+            return;
+        }
+        // 是否为空
+        if (!newPwd) {
+            modifyLPView.oldAndnewIsDifferent = true;
+            return;
+        }
+        // 密码是否是一致
+        if (oldPwd === newPwd) {
+            modifyLPView.oldAndnewIsDifferent = true;
+            return;
+        }
+        modifyLPView.oldAndnewIsDifferent = false;
     },
     confirmPWdCheck() {
         const newPwd = document.getElementsByClassName('newPwd')[0].value;
         const confirmPWd = document.getElementsByClassName('confirmPWd')[0].value;
+        if (!newPwd) {
+            modifyLPView.pwdIsDifferent = true;
+        }
         newPwd !== confirmPWd ? modifyLPView.pwdIsDifferent = true : modifyLPView.pwdIsDifferent = false;
     },
     oninit: () => {
         modifyLPLogic.initFn();
     },
     view: () => {
-        return m('div', { class: `views-page-accountSecurity-modifyLoginPassword theme--light` }, [
+        return m('div', { class: `views-page-accountSecurity-modifyLoginPassword theme--light pb-7` }, [
             m('div', { class: `operation mb-7 has-bg-level-2` }, [
                 m('div', { class: `content-width container` }, [
                     m('i', { class: `iconfont icon-Return has-text-title` }),

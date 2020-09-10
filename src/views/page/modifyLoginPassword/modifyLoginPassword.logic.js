@@ -7,7 +7,7 @@ const validate = require('@/models/validate/validate').default;
 const I18n = require('@/languages/I18n').default;
 const gM = require('@/models/globalModels');
 const errCode = require('@/util/errCode').default;
-const modifyLPView = require('@/views/page/modifyLoginPassword/modifyLoginPassword.view');
+// const modifyLPView = require('@/views/page/modifyLoginPassword/modifyLoginPassword.view');
 
 module.exports = {
     loginType: null, // 登录类型
@@ -21,12 +21,12 @@ module.exports = {
     },
     confirmBtn: function() {
         // console.log(this.loginType, this.setting2fa, this.nationNo, this.phoneNum);
-        if (modifyLPView.pwdIsDifferent === false && modifyLPView.oldAndnewIsDifferent === false) {
-            alert("满足要求");
-            // geetest.verify(); // 极验
-        } else if (modifyLPView.pwdIsDifferent !== false && modifyLPView.oldAndnewIsDifferent !== false) {
-            alert("不满足要求");
-        }
+        // if (modifyLPView.pwdIsDifferent === false && modifyLPView.oldAndnewIsDifferent === false) {
+        //     alert("满足要求");
+        //     // geetest.verify(); // 极验
+        // } else if (modifyLPView.pwdIsDifferent !== false && modifyLPView.oldAndnewIsDifferent !== false) {
+        //     alert("不满足要求");
+        // }
     },
     // 加载极验
     initGeetest() {

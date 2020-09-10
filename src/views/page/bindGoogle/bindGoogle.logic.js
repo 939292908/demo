@@ -36,7 +36,7 @@ module.exports = {
         const that = this;
         // 获取秘钥（用于绑定google验证）
         Http.getGoogleSecret().then(function(arg) {
-            console.log('nzm', 'getGoogleSecret success', arg);
+            // console.log('nzm', 'getGoogleSecret success', arg);
             that.secret = arg.secret;
             // 生成密钥二维码
             that.generatedCodeFN(arg.secret, 'key');
@@ -235,7 +235,7 @@ module.exports = {
     // 获取用户信息
     getUserInfo() {
         const account = gM.getAccount();
-        console.log(account);
+        // console.log(account);
         this.loginType = account.loginType; // 账户类型
         this.setting2fa = account.setting2fa; // 账户绑定状态
         this.email = account.email; // 用户邮箱

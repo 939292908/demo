@@ -20,7 +20,7 @@ const openGView = {
         openGView.initNav();
         openGView.checkFlag = 1;
     },
-    // 上方导航（下载App，扫描二维码，备份密钥，开启谷歌验证）
+    // 导航（下载App，扫描二维码，备份密钥，开启谷歌验证）
     nav: [],
     // 当前选中哪个步骤
     checkFlag: 2,
