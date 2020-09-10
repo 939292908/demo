@@ -82,6 +82,9 @@ const config = {
         new CopyPlugin([
             { from: './tplibs/kline', to: 'static/libs/kline' },
         ]),
+        new CopyPlugin([
+            { from: './tplibs/img/favicon.ico', to: 'libs/img/favicon.ico' },
+        ]),
         new webpack.DefinePlugin({
             'process.env.BUILD_ENV': JSON.stringify(process.env.BUILD_ENV)
         }),
