@@ -8,6 +8,7 @@ var m = require("mithril");
 const wlt = require('@/models/wlt/wlt');
 const I18n = require('@/languages/I18n').default;
 const Http = require('@/api').webApi;
+const errCode = require('@/util/errCode').default;
 
 const model = {
     vnode: {},
@@ -246,6 +247,8 @@ const model = {
         currentId: "",
         menuHeight: 260,
         setOption (option) {
+            /* eslint-disable */
+            // debugger
             this.showMenu = option.showMenu;
             this.currentId = option.currentId ? option.currentId : this.currentId;
         },
@@ -329,7 +332,7 @@ const model = {
                     model.showlegalTenderModal = true; // 法币弹框显示
                     m.redraw();
                 } else {
-                    window.$message({ title: I18n.$t('10410' /** 提示 */), content: res.result.msg, type: 'danger' });
+                    window.$message({ title: I18n.$t('10410' /** 提示 */), content: errCode.getWebApiErrorCode(res.result.code), type: 'danger' });
                 }
             }
             this.successCallback(); // 成功回调
