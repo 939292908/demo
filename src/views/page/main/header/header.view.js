@@ -26,7 +26,7 @@ module.exports = {
             m('.navbar-brand', {}, [
                 m('div.navbar-item.cursor-pointer', {
                     onclick: function () {
-                        window.router.push('/');
+                        window.router.push(window.router.defaultRoutePath);
                     }
                 }, [
                     m('svg.icon.header-logo', { "aria-hidden": true }, [
@@ -52,7 +52,10 @@ module.exports = {
                     m('div', {
                         class: "navbar-item has-text-primary-hover cursor-pointer ",
                         onclick: function () {
-                            window.router.push('/');
+                            window.$message({
+                                content: I18n.$t('10513'), // 暂未开放，敬请期待
+                                type: 'danger'
+                            });
                         }
                     }, [
                         '法币交易'
@@ -64,7 +67,11 @@ module.exports = {
                         ]),
                         m('div.theme--light', { }, [
                             m('div.navbar-dropdown.has-bg-level-2.border-radius-medium.pa-0', {}, [
-                                m('a', { class: `navbar-item media is-align-items-center pa-5 ma-0` }, [
+                                m('a', {
+                                    class: `navbar-item media is-align-items-center pa-5 ma-0`,
+                                    href: '/w/trd/',
+                                    target: "_blank"
+                                }, [
                                     m('div.media-left.pa-3', {}, [
                                         m('div', { class: `header-navbar-item-icon has-line-level-3 mr-2` })
                                     ]),
@@ -75,7 +82,11 @@ module.exports = {
                                         ])
                                     ])
                                 ]),
-                                m('a', { class: `navbar-item media is-align-items-center pa-5 ma-0` }, [
+                                m('a', {
+                                    class: `navbar-item media is-align-items-center pa-5 ma-0`,
+                                    href: '/w/trd/',
+                                    target: "_blank"
+                                }, [
                                     m('div.media-left.pa-3', {}, [
                                         m('div', { class: `header-navbar-item-icon has-line-level-3 mr-2` })
                                     ]),
@@ -245,25 +256,25 @@ module.exports = {
                                     ])
                                 ]),
                                 m('a', {
-                                    class: `navbar-item columns has-text-primary-hover min-width-200 ma-0 px-6 py-4 body-5`
+                                    class: `navbar-item columns has-text-primary-hover min-width-200 ma-0 px-6 py-4 body-5 is-hidden`
                                 }, [
                                     '账户安全'
                                 ]),
                                 m('a', {
-                                    class: `navbar-item columns has-text-primary-hover min-width-200 ma-0 px-6 py-4 body-5`
+                                    class: `navbar-item columns has-text-primary-hover min-width-200 ma-0 px-6 py-4 body-5 is-hidden`
                                 }, [
                                     '身份认证'
                                 ]),
                                 m('a', {
-                                    class: `navbar-item columns has-text-primary-hover min-width-200 ma-0 px-6 py-4 body-5`
+                                    class: `navbar-item columns has-text-primary-hover min-width-200 ma-0 px-6 py-4 body-5 is-hidden`
                                 }, [
                                     'API管理'
                                 ]),
-                                // m('a', {
-                                //     class: `navbar-item columns has-text-primary-hover min-width-200 ma-0 px-6 py-4 body-5`
-                                // }, [
-                                //     '邀请返佣'
-                                // ]),
+                                m('a', {
+                                    class: `navbar-item columns has-text-primary-hover min-width-200 ma-0 px-6 py-4 body-5 is-hidden`
+                                }, [
+                                    '邀请返佣'
+                                ]),
                                 m('a', {
                                     class: `navbar-item columns has-text-primary-hover min-width-200 ma-0 px-6 py-4 body-5`,
                                     onclick: () => {
