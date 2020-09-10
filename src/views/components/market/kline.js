@@ -83,6 +83,12 @@ let obj = {
             name: "5m",
             title: gDI18n.$t('10027'),//"5分钟"
         },
+        '15m': {
+            type: '15',
+            name: "15m",
+            title: gDI18n.$t('10660'),//"15分钟",
+            isShow : true
+        },
         '30m': {
             type: '30',
             name: "30m",
@@ -98,11 +104,11 @@ let obj = {
             name: "2h",
             title: gDI18n.$t('10030'),//"2小时"
         },
-        // '240': {
-        //     type: '240',
-        //     name: "4h",
-        //     title: gDI18n.$t('10031'),//"4小时"
-        // },
+        '4h': {
+            type: '240',
+            name: "4h",
+            title: gDI18n.$t('10031'),//"4小时"
+        },
         '1d': {
             type: 'D',
             name: "1d",
@@ -282,6 +288,12 @@ let obj = {
                 name: "5m",
                 title: gDI18n.$t('10027'),//"5分钟"
             },
+            '15m': {
+                type: '15',
+                name: "15m",
+                title: "15分钟",
+                isShow : true
+            },
             '30m': {
                 type: '30',
                 name: "30m",
@@ -297,11 +309,11 @@ let obj = {
                 name: "2h",
                 title: gDI18n.$t('10030'),//"2小时"
             },
-            // '240': {
-            //     type: '240',
-            //     name: "4h",
-            //     title: gDI18n.$t('10031'),//"4小时"
-            // },
+            '4h': {
+                type: '240',
+                name: "4h",
+                title: gDI18n.$t('10031'),//"4小时"
+            },
             '1d': {
                 type: 'D',
                 name: "1d",
@@ -369,7 +381,7 @@ let obj = {
     setSymbol: function (Sym) {
         let that = this
         this.Sym = Sym//window.gMkt.CtxPlaying.Sym
-        this.Typ = window.gMkt.CtxPlaying.Typ || '1m'
+        this.Typ = window.gMkt.CtxPlaying.Typ || '15m'
         this.setKcross()
     },
     createTarget: function (param) {
