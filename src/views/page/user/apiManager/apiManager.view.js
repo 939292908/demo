@@ -4,6 +4,7 @@ const Header = require('@/views/components/indexHeader/indexHeader.view');
 const APIManager = require('./apiManager.model');
 const config = require('@/config.js');
 const VerifyView = require('@/views/components/dialogVerify/dialogVerify.view');
+const Modal = require('@/views/components/common/Modal');
 require('./apiManager.scss');
 module.exports = {
     oninit() { APIManager.oninit(); },
@@ -54,13 +55,13 @@ module.exports = {
                             value: APIManager.mark
                         }),
                         m('div.mb-2', {}, [I18n.$t('10318')/* '权限设置' */]),
-                        m('i.iconfont.mr-7.iconfont-medium.checkbox-label', {
+                        m('i.iconfont.mr-7.iconfont-medium.cursor-pointer', {
                             class: APIManager.onlyRead ? 'icon-u_check-square' : 'icon-Unselected',
                             onclick() { APIManager.onlyRead = !APIManager.onlyRead; }
                         }, [
                             m('span.ml-1.body-4.checkbox-text', {}, [I18n.$t('10319')/* 只读 */])
                         ]),
-                        m('i.iconfont.iconfont-medium.checkbox-label', {
+                        m('i.iconfont.iconfont-medium.cursor-pointer', {
                             class: APIManager.canTrade ? 'icon-u_check-square' : 'icon-Unselected',
                             onclick() { APIManager.canTrade = !APIManager.canTrade; }
                         }, [
@@ -123,7 +124,50 @@ module.exports = {
                     logo: config.exchName,
                     text: I18n.$t('10113')/* "安全验证" */
                 }
-            }) : null
+            }) : null,
+            m(Modal, {
+                isShow: APIManager.showAPIKey, // 弹框显示/隐藏
+                onClose () {
+                    APIManager.showAPIKey = false;
+                },
+                slot: {
+                    header: m('div.w100', {}, [
+                        m('div', {}, [I18n.$t('10330')/* "创建成功", */]),
+                        m('article.body-4.has-text-level-3.message.is-warning.mt-4.mr-4.flex-shrink-initial', {}, [
+                            m('div.message-body.border-1.has-text-level-1.body-4.font-weight-medium', {}, [
+                                I18n.$t('10331')/* 密钥仅显示一次，丢失不可找回，请妥善保管！ */
+                            ])
+                        ])
+                    ]),
+                    body: m('div', {}, [
+                        m('div.body-4.has-text-level-4', {}, ['SECRET KEY']),
+                        m('div.body-5.has-text-level-1', {}, [
+                            m('span', {}, ['ghjrgrft5g-e0c9f474']),
+                            m('i.iconfont.icon-copy.has-text-primary.iconfont-small.cursor-pointer.ml-1', {
+                                onclick() { APIManager.copyText('ghjrgrft5g-e0c9f474'); }
+                            }, [])
+                        ]),
+                        m('div.body-4.has-text-level-4.mt-7', {}, [I18n.$t('10332')/* 访问密码 */]),
+                        m('div.body-5.has-text-level-1', {}, [
+                            m('span', {}, ['155454ft5g-e0c9f474']),
+                            m('i.iconfont.icon-copy.has-text-primary.iconfont-small.cursor-pointer.ml-1', {
+                                onclick() { APIManager.copyText('155454ft5g-e0c9f474'); }
+                            }, [])
+                        ]),
+                        m('div.body-4.has-text-level-4.mt-7', {}, [I18n.$t('10326')/* 权限 */]),
+                        m('div.body-5.has-text-level-1', {}, ['只读、交易']),
+                        m('div.body-4.has-text-level-4.mt-7', {}, [I18n.$t('10334')/* 绑定ip */]),
+                        m('div.body-5.has-text-level-1', {}, ['189.128.2.9,185.158.3.2']),
+                        m('div.body-5.has-text-level-4.mt-7', {}, [I18n.$t('10082')/* '温馨提示' */]),
+                        m('div.body-4.has-text-level-4.mt-2', {}, [
+                            '* ' + I18n.$t('10335')/* '请不要泄露您的访问密钥和secretkey，以免造成资产损失。' */
+                        ]),
+                        m('div.body-4.has-text-level-4', {}, [
+                            '* ' + I18n.$t('10336')/* '如果您忘记了secretkey，请申请新的密钥对。' */
+                        ])
+                    ])
+                }
+            })
         ]);
     }
 };
