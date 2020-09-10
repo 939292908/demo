@@ -19,6 +19,7 @@ module.exports = {
             cmd: broadcast.MSG_ASSETD_UPD,
             cb: this.assetDCallBack
         });
+        this.assetDCallBack();
     },
     assetDCallBack: function (arg) {
         // const data = arg.data.filter(item => item.TrdCls === 3 && (item.Flag & 1) !== 1);
@@ -40,9 +41,9 @@ module.exports = {
         }, [
             // 大图
             m('div', { class: `home-picture container is-hidden-mobile` }, [
-                m('img', { class: 'picture-layer ', src: require("@/assets/img/home/layer-4.png").default }),
+                m('img', { class: 'picture-layer border-radius-large', src: require("@/assets/img/home/layer-4.png").default }),
                 // 轮播2
-                m('div', { class: `rotationtwo-content container mt-7` }, [
+                m('div', { class: `rotationtwo-content container mt-8` }, [
                     Object.keys(market.tickData).length > 0 && Object.keys(market.tickData).length === logic.length ? m(Slideshow, { list: logic.nameList }) : m(Slideshow, { list: ['a', 'b', 'c', 'd'] })
                 ])
             ])
