@@ -286,6 +286,13 @@ const extract = {
             cmd: broadcast.MSG_WLT_READY,
             cb: self.getCoinInfo
         });
+        broadcast.onMsg({
+            key: this.name,
+            cmd: broadcast.MSG_ASSETD_UPD,
+            cb: () => {
+                if (wlt.wallet['03'].length > 0) self.getExtractableCoinToBTCNum(); m.redraw();
+            }
+        });
         if (wlt.wallet['01'].toString()) {
             self.getCoinInfo();
         }

@@ -29,7 +29,7 @@ module.exports = {
                         // m('span', 'VIP8')
                     ]),
                     m('.user-uid', { onclick: this.handleEditCopy, id: 'copyUid' }, [
-                        m('span', `${UserInfo.info.uid}`),
+                        m('span.mr-2', `UID：${UserInfo.info.uid}`),
                         m('i.iconfont icon-copy')
                     ])
                 ])
