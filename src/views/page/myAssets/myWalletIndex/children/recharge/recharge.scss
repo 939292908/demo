@@ -9,6 +9,14 @@
             display: inline-block;
         }
     }
+    .dropdown-content{
+        padding: 0px !important;
+        width: 120px;
+    }
+    .dropdown-item{
+        width: 120px;
+        padding: 0px !important;
+    }
     .bottom{
         margin: 0 auto;
         .bottom-upper{
@@ -18,41 +26,29 @@
                 }
             }
             .currencyAddr{
-                width: 420px;
-                height: 44px;
-                display: flex;
                 background: #FAFAFA;
-                flex-direction: row;
+                display: inline-block;
                 .currencyAddr-text{
-                    width: 336px;
-                    height: 44px;
-                    input{
-                        height: 96%;
-                        width: 340px;
-                        outline: none;
-                        border: none;
-                        font-weight: 600;
-                    }
-                    ::-moz-selection{/*Mozilla Firefox 4 to 8*/
-                        background-color: none;
-                    }
-                    ::-webkit-selection{/*Webkit browsers*/
-                        background-color: none;
-                    }
-                    ::-ms-selection{/*Internet Explorer 10+*/
-                        background-color: none;
-                    }
-                    input::selection{
-                        background-color: none;
-                    }
+                    height: 35px;
+                    line-height: 35px;
+                    float: left;
+                }
+                ::-moz-selection{/*Mozilla Firefox 4 to 8*/
+                    background-color: none;
+                }
+                ::-webkit-selection{/*Webkit browsers*/
+                    background-color: none;
+                }
+                ::-ms-selection{/*Internet Explorer 10+*/
+                    background-color: none;
+                }
+                .currencyAddr-text::selection{
+                    background-color: none;
                 }
                 .currencyAddr-Operation{
-                    margin: auto 0;
-                    .addressImg{
-                       width: 130px;
-                       height: 130px;
-                    }
+                    float: left;
                 }
+                clear: both;
             }
             .xrpLable{
                 height: 48px;

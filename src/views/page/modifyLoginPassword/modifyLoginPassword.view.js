@@ -4,6 +4,7 @@ const modifyLPLogic = require('@/views/page/modifyLoginPassword/modifyLoginPassw
 const I18n = require('@/languages/I18n').default;
 const config = require('@/config.js');
 const VerifyView = require('@/views/components/dialogVerify/dialogVerify.view');
+const Header = require('@/views/components/indexHeader/indexHeader.view');
 
 const modifyLPView = {
     pwdIsDifferent: false, // 【密码不一致】提示是否显示
@@ -49,6 +50,16 @@ const modifyLPView = {
     },
     view: () => {
         return m('div', { class: `views-page-accountSecurity-modifyLoginPassword theme--light pb-7` }, [
+            m(Header, {
+                highlightFlag: 1,
+                navList: [
+                    { to: '', title: I18n.$t('10051') /* '个人总览' */ },
+                    { to: '', title: I18n.$t('10181') /* '账户安全' */ },
+                    { to: '', title: I18n.$t('10182') /* '身份认证' */ },
+                    { to: '', title: I18n.$t('10183') /* 'API管理' */ },
+                    { to: '', title: I18n.$t('10184') /* '邀请返佣' */ }
+                ]
+            }),
             m('div', { class: `operation mb-7 has-bg-level-2` }, [
                 m('div', { class: `content-width container` }, [
                     m('i', { class: `iconfont icon-Return has-text-title` }),
