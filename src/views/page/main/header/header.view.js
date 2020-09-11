@@ -377,7 +377,7 @@ module.exports = {
                                         ]),
                                         m('span.column.has-text-left', {}, [
                                             // '延迟 ' + apiLines.wsResponseSpeed[i] + '/' + apiLines.apiResponseSpeed[i] + 'ms'
-                                            I18n.$t('10155') + ' ' + apiLines.wsResponseSpeed[i] + '/' + apiLines.apiResponseSpeed[i] + 'ms'
+                                            I18n.$t('10155') + ' ' + (apiLines.wsResponseSpeed[i] || '--') + '/' + (apiLines.apiResponseSpeed[i] || '--') + 'ms'
                                         ])
                                     ]);
                                 })
