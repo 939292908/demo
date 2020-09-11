@@ -313,10 +313,11 @@ module.exports = {
                         {
                             key: I18n.$t('10097'), /* '区块链交易ID' */
                             value: item.txId
-                        }, {
-                            key: I18n.$t('10102'), /* '链类型' */
-                            value: item.wType.includes('USDT') ? (item.wType.split('USDT')[1] || 'Omni') : item.wType
                         }
+                        // {
+                        //     key: I18n.$t('10102'), /* '链类型' */
+                        //     value: item.wType.includes('USDT') ? (item.wType.split('USDT')[1] || 'Omni') : item.wType
+                        // }
                         // {
                         //     key: '标签',
                         //     value: item.addr
