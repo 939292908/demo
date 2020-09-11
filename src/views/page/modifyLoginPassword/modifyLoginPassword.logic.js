@@ -36,7 +36,7 @@ module.exports = {
                     // 成功则进入安全验证
                     console.log('success initGeetest');
                     m.redraw();
-                    that.checkSmsCode();
+                    that.checkSmsCode(999999);
                     // that.ChooseVerify();
                 } else {
                     console.log('error initGeetest');
