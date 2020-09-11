@@ -65,7 +65,7 @@ module.exports = {
                     // 图片
                     m('img', { class: 'home-picture-vbit', src: require("@/assets/img/home/vbit.png").default }),
                     // 下载信息
-                    m('div', { class: `pr-6 h100 ml-8` }, [
+                    m('div', { class: `h100 ${utils.isMobile() ? 'pr-6 ml-8' : 'home-download-info-vbit'}` }, [
                         m('p', { class: `title-large font-weight-regular` }, [
                             // '随时随地交易'
                             I18n.$t('10028')
@@ -76,7 +76,7 @@ module.exports = {
                         ])
                     ]),
                     // 下载按钮
-                    m('div', { class: `pl-8 h100` }, [
+                    m('div', { class: `h100 ${utils.isMobile() ? 'pl-8 mt-5' : 'home-download-btn-vbit'}` }, [
                         m('div', { class: `dropdown is-hoverable` }, [
                             m('div', { class: "dropdown-trigger has-text-1" }, [
                                 // Android 按钮
