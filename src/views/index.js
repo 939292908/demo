@@ -1,6 +1,6 @@
 import m from 'mithril';
 import header from './page/main/header/header.view';
-import footer from './page/main/footer';
+import footer from './page/main/footer/footer.view.js';
 import message from './page/main/message';
 import broadcast from '../broadcast/broadcast';
 import utils from '../util/utils';

@@ -156,7 +156,6 @@ module.exports = {
     },
     getCoinList() {
         Http.getWallet().then(res => {
-            console.log('getWallet ', res);
             this.coinList['01'] = [];
             for (const coin of res.assetLists01) {
                 this.coinList['01'].push(coin.wType);
@@ -185,6 +184,29 @@ module.exports = {
      */
     getATypeRecords() {
         this.loading = true;
+        this.recordObj = {
+            '01': { // 合约账户
+                gift: [], // 合约赠金
+                transfer: [] // 资产划转
+            },
+            '02': { // 币币账户
+                transfer: [], // 资产划转
+                other: [] // 其他类型
+            },
+            '03': { // 我的钱包
+                recharge: [], // 钱包充币
+                withdraw: [], // 钱包提币
+                transfer: [], // 资产划转
+                paymentTransfer: [], // 内部转账
+                active: [], // 活动出入金
+                exchange: [], // 系统兑换
+                other: [] // 其他类型
+            },
+            '04': { // 法币账户
+                transfer: [], // 资产划转
+                otcSell: [] // 法币交易
+            }
+        };
         switch (this.aType) {
         case '03' :
             Http.assetRecordsAll([
@@ -257,7 +279,6 @@ module.exports = {
         }
         switch (mhType) {
         case '1':
-            this.recordObj[aType].recharge = [];
             for (const item of log) {
                 this.recordObj[aType].recharge.push({
                     coin: item.wType,
@@ -293,7 +314,6 @@ module.exports = {
             }
             break;
         case '2':
-            this.recordObj[aType].withdraw = [];
             for (const item of log) {
                 const wType = item.wType.includes('USDT') ? 'USDT' : item.wType;
                 this.recordObj[aType].withdraw.push({
@@ -333,16 +353,6 @@ module.exports = {
             }
             break;
         case '4':
-            this.recordObj[aType].transfer = [];
-            if (aType !== '04') {
-                this.recordObj[aType].other = [];
-            }
-            if (aType === '03') {
-                this.recordObj[aType].gift = [];
-                this.recordObj[aType].active = [];
-                this.recordObj[aType].exchange = [];
-                this.recordObj[aType].paymentTransfer = [];
-            }
             for (const item of log) {
                 let des = '';
                 const info = [];
@@ -497,13 +507,14 @@ module.exports = {
                         this.recordObj[aType].paymentTransfer.push(newLog);
                     } else { // 资产划转
                         this.recordObj[aType].transfer.push(newLog);
+                        // console.log(this.recordObj[aType].transfer);
                     }
                 }
             }
+            console.log(this.recordObj[aType]);
             break;
         case '5':
             if (aType === '04') {
-                this.recordObj[aType].otcSell = [];
                 for (const item of log) {
                     this.recordObj[aType].otcSell.push({
                         coin: item.wType,
@@ -526,8 +537,6 @@ module.exports = {
                 }
                 break;
             }
-            this.recordObj[aType].transfer = [];
-            this.recordObj[aType].other = [];
             for (const item of log) {
                 let des = '';
                 const num = 0;
@@ -633,8 +642,8 @@ module.exports = {
                     des = I18n.$t('10385'/**/); // 平仓亏损
                     toType.other = true;
                 } else {
-                    // des = utils.getRecordsType5Str(item.addr, item.wType);
-                    des = I18n.$t('10140'); // 其他类型
+                    des = errCode.getRecordsType5Str(item.addr, item.wType);
+                    // des = I18n.$t('10140'); // 其他类型
                     // switch (item.addr) {
                     // case 'g103wdrw':
                     // case 'g103depo':
@@ -686,20 +695,26 @@ module.exports = {
      */
     onSelectType(type) {
         this.type = type;
-        this.filterList();
     },
     /**
      * 选择币种
      */
     onSelectCoin(coin) {
         this.coin = coin;
-        this.filterList();
     },
     /**
      * 选择时间
      */
     onSelectTime(time) {
         this.filterTime = time;
+    },
+    onSearch() {
+        this.filterList();
+    },
+    onClean() {
+        this.filterTime = [];
+        this.coin = 'all';
+        this.type = 'all';
         this.filterList();
     },
     /**

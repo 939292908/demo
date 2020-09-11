@@ -135,7 +135,7 @@ const extract = {
         this.getExtractableCoinToBTCNum();
     },
     getExtractableCoinToBTCNum: function () {
-        const price = wlt.getPrz(this.currenLinkBut || this.currentSelect.wType);
+        const price = wlt.getPrz(this.currentSelect.wType);
         const btcPrice = wlt.getPrz('BTC');
         const usableCoin = this.currentSelect.wdrawable - this.currentFees.withdrawFee > 0 ? this.currentSelect.wdrawable - this.currentFees.withdrawFee : 0;
         const BTCNum = Number(usableCoin * price / btcPrice).toFixed(8);
@@ -148,7 +148,7 @@ const extract = {
         return Number(BTCNum * btcPrice / price).toFixed(8);
     },
     getExtractableNum: function (BTCNum) {
-        if (this.currentSelect?.Setting?.idcardVerifyWithdraw && this.UserInfo.iStatus === 9) {
+        if (this.UserInfo.iStatus === 9) {
             this.currentExtractableNum = this.getBTCToCoin(BTCNum > 100 ? 100 : BTCNum);
         } else {
             this.currentExtractableNum = this.getBTCToCoin(2);
@@ -286,6 +286,13 @@ const extract = {
             cmd: broadcast.MSG_WLT_READY,
             cb: self.getCoinInfo
         });
+        broadcast.onMsg({
+            key: this.name,
+            cmd: broadcast.MSG_ASSETD_UPD,
+            cb: () => {
+                if (wlt.wallet['03'].length > 0) self.getExtractableCoinToBTCNum(); m.redraw();
+            }
+        });
         if (wlt.wallet['01'].toString()) {
             self.getCoinInfo();
         }
@@ -304,6 +311,11 @@ const extract = {
             cmd: broadcast.GET_USER_INFO_READY,
             isall: true
         });
+        // broadcast.offMsg({
+        //     key: this.name,
+        //     cmd: broadcast.MSG_WLT_READY,
+        //     isall: true
+        // });
         // 生命周期结束清空列表选中字段并关闭列表
         this.showCurrencyMenu = false;
         this.selectActiveId.wType = '';

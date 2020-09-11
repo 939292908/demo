@@ -1,0 +1,32 @@
+.self-manage-home {
+
+  .dis-flex {
+    display: flex;
+    flex-flow: nowrap;
+  }
+  .justify-between {
+    justify-content: space-between;
+  }
+  .align-center {
+    align-items: center;
+  }
+  .align-stretch {
+    align-items: stretch;
+  }
+
+  .cur-pri {
+    cursor: pointer;
+  }
+  // 页面主要内容
+  .liftingBox {
+    position: relative;
+    height: 56px;
+    margin-bottom: 20px;
+
+    .lifting {
+      position: absolute;
+      top: -56px;
+    }
+  }
+
+}

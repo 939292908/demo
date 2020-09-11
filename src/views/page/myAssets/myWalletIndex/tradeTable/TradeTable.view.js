@@ -43,7 +43,16 @@ module.exports = {
                 ]),
                 m('div.fundRecords mr-7 cursor-pointer', {}, [
                     m('i', { class: 'iconfont icon-AssetRecord' }),
-                    m('span', { onclick: function () { window.router.push('/assetRecords'); } }, I18n.$t('10053') /* `资金记录` */)
+                    m('span', {
+                        onclick: function () {
+                            window.router.push({
+                                path: '/assetRecords',
+                                data: {
+                                    aType: t.pageFlag
+                                }
+                            });
+                        }
+                    }, I18n.$t('10053') /* `资金记录` */)
                 ]),
                 m('div.profit', { style: { display: t.coinType === `contract` ? `none` : `none` } }, [
                     m('i', { class: 'iconfont icon-Analysis' }),

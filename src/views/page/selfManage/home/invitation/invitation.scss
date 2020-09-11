@@ -1,0 +1,31 @@
+.invitattion-block {
+  width: 592px;
+
+  .qrCode {
+    width: 90px;
+    margin: auto;
+    text-align: center;
+
+    img {
+      width: 90px;
+      height: 90px;
+    }
+    .text, click-copy {
+      font-weight: normal;
+      font-size: 12px;
+      line-height: 20px;
+      color: #9A9EAC;
+    }
+    .click-copy {
+      color: #585E71;
+      cursor: pointer;
+
+      span, i {
+        vertical-align: middle;
+      }
+      .icon-copy:before {
+        font-size: var(--c-fontsz-level5);
+      }
+    }
+  }
+}

@@ -9,6 +9,7 @@ module.exports = {
     coinIsActive: false,
     typeIsActive: false,
     dateIsActive: false,
+    time: [],
     oncreate(vnode) {
         this.initPicker(vnode);
         broadcast.onMsg({
@@ -89,12 +90,15 @@ module.exports = {
             vnode.attrs.onSelectTime([]);
             return;
         }
-        this.date = str;
         const time = [];
         time[0] = start / 1000;
         time[1] = end / 1000 + 24 * 60 * 60;
-        vnode.attrs.onSelectTime(time);
+        if (time[0] === this.time[0] || time[1] === this.time[1]) return;
+        this.time = time;
+        this.date = str;
+        vnode.attrs.onSelectTime(this.time);
         this.dateIsActive = false;
+        m.redraw();
     },
     onremove() {
         this.picker.destroy();
@@ -113,10 +117,6 @@ module.exports = {
         window.onclick = null;
     },
     openDate(vnode, e) {
-        const time = [];
-        this.date = '';
-        this.picker.setDateRange(0, 0);
-        vnode.attrs.onSelectTime(time);
         this.typeIsActive = false;
         this.coinIsActive = false;
         this.dateIsActive = !this.dateIsActive;
