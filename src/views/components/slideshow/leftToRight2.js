@@ -6,12 +6,19 @@ require('@/styles/components/slideshow.scss');
 const TOLEFT = require('@/assets/img/home/toLeft.png').default;
 const TORIGHT = require('@/assets/img/home/toRight.png').default;
 
+const swiper = { Loadingnumber: 0 };
+
 const horizontal = {
     direction: 'horizontal',
     loop: false,
     slidesPerView: 4,
     spaceBetween: 24,
-    autoplay: false,
+    observer: true,
+    observeSlideChildren: true,
+    autoplay: {
+        delay: 5000,
+        disableOnInteraction: false
+    },
     navigation: {
         nextEl: '.button-next',
         prevEl: '.button-prev'
@@ -22,8 +29,11 @@ module.exports = {
         list: [],
         mySwiper: null
     },
+    openUrl: function () {
+        window.open('/w/trd/#!/future');
+    },
     oncreate: function (vnode) {
-        this.mySwiper = new Swiper('#slideShowLTR2', horizontal);
+        this.mySwiper = new Swiper('#slideShowLTR', horizontal);
     },
     leftToRight: function (vnode) {
         const data = market.tickData;
@@ -42,8 +52,21 @@ module.exports = {
         });
     },
     view: function (vnode) {
+        if (swiper.Loadingnumber < 10) swiper.Loadingnumber += 1;
+        if (swiper.Loadingnumber === 5) {
+            this.mySwiper?.destroy();
+            horizontal.loop = true;
+            this.mySwiper = new Swiper('#slideShowLTR', horizontal);
+            // this.mySwiper.removeSlide(0);
+            // this.mySwiper.removeSlide(0);
+            // this.mySwiper.removeSlide(0);
+            // this.mySwiper.removeSlide(0);
+            // this.mySwiper.params.loop = true;
+            // this.mySwiper.update();
+            // this.mySwiper.autoplay.start();
+        }
         return m('div', { class: 'slideshow swiperLTF' }, [
-            m('div', { class: 'swiper-container', id: "slideShowLTR2" }, [
+            m('div', { class: 'swiper-container', id: "slideShowLTR" }, [
                 m('div.swiper-wrapper', [
                     this.leftToRight(vnode)
                 ])

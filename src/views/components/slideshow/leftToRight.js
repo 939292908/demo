@@ -5,26 +5,29 @@ const market = require('@/models/market/market');
 require('@/styles/components/slideshow.scss');
 const TOLEFT = require('@/assets/img/home/toLeft.png').default;
 const TORIGHT = require('@/assets/img/home/toRight.png').default;
-
-const swiper = { Loadingnumber: 0 };
-
-const horizontal = {
-    direction: 'horizontal',
-    loop: false,
-    slidesPerView: 4,
-    spaceBetween: 24,
-    observer: true,
-    observeSlideChildren: true,
-    autoplay: {
-        delay: 5000,
-        disableOnInteraction: false
-    },
-    navigation: {
-        nextEl: '.button-next',
-        prevEl: '.button-prev'
-    }
-};
+const slidesPerView = 4; // 一页显示几个
 module.exports = {
+    horizontal: {
+        direction: 'horizontal',
+        loop: false,
+        slidesPerView,
+        spaceBetween: 24,
+        observer: true,
+        observeSlideChildren: true,
+        autoplay: {
+            delay: 5000,
+            disableOnInteraction: false
+        },
+        // navigation: {
+        //     nextEl: '.button-next',
+        //     prevEl: '.button-prev'
+        // },
+        on: {
+            slideChangeTransitionEnd: function() {
+                if (this.slides.length - slidesPerView === this.activeIndex) this.slideTo(0, 0, false);
+            }
+        }
+    },
     data: {
         list: [],
         mySwiper: null
@@ -32,8 +35,8 @@ module.exports = {
     openUrl: function () {
         window.open('/w/trd/#!/future');
     },
-    oncreate: function (vnode) {
-        this.mySwiper = new Swiper('#slideShowLTR', horizontal);
+    oncreate: function () {
+        this.mySwiper = new Swiper('#slideShowLTR', this.horizontal);
     },
     leftToRight: function (vnode) {
         const data = market.tickData;
@@ -51,28 +54,23 @@ module.exports = {
             ]);
         });
     },
+    handleNextEl: function () {
+        const index = this.mySwiper.activeIndex === 0 ? this.mySwiper.slides.length - slidesPerView : this.mySwiper.activeIndex - 1;
+        this.mySwiper.slideTo(index, 0, false);
+    },
+    handlePrevEl: function () {
+        const index = this.mySwiper.slides.length - slidesPerView === this.mySwiper.activeIndex ? 0 : this.mySwiper.activeIndex + 1;
+        this.mySwiper.slideTo(index, 0, false);
+    },
     view: function (vnode) {
-        if (swiper.Loadingnumber < 10) swiper.Loadingnumber += 1;
-        if (swiper.Loadingnumber === 5) {
-            this.mySwiper?.destroy();
-            horizontal.loop = true;
-            this.mySwiper = new Swiper('#slideShowLTR', horizontal);
-            // this.mySwiper.removeSlide(0);
-            // this.mySwiper.removeSlide(0);
-            // this.mySwiper.removeSlide(0);
-            // this.mySwiper.removeSlide(0);
-            // this.mySwiper.params.loop = true;
-            // this.mySwiper.update();
-            // this.mySwiper.autoplay.start();
-        }
         return m('div', { class: 'slideshow swiperLTF' }, [
             m('div', { class: 'swiper-container', id: "slideShowLTR" }, [
                 m('div.swiper-wrapper', [
                     this.leftToRight(vnode)
                 ])
             ]),
-            m('div.button-prev', m('img', { src: TOLEFT })),
-            m('div.button-next', m('img', { src: TORIGHT }))
+            m('div.button-prev', { onclick: this.handleNextEl.bind(this) }, m('img', { src: TOLEFT })),
+            m('div.button-next', { onclick: this.handlePrevEl.bind(this) }, m('img', { src: TORIGHT }))
         ]);
     },
     onremove: function () {
