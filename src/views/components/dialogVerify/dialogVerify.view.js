@@ -78,7 +78,7 @@ module.exports = {
         ]);
     },
     verifyContentTitle: function () { // 验证 title
-        console.log(validateModel.smsConfig);
+        console.log(validateModel.linshiConfig);
         return m('.dis-flex verifyContentTitle', [
             m('.has-text-level-2.body-5.mb-2', [
                 Validate.selectName,

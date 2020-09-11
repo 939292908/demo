@@ -208,6 +208,7 @@ const extract = {
     },
     readyStartSafetyVerify: function (start) {
         if (start !== 'success') return;
+        /* eslint-disable */
         const funName = extract.UserInfo?.setting2fa.google && extract.UserInfo?.setting2fa.phone ? 'activeSmsAndGoogle' : extract.UserInfo?.setting2fa.google ? 'activeGoogle' : 'activeSms';
         if ((extract.UserInfo?.setting2fa.google && extract.UserInfo?.setting2fa.phone) || extract.UserInfo?.setting2fa.phone) {
             validate[funName]({
@@ -217,8 +218,7 @@ const extract = {
                 extract.sendExtractCoin();
                 extract.handleChangeShow(); // 关闭 a
             });
-        }
-        if (extract.UserInfo?.setting2fa.google) {
+        } else if (extract.UserInfo?.setting2fa.google) {
             validate[funName](res => {
                 extract.sendExtractCoin();
                 extract.handleChangeShow(); // 关闭 a
