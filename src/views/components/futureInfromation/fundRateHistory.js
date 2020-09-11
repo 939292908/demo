@@ -16,6 +16,24 @@ let obj = {
     tableData: [],
     pageIndex: 1,
     Chargein : null,
+    tableColumns : [
+        {
+            title: gDI18n.$t('10103'),//'时间',
+            key: 'Tm'
+        },
+        {
+            title: gDI18n.$t('10053'),//'合约',
+            key: 'Sym'
+        },
+        // {
+        //     title: gDI18n.$t('10623'),//'资金费率间隔',
+        //     key: 'interval'
+        // },
+        {
+            title: gDI18n.$t('10020'),//'资金费率',
+            key: 'FundingRate'
+        }
+    ],
      // 一次性获取所有表格数据
     allTableData: [],
     // 初始化合约列表
@@ -47,10 +65,10 @@ let obj = {
                 title: '合约',
                 key: 'Sym'
             },
-            {
-                title: '资金费率间隔',
-                key: 'interval'
-            },
+            // {
+            //     title: '资金费率间隔',
+            //     key: 'interval'
+            // },
             {
                 title: '资金费率',
                 key: 'FundingRate'
@@ -81,7 +99,8 @@ let obj = {
                         Sym : utils.getSymDisplayName(window.gMkt.AssetD, item.Sym) || "--",
                         Tm : new Date(Tm).format('yyyy-MM-dd hh:mm:ss') || "--",
                         FundingRate: (Number(utils.getFullNum(item.FundingRate))*100).toFixed2(6,8) + "%" || "--",
-                        interval : this.Chargein
+                        interval : '--',//this.Chargein,
+                        OSym : item.Sym
                     }
                     tableData.push(_d)
                 })
@@ -145,7 +164,7 @@ export default {
             m(Table, {
                 columns: obj.tableColumns,
                 data: obj.tableData,
-                defaultColumnWidth: "25%",
+                defaultColumnWidth: "33%",
                 height: 580,
                 onscroll (e) {
                     utils.triggerScroll(e, () => {
