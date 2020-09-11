@@ -5,6 +5,7 @@ const I18n = require('@/languages/I18n').default;
 const broadcast = require('@/broadcast/broadcast');
 const VerifyView = require('@/views/components/dialogVerify/dialogVerify.view');
 const config = require('@/config.js');
+const Header = require('@/views/components/indexHeader/indexHeader.view');
 
 const openGView = {
     // totalFlag: false, /* 是否满足校验  默认false不满足 */
@@ -22,7 +23,7 @@ const openGView = {
         openGView.initNav();
         openGView.checkFlag = 1;
     },
-    // 导航（下载App，扫描二维码，备份密钥，开启谷歌验证）
+    /* 导航（下载App，扫描二维码，备份密钥，开启谷歌验证） */
     nav: [],
     checkFlag: 1, /* 当前选中哪个步骤 */
     initNav() {
@@ -48,8 +49,7 @@ const openGView = {
     modifyCheckFlag(type) { /* 上一步 下一步 */
         type === 'prev' ? openGView.checkFlag = openGView.checkFlag - 1 : openGView.checkFlag = openGView.checkFlag + 1;
     },
-    /* 复制文字 */
-    copyText(type) {
+    copyText(type) { /* 复制文字 */
         let ele;
         type === 'one' ? ele = document.getElementsByClassName('keyText')[0] : ele = document.getElementsByClassName('keyText')[1];
         // 选择对象
@@ -59,6 +59,10 @@ const openGView = {
     },
     view: () => {
         return m('div', { class: `views-page-accountSecurity-bindGoogle-open theme--light pb-8` }, [
+            m(Header, {
+                highlightFlag: 0,
+                navList: [{ to: '', title: I18n.$t('10052') /* '个人总览' */ }, { to: '/assetRecords', title: I18n.$t('10053') /* '账户安全' */ }]
+            }),
             m('div', { class: `operation mb-7 has-bg-level-2` }, [
                 m('div', { class: `content-width container` }, [
                     m('i', { class: `iconfont icon-Return has-text-title` }),
