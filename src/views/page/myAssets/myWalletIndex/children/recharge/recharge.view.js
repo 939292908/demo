@@ -87,8 +87,8 @@ module.exports = {
                         m('span', { class: `body-5` }, I18n.$t('10081') /* '充币地址' */)
                     ]),
                     m('div', { class: `currencyAddr border-radius-medium mt-2 mb-7` }, [
-                        m('div', { class: `currencyAddr-text ml-3 has-bg-level-3` }, [
-                            m('input', { class: `addrText body-5 has-bg-level-3`, type: 'text', readOnly: `readOnly`, value: rechargeIndex.rechargeAddr })
+                        m('div', { class: `currencyAddr-text ml-3 has-bg-level-3` }, [rechargeIndex.rechargeAddr
+                            // m('input', { class: `addrText body-5 has-bg-level-3`, type: 'text', readOnly: `readOnly`, value: rechargeIndex.rechargeAddr })
                         ]),
                         m('div', { class: `currencyAddr-Operation ml-3` }, [
                             m('div', { class: `iImg mt-2` }, [
@@ -105,7 +105,7 @@ module.exports = {
                     m('div', { class: `tips pb-6` }, [
                         m('span', { class: `body-5` }, I18n.$t('10082') /* '温馨提示' */),
                         m('br'),
-                        rechargeIndex.tips.split('*').map((item, index) => m(`span.pb-1 body-4`, { class: index === 0 ? `has-text-primary` : `has-text-level-4`, key: item }, '*' + item))
+                        rechargeIndex.tipsAry.map((item, index) => m(`span.pb-1 body-4`, { class: index === 0 ? `has-text-primary` : `has-text-level-4`, key: item }, '*' + item))
                     ])
                 ]),
                 m('div.bottom-tab.has-bg-level-2.mt-5.pt-3.border-radius-medium', {}, [

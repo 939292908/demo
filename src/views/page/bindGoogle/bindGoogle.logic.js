@@ -95,17 +95,20 @@ module.exports = {
         }
         if (this.setting2fa.email === 1 && this.setting2fa.phone === 0) {
             console.log('已绑定邮箱');
+            validate.checkGoogleCode(document.getElementsByClassName('code')[0].value, this.secret);
             this.initSecurityVerification(1);
         } else if (this.setting2fa.email === 0 && this.setting2fa.phone === 1) {
             console.log('已绑定手机');
+            validate.checkGoogleCode(document.getElementsByClassName('code')[0].value);
             this.initSecurityVerification(2);
         } else if (this.setting2fa.email === 1 && this.setting2fa.phone === 1) {
             console.log('已绑定手机和邮箱');
+            validate.checkGoogleCode(document.getElementsByClassName('code')[0].value);
             this.initSecurityVerification(3);
         }
         this.switchSafetyVerifyModal(true); // 打开弹框
     },
-    // 初始化安全验证          typeFlag: 1：邮箱 2：手机 3：邮箱收集双切换验证
+    // 初始化安全验证          typeFlag: 1：邮箱 2：手机 3：邮箱手机双切换验证
     initSecurityVerification(typeFlag) {
         const that = this;
         let params = null;
@@ -122,9 +125,10 @@ module.exports = {
         } else if (typeFlag === 2) {
             params = {
                 areaCode: that.nationNo, // 区号
-                phoneNum: that.phoneNum, // 手机号
+                phoneNum: that.nationNo + '-' + that.phoneNum, // 手机号
                 resetPwd: true, // 是否重置密码
                 lang: I18n.getLocale(),
+                phone: that.phoneNum,
                 mustCheckFn: "" // 验证类型
             };
             validate.activeSms(params, function() {
@@ -140,9 +144,10 @@ module.exports = {
                 },
                 smsConfig: {
                     areaCode: that.nationNo, // 区号
-                    phoneNum: that.phoneNum, // 手机号
+                    phoneNum: that.nationNo + '-' + that.phoneNum, // 手机号
                     resetPwd: true, // 是否重置密码
                     lang: I18n.getLocale(),
+                    phone: that.phoneNum,
                     mustCheckFn: "" // 验证类型
                 }
             };
