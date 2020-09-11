@@ -6,6 +6,7 @@ const ActiveLine = require('@/api').ActiveLine;
 const { Conf } = require('@/api');
 const l180n = require('@/languages/I18n').default;
 const { calcFutureWltAndPosAndMI } = require('../futureCalc/calcFuture.js');
+const config = require('@/config.js');
 
 module.exports = {
     name: "modelsForWlt",
@@ -238,36 +239,7 @@ module.exports = {
             // this.wallet_obj[type] = this.wallet_obj[type] ? this.wallet_obj[type] : {};
             this.wallet[type] = [];
             for (const coin in wlt[type]) {
-                // 如果是合约账户，则选择部分字段进行赋值
-                if (type === '01') {
-                    // if (this.walletState === 0) {
-                    this.wallet_obj[type][coin] = this.wltHandle(type, wlt[type][coin]);
-                    // } else {
-                    //     const wltHandleData = this.wltHandle(type, wlt[type][coin]);
-                    //     for (const key in wltHandleData) {
-                    //         switch (key) {
-                    //         case 'MgnBal':
-                    //         case 'Gift':
-                    //         case 'NL':
-                    //         case 'NLToCRN':
-                    //         case 'NLToBTC':
-                    //         case 'MI':
-                    //         case 'MM':
-                    //         case 'PNL':
-                    //         case 'UPNL':
-                    //         case 'UPNLToCRN':
-                    //         case 'UPNLToBTC':
-                    //         case 'wdrawable':
-                    //             // 此处跳过数据更新
-                    //             break;
-                    //         default:
-                    //             this.wallet_obj[type][coin][key] = wltHandleData[key];
-                    //         }
-                    //     }
-                    // }
-                } else {
-                    this.wallet_obj[type][coin] = this.wltHandle(type, wlt[type][coin]);
-                }
+                this.wallet_obj[type][coin] = this.wltHandle(type, wlt[type][coin]);
                 this.wallet[type].push(this.wallet_obj[type][coin]);
 
                 wlt[type][coin].valueForUSDT = utils.toFixedForFloor(wlt[type][coin].valueForUSDT, 4);
@@ -671,10 +643,20 @@ module.exports = {
             orderArr.push(item);
         }
         // console.log('orderArr', orderArr);
-        calcFutureWltAndPosAndMI(posArr, wallets, orderArr, RS, AssetD, lastTick, '1', 0, 0, arg => {
-            // console.log('calcFutureWltAndPosAndMI CallBack', arg);
-            that.updTrdWlt(arg.wallets);
-        });
+        calcFutureWltAndPosAndMI(
+            posArr,
+            wallets,
+            orderArr,
+            RS,
+            AssetD,
+            lastTick,
+            config.future.UPNLPrzActive,
+            config.future.UPNLPrzActive,
+            config.future.UPNLPrzActive,
+            arg => {
+                // console.log('calcFutureWltAndPosAndMI CallBack', arg);
+                that.updTrdWlt(arg.wallets);
+            });
         // console.log('calcFutureWltAndPosAndMI', calcFutureWltAndPosAndMI, Poss, Wlts, Orders, RS, lastTick, AssetD);
     },
     updTrdWlt: function(param) {
