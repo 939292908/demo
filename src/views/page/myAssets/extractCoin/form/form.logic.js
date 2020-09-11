@@ -137,7 +137,7 @@ const extract = {
     getExtractableCoinToBTCNum: function () {
         const price = wlt.getPrz(this.currentSelect.wType);
         const btcPrice = wlt.getPrz('BTC');
-        const usableCoin = this.currentSelect.wdrawable - this.currentFees.withdrawFee > 0 ? this.currentSelect.wdrawable - this.currentFees.withdrawFee : 0;
+        const usableCoin = this.currentSelect?.wdrawable - this.currentFees?.withdrawFee > 0 ? this.currentSelect.wdrawable - this.currentFees.withdrawFee : 0;
         const BTCNum = Number(usableCoin * price / btcPrice).toFixed(8);
         if (BTCNum > 2) return this.getExtractableNum(BTCNum);
         this.currentExtractableNum = Number(usableCoin).toFixed(8);
@@ -346,6 +346,24 @@ const extract = {
             } else if (account.iStatus === 1) {
                 this.handleTotalShow({ content: l180n.$t('10535') /* '为了您的账户安全，实名认证通过后才可提现！' */, isLinshiErWeiMa: false });
             }
+        }
+    },
+    option2: {
+        evenKey: "option111key",
+        currentId: 2,
+        showMenu: false,
+        setOption (option) {
+            this.showMenu = option.showMenu;
+            this.currentId = option.currentId ? option.currentId : this.currentId;
+        },
+        menuClick(item) {
+            extract.currentSelect = item;
+            // // 检查是否需要身份认证
+            extract.checkIdcardVerify();
+            extract.getlinkButtonListData();
+        },
+        menuList() {
+            return extract.selectList;
         }
     }
 };
