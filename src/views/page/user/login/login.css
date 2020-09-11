@@ -14,3 +14,7 @@
 .views-page-login-title.opacity {
     opacity: 0.12;
 }
+
+.views-page-register-checkbox-label {
+    vertical-align: top;
+}
