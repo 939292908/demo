@@ -95,7 +95,7 @@ module.exports = {
                                     label: m('i', { class: `iconfont icon-QrCode has-text-primary cursor-pointer` }),
                                     content: m('img', { class: `addressImg`, src: rechargeIndex.rechargeAddrSrc }),
                                     position: `bottom`,
-                                    direction: `center`
+                                    direction: `right`
                                 })
                             ])
                         ])

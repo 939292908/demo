@@ -9,6 +9,14 @@
             display: inline-block;
         }
     }
+    .dropdown-content{
+        padding: 0px !important;
+        width: 120px;
+    }
+    .dropdown-item{
+        width: 120px;
+        padding: 0px !important;
+    }
     .bottom{
         margin: 0 auto;
         .bottom-upper{
@@ -39,10 +47,6 @@
                 }
                 .currencyAddr-Operation{
                     float: left;
-                    margin: auto 0;
-                    .addressImg{
-                       width: 130px;
-                    }
                 }
                 clear: both;
             }
