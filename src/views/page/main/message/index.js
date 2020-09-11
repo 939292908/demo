@@ -94,7 +94,7 @@ module.exports = {
         msg.initMsg();
     },
     view: function (vnode) {
-        return m('div', { class: "window-message-box" }, msg.messageContent);
+        return m('div', { class: "window-message-box ma-6" }, msg.messageContent);
     },
     onremove: function () {
     }

@@ -14,11 +14,14 @@ module.exports = {
         rechargeIndex.initFn();
         AssetRecords.init('03', 'recharge', 1, 10);
         AssetRecords.setLanguageListen();
-
         this.nameTips =
-        [I18n.$t('10400') /* 'USDT-ERC20是Tether泰达公司基于ETH网络发行的USDT，充币地址是ETH地址，充提币走ETH网络，USDT-ERC20使用的是ERC20协议。' */,
+        [
+            I18n.$t('10400') /* 'USDT-ERC20是Tether泰达公司基于ETH网络发行的USDT，充币地址是ETH地址，充提币走ETH网络，USDT-ERC20使用的是ERC20协议。' */,
+
             I18n.$t('10507') /* 'USDT-TRC20(USDT-TRON)是Tether泰达公司基于TRON网络发行的USDT，充币地址是TRON地址，充提币走TRON网络，USDT-TRC20(USDT-TRON)使用的是TRC20协议。' */,
-            I18n.$t('10508')/* 'USDT-Omni是Tether泰达公司基于BTC网络发行的USDT，充币地址是BTC地址，充提币走BTC网络，USDT-Omni使用的协议是建立在BTC区块链网络上的omni layer协议。' */];
+
+            I18n.$t('10508')/* 'USDT-Omni是Tether泰达公司基于BTC网络发行的USDT，充币地址是BTC地址，充提币走BTC网络，USDT-Omni使用的协议是建立在BTC区块链网络上的omni layer协议。' */
+        ];
     },
     oncreate: () => {
     },
@@ -84,9 +87,7 @@ module.exports = {
                         m('span', { class: `body-5` }, I18n.$t('10081') /* '充币地址' */)
                     ]),
                     m('div', { class: `currencyAddr border-radius-medium mt-2 mb-7` }, [
-                        m('div', { class: `currencyAddr-text ml-3 has-bg-level-3` }, [
-                            m('input', { class: `addrText body-5 has-bg-level-3`, type: 'text', readOnly: `readOnly`, value: rechargeIndex.rechargeAddr })
-                        ]),
+                        m('div', { class: `currencyAddr-text ml-3 has-bg-level-3` }, rechargeIndex.rechargeAddr),
                         m('div', { class: `currencyAddr-Operation ml-3` }, [
                             m('div', { class: `iImg mt-2` }, [
                                 m('i', { class: `iconfont icon-copy has-text-primary cursor-pointer mr-2`, onclick: () => { rechargeIndex.copyText(); } }),
@@ -94,7 +95,7 @@ module.exports = {
                                     label: m('i', { class: `iconfont icon-QrCode has-text-primary cursor-pointer` }),
                                     content: m('img', { class: `addressImg`, src: rechargeIndex.rechargeAddrSrc }),
                                     position: `bottom`,
-                                    direction: `center`
+                                    direction: `right`
                                 })
                             ])
                         ])
@@ -102,7 +103,7 @@ module.exports = {
                     m('div', { class: `tips pb-6` }, [
                         m('span', { class: `body-5` }, I18n.$t('10082') /* '温馨提示' */),
                         m('br'),
-                        rechargeIndex.tips.split('*').map((item, index) => m(`span.pb-1 body-4`, { class: index === 0 ? `has-text-primary` : `has-text-level-4`, key: item }, '*' + item))
+                        rechargeIndex.tipsAry.map((item, index) => m(`span.pb-1 body-4`, { class: index === 0 ? `has-text-primary` : `has-text-level-4`, key: item }, '*' + item))
                     ])
                 ]),
                 m('div.bottom-tab.has-bg-level-2.mt-5.pt-3.border-radius-medium', {}, [

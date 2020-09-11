@@ -32,7 +32,7 @@ module.exports = {
             return m('div.swiper-slide', [
                 item.map(item => {
                     const srcUrl = item.image.indexOf('http') === 0 ? item.image : ActiveLine.WebAPI + item.image;
-                    return m('div', { class: "imgBox", onclick: click.bind(this, item) }, m('img', { class: "border-radius-medium", src: srcUrl }));
+                    return m('div', { class: "imgBox", onclick: click.bind(this, item) }, m('img', { class: "border-radius-large", src: srcUrl }));
                 })
             ]);
         });

@@ -11,6 +11,7 @@ const Http = require('@/api').webApi;
 const l180n = require('@/languages/I18n').default;
 const TopView = require('./top.view');
 const Conf = require('@/api').Conf;
+const utils = require('@/util/utils').default;
 
 module.exports = {
     data: {
@@ -20,6 +21,13 @@ module.exports = {
     toPage() {
         if (window.gWebApi.loginState) {
             window.router.push('/chargeMoney');
+        } else {
+            window.router.push('/login');
+        }
+    },
+    toTrade: function () {
+        if (utils.getItem('loginState')) {
+            window.open(window.location.host + "/trd/", '_blank');
         } else {
             window.router.push('/login');
         }
@@ -58,6 +66,7 @@ module.exports = {
         const props = {
             data: this.data,
             toPage: this.toPage,
+            toTrade: this.toTrade,
             handleNoticeClick: this.handleNoticeClick
         };
         return TopView(props);

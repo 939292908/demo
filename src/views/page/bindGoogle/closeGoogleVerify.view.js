@@ -4,13 +4,25 @@ const closeGLogic = require('@/views/page/bindGoogle/bindGoogle.logic');
 const I18n = require('@/languages/I18n').default;
 const VerifyView = require('@/views/components/dialogVerify/dialogVerify.view');
 const config = require('@/config.js');
+const Header = require('@/views/components/indexHeader/indexHeader.view');
 
 const closeGView = {
     oninit: () => {
+        closeGLogic.currentOperation = 'unbind';
         closeGLogic.initFn();
     },
     view: () => {
         return m('div', { class: `views-page-accountSecurity-bindGoogle-close theme--light pb-7` }, [
+            m(Header, {
+                highlightFlag: 1,
+                navList: [
+                    { to: '', title: I18n.$t('10051') /* '个人总览' */ },
+                    { to: '', title: I18n.$t('10181') /* '账户安全' */ },
+                    { to: '', title: I18n.$t('10182') /* '身份认证' */ },
+                    { to: '', title: I18n.$t('10183') /* 'API管理' */ },
+                    { to: '', title: I18n.$t('10184') /* '邀请返佣' */ }
+                ]
+            }),
             m('div', { class: `operation mb-7 has-bg-level-2` }, [
                 m('div', { class: `content-width container` }, [
                     m('i', { class: `iconfont icon-Return has-text-title` }),
@@ -34,7 +46,7 @@ const closeGView = {
                         m('input', { class: `border-radius-small mt-2 code has-line-level-3`, type: `text` })
                     ]),
                     m('div', { class: `btn mt-8 margin-LRauto` }, [
-                        m('button', { class: `has-bg-primary cursor-pointer`, onclick: () => { closeGLogic.confirmBtn('unbind'); } }, I18n.$t('10337') /* '确定' */)
+                        m('button', { class: `has-bg-primary cursor-pointer`, onclick: () => { closeGLogic.confirmBtn(); } }, I18n.$t('10337') /* '确定' */)
                     ])
                 ])
             ]),

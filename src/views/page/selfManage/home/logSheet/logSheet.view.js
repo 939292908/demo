@@ -14,16 +14,16 @@ module.exports = {
                 ])
             ]),
             m('div.invitattion-qrcode-box pa-8', [
-                m('div.mb-7', [
+                LogSheet.logList.map((item, index) => index < 2 ? m('div.mb-7', [
                     m('div.logText dis-flex justify-between align-center mb-1', [
-                        m('div', 'web'),
-                        m('div', 'web')
+                        m('div', item.country || '--'),
+                        m('div', item.ip || '--')
                     ]),
                     m('div.logAddress dis-flex justify-between align-center', [
-                        m('div', 'Japan'),
-                        m('div', '2020-07-15 05:20:12')
+                        m('div', item.regionName || '--'),
+                        m('div', item.time || '--')
                     ])
-                ])
+                ]) : null)
             ])
         ]);
     }

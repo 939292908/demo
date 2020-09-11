@@ -11,6 +11,7 @@ const model = {
     USDTLabel: [], // 链名称
     selectList: [], // 下拉列表
     tips: '', // 提示
+    tipsAry: [], // 提示数组
     uId: '', // 用户uId
     rechargeAddr: '', // 充币地址
     btnCheckFlag: null, // 默认选中第一个
@@ -124,6 +125,9 @@ const model = {
                     networkNum = model.pageData[i].networkNum;
                 }
 
+                /* 清空温馨提示 */
+                model.tips = '';
+
                 // 小部分温馨提示
                 const fractionTip =
                     /* 禁止向{value}地址充币除{value}之外的资产,任何充入{value}地址的非{value}资产将不可找回 */
@@ -138,7 +142,15 @@ const model = {
                     /* '默认充入我的钱包，您可以通过“资金划转”将资金转至交易账户或者其他账户' */
                     '*' + I18n.$t('10085');
 
-                model.tips = model.pageData[i].promptRecharge !== 0 ? model.pageData[i].promptRecharge + '*' + fractionTip : '' + fractionTip;
+                model.tips = model.pageData[i].promptRecharge !== 0 ? model.pageData[i].promptRecharge + fractionTip : fractionTip;
+
+                const ary = [];
+                for (const i of model.tips.split('*')) {
+                    if (i !== '') {
+                        ary.push(i);
+                    }
+                }
+                model.tipsAry = ary;
 
                 model.memo = model.pageData[i].memo; // 当前选中币种的标签是否显示
                 model.openChains = model.pageData[i].openChains; // 当前选中币种的链名称是否显示
@@ -165,10 +177,22 @@ const model = {
     },
     // 复制文本
     copyText() {
-        const ele = document.getElementsByClassName('addrText')[0];
-        if (ele.value) {
-            ele.select(); // 选择对象
-            document.execCommand("copy", false, null);
+        var div = document.getElementsByClassName('currencyAddr-text')[0];
+        if (this.rechargeAddr !== '') {
+            if (document.body.createTextRange) {
+                const range = document.body.createTextRange();
+                range.moveToElementText(div);
+                range.select();
+            } else if (window.getSelection) {
+                var selection = window.getSelection();
+                const range = document.createRange();
+                range.selectNodeContents(div);
+                selection.removeAllRanges();
+                selection.addRange(range);
+            } else {
+                console.warn("none");
+            }
+            document.execCommand("Copy"); // 执行浏览器复制命令
             return window.$message({ title: I18n.$t('10410') /* '提示' */, content: I18n.$t('10546') /* '复制成功' */, type: 'success' });
         }
     },
@@ -239,6 +263,13 @@ const model = {
             }
         });
         model.uId = gM.getAccount().uid;
+    },
+    copyEditText: function (e) {
+        this.rechargeAddr = '123';
+        console.log(window.clipboardData);
+        window.event.clipboardData.setData('text/plain', this.rechargeAddr);
+        window.event.e.preventDefault();
+        window.$message({ title: I18n.$t('10410') /* '提示' */, content: I18n.$t('10546') /* '复制成功' */, type: 'success' });
     },
     updateFn: function (vnode) { },
     removeFn: function () {

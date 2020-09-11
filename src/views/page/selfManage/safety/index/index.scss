@@ -1,5 +1,4 @@
-.self-manage-home {
-
+.self-manage-safety {
   .dis-flex {
     display: flex;
     flex-flow: nowrap;
@@ -17,16 +16,4 @@
   .cur-pri {
     cursor: pointer;
   }
-  // 页面主要内容
-  .liftingBox {
-    position: relative;
-    height: 56px;
-    margin-bottom: 20px;
-
-    .lifting {
-      position: absolute;
-      top: -56px;
-    }
-  }
-
 }

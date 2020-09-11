@@ -5,9 +5,12 @@ const I18n = require('@/languages/I18n').default;
 const broadcast = require('@/broadcast/broadcast');
 const VerifyView = require('@/views/components/dialogVerify/dialogVerify.view');
 const config = require('@/config.js');
+const Header = require('@/views/components/indexHeader/indexHeader.view');
 
 const openGView = {
+    // totalFlag: false, /* 是否满足校验  默认false不满足 */
     oninit: () => {
+        openGLogic.currentOperation = 'bind';
         openGLogic.initFn();
 
         broadcast.onMsg({
@@ -20,10 +23,9 @@ const openGView = {
         openGView.initNav();
         openGView.checkFlag = 1;
     },
-    // 上方导航（下载App，扫描二维码，备份密钥，开启谷歌验证）
+    /* 导航（下载App，扫描二维码，备份密钥，开启谷歌验证） */
     nav: [],
-    // 当前选中哪个步骤
-    checkFlag: 2,
+    checkFlag: 1, /* 当前选中哪个步骤 */
     initNav() {
         openGView.nav = [
             {
@@ -44,18 +46,12 @@ const openGView = {
             }
         ];
     },
-    // 上一步 下一步
-    modifyCheckFlag(type) {
+    modifyCheckFlag(type) { /* 上一步 下一步 */
         type === 'prev' ? openGView.checkFlag = openGView.checkFlag - 1 : openGView.checkFlag = openGView.checkFlag + 1;
     },
-    // 复制文字
-    copyText(type) {
+    copyText(type) { /* 复制文字 */
         let ele;
-        if (type === 'one') {
-            ele = document.getElementsByClassName('keyText')[0];
-        } else if (type === 'two') {
-            ele = document.getElementsByClassName('keyText')[1];
-        }
+        type === 'one' ? ele = document.getElementsByClassName('keyText')[0] : ele = document.getElementsByClassName('keyText')[1];
         // 选择对象
         ele.select();
         document.execCommand("copy", false, null);
@@ -63,6 +59,16 @@ const openGView = {
     },
     view: () => {
         return m('div', { class: `views-page-accountSecurity-bindGoogle-open theme--light pb-8` }, [
+            m(Header, {
+                highlightFlag: 1,
+                navList: [
+                    { to: '', title: I18n.$t('10051') /* '个人总览' */ },
+                    { to: '', title: I18n.$t('10181') /* '账户安全' */ },
+                    { to: '', title: I18n.$t('10182') /* '身份认证' */ },
+                    { to: '', title: I18n.$t('10183') /* 'API管理' */ },
+                    { to: '', title: I18n.$t('10184') /* '邀请返佣' */ }
+                ]
+            }),
             m('div', { class: `operation mb-7 has-bg-level-2` }, [
                 m('div', { class: `content-width container` }, [
                     m('i', { class: `iconfont icon-Return has-text-title` }),
@@ -121,19 +127,19 @@ const openGView = {
                         m('div', { class: `pwdDiv margin-LRauto` }, [
                             m('span', { class: `body-5` }, I18n.$t('10512') /* '登录密码' */),
                             m('br'),
-                            m('input', { class: `border-radius-small mb-5 mt-2 pwd has-line-level-3`, type: `password`, oninput: function() { openGLogic.check('pwd', this.value); } })
+                            m('input', { class: `border-radius-small mb-5 mt-2 pwd has-line-level-3`, type: `password` })
                         ]),
                         m('div', { class: `codeDiv margin-LRauto` }, [
                             m('span', { class: `body-5 mb-2` }, I18n.$t('10119') /* '谷歌验证码' */),
                             m('br'),
-                            m('input', { class: `border-radius-small mt-2 code has-line-level-3`, type: `text`, oninput: function() { openGLogic.check('code', this.value); } })
+                            m('input', { class: `border-radius-small mt-2 code has-line-level-3`, type: `text` })
                         ]),
-                        m('div', { class: `tips mt-3` }, [
+                        /* m('div', { class: `tips mt-3` }, [
                             m('span', { class: ``, style: { display: openGLogic.pwdTipFlag ? `` : `none` } }, '登录密码错误请重新输入!'),
                             m('span', { class: ``, style: { display: openGLogic.codeTipFlag ? `` : `none` } }, '谷歌验证码输入错误或已过期，请重新输入!')
-                        ]),
+                        ]), */
                         m('div', { class: `btn mt-3 margin-LRauto` }, [
-                            m('button', { class: `has-bg-primary cursor-pointer`, onclick: () => { openGLogic.confirmBtn('bind'); } }, I18n.$t('10337') /* '确定' */)
+                            m('button', { class: `has-bg-primary cursor-pointer`, onclick: () => { openGLogic.confirmBtn(); } }, I18n.$t('10337') /* '确定' */)
                         ])
                     ])
                 ]),

@@ -1,6 +1,6 @@
 const m = require('mithril');
 // const titleLogo = require("@/assets/img/logo/title-logo.png").default;
-const I18n = require("../../../../languages/I18n").default;
+const I18n = require("@/languages/I18n").default;
 const Tooltip = require('@/views/components/common/Tooltip/Tooltip.view.js');
 const utils = require('@/util/utils').default;
 const apiLines = require('@/models/network/lines.js');
@@ -26,7 +26,7 @@ module.exports = {
             m('.navbar-brand', {}, [
                 m('div.navbar-item.cursor-pointer', {
                     onclick: function () {
-                        window.router.push('/');
+                        window.router.push(window.router.defaultRoutePath);
                     }
                 }, [
                     m('svg.icon.header-logo', { "aria-hidden": true }, [
@@ -52,38 +52,61 @@ module.exports = {
                     m('div', {
                         class: "navbar-item has-text-primary-hover cursor-pointer ",
                         onclick: function () {
-                            window.router.push('/');
+                            window.$message({
+                                content: I18n.$t('10513'), // 暂未开放，敬请期待
+                                type: 'primary'
+                            });
                         }
                     }, [
-                        '法币交易'
+                        I18n.$t('10001')// '法币交易'
                     ]),
                     // 合约交易
                     m('div.navbar-item.has-dropdown.is-hoverable', {}, [
                         m('div.navbar-item.ma-0.has-text-primary-hover.cursor-pointer', {}, [
-                            "合约交易"
+                            I18n.$t('10002')// "合约交易"
                         ]),
                         m('div.theme--light', { }, [
                             m('div.navbar-dropdown.has-bg-level-2.border-radius-medium.pa-0', {}, [
-                                m('a', { class: `navbar-item media is-align-items-center pa-5 ma-0` }, [
-                                    m('div.media-left.pa-3', {}, [
-                                        m('div', { class: `header-navbar-item-icon has-line-level-3 mr-2` })
-                                    ]),
+                                m('a', {
+                                    class: `navbar-item media is-align-items-center pa-5 ma-0`,
+                                    href: '/w/trd/',
+                                    target: "_blank"
+                                }, [
+                                    // m('div.media-left.pa-3', {}, [
+                                    //     m('div', { class: `header-navbar-item-icon has-line-level-3 mr-2` })
+                                    // ]),
                                     m('div', { class: `media-content` }, [
                                         m('div', { class: `content` }, [
-                                            m('p', { class: `title-small` }, "USDT永续合约"),
-                                            m('p', { class: `body-4 has-text-level-3` }, [" 最高百倍杠杆，交易简单"])
+                                            m('p', { class: `title-small` }, [
+                                                // "USDT永续合约"
+                                                'USDT ' + I18n.$t('10033')
+                                            ]),
+                                            m('p', { class: `body-4 has-text-level-3` }, [
+                                                // " 最高百倍杠杆，交易简单"
+                                                I18n.$t('10591')
+                                            ])
                                         ])
                                     ])
                                 ]),
-                                m('a', { class: `navbar-item media is-align-items-center pa-5 ma-0` }, [
-                                    m('div.media-left.pa-3', {}, [
-                                        m('div', { class: `header-navbar-item-icon has-line-level-3 mr-2` })
-                                    ]),
+                                m('a', {
+                                    class: `navbar-item media is-align-items-center pa-5 ma-0`,
+                                    href: '/w/trd/',
+                                    target: "_blank"
+                                }, [
+                                    // m('div.media-left.pa-3', {}, [
+                                    //     m('div', { class: `header-navbar-item-icon has-line-level-3 mr-2` })
+                                    // ]),
                                     m('div', { class: `media-content` }, [
                                         m('div', { class: `content` }, [
-                                            m('span', { class: `title-small` }, "全币种合约"),
+                                            m('span', { class: `title-small` }, [
+                                                // "全币种合约"
+                                                I18n.$t('10035')
+                                            ]),
                                             m('span', { class: `header-new-info has-bg-primary px-3 ml-2` }, ["NEW"]),
-                                            m('p', { class: `body-4 has-text-level-3` }, [" 小币种开仓，统一价格标的"])
+                                            m('p', { class: `body-4 has-text-level-3` }, [
+                                                // " 小币种开仓，统一价格标的"
+                                                I18n.$t('10592')
+                                            ])
                                         ])
                                     ])
                                 ])
@@ -93,18 +116,26 @@ module.exports = {
                     m('div', {
                         class: "navbar-item has-text-primary-hover cursor-pointer ",
                         onclick: function () {
-                            window.router.push('/');
+                            window.$message({
+                                content: I18n.$t('10513'), // 暂未开放，敬请期待
+                                type: 'primary'
+                            });
                         }
                     }, [
-                        '币币交易'
+                        // '币币交易'
+                        I18n.$t('10003')
                     ]),
                     m('div', {
                         class: "navbar-item has-text-primary-hover cursor-pointer ",
                         onclick: function () {
-                            window.router.push('/');
+                            window.$message({
+                                content: I18n.$t('10513'), // 暂未开放，敬请期待
+                                type: 'primary'
+                            });
                         }
                     }, [
-                        'ETF专区'
+                        // 'ETF专区'
+                        I18n.$t('10004')
                     ]),
                     m('div', {
                         class: "navbar-item has-text-primary-hover cursor-pointer ",
@@ -112,7 +143,8 @@ module.exports = {
                             window.open('https://vbithelp.zendesk.com/hc/zh-cn/sections/360007960273');
                         }
                     }, [
-                        '新手帮助'
+                        // '新手帮助'
+                        I18n.$t('10005')
                     ])
                 ]),
                 m('div.navbar-end.mr-3', {}, [
@@ -160,7 +192,8 @@ module.exports = {
                     // 资产
                     m('div.navbar-item.has-dropdown.is-hoverable' + (utils.getItem('loginState') ? '' : '.is-hidden'), {}, [
                         m('div.navbar-item.ma-0.has-text-primary-hover.cursor-pointer', {}, [
-                            "资产"
+                            // "资产"
+                            I18n.$t('10049')
                         ]),
                         m('div.theme--light', { }, [
                             m('div.navbar-dropdown.is-right.has-bg-level-2.border-radius-medium', {}, [
@@ -175,7 +208,8 @@ module.exports = {
                                         });
                                     }
                                 }, [
-                                    '我的钱包'
+                                    // '我的钱包'
+                                    I18n.$t('10055')
                                 ]),
                                 m('a', {
                                     class: `navbar-item columns has-text-primary-hover min-width-200 ma-0 px-6 py-4 body-5`,
@@ -188,7 +222,8 @@ module.exports = {
                                         });
                                     }
                                 }, [
-                                    '合约账户'
+                                    // '合约账户'
+                                    I18n.$t('10072')
                                 ]),
                                 m('a', {
                                     class: `navbar-item columns has-text-primary-hover min-width-200 ma-0 px-6 py-4 body-5`,
@@ -201,7 +236,8 @@ module.exports = {
                                         });
                                     }
                                 }, [
-                                    '币币账户'
+                                    // '币币账户'
+                                    I18n.$t('10073')
                                 ]),
                                 m('a', {
                                     class: `navbar-item columns has-text-primary-hover min-width-200 ma-0 px-6 py-4 body-5`,
@@ -214,7 +250,8 @@ module.exports = {
                                         });
                                     }
                                 }, [
-                                    '法币账户'
+                                    // '法币账户'
+                                    I18n.$t('10074')
                                 ])
                             ])
                         ])
@@ -239,32 +276,37 @@ module.exports = {
                                     ])
                                 ]),
                                 m('a', {
-                                    class: `navbar-item columns has-text-primary-hover min-width-200 ma-0 px-6 py-4 body-5`
+                                    class: `navbar-item columns has-text-primary-hover min-width-200 ma-0 px-6 py-4 body-5 is-hidden`
                                 }, [
-                                    '账户安全'
+                                    // '账户安全'
+                                    I18n.$t('10181')
                                 ]),
                                 m('a', {
-                                    class: `navbar-item columns has-text-primary-hover min-width-200 ma-0 px-6 py-4 body-5`
+                                    class: `navbar-item columns has-text-primary-hover min-width-200 ma-0 px-6 py-4 body-5 is-hidden`
                                 }, [
-                                    '身份认证'
+                                    // '身份认证'
+                                    I18n.$t('10182')
                                 ]),
                                 m('a', {
-                                    class: `navbar-item columns has-text-primary-hover min-width-200 ma-0 px-6 py-4 body-5`
+                                    class: `navbar-item columns has-text-primary-hover min-width-200 ma-0 px-6 py-4 body-5 is-hidden`
                                 }, [
-                                    'API管理'
+                                    // 'API管理'
+                                    I18n.$t('10183')
                                 ]),
-                                // m('a', {
-                                //     class: `navbar-item columns has-text-primary-hover min-width-200 ma-0 px-6 py-4 body-5`
-                                // }, [
-                                //     '邀请返佣'
-                                // ]),
+                                m('a', {
+                                    class: `navbar-item columns has-text-primary-hover min-width-200 ma-0 px-6 py-4 body-5 is-hidden`
+                                }, [
+                                    // '邀请返佣'
+                                    I18n.$t('10184')
+                                ]),
                                 m('a', {
                                     class: `navbar-item columns has-text-primary-hover min-width-200 ma-0 px-6 py-4 body-5`,
                                     onclick: () => {
                                         header.loginOut();
                                     }
                                 }, [
-                                    '退出登录'
+                                    // '退出登录'
+                                    I18n.$t('10185')
                                 ])
                             ])
                         ])
@@ -284,7 +326,10 @@ module.exports = {
                                     ]),
                                     m('div', { class: `media-content` }, [
                                         m('div', { class: `content` }, [
-                                            m('p', { class: `title-small` }, "扫码下载APP"),
+                                            m('p', { class: `title-small` }, [
+                                                // "扫码下载APP"
+                                                I18n.$t('10489')
+                                            ]),
                                             m('p', { class: `title-small` }, "iOS&Android")
                                         ])
                                     ])
@@ -302,7 +347,8 @@ module.exports = {
                                 m('div', {
                                     class: "navbar-item px-6 ma-0 pa-0 title-small is-flex"
                                 }, [
-                                    `线路切换(${apiLines.netLines.length})`,
+                                    // `线路切换(${apiLines.netLines.length})`,
+                                    I18n.$t('10153', { value: apiLines.netLines.length }),
                                     m('div.spacer'),
                                     m('button.button.is-light.pa-0', {
                                         onclick: function() {
@@ -325,7 +371,8 @@ module.exports = {
                                             item.Name
                                         ]),
                                         m('span.column.has-text-left', {}, [
-                                            '延迟 ' + apiLines.wsResponseSpeed[i] + '/' + apiLines.apiResponseSpeed[i] + 'ms'
+                                            // '延迟 ' + apiLines.wsResponseSpeed[i] + '/' + apiLines.apiResponseSpeed[i] + 'ms'
+                                            I18n.$t('10155') + ' ' + apiLines.wsResponseSpeed[i] + '/' + apiLines.apiResponseSpeed[i] + 'ms'
                                         ])
                                     ]);
                                 })
@@ -368,11 +415,13 @@ module.exports = {
                 slot: { // 插槽
                     header: m('div.w100', {}, [
                         m('div', {}, [
-                            `Web网络监测(${globalModels.getAccount().uid})`
+                            // `Web网络监测(${globalModels.getAccount().uid})`
+                            `${I18n.$t('10164')}(${globalModels.getAccount().uid})`
                         ]),
                         m('article.body-4.has-text-level-3.message.is-warning.mt-4.mr-4.flex-shrink-initial', {}, [
                             m('div.message-body.border-1', {}, [
-                                '此页面仅用于定位您的浏览器和网络信息，不涉及您的隐私信息， 请放心使用。'
+                                // '此页面仅用于定位您的浏览器和网络信息，不涉及您的隐私信息，请放心使用。'
+                                I18n.$t('10165')
                             ])
                         ])
                     ]),

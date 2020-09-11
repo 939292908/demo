@@ -39,9 +39,12 @@
         border-radius: 50px;
         display: inline-block;
         background: linear-gradient(110.35deg, #EFE7DB 7.31%, #CEC6B8 81.37%);
-
-        .span, i {
-          vertical-align: middle;
+        span {
+          position: relative;
+          top: -2px;
+        }
+        .icon-copy:before {
+          font-size: var(--c-fontsz-level5);
         }
       }
     }

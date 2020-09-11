@@ -1,6 +1,7 @@
 const Fingerprint2 = require('fingerprintjs2');
 const m = require('mithril');
-const utils = require('../../../../../util/utils.js').default;
+const utils = require('@/util/utils.js').default;
+const I18n = require("@/languages/I18n").default;
 // const { getISP } = require('@/api/').webApi;
 
 const deviceInfo = {
@@ -70,7 +71,7 @@ const deviceInfo = {
                     that.info.location.value = item.value;
                     break;
                 case 'screenResolution':
-                    that.info.explore.value = `\n 浏览器宽: ${screen.width} \n 浏览器高: ${screen.height}`;
+                    that.info.explore.value = `${I18n.$t('10490')} ${screen.width}  ${I18n.$t('10491')} ${screen.height}`;// `\n 浏览器宽: ${screen.width} \n 浏览器高: ${screen.height}`;
                     break;
                 }
             }

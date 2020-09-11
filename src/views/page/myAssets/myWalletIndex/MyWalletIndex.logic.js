@@ -186,16 +186,6 @@ const model = {
             window.router.push(item.to);
         }
     },
-    // 交易账户（...）显示与隐藏切换
-    switchDisplay: function (param, flag) {
-        if (param === 'tradeCard') {
-            if (flag === 'show') {
-                document.getElementsByClassName('tradeCard')[0].style.display = '';
-            } else if (flag === 'hide') {
-                document.getElementsByClassName('tradeCard')[0].style.display = 'none';
-            }
-        }
-    },
     // 提币，内部转账，资金划转悬浮样式
     changeBtnSty: function (index, type) {
         if (index !== 0) {

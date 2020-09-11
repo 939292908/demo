@@ -8,7 +8,7 @@ module.exports = {
                 m.fragment(vnode.attrs.nav),
                 m('div.pad-bottom', m.fragment(vnode.attrs.content))
             ])),
-            m('.main', m('.content-width marg-auto mainBody pb-8', vnode.children))
+            m('.main', m('.content-width marg-auto mainBody pb-7', vnode.children))
         ]);
     }
 };
