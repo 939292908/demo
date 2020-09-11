@@ -276,7 +276,12 @@ module.exports = {
                                     ])
                                 ]),
                                 m('a', {
-                                    class: `navbar-item columns has-text-primary-hover min-width-200 ma-0 px-6 py-4 body-5 is-hidden`
+                                    class: `navbar-item columns has-text-primary-hover min-width-200 ma-0 px-6 py-4 body-5`,
+                                    onclick: function () {
+                                        window.router.push({
+                                            path: '/selfManage'
+                                        });
+                                    }
                                 }, [
                                     // '账户安全'
                                     I18n.$t('10181')

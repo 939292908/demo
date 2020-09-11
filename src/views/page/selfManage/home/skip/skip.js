@@ -1,17 +1,7 @@
 const m = require('mithril');
 const Block = require('../block');
-// const safety30 = require('./Authentication.svg').default;
-// const attestation30 = require('./AccountSecurity.svg').default;
 const l180n = require('@/languages/I18n').default;
-// const { Conf } = require('@/api');
 require('./skip.scss');
-
-// const safety = {
-//     30: safety30
-// };
-// const attestation = {
-//     30: attestation30
-// };
 
 const Skip = {
     list: [
@@ -22,7 +12,7 @@ const Skip = {
                 subhead: '帮助您提高账户的安全等级'
             },
             rightVnode: 'iconfont icon-arrow-right',
-            urlTo: ''
+            urlTo: '/securityManage'
         },
         {
             leftVnode: {
@@ -38,7 +28,8 @@ const Skip = {
 
 module.exports = {
     skipTo: function (item) {
-        if (!item.urlTo) window.$message({ title: l180n.$t('10410') /* '提示' */, content: '功能暂未开放，敬请期待', type: 'success' });
+        if (!item.urlTo) window.$message({ title: l180n.$t('10410') /* '提示' */, content: '功能暂未开放，敬请期待', type: 'primary' });
+        window.router.push(item.urlTo);
     },
     view: function () {
         return m('.self-manage-skip content-width dis-flex justify-between align-center', [

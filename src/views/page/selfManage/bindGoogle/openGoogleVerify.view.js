@@ -1,6 +1,6 @@
 const m = require('mithril');
-require('@/views/page/bindGoogle/bindGoogle.scss');
-const openGLogic = require('@/views/page/bindGoogle/bindGoogle.logic');
+require('@/views/page/selfManage/bindGoogle/bindGoogle.scss');
+const openGLogic = require('@/views/page/selfManage/bindGoogle/bindGoogle.logic');
 const I18n = require('@/languages/I18n').default;
 const broadcast = require('@/broadcast/broadcast');
 const VerifyView = require('@/views/components/dialogVerify/dialogVerify.view');
@@ -64,8 +64,8 @@ const openGView = {
             m(Header, {
                 highlightFlag: 1,
                 navList: [
-                    { to: '', title: I18n.$t('10051') /* '个人总览' */ },
-                    { to: '', title: I18n.$t('10181') /* '账户安全' */ },
+                    { to: '/selfManage', title: I18n.$t('10051') /* '个人总览' */ },
+                    { to: '/securityManage', title: I18n.$t('10181') /* '账户安全' */ },
                     { to: '', title: I18n.$t('10182') /* '身份认证' */ },
                     { to: '', title: I18n.$t('10183') /* 'API管理' */ },
                     { to: '', title: I18n.$t('10184') /* '邀请返佣' */ }
