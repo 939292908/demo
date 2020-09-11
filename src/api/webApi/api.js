@@ -629,7 +629,7 @@ export function relieveGoogleAuth (params = {}, options = { withCredentials: fal
 /**
  * 修改密码
  * @param {Object} params {
-        password: '5bacd9f25613659b2fbd2f3a58822e5c' // 用户老密码
+        oldPasswd: '5bacd9f25613659b2fbd2f3a58822e5c' // 用户老密码
         Passwd1:'fa22fb87b07ae7407f5ceda208a47996' // 新密码
         Passwd2:'fa22fb87b07ae7407f5ceda208a47996' // 确认密码
     }

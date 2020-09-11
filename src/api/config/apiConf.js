@@ -89,12 +89,12 @@ class Conf {
         };
         // 设置默认线路
         this.Active = this.M[aKey].netLines[0];
-        let lines = window.localStorage.getItem('net_lines_config');
+        let lines = window.localStorage.getItem('net_lines_config_web');
         if (lines) {
             lines = JSON.parse(lines);
             this.M[aKey].netLines = lines;
         }
-        let active = window.localStorage.getItem('net_lines_active');
+        let active = window.localStorage.getItem('net_lines_active_web');
         if (active) {
             active = JSON.parse(active);
             this.Active = active;
@@ -117,7 +117,7 @@ class Conf {
                     this.Active = item;
                 }
             }
-            window.localStorage.setItem('net_lines_active', JSON.stringify(this.Active));
+            window.localStorage.setItem('net_lines_active_web', JSON.stringify(this.Active));
         }
     }
 
@@ -151,7 +151,7 @@ class Conf {
                 }
                 if (lines.length > 0) {
                     s.M[s.BUILD_ENV].netLines = lines;
-                    window.localStorage.setItem('net_lines_config', JSON.stringify(lines));
+                    window.localStorage.setItem('net_lines_config_web', JSON.stringify(lines));
                 }
                 CallBack && CallBack();
             }

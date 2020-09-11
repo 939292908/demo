@@ -27,7 +27,7 @@ module.exports = {
     },
     toTrade: function () {
         if (utils.getItem('loginState')) {
-            window.open(window.location.host + "/trd/", '_blank');
+            window.open("trd/", '_blank');
         } else {
             window.router.push('/login');
         }

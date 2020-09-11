@@ -8,7 +8,7 @@ require('@/views/page/home/introduce/introduce.scss');
 module.exports = {
     toPage() {
         if (utils.getItem('loginState')) {
-            window.open("w/trd/", '_blank');
+            window.open("trd/", '_blank');
         } else {
             window.router.push('/login');
         }

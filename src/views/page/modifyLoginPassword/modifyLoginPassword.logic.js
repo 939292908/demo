@@ -73,7 +73,7 @@ module.exports = {
         } else if (typeFlag === 2) {
             params = {
                 areaCode: that.nationNo, // 区号
-                phoneNum: that.phoneNum, // 手机号
+                phoneNum: that.nationNo + '-' + that.phoneNum, // 手机号
                 lang: I18n.getLocale(),
                 mustCheckFn: "" // 验证类型
             };
@@ -85,7 +85,7 @@ module.exports = {
             params = {
                 smsConfig: {
                     areaCode: that.nationNo, // 区号
-                    phoneNum: that.phoneNum, // 手机号
+                    phoneNum: that.nationNo + '-' + that.phoneNum, // 手机号
                     lang: I18n.getLocale(),
                     mustCheckFn: "" // 验证类型
                 }
@@ -100,19 +100,21 @@ module.exports = {
         const oldPwd = document.getElementsByClassName('oldPwd')[0].value;
         const newPwd = document.getElementsByClassName('newPwd')[0].value;
         const confirmPwd = document.getElementsByClassName('confirmPWd')[0].value;
-        // console.log(oldPwd, newPwd, confirmPwd);
+        console.log(oldPwd, newPwd, confirmPwd);
         const that = this;
 
         Http.changePasswd({
-            password: md5(oldPwd),
+            oldPasswd: md5(oldPwd),
             Passwd1: md5(newPwd),
             Passwd2: md5(confirmPwd)
         }).then(function(arg) {
             console.log('nzm', 'changePasswd success', arg);
             if (arg.result.code === 0) {
                 console.log('success');
+                window.$message({ content: '密码修改成功', type: 'danger' });
             } else {
-                window.$message({ content: errCode.getWebApiErrorCode(arg.result.code), type: 'danger' });
+                console.log('arg.result.code', arg.result.code, errCode.getWebApiErrorCode(arg.result.code));
+                // window.$message({ content: errCode.getWebApiErrorCode(arg.result.code), type: 'danger' });
             }
             that.switchSafetyVerifyModal(false); // 关闭安全验证弹框
             m.redraw();

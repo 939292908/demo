@@ -41,7 +41,7 @@ const modifyLPView = {
     },
     /* 确认按钮事件 */
     confirmBtn: function() {
-        console.log(modifyLPView.totalFlag);
+        // console.log(modifyLPView.totalFlag);
         if (!modifyLPView.totalFlag) {
             // alert("不满足要求");
             return;

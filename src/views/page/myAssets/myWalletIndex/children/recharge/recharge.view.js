@@ -76,7 +76,7 @@ module.exports = {
                         m('div', { class: `mt-2` }, [
                             rechargeIndex.USDTLabel.map((item, index) => {
                                 return m('button', {
-                                    class: `mr-6 button button-small is-primary` + (rechargeIndex.btnCheckFlag === item ? `` : ` is-outlined`),
+                                    class: `mr-6 button button-small is-primary` + (rechargeIndex.btnCheckFlag === item ? ` has-text-white` : ` is-outlined`),
                                     key: item,
                                     onclick: () => { rechargeIndex.changeBtnflag(item); }
                                 }, item);
