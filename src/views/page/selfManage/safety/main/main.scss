@@ -1,0 +1,28 @@
+.safety-man {
+  position: relative;
+  padding-top: 331px;
+
+  .leezBlock { // 覆盖 block 组件样式
+    border: none;
+  }
+
+  .liftingBox {
+    position: absolute;
+    top: -56px;
+  }
+
+  .leftBox, .rightBox {
+    width: 592px;
+    box-sizing: border-box;
+  }
+  .leftBox {
+
+    .addPadding {
+      //padding: 20px 0;
+      box-sizing: border-box;
+      border-top: 1px solid rgba(10, 13, 22, 0.04);
+      border-bottom: 1px solid rgba(10, 13, 22, 0.04);
+      background-color: #FFFFFF;
+    }
+  }
+}

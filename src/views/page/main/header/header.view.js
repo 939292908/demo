@@ -72,9 +72,9 @@ module.exports = {
                                     href: '/w/trd/',
                                     target: "_blank"
                                 }, [
-                                    m('div.media-left.pa-3', {}, [
-                                        m('div', { class: `header-navbar-item-icon has-line-level-3 mr-2` })
-                                    ]),
+                                    // m('div.media-left.pa-3', {}, [
+                                    //     m('div', { class: `header-navbar-item-icon has-line-level-3 mr-2` })
+                                    // ]),
                                     m('div', { class: `media-content` }, [
                                         m('div', { class: `content` }, [
                                             m('p', { class: `title-small` }, [
@@ -93,9 +93,9 @@ module.exports = {
                                     href: '/w/trd/',
                                     target: "_blank"
                                 }, [
-                                    m('div.media-left.pa-3', {}, [
-                                        m('div', { class: `header-navbar-item-icon has-line-level-3 mr-2` })
-                                    ]),
+                                    // m('div.media-left.pa-3', {}, [
+                                    //     m('div', { class: `header-navbar-item-icon has-line-level-3 mr-2` })
+                                    // ]),
                                     m('div', { class: `media-content` }, [
                                         m('div', { class: `content` }, [
                                             m('span', { class: `title-small` }, [

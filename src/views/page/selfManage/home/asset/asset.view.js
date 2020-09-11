@@ -2,6 +2,7 @@ const m = require('mithril');
 const Echarts = require('@/libs/echarts');
 const AssetData = require('./asset.logic');
 const options = require('./pir');
+const I18n = require('@/languages/I18n').default;
 require('./asset.scss');
 
 const assetView = {
@@ -43,30 +44,30 @@ const assetView = {
     },
     getallMoneyVnode: function () {
         return m.fragment(m('div.data-item mb-7', [
-            m('div.data-text mb-1', '资产总额'),
+            m('div.data-text mb-1', I18n.$t('10212') /* '资产总额' */),
             m('div.data-price mb-1', `${AssetData.AssetOverview.coinToBTC}BTC`)
         ]),
         m('div.dis-flex align-center', [
             m('div.data-item', [
-                m('div.data-text mb-1', '资产估值'),
+                m('div.data-text mb-1', I18n.$t('10213') /* '资产估值' */),
                 m('div.data-price mb-1', `${AssetData.AssetOverview.coinToCNY}`)
             ])
         ]));
     },
     getContractVnode: function () {
         return m.fragment(m('div.data-item mb-7', [
-            m('div.data-text mb-1', '账户权益'),
+            m('div.data-text mb-1', I18n.$t('10076') /* '账户权益' */),
             m('div.data-price mb-1', `${AssetData.AssetOverview.coinToBTC}BTC`),
             m('div.data-text', `≈ ￥${AssetData.AssetOverview.coinToCNY}`)
         ]),
         m('div.dis-flex align-center', [
             m('div.data-item mr-9', [
-                m('div.data-text mb-1', '保证金余额'),
+                m('div.data-text mb-1', I18n.$t('10219') /* '保证金余额' */),
                 m('div.data-price mb-1', `${AssetData.AssetOverview.NLToBTC}BTC`),
                 m('div.data-text', `≈ ￥${AssetData.AssetOverview.NLToCRN}`)
             ]),
             m('div.data-item', [
-                m('div.data-text mb-1', '未实现盈亏'),
+                m('div.data-text mb-1', I18n.$t('10077') /* '未实现盈亏' */),
                 m('div.data-price mb-1', `${AssetData.AssetOverview.UPNLToBTC}BTC`),
                 m('div.data-text', `≈ ￥${AssetData.AssetOverview.UPNLToCRN}`)
             ])
@@ -77,7 +78,7 @@ const assetView = {
             // block header
             m('.asset-header dis-flex justify-between align-center', [
                 m('div.asset-title', { onclick: () => { AssetData.handleEditShow(); } }, [
-                    m('span', '资产总览'),
+                    m('span', I18n.$t('10152') /* '资产总览' */),
                     AssetData.isShow ? m('i.iconfont icon-yincang  cur-pri') : m('i.iconfont icon-zichanzhengyan  cur-pri')
                 ]),
                 m('div.cur-pri', m('i.iconfont icon-arrow-right'))

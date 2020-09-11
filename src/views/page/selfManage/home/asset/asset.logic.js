@@ -8,7 +8,7 @@ const broadcast = require('@/broadcast/broadcast');
 const manageAssetData = {
     walletAcId: 'all',
     walletList: [
-        { label: '资产总览', activeId: 'all' },
+        { label: l180n.$t('10152') /* '资产总览' */, activeId: 'all' },
         { label: '我的钱包', activeId: '03' },
         { label: '合约账户', activeId: '01' },
         { label: '币币账户', activeId: '02' },
