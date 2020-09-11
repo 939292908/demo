@@ -38,7 +38,7 @@ const Skip = {
 
 module.exports = {
     skipTo: function (item) {
-        if (!item.urlTo) window.$message({ title: l180n.$t('10410') /* '提示' */, content: '功能暂未开放，敬请期待', type: 'success' });
+        if (!item.urlTo) window.$message({ title: l180n.$t('10410') /* '提示' */, content: '功能暂未开放，敬请期待', type: 'primary' });
         window.router.push(item.urlTo);
     },
     view: function () {
