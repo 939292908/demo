@@ -30,7 +30,6 @@ module.exports = {
                 areaCode: globalModels.getAccount().nationNo, // 区号
                 phone: globalModels.getAccount().phone, // 手机号
                 phoneNum: globalModels.getAccount().nationNo + '-' + globalModels.getAccount().phone, // 手机号
-                resetPwd: true,
                 lang: I18n.getLocale() // 语言
             };
             if (globalModels.getAccount().googleId) {

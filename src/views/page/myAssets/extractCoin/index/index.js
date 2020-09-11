@@ -18,7 +18,7 @@ const I18n = require('@/languages/I18n').default;
 require('./index.scss');
 module.exports = {
     oninit() {
-        AssetRecords.init('03', 'withdraw', 10);
+        AssetRecords.init('03', 'withdraw', 2, 10);
         AssetRecords.setLanguageListen();
     },
     onremove() {

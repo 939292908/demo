@@ -175,14 +175,14 @@ methods.getTransferHisStr = function(p, coin) {
 
 methods.getRecordsType5Str = function(p, coin) {
     const obj = {
-        ins_pay: '合约保险-保险金扣除', // '合约保险-保险金扣除',
-        ins_back: '合约保险-保险金退款', // '合约保险-保险金退款',
-        ins_back2: '合约保险-保险金退款' // '合约保险-保险金退款',
+        ins_pay: I18n.$t('10588'), // '合约保险-保险金扣除',
+        ins_back: I18n.$t('10589'), // '合约保险-保险金退款',
+        ins_back2: I18n.$t('10589') // '合约保险-保险金退款',
     };
     let str = obj[p] || I18n.$t('10140');
     if (!str) {
         if (p.includes('INS_')) {
-            str = '合约保险-获得赔付金额';
+            str = I18n.$t('10590'); // '合约保险-获得赔付金额'
         } else {
             str = I18n.$t('10140'); // '其他类型'
         }

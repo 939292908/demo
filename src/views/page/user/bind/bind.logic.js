@@ -72,7 +72,6 @@ module.exports = {
             areaCode: '00' + this.areaCode, // 区号
             phone: globalModels.getAccount().phone, // 手机号
             phoneNum: '00' + this.areaCode + '-' + globalModels.getAccount().phone, // 手机号
-            resetPwd: true,
             lang: I18n.getLocale() // 语言
         }, () => {
             this.queryUserInfo();
@@ -99,7 +98,6 @@ module.exports = {
             areaCode: '00' + this.areaCode, // 区号
             phone: globalModels.getAccount().phone, // 手机号
             phoneNum: '00' + this.areaCode + '-' + globalModels.getAccount().phone, // 手机号
-            resetPwd: true,
             lang: I18n.getLocale() // 语言
         }, () => {
             this.queryUserInfo();
