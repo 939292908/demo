@@ -94,6 +94,8 @@ module.exports = {
     calcTrdWltLastTm: 0,
     // 计算交易资产的时间间隔
     calcTrdWltInterval: 1000,
+    // 是否正在请求风险限额
+    isReqRiskLimits: false,
 
     init: function () {
         // 初始化
@@ -169,7 +171,7 @@ module.exports = {
             cmd: broadcast.EV_GET_WLT_READY,
             cb: function (arg) {
                 // console.log('EV_GET_WLT_READY', arg);
-                that.trdDataOnFun();
+                that.calcTrdWlt();
             }
         });
         // 资产更新广播
@@ -178,7 +180,7 @@ module.exports = {
             cmd: broadcast.EV_WLT_UPD,
             cb: function (arg) {
                 // console.log('EV_WLT_UPD', arg);
-                that.trdDataOnFun();
+                that.calcTrdWlt();
             }
         });
         // 交易风险限额数据获取完成广播
@@ -430,11 +432,11 @@ module.exports = {
                     case 'UPNLToCRN':
                     case 'UPNLToBTC':
                     case 'wdrawable':
-                        console.log(key, item[key]);
+                        // console.log(key, item[key]);
                         // 此处跳过数据更新
                         break;
                     default:
-                        console.log('default', key, item[key]);
+                        // console.log('default', key, item[key]);
                         this.wallet_obj['01'][item.wType][key] = item[key];
                     }
                 }
@@ -639,8 +641,10 @@ module.exports = {
         const orderArr = [];
         for (const key in Orders['01']) {
             const item = {};
-            utils.copyTab(item, Orders['01'][key]);
-            orderArr.push(item);
+            if (Orders['01'][key].OType === 1 || Orders['01'][key].OType === 2) {
+                utils.copyTab(item, Orders['01'][key]);
+                orderArr.push(item);
+            }
         }
         // console.log('orderArr', orderArr);
         calcFutureWltAndPosAndMI(
@@ -651,8 +655,8 @@ module.exports = {
             AssetD,
             lastTick,
             config.future.UPNLPrzActive,
-            config.future.UPNLPrzActive,
-            config.future.UPNLPrzActive,
+            config.future.MMType,
+            config.future.PrzLiqType,
             arg => {
                 // console.log('calcFutureWltAndPosAndMI CallBack', arg);
                 that.updTrdWlt(arg.wallets);
@@ -720,6 +724,7 @@ module.exports = {
     // 获取钱包计算所需风险限额
     getRiskLimits: function() {
         // ReqTrdGetRiskLimits
+        const that = this;
         const Authrized = gTrdApi.RT.Authrized;// aObj.AUTH_ST_OK
         const AssetD = gMktApi.AssetD;
         if (Authrized === gTrdApi.AUTH_ST_OK && Object.keys(AssetD).length > 0) {
@@ -731,9 +736,15 @@ module.exports = {
                 }
             }
             if (aymArr.length > 0) {
+                if (this.isReqRiskLimits) {
+                    return;
+                }
+                this.isReqRiskLimits = true;
                 gTrdApi.ReqTrdGetRiskLimits({
                     AId: gTrdApi.RT.UserId + "01",
                     Sym: aymArr.join(',')
+                }, function() {
+                    that.isReqRiskLimits = false;
                 });
             }
         }

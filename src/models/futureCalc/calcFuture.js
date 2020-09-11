@@ -179,8 +179,8 @@ export function calcPos(posArr, sumMI, assetD, lastTick, UPNLPrzActive, WltBalOb
 
         let MM = 0; let _MM = 0; let UPNLforM = 0; let UPNLforLast = 0; let UrP = 0; let UrL = 0; let profitPer = 0; let AvailMgnISO = 0;
 
-        UPNLforLast = (ValL > 0 && ValIni > 0) ? ValL - ValIni : 0;
-        UPNLforM = (ValM > 0 && ValIni > 0) ? ValM - ValIni : 0;
+        UPNLforLast = (ValL !== 0 && ValIni !== 0) ? ValL - ValIni : 0;
+        UPNLforM = (ValM !== 0 && ValIni !== 0) ? ValM - ValIni : 0;
 
         UrP = UPNLforM > 0 ? UPNLforM : 0;
         UrL = UPNLforM < 0 ? UPNLforM : 0;
@@ -223,7 +223,7 @@ export function calcPos(posArr, sumMI, assetD, lastTick, UPNLPrzActive, WltBalOb
             SumMMForLever0[ass.SettleCoin] += (_MM || 0);
         }
 
-        SumUPNLForM[ass.SettleCoin] = !SumUPNLForM[ass.SettleCoin] ? 0 : SumUPNLForM[ass.SettleCoin];
+        SumUPNLForM[ass.SettleCoin] = SumUPNLForM[ass.SettleCoin] || 0;
         if (pos.Lever === 0) {
             SumUPNLForM[ass.SettleCoin] += (UPNLforM || 0);
         }
