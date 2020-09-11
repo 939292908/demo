@@ -9,14 +9,6 @@
             display: inline-block;
         }
     }
-    .dropdown-content{
-        padding: 0px !important;
-        width: 120px;
-    }
-    .dropdown-item{
-        width: 120px;
-        padding: 0px !important;
-    }
     .bottom{
         margin: 0 auto;
         .bottom-upper{
@@ -29,6 +21,7 @@
                 background: #FAFAFA;
                 display: inline-block;
                 .currencyAddr-text{
+                    margin-right: 24px;
                     height: 35px;
                     line-height: 35px;
                     float: left;
@@ -49,6 +42,16 @@
                     float: left;
                 }
                 clear: both;
+                .iImg{
+                    .dropdown-content{
+                        padding: 0px !important;
+                        width: 120px;
+                    }
+                    .dropdown-item{
+                        width: 120px;
+                        padding: 0px !important;
+                    }
+                }
             }
             .xrpLable{
                 height: 48px;
