@@ -40,7 +40,7 @@ export default {
             key: "tw",
             language: "繁体中文",
             imgName: "china_icon",
-            open: 0
+            open: 1
         },
         kr: {
             韩语: "注释",
