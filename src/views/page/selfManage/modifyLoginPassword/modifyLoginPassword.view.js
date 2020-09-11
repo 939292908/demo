@@ -1,24 +1,26 @@
 const m = require('mithril');
-require('@/views/page/modifyLoginPassword/modifyLoginPassword.scss');
-const modifyLPLogic = require('@/views/page/modifyLoginPassword/modifyLoginPassword.logic');
+require('@/views/page/selfManage/modifyLoginPassword/modifyLoginPassword.scss');
+const modifyLPLogic = require('@/views/page/selfManage/modifyLoginPassword/modifyLoginPassword.logic');
 const I18n = require('@/languages/I18n').default;
 const config = require('@/config.js');
 const VerifyView = require('@/views/components/dialogVerify/dialogVerify.view');
 const Header = require('@/views/components/indexHeader/indexHeader.view');
+const InputWithComponent = require('@/views/components/inputWithComponent/inputWithComponent.view');
 
 const modifyLPView = {
     pwdIsDifferent: false, // 【密码不一致】提示是否显示
     oldAndnewIsDifferent: false, // 【原密码与新密码不可相同】提示是否显示
     totalFlag: false, /* 是否通过校验 */
+    showPassword1: false, /* 是否显示密码 */
+    showPassword2: false, /* 是否显示密码 */
+    showPassword3: false, /* 是否显示密码 */
     oninit: () => {
         modifyLPLogic.initFn();
     },
     /* 校验【原密码与新密码不可相同】 */
     newPwdCheck() {
-        const oldPwd = document.getElementsByClassName('oldPwd')[0].value;
-        const newPwd = document.getElementsByClassName('newPwd')[0].value;
         /* 是否为空 新旧密码是否是一致 */
-        if (!oldPwd || !newPwd || oldPwd === newPwd) {
+        if (!modifyLPLogic.oldLpwd || !modifyLPLogic.newLpwd || modifyLPLogic.oldLpwd === modifyLPLogic.newLpwd) {
             modifyLPView.totalFlag = false;
             modifyLPView.oldAndnewIsDifferent = true;
             return;
@@ -28,10 +30,8 @@ const modifyLPView = {
     },
     /* 校验新与确认【密码不一致】 */
     confirmPWdCheck() {
-        const newPwd = document.getElementsByClassName('newPwd')[0].value;
-        const confirmPWd = document.getElementsByClassName('confirmPWd')[0].value;
         /* 是否为空 新 确认密码是否输入一致 */
-        if (!newPwd || !confirmPWd || newPwd !== confirmPWd) {
+        if (!modifyLPLogic.oldLpwd || !modifyLPLogic.newLpwd || modifyLPLogic.newLpwd !== modifyLPLogic.confirmLpwd) {
             modifyLPView.totalFlag = false;
             modifyLPView.pwdIsDifferent = true;
             return;
@@ -53,8 +53,8 @@ const modifyLPView = {
             m(Header, {
                 highlightFlag: 1,
                 navList: [
-                    { to: '', title: I18n.$t('10051') /* '个人总览' */ },
-                    { to: '', title: I18n.$t('10181') /* '账户安全' */ },
+                    { to: '/selfManage', title: I18n.$t('10051') /* '个人总览' */ },
+                    { to: '/securityManage', title: I18n.$t('10181') /* '账户安全' */ },
                     { to: '', title: I18n.$t('10182') /* '身份认证' */ },
                     { to: '', title: I18n.$t('10183') /* 'API管理' */ },
                     { to: '', title: I18n.$t('10184') /* '邀请返佣' */ }
@@ -68,31 +68,64 @@ const modifyLPView = {
             ]),
             m('div', { class: `center content-width container has-bg-level-2 pt-8` }, [
                 m('div', { class: `center-center margin-LRauto` }, [
-                    m('div', { class: `oldPwdDiv` }, [
+                    m('div', { class: `oldPwdDiv mb-5` }, [
                         m('span', { class: `body-5` }, I18n.$t('10276') /* '原密码' */),
                         m('br'),
-                        m('input', {
-                            class: `border-radius-small mb-5 mt-2 oldPwd has-line-level-3`,
-                            type: `password`
+                        m(InputWithComponent, {
+                            hiddenLine: true,
+                            addClass: `mt-2`,
+                            options: {
+                                type: modifyLPView.showPassword1 ? 'text' : 'password',
+                                oninput: e => {
+                                    modifyLPLogic.oldLpwd = e.target.value;
+                                },
+                                value: modifyLPLogic.oldLpwd
+                            },
+                            rightComponents: m('i.iconfont.mx-2', {
+                                onclick: () => { modifyLPView.showPassword1 = !modifyLPView.showPassword1; },
+                                class: modifyLPView.showPassword1 ? 'icon-yincang' : 'icon-zichanzhengyan'
+                            })
                         })
                     ]),
-                    m('div', { class: `newPwdDiv` }, [
+                    m('div', { class: `newPwdDiv mb-5` }, [
                         m('span', { class: `body-5 mb-2` }, I18n.$t('10210') /* '新密码' */),
                         m('br'),
-                        m('input', {
-                            class: `border-radius-small mt-2 newPwd has-line-level-3 mb-5`,
-                            onblur: () => { modifyLPView.newPwdCheck(); },
-                            type: `password`
+                        m(InputWithComponent, {
+                            hiddenLine: true,
+                            addClass: `mt-2 mb-2`,
+                            options: {
+                                type: modifyLPView.showPassword2 ? 'text' : 'password',
+                                oninput: e => {
+                                    modifyLPLogic.newLpwd = e.target.value;
+                                },
+                                onblur: () => { modifyLPView.newPwdCheck(); },
+                                value: modifyLPLogic.newLpwd
+                            },
+                            rightComponents: m('i.iconfont.mx-2', {
+                                onclick: () => { modifyLPView.showPassword2 = !modifyLPView.showPassword2; },
+                                class: modifyLPView.showPassword2 ? 'icon-yincang' : 'icon-zichanzhengyan'
+                            })
                         }),
                         m('span', { class: `has-text-tip-error`, style: { display: modifyLPView.oldAndnewIsDifferent ? `` : `none` } }, '原密码与新密码不可相同')
                     ]),
-                    m('div', { class: `confirmPWdDiv` }, [
+                    m('div', { class: `confirmPWdDiv mb-5` }, [
                         m('span', { class: `body-5 mb-2` }, I18n.$t('10211') /* '确认密码' */),
                         m('br'),
-                        m('input', {
-                            class: `border-radius-small mt-2 confirmPWd has-line-level-3`,
-                            onblur: () => { modifyLPView.confirmPWdCheck(); },
-                            type: `password`
+                        m(InputWithComponent, {
+                            hiddenLine: true,
+                            addClass: `mt-2 mb-2`,
+                            options: {
+                                type: modifyLPView.showPassword3 ? 'text' : 'password',
+                                oninput: e => {
+                                    modifyLPLogic.confirmLpwd = e.target.value;
+                                },
+                                onblur: () => { modifyLPView.confirmPWdCheck(); },
+                                value: modifyLPLogic.confirmLpwd
+                            },
+                            rightComponents: m('i.iconfont.mx-2', {
+                                onclick: () => { modifyLPView.showPassword3 = !modifyLPView.showPassword3; },
+                                class: modifyLPView.showPassword3 ? 'icon-yincang' : 'icon-zichanzhengyan'
+                            })
                         }),
                         m('span', { class: `has-text-tip-error`, style: { display: modifyLPView.pwdIsDifferent ? `` : `none` } }, '密码不一致')
                     ]),
