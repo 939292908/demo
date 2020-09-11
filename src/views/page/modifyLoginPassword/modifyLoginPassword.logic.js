@@ -7,6 +7,9 @@ const validate = require('@/models/validate/validate').default;
 const I18n = require('@/languages/I18n').default;
 const gM = require('@/models/globalModels');
 const errCode = require('@/util/errCode').default;
+const { logOut } = require('@/api/').webApi;
+const utils = require('@/util/utils').default;
+const globalModels = require('@/models/globalModels');
 
 module.exports = {
     loginType: null, // 登录类型
@@ -14,12 +17,16 @@ module.exports = {
     nationNo: null, // 区号
     phoneNum: null, // 用户手机号码
     isShowVerifyView: false, // 安全校验弹框 show
+    oldLpwd: '', // 输入的旧密码
+    newLpwd: '', // 输入的新密码
+    confirmLpwd: '', // 输入的确认密码
     // 安全校验弹框 显示/隐藏
     switchSafetyVerifyModal (type) {
         this.isShowVerifyView = type;
     },
     // 确认按钮事件
     confirmBtn: function() {
+        console.log(this.oldLpwd, this.newLpwd, this.confirmLpwd);
         /* console.log(this.loginType, this.setting2fa, this.nationNo, this.phoneNum); */
         geetest.verify(); // 极验
     },
@@ -97,21 +104,18 @@ module.exports = {
         }
     },
     changePassword: function () {
-        const oldPwd = document.getElementsByClassName('oldPwd')[0].value;
-        const newPwd = document.getElementsByClassName('newPwd')[0].value;
-        const confirmPwd = document.getElementsByClassName('confirmPWd')[0].value;
-        console.log(oldPwd, newPwd, confirmPwd);
         const that = this;
-
         Http.changePasswd({
-            oldPasswd: md5(oldPwd),
-            Passwd1: md5(newPwd),
-            Passwd2: md5(confirmPwd)
+            oldPasswd: md5(that.oldLpwd),
+            Passwd1: md5(that.newLpwd),
+            Passwd2: md5(that.confirmLpwd)
         }).then(function(arg) {
             console.log('nzm', 'changePasswd success', arg);
             if (arg.result.code === 0) {
                 console.log('success');
                 window.$message({ content: '密码修改成功', type: 'danger' });
+                that.loginOut();
+                window.router.push('/login');
             } else {
                 console.log('arg.result.code', arg.result.code, errCode.getWebApiErrorCode(arg.result.code));
                 // window.$message({ content: errCode.getWebApiErrorCode(arg.result.code), type: 'danger' });
@@ -120,6 +124,26 @@ module.exports = {
             m.redraw();
         }).catch(function(err) {
             console.log('nzm', 'changePasswd error', err);
+        });
+    },
+    loginOut: function () {
+        logOut().then(res => {
+            utils.removeItem("ex-session");
+            utils.setItem('loginState', false);
+            globalModels.setAccount({});
+
+            window.router.checkRoute({ path: window.router.path });
+            broadcast.emit({
+                cmd: broadcast.MSG_LOG_OUT,
+                data: {
+                    cmd: broadcast.MSG_LOG_OUT
+                }
+            });
+            m.redraw();
+        }, err => {
+            console.log(err);
+        }).catch(err => {
+            console.log(err);
         });
     },
     // 获取用户信息
@@ -132,6 +156,9 @@ module.exports = {
         this.phoneNum = account.phone; // 用户手机号码
     },
     initFn: function() {
+        this.oldLpwd = ''; // 输入的旧密码初始化
+        this.newLpwd = ''; // 输入的新密码初始化
+        this.confirmLpwd = ''; // 输入的确认密码初始化
         // 获取用户信息
         broadcast.onMsg({
             key: 'index',

@@ -5,8 +5,10 @@ const I18n = require('@/languages/I18n').default;
 const VerifyView = require('@/views/components/dialogVerify/dialogVerify.view');
 const config = require('@/config.js');
 const Header = require('@/views/components/indexHeader/indexHeader.view');
+const InputWithComponent = require('@/views/components/inputWithComponent/inputWithComponent.view');
 
 const closeGView = {
+    showPassword: false, /* 是否显示密码 */
     oninit: () => {
         closeGLogic.currentOperation = 'unbind';
         closeGLogic.initFn();
@@ -35,15 +37,38 @@ const closeGView = {
                     m('span', { class: `has-text-level-3` }, I18n.$t('10263') /* '出于安全考虑，修改账户安全项之后，24h内禁止提币' */)
                 ]),
                 m('div', { class: `closeOperation pt-8 has-bg-level-2` }, [
-                    m('div', { class: `pwdDiv margin-LRauto` }, [
+                    m('div', { class: `pwdDiv margin-LRauto mb-5` }, [
                         m('span', { class: `body-5` }, I18n.$t('10512') /* '登录密码' */),
                         m('br'),
-                        m('input', { class: `border-radius-small mb-5 mt-2 pwd has-line-level-3`, type: `password` })
+                        m(InputWithComponent, {
+                            hiddenLine: true,
+                            addClass: `mt-2`,
+                            options: {
+                                type: closeGView.showPassword ? 'text' : 'password',
+                                oninput: e => {
+                                    closeGLogic.closeLcPWd = e.target.value;
+                                },
+                                value: closeGLogic.closeLcPWd
+                            },
+                            rightComponents: m('i.iconfont.mx-2', {
+                                onclick: () => { closeGView.showPassword = !closeGView.showPassword; },
+                                class: closeGView.showPassword ? 'icon-yincang' : 'icon-zichanzhengyan'
+                            })
+                        })
                     ]),
                     m('div', { class: `codeDiv margin-LRauto` }, [
                         m('span', { class: `body-5 mb-2` }, I18n.$t('10264') /* '原谷歌验证码' */),
                         m('br'),
-                        m('input', { class: `border-radius-small mt-2 code has-line-level-3`, type: `text` })
+                        m(InputWithComponent, {
+                            hiddenLine: true,
+                            addClass: `mt-2`,
+                            options: {
+                                oninput: e => {
+                                    closeGLogic.closeLcCode = e.target.value;
+                                },
+                                value: closeGLogic.closeLcCode
+                            }
+                        })
                     ]),
                     m('div', { class: `btn mt-8 margin-LRauto` }, [
                         m('button', { class: `has-bg-primary cursor-pointer`, onclick: () => { closeGLogic.confirmBtn(); } }, I18n.$t('10337') /* '确定' */)
