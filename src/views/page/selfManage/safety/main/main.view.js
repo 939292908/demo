@@ -17,7 +17,7 @@ module.exports = {
             m('div.liftingBox content-width dis-flex justify-between align-stretch', [
                 m('div.leftBox', [
                     m('div', m(Block, { Icon: m('i.iconfont icon-GoogleVerification'), title: '谷歌验证', subhead: '用于提现和修改安全设置' }, m('div.dis-flex', [
-                        mainLogic.user?.setting2fa?.google ? m('div.has-text-primary', mainLogic.user?.googleId) : m('div.but py-1 px-4', { onclick: this.handleToUrl.bind(this, '/openGoogleVerify') }, '开启')
+                        mainLogic.user?.setting2fa?.google ? m('div.but py-1 px-4', { onclick: this.handleToUrl.bind(this, '/closeGoogleVerify') }, '解绑') : m('div.but py-1 px-4', { onclick: this.handleToUrl.bind(this, '/openGoogleVerify') }, '开启')
                     ]))),
                     m('div.addPadding py-5', m(Block, { Icon: m('i.iconfont icon-PhoneVerification'), title: '手机验证', subhead: '用于提现和修改安全设置' }, m('div.dis-flex', [
                         mainLogic.user?.setting2fa?.phone ? m('div.has-text-primary', mainLogic.user?.phone) : ('div.but py-1 px-4', { onclick: this.handleToUrl.bind(this, '/bindPhone') }, '开启')

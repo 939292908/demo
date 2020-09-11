@@ -1,17 +1,7 @@
 const m = require('mithril');
 const Block = require('../block');
-// const safety30 = require('./Authentication.svg').default;
-// const attestation30 = require('./AccountSecurity.svg').default;
 const l180n = require('@/languages/I18n').default;
-// const { Conf } = require('@/api');
 require('./skip.scss');
-
-// const safety = {
-//     30: safety30
-// };
-// const attestation = {
-//     30: attestation30
-// };
 
 const Skip = {
     list: [
