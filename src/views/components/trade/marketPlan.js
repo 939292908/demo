@@ -312,10 +312,8 @@ let obj = {
     },
     onTick: function (arg) {
         if (arg.Sym == window.gMkt.CtxPlaying.Sym ) {
-            if(!this.form.Prz){
-                let lastTick = window.gMkt.lastTick[arg.Sym]
-                this.form.Prz = Number(lastTick && lastTick.LastPrz || 0)
-            }
+            let lastTick = window.gMkt.lastTick[arg.Sym]
+            this.currentPrz = Number(lastTick && lastTick.LastPrz || 0)
         }
         let tm = Date.now()
         if(tm - this.lastTmForTick > this.TICKCLACTNTERVAL){
@@ -390,31 +388,31 @@ let obj = {
                 // 买
                 if(dir == 1){
                     if(this.form.stopP !="" && this.form.stopL !=""){
-                        if (Number(this.form.stopP) <= Number(obj.form.Prz)){
+                        if (Number(this.form.stopP) <= Number(obj.currentPrz)){
                             return $message({ title: gDI18n.$t('10037'/*"提示"*/), content: gDI18n.$t('10512'/*"止盈触发价不能小于委托价格！"*/), type: 'danger'})
                         }
-                        if (Number(this.form.stopL) >= Number(obj.form.Prz)){
+                        if (Number(this.form.stopL) >= Number(obj.currentPrz)){
                             return $message({ title: gDI18n.$t('10037'/*"提示"*/), content: gDI18n.$t('10513'/*"止损触发价不能大于委托价格！"*/), type: 'danger'})
                         }
                         if (Number(this.form.stopP) <= Number(this.form.stopL)){
                             return $message({ title: gDI18n.$t('10037'/*"提示"*/), content: gDI18n.$t('10193'/*'该仓位为多仓，止盈价需大于止损价'*/), type: 'danger'})
                         }
                     }else if(this.form.stopP !=""){
-                        if (Number(this.form.stopP) <= Number(obj.form.Prz)){
+                        if (Number(this.form.stopP) <= Number(obj.currentPrz)){
                             return $message({ title: gDI18n.$t('10037'/*"提示"*/), content: gDI18n.$t('10512'/*"止盈触发价不能小于委托价格！"*/), type: 'danger'})
                         }
                     }else if(this.form.stopL !=""){
-                        if (Number(this.form.stopL) >= Number(obj.form.Prz)){
+                        if (Number(this.form.stopL) >= Number(obj.currentPrz)){
                             return $message({ title: gDI18n.$t('10037'/*"提示"*/), content: gDI18n.$t('10513'/*"止损触发价不能大于委托价格！"*/), type: 'danger'})
                         }
                     }
                 // 卖
                 }else if(dir == -1){
                     if(this.form.stopP !="" && this.form.stopL !=""){
-                        if (Number(this.form.stopP) >= Number(obj.form.Prz)){
+                        if (Number(this.form.stopP) >= Number(obj.currentPrz)){
                             return $message({ title: gDI18n.$t('10037'/*"提示"*/), content: gDI18n.$t('10514'/*"止盈触发价不能大于委托价格！"*/), type: 'danger'})
                         }
-                        if (Number(this.form.stopL) <= Number(obj.form.Prz)){
+                        if (Number(this.form.stopL) <= Number(obj.currentPrz)){
                             return $message({
                                 title: gDI18n.$t('10037'/*"提示"*/), content: gDI18n.$t('10515'/*"止损触发价不能小于委托价格！"*/), type: 'danger'})
                         }
@@ -422,11 +420,11 @@ let obj = {
                             return $message({ title: gDI18n.$t('10037'/*"提示"*/), content: gDI18n.$t('10194'/*'该仓位为空仓，止盈价需小于止损价'*/), type: 'danger'})
                         }
                     }else if(this.form.stopP !=""){
-                        if (Number(this.form.stopP) >= Number(obj.form.Prz)){
+                        if (Number(this.form.stopP) >= Number(obj.currentPrz)){
                             return $message({ title: gDI18n.$t('10037'/*"提示"*/), content: gDI18n.$t('10514'/*"止盈触发价不能大于委托价格！"*/), type: 'danger'})
                         }
                     }else if(this.form.stopL !=""){
-                        if (Number(this.form.stopL) <= Number(obj.form.Prz)){
+                        if (Number(this.form.stopL) <= Number(obj.currentPrz)){
                             return $message({ title: gDI18n.$t('10037'/*"提示"*/), content: gDI18n.$t('10515'/*"止损触发价不能小于委托价格！"*/), type: 'danger'})
                         }
                     }
@@ -461,13 +459,13 @@ let obj = {
                 
         }
         
-        if(this.form.Prz === '0'){
+        if(this.currentPrz === '0'){
             return $message({ title: gDI18n.$t('10037'/*"提示"*/), content: gDI18n.$t('10141'/*'下单价格不能为0'*/), type: 'danger'})
-        }else if(!this.form.Prz){
+        }else if(!this.currentPrz){
             return $message({ title: gDI18n.$t('10037'/*"提示"*/), content: gDI18n.$t('10142'/*'下单价格不能为空'*/), type: 'danger'})
-        }else if(Number(this.form.Prz) == 0){
+        }else if(Number(this.currentPrz) == 0){
             return $message({ title: gDI18n.$t('10037'/*"提示"*/), content: gDI18n.$t('10141'/*'下单价格不能为0'*/), type: 'danger'})
-        }else if(isNaN(Number(this.form.Prz))){
+        }else if(isNaN(Number(this.currentPrz))){
             return $message({ title: gDI18n.$t('10037'/*"提示"*/), content: gDI18n.$t('10143'/*'请输入正确的价格'*/), type: 'danger'})
         }
 
