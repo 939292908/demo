@@ -58,7 +58,7 @@ module.exports = {
                                 logic.menuClick(item, vnode); // click
                             }
                         }, [
-                            m('div', { class: `my-menu-label` }, item.render ? item.render(item) : item.label), // 内容
+                            m('div', { class: `my-menu-label` }, item.render ? item.render(item, vnode.attrs.currentId) : item.label), // 内容
                             vnode.attrs.showMenuIcon ? m('i', { class: `my-menu-icon iconfont icon-fabijiaoyiwancheng ${vnode.attrs.currentId === item.id ? '' : 'is-hidden'}` }) : "" // icon
                         ]);
                     })

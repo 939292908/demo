@@ -19,7 +19,7 @@ module.exports = function (props) {
                 // '自主研发钱包加密技术，全面保护用户数字资产安全'
                 I18n.$t('10009')
             ]),
-            m('button', { class: `button button-large mt-8 theme--light has-bg-primary min-width-200 ${utils.isMobile() ? ' title-small body-5 px-4 py-2' : 'title-medium  px-8 py-3'}`, onclick: this.toPage }, [
+            m('button', { class: `button button-large mt-8 theme--light has-bg-primary min-width-200 ${utils.isMobile() ? ' title-small body-5 px-4 py-2' : 'title-medium  px-8 py-3'}`, onclick: props.toTrade }, [
                 // '立即交易'
                 I18n.$t('10010')
             ]),
