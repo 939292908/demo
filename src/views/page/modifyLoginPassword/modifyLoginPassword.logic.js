@@ -36,10 +36,40 @@ module.exports = {
                     // 成功则进入安全验证
                     console.log('success initGeetest');
                     m.redraw();
-                    that.ChooseVerify();
+                    that.checkSmsCode();
+                    // that.ChooseVerify();
                 } else {
                     console.log('error initGeetest');
                 }
+            }
+        });
+    },
+    /**
+     * 校验短信验证码
+     * @param code
+     */
+    checkSmsCode(code) {
+        const that = this;
+        if (!code) {
+            window.$message({
+                content: I18n.$t('10416') /* '该字段不能为空' */,
+                type: 'danger'
+            });
+            return;
+        }
+        Http.smsVerifyV2({
+            phoneNum: that.nationNo + '-' + that.phoneNum, // 手机号
+            code: code
+        }).then(res => {
+            if (res.result === 0) {
+                console.log('checkSmsCode success');
+                m.redraw();
+                that.ChooseVerify();
+            } else {
+                window.$message({
+                    content: errCode.getWebApiErrorCode(res.result.code),
+                    type: 'danger'
+                });
             }
         });
     },
