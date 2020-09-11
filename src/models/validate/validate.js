@@ -106,10 +106,18 @@ export default {
             });
             return;
         }
-        webApi.smsVerifyV2({
-            phoneNum: this.smsConfig.phoneNum || this.smsConfig.phone,
-            code: code
-        }).then(res => {
+        let param = {};
+        if (this.smsConfig.resetPwd) {
+            param = {
+                code: code
+            };
+        } else {
+            param = {
+                phoneNum: this.smsConfig.phoneNum || this.smsConfig.phone,
+                code: code
+            };
+        }
+        webApi.smsVerifyV2(param).then(res => {
             if (res.result === 0) {
                 this.finished();
             } else {

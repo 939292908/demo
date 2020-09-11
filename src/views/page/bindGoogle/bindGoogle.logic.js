@@ -153,7 +153,6 @@ module.exports = {
             params = {
                 areaCode: that.nationNo, // 区号
                 phoneNum: that.phoneNum, // 手机号
-                resetPwd: true, // 是否重置密码
                 lang: I18n.getLocale(),
                 mustCheckFn: "" // 验证类型
             };
@@ -171,7 +170,6 @@ module.exports = {
                 smsConfig: {
                     areaCode: that.nationNo, // 区号
                     phoneNum: that.phoneNum, // 手机号
-                    resetPwd: true, // 是否重置密码
                     lang: I18n.getLocale(),
                     mustCheckFn: "" // 验证类型
                 }
