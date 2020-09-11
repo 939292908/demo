@@ -14,7 +14,7 @@ module.exports = {
         }
     },
     toUrl () {
-        window.open("w/#!/register", '_blank');
+        window.open("/w/#!/register", '_blank');
     },
     view: function () {
         return m('div', { class: 'views-pages-home-introduce ' }, [
