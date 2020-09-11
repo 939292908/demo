@@ -1,7 +1,8 @@
 const m = require('mithril');
 const broadcast = require('@/broadcast/broadcast');
 const utils = require('@/util/utils').default;
-const wsApi = require('@/api').wsApi;
+const { gMktApi } = require('@/api').wsApi;
+
 const I18n = require('@/languages/I18n').default;
 
 module.exports = {
@@ -77,7 +78,7 @@ module.exports = {
 
         for (const key of subArr) {
             this.subList.push(key);
-            wsApi.TpcAdd(key);
+            gMktApi.TpcAdd(key);
         }
     },
     //  取消订阅
@@ -87,7 +88,7 @@ module.exports = {
         }
 
         for (const key of subArr) {
-            wsApi.TpcDel(key);
+            gMktApi.TpcDel(key);
             const idx = this.subList.findIndex(t => {
                 return t === key;
             });
@@ -114,7 +115,7 @@ module.exports = {
         m.redraw();
     },
     createTickData: function (param) {
-        const AssetD = wsApi.AssetD[param.Sym];
+        const AssetD = gMktApi.AssetD[param.Sym];
         if (param.Sym.indexOf('CI_') > -1) {
             let tick = Object.assign({}, this.tickDefault);
             tick = Object.assign(tick, param);
@@ -172,18 +173,6 @@ module.exports = {
             return false;
         }
     },
-    setSubArrType: function (type, params) { //  将数组内容转换为可订阅内容，ps： tick_BTC1812
-        const arr = [];
-        //  params.forEach(item => {
-        for (const item of params) {
-            if (item && type === 'tick' && item.indexOf('CI_') > -1) {
-                arr.push('index_' + item);
-            } else {
-                arr.push(type + '_' + item);
-            }
-        }
-        return arr;
-    },
     //  获取显示的合约名称
     getSymDisplayName: function (ass, Sym) {
         if (ass) {
@@ -212,7 +201,7 @@ module.exports = {
     },
     //  初始化首页需要请阅的行情
     initHomeNeedSub: function (syms, list) {
-        this.subTick(this.setSubArrType('tick', [...syms]));
+        this.subTick(utils.setSubArrType('tick', [...syms]));
         this.tickData = list;
     }
 };

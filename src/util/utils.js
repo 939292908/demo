@@ -324,5 +324,23 @@ utils.createScript = function({ src, type = 'text/javascript', id, async = true,
     };
     document.getElementsByTagName('head')[0].appendChild(script);
 };
+//  将数组内容转换为可订阅内容，ps： tick_BTC1812
+utils.setSubArrType = function (type, params) {
+    const arr = [];
+    for (const item of params) {
+        if (item && type === 'tick' && item.indexOf('CI_') > -1) {
+            arr.push('index_' + item);
+        } else {
+            arr.push(type + '_' + item);
+        }
+    }
+    return arr;
+};
+// 拷贝对象b的字段到对象a
+utils.copyTab = function(a, b) {
+    for (const key in b) {
+        a[key] = b[key];
+    }
+};
 
 export default utils;

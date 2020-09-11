@@ -290,6 +290,7 @@ const model = {
             cmd: broadcast.GET_FUNLIST_READY,
             isall: true
         });
+        wlt.remove();
     }
 };
 module.exports = model;
