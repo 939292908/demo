@@ -35,7 +35,7 @@ module.exports = {
                         m('span', {
                             class: `mr-7`,
                             onclick: () => {
-                                window.router.go(-1);
+                                window.router.push('/securityManage');
                             }
                         }, [
                             m('i.iconfont.icon-Return.iconfont-medium', {}, [])
