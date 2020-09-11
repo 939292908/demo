@@ -78,11 +78,12 @@ module.exports = {
         ]);
     },
     verifyContentTitle: function () { // 验证 title
+        console.log(validateModel.linshiConfig);
         return m('.dis-flex verifyContentTitle', [
             m('.has-text-level-2.body-5.mb-2', [
                 Validate.selectName,
                 m('span.ml-2.body-2.has-text-level-4', {}, [
-                    Validate.selectType === 'sms' ? `(${utils.hideAccountNameInfo(validateModel.smsConfig.phoneNum || validateModel.smsConfig.phone || validateModel.smsConfig.securePhone)})`
+                    Validate.selectType === 'sms' ? `(${utils.hideAccountNameInfo(validateModel.smsConfig.securePhone || validateModel.smsConfig.phoneNum || validateModel.smsConfig.phone)})`
                         : Validate.selectType === 'email' ? `(${utils.hideAccountNameInfo(validateModel.emailConfig.email || validateModel.emailConfig.secureEmail)})`
                             : ''
                 ])
@@ -102,7 +103,7 @@ module.exports = {
                 maxlength: '6',
                 value: Validate.code
             }),
-            m('.right-click-but', { onclick: () => { Validate.smsCd <= 0 && Validate.sendSmsCode(); } }, m('div', Validate.smsCd > 0 ? `${Validate.smsCd} s` : I18n.$t('10117')/* '获取验证码' */))
+            m('.right-click-but', { onclick: () => { Validate.smsCd <= 0 && Validate.sendSmsCode(); } }, m('div.has-text-primary', Validate.smsCd > 0 ? `${Validate.smsCd} s` : I18n.$t('10117')/* '获取验证码' */))
         ]);
     },
     emailVerifyContent: function () {
