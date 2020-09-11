@@ -73,7 +73,7 @@ export default {
      * 校验google验证码
      * @param code
      */
-    checkGoogleCode(code, opInfo) {
+    checkGoogleCode(code) {
         if (!code) {
             window.$message({
                 content: I18n.$t('10416') /* '该字段不能为空' */,
@@ -81,7 +81,7 @@ export default {
             });
             return;
         }
-        webApi.googleCheck({ code: code, opInfo: opInfo }).then(res => {
+        webApi.googleCheck({ code: code }).then(res => {
             if (res.result.code === 0) {
                 this.finished();
             } else {
