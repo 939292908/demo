@@ -2,7 +2,7 @@ const m = require('mithril');
 const Slideshow = require('@/views/components/slideshow/leftToRight');
 const Slideshow2 = require('@/views/components/slideshow/leftToRight2');
 const broadcast = require('@/broadcast/broadcast');
-const wsApi = require('@/api').wsApi;
+const { gMktApi } = require('@/api').wsApi;
 require('@/views/page/home/picture/picture.scss');
 
 const market = require('@/models/market/market');
@@ -26,8 +26,8 @@ module.exports = {
         // const data = arg.data.filter(item => item.TrdCls === 3 && (item.Flag & 1) !== 1);
         var syms = [];
         var list = {};
-        wsApi.displaySym.forEach(item => {
-            const sys = wsApi.AssetD[item];
+        gMktApi.displaySym.forEach(item => {
+            const sys = gMktApi.AssetD[item];
             if (sys.TrdCls === 3 && (sys.Flag & 1) !== 1) {
                 syms.push(item);
                 list[item] = sys;
