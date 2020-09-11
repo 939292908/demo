@@ -1,0 +1,13 @@
+.safety-man {
+  position: relative;
+
+  .leftBox, .rightBox {
+    width: 592px;
+    box-sizing: border-box;
+  }
+  .leftBox {
+    .leezBlock { // 覆盖 block 组件样式
+      border: none;
+    }
+  }
+}
