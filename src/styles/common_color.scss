@@ -810,3 +810,8 @@ $primary-lighten: var(--c-primary-lighten);
 .button.is-primary.is-outlined:hover {
     color: var(--c-fontwhite-base) !important;
 }
+
+.button.is-primary.is-outlined:focus {
+    background-color: var(--c-fontwhite-base) !important;
+    color: $primary-lighten !important;
+}
