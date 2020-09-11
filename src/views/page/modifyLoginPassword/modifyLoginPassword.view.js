@@ -19,11 +19,8 @@ const modifyLPView = {
     },
     /* 校验【原密码与新密码不可相同】 */
     newPwdCheck() {
-        const oldPwd = document.getElementsByTagName('input')[0].value;
-        const newPwd = document.getElementsByTagName('input')[1].value;
-
         /* 是否为空 新旧密码是否是一致 */
-        if (!oldPwd || !newPwd || oldPwd === newPwd) {
+        if (!modifyLPLogic.oldLpwd || !modifyLPLogic.newLpwd || modifyLPLogic.oldLpwd === modifyLPLogic.newLpwd) {
             modifyLPView.totalFlag = false;
             modifyLPView.oldAndnewIsDifferent = true;
             return;
@@ -33,10 +30,8 @@ const modifyLPView = {
     },
     /* 校验新与确认【密码不一致】 */
     confirmPWdCheck() {
-        const newPwd = document.getElementsByTagName('input')[1].value;
-        const confirmPWd = document.getElementsByTagName('input')[2].value;
         /* 是否为空 新 确认密码是否输入一致 */
-        if (!newPwd || !confirmPWd || newPwd !== confirmPWd) {
+        if (!modifyLPLogic.oldLpwd || !modifyLPLogic.newLpwd || modifyLPLogic.newLpwd !== modifyLPLogic.confirmLpwd) {
             modifyLPView.totalFlag = false;
             modifyLPView.pwdIsDifferent = true;
             return;
@@ -80,7 +75,11 @@ const modifyLPView = {
                             hiddenLine: true,
                             addClass: `mt-2`,
                             options: {
-                                type: modifyLPView.showPassword1 ? 'text' : 'password'
+                                type: modifyLPView.showPassword1 ? 'text' : 'password',
+                                oninput: e => {
+                                    modifyLPLogic.oldLpwd = e.target.value;
+                                },
+                                value: modifyLPLogic.oldLpwd
                             },
                             rightComponents: m('i.iconfont.mx-2', {
                                 onclick: () => { modifyLPView.showPassword1 = !modifyLPView.showPassword1; },
@@ -96,7 +95,11 @@ const modifyLPView = {
                             addClass: `mt-2 mb-2`,
                             options: {
                                 type: modifyLPView.showPassword2 ? 'text' : 'password',
-                                onblur: () => { modifyLPView.newPwdCheck(); }
+                                oninput: e => {
+                                    modifyLPLogic.newLpwd = e.target.value;
+                                },
+                                onblur: () => { modifyLPView.newPwdCheck(); },
+                                value: modifyLPLogic.newLpwd
                             },
                             rightComponents: m('i.iconfont.mx-2', {
                                 onclick: () => { modifyLPView.showPassword2 = !modifyLPView.showPassword2; },
@@ -113,7 +116,11 @@ const modifyLPView = {
                             addClass: `mt-2 mb-2`,
                             options: {
                                 type: modifyLPView.showPassword3 ? 'text' : 'password',
-                                onblur: () => { modifyLPView.confirmPWdCheck(); }
+                                oninput: e => {
+                                    modifyLPLogic.confirmLpwd = e.target.value;
+                                },
+                                onblur: () => { modifyLPView.confirmPWdCheck(); },
+                                value: modifyLPLogic.confirmLpwd
                             },
                             rightComponents: m('i.iconfont.mx-2', {
                                 onclick: () => { modifyLPView.showPassword3 = !modifyLPView.showPassword3; },

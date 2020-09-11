@@ -26,6 +26,7 @@ module.exports = {
     },
     // 确认按钮事件
     confirmBtn: function() {
+        console.log(this.oldLpwd, this.newLpwd, this.confirmLpwd);
         /* console.log(this.loginType, this.setting2fa, this.nationNo, this.phoneNum); */
         geetest.verify(); // 极验
     },
@@ -103,15 +104,11 @@ module.exports = {
         }
     },
     changePassword: function () {
-        const oldPwd = document.getElementsByTagName('input')[0].value;
-        const newPwd = document.getElementsByTagName('input')[1].value;
-        const confirmPwd = document.getElementsByTagName('input')[2].value;
         const that = this;
-
         Http.changePasswd({
-            oldPasswd: md5(oldPwd),
-            Passwd1: md5(newPwd),
-            Passwd2: md5(confirmPwd)
+            oldPasswd: md5(that.oldLpwd),
+            Passwd1: md5(that.newLpwd),
+            Passwd2: md5(that.confirmLpwd)
         }).then(function(arg) {
             console.log('nzm', 'changePasswd success', arg);
             if (arg.result.code === 0) {
