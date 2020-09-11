@@ -54,7 +54,7 @@ module.exports = {
                         onclick: function () {
                             window.$message({
                                 content: I18n.$t('10513'), // 暂未开放，敬请期待
-                                type: 'danger'
+                                type: 'primary'
                             });
                         }
                     }, [
@@ -118,7 +118,7 @@ module.exports = {
                         onclick: function () {
                             window.$message({
                                 content: I18n.$t('10513'), // 暂未开放，敬请期待
-                                type: 'danger'
+                                type: 'primary'
                             });
                         }
                     }, [
@@ -130,7 +130,7 @@ module.exports = {
                         onclick: function () {
                             window.$message({
                                 content: I18n.$t('10513'), // 暂未开放，敬请期待
-                                type: 'danger'
+                                type: 'primary'
                             });
                         }
                     }, [
