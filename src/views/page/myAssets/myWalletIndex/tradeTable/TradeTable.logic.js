@@ -184,10 +184,13 @@ module.exports = {
         // console.log(this.tableNewAry, '----------');
         this.tableNewAry.length === 0 ? this.isShowNoneData = true : this.isShowNoneData = false;
     },
+    initFlag: function () {
+        const fun = gM.getFunctions();
+        this.transferFlag = fun.transfer;
+        this.rechargeFlag = fun.recharge;
+        this.withdrawFlag = fun.withdraw;
+    },
     createFn: function (vnode) {
-        this.transferFlag = gM.getFunctions().transfer;
-        this.rechargeFlag = gM.getFunctions().recharge;
-        this.withdrawFlag = gM.getFunctions().withdraw;
         const self = this;
         this.vnode = vnode;
         broadcast.onMsg({
@@ -198,13 +201,6 @@ module.exports = {
                 this.initAccountBanlance();
             }
         });
-        this.oldHideMoneyFlag = vnode.attrs.hideMoneyFlag;
-        // 初始化表头
-        this.initColumnData();
-        // 初始化表格数据（表身）
-        this.initTableData();
-        // 初始化交易账户各账户名称与估值
-        this.initAccountBanlance();
 
         // 资产数据变化
         broadcast.onMsg({
@@ -215,6 +211,35 @@ module.exports = {
                 self.setTableNewAry();
             }
         });
+
+        broadcast.onMsg({
+            key: 'view-pages-Myassets-TablegB',
+            cmd: broadcast.MSG_LANGUAGE_UPD,
+            cb: (arg) => {
+                // console.log('切换语言');
+                self.setNavAry();
+                self.setPageFlag(currencyIndex);
+            }
+        });
+
+        // 总开关
+        broadcast.onMsg({
+            key: 'view-pages-Myassets-TablegB',
+            cmd: broadcast.GET_FUNLIST_READY,
+            cb: (arg) => {
+                self.initFlag();
+                m.redraw();
+            }
+        });
+        self.initFlag();
+
+        this.oldHideMoneyFlag = vnode.attrs.hideMoneyFlag;
+        // 初始化表头
+        this.initColumnData();
+        // 初始化表格数据（表身）
+        this.initTableData();
+        // 初始化交易账户各账户名称与估值
+        this.initAccountBanlance();
 
         const currencyIndex = window.router.getUrlInfo().params.id;
         if (currencyIndex === '03' || currencyIndex === '02' || currencyIndex === '01' || currencyIndex === '04') {
@@ -230,15 +255,6 @@ module.exports = {
             this.setTableNewAry();
         }
 
-        broadcast.onMsg({
-            key: 'view-pages-Myassets-TablegB',
-            cmd: broadcast.MSG_LANGUAGE_UPD,
-            cb: (arg) => {
-                // console.log('切换语言');
-                self.setNavAry();
-                self.setPageFlag(currencyIndex);
-            }
-        });
         this.setNavAry();
     },
     updateFn: function(vnode) {

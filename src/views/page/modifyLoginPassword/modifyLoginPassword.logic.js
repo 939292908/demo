@@ -5,8 +5,11 @@ const geetest = require('@/models/validate/geetest').default;
 const broadcast = require('@/broadcast/broadcast');
 const validate = require('@/models/validate/validate').default;
 const I18n = require('@/languages/I18n').default;
+const gM = require('@/models/globalModels');
+const errCode = require('@/util/errCode').default;
 
 module.exports = {
+    loginType: null, // 登录类型
     setting2fa: null, // 账户绑定状态
     nationNo: null, // 区号
     phoneNum: null, // 用户手机号码
@@ -15,7 +18,9 @@ module.exports = {
     switchSafetyVerifyModal (type) {
         this.isShowVerifyView = type;
     },
+    // 确认按钮事件
     confirmBtn: function() {
+        /* console.log(this.loginType, this.setting2fa, this.nationNo, this.phoneNum); */
         geetest.verify(); // 极验
     },
     // 加载极验
@@ -108,7 +113,8 @@ module.exports = {
             console.log('nzm', 'changePasswd success', arg);
             if (arg.result.code === 0) {
                 console.log('success');
-                // that.switchSafetyVerifyModal(false); // 关闭安全验证弹框
+            } else {
+                window.$message({ content: errCode.getWebApiErrorCode(arg.result.code), type: 'danger' });
             }
             that.switchSafetyVerifyModal(false); // 关闭安全验证弹框
             m.redraw();
@@ -118,21 +124,22 @@ module.exports = {
     },
     // 获取用户信息
     getUserInfo() {
-        const that = this;
-        Http.getUserInfo().then(function(arg) {
-            // console.log('nzm', 'getUserInfo success', arg);
-            if (arg.result.code === 0) {
-                that.loginType = arg.account.loginType; // 账户类型
-                that.setting2fa = arg.account.setting2fa; // 账户绑定状态
-                that.nationNo = arg.account.nationNo; // 区号
-                that.phoneNum = arg.account.phone; // 用户手机号码
-                m.redraw();
-            }
-        }).catch(function(err) {
-            console.log('nzm', 'getUserInfo error', err);
-        });
+        const account = gM.getAccount();
+        // console.log(account);
+        this.loginType = account.loginType; // 账户类型
+        this.setting2fa = account.setting2fa; // 账户绑定状态
+        this.nationNo = account.nationNo; // 区号
+        this.phoneNum = account.phone; // 用户手机号码
     },
     initFn: function() {
+        // 获取用户信息
+        broadcast.onMsg({
+            key: 'index',
+            cmd: broadcast.GET_USER_INFO_READY,
+            cb: () => {
+                this.getUserInfo();
+            }
+        });
         this.getUserInfo();
         this.initGeetest();
     },
@@ -140,6 +147,10 @@ module.exports = {
         broadcast.offMsg({
             key: 'updatePWD',
             cmd: 'geetestMsg',
+            isall: true
+        });
+        broadcast.offMsg({
+            key: 'index',
             isall: true
         });
     }
