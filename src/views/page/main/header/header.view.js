@@ -81,7 +81,10 @@ module.exports = {
                                                 // "USDT永续合约"
                                                 'USDT ' + I18n.$t('10033')
                                             ]),
-                                            m('p', { class: `body-4 has-text-level-3` }, [" 最高百倍杠杆，交易简单"])
+                                            m('p', { class: `body-4 has-text-level-3` }, [
+                                                // " 最高百倍杠杆，交易简单"
+                                                I18n.$t('10591')
+                                            ])
                                         ])
                                     ])
                                 ]),
@@ -101,7 +104,8 @@ module.exports = {
                                             ]),
                                             m('span', { class: `header-new-info has-bg-primary px-3 ml-2` }, ["NEW"]),
                                             m('p', { class: `body-4 has-text-level-3` }, [
-                                                " 小币种开仓，统一价格标的"
+                                                // " 小币种开仓，统一价格标的"
+                                                I18n.$t('10592')
                                             ])
                                         ])
                                     ])
