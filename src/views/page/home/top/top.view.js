@@ -24,7 +24,7 @@ module.exports = function (props) {
                 I18n.$t('10010')
             ]),
             m('div', { class: `has-text-centered mt-4` }, [
-                m('a', { class: `has-text-level-2 ${utils.isMobile() ? 'body-6' : 'pc才有的类名xx'}`, href: "/w/user/#!/register", target: "_blank" }, [
+                m('a', { class: `has-text-level-2 ${utils.isMobile() ? 'body-6' : 'pc才有的类名xx'}`, href: "/w/#!/register", target: "_blank" }, [
                     // '还没账号？立即前往账号注册 →'
                     I18n.$t('10011')
                 ])
