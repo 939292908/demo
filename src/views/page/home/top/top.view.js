@@ -10,7 +10,7 @@ module.exports = function (props) {
     return m('div.views-pages-home-top has-bg-sub-level-1 ', {
     }, [
         // 顶部
-        m('div', { class: ` has-text-centered pt-7`, style: `background: url(${require("@/assets/img/home/vector.png").default}) no-repeat center center / 100% 100%;` }, [
+        m('div', { class: ` has-text-centered pt-7`, style: `background: url(${require("@/assets/img/home/vector.png").default}) no-repeat center center / 100%;` }, [
             m('p', { class: `font-weight-regular pt-9 title-x-large-1 ${utils.isMobile() ? 'ml-7 mr-7' : 'pc才有的类名xx'}` }, [
                 // '最值得信任的数字资产交易平台'
                 I18n.$t('10008')

@@ -10,7 +10,7 @@ const vertical = {
     spaceBetween: 10,
     // preventClicks: false,
     autoplay: {
-        delay: 5000,
+        delay: 500000,
         disableOnInteraction: false
     },
     pagination: {

@@ -41,7 +41,7 @@ module.exports = {
             return m('div.swiper-slide', { onclick: this.openUrl, style: 'cursor: pointer;' }, [
                 m('div.imgBox', [
                     m('div.marketTitle', [
-                        m('div.marketName', { class: 'title-medium' }, data[item]?.distSym || '--'),
+                        m('div.marketName', { class: 'title-small' }, data[item]?.distSym || '--'),
                         m('div.marketGrowth body-6', { class: data[item]?.rfpreColor > 0 ? 'has-bg-up' : data[item]?.rfpreColor === 0 ? 'is0Colorbg' : 'has-bg-down' }, data[item]?.rfpre || '--')
                     ]),
                     m('div.marketPrice title-large', { class: data[item]?.rfpreColor > 0 ? 'has-text-up' : data[item]?.rfpreColor === 0 ? 'is0ColorTxt' : 'has-text-down' }, `$${data[item]?.LastPrz || '--'}`),
