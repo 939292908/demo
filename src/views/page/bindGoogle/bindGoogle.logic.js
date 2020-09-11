@@ -80,30 +80,58 @@ module.exports = {
                     // 成功则进入安全验证
                     console.log('success initGeetest');
                     m.redraw();
-                    that.ChooseVerify();
+                    // that.ChooseVerify();
+                    that.checkGoogleCode(document.getElementsByClassName('code')[0].value, this.secret);
                 } else {
                     console.log('error initGeetest');
                 }
             }
         });
     },
+    /**
+     * 校验google验证码
+     * @param code
+     */
+    checkGoogleCode(code, opInfo) {
+        const that = this;
+        if (!code) {
+            window.$message({
+                content: I18n.$t('10416') /* '该字段不能为空' */,
+                type: 'danger'
+            });
+            return;
+        }
+        let params = {};
+        this.currentOperation === 'bind' ? params = { code: code, opInfo: opInfo } : params = { code: code };
+        Http.googleCheck(params).then(res => {
+            if (res.result.code === 0) {
+                m.redraw();
+                that.ChooseVerify();
+            } else {
+                window.$message({
+                    content: errCode.getWebApiErrorCode(res.result.code),
+                    type: 'danger'
+                });
+            }
+        }).catch(err => {
+            console.log('tlh', err);
+        });
+    },
     // 选择验证方式
     ChooseVerify() {
+        console.log('ChooseVerify');
         if (this.setting2fa.email === 0 && this.setting2fa.phone === 0) {
             console.log('未绑定手机与邮箱');
             return;
         }
         if (this.setting2fa.email === 1 && this.setting2fa.phone === 0) {
             console.log('已绑定邮箱');
-            validate.checkGoogleCode(document.getElementsByClassName('code')[0].value, this.secret);
             this.initSecurityVerification(1);
         } else if (this.setting2fa.email === 0 && this.setting2fa.phone === 1) {
             console.log('已绑定手机');
-            validate.checkGoogleCode(document.getElementsByClassName('code')[0].value);
             this.initSecurityVerification(2);
         } else if (this.setting2fa.email === 1 && this.setting2fa.phone === 1) {
             console.log('已绑定手机和邮箱');
-            validate.checkGoogleCode(document.getElementsByClassName('code')[0].value);
             this.initSecurityVerification(3);
         }
         this.switchSafetyVerifyModal(true); // 打开弹框
@@ -174,7 +202,8 @@ module.exports = {
         }).then(function(arg) {
             console.log('nzm', 'bindGoogleAuth success', arg);
             if (arg.result.code === 0) {
-                console.log('success');
+                console.log('bindGoogle success');
+                window.$message({ content: '谷歌绑定成功', type: 'danger' });
             } else {
                 window.$message({ content: errCode.getWebApiErrorCode(arg.result.code), type: 'danger' });
             }
@@ -197,7 +226,8 @@ module.exports = {
         }).then(function(arg) {
             console.log('nzm', 'relieveGoogleAuth success', arg);
             if (arg.result.code === 0) {
-                console.log('success');
+                console.log('unbindGoogle success');
+                window.$message({ content: '谷歌解绑成功', type: 'danger' });
             } else {
                 window.$message({ content: errCode.getWebApiErrorCode(arg.result.code), type: 'danger' });
             }
