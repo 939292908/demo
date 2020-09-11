@@ -1,8 +1,12 @@
 const m = require('mithril');
 const Block = require('../../home/block');
-// const mainLogic = require('./main.logic');
+const mainLogic = require('./main.logic');
+
 require('./main.scss');
 module.exports = {
+    oninit: function () {
+        mainLogic.oninit();
+    },
     handleToUrl: function (item) {
         window.router.push(item);
     },
@@ -14,10 +18,10 @@ module.exports = {
                         m('div.but py-1 px-4', '开启')
                     ]))),
                     m('div.addPadding py-5', m(Block, { Icon: m('i.iconfont icon-PhoneVerification'), title: '手机验证', subhead: '用于提现和修改安全设置' }, m('div.dis-flex', [
-                        m('div.but py-1 px-4', '开启')
+                        m('div.but py-1 px-4', { onclick: this.handleToUrl.bind(this, '/bindPhone') }, '开启')
                     ]))),
                     m('div', m(Block, { Icon: m('i.iconfont icon-Mailbox'), title: '邮箱验证', subhead: '用于提现和修改安全设置' }, m('div.dis-flex', [
-                        m('div.but py-1 px-4', '开启')
+                        m('div.but py-1 px-4', { onclick: this.handleToUrl.bind(this, '/bindEmail') }, '开启')
                     ])))
                 ]),
                 m('div.rightBox', [
@@ -42,5 +46,8 @@ module.exports = {
                 m('div', { class: 'but py-1 px-4' }, '管理')
             ])))
         ]);
+    },
+    onremove: function () {
+        mainLogic.onremove();
     }
 };
