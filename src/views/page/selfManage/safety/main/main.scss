@@ -25,4 +25,17 @@
       background-color: #FFFFFF;
     }
   }
+
+  // 修改 icon
+  i.iconfont:before {
+    font-size: 30px;
+  }
+
+  // 操作按钮
+  .but {
+    cursor: pointer;
+    background: #FF8B00;
+    border-radius: 2px;
+    color: #FFFFFF;
+  }
 }

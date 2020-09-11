@@ -181,7 +181,7 @@ const extract = {
             this.errorShow.address.text = l180n.$t('10401')/* '提币地址不能为空' */;
             return;
         }
-        if (this.extractCoin.coinNum <= 0) return window.$message({ content: l180n.$t('10402')/* '输入值不能为0' */, type: 'danger' });
+        if (this.extractCoin.coinNum <= 0) return window.$message({ content: l180n.$t('10402')/* '输入值不能为0' */, type: 'primary' });
         geetest.verify();
     },
     readrSendEmail: function (params, user, seq) {
