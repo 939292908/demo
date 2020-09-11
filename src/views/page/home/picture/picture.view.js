@@ -1,5 +1,6 @@
 const m = require('mithril');
 const Slideshow = require('@/views/components/slideshow/leftToRight');
+const Slideshow2 = require('@/views/components/slideshow/leftToRight2');
 const broadcast = require('@/broadcast/broadcast');
 const wsApi = require('@/api').wsApi;
 require('@/views/page/home/picture/picture.scss');
@@ -44,7 +45,7 @@ module.exports = {
                 m('img', { class: 'picture-layer border-radius-large', src: require("@/assets/img/home/layer-4.png").default }),
                 // 轮播2
                 m('div', { class: `rotationtwo-content container mt-8` }, [
-                    Object.keys(market.tickData).length > 0 && Object.keys(market.tickData).length === logic.length ? m(Slideshow, { list: logic.nameList }) : m(Slideshow, { list: ['a', 'b', 'c', 'd'] })
+                    Object.keys(market.tickData).length > 0 && Object.keys(market.tickData).length === logic.length ? m(Slideshow, { list: logic.nameList }) : m(Slideshow2, { list: ['a', 'b', 'c', 'd'] })
                 ])
             ])
         ]);
