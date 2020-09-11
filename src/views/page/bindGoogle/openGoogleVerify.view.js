@@ -6,9 +6,11 @@ const broadcast = require('@/broadcast/broadcast');
 const VerifyView = require('@/views/components/dialogVerify/dialogVerify.view');
 const config = require('@/config.js');
 const Header = require('@/views/components/indexHeader/indexHeader.view');
+const InputWithComponent = require('@/views/components/inputWithComponent/inputWithComponent.view');
 
 const openGView = {
     // totalFlag: false, /* 是否满足校验  默认false不满足 */
+    showPassword1: false, /* 是否显示登录密码 */
     oninit: () => {
         openGLogic.currentOperation = 'bind';
         openGLogic.initFn();
@@ -124,15 +126,38 @@ const openGView = {
                     ]),
                     m('div', { class: `stepFour pt-7`, style: { display: (openGView.checkFlag === 4 ? '' : 'none') } }, [
                         m('div', { class: `desc1 title-small mb-7` }, I18n.$t('10261') /* '完成以下验证，开启谷歌验证' */),
-                        m('div', { class: `pwdDiv margin-LRauto` }, [
+                        m('div', { class: `pwdDiv margin-LRauto mb-5` }, [
                             m('span', { class: `body-5` }, I18n.$t('10512') /* '登录密码' */),
                             m('br'),
-                            m('input', { class: `border-radius-small mb-5 mt-2 pwd has-line-level-3`, type: `password` })
+                            m(InputWithComponent, {
+                                hiddenLine: true,
+                                addClass: `mt-2`,
+                                options: {
+                                    type: openGView.showPassword1 ? 'text' : 'password',
+                                    oninput: e => {
+                                        openGLogic.openLcPWd = e.target.value;
+                                    },
+                                    value: openGLogic.openLcPWd
+                                },
+                                rightComponents: m('i.iconfont.mx-2', {
+                                    onclick: () => { openGView.showPassword1 = !openGView.showPassword1; },
+                                    class: openGView.showPassword1 ? 'icon-yincang' : 'icon-zichanzhengyan'
+                                })
+                            })
                         ]),
-                        m('div', { class: `codeDiv margin-LRauto` }, [
+                        m('div', { class: `codeDiv margin-LRauto mb-8` }, [
                             m('span', { class: `body-5 mb-2` }, I18n.$t('10119') /* '谷歌验证码' */),
                             m('br'),
-                            m('input', { class: `border-radius-small mt-2 code has-line-level-3`, type: `text` })
+                            m(InputWithComponent, {
+                                hiddenLine: true,
+                                options: {
+                                    addClass: `mt-2`,
+                                    oninput: e => {
+                                        openGLogic.openLcCode = e.target.value;
+                                    },
+                                    value: openGLogic.openLcCode
+                                }
+                            })
                         ]),
                         /* m('div', { class: `tips mt-3` }, [
                             m('span', { class: ``, style: { display: openGLogic.pwdTipFlag ? `` : `none` } }, '登录密码错误请重新输入!'),

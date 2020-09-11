@@ -24,6 +24,10 @@ module.exports = {
     IOSDLAddQrCodeSrc: null, // IOS下载二维码地址
     AndroidDLAddQrCodeSrc: null, // Android Q下载二维码地址
     secretQrCodeSrc: null, // 秘钥二维码地址
+    closeLcPWd: '', // 关闭验证中的登录密码值
+    closeLcCode: '', // 关闭验证中的谷歌验证码值
+    openLcPWd: '', // 开启验证中的登录密码值
+    openLcCode: '', // 开启验证中的谷歌验证码值
     switchSafetyVerifyModal (type) { // 安全校验弹框 显示/隐藏
         this.isShowVerifyView = type;
     },
@@ -65,6 +69,7 @@ module.exports = {
 
     confirmBtn: function () {
         // console.log(this.loginType, this.setting2fa, this.email, this.nationNo, this.phoneNum);
+        console.log(this.openLcCode, this.openLcPWd, this.closeLcCode, this.closeLcPWd);
         geetest.verify(); /* 极验 */
     },
     // 加载极验
@@ -81,7 +86,7 @@ module.exports = {
                     console.log('success initGeetest');
                     m.redraw();
                     // that.ChooseVerify();
-                    that.checkGoogleCode(document.getElementsByClassName('code')[0].value, this.secret);
+                    that.checkGoogleCode();
                 } else {
                     console.log('error initGeetest');
                 }
@@ -92,9 +97,9 @@ module.exports = {
      * 校验google验证码
      * @param code
      */
-    checkGoogleCode(code, opInfo) {
+    checkGoogleCode() {
         const that = this;
-        if (!code) {
+        if (this.currentOperation === 'bind' ? (this.openLcCode === '') : (this.closeLcCode === '')) {
             window.$message({
                 content: I18n.$t('10416') /* '该字段不能为空' */,
                 type: 'danger'
@@ -102,7 +107,7 @@ module.exports = {
             return;
         }
         let params = {};
-        this.currentOperation === 'bind' ? params = { code: code, opInfo: opInfo } : params = { code: code };
+        this.currentOperation === 'bind' ? params = { code: this.openLcCode, opInfo: this.secret } : params = { code: this.closeLcCode };
         Http.googleCheck(params).then(res => {
             if (res.result.code === 0) {
                 m.redraw();
@@ -191,9 +196,9 @@ module.exports = {
         // 密钥
         const opInfo = this.secret;
         // 用户密码
-        const password = document.getElementsByClassName('pwd')[0].value;
+        const password = this.openLcPWd;
         // google验证码
-        const code = document.getElementsByClassName('code')[0].value;
+        const code = this.openLcCode;
 
         Http.bindGoogleAuth({
             opInfo: opInfo,
@@ -217,9 +222,9 @@ module.exports = {
     unbindGoogle: function() {
         const that = this;
         // 用户密码
-        const password = document.getElementsByClassName('pwd')[0].value;
+        const password = this.closeLcPWd;
         // google验证码
-        const code = document.getElementsByClassName('code')[0].value;
+        const code = this.closeLcCode;
         Http.relieveGoogleAuth({
             password: md5(password),
             code: code
