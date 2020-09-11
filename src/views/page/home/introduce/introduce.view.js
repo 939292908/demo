@@ -20,7 +20,7 @@ module.exports = {
         return m('div', { class: 'views-pages-home-introduce ' }, [
             // 1. 平台介绍 模块
             // m('div', { class: `introduce-box ` }, [
-            m('div', { class: ``, style: `background: url(${require("@/assets/img/home/layer_14.png").default}) no-repeat center center / 100% 100%;` }, [
+            m('div', { class: ``, style: `background: url(${require("@/assets/img/home/layer_14.png").default}) no-repeat center center / 100%;` }, [
                 // 内容
                 m('div', { class: `container ` }, [
                     m('div', { class: `pt-8 title-x-large` }, [
@@ -65,12 +65,12 @@ module.exports = {
                     // 图片
                     m('img', { class: 'home-picture-vbit', src: require("@/assets/img/home/vbit.png").default }),
                     // 下载信息
-                    m('div', { class: `pr-6 h100` }, [
-                        m('p', { class: `ml-7 title-large font-weight-regular` }, [
+                    m('div', { class: `pr-6 h100 ml-8` }, [
+                        m('p', { class: `title-large font-weight-regular` }, [
                             // '随时随地交易'
                             I18n.$t('10028')
                         ]),
-                        m('p', { class: `pt-2 ${utils.isMobile() ? 'title-small  ml-7 font-weight-regular' : 'ml-7'}` }, [
+                        m('p', { class: `pt-2 ${utils.isMobile() ? 'title-small font-weight-regular' : ''}` }, [
                             // '下载Vbit移动应用端'
                             I18n.$t('10028', { value: config.exchName })
                         ])

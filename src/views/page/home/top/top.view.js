@@ -10,7 +10,7 @@ module.exports = function (props) {
     return m('div.views-pages-home-top has-bg-sub-level-1 ', {
     }, [
         // 顶部
-        m('div', { class: ` has-text-centered pt-7`, style: `background: url(${require("@/assets/img/home/vector.png").default}) no-repeat center center / 100% 100%;` }, [
+        m('div', { class: ` has-text-centered pt-7`, style: `background: url(${require("@/assets/img/home/vector.png").default}) no-repeat center center / 100%;` }, [
             m('p', { class: `font-weight-regular pt-9 title-x-large-1 ${utils.isMobile() ? 'ml-7 mr-7' : 'pc才有的类名xx'}` }, [
                 // '最值得信任的数字资产交易平台'
                 I18n.$t('10008')
@@ -24,7 +24,7 @@ module.exports = function (props) {
                 I18n.$t('10010')
             ]),
             m('div', { class: `has-text-centered mt-4` }, [
-                m('a', { class: `has-text-level-2 ${utils.isMobile() ? 'body-6' : 'pc才有的类名xx'}`, href: "/w/user/#!/register", target: "_blank" }, [
+                m('a', { class: `has-text-level-2 ${utils.isMobile() ? 'body-6' : 'pc才有的类名xx'}`, href: "/w/#!/register", target: "_blank" }, [
                     // '还没账号？立即前往账号注册 →'
                     I18n.$t('10011')
                 ])

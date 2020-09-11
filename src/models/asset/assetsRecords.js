@@ -85,9 +85,10 @@ module.exports = {
         '04': []
     },
     coin: 'all', // 币种
-    type: 'all', // 类型
+    type: 'all', // 类型 用于过滤
     loading: false,
     length: -1, // 显示条数
+    mhType: 'all', // 类型 用于请求
     setLanguageListen() {
         broadcast.onMsg({
             key: 'assetRecords',
@@ -141,12 +142,14 @@ module.exports = {
         this.aType = '03';
         this.type = 'all';
         this.coin = 'all';
+        this.mhType = 'all';
         this.filterTime = [];
         this.showList = [];
     },
-    init(aType, type = 'all', length = -1) {
+    init(aType, type = 'all', mhType = 'all', length = -1) {
         this.aType = aType;
         this.type = type;
+        this.mhType = mhType;
         this.length = length;
         this.coin = 'all';
         this.filterTime = [];
@@ -182,7 +185,7 @@ module.exports = {
     /**
      * 获取子账户记录
      */
-    getATypeRecords() {
+    getATypeRecords: function() {
         this.loading = true;
         this.recordObj = {
             '01': { // 合约账户
@@ -207,19 +210,29 @@ module.exports = {
                 otcSell: [] // 法币交易
             }
         };
+        let httpList = [];
         switch (this.aType) {
         case '03' :
-            Http.assetRecordsAll([
-                Http.assetRecords({ aType: this.aType, mhType: 1 }), // 充币
-                Http.assetRecords({ aType: this.aType, mhType: 2 }), // 提币
-                Http.assetRecords({ aType: this.aType, mhType: 4 }), // 划转
-                Http.assetRecords({ aType: this.aType, mhType: 5 }) // 其他
-            ]).then(res => {
+            if (this.mhType === 'all') {
+                httpList = [
+                    Http.assetRecords({ aType: this.aType, mhType: 1 }), // 充币
+                    Http.assetRecords({ aType: this.aType, mhType: 2 }), // 提币
+                    Http.assetRecords({ aType: this.aType, mhType: 4 }), // 划转
+                    Http.assetRecords({ aType: this.aType, mhType: 5 }) // 其他
+                ];
+            } else {
+                httpList.push(Http.assetRecords({ aType: this.aType, mhType: this.mhType }));
+            }
+            Http.assetRecordsAll(httpList).then(res => {
                 this.loading = false;
-                this.walletLog[this.aType]['1'] = res[0].result.code === 0 ? res[0].history : [];
-                this.walletLog[this.aType]['2'] = res[1].result.code === 0 ? res[1].history : [];
-                this.walletLog[this.aType]['4'] = res[2].result.code === 0 ? res[2].history : [];
-                this.walletLog[this.aType]['5'] = res[3].result.code === 0 ? res[3].history : [];
+                if (this.mhType === 'all') {
+                    this.walletLog[this.aType][1] = res[0].result.code === 0 ? res[0].history : [];
+                    this.walletLog[this.aType][2] = res[1].result.code === 0 ? res[1].history : [];
+                    this.walletLog[this.aType][4] = res[2].result.code === 0 ? res[2].history : [];
+                    this.walletLog[this.aType][5] = res[3].result.code === 0 ? res[3].history : [];
+                } else {
+                    this.walletLog[this.aType][this.mhType] = res[0].result.code === 0 ? res[0].history : [];
+                }
                 this.fillDataAll();
             }).catch(err => {
                 this.loading = false;
@@ -228,11 +241,10 @@ module.exports = {
             break;
         case '01':
         case '02':
-            Http.assetRecordsAll([
-                Http.assetRecords({ aType: this.aType, mhType: 4 }) // 划转
-            ]).then(res => {
+            httpList = [Http.assetRecords({ aType: this.aType, mhType: 4 })]; // 划转
+            Http.assetRecordsAll(httpList).then(res => {
                 this.loading = false;
-                this.walletLog[this.aType]['4'] = res[0].result.code === 0 ? res[0].history : [];
+                this.walletLog[this.aType][4] = res[0].result.code === 0 ? res[0].history : [];
                 this.fillDataAll();
             }).catch(err => {
                 this.loading = false;
@@ -240,13 +252,14 @@ module.exports = {
             });
             break;
         case '04':
-            Http.assetRecordsAll([
+            httpList = [
                 Http.assetRecords({ aType: this.aType, mhType: 4 }), // 划转
                 Http.assetRecords({ aType: this.aType, mhType: 5 }) // 其他
-            ]).then(res => {
+            ];
+            Http.assetRecordsAll(httpList).then(res => {
                 this.loading = false;
-                this.walletLog[this.aType]['4'] = res[0].result.code === 0 ? res[0].history : [];
-                this.walletLog[this.aType]['5'] = res[1].result.code === 0 ? res[1].history : [];
+                this.walletLog[this.aType][4] = res[0].result.code === 0 ? res[0].history : [];
+                this.walletLog[this.aType][5] = res[1].result.code === 0 ? res[1].history : [];
                 this.fillDataAll();
             }).catch(err => {
                 this.loading = false;
@@ -507,11 +520,9 @@ module.exports = {
                         this.recordObj[aType].paymentTransfer.push(newLog);
                     } else { // 资产划转
                         this.recordObj[aType].transfer.push(newLog);
-                        // console.log(this.recordObj[aType].transfer);
                     }
                 }
             }
-            console.log(this.recordObj[aType]);
             break;
         case '5':
             if (aType === '04') {

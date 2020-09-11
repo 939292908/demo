@@ -164,19 +164,14 @@ module.exports = {
                                 },
                                 value: Register.refereeId
                             }, []),
-                            m('label.checkbox.body-3', {}, [
-                                m('input.mr-2', {
-                                    hidden: !(config.exchInfo.helpCenter.website &&
-                                        config.exchInfo.helpCenter.termsServiceId &&
-                                        config.exchInfo.helpCenter.privacyPolicyId),
-                                    type: 'checkbox',
-                                    onclick: e => {
-                                        Register.checkbox = e.target.checked;
-                                    },
-                                    checked: Register.checkbox
-                                }, [])
-                            ]),
-                            m('span.body-3', {
+                            m('i.iconfont.iconfont-medium.cursor-pointer', {
+                                hidden: !(config.exchInfo.helpCenter.website &&
+                                    config.exchInfo.helpCenter.termsServiceId &&
+                                    config.exchInfo.helpCenter.privacyPolicyId),
+                                class: Register.checkbox ? 'icon-u_check-square has-text-primary' : 'icon-Unselected',
+                                onclick() { Register.checkbox = !Register.checkbox; }
+                            }, []),
+                            m('span.body-3.views-page-register-checkbox-label', {
                                 hidden: !(config.exchInfo.helpCenter.website &&
                                     config.exchInfo.helpCenter.termsServiceId &&
                                     config.exchInfo.helpCenter.privacyPolicyId)

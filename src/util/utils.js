@@ -173,7 +173,7 @@ utils.hideAccountNameInfo = val => {
     if (val.includes('@')) {
         const arr = val.split('@');
         if (arr[0].length > 4) {
-            return arr[0].substr(0, 4) + '****@' + arr[1];
+            return arr[0].substr(0, 3) + '****@' + arr[1];
         } else {
             return val;
         }

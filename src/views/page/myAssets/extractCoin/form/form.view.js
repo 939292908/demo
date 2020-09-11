@@ -3,13 +3,14 @@ require('./index.scss');
 const FromDataMode = require('./form.logic');
 const VerifyView = require('@/views/components/dialogVerify/dialogVerify.view');
 const Tooltip = require('@/views/components/common/Tooltip/Tooltip.view');
-// const Dropdown = require('@/views/components/common/Dropdown');
+const Dropdown = require('@/views/components/common/Dropdown/Dropdown.view');
 const l180n = require('@/languages/I18n').default;
 
 module.exports = {
     oninit () {
         const initWType = m.parseQueryString(m.route.get().split('?')[1])?.wType;
         FromDataMode.oninit(initWType);
+        FromDataMode.option2.currentId = initWType;
     },
     // handleSelectChange: function (e) {
     //     FromDataMode.currentSelect = FromDataMode.selectList[e.target.selectedIndex];
@@ -56,47 +57,48 @@ module.exports = {
             m('div.form-block', [
                 m('div.formModule', [
                     m('div.topLabel has-text-title body-5', l180n.$t('10063') /* '币种' */),
-                    m('div.control changeCoin', [
-                        m('div', { class: `my-dropdown dropdown ${FromDataMode.showCurrencyMenu ? " is-active" : ''}` }, [
-                            m('div', { class: "dropdown-trigger has-text-1" }, [
-                                m('button', {
-                                    class: `button`,
-                                    onclick: (e) => {
-                                        FromDataMode.showCurrencyMenu = !FromDataMode.showCurrencyMenu;
-                                    }
-                                }, [
-                                    m('p', { class: `my-trigger-text` }, [
-                                        m('span', { class: `has-text-level-4` }, FromDataMode.currentSelect.label)
-                                    ]),
-                                    m('i', { class: "my-trigger-icon iconfont icon-xiala has-text-primary" }) // icon
-                                ])
-                            ]),
-                            m('div', { class: "dropdown-menu " }, [
-                                m('div', { class: "dropdown-content", style: "max-height: 400px; overflow: auto;" },
-                                    FromDataMode.selectList.map((item, index) => {
-                                        return m('a', {
-                                            class: `dropdown-item has-hover ${FromDataMode.selectActiveId.wType === item.id ? 'has-active' : ''}`,
-                                            key: item.id + index,
-                                            onclick () {
-                                                FromDataMode.selectActiveId.wType = item.id; // 修改选中id
-                                                FromDataMode.currentSelect = item;
-                                                FromDataMode.showCurrencyMenu = false; // 关闭菜单
-                                                // 检查是否需要身份认证
-                                                FromDataMode.checkIdcardVerify();
-                                                FromDataMode.getlinkButtonListData();
-                                            }
-                                        }, [
-                                            m('span', { class: `my-menu-label` }, [
-                                                m('span', { class: `mr-2` }, item.label),
-                                                m('span', { class: `has-text-level-4` }, item.coinName)
-                                            ])
-                                            // m('i', { class: `my-menu-icon iconfont icon-fabijiaoyiwancheng ${FromDataMode.selectActiveId.wType === item.id ? '' : 'is-hidden'}` }) // icon
-                                        ]);
-                                    })
-                                )
-                            ])
-                        ])
-                    ])
+                    m(Dropdown, FromDataMode.option2)
+                    // m('div.control changeCoin', [
+                    //     m('div', { class: `my-dropdown dropdown ${FromDataMode.showCurrencyMenu ? " is-active" : ''}` }, [
+                    //         m('div', { class: "dropdown-trigger has-text-1" }, [
+                    //             m('button', {
+                    //                 class: `button`,
+                    //                 onclick: (e) => {
+                    //                     FromDataMode.showCurrencyMenu = !FromDataMode.showCurrencyMenu;
+                    //                 }
+                    //             }, [
+                    //                 m('p', { class: `my-trigger-text` }, [
+                    //                     m('span', { class: `has-text-level-4` }, FromDataMode.currentSelect.label)
+                    //                 ]),
+                    //                 m('i', { class: "my-trigger-icon iconfont icon-xiala has-text-primary" }) // icon
+                    //             ])
+                    //         ]),
+                    //         m('div', { class: "dropdown-menu " }, [
+                    //             m('div', { class: "dropdown-content", style: "max-height: 400px; overflow: auto;" },
+                    //                 FromDataMode.selectList.map((item, index) => {
+                    //                     return m('a', {
+                    //                         class: `dropdown-item has-hover ${FromDataMode.selectActiveId.wType === item.id ? 'has-active' : ''}`,
+                    //                         key: item.id + index,
+                    //                         onclick () {
+                    //                             FromDataMode.selectActiveId.wType = item.id; // 修改选中id
+                    //                             FromDataMode.currentSelect = item;
+                    //                             FromDataMode.showCurrencyMenu = false; // 关闭菜单
+                    //                             // 检查是否需要身份认证
+                    //                             FromDataMode.checkIdcardVerify();
+                    //                             FromDataMode.getlinkButtonListData();
+                    //                         }
+                    //                     }, [
+                    //                         m('span', { class: `my-menu-label` }, [
+                    //                             m('span', { class: `mr-2` }, item.label),
+                    //                             m('span', { class: `has-text-level-4` }, item.coinName)
+                    //                         ])
+                    //                         // m('i', { class: `my-menu-icon iconfont icon-fabijiaoyiwancheng ${FromDataMode.selectActiveId.wType === item.id ? '' : 'is-hidden'}` }) // icon
+                    //                     ]);
+                    //                 })
+                    //             )
+                    //         ])
+                    //     ])
+                    // ])
                 ]),
                 FromDataMode.currentSelect.Setting && FromDataMode.currentSelect.Setting.memo ? m('div.formModule', [
                     m('div.topLabel has-text-title body-5', [
