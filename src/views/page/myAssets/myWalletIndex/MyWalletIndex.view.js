@@ -18,7 +18,10 @@ module.exports = {
                     // highlightFlag:哪个高亮   0：我的资产  1：资产记录
                     m(Header, {
                         highlightFlag: 0,
-                        navList: [{ to: '/myWalletIndex', title: I18n.$t('10052') /* '我的资产' */ }, { to: '/assetRecords', title: I18n.$t('10053') /* '资金记录' */ }]
+                        navList: [
+                            { to: '/myWalletIndex', title: I18n.$t('10052') /* '我的资产' */ },
+                            { to: '/assetRecords', title: I18n.$t('10053') /* '资金记录' */ }
+                        ]
                     }),
                     m('div', { class: `myWalletIndex-warpper container content-width` }, [
                         m('div', { class: `myWalletIndex-head columns-flex mt-3` }, [

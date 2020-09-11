@@ -60,8 +60,14 @@ const openGView = {
     view: () => {
         return m('div', { class: `views-page-accountSecurity-bindGoogle-open theme--light pb-8` }, [
             m(Header, {
-                highlightFlag: 0,
-                navList: [{ to: '', title: I18n.$t('10052') /* '个人总览' */ }, { to: '/assetRecords', title: I18n.$t('10053') /* '账户安全' */ }]
+                highlightFlag: 1,
+                navList: [
+                    { to: '', title: I18n.$t('10051') /* '个人总览' */ },
+                    { to: '', title: I18n.$t('10181') /* '账户安全' */ },
+                    { to: '', title: I18n.$t('10182') /* '身份认证' */ },
+                    { to: '', title: I18n.$t('10183') /* 'API管理' */ },
+                    { to: '', title: I18n.$t('10184') /* '邀请返佣' */ }
+                ]
             }),
             m('div', { class: `operation mb-7 has-bg-level-2` }, [
                 m('div', { class: `content-width container` }, [
