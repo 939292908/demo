@@ -12,7 +12,7 @@ module.exports = {
     nameTips: null, // 链名称提示
     oninit: () => {
         rechargeIndex.initFn();
-        AssetRecords.init('03', 'recharge', 10);
+        AssetRecords.init('03', 'recharge', 1, 10);
         AssetRecords.setLanguageListen();
 
         this.nameTips =
