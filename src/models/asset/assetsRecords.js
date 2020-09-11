@@ -142,6 +142,7 @@ module.exports = {
         this.aType = '03';
         this.type = 'all';
         this.coin = 'all';
+        this.mhType = 'all';
         this.filterTime = [];
         this.showList = [];
     },
