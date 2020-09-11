@@ -57,6 +57,9 @@ let obj = {
         let PId = this.param.pos.PId
         let Dir = this.param.pos.Sz > 0 ? -1 : 1
 
+        let Lever = this.param.pos.Lever || 0
+        let MIRMy = this.param.pos.MIRMy || 0
+
         let p = null;
         if (this.tabsActive == 0) {
             p = {
@@ -72,6 +75,8 @@ let obj = {
                 Tif: 0,
                 OrdFlag: 2, //只减仓
                 PrzChg: 0,
+                lvr: Lever,
+                MIRMy: MIRMy,
             }
         } else {
             p = {
@@ -87,6 +92,8 @@ let obj = {
                 Tif: 1,
                 OrdFlag: 2, //只减仓
                 PrzChg: 10,
+                lvr: Lever,
+                MIRMy: MIRMy,
             }
         }
         if (!p) return

@@ -58,8 +58,8 @@ let obj = {
         let PId = this.param.pos.PId
         let Dir = this.param.pos.Sz > 0 ? 1 : -1
 
-    let Lever = this.param.pos.Lever || 0
-    let MIRMy = this.param.pos.MIRMy || 0
+        let Lever = this.param.pos.Lever || 0
+        let MIRMy = this.param.pos.MIRMy || 0
 
 
         let p = {
@@ -74,7 +74,9 @@ let obj = {
             QtyDsp: 0,
             Tif: 0,
             OrdFlag: 0,
-            PrzChg: 0
+            PrzChg: 0,
+            lvr: Lever,
+            MIRMy: MIRMy,
         }
 
 
