@@ -19,6 +19,8 @@ const logic = {
             window.open(link);
         } else if (item.email) {
             window.location = `mailto:${item.email}`;
+        } else if (item.href) {
+            window.open(item.href);
         }
     },
     // icon列表
