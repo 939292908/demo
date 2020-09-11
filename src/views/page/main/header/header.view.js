@@ -416,7 +416,7 @@ module.exports = {
                     header: m('div.w100', {}, [
                         m('div', {}, [
                             // `Web网络监测(${globalModels.getAccount().uid})`
-                            `${I18n.$t('10164')}(${globalModels.getAccount().uid})`
+                            `${I18n.$t('10164')}(${globalModels.getAccount().uid || '****'})`
                         ]),
                         m('article.body-4.has-text-level-3.message.is-warning.mt-4.mr-4.flex-shrink-initial', {}, [
                             m('div.message-body.border-1', {}, [
