@@ -116,7 +116,7 @@ let header = {
     },
     initUserInfo () {
         let account = window.gWebAPI.CTX.account
-        this.userName = account.accountName
+        this.userName = this.userName = account.accountName.substr(0,3) + "***" + account.accountName.substr(-3)
         this.uid = account.uid
     },
     getLoginDom: function () {
@@ -129,8 +129,11 @@ let header = {
                     m("a", { class: "navbar-item" }, [
                         this.userName
                     ]),
-                    m("a", { class: "navbar-item" }, [
-                        `UID:${this.uid}`
+                    m("a", { class: "navbar-item header-right-user-id cursor-pointer","data-clipboard-text": this.uid,onclick:function(e){
+                        window.$copy(".header-right-user-id")
+                    }}, [
+                        `UID:${this.uid}`,
+                        m("i", { class: "iconfont iconcopy" }),
                     ]),
                     m("a", { class: "navbar-item" }, [
                         gDI18n.$t('10599'), //'账户安全'
