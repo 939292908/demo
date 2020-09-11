@@ -1,13 +1,27 @@
 .safety-man {
   position: relative;
+  padding-top: 331px;
+
+  .leezBlock { // 覆盖 block 组件样式
+    border: none;
+  }
+
+  .liftingBox {
+    position: absolute;
+    top: -56px;
+  }
 
   .leftBox, .rightBox {
     width: 592px;
     box-sizing: border-box;
   }
   .leftBox {
-    .leezBlock { // 覆盖 block 组件样式
-      border: none;
+
+    .addPadding {
+      //padding: 20px 0;
+      box-sizing: border-box;
+      border: 1px soil;
+      background-color: #FFFFFF;
     }
   }
 }

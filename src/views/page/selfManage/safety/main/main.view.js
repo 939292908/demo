@@ -5,27 +5,15 @@ require('./main.scss');
 module.exports = {
     view: function () {
         return m('div.safety-man', [
-            m('div.liftingBox dis-flex justify-between align-stretch', [
+            m('div.liftingBox content-width dis-flex justify-between align-stretch', [
                 m('div.leftBox', [
-                    m('div', m(Block, {
-                        Icon: m('img', ''),
-                        title: '谷歌验证',
-                        subhead: '用于提现和修改安全设置'
-                    }, m('div.dis-flex', [
+                    m('div', m(Block, { Icon: m('img', ''), title: '谷歌验证', subhead: '用于提现和修改安全设置' }, m('div.dis-flex', [
                         m('div', '关闭'), m('div', '解绑')
                     ]))),
-                    m('div.', m(Block, {
-                        Icon: m('img', ''),
-                        title: '手机验证',
-                        subhead: '用于提现和修改安全设置'
-                    }, m('div.dis-flex', [
+                    m('div.addPadding py-5', m(Block, { Icon: m('img', ''), title: '手机验证', subhead: '用于提现和修改安全设置' }, m('div.dis-flex', [
                         m('div', '关闭'), m('div', '解绑')
                     ]))),
-                    m('div', m(Block, {
-                        Icon: m('img', ''),
-                        title: '邮箱验证',
-                        subhead: '用于提现和修改安全设置'
-                    }, m('div.dis-flex', [
+                    m('div', m(Block, { Icon: m('img', ''), title: '邮箱验证', subhead: '用于提现和修改安全设置' }, m('div.dis-flex', [
                         m('div', '关闭'), m('div', '解绑')
                     ])))
                 ]),
