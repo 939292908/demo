@@ -616,6 +616,9 @@ class Mkt {
     // 设置地址
     setSocketUrl(url) {
         const s = this;
+        if (!s.Conf) {
+            return;
+        }
         s.Conf.baseUrl = url;
         s.close();
     }
@@ -876,10 +879,6 @@ class Mkt {
         }
 
         broadcast.emit({ cmd: broadcast.EV_ORD_UPD, data: { Ev: broadcast.EV_ORD_UPD, aType: id, dType: dType, data: data } });
-    }
-
-    wsClose(aObj) {
-        aObj.ws.close();
     }
 }
 module.exports = Mkt;

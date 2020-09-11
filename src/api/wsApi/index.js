@@ -41,7 +41,7 @@ broadcast.onMsg({
     cb: arg => {
         console.log('wsApi MSG_LOG_OUT');
         gTrdApi.Conf = null;
-        gTrdApi.wsClose(gTrdApi);
+        gTrdApi.close();
     }
 });
 
