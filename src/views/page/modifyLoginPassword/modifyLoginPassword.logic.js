@@ -156,6 +156,9 @@ module.exports = {
         this.phoneNum = account.phone; // 用户手机号码
     },
     initFn: function() {
+        this.oldLpwd = ''; // 输入的旧密码初始化
+        this.newLpwd = ''; // 输入的新密码初始化
+        this.confirmLpwd = ''; // 输入的确认密码初始化
         // 获取用户信息
         broadcast.onMsg({
             key: 'index',

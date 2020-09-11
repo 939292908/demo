@@ -253,6 +253,10 @@ module.exports = {
         this.phoneNum = account.phone; // 用户手机号码
     },
     initFn: function() {
+        this.closeLcPWd = ''; // 关闭验证中的登录密码值初始化
+        this.closeLcCode = ''; // 关闭验证中的谷歌验证码值初始化
+        this.openLcPWd = ''; // 开启验证中的登录密码值初始化
+        this.openLcCode = ''; // 开启验证中的谷歌验证码值初始化
         broadcast.onMsg({
             key: 'index',
             cmd: broadcast.GET_USER_INFO_READY,
