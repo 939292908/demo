@@ -140,7 +140,7 @@ module.exports = {
             }
         } else if (item.operation === I18n.$t('10079') /* '去交易' */) {
             if (this.pageFlag === '01') {
-                window.open('https://beta.xmex.co/w/trd/#!/future');
+                window.open('/w/trd/#!/future');
             } else {
                 return window.$message({ title: I18n.$t('10410') /* '提示' */, content: I18n.$t('10513') /* '暂未开放，敬请期待' */, type: 'primary' });
             }

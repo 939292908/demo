@@ -27,9 +27,15 @@
                 align-items: center;
                 padding: 12px !important;
     
-                &.has-hover:hover,
-                &.has-active {
-                    color: var(--c-primary-lighten);
+                &.has-active,
+                & .has-active {
+                    color: var(--c-primary-lighten) !important;
+                }
+                &:hover {
+                    &.has-hover,
+                    .has-hover {
+                        color: var(--c-primary-lighten) !important;
+                    }
                 }
             }
         }

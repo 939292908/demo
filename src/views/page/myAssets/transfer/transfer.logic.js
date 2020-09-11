@@ -118,10 +118,10 @@ const model = {
                     item.id = item.wType;
                     item.label = item.wType;
                     item.coinName = wlt.wltFullName[item.wType].name;
-                    item.render = params => {
+                    item.render = (params, currentId) => {
                         return m('div', { class: `` }, [
-                            m('span', { class: `mr-2` }, item.label),
-                            m('span', { class: `has-text-level-4` }, item.coinName)
+                            m('span', { class: `mr-2` }, params.label),
+                            m('span', { class: params.id === currentId ? `has-active` : `has-hover has-text-level-4` }, params.coinName)
                         ]);
                     };
                     this.canTransferCoin.push(item); // push
