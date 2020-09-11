@@ -25,6 +25,7 @@ let obj = {
         maxLeverForSell: 0,
         // 交易模式2相关内容 end
     },
+    currentPrz:'',//当前最新价格
     setingList:[
         {
           id:"0",
