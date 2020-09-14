@@ -30,6 +30,7 @@ export default {
     SymM: "",
     MIRMy: 0,
   },
+  //历史委托模板
   OrdDefault: {
     UId: "",
     AId: "",
@@ -91,6 +92,7 @@ export default {
     Gift: 0,
     PNLG: 0,
   },
+  //成交记录模板
   TrdRecDefault: {
     UId: "",
     AId: "",

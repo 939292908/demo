@@ -12,6 +12,9 @@
 let Stately = require('stately.js');
 let md5 = require('md5')
 let consts = require("./consts")
+
+let objectDefault = require('../futureCalc/objectDefault').default
+
 const AUTH_ST_NO = 0;
 const AUTH_ST_WT = 1; //等待
 const AUTH_ST_OK = 2; //OK
@@ -1709,17 +1712,21 @@ class Mkt {
     getHistoryOrdAndTrdAndWltlog({AId}){
         let s = this
         let aType = AId.substr(-2)
-        s.ReqTrdGetHistOrders({
+        s.ReqTrdGetHistOrders({//历史委托
             AId: AId,
         }, function (aTrd, aArg) {
             if (aArg.code == 0) {
+                for(let item of aArg.data){
+                    FixObjWithSample(item,objectDefault.OrdDefault)//按照模板修改数据
+                    aArg.data[item] = item
+                }
                 s.trdInfoStatus.historyOrd[aType] = 1
                 s.HistoryOrders[aType] = aArg.data
                 gEVBUS.emit(EV_GET_HISTORY_ORD_READY, {ev:EV_GET_HISTORY_ORD_READY, aType: aType, data: aArg.data})
             }
         })
 
-        s.ReqTrdGetTrades({
+        s.ReqTrdGetTrades({//成交记录
             AId: AId,
         }, function(aTrd, aArg){
             if(aArg.code == 0){
@@ -1730,6 +1737,7 @@ class Mkt {
                 s.trdInfoStatus.trade[aType] = 1
                 s.MyTrades[aType] = aArg.data
                 for(let item of aArg.data){
+                    FixObjWithSample(item,objectDefault.TrdRecDefault)//按照模板修改数据
                     if(!s.MyTrades_Obj[aType][item.OrdId]){
                         s.MyTrades_Obj[aType][item.OrdId] = []
                     }
