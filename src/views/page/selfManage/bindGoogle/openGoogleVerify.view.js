@@ -25,10 +25,9 @@ const openGView = {
         openGView.initNav();
         openGView.checkFlag = 1; /* 步驟初始化 */
     },
-    /* 导航（下载App，扫描二维码，备份密钥，开启谷歌验证） */
-    nav: [],
+    nav: [], /* 导航（下载App，扫描二维码，备份密钥，开启谷歌验证） */
     checkFlag: 1, /* 当前选中哪个步骤 */
-    myWidth: 25, /* 使用百分比 */
+    myWidth: 25, /* '进度'使用百分比 */
     initNav() {
         openGView.nav = [
             {
