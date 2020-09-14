@@ -13,7 +13,7 @@ const obj = {
         // 3.下拉开关 (必填)
         showMenu: false,
         // 4.组件内部 自动维护上面两个值 (必填)
-        setOption (option) {
+        updateOption (option) {
             Object.keys(option).forEach(key => (this[key] = option[key]));
         },
         // 5.菜单列表 (必填)
@@ -31,7 +31,7 @@ const obj = {
         evenKey: "option2key", // 1.事件广播key (必填 随意唯一即可)
         currentId: 2, // 2.选中id (必填)
         showMenu: false, // 3.下拉开关 (必填)
-        setOption (option) { // 4.组件内部 自动维护上面两个值 (必填)
+        updateOption (option) { // 4.组件内部 自动维护上面两个值 (必填)
             Object.keys(option).forEach(key => (this[key] = option[key]));
         },
         menuList() { // 5.菜单列表 (必填)
@@ -61,7 +61,7 @@ const obj = {
         evenKey: "option3key",
         currentId: 2,
         showMenu: false,
-        setOption (option) {
+        updateOption (option) {
             Object.keys(option).forEach(key => (this[key] = option[key]));
             // 同时更新其他变量
             obj.form.showMenu3 = option.showMenu;

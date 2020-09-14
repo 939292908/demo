@@ -246,7 +246,7 @@ const model = {
         showMenu: false,
         currentId: "",
         menuHeight: 260,
-        setOption (option) {
+        updateOption (option) {
             /* eslint-disable */
             // debugger
             this.showMenu = option.showMenu;
@@ -266,7 +266,7 @@ const model = {
         showMenu: false,
         currentId: "",
         menuHeight: 180,
-        setOption (option) {
+        updateOption (option) {
             this.showMenu = option.showMenu;
             this.currentId = option.currentId ? option.currentId : this.currentId;
         },
@@ -285,7 +285,7 @@ const model = {
         showMenu: false,
         currentId: "",
         menuHeight: 180,
-        setOption (option) {
+        updateOption (option) {
             this.showMenu = option.showMenu;
             this.currentId = option.currentId ? option.currentId : this.currentId;
         },

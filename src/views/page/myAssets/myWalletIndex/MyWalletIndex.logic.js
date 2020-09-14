@@ -41,7 +41,7 @@ const model = {
         btnWidth: 70,
         menuWidth: 70,
         showMenu: false,
-        setOption (option) {
+        updateOption (option) {
             this.showMenu = option.showMenu;
             this.currentId = option.currentId ? option.currentId : this.currentId;
         },
