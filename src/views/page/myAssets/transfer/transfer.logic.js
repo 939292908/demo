@@ -249,8 +249,7 @@ const model = {
         updateOption (option) {
             /* eslint-disable */
             // debugger
-            this.showMenu = option.showMenu;
-            this.currentId = option.currentId ? option.currentId : this.currentId;
+            Object.keys(option).forEach(key => (this[key] = option[key]));
         },
         menuClick (item) {
             model.setMaxTransfer(); // 设置 最大划转
@@ -267,8 +266,7 @@ const model = {
         currentId: "",
         menuHeight: 180,
         updateOption (option) {
-            this.showMenu = option.showMenu;
-            this.currentId = option.currentId ? option.currentId : this.currentId;
+            Object.keys(option).forEach(key => (this[key] = option[key]));
         },
         menuClick (item) {
             console.log(model.fromMenuOption.currentId, model.toMenuOption.currentId);
@@ -286,8 +284,7 @@ const model = {
         currentId: "",
         menuHeight: 180,
         updateOption (option) {
-            this.showMenu = option.showMenu;
-            this.currentId = option.currentId ? option.currentId : this.currentId;
+            Object.keys(option).forEach(key => (this[key] = option[key]));
         },
         menuClick (item) {
             // console.log(model.fromMenuOption.currentId, model.toMenuOption.currentId);
