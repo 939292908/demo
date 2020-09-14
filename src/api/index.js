@@ -8,7 +8,7 @@
  */
 const Conf = require('@/config');
 const webApi = require('./webApi');
-const wsApi = require('./wsApi').gWsApi;
+const wsApi = require('./wsApi');
 const { instConf, ActiveLine } = require('./config');
 module.exports = {
     ActiveLine,

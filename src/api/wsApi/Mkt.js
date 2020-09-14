@@ -2,8 +2,13 @@ const Stately = require('stately.js');
 const API_TAG = 'WS';
 const DBG_WSCALL = true;
 const broadcast = require('@/broadcast/broadcast');
+const md5 = require('md5');
 class Mkt {
     Conf = null;
+    RT = {
+        Authrized: this.AUTH_ST_NO
+    };
+
     // websocket
     ws = null;
     // 状态机
@@ -37,6 +42,10 @@ class Mkt {
         // "sub1": {want:true,done:false},
     };
 
+    AUTH_ST_NO = 0;
+    AUTH_ST_WT = 1; // 等待
+    AUTH_ST_OK = 2; // OK
+
     // 合约详情
     AssetD = {}
     // 合约详情补充参数
@@ -46,6 +55,75 @@ class Mkt {
     lastTick = {}
     // 成交行情
     trades = []
+
+    OrdStatus = {
+        // 正在排队
+        Queueing: 1,
+        // 有效
+        Matching: 2,
+        // 提交失败
+        PostFail: 3,
+        // 已执行
+        Executed: 4,
+
+        Status_5: 5,
+        Status_6: 6
+    };
+
+    Wlts = {
+        "01": [],
+        "02": [],
+        "03": []
+    }
+
+    Poss = {}
+
+    Orders = {
+        "01": [],
+        "02": []
+    }
+
+    HistoryOrders = {
+        "01": [],
+        "02": []
+    }
+
+    MyTrades = {
+        "01": [],
+        "02": []
+    }
+
+    MyTradesObj = {
+        "01": {},
+        "02": {}
+    }
+
+    WltLog = {
+        "01": [],
+        "02": []
+    }
+
+    RS = {}
+
+    trdInfoStatus = {
+        pos: 0,
+        ord: 0,
+        wlt: 0,
+        rs: 0,
+        historyOrd: {
+            '01': 0,
+            '02': 0
+        },
+        trade: {
+            '01': 0,
+            '02': 0
+        },
+        wltLog: {
+            '01': 0,
+            '02': 0
+        }
+    }
+
     constructor(arg) {
         this.Conf = arg;
         this.initStately(arg);
@@ -62,6 +140,9 @@ class Mkt {
             },
             PRECONNECT: {
                 do: (aObj) => {
+                    if (!aObj.Conf) {
+                        return 'IDLE';
+                    }
                     // 清理订阅状态
                     for (var propName in aObj.booking) {
                         aObj.booking[propName].done = false;
@@ -95,7 +176,7 @@ class Mkt {
                     switch (aObj.ws.readyState) {
                     case WebSocket.CONNECTING:
                         if (Date.now() - aObj.openStart > aObj.timeoutOpen) {
-                            return aObj.stately.PRECONNECT;
+                            return 'PRECONNECT';
                         }
                         break;
                     case WebSocket.OPEN:
@@ -106,14 +187,63 @@ class Mkt {
                         case "mkt":
                             return 'AUTHORIZING';
                         case "trd":
+                            /*
 
-                            break;
+                            如果 使用用户名获取的token
+                            则:
+                            ReqTrdLogin()
+                            let userData = {
+                                UserName: store.state.account.email ? store.state.account.email : store.state.account.phone,
+                                AuthType: 2,
+                                UserCred: store.state.account.token,
+                            }
+                            也就是获取到Token后，应该修改 Trd 的 Conf
+
+                            */
+                            aObj.Conf.Authrized = aObj.AUTH_ST_WT;
+                            // 登录交易前先校对时间
+                            aObj.ReqTime(arg => {
+                                aObj.ReqTrdLogin({ // 服务端所需的参数
+                                    UserName: aObj.Conf.UserName,
+                                    UserSecr: aObj.Conf.UserSecr, // 如果有API Key
+                                    UserCred: aObj.Conf.UserCred, // token ,或者 UserCred
+                                    AuthType: aObj.Conf.AuthType ? aObj.Conf.AuthType : 0
+                                }, function (aObj, aRaw) {
+                                    /*
+                                    {
+                                    "rid":"0",
+                                    "code":0,
+                                    "data":{
+                                        "UserName":"gmex-test@gmail.com",
+                                        "UserId":"1234567"
+                                        }
+                                    }
+                                    */
+                                    const d = aRaw.data;
+                                    console.log("ReqTrdLogin", aRaw);
+                                    switch (aRaw.code) {
+                                    case 0:
+
+                                        aObj.RT.Authrized = aObj.AUTH_ST_OK;
+                                        for (const prop in d) {
+                                            aObj.RT[prop] = d[prop];
+                                        }
+                                        // aObj.CtxPlaying.UId = aObj.RT.UserId;
+
+                                        break;
+                                    default:
+                                        aObj.RT.Authrized = aObj.AUTH_ST_NO;
+                                        break;
+                                    }
+                                });
+                            });
+                            return 'AUTHORIZING';
                         }
                         break;
                     case WebSocket.CLOSING:
                         break;
                     case WebSocket.CLOSED:
-                        return aObj.stately.PRECONNECT;
+                        return 'PRECONNECT';
                     }
                 }
             },
@@ -124,8 +254,42 @@ class Mkt {
                         aObj.ReqAssetD({ vp: aObj.Conf.vp });
                         return 'WORKING';
                     case "trd":
+                        switch (aObj.RT.Authrized) {
+                        case aObj.AUTH_ST_NO:
+                            return 'PRECONNECT';
+                        case aObj.AUTH_ST_WT:
+                            break;
+                        case aObj.AUTH_ST_OK:
+                        {
+                            // 订阅仓位等。
+                            // 合约
+                            aObj.ReqTrdGetWallets({
+                                AId: aObj.RT.UserId + "01"
+                            }, function (aTrd, aRaw) {
+                                aObj.WltsReplace(aTrd, aRaw, "01");
+                            });
+                            aObj.ReqTrdGetOrders({
+                                AId: aObj.RT.UserId + "01"
+                            }, function (aTrd, aRaw) {
+                                aObj.OrdersReplace(aTrd, aRaw, "01");
+                            });
 
-                        break;
+                            aObj.ReqTrdGetPositions({
+                                AId: aObj.RT.UserId + "01"
+                            }, function (aTrd, aRaw) {
+                                console.log("ReqTrdGetPositions 03", aRaw);
+                                aObj.PossReplace(aTrd, aRaw);
+                            });
+                            // 现货
+                            aObj.ReqTrdGetWallets({
+                                AId: aObj.RT.UserId + "02"
+                            }, function (aTrd, aRaw) {
+                                aObj.WltsReplace(aTrd, aRaw, "02");
+                            });
+
+                            return 'WORKING';
+                        }
+                        }
                     }
                 }
             },
@@ -256,15 +420,15 @@ class Mkt {
         }
 
         case "onOrder": { // 报单通知
-            // aObj.OrderUpdate(aObj,d.data)
+            aObj.OrderUpdate(aObj, d.data);
             break;
         }
         case "onPosition": { // 持仓通知
-            // aObj.PosUpdate(aObj,d.data)
+            aObj.PosUpdate(aObj, d.data);
             break;
         }
         case "onWallet": {
-            // aObj.WltUpdate(aObj,d.data)
+            aObj.WltUpdate(aObj, d.data);
             break;
         }
         case "onWltLog": {
@@ -452,6 +616,9 @@ class Mkt {
     // 设置地址
     setSocketUrl(url) {
         const s = this;
+        if (!s.Conf) {
+            return;
+        }
         s.Conf.baseUrl = url;
         s.close();
     }
@@ -465,5 +632,253 @@ class Mkt {
     }
 
     clearConf() {}
+
+    WSCallTrade (aCmd, aParam, aFunc) {
+        const s = this;
+        if (DBG_WSCALL) { console.log(__filename, "WSCallTrade", aCmd, aParam); }
+        const tm = Date.now();
+        s.lastSendTm = tm;
+
+        const msg = {
+            req: aCmd,
+            rid: String(++s.rid),
+            args: aParam,
+            expires: tm + s.netLag + s.timeoutMsg
+        };
+        if (aParam) {
+            msg.args = aParam;
+        }
+        const texts = [
+            msg.req,
+            msg.rid,
+            aParam ? JSON.stringify(msg.args) : "",
+            String(msg.expires),
+            s.Conf.SecretKey
+        ];
+        const textjoined = texts.join("");
+        const signature = md5(textjoined);
+        msg.signature = signature;
+        const msgStr = JSON.stringify(msg);
+        try {
+            s.ws.send(msgStr);
+        } catch (e) {
+            console.log(e);
+        }
+        msg.cb = aFunc;
+        s.Reqs[msg.rid] = msg;
+    }
+
+    ReqTrdLogin(aParam, aFunc) {
+        const s = this;
+        s.WSCallTrade("Login", aParam, aFunc);
+    }
+
+    ReqTrdGetWallets(aParam, aFunc) {
+        /*
+            查询合约钱包： GetWallets （AId=UID+01）
+            查询币币钱包： GetWallets （AId=UID+02）
+            {
+               "AId":"1525354501"
+            }
+        */
+        const s = this;
+        s.WSCallTrade("GetWallets", aParam, aFunc);
+    }
+
+    ReqTrdGetCcsWallets(aParam, aFunc) {
+        /*
+            aParam 为 null
+        */
+        const s = this;
+        s.WSCallTrade("GetCcsWallets", null, aFunc);
+    }
+
+    ReqTrdGetTrades(aParam, aFunc) {
+        /*
+            {
+                "AId":"123456701"
+            }
+        */
+        const s = this;
+        s.WSCallTrade("GetTrades", aParam, aFunc);
+    }
+
+    ReqTrdGetOrders(aParam, aFunc) {
+        /*
+            {
+                "AId":"123456701"
+            }
+        */
+        const s = this;
+        s.WSCallTrade("GetOrders", aParam, aFunc);
+    }
+
+    ReqTrdGetPositions(aParam, aFunc) {
+        /*
+            {
+                "AId":"123456701"
+            }
+        */
+        const s = this;
+        s.WSCallTrade("GetPositions", aParam, aFunc);
+    }
+
+    ReqTrdGetHistOrders(aParam, aFunc) {
+        /*
+            {
+                "AId":"123456701"
+            }
+        */
+        const s = this;
+        s.WSCallTrade("GetHistOrders", aParam, aFunc);
+    }
+
+    ReqTrdGetWalletsLog(aParam, aFunc) {
+        /*
+            {
+                "AId":"123456701"
+            }
+        */
+        const s = this;
+        s.WSCallTrade("GetWalletsLog", aParam, aFunc);
+    }
+
+    ReqTrdGetRiskLimits(aParam, aFunc) {
+        const s = this;
+
+        /*
+            {
+                "AId":"123456701",
+                "Sym":"BTC.USDT,BTC.BTC"
+            }
+        */
+        s.WSCallTrade("GetRiskLimits", aParam, function(aTrd, aRaw) {
+            if (aRaw.code === 0) {
+                const data = aRaw.data;
+                for (let i = 0; i < data.length; i++) {
+                    const item = data[i];
+                    aTrd.RS[item.Sym] = item;
+                }
+                aTrd.trdInfoStatus.rs = 1;
+                broadcast.emit({ cmd: broadcast.EV_GET_RS_READY, data: { Ev: broadcast.EV_GET_RS_READY, data: aTrd.RS } });
+            }
+        });
+    }
+
+    WltsReplace(aTrd, aRaw, aId) {
+        const items = aRaw.data;
+        aTrd.Wlts[aId] = items;
+        if (aId === '01') {
+            aTrd.trdInfoStatus.wlt = 1;
+        }
+        broadcast.emit({ cmd: broadcast.EV_GET_WLT_READY, data: { Ev: broadcast.EV_GET_WLT_READY, aType: aId, data: items } });
+    }
+
+    WltUpdate(aTrd, data) {
+        const AId = data.AId;
+        const id = AId.slice(AId.length - 2);
+        const wlts = aTrd.Wlts[id];
+        let updated = false;
+        if (wlts) {
+            for (let i = 0; i < wlts.length; i++) {
+                const wlt = wlts[i];
+                switch (id) {
+                case "01":
+                case "02": {
+                    if ((wlt.AId === data.AId) && (wlt.Coin === data.Coin)) {
+                        wlts[i] = data;
+                        updated = true;
+                    }
+                    break;
+                }
+                default:
+                }
+                if (updated) {
+                    break;
+                }
+            }
+            if (!updated) {
+                wlts.push(data);
+            }
+            broadcast.emit({ cmd: broadcast.EV_WLT_UPD, data: { Ev: broadcast.EV_WLT_UPD, aType: id, data: data } });
+        }
+    }
+
+    PossReplace(aTrd, aRaw) {
+        const items = aRaw.data;
+        const converted = {};
+        for (let i = 0; i < items.length; i++) {
+            const pos = items[i];
+            converted[pos.PId] = pos;
+        }
+        aTrd.Poss = converted;
+        aTrd.trdInfoStatus.pos = 1;
+
+        broadcast.emit({ cmd: broadcast.EV_GET_POS_READY, data: { Ev: broadcast.EV_GET_POS_READY, data: items } });
+    }
+
+    PosUpdate(aTrd, data) {
+        if ((data.DF & 512) !== 0) {
+            // 删除
+            delete aTrd.Poss[data.PId];
+            broadcast.emit({ cmd: broadcast.EV_POS_UPD, data: { Ev: broadcast.EV_POS_UPD, dType: 3, data: data } });
+            return;
+        }
+        if (aTrd.Poss[data.PId]) {
+            // 更新
+            aTrd.Poss[data.PId] = data;
+            broadcast.emit({ cmd: broadcast.EV_POS_UPD, data: { Ev: broadcast.EV_POS_UPD, dType: 2, data: data } });
+        } else {
+            // 新增
+            aTrd.Poss[data.PId] = data;
+            broadcast.emit({ cmd: broadcast.EV_POS_UPD, data: { Ev: broadcast.EV_POS_UPD, dType: 1, data: data } });
+        }
+    }
+
+    OrdersReplace(aTrd, aRaw, aId) {
+        const items = aRaw.data;
+        aTrd.Orders[aId] = items;
+        if (aId === '01') {
+            aTrd.trdInfoStatus.ord = 1;
+        }
+        broadcast.emit({ cmd: broadcast.EV_GET_ORD_READY, data: { Ev: broadcast.EV_GET_ORD_READY, aType: aId, data: items } });
+    }
+
+    OrderUpdate(aTrd, data) {
+        const AId = data.AId;
+        const id = AId.slice(AId.length - 2);
+
+        const ords = aTrd.Orders[id];
+        const historyOrd = aTrd.HistoryOrders[id];
+        let dType = 1; // 1:新增， 2:更新， 3: 删除
+        switch (data.Status) {
+        case aTrd.OrdStatus.Queueing:
+        case aTrd.OrdStatus.Matching:
+        case aTrd.OrdStatus.Status_6:
+            for (let i = 0; i < ords.length; i++) {
+                const ord = ords[i];
+                if (ord.OrdId === data.OrdId) {
+                    ords[i] = data;
+                    dType = 2;
+                }
+            }
+            break;
+        default:
+            dType = 3;
+            for (let i = 0; i < ords.length; i++) {
+                const ord = ords[i];
+                if (ord.OrdId === data.OrdId) {
+                    ords.splice(i, 1);
+                }
+            }
+            historyOrd.push(data);
+            break;
+        }
+        if (dType === 1) {
+            ords.push(data);
+        }
+
+        broadcast.emit({ cmd: broadcast.EV_ORD_UPD, data: { Ev: broadcast.EV_ORD_UPD, aType: id, dType: dType, data: data } });
+    }
 }
 module.exports = Mkt;

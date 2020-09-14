@@ -35,7 +35,7 @@ module.exports = {
                                 item.Name
                             ]),
                             m('span', {}, [
-                                apiLines.wsResponseSpeed[i] + 'ms'
+                                (apiLines.wsResponseSpeed[i] || '--') + 'ms'
                             ])
                         ]);
                     })
@@ -52,7 +52,7 @@ module.exports = {
                                 item.Name
                             ]),
                             m('span', {}, [
-                                apiLines.apiResponseSpeed[i] + 'ms'
+                                (apiLines.apiResponseSpeed[i] || '--') + 'ms'
                             ])
                         ]);
                     })

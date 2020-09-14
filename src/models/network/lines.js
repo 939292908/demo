@@ -2,7 +2,7 @@ const m = require('mithril');
 const { apiLines } = require('@/api/index.js');
 const TradeNetSpeed = require('./TradeNetSpeed').default;
 const HttpNetSpeed = require('./HttpNetSpeed').default;
-const { gWsApi } = require('../../api/wsApi/index.js');
+const { gMktApi, gTrdApi } = require('../../api/wsApi/index.js');
 const { Http } = require('../../api/webApi/request.js');
 const lines = {
     // 线路
@@ -29,7 +29,8 @@ const lines = {
         apiLines.SetActive(id);
         this.activeLine = apiLines.GetActive();
         // 切换ws的线路
-        gWsApi.setSocketUrl(this.activeLine.WSMKT);
+        gMktApi.setSocketUrl(this.activeLine.WSMKT);
+        gTrdApi.setSocketUrl(this.activeLine.WSTRD);
         // 切换WebApi的线路
         Http.setBaseUrl(this.activeLine.WebAPI);
         m.redraw();

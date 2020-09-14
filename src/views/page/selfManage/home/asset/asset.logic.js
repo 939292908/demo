@@ -110,6 +110,7 @@ const manageAssetData = {
             isall: true
         });
         this.walletAcId = 'all';
+        wlt.remove();
     }
 };
 

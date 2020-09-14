@@ -187,29 +187,6 @@ module.exports = {
      */
     getATypeRecords: function() {
         this.loading = true;
-        this.recordObj = {
-            '01': { // 合约账户
-                gift: [], // 合约赠金
-                transfer: [] // 资产划转
-            },
-            '02': { // 币币账户
-                transfer: [], // 资产划转
-                other: [] // 其他类型
-            },
-            '03': { // 我的钱包
-                recharge: [], // 钱包充币
-                withdraw: [], // 钱包提币
-                transfer: [], // 资产划转
-                paymentTransfer: [], // 内部转账
-                active: [], // 活动出入金
-                exchange: [], // 系统兑换
-                other: [] // 其他类型
-            },
-            '04': { // 法币账户
-                transfer: [], // 资产划转
-                otcSell: [] // 法币交易
-            }
-        };
         let httpList = [];
         switch (this.aType) {
         case '03' :
@@ -276,6 +253,29 @@ module.exports = {
         }
     },
     fillDataAll() {
+        this.recordObj = {
+            '01': { // 合约账户
+                gift: [], // 合约赠金
+                transfer: [] // 资产划转
+            },
+            '02': { // 币币账户
+                transfer: [], // 资产划转
+                other: [] // 其他类型
+            },
+            '03': { // 我的钱包
+                recharge: [], // 钱包充币
+                withdraw: [], // 钱包提币
+                transfer: [], // 资产划转
+                paymentTransfer: [], // 内部转账
+                active: [], // 活动出入金
+                exchange: [], // 系统兑换
+                other: [] // 其他类型
+            },
+            '04': { // 法币账户
+                transfer: [], // 资产划转
+                otcSell: [] // 法币交易
+            }
+        };
         for (const aType in this.walletLog) {
             for (const mhType in this.walletLog[aType]) {
                 this.fillData(this.walletLog[aType][mhType], aType, mhType);
@@ -313,10 +313,11 @@ module.exports = {
                         {
                             key: I18n.$t('10097'), /* '区块链交易ID' */
                             value: item.txId
-                        }, {
-                            key: I18n.$t('10102'), /* '链类型' */
-                            value: item.wType.includes('USDT') ? (item.wType.split('USDT')[1] || 'Omni') : item.wType
                         }
+                        // {
+                        //     key: I18n.$t('10102'), /* '链类型' */
+                        //     value: item.wType.includes('USDT') ? (item.wType.split('USDT')[1] || 'Omni') : item.wType
+                        // }
                         // {
                         //     key: '标签',
                         //     value: item.addr
