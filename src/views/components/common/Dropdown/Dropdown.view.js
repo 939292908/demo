@@ -2,7 +2,7 @@
 // evenKey body事件key (必填)
 // currentId 选中id (必填)
 // showMenu 下拉状态 (必填)
-// updateOption (设置currentId和showMenu) (必填)
+// updateOption (更新currentId和showMenu) (必填)
 // menuList() {return [{ id:xxx, label:xxx,... }, { id:xxx, label:xxx,... }]} 菜单数据 (id, label) (必填) (render(){} 自定义内容)
 
 // menuClick(item) {} 点击事件 可获取item (选填)
