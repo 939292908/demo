@@ -1,4 +1,5 @@
 const { webApi } = require('@/api');
+const errCode = require('@/util/errCode').default;
 const LogSheet = {
     logList: [],
     oninit: function () {
@@ -10,6 +11,8 @@ const LogSheet = {
                     self.logList.push({ ip, time: item.strs[0] });
                     self.getLogInLog(ip, index);
                 });
+            } else {
+                window.$message({ content: errCode.getWebApiErrorCode(res.result.code), type: 'danger' });
             }
         });
     },
@@ -19,6 +22,8 @@ const LogSheet = {
             if (res.result.code === 0) {
                 self.logList[index].country = res.result.inInfo?.country;
                 self.logList[index].regionName = res.result.inInfo?.regionName;
+            } else {
+                window.$message({ content: errCode.getWebApiErrorCode(res.result.code), type: 'danger' });
             }
         });
     }
