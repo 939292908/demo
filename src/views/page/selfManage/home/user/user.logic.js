@@ -6,23 +6,24 @@ const UserIndo = {
     name: 'selfManageUser',
     info: {}, // 身份信息
     ExtList: [], // 最近登录ip
-    getExtList: function () {
+    getExtList: function (item) {
         const self = this;
+        self.info = item;
         webApi.getExtListInfo({ infoType: 2 }).then(res => {
             if (res.result.code === 0) {
                 self.ExtList = res.infos;
             }
+            console.log(self.info, 'qwofbqwfjqnfo');
         });
     },
     oninit: function () {
         const self = this;
-        self.info = globalModels.getAccount();
-        self.getExtList();
+        self.getExtList(globalModels.getAccount());
         if (Object.keys(self.info).length < 1) {
             broadcast.onMsg({
                 key: this.name,
                 cmd: broadcast.GET_USER_INFO_READY,
-                cb: (data) => { self.info = data; }
+                cb: self.getExtList.bind(this)
             });
         }
     },

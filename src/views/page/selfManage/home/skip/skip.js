@@ -7,18 +7,18 @@ const Skip = {
     list: [
         {
             leftVnode: {
-                icon: 'iconfont icon-Mmm',
-                title: '账户安全',
-                subhead: '帮助您提高账户的安全等级'
+                icon: 'iconfont icon-AccountSecurity',
+                title: l180n.$t('10181') /* '账户安全' */,
+                subhead: l180n.$t('10150') /* '帮助您提高账户的安全等级' */
             },
             rightVnode: 'iconfont icon-arrow-right',
             urlTo: '/securityManage'
         },
         {
             leftVnode: {
-                icon: 'iconfont icon-Mmm',
-                title: '身份认证',
-                subhead: '您的等级：未认证'
+                icon: 'iconfont icon-Authentication1',
+                title: l180n.$t('10182') /* '身份认证' */,
+                subhead: l180n.$t('10222') /* '您的等级：' */+ l180n.$t('10223')/* '未认证：' */
             },
             rightVnode: 'iconfont icon-arrow-right',
             urlTo: ''
@@ -28,7 +28,7 @@ const Skip = {
 
 module.exports = {
     skipTo: function (item) {
-        if (!item.urlTo) window.$message({ title: l180n.$t('10410') /* '提示' */, content: '功能暂未开放，敬请期待', type: 'primary' });
+        if (!item.urlTo) return window.$message({ title: l180n.$t('10410') /* '提示' */, content: '功能暂未开放，敬请期待', type: 'primary' });
         window.router.push(item.urlTo);
     },
     view: function () {

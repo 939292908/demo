@@ -20,6 +20,11 @@ const manageAssetData = {
         { label: '内部转账', toUrl: '' },
         { label: '资金划转', toUrl: '' }
     ],
+    legalList: [
+        { label: '买', toUrl: '' },
+        { label: '卖', toUrl: '' },
+        { label: '划转', toUrl: '' }
+    ],
     AssetOverview: {
         coinToBTC: 0, // 资产总额 BTC (账户权益 BTC)
         coinToCNY: 0, // 资产估值 CRN （账户权益 CRN）

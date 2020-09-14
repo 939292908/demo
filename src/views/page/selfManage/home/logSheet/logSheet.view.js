@@ -1,5 +1,6 @@
 const m = require('mithril');
 const LogSheet = require('./logSheet.logic');
+const l180n = require('@/languages/I18n').default;
 require('./logSheet.scss');
 module.exports = {
     oninit: function () {
@@ -10,7 +11,7 @@ module.exports = {
             // block header
             m('.asset-header dis-flex justify-between align-center', [
                 m('div.asset-title', [
-                    m('span', '账户活动')
+                    m('span', l180n.$t('10216') /* '账户活动' */)
                 ])
             ]),
             m('div.invitattion-qrcode-box pa-8', [

@@ -20,7 +20,7 @@ module.exports = {
     MSG_TRADE_UPD: 'MSG_TRADE_UPD',
     // k线行情广播
     MSG_KLINE_UPD: 'MSG_KLINE_UPD',
-    // 20档盘口行情广播
+    // 20档盘口行情广播s
     MSG_ORDER20_UPD: 'MSG_ORDER20_UPD',
     // 全档盘口行情广播
     MSG_ORDERL2_UPD: 'MSG_ORDERL2_UPD',
