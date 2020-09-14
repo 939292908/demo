@@ -379,12 +379,16 @@ let spotTick = {
             ]),
         ])
     },
+    //计算器
+    getCalculatorView:function(){
+        gEVBUS.emit(gEVBUS.EV_OPENCALCULATORVIEW_UPD, { Ev: gEVBUS.EV_OPENCALCULATORVIEW_UPD})
+    },
     getRightTick: function(){
         let type = window.$config.views.headerTick.right.type
         switch(type){
             case 0: 
                 return m("div",{class:"pub-header-tick-right"},[
-                    m('button', {class: "button is-rounded pub-header-tick-right-setting",onclick:function(e){
+                    m('button', {class: "button is-rounded pub-header-tick-right-setting px-3",onclick:function(e){
                         spotTick.settingAny()
                         window.stopBubble(e)
                     }}, [
@@ -392,6 +396,14 @@ let spotTick = {
                             m('i', {class: "iconfont iconshezhi1 fas fa-2x has-text-1 icon-fixed", "aria-hidden": true })
                         ]),
                         spotTick.getSettingView()
+                    ]),
+                    m('button', {class: "button is-rounded pub-header-tick-right-setting px-3",onclick:function(e){
+                        spotTick.getCalculatorView()
+                        window.stopBubble(e)
+                    }}, [
+                        m('span', {class: "icon is-medium"},[
+                            m('i', {class: "iconfont iconCalculator fas fa-2x has-text-1 icon-fixed", "aria-hidden": true })
+                        ]),
                     ]),
                 ])
             case 1:
