@@ -330,6 +330,21 @@ module.exports = {
         case '2':
             for (const item of log) {
                 const wType = item.wType.includes('USDT') ? 'USDT' : item.wType;
+                const info = [];
+                info.push({
+                    key: I18n.$t('10103'), /* '提币地址' */
+                    value: item.addr
+                });
+                if (item.wType.includes('USDT')) {
+                    info.push({
+                        key: I18n.$t('10102'), /* '链类型' */
+                        value: item.wType.split('USDT')[1] || 'Omni'
+                    });
+                }
+                info.push({
+                    key: I18n.$t('10097'), /* '区块链交易ID' */
+                    value: item.txId
+                });
                 this.recordObj[aType].withdraw.push({
                     coin: wType,
                     // wType: wType,
@@ -346,22 +361,7 @@ module.exports = {
                     stat: item.stat,
                     seq: item.seq,
                     des: I18n.$t('10057'), /* '提币' */
-                    info: [
-                        {
-                            key: I18n.$t('10103'), /* '提币地址' */
-                            value: item.addr
-                        }, {
-                            key: I18n.$t('10102'), /* '链类型' */
-                            value: item.wType.includes('USDT') ? (item.wType.split('USDT')[1] || 'Omni') : item.wType
-                        }, {
-                            key: I18n.$t('10097'), /* '区块链交易ID' */
-                            value: item.txId
-                        }
-                        // {
-                        //     key: '标签',
-                        //     value: item.addr
-                        // }
-                    ]
+                    info: info
                     // chainType: item.wType.includes('USDT') ? (item.wType.split('USDT')[1] || 'Omni') : ''
                 });
             }
