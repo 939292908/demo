@@ -21,17 +21,17 @@ module.exports = {
     view: function () { // self-manage-content-block 资产内的样式
         return m('.self-manage-content-block invitattion-block', [
             // block header
-            m('.asset-header dis-flex justify-between align-center', [
-                m('div.asset-title', [
-                    m('span', '邀请返佣')
+            m('.asset-header dis-flex justify-between align-center  py-3 px-5', [
+                m('div.asset-title title-small has-text-level-1', [
+                    m('span', l180n.$t('10184') /* '邀请返佣' */)
                     // m('i.iconfont icon-xiala')
                 ]),
                 m('div' /* m('i.iconfont icon-xiala') */)
             ]),
             m('div.invitattion-qrcode-box py-8', m('.qrCode', [
                 m('img.mb-3', { src: Invitation.qrCodeBase64 }),
-                m('div.text mb-1', '我的专属·邀请码'),
-                m('div.click-copy', { onclick: this.handleClickCopy, id: 'invitationCode' }, [
+                m('div.text mb-1  body-4', l180n.$t('10215') /* '我的专属·邀请码' */),
+                m('div.click-copy  body-4', { onclick: this.handleClickCopy, id: 'invitationCode' }, [
                     m('span', Invitation.invitationCode),
                     m('i.iconfont icon-copy')
                 ])

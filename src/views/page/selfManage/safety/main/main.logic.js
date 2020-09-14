@@ -5,7 +5,6 @@ const MainData = {
     name: 'mainlogic',
     user: {},
     handleUserCanAction: function (item) {
-        console.log(item, 99999);
         MainData.user = item;
         m.redraw();
     },

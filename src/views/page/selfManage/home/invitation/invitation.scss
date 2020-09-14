@@ -12,9 +12,9 @@
     }
     .text, click-copy {
       font-weight: normal;
-      font-size: 12px;
+      //font-size: 12px;
       line-height: 20px;
-      color: #9A9EAC;
+      color:  var(--c-font-lighten3);
     }
     .click-copy {
       color: #585E71;

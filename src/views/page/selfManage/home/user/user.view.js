@@ -1,6 +1,7 @@
 const m = require('mithril');
 const img = require('./Image.png').default;
 const UserInfo = require('./user.logic');
+const utils = require('@/util/utils').default;
 const l180n = require('@/languages/I18n').default;
 require('./user.scss');
 
@@ -25,7 +26,7 @@ module.exports = {
                 m('.headPortrait', m('.imgBox', m('img', { src: img }))),
                 m('.userMessage', [
                     m('.name', [
-                        m('span', `${UserInfo.info.phone}`)
+                        m('span', `${utils.hideAccountNameInfo(UserInfo.info.accountName)}`)
                         // m('span', 'VIP8')
                     ]),
                     m('.user-uid', { onclick: this.handleEditCopy, id: 'copyUid' }, [
@@ -35,8 +36,8 @@ module.exports = {
                 ])
             ]),
             m('div.logInLog', [
-                m('div', `上次登录时间 ${UserInfo.ExtList[0]?.strs[0]}`),
-                m('div', `IP: ${UserInfo.ExtList[0]?.strs[1]}`)
+                m('div', `${l180n.$t('10148') /* '上次登录时间' */} ${UserInfo.ExtList[0]?.strs[0] || '--'}`),
+                m('div', `IP: ${UserInfo.ExtList[0]?.strs[1] || '--'}`)
             ])
         ]);
     },

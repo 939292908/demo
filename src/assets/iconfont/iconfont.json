@@ -6,6 +6,20 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "17123699",
+      "name": "Authentication",
+      "font_class": "Authentication1",
+      "unicode": "e671",
+      "unicode_decimal": 58993
+    },
+    {
+      "icon_id": "17123700",
+      "name": "AccountSecurity",
+      "font_class": "AccountSecurity",
+      "unicode": "e672",
+      "unicode_decimal": 58994
+    },
+    {
       "icon_id": "16990869",
       "name": "Ellipse 157",
       "font_class": "dot",
