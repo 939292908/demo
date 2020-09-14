@@ -692,6 +692,10 @@ module.exports = {
                 this.wallet_obj['01'][item.Coin].UPNLToBTC = utils.toFixedForFloor(Number(item.aUPNL * coinPrz / btcPrz) || 0, 8);
                 // 账户可提金额，用于资产划转
                 this.wallet_obj['01'][item.Coin].wdrawable = utils.toFixedForFloor(item.maxTransfer || 0, 8);
+                // USDT估值
+                this.wallet_obj['01'][item.Coin].valueForUSDT = utils.toFixedForFloor(item.MgnBal * coinPrz, 4);
+                // BTC估值
+                this.wallet_obj['01'][item.Coin].valueForBTC = utils.toFixedForFloor(item.MgnBal * coinPrz / btcPrz, 8);
             }
         }
         broadcast.emit({
