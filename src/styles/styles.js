@@ -60,15 +60,15 @@ const fontwhite = Object.freeze({
 });
 // 线条颜色
 const line = Object.freeze({
-    lighten: 'rgba(10, 13, 22, 0.02)',
-    lighten1: 'rgba(30, 40, 70, 0.04)',
-    lighten2: 'rgba(30, 40, 70, 0.06)',
-    lighten3: 'rgba(30, 40, 70, 0.08)',
+    lighten: 'rgba(10, 13, 22, 0.04)',
+    lighten1: 'rgba(30, 40, 70, 0.08)',
+    lighten2: 'rgba(30, 40, 70, 0.12)',
+    lighten3: 'rgba(30, 40, 70, 0.16)',
 
-    darken: 'rgba(255, 255, 255, 0.02)',
-    darken1: 'rgba(255, 255, 255, 0.04)',
-    darken2: 'rgba(255, 255, 255, 0.06)',
-    darken3: 'rgba(255, 255, 255, 0.08)'
+    darken: 'rgba(255, 255, 255, 0.04)',
+    darken1: 'rgba(255, 255, 255, 0.08)',
+    darken2: 'rgba(255, 255, 255, 0.12)',
+    darken3: 'rgba(255, 255, 255, 0.16)'
 });
 // 背景颜色
 const background = Object.freeze({
