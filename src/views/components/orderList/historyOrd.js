@@ -449,12 +449,12 @@ let obj = {
         this.scrollList = (utils.splitList(posList,20) || [])
 
         this.posListTwo = posList
-        console.log(this.posListTwo, "原始数据")
+        // console.log(this.posListTwo, "原始数据")
         // this.posList = posList
         //根据 obj.navDrawerInfo筛选this.posList数据
         if (this.navDrawerInfo.Sym == this.oldNavDrawerInfo.Sym && this.navDrawerInfo.dir == this.oldNavDrawerInfo.dir && this.navDrawerInfo.status == this.oldNavDrawerInfo.status) {
             this.posList = posList
-            console.log(posList, "原始数据2")
+            // console.log(posList, "原始数据2")
         } else if (this.navDrawerInfo.Sym != this.oldNavDrawerInfo.Sym && this.navDrawerInfo.dir == this.oldNavDrawerInfo.dir && this.navDrawerInfo.status == this.oldNavDrawerInfo.status) {
             let newposList = []
             for (let i = 0; i < posList.length; i++) {
@@ -463,7 +463,7 @@ let obj = {
                 }
             }
             this.posList = newposList
-            console.log(newposList, "合约名称选择后数据")
+            // console.log(newposList, "合约名称选择后数据")
         } else if (this.navDrawerInfo.Sym == this.oldNavDrawerInfo.Sym && this.navDrawerInfo.dir != this.oldNavDrawerInfo.dir && this.navDrawerInfo.status == this.oldNavDrawerInfo.status) {
             let newposList = []
             for (let i = 0; i < posList.length; i++) {
@@ -472,7 +472,7 @@ let obj = {
                 }
             }
             this.posList = newposList
-            console.log(newposList, "买入卖出选择后数据")
+            // console.log(newposList, "买入卖出选择后数据")
         } else if (this.navDrawerInfo.Sym == this.oldNavDrawerInfo.Sym && this.navDrawerInfo.dir == this.oldNavDrawerInfo.dir && this.navDrawerInfo.status != this.oldNavDrawerInfo.status) {
             let newposList = []
             for (let i = 0; i < posList.length; i++) {
@@ -481,7 +481,7 @@ let obj = {
                 }
             }
             this.posList = newposList
-            console.log(newposList, "状态选择后数据")
+            // console.log(newposList, "状态选择后数据")
         } else if (this.navDrawerInfo.Sym != this.oldNavDrawerInfo.Sym && this.navDrawerInfo.dir != this.oldNavDrawerInfo.dir && this.navDrawerInfo.status == this.oldNavDrawerInfo.status) {
             let newposList = []
             for (let i = 0; i < posList.length; i++) {
@@ -490,7 +490,7 @@ let obj = {
                 }
             }
             this.posList = newposList
-            console.log(newposList, "名称和买卖选择后数据")
+            // console.log(newposList, "名称和买卖选择后数据")
         } else if (this.navDrawerInfo.Sym != this.oldNavDrawerInfo.Sym && this.navDrawerInfo.dir == this.oldNavDrawerInfo.dir && this.navDrawerInfo.status != this.oldNavDrawerInfo.status) {
             let newposList = []
             for (let i = 0; i < posList.length; i++) {
@@ -499,7 +499,7 @@ let obj = {
                 }
             }
             this.posList = newposList
-            console.log(newposList, "名称和状态选择后数据")
+            // console.log(newposList, "名称和状态选择后数据")
         } else if (this.navDrawerInfo.Sym == this.oldNavDrawerInfo.Sym && this.navDrawerInfo.dir != this.oldNavDrawerInfo.dir && this.navDrawerInfo.status != this.oldNavDrawerInfo.status) {
             let newposList = []
             for (let i = 0; i < posList.length; i++) {
@@ -508,7 +508,7 @@ let obj = {
                 }
             }
             this.posList = newposList
-            console.log(newposList, "买卖和状态选择后数据")
+            // console.log(newposList, "买卖和状态选择后数据")
         } else if (this.navDrawerInfo.Sym != this.oldNavDrawerInfo.Sym && this.navDrawerInfo.dir != this.oldNavDrawerInfo.dir && this.navDrawerInfo.status != this.oldNavDrawerInfo.status) {
             let newposList = []
             for (let i = 0; i < posList.length; i++) {
@@ -517,7 +517,7 @@ let obj = {
                 }
             }
             this.posList = newposList
-            console.log(newposList, "名称和买卖和状态选择后数据")
+            // console.log(newposList, "名称和买卖和状态选择后数据")
         }
         m.redraw()
     },
