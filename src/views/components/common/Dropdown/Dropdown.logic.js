@@ -7,7 +7,7 @@ module.exports = {
         const currentItem = vnode.attrs.menuList().find(item => item.id === vnode.attrs.currentId) || vnode.attrs.menuList()[0];
         // renderHeader
         if (vnode.attrs.renderHeader) {
-            return vnode.attrs.renderHeader(currentItem);
+            return vnode.attrs.renderHeader(currentItem || {});
         } else {
             return currentItem ? currentItem.render ? currentItem.render(currentItem) : currentItem.label : "";
         }
