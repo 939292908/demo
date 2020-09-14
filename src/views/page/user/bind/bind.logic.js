@@ -197,14 +197,14 @@ module.exports = {
         this.bindType = bindType;
         if ((this.bindType === 'phone' && globalModels.getAccount().phone) ||
             (this.bindType === 'email' && globalModels.getAccount().email)) {
-            return window.router.go(-1);
+            return window.router.push('/securityManage');
         }
         broadcast.onMsg({
             key: 'bind',
             cmd: broadcast.GET_USER_INFO_READY,
             cb: res => {
                 if (res) {
-                    return window.router.go(-1);
+                    return window.router.push('/securityManage');
                 } else {
                     window.$message({ content: I18n.$t('10340')/* '网络异常，请稍后重试' */, type: 'danger' });
                 }
