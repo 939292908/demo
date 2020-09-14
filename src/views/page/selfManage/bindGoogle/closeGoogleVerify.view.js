@@ -86,7 +86,7 @@ const closeGView = {
         ]);
     },
     onremove: () => {
-
+        closeGLogic.removeFN();
     }
 };
 module.exports = closeGView;

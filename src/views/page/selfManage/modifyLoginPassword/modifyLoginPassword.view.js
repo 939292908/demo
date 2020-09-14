@@ -92,7 +92,7 @@ const modifyLPView = {
                         m('br'),
                         m(InputWithComponent, {
                             hiddenLine: true,
-                            addClass: `mt-2 mb-2`,
+                            addClass: `my-2`,
                             options: {
                                 type: modifyLPView.showPassword2 ? 'text' : 'password',
                                 oninput: e => {
@@ -106,14 +106,14 @@ const modifyLPView = {
                                 class: modifyLPView.showPassword2 ? 'icon-yincang' : 'icon-zichanzhengyan'
                             })
                         }),
-                        m('span', { class: `has-text-tip-error`, style: { display: modifyLPView.oldAndnewIsDifferent ? `` : `none` } }, '原密码与新密码不可相同')
+                        m('span', { class: `has-text-tip-error`, style: { display: modifyLPView.oldAndnewIsDifferent ? `` : `none` } }, '新密码与原密码不可相同')
                     ]),
                     m('div', { class: `confirmPWdDiv mb-5` }, [
                         m('span', { class: `body-5 mb-2` }, I18n.$t('10211') /* '确认密码' */),
                         m('br'),
                         m(InputWithComponent, {
                             hiddenLine: true,
-                            addClass: `mt-2 mb-2`,
+                            addClass: `my-2`,
                             options: {
                                 type: modifyLPView.showPassword3 ? 'text' : 'password',
                                 oninput: e => {
@@ -127,7 +127,7 @@ const modifyLPView = {
                                 class: modifyLPView.showPassword3 ? 'icon-yincang' : 'icon-zichanzhengyan'
                             })
                         }),
-                        m('span', { class: `has-text-tip-error`, style: { display: modifyLPView.pwdIsDifferent ? `` : `none` } }, '密码不一致')
+                        m('span', { class: `has-text-tip-error`, style: { display: modifyLPView.pwdIsDifferent ? `` : `none` } }, I18n.$t('10277') /* '密码不一致' */)
                     ]),
                     m('div', { class: `btn mt-8` }, [
                         m('button', { class: `has-bg-primary cursor-pointer`, onclick: () => { modifyLPView.confirmBtn(); } }, I18n.$t('10337') /* '确定' */)
@@ -145,7 +145,7 @@ const modifyLPView = {
         ]);
     },
     onremove: () => {
-
+        modifyLPLogic.removeFn();
     }
 };
 module.exports = modifyLPView;

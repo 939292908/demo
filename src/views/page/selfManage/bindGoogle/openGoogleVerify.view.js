@@ -23,7 +23,7 @@ const openGView = {
             }
         });
         openGView.initNav();
-        openGView.checkFlag = 1;
+        openGView.checkFlag = 1; /* 步驟初始化 */
     },
     /* 导航（下载App，扫描二维码，备份密钥，开启谷歌验证） */
     nav: [],
@@ -54,8 +54,7 @@ const openGView = {
     copyText(type) { /* 复制文字 */
         let ele;
         type === 'one' ? ele = document.getElementsByClassName('keyText')[0] : ele = document.getElementsByClassName('keyText')[1];
-        // 选择对象
-        ele.select();
+        ele.select(); /* 选择对象 */
         document.execCommand("copy", false, null);
         return window.$message({ title: I18n.$t('10410') /* '提示' */, content: I18n.$t('10546') /* '复制成功' */, type: 'success' });
     },
@@ -197,6 +196,7 @@ const openGView = {
             cmd: broadcast.MSG_LANGUAGE_UPD,
             isall: true
         });
+        openGLogic.removeFn();
     }
 };
 module.exports = openGView;
