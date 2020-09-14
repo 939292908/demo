@@ -1,6 +1,7 @@
 const broadcast = require('@/broadcast/broadcast');
 const globalModels = require('@/models/globalModels');
 const { webApi } = require('@/api');
+const errCode = require('@/util/errCode').default;
 
 const UserIndo = {
     name: 'selfManageUser',
@@ -12,8 +13,9 @@ const UserIndo = {
         webApi.getExtListInfo({ infoType: 2 }).then(res => {
             if (res.result.code === 0) {
                 self.ExtList = res.infos;
+            } else {
+                window.$message({ content: errCode.getWebApiErrorCode(res.result.code), type: 'danger' });
             }
-            console.log(self.info, 'qwofbqwfjqnfo');
         });
     },
     oninit: function () {

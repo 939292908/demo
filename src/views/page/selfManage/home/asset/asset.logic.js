@@ -73,6 +73,12 @@ const manageAssetData = {
         return { UPNLToBTC, UPNLToCRN, NLToBTC, NLToCRN };
     },
     getWltData: function () {
+        this.pirData = [
+            { name: l180n.$t('10055') /* '我的钱包' */, value: Number(wlt.walletTotalValueForUSDT) },
+            { name: l180n.$t('10072') /* '合约账户' */, value: Number(wlt.contractTotalValueForUSDT) },
+            { name: l180n.$t('10073') /* '币币账户' */, value: Number(wlt.coinTotalValueForUSDT) },
+            { name: l180n.$t('10074') /* '法币账户' */, value: Number(wlt.legalTotalValueForUSDT) }
+        ];
         this.getAssetOverview();
     },
     initList: function () {
