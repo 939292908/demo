@@ -6,6 +6,13 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "16771429",
+      "name": "Calculator",
+      "font_class": "Calculator",
+      "unicode": "e64a",
+      "unicode_decimal": 58954
+    },
+    {
       "icon_id": "16549483",
       "name": "Frame",
       "font_class": "rise",
