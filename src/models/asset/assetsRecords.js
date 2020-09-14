@@ -4,6 +4,7 @@ const utils = require('@/util/utils').default;
 const I18n = require('@/languages/I18n').default;
 const broadcast = require('@/broadcast/broadcast');
 const errCode = require('@/util/errCode').default;
+const assetsRecordType = require('./assetsRecordType');
 
 module.exports = {
     Record() {
@@ -335,8 +336,9 @@ module.exports = {
                         // des = '合约赠金';
                         des = I18n.$t('10142');
                     } else {
-                        des = errCode.getTransferHisSearchStr(item.addr, item.wType) ||
-                            errCode.getTransferHisStr(item.addr, item.wType) ||
+                        // addr先判断包含再判断全匹配
+                        des = assetsRecordType.getRecordsType4SearchStr(item.addr, item.wType) ||
+                            assetsRecordType.getRecordsType4Str(item.addr, item.wType) ||
                             I18n.$t('10140')/* 其他类型 */;
                     }
                     const newLog = {
@@ -390,8 +392,9 @@ module.exports = {
             for (const item of log) {
                 let des = '';
                 const num = 0;
-                des = errCode.getRecordsType5SearchStr(aType, item.addr) ||
-                    errCode.getRecordsType5Str(item.addr, item.wType) ||
+                // addr先判断包含再判断全匹配
+                des = assetsRecordType.getRecordsType5SearchStr(aType, item.addr) ||
+                    assetsRecordType.getRecordsType5Str(item.addr, item.wType) ||
                     I18n.$t('10140')/* 其他类型 */;
                 const newLog = {
                     coin: item.wType,
@@ -405,7 +408,7 @@ module.exports = {
                     des: des,
                     fee: item.fee
                 };
-                this.recordObj[aType][errCode.getRecordsType5Type(item.addr)].push(newLog);
+                this.recordObj[aType][assetsRecordType.getRecordsType5Type(item.addr)].push(newLog);
             }
             break;
         }
