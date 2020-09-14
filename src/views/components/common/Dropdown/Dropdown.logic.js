@@ -7,7 +7,7 @@ module.exports = {
         const currentItem = vnode.attrs.menuList().find(item => item.id === vnode.attrs.currentId) || vnode.attrs.menuList()[0];
         // renderHeader
         if (vnode.attrs.renderHeader) {
-            return vnode.attrs.renderHeader(currentItem);
+            return vnode.attrs.renderHeader(currentItem || {});
         } else {
             return currentItem ? currentItem.render ? currentItem.render(currentItem) : currentItem.label : "";
         }
@@ -16,15 +16,15 @@ module.exports = {
     headerClick(vnode) {
         // console.log(vnode.attrs.currentId);
         // 进入下一次事件队列，先让body事件关闭所有下拉，再开启自己
-        const type = vnode.attrs.showMenu;
+        const type = vnode.attrs.showMenu; // 保存body事件前的状态
         setTimeout(() => {
-            vnode.attrs.setOption({ showMenu: !type });
+            vnode.attrs.updateOption({ showMenu: !type });
             // m.redraw(); // body事件中已刷新,此处可省略
         }, 0);
     },
     // 菜单 click
     menuClick(item, vnode) {
-        vnode.attrs.setOption({
+        vnode.attrs.updateOption({
             showMenu: false,
             currentId: item.id
         });
@@ -37,7 +37,7 @@ module.exports = {
             key: vnode.attrs.evenKey,
             cmd: broadcast.EV_ClICKBODY,
             cb() {
-                vnode.attrs.setOption({ showMenu: false });
+                vnode.attrs.updateOption({ showMenu: false }); // 关闭下拉
                 setTimeout(() => { m.redraw(); }, 0); // 异步更新状态后需刷新组件
             }
         });

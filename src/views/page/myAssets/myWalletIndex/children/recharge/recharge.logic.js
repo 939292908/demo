@@ -211,7 +211,7 @@ const model = {
         evenKey: "optionkey",
         showMenu: false,
         currentId: 1,
-        setOption (option) {
+        updateOption (option) {
             this.showMenu = option.showMenu;
             this.currentId = option.currentId ? option.currentId : this.currentId;
         },
