@@ -34,7 +34,7 @@ module.exports = {
             // JSON.stringify(rechargeIndex.selectList),
             m('div', { class: `top mb-7 has-bg-level-2 cursor-pointer` }, [
                 m('div', { class: `content-width `, style: { margin: `auto` } }, [
-                    m('i', { class: `iconfont icon-Return has-text-title`, onclick: () => { window.router.go(-1); } }),
+                    m('i', { class: `iconfont icon-Return has-text-title cursor-pointer`, onclick: () => { window.router.go(-1); } }),
                     m('span', { class: `has-text-title my-4 ml-4 title-medium` }, I18n.$t('10056') /* '充币' */)
                 ])
             ]),
@@ -47,7 +47,7 @@ module.exports = {
                     m('div', { class: `xrpLable mb-7`, style: { display: rechargeIndex.memo ? (rechargeIndex.option.currentId === 'XRP' || rechargeIndex.option.currentId === 'EOS' ? '' : 'none') : 'none' } }, [
                         m('div', { class: `labeltip` }, [
                             m('span', {}, I18n.$t('10098') /* '标签' */),
-                            m('div.navbar-item.cursor-pointer', { class: `has-text-primary-hover` }, [
+                            m('div.navbar-item.cursor-pointer', { class: `` }, [
                                 m(Tooltip, {
                                     label: m('i', { class: `iconfont icon-Tooltip` }),
                                     content: rechargeIndex.labelTips,
@@ -61,7 +61,7 @@ module.exports = {
                     m('div', { class: `usdtLable mb-7`, style: { display: rechargeIndex.openChains ? (rechargeIndex.option.currentId === 'USDT' ? '' : 'none') : 'none' } }, [
                         m('div', { class: `labeltip` }, [
                             m('span', {}, I18n.$t('10100') /* '链名称' */),
-                            m('div.navbar-item.cursor-pointer', { class: `has-text-primary-hover` }, [
+                            m('div.navbar-item.cursor-pointer', { class: `` }, [
                                 m(Tooltip, {
                                     label: m('i', { class: `iconfont icon-Tooltip` }),
                                     content: this.nameTips.map(item => {
@@ -74,7 +74,7 @@ module.exports = {
                             ])
                         ]),
                         m('div', { class: `mt-2` }, [
-                            rechargeIndex.USDTLabel.map((item, index) => {
+                            rechargeIndex.USDTLabel.map((item) => {
                                 return m('button', {
                                     class: `mr-6 button button-small is-primary` + (rechargeIndex.btnCheckFlag === item ? ` has-text-white` : ` is-outlined`),
                                     key: item,

@@ -23,11 +23,11 @@ const openGView = {
             }
         });
         openGView.initNav();
-        openGView.checkFlag = 1;
+        openGView.checkFlag = 1; /* 步驟初始化 */
     },
-    /* 导航（下载App，扫描二维码，备份密钥，开启谷歌验证） */
-    nav: [],
+    nav: [], /* 导航（下载App，扫描二维码，备份密钥，开启谷歌验证） */
     checkFlag: 1, /* 当前选中哪个步骤 */
+    myWidth: 25, /* '进度'使用百分比 */
     initNav() {
         openGView.nav = [
             {
@@ -49,13 +49,18 @@ const openGView = {
         ];
     },
     modifyCheckFlag(type) { /* 上一步 下一步 */
-        type === 'prev' ? openGView.checkFlag = openGView.checkFlag - 1 : openGView.checkFlag = openGView.checkFlag + 1;
+        if (type === 'prev') {
+            openGView.checkFlag = openGView.checkFlag - 1;
+            openGView.myWidth = openGView.myWidth - 25;
+        } else {
+            openGView.checkFlag = openGView.checkFlag + 1;
+            openGView.myWidth = openGView.myWidth + 25;
+        }
     },
     copyText(type) { /* 复制文字 */
         let ele;
         type === 'one' ? ele = document.getElementsByClassName('keyText')[0] : ele = document.getElementsByClassName('keyText')[1];
-        // 选择对象
-        ele.select();
+        ele.select(); /* 选择对象 */
         document.execCommand("copy", false, null);
         return window.$message({ title: I18n.$t('10410') /* '提示' */, content: I18n.$t('10546') /* '复制成功' */, type: 'success' });
     },
@@ -73,21 +78,22 @@ const openGView = {
             }),
             m('div', { class: `operation mb-7 has-bg-level-2` }, [
                 m('div', { class: `content-width container` }, [
-                    m('i', { class: `iconfont icon-Return has-text-title` }),
+                    m('i', { class: `iconfont icon-Return has-text-title cursor-pointer`, onclick: () => { window.router.go(-1); } }),
                     m('span', { class: `has-text-title my-4 ml-4 title-medium` }, I18n.$t('10250') /* '您正在绑定谷歌验证' */)
                 ])
             ]),
             m('div', { class: `center content-width has-bg-level-2 margin-LRauto` }, [
-                m('div', { class: `center-top mt-7` }, [
+                m('div', { class: `center-top` }, [
                     openGView.nav.map(item => {
-                        return m('div', { class: `column my-7 pb-7 ` + (item.id <= openGView.checkFlag ? `has-text-primary  has-line-primary` : `has-line-level-4`), key: item.id }, [
+                        return m('div', { class: `column my-7 ${item.id <= openGView.checkFlag ? `has-text-primary` : `has-line-level-4`}`, key: item.id }, [
                             m('span', { class: `title-small` }, item.id),
                             m('span', { class: `body-5` }, item.title)
                         ]);
                     })
                 ]),
+                m('div', { class: `my-progress has-bg-sub-level-2`, style: { width: `${openGView.myWidth}%` } }),
                 m('div', { class: `center-center` }, [
-                    m('div', { class: `stepOne pt-7`, style: { display: (openGView.checkFlag === 1 ? '' : 'none') } }, [
+                    m('div', { class: `stepOne pt-7`, style: { display: `${openGView.checkFlag === 1 ? `` : `none`}` } }, [
                         m('div', { class: `desc1 body-5 mb-3` }, I18n.$t('10255') /* '下载谷歌验证器' */),
                         m('div', { class: `desc2 body-5` }, I18n.$t('10511') /* '扫码下载或者在应用商店中搜索“Google Authentication”应用' */),
                         m('div', { class: `stepOne-qrcode mt-6` }, [
@@ -105,7 +111,7 @@ const openGView = {
                             ])
                         ])
                     ]),
-                    m('div', { class: `stepTwo pt-7`, style: { display: (openGView.checkFlag === 2 ? '' : 'none') } }, [
+                    m('div', { class: `stepTwo pt-7`, style: { display: `${openGView.checkFlag === 2 ? `` : `none`}` } }, [
                         m('div', { class: `desc1 body-5` }, I18n.$t('10256') /* '使用谷歌验证App扫描以下二维码' */),
                         m('div', { class: `stepTwo-qrcode my-7 margin-LRauto` }, [
                             m('img', { class: ``, src: openGLogic.secretQrCodeSrc })
@@ -116,7 +122,7 @@ const openGView = {
                             m('i', { class: `iconfont icon-copy has-text-primary cursor-pointer`, onclick: () => { openGView.copyText('one'); } })
                         ])
                     ]),
-                    m('div', { class: `stepThree pt-7`, style: { display: (openGView.checkFlag === 3 ? '' : 'none') } }, [
+                    m('div', { class: `stepThree pt-7`, style: { display: `${openGView.checkFlag === 3 ? `` : `none`}` } }, [
                         m('div', { class: `mb-1` }, I18n.$t('10257') + `!` /* '请妥善保管好该密钥，以免丢失' */),
                         m('div', { class: `mb-7` }, I18n.$t('10260') /* '如果该密钥丢失，需要联系客服处理，这通常需要一定的时间' */),
                         m('div', { class: `key` }, [
@@ -124,7 +130,7 @@ const openGView = {
                             m('i', { class: `iconfont icon-copy has-text-primary`, onclick: () => { openGView.copyText('two'); } })
                         ])
                     ]),
-                    m('div', { class: `stepFour pt-7`, style: { display: (openGView.checkFlag === 4 ? '' : 'none') } }, [
+                    m('div', { class: `stepFour pt-7`, style: { display: `${openGView.checkFlag === 4 ? `` : `none`}` } }, [
                         m('div', { class: `desc1 title-small mb-7` }, I18n.$t('10261') /* '完成以下验证，开启谷歌验证' */),
                         m('div', { class: `pwdDiv margin-LRauto mb-5` }, [
                             m('span', { class: `body-5` }, I18n.$t('10512') /* '登录密码' */),
@@ -197,6 +203,7 @@ const openGView = {
             cmd: broadcast.MSG_LANGUAGE_UPD,
             isall: true
         });
+        openGLogic.removeFn();
     }
 };
 module.exports = openGView;

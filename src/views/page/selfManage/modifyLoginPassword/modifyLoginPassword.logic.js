@@ -112,13 +112,12 @@ module.exports = {
         }).then(function(arg) {
             console.log('nzm', 'changePasswd success', arg);
             if (arg.result.code === 0) {
-                console.log('success');
+                // console.log('success');
                 window.$message({ content: '密码修改成功', type: 'danger' });
                 that.loginOut();
                 window.router.push('/login');
             } else {
-                console.log('arg.result.code', arg.result.code, errCode.getWebApiErrorCode(arg.result.code));
-                // window.$message({ content: errCode.getWebApiErrorCode(arg.result.code), type: 'danger' });
+                window.$message({ content: errCode.getWebApiErrorCode(arg.result.code), type: 'danger' });
             }
             that.switchSafetyVerifyModal(false); // 关闭安全验证弹框
             m.redraw();

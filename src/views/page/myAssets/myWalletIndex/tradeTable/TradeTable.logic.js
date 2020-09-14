@@ -119,7 +119,7 @@ module.exports = {
                     coin: row.wType, // 币种 默认选中
                     transferFrom: that.pageFlag,
                     successCallback() { // 划转成功回调
-                        that.setPageFlag();
+                        that.setPageFlag(that.pageFlag);
                         that.initAccountBanlance();
                     }
                 });

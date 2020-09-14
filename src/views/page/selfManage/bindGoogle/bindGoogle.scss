@@ -11,6 +11,9 @@
     }
     .pwdDiv,.codeDiv{
         width: 385px;
+        span{
+            display: inline-block;
+        }
     }
     .btn{
         width: 385px;
@@ -34,12 +37,11 @@
                 display: flex;
                 flex-direction: column;
                 text-align: center;
-                border-width: 2px;
-                border-style: solid;
-                border-top: none;
-                border-left: none;
-                border-right: none;
             }
+        }
+        .my-progress{
+            height: 2px;
+            transition: width 1.5s;
         }
         .center-center{
             .stepOne{
