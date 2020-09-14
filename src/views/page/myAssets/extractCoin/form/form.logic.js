@@ -181,7 +181,7 @@ const extract = {
             this.errorShow.address.text = l180n.$t('10401')/* '提币地址不能为空' */;
             return;
         }
-        if (this.extractCoin.coinNum <= 0) return window.$message({ content: l180n.$t('10402')/* '输入值不能为0' */, type: 'danger' });
+        if (this.extractCoin.coinNum <= 0) return window.$message({ content: l180n.$t('10402')/* '输入值不能为0' */, type: 'primary' });
         geetest.verify();
     },
     readrSendEmail: function (params, user, seq) {
@@ -208,6 +208,7 @@ const extract = {
     },
     readyStartSafetyVerify: function (start) {
         if (start !== 'success') return;
+        /* eslint-disable */
         const funName = extract.UserInfo?.setting2fa.google && extract.UserInfo?.setting2fa.phone ? 'activeSmsAndGoogle' : extract.UserInfo?.setting2fa.google ? 'activeGoogle' : 'activeSms';
         if ((extract.UserInfo?.setting2fa.google && extract.UserInfo?.setting2fa.phone) || extract.UserInfo?.setting2fa.phone) {
             validate[funName]({
@@ -217,8 +218,7 @@ const extract = {
                 extract.sendExtractCoin();
                 extract.handleChangeShow(); // 关闭 a
             });
-        }
-        if (extract.UserInfo?.setting2fa.google) {
+        } else if (extract.UserInfo?.setting2fa.google) {
             validate[funName](res => {
                 extract.sendExtractCoin();
                 extract.handleChangeShow(); // 关闭 a
@@ -320,6 +320,7 @@ const extract = {
         this.showCurrencyMenu = false;
         this.selectActiveId.wType = '';
         this.errCodeToNull();
+        wlt.remove();
     },
     errCodeToNull: function () {
         this.extractCoin.address = '';

@@ -149,7 +149,7 @@ module.exports = {
     setHideZeroFlag: function () {
         this.hideZeroFlag = !this.hideZeroFlag;
         this.setTableNewAry();
-        console.log(this.hideZeroFlag);
+        // console.log(this.hideZeroFlag);
         localStorage.setItem("isHideZeroFlag", this.hideZeroFlag);
     },
     tableNewAry: [], // 表格显示的数组

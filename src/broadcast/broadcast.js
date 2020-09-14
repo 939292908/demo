@@ -36,6 +36,20 @@ module.exports = {
     MSG_LANGUAGE_UPD: 'MSG_LANGUAGE_UPD',
     // 刷新资产记录
     MSG_ASSET_RECORD_UPD: 'MSG_ASSET_RECORD_UPD',
+    // 交易获取仓位ready
+    EV_GET_POS_READY: 'EV_GET_POS_READY',
+    // 交易更新仓位
+    EV_POS_UPD: 'EV_POS_UPD',
+    // 交易获取钱包数据ready
+    EV_GET_WLT_READY: 'EV_GET_WLT_READY',
+    // 交易更新资产数据
+    EV_WLT_UPD: 'EV_WLT_UPD',
+    // 交易获取委托ready
+    EV_GET_ORD_READY: 'EV_GET_ORD_READY',
+    // 交易更新委托
+    EV_ORD_UPD: 'EV_ORD_UPD',
+    // 交易获取资金费率ready
+    EV_GET_RS_READY: 'EV_GET_RS_READY',
     /**
      * 发送广播
      * @param {string} cmd
