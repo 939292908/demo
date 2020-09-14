@@ -209,6 +209,7 @@ module.exports = {
             if (arg.result.code === 0) {
                 console.log('bindGoogle success');
                 window.$message({ content: '谷歌绑定成功', type: 'danger' });
+                window.router.push({ path: '/securityManage' });
             } else {
                 window.$message({ content: errCode.getWebApiErrorCode(arg.result.code), type: 'danger' });
             }
@@ -233,6 +234,7 @@ module.exports = {
             if (arg.result.code === 0) {
                 console.log('unbindGoogle success');
                 window.$message({ content: '谷歌解绑成功', type: 'danger' });
+                window.router.push({ path: '/securityManage' });
             } else {
                 window.$message({ content: errCode.getWebApiErrorCode(arg.result.code), type: 'danger' });
             }

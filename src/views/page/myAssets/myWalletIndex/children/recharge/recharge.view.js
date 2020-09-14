@@ -34,7 +34,7 @@ module.exports = {
             // JSON.stringify(rechargeIndex.selectList),
             m('div', { class: `top mb-7 has-bg-level-2 cursor-pointer` }, [
                 m('div', { class: `content-width `, style: { margin: `auto` } }, [
-                    m('i', { class: `iconfont icon-Return has-text-title`, onclick: () => { window.router.go(-1); } }),
+                    m('i', { class: `iconfont icon-Return has-text-title cursor-pointer`, onclick: () => { window.router.go(-1); } }),
                     m('span', { class: `has-text-title my-4 ml-4 title-medium` }, I18n.$t('10056') /* '充币' */)
                 ])
             ]),
