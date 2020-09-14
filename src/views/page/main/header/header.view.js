@@ -276,7 +276,12 @@ module.exports = {
                                     ])
                                 ]),
                                 m('a', {
-                                    class: `navbar-item columns has-text-primary-hover min-width-200 ma-0 px-6 py-4 body-5 is-hidden`
+                                    class: `navbar-item columns has-text-primary-hover min-width-200 ma-0 px-6 py-4 body-5`,
+                                    onclick: function () {
+                                        window.router.push({
+                                            path: '/selfManage'
+                                        });
+                                    }
                                 }, [
                                     // '账户安全'
                                     I18n.$t('10181')
@@ -372,7 +377,7 @@ module.exports = {
                                         ]),
                                         m('span.column.has-text-left', {}, [
                                             // '延迟 ' + apiLines.wsResponseSpeed[i] + '/' + apiLines.apiResponseSpeed[i] + 'ms'
-                                            I18n.$t('10155') + ' ' + apiLines.wsResponseSpeed[i] + '/' + apiLines.apiResponseSpeed[i] + 'ms'
+                                            I18n.$t('10155') + ' ' + (apiLines.wsResponseSpeed[i] || '--') + '/' + (apiLines.apiResponseSpeed[i] || '--') + 'ms'
                                         ])
                                     ]);
                                 })
@@ -416,7 +421,7 @@ module.exports = {
                     header: m('div.w100', {}, [
                         m('div', {}, [
                             // `Web网络监测(${globalModels.getAccount().uid})`
-                            `${I18n.$t('10164')}(${globalModels.getAccount().uid})`
+                            `${I18n.$t('10164')}(${globalModels.getAccount().uid || '****'})`
                         ]),
                         m('article.body-4.has-text-level-3.message.is-warning.mt-4.mr-4.flex-shrink-initial', {}, [
                             m('div.message-body.border-1', {}, [

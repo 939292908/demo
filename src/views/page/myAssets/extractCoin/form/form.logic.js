@@ -320,6 +320,7 @@ const extract = {
         this.showCurrencyMenu = false;
         this.selectActiveId.wType = '';
         this.errCodeToNull();
+        wlt.remove();
     },
     errCodeToNull: function () {
         this.extractCoin.address = '';
