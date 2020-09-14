@@ -65,7 +65,7 @@ module.exports = {
 ```js
 // demo.view.js文件
 const m = require('mithril');
-const methods = require('./demo.logic.js);
+const methods = require('./demo.logic.js');
 
 module.exports = {
     oninit: function(vnode) {
