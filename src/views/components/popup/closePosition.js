@@ -106,7 +106,7 @@ let obj = {
     getLever:function(e){
         let val = e.target.value
         if(val < 0){
-            this.params.Lever = ''
+            this.params.Lever = null
         }else if(val > this.maxLever){
             this.params.Lever = this.maxLever
         }else {
