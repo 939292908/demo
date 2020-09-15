@@ -3,10 +3,10 @@ require('@/views/page/selfManage/modifyFundPassword/modifyFundPassword.scss');
 const modifyFPLogic = require('@/views/page/selfManage/modifyFundPassword/modifyFundPassword.logic');
 const I18n = require('@/languages/I18n').default;
 // const broadcast = require('@/broadcast/broadcast');
-// const VerifyView = require('@/views/components/dialogVerify/dialogVerify.view');
-// const config = require('@/config.js');
 const Header = require('@/views/components/indexHeader/indexHeader.view');
 const InputWithComponent = require('@/views/components/inputWithComponent/inputWithComponent.view');
+const VerifyView = require('@/views/components/dialogVerify/dialogVerify.view');
+const config = require('@/config.js');
 
 const modifyFPView = {
     showPassword1: false, /* 是否显示密码 */
@@ -38,7 +38,7 @@ const modifyFPView = {
             ]),
             m('div', { class: `center content-width container has-bg-level-2 margin-LRauto pt-7` }, [
                 m('div', { class: `center-content content-width container` }, [
-                    m('div', { class: `oldPwdDiv mb-5` }, [
+                    m('div', { class: `oldPwdDiv mb-5`, style: { display: `${modifyFPLogic.modifyFlag === 1 ? `` : `none`}` } }, [
                         m('span', { class: `body-5` }, I18n.$t('10276') /* '原密码' */),
                         m('br'),
                         m(InputWithComponent, {
@@ -47,9 +47,9 @@ const modifyFPView = {
                             options: {
                                 type: modifyFPView.showPassword1 ? 'text' : 'password',
                                 oninput: e => {
-                                    modifyFPLogic.oldFUndPwd = e.target.value;
+                                    modifyFPLogic.oldFundPwd = e.target.value;
                                 },
-                                value: modifyFPLogic.oldFUndPwd
+                                value: modifyFPLogic.oldFundPwd
                             },
                             rightComponents: m('i.iconfont.mx-2', {
                                 onclick: () => { modifyFPView.showPassword1 = !modifyFPView.showPassword1; },
@@ -103,7 +103,15 @@ const modifyFPView = {
                         m('button', { class: `has-bg-primary cursor-pointer` }, I18n.$t('10337') /* '确定' */)
                     ])
                 ])
-            ])
+            ]),
+            modifyFPLogic.isShowVerifyView ? m(VerifyView, {
+                close: () => modifyFPLogic.switchSafetyVerifyModal(false),
+                isHandleVerify: true,
+                title: {
+                    logo: config.exchName,
+                    text: I18n.$t('10113') /* "安全验证" */
+                }
+            }) : null
         ]);
     },
     onremove: () => {
