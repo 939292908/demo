@@ -1,5 +1,5 @@
 const m = require('mithril');
-const img = require('./Image.png').default;
+// const img = require('./Image.png').default;
 const UserInfo = require('./user.logic');
 const utils = require('@/util/utils').default;
 const l180n = require('@/languages/I18n').default;
@@ -23,9 +23,9 @@ module.exports = {
     view: function () {
         return m('div.self-manage-user dis-flex justify-between align-center', [
             m('div.userInfo dis-flex align-center', [
-                m('.headPortrait', m('.imgBox', m('img', { src: img }))),
+                m('.headPortrait', m('.imgBox.title-large', m('div', UserInfo.info?.accountName.split('')[0]))),
                 m('.userMessage', [
-                    m('.name', [
+                    m('.name title-large', [
                         m('span', `${utils.hideAccountNameInfo(UserInfo.info.accountName)}`)
                         // m('span', 'VIP8')
                     ]),
@@ -35,9 +35,9 @@ module.exports = {
                     ])
                 ])
             ]),
-            m('div.logInLog', [
+            m('div.logInLog.body-4', [
                 m('div', `${l180n.$t('10148') /* '上次登录时间' */} ${UserInfo.ExtList[0]?.strs[0] || '--'}`),
-                m('div', `IP: ${UserInfo.ExtList[0]?.strs[1] || '--'}`)
+                m('div', `IP: ${UserInfo.ExtList[0]?.strs[1].indexOf('::ffff:') >= 0 ? UserInfo.ExtList[0]?.strs[1].split('::ffff:')[1] : UserInfo.ExtList[0]?.strs[1] || '--'}`)
             ])
         ]);
     },
