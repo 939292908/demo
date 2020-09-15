@@ -32,7 +32,7 @@ module.exports = {
                         m('div.has-text-primary', mainLogic.user?.iStatus === 1 ? l180n.$t('10523') /* '确认中' */ : mainLogic.user?.iStatus === 2 ? l180n.$t('10223') /* '未认证' */ : mainLogic.user?.iStatus === 9 ? l180n.$t('10146') /* '已认证' */ : l180n.$t('10223') /* '未认证' */)
                     ]))),
                     m('div', { class: 'mb-5' }, m(Block, { Icon: m('i.iconfont icon-FundPassword'), title: l180n.$t('10128') /* '资金密码 */, subhead: l180n.$t('10235') /* '用于内部转账和法币交易确认 */ }, m('div.dis-flex', [
-                        m('div.but py-1 px-4', { onclick: this.handleToUrl.bind(this, '') }, mainLogic.user?.antiFishCode ? l180n.$t('10239') /* '修改' */ : l180n.$t('10233')/* '设置' */)
+                        m('div.but py-1 px-4', { onclick: this.handleToUrl.bind(this, '') }, mainLogic.moneyPasswordIsExist ? l180n.$t('10239') /* '修改' */ : l180n.$t('10233')/* '设置' */)
                     ]))),
                     m('div', { class: 'mb-5' }, m(Block, { Icon: m('i.iconfont icon-AntiFishing'), title: l180n.$t('10232') /* '防钓鱼码' */, subhead: l180n.$t('10247', { value: 'XXX' }) /* 'XXXX给您发送邮件内容将包含您设置的防钓鱼码' */ }, m('div.dis-flex', [
                         m('div.but py-1 px-4', { onclick: this.handleToUrl.bind(this, '') }, mainLogic.user?.antiFishCode ? l180n.$t('10239') /* '修改' */ : l180n.$t('10233')/* '设置' */)
