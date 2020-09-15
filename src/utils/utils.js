@@ -1171,15 +1171,4 @@ utils.getDirByStrType = function(item){
         if (item.Dir == -1) return gDI18n.$t('10456')//"卖出平多并开空"
     }
 }
-
-// 不四舍五入取小数
-utils.decimaltoFixed= function(val, num) {
-    let rule = `^(\\-)*(\\d+)\\.(\\d{${num}}).*$`;
-    let reg = new RegExp(rule);
-    if(num == 0) {
-      return Math.floor(val)
-    }else {
-      return new Decimal(val).toFixed(num + 20).replace(reg, '$1$2.$3');
-    }
-}
 export default utils
