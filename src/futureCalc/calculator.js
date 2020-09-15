@@ -1,4 +1,4 @@
-import utils from "SRC_PRIVATE/util/utils";
+import utils from "../utils/utils";
 import library from './library'
 /**
  * 本文件为合约计算器相关计算方法
