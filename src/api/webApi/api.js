@@ -718,3 +718,43 @@ export function getExtListInfo (params = {}, options = { withCredentials: false 
 export function getExtItemInfo (params = {}, options = { withCredentials: false }) {
     return Http.post(API.USER_GET_EXTINFO, params, options);
 }
+
+/**
+ * 设置资金密码和修改资金密码
+ * @param {Object} params {
+        settingType: 12 // 设置类型，固定值
+        settingKey: 'ucp', // 设置类型的key，固定值
+        settingValue: '9cbf8a4dcb8e30682b927f352d6559a0', // 资金密码，md5加密
+        settingValue2: '' // 老密码，设置资金密码时不需要，修改时需要填写，md5加密
+    }
+ * @param {Object} options axios请求配置
+ * @returns {Object} {
+        "result":{
+            "code":0 // code为0则是成功，其他失败
+        },
+        settingKey: ""
+        settingValue: ""
+    }
+ */
+export function setWalletPwd (params = {}, options = { withCredentials: false }) {
+    return Http.post(API.FAVORITE_SETTING_V1, params, options);
+}
+
+/**
+ * 查询是否已设置资金密码
+ * @param {Object} params {
+        settingType: 13 // 设置类型，固定值
+        settingKey: 'ucp', // 设置类型的key，固定值
+    }
+ * @param {Object} options axios请求配置
+ * @returns {Object} {
+        "result":{
+            "code":0 // code为0则是成功，其他失败
+        },
+        settingKey: "ucp",
+        settingValue: "*" // "*"代表已设置，""代表未设置
+    }
+ */
+export function getWalletPwdStatus (params = {}, options = { withCredentials: false }) {
+    return Http.post(API.FAVORITE_SETTING_V1, params, options);
+}
