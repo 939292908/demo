@@ -18,8 +18,8 @@ const manageAssetData = {
         NLToCRN: 0 // 可用保证金 CRN
     },
     isShow: true,
-    handleEditShow: function () {
-        this.isShow = !this.isShow;
+    handleEditShow: function (judge) { // judge 是否是 页面切换
+        if (judge) this.isShow = !this.isShow;
         if (this.isShow) return this.getAssetOverview();
         this.AssetOverview = {
             coinToBTC: '******',
@@ -32,10 +32,11 @@ const manageAssetData = {
     },
     handleChangeWallet: function (item) {
         this.walletAcId = item.activeId;
+        if (!this.isShow) return this.handleEditShow(false);
         this.getAssetOverview();
     },
     handleClickLBItem: function (item) {
-        if (!item.toUrl) return window.$message({ title: l180n.$t('10410') /* '提示' */, content: l180n.$t('10594') /* 功能暂未开放，敬请期待 */, type: 'success' });
+        if (!item.toUrl) return window.$message({ title: l180n.$t('10410') /* '提示' */, content: l180n.$t('10594') /* 功能暂未开放，敬请期待 */, type: 'primary' });
         window.router.push(item.toUrl);
     },
     getAssetOverview: function () {
@@ -74,10 +75,10 @@ const manageAssetData = {
     },
     getWltData: function () {
         this.pirData = [
-            { name: l180n.$t('10055') /* '我的钱包' */, value: Number(wlt.walletTotalValueForUSDT) },
-            { name: l180n.$t('10072') /* '合约账户' */, value: Number(wlt.contractTotalValueForUSDT) },
-            { name: l180n.$t('10073') /* '币币账户' */, value: Number(wlt.coinTotalValueForUSDT) },
-            { name: l180n.$t('10074') /* '法币账户' */, value: Number(wlt.legalTotalValueForUSDT) }
+            { name: l180n.$t('10055') /* '我的钱包' */, value: Number(wlt.walletTotalValueForBTC) },
+            { name: l180n.$t('10072') /* '合约账户' */, value: Number(wlt.contractTotalValueForBTC) },
+            { name: l180n.$t('10073') /* '币币账户' */, value: Number(wlt.coinTotalValueForBTC) },
+            { name: l180n.$t('10074') /* '法币账户' */, value: Number(wlt.legalTotalValueForBTC) }
         ];
         this.getAssetOverview();
     },

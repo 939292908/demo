@@ -20,7 +20,7 @@ module.exports = {
         );
         if (vnode.attrs.loading) {
             table.push(m('div.is-align-items-center.py-8', {}, [m(Loading)]));
-        } else if (!vnode.attrs.list.length) {
+        } else if (vnode.attrs.list ? !vnode.attrs.list.length : true) {
             table.push(m('div.is-align-items-center.mt-8.nodata-icon', {}, [
                 m('div.has-bg-level-1.mb-3.is-align-items-center', {}, [
                     m('img', { src: require(`@/assets/img/myAssets/noneData.svg`).default })
