@@ -13,12 +13,18 @@ module.exports = {
     setting2fa: null, // 账户绑定状态
     nationNo: null, // 区号
     phoneNum: null, // 用户手机号码
-    oldFUndPwd: null, // 原密码
+    oldFundPwd: null, // 原密码
     newFunPwd: null, // 新密码/资金密码
     confirmFunPwd: null, // 新密码/资金密码
     isShowVerifyView: false, // 安全校验弹框 show
     switchSafetyVerifyModal (type) { // 安全校验弹框 显示/隐藏
         this.isShowVerifyView = type;
+    },
+    // 确认按钮事件
+    confirmBtn: function() {
+        /* console.log(this.oldFundPwd, this.newFunPwd, this.confirmFunPwd); */
+        /* console.log(this.loginType, this.setting2fa, this.nationNo, this.phoneNum); */
+        geetest.verify(); // 极验
     },
     // 加载极验
     initGeetest() {
@@ -77,7 +83,6 @@ module.exports = {
             validate.activeSms(params, function() {
                 that.setWalletPwd();
             });
-            console.log(2);
         } else if (typeFlag === 3) {
             params = {
                 smsConfig: {
@@ -87,27 +92,28 @@ module.exports = {
                     mustCheckFn: "" // 验证类型
                 }
             };
-            console.log(params);
             validate.activeSmsAndGoogle(params, function() {
                 that.setWalletPwd();
             });
         }
+        console.log(params);
     },
     setWalletPwd() { /* 设置 || 修改密码 */
         const that = this;
         const param = {
             settingType: 12, /* 设置类型，固定值 */
             settingKey: 'ucp', /* 设置类型的key，固定值 */
-            settingValue: md5(that.newFunPwd) /* 资金密码，md5加密 */
+            settingValue: md5(this.newFunPwd) /* 资金密码，md5加密 */
         };
-
         if (this.modifyFlag === 1) {
-            param.settingValue2 = md5(that.oldFUndPwd); /* 老密码，设置资金密码时不需要，修改时需要填写，md5加密 */
+            param.settingValue2 = md5(that.oldFundPwd); /* 老密码，设置资金密码时不需要，修改时需要填写，md5加密 */
         }
-        Http.bindGoogleAuth(param).then(function(arg) {
+        Http.setWalletPwd(param).then(function(arg) {
             console.log('nzm', 'setWalletPwd success', arg);
             if (arg.result.code === 0) {
-                console.log('bindGoogle success');
+                console.log('setWalletPwd success');
+                window.$message({ content: this.modifyFlag === 0 ? '设置资金密码成功' : '修改资金密码成功', type: 'success' });
+                window.router.push('/securityManage');
             } else {
                 window.$message({ content: errCode.getWebApiErrorCode(arg.result.code), type: 'danger' });
             }
@@ -127,10 +133,26 @@ module.exports = {
         this.phoneNum = account.phone; // 用户手机号码
     },
     initFn: function() {
-        this.modifyFlag = window.router.getUrlInfo().params.type;
-        this.oldFUndPwd = ''; // 输入的旧密码初始化
-        this.newFunPwd = ''; // 输入的新密码初始化
-        this.confirmFunPwd = ''; // 输入的确认密码初始化
+        const that = this;
+        Http.getWalletPwdStatus({
+            settingType: 13, /* 设置类型，固定值 */
+            settingKey: 'ucp' /* 设置类型的key，固定值 */
+        }).then(function(arg) {
+            console.log('nzm', 'getWalletPwdStatus success', arg);
+            if (arg.result.code === 0) {
+                that.modifyFlag = arg.settingValue === '*' ? 1 : 0;
+            } else {
+                window.$message({ content: errCode.getWebApiErrorCode(arg.result.code), type: 'danger' });
+            }
+        }).catch(function(err) {
+            console.log('nzm', 'setWalletPwd error', err);
+        });
+
+        // this.modifyFlag = window.router.getUrlInfo().params.type;
+        this.oldFundPwd = null; // 输入的旧密码初始化
+        this.newFunPwd = null; // 输入的新密码初始化
+        this.confirmFunPwd = null; // 输入的确认密码初始化
+
         // 获取用户信息
         broadcast.onMsg({
             key: 'index',
