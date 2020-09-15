@@ -4,6 +4,7 @@ const Header = require('@/views/components/indexHeader/indexHeader.view');
 const HeaContent = require('../headerContent/headerContent.view');
 const Main = require('../main/main.view');
 const I18n = require('@/languages/I18n').default;
+// const BindingOrNot = require('@/views/components/theBindingOrNot/theBindingOrNot.view');
 require('./index.scss');
 
 module.exports = {
