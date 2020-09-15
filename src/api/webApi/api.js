@@ -718,3 +718,63 @@ export function getExtListInfo (params = {}, options = { withCredentials: false 
 export function getExtItemInfo (params = {}, options = { withCredentials: false }) {
     return Http.post(API.USER_GET_EXTINFO, params, options);
 }
+
+/**
+ * 设置资金密码和修改资金密码
+ * @param {Object} params {
+        settingType: 12 // 设置类型，固定值
+        settingKey: 'ucp', // 设置类型的key，固定值
+        settingValue: '9cbf8a4dcb8e30682b927f352d6559a0', // 资金密码，md5加密
+        settingValue2: '' // 老密码，设置资金密码时不需要，修改时需要填写，md5加密
+    }
+ * @param {Object} options axios请求配置
+ * @returns {Object} {
+        "result":{
+            "code":0 // code为0则是成功，其他失败
+        },
+        settingKey: ""
+        settingValue: ""
+    }
+ */
+export function setWalletPwd (params = {}, options = { withCredentials: false }) {
+    return Http.post(API.FAVORITE_SETTING_V1, params, options);
+}
+
+/**
+ * 查询是否已设置资金密码
+ * @param {Object} params {
+        settingType: 13 // 设置类型，固定值
+        settingKey: 'ucp', // 设置类型的key，固定值
+    }
+ * @param {Object} options axios请求配置
+ * @returns {Object} {
+        "result":{
+            "code":0 // code为0则是成功，其他失败
+        },
+        settingKey: "ucp",
+        settingValue: "*" // "*"代表已设置，""代表未设置
+    }
+ */
+export function getWalletPwdStatus (params = {}, options = { withCredentials: false }) {
+    return Http.post(API.FAVORITE_SETTING_V1, params, options);
+}
+
+/**
+ * 设置防钓鱼码
+ * 判断是否已设置钓鱼码，可通过判断用户信息内 antiFishCode 字段是否有值
+ * @param {Object} params {
+        settingType: 3 // 设置类型，固定值
+        settingValue: '', // 需要设置的防钓鱼码
+    }
+ * @param {Object} options axios请求配置
+ * @returns {Object} {
+        "result":{
+            "code":0 // code为0则是成功，其他失败
+        },
+        settingKey: "",
+        settingValue: ""
+    }
+ */
+export function setFishCode (params = {}, options = { withCredentials: false }) {
+    return Http.post(API.FAVORITE_SETTING_V1, params, options);
+}

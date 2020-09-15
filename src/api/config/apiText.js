@@ -81,5 +81,9 @@ module.exports = {
     // 最近登录 IP
     USER_GET_EXTINFO: '/users/ipInfo',
     // 登陆的记录
-    USER_EXT_LIST: '/users/GetExtInfo'
+    USER_EXT_LIST: '/users/GetExtInfo',
+    // 设置自选、资金密码等
+    FAVORITE_SETTING_V1: '/v1/users/favoriteSetting',
+    // 账户设置，设置防钓鱼码等
+    ACCOUNT_SETTING: '/users/AccountSetting'
 };
