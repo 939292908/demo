@@ -145,7 +145,7 @@ module.exports = {
                 window.$message({ content: errCode.getWebApiErrorCode(arg.result.code), type: 'danger' });
             }
         }).catch(function(err) {
-            console.log('nzm', 'setWalletPwd error', err);
+            console.log('nzm', 'getWalletPwdStatus error', err);
         });
 
         // this.modifyFlag = window.router.getUrlInfo().params.type;
