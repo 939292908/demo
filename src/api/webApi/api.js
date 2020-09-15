@@ -758,3 +758,23 @@ export function setWalletPwd (params = {}, options = { withCredentials: false })
 export function getWalletPwdStatus (params = {}, options = { withCredentials: false }) {
     return Http.post(API.FAVORITE_SETTING_V1, params, options);
 }
+
+/**
+ * 设置防钓鱼码
+ * 判断是否已设置钓鱼码，可通过判断用户信息内 antiFishCode 字段是否有值
+ * @param {Object} params {
+        settingType: 3 // 设置类型，固定值
+        settingValue: '', // 需要设置的防钓鱼码
+    }
+ * @param {Object} options axios请求配置
+ * @returns {Object} {
+        "result":{
+            "code":0 // code为0则是成功，其他失败
+        },
+        settingKey: "",
+        settingValue: ""
+    }
+ */
+export function setFishCode (params = {}, options = { withCredentials: false }) {
+    return Http.post(API.FAVORITE_SETTING_V1, params, options);
+}
