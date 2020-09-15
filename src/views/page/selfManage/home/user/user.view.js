@@ -23,7 +23,7 @@ module.exports = {
     view: function () {
         return m('div.self-manage-user dis-flex justify-between align-center', [
             m('div.userInfo dis-flex align-center', [
-                m('.headPortrait', m('.imgBox.title-large', m('div', UserInfo.info?.accountName.split('')[0]))),
+                m('.headPortrait', m('.imgBox.title-large', m('div', UserInfo.info?.accountName?.split('')[0]))),
                 m('.userMessage', [
                     m('.name title-large', [
                         m('span', `${utils.hideAccountNameInfo(UserInfo.info.accountName)}`)
