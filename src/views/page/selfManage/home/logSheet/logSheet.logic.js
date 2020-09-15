@@ -22,8 +22,6 @@ const LogSheet = {
             if (res.result.code === 0) {
                 self.logList[index].country = res.result.inInfo?.country;
                 self.logList[index].regionName = res.result.inInfo?.regionName;
-            } else {
-                window.$message({ content: errCode.getWebApiErrorCode(res.result.code), type: 'danger' });
             }
         });
     }

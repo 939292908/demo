@@ -22,7 +22,6 @@ module.exports = {
         this.info = item;
     },
     skipTo: function (item) {
-        console.log(item);
         if (!item.urlTo) return window.$message({ title: l180n.$t('10410') /* '提示' */, content: l180n.$t('10594') /* 功能暂未开放，敬请期待 */, type: 'primary' });
         window.router.push(item.urlTo);
     },
