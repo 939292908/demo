@@ -3121,7 +3121,12 @@ input[type="checkbox"] {
         }
 
         .input-border-lable{
+            width: 100%;
             border-radius: 2px;
+
+            input{
+                @extend .px-0;
+            }
 
             .input-border-line{
                 // width: 80%;
@@ -3132,6 +3137,11 @@ input[type="checkbox"] {
                 height: 40px;
                 line-height: 40px;
             }
+            .input-left{
+                height: 40px;
+                line-height: 40px;
+                width: 50%;
+            }
         }
     }
     //右边
@@ -3139,7 +3149,18 @@ input[type="checkbox"] {
         width: 50%;
 
         .calculator-public-right-item{
+            position: relative;
             height: 385px;
+
+            .calculator-public-right-item-list{
+                justify-content: space-between;
+            }
+        }
+
+        .calculator-text{
+            text-align: justify;
+            position: absolute;
+            bottom: 0px;
         }
     }
 }
