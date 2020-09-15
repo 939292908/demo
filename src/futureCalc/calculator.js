@@ -81,19 +81,6 @@ let getVal = function() {
     ValCls = library.calcVal(isReverse, params.PrzCls, params.SZ, LotSz)
 }
 
-// 计算新的风险限额
-let risklimit = 0;
-let getRisklimit  = function() {
-    
-    if(false){
-        if( Val > params.Base ){  // 【（价值Val-基础风险限额）/步长】向上取整*步长+基础风险限额
-            risklimit = Math.ceil( ( Val - params.Base ) / params.Step ) * params.Step + params.Base
-        } else {
-            risklimit = params.Base
-        }
-    }
-}
-
 // 计算新的MMR和MIR
 let MIR = { new:0 }
 let MMR = { new:0 }

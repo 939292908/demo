@@ -40,6 +40,9 @@ import closePosition from './orderList/closePosition'
 //全删/全撤
 import allClose from './orderList/allClose'
 
+//计算器
+import calculatorView from './popup/calculatorView'
+
 let obj = {
 
 
@@ -253,6 +256,9 @@ let obj = {
   },
   getAllClose:function(){
     return m(allClose)
+  },
+  getCalculatorView:function(){
+    return m(calculatorView)
   }
   
 }
@@ -309,6 +315,7 @@ export default {
           obj.getOrderCommon(),
           obj.getClosePosition(),
           obj.getAllClose(),
+          obj.getCalculatorView()
         ])
     }
 }

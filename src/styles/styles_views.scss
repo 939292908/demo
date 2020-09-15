@@ -2376,6 +2376,14 @@ input[type="checkbox"] {
         // 边框-绿
         border: 1px solid $white-green-shallow !important;
     }
+    .has-border-primary {
+        // 边框-主题色
+        border: 1px solid $white-main-color !important;
+    }
+    .has-border-gry {
+        //边框-文字色
+        border: 1px solid $white-line3;
+    }
     .has-text-1-important {
         // 特殊情况 加权重
         color: $white-font-color-title !important;
@@ -2416,7 +2424,7 @@ input[type="checkbox"] {
     }
     .has-background-success {
         // 背景-透明绿
-        background-color: $white-red-shallow !important;
+        background-color: $white-green-shallow !important;
         opacity: 0.1;
     }
     // ------------------------ 公共 ------------------------
@@ -2656,6 +2664,15 @@ input[type="checkbox"] {
     .kline_border{
         border: 1px solid $white-line1;
     }
+
+    //计算器样式
+    .input-border-lable{
+        border: 1px solid $white-line3;
+    }
+
+    .calculator-public-right-item{
+        background-color: $white-background-color-once-level;
+    }
 }
 
 // -------------- 黑夜模式 --------------
@@ -2754,6 +2771,14 @@ input[type="checkbox"] {
     .has-border-success {
         // 边框-绿
         border: 1px solid $black-green-shallow !important;
+    }
+    .has-border-primary {
+        // 边框-主题色
+        border: 1px solid $black-main-color !important;
+    }
+    .has-border-gry {
+        //边框-文字色
+        border: 1px solid $black-line3;
     }
     .has-text-1-important {
         // 特殊情况 加权重
@@ -3034,5 +3059,87 @@ input[type="checkbox"] {
     //合约信息 k线
     .kline_border{
         border: 1px solid $black-line1;
+    }
+
+    //计算器样式
+    .input-border-lable{
+        border: 1px solid $black-line3;
+    }
+    .calculator-public-right-item{
+        background-color: $black-background-color-four-level;
+    }
+}
+
+//字体大小
+//10px
+.is-text-1 {
+    @extend %font-1;
+}
+//12px
+.is-text-2{
+    @extend %font-2; 
+}
+//14px
+.is-text-3{
+    @extend %font-3; 
+}
+//16px
+.is-text-4{
+    @extend %font-4; 
+}
+//18px
+.is-text-5{
+    @extend %font-5; 
+}
+//20px
+.is-text-6{
+    @extend %font-6; 
+}
+//22px
+.is-text-7{
+    @extend %font-7; 
+}
+//24px
+.is-text-8{
+    @extend %font-8; 
+}
+//计算器样式
+.calculator{
+
+    //左边
+    .calculator-public-left{
+        width: 50%;
+
+        .calculator-button-title{
+            justify-content: space-between;
+
+            .calculator-button-item{
+                width: 47%;
+                height: 35px;
+                border-radius: 2px;
+            }
+        }
+
+        .input-border-lable{
+            border-radius: 2px;
+
+            .input-border-line{
+                // width: 80%;
+                border-radius: 0px;
+            }
+    
+            .input-right{
+                height: 40px;
+                line-height: 40px;
+            }
+        }
+    }
+    //右边
+    .calculator-public-right{
+        width: 50%;
+
+        .calculator-public-right-item{
+            height: 385px;
+        }
     }
 }
