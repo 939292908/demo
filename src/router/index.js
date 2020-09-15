@@ -87,6 +87,14 @@ class Router {
         '/securityManage': {
             requireAuth: true,
             onmatch: () => import('@/views/page/selfManage/safety/index')
+        },
+        '/antiFishingCode': {
+            requireAuth: true,
+            onmatch: () => import('@/views/page/selfManage/antiFishingCode/antiFishingCode.view')
+        },
+        '/modifyFundPassword': {
+            requireAuth: true,
+            onmatch: () => import('@/views/page/selfManage/modifyFundPassword/modifyFundPassword.view')
         }
     };
 
