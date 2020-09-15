@@ -3,8 +3,7 @@ const Http = require('@/api').webApi;
 const utils = require('@/util/utils').default;
 const I18n = require('@/languages/I18n').default;
 const broadcast = require('@/broadcast/broadcast');
-const errCode = require('@/util/errCode').default;
-const assetsRecordType = require('./assetsRecordType');
+const assetsRecordsType = require('./assetsRecordsType');
 
 module.exports = {
     Record() {
@@ -258,7 +257,7 @@ module.exports = {
                     num: utils.totalNumSub(item.num, 8),
                     time: utils.time(item.timestamp),
                     timestamp: item.timestamp,
-                    status: errCode.getTransferInfo(item.stat),
+                    status: assetsRecordsType.getTransferInfo(item.stat),
                     stat: item.stat,
                     seq: item.seq,
                     des: I18n.$t('10056'), /* '充币' */
@@ -296,7 +295,7 @@ module.exports = {
                     num: utils.totalNumSub(item.num, 8),
                     time: utils.time(item.timestamp),
                     timestamp: item.timestamp,
-                    status: errCode.getWithdrawArr(item.stat),
+                    status: assetsRecordsType.getWithdrawArr(item.stat),
                     stat: item.stat,
                     seq: item.seq,
                     des: I18n.$t('10057'), /* '提币' */
@@ -337,8 +336,8 @@ module.exports = {
                         des = I18n.$t('10142');
                     } else {
                         // addr先判断包含再判断全匹配
-                        des = assetsRecordType.getRecordsType4SearchStr(item.addr, item.wType) ||
-                            assetsRecordType.getRecordsType4Str(item.addr, item.wType) ||
+                        des = assetsRecordsType.getRecordsType4SearchStr(item.addr, item.wType) ||
+                            assetsRecordsType.getRecordsType4Str(item.addr, item.wType) ||
                             I18n.$t('10140')/* 其他类型 */;
                     }
                     const newLog = {
@@ -347,7 +346,7 @@ module.exports = {
                         num: utils.totalNumSub(item.num, 8),
                         time: utils.time(item.timestamp),
                         timestamp: item.timestamp,
-                        status: errCode.getTransferInfo(item.stat),
+                        status: assetsRecordsType.getTransferInfo(item.stat),
                         stat: item.stat,
                         seq: item.seq,
                         des: des,
@@ -380,7 +379,7 @@ module.exports = {
                         num: utils.totalNumSub(item.addr === 'from' ? '-' + item.num : item.num, 8),
                         time: utils.time(item.timestamp),
                         timestamp: item.timestamp,
-                        status: errCode.getTransferInfo(item.stat),
+                        status: assetsRecordsType.getTransferInfo(item.stat),
                         stat: item.stat,
                         seq: item.seq,
                         // des: item.addr === 'to' ? '买入' : '卖出'
@@ -393,8 +392,8 @@ module.exports = {
                 let des = '';
                 const num = 0;
                 // addr先判断包含再判断全匹配
-                des = assetsRecordType.getRecordsType5SearchStr(aType, item.addr) ||
-                    assetsRecordType.getRecordsType5Str(item.addr, item.wType) ||
+                des = assetsRecordsType.getRecordsType5SearchStr(aType, item.addr) ||
+                    assetsRecordsType.getRecordsType5Str(item.addr, item.wType) ||
                     I18n.$t('10140')/* 其他类型 */;
                 const newLog = {
                     coin: item.wType,
@@ -402,13 +401,13 @@ module.exports = {
                     num: utils.totalNumSub(num || item.num, 8),
                     time: utils.time(item.timestamp),
                     timestamp: item.timestamp,
-                    status: errCode.getTransferInfo(item.stat),
+                    status: assetsRecordsType.getTransferInfo(item.stat),
                     stat: item.stat,
                     seq: item.seq,
                     des: des,
                     fee: item.fee
                 };
-                this.recordObj[aType][assetsRecordType.getRecordsType5Type(item.addr)].push(newLog);
+                this.recordObj[aType][assetsRecordsType.getRecordsType5Type(item.addr)].push(newLog);
             }
             break;
         }
