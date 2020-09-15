@@ -204,11 +204,11 @@ let formateLen = (data,len) => {
         }
 
         if (key == 'PrzCls' || key == 'QiangPingPrice' || key == "PoChanPrice") {
-            data[key] = utils.decimaltoFixed(data[key], utils.getFloatSize(utils.getFullNum(PrzMinInc)) + 1) //平仓价格、强平价格类的计算保留最小价格变动+一位小数
+            data[key] = data[key].toFixed2(utils.getFloatSize(utils.getFullNum(PrzMinInc)) + 1) //平仓价格、强平价格类的计算保留最小价格变动+一位小数
         } else if (key == "ProfitLossPer") {
-            data[key] = utils.decimaltoFixed(data[key].toString().split('%')[0], 2) + '%' //盈亏%保留两位小数
+            data[key] = data[key].toFixed2(data[key].toString().split('%')[0], 2) + '%' //盈亏%保留两位小数
         }else {
-            data[key] = utils.decimaltoFixed(data[key], 4) //仓位价值 、基础保证金、盈亏 四位小数
+            data[key] = data[key].toFixed2(4) //仓位价值 、基础保证金、盈亏 四位小数
         }
     }
     return data
