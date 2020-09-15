@@ -1,3 +1,11 @@
+/*
+ * @Author: your name
+ * @Date: 2020-09-15 17:54:03
+ * @LastEditTime: 2020-09-15 17:56:12
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: \website-project\src\views\page\selfManage\safety\index\index.js
+ */
 const m = require('mithril');
 const Layout = require('../../home/layout');
 const Header = require('@/views/components/indexHeader/indexHeader.view');
@@ -15,10 +23,10 @@ module.exports = {
                         highlightFlag: 1,
                         navList: [
                             { to: '/selfManage', title: I18n.$t('10051') /* '个人总览' */ },
-                            { to: '/securityManage', title: I18n.$t('10181') /* '账户安全' */ },
-                            { to: '', title: I18n.$t('10182') /* '身份认证' */ },
-                            { to: '/apiManager', title: I18n.$t('10183') /* 'API管理' */ },
-                            { to: '', title: I18n.$t('10184') /* '邀请返佣' */ }
+                            { to: '/securityManage', title: I18n.$t('10181') /* '账户安全' */ }
+                            // { to: '', title: I18n.$t('10182') /* '身份认证' */ },
+                            // { to: '', title: I18n.$t('10183') /* 'API管理' */ },
+                            // { to: '', title: I18n.$t('10184') /* '邀请返佣' */ }
                         ]
                     }),
                     content: m(HeaContent)
