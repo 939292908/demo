@@ -11,7 +11,7 @@ module.exports = {
             label: {
                 show: true,
                 position: 'outer',
-                formatter: '{b} {c} BTC ({d})%',
+                formatter: '{b} ({d})%',
                 textStyle: {
                     fontSize: 10
                 }

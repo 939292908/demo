@@ -85,7 +85,7 @@ const assetView = {
         return m('div.self-manage-content-block border-radius-medium mb-5', [
             // block header
             m('.asset-header dis-flex justify-between align-center py-3 px-5', [
-                m('div.asset-title title-small has-text-level-1', { onclick: () => { AssetData.handleEditShow(); } }, [
+                m('div.asset-title title-small has-text-level-1', { onclick: () => { AssetData.handleEditShow(true); } }, [
                     m('span', I18n.$t('10152') /* '资产总览' */),
                     AssetData.isShow ? m('i.iconfont icon-yincang  cur-pri') : m('i.iconfont icon-zichanzhengyan  cur-pri')
                 ]),
