@@ -3,12 +3,36 @@ import Calculator from '../../../futureCalc/calculator'
 
 let obj = {
     open: false,        //页面开关
-    tabsActive: 0,      //默认显示项
     leverClose:false,   //杠杆输入框X按钮
-    leverMultiple:"",   //杠杆输入倍数
-    Dir: 1,             //做多/做空         :1/0
-    buyModel: 1,        //全仓/逐仓         :1/0
     AssetD: {},         //合约数据填充
+
+    params: { 
+        type: 1,        // 合约类型 1：正向 ，-1：反向， 0：定期
+        model: 3,       // 1:盈亏计算 2：平仓价格 3：强平价格
+        Dir: 1,         // 1: 【做多】 -1: 【做空】
+        buyModel: 1,    // 1: 【全仓】 -1：【逐仓】
+        Lever: null,    // 杠杆Lever
+        SZ: null,       // 开仓数量
+        PrzIni: null,   // 开仓价格
+        PrzCls: null,   // 平仓价格
+        profit: null,   // 目标收益 平仓
+        profitType: 1,  // 目标收益类型 1【目标收益】 2【目标收益率】
+        WltBal: null,   // 钱包余额
+        MgnISO: 0,      // 追加保证金
+        aMMType: 0,
+      },
+      riskParams: {
+        Base: null,     // 基础风险限额：Base
+        Step: null,     // 基础风险限额：步长Step
+        BaseMIR: null,
+        StepIR: null, 
+        BaseMMR: null, 
+        StepMR: null,  
+      },
+      result:{
+        
+      },
+      maxLever:100,
 
     //初始化全局广播
     initEVBUS: function () {
@@ -50,28 +74,87 @@ let obj = {
         let Sym = window.gMkt.CtxPlaying.Sym
         let assetD = window.gMkt.AssetD[Sym] || {}
         this.AssetD = assetD
+        if (assetD.TrdCls == 2) {
+            this.params.type = 0//交割合约
+            }else if (assetD.TrdCls == 3) {
+            if ((assetD.Flag&1) == 1) {
+              this.params.type = -1//反向永续
+            }else {
+              this.params.type = 1//正向永续
+            }
+        }
+        let calculator = new Calculator(assetD);
+        let RS = window.gTrd.RS[Sym] || null
+        if(RS){
+            this.maxLever = 1/RS.BaseMIR
+            for(let key in this.riskParams){
+            this.riskParams[key] = RS[key]
+            }
+            this.result = calculator.getResult({...this.params,...this.riskParams});
+        }
     },
     //做多/做空判断
     setDirType:function(type){
-        this.Dir = type
+        this.params.Dir = type
+        this.initFuture()
     },
     //全仓/逐仓判断
     setBuyModelType:function(type){
-        this.buyModel = type
+        this.params.buyModel = type
+        this.initFuture()
     },
     //杠杆倍数输入栏
     getLever:function(e){
         let val = e.target.value
         if(val < 0){
-            this.leverMultiple = ''
+            this.params.Lever = null
+        }else if(val > this.maxLever){
+            this.params.Lever = this.maxLever
         }else {
-            this.leverMultiple = val
+            this.params.Lever = val
         }
-        if(this.leverMultiple != ""){
+        if(this.params.Lever){
             this.leverClose = true
         }else {
             this.leverClose = false
         }
+        this.initFuture()
+    },
+    //清除杠杆数据
+    closeLever:function(){
+        obj.leverClose = false
+        obj.params.Lever = null
+        this.initFuture()
+    },
+    //开仓数量
+    getPosSz:function(e){
+        let val = e.target.value
+        if(val < 0){
+            this.params.SZ = null
+        }else {
+            this.params.SZ = val
+        }
+        this.initFuture()
+    },
+    //开仓价格
+    getPrzIni:function(e){
+        let val = e.target.value
+        if(val < 0){
+            this.params.PrzIni = null
+        }else {
+            this.params.PrzIni = val
+        }
+        this.initFuture()
+    },
+    //保证金余额
+    getWltBal:function(e){
+        let val = e.target.value
+        if(val < 0){
+            this.params.WltBal = null
+        }else {
+            this.params.WltBal = val
+        }
+        this.initFuture()
     },
 }
 
@@ -88,12 +171,12 @@ export default {
             //左边计算区域
             m('div',{class:"calculator-public-left pr-3"},[
                 m('div',{class:"is-flex calculator-button-title mb-3"},[
-                    m('button',{class:"button calculator-button-item is-background-3 has-text-2 has-border-gry  is-text-3" + (obj.Dir == 1 ? " has-border-primary" : ""),onclick:function(){
+                    m('button',{class:"button calculator-button-item is-background-3 has-text-2 has-border-gry  is-text-3" + (obj.params.Dir == 1 ? " has-border-primary" : ""),onclick:function(){
                         obj.setDirType(1)
                     }},[
                         "做多"
                     ]),
-                    m('button',{class:"button calculator-button-item is-background-3 has-text-2 has-border-gry is-text-3" + (obj.Dir == -1 ? " has-border-primary" : ""),onclick:function(){
+                    m('button',{class:"button calculator-button-item is-background-3 has-text-2 has-border-gry is-text-3" + (obj.params.Dir == -1 ? " has-border-primary" : ""),onclick:function(){
                         obj.setDirType(-1)
                     }},[
                         "做空"
@@ -103,12 +186,12 @@ export default {
                     '账户模式'
                 ]),
                 m('div',{class:"is-flex calculator-button-title mb-3"},[
-                    m('button',{class:"button button calculator-button-item is-background-3 has-text-2 has-border-gry is-text-3" + (obj.buyModel == 1?" has-border-primary" : ""),onclick:function(){
+                    m('button',{class:"button button calculator-button-item is-background-3 has-text-2 has-border-gry is-text-3" + (obj.params.buyModel == 1?" has-border-primary" : ""),onclick:function(){
                         obj.setBuyModelType(1)
                     }},[
                         "全仓"
                     ]),
-                    m('button',{class:"button button calculator-button-item is-background-3 has-text-2 has-border-gry is-text-3" + (obj.buyModel == -1?" has-border-primary" : ""),onclick:function(){
+                    m('button',{class:"button button calculator-button-item is-background-3 has-text-2 has-border-gry is-text-3" + (obj.params.buyModel == -1?" has-border-primary" : ""),onclick:function(){
                         obj.setBuyModelType(-1)
                     }},[
                         "逐仓"
@@ -118,13 +201,12 @@ export default {
                     m('div',{class:"input-left"},[
                         "杠杆倍数"
                     ]),
-                    m('input',{class:"input input-border-line",type: 'number',value : obj.leverMultiple,oninput:function(e){
+                    m('input',{class:"input input-border-line",type: 'number',value : obj.params.Lever,oninput:function(e){
                         obj.getLever(e)
                     }}),
                     m('div',{class:"input-right"},[
                         m('i',{class:"iconfont cursor-pointer " + (obj.leverClose?" iconclose" : ""),onclick:function(){
-                            obj.leverClose = false
-                            obj.leverMultiple = ''
+                            obj.closeLever()
                         }})
                     ])
                 ]),
@@ -132,7 +214,9 @@ export default {
                     m('div',{class:"input-left"},[
                         "保证金余额"
                     ]),
-                    m('input',{class:"input input-border-line",type: 'number'}),
+                    m('input',{class:"input input-border-line",type: 'number',value : obj.params.WltBal,oninput:function(e){
+                        obj.getWltBal(e)
+                    }}),
                     m('div',{class:"input-right"},[
                         obj.AssetD.QuoteCoin || ''
                     ])
@@ -141,7 +225,9 @@ export default {
                     m('div',{class:"input-left"},[
                         "开仓数量"
                     ]),
-                    m('input',{class:"input input-border-line",type: 'number'}),
+                    m('input',{class:"input input-border-line",type: 'number',value : obj.params.SZ,oninput:function(e){
+                        obj.getPosSz(e)
+                    }}),
                     m('div',{class:"input-right"},[
                         "张"
                     ])
@@ -150,7 +236,9 @@ export default {
                     m('div',{class:"input-left"},[
                         "开仓价格"
                     ]),
-                    m('input',{class:"input input-border-line",type: 'number'}),
+                    m('input',{class:"input input-border-line",type: 'number',value : obj.params.PrzIni,oninput:function(e){
+                        obj.getPrzIni(e)
+                    }}),
                     m('div',{class:"input-right"},[
                         obj.AssetD.QuoteCoin || ''
                     ])
@@ -167,7 +255,7 @@ export default {
                             '平仓价格' + "(" + (obj.AssetD.SettleCoin || '--') + ")"
                         ]),
                         m('div',{class:""},[
-                            '--'
+                            obj.result.QiangPingPrice || '--'
                         ]),
                     ]),
                     m('div',{class:""},[
