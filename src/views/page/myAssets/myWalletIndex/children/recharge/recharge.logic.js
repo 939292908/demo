@@ -24,6 +24,7 @@ const model = {
     chains: null, // 链名称
     chainAry: [], // 链名称数组
     flagReq: false, // 优化请求
+    pageIsShow: false, // loading
     setPageData() {
         if (JSON.stringify(wlt.wallet['03']) !== '[]') {
             if (model.flagReq) {
@@ -162,6 +163,7 @@ const model = {
 
                 model.setQrCodeImg(); // 当前选中币种的二维码
                 model.setLabelTips(); // 当前选中币种的标签提示语句
+                model.pageIsShow = true;
             }
         }
     },
@@ -232,6 +234,7 @@ const model = {
         }
     },
     initFn: function () {
+        this.pageIsShow = false;
         const currencyType = window.router.getUrlInfo().params.wType;
         if (currencyType !== undefined) {
             model.coinParam = currencyType;

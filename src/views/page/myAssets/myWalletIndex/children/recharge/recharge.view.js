@@ -7,6 +7,7 @@ const Tooltip = require('@/views/components/common/Tooltip/Tooltip.view');
 const Dropdown = require('@/views/components/common/Dropdown/Dropdown.view');
 const I18n = require('@/languages/I18n').default;
 const Header = require('@/views/components/indexHeader/indexHeader.view');
+const Loading = require('@/views/components/loading/loading.view');
 
 module.exports = {
     nameTips: null, // 链名称提示
@@ -39,7 +40,10 @@ module.exports = {
                 ])
             ]),
             m('div', { class: `bottom content-width mb-7 border-radius-medium` }, [
-                m('div', { class: `bottom-upper has-bg-level-2 pl-8 pt-7` }, [
+                m('div', { class: `bottom-upper has-bg-level-2 pl-8 pt-7`, style: { position: `relative` } }, [
+                    m('div.myLoading', { class: `${!rechargeIndex.pageIsShow ? `` : `is-hidden`}` }, [
+                        m(Loading)
+                    ]),
                     m('div', { class: `form-item-title` }, I18n.$t('10063') /* '币种' */),
                     m('div', { class: `form-item-content border-radius-medium mt-2 mb-7`, style: { width: `384px` } }, [
                         m(Dropdown, rechargeIndex.option)
