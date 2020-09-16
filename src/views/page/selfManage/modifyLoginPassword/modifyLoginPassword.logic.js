@@ -113,7 +113,7 @@ module.exports = {
             console.log('nzm', 'changePasswd success', arg);
             if (arg.result.code === 0) {
                 // console.log('success');
-                window.$message({ content: '登录密码修改成功', type: 'success' });
+                window.$message({ content: I18n.$t('10598') /* '登录密码修改成功' */, type: 'success' });
                 that.loginOut();
                 window.router.push('/login');
             } else {

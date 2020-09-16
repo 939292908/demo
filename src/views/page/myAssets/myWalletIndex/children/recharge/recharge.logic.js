@@ -108,7 +108,10 @@ const model = {
         }
     },
     // 切换币种时的操作
-    setTipsAndAddrAndCode() {
+    setTipsAndAddrAndCode(txt) {
+        if (txt) {
+            this.btnCheckFlag = txt;
+        }
         // console.log('setTipsAndAddrAndCode', JSON.stringify(model.pageData));
         for (const i in model.pageData) {
             if (model.pageData[i].wType === model.option.currentId) {
