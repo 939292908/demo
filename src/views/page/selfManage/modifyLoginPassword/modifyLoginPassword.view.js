@@ -93,7 +93,7 @@ const modifyLPView = {
                     m('span', { class: `has-text-title my-4 ml-4 title-medium` }, I18n.$t('10275') /* '您正在绑定谷歌验证' */)
                 ])
             ]),
-            m('div', { class: `center content-width container has-bg-level-2 pt-8` }, [
+            m('div', { class: `center content-width container has-bg-level-2 pt-8 pb-8` }, [
                 m('div', { class: `center-center margin-LRauto` }, [
                     m('div', { class: `oldPwdDiv mb-5` }, [
                         m('span', { class: `body-5` }, I18n.$t('10276') /* '原密码' */),

@@ -31,7 +31,6 @@ module.exports = {
     switchSafetyVerifyModal (type) { // 安全校验弹框 显示/隐藏
         this.isShowVerifyView = type;
     },
-
     /* 生成IOS，Android，密钥二维码 begin */
     generateQRCode() {
         const that = this;
