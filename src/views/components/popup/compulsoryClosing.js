@@ -33,6 +33,7 @@ let obj = {
         
       },
       maxLever:100,
+      wlt: {},//钱包数据
 
     //初始化全局广播
     initEVBUS: function () {
@@ -92,6 +93,27 @@ let obj = {
             }
             this.result = calculator.getResult({...this.params,...this.riskParams});
         }
+    },
+    //初始化钱包数据
+    initWlt: function (arg) {
+        let Sym = window.gMkt.CtxPlaying.Sym
+        let assetD = window.gMkt.AssetD[Sym] || {}
+        let wallets = []
+        if (assetD.TrdCls == 2 || assetD.TrdCls == 3) {
+            wallets = window.gTrd.Wlts['01']
+        }
+        let isUpdate = false
+        for (let i = 0; i < wallets.length; i++) {
+            let item = wallets[i]
+            if (item.AId && item.Coin == assetD.SettleCoin) {
+                isUpdate = true
+                this.wlt = item
+            }
+        }
+        if (!isUpdate) {
+            this.wlt = {}
+        }
+        this.params.WltBal = this.wlt.Wdrawable
     },
     //做多/做空判断
     setDirType:function(type){
@@ -163,6 +185,7 @@ export default {
 
     },
     oncreate: function (vnode) {
+        obj.initWlt()
         obj.initFuture()
         obj.initEVBUS()
     },
