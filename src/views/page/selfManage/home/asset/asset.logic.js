@@ -148,6 +148,7 @@ const manageAssetData = {
             isall: true
         });
         this.walletAcId = 'all';
+        this.isShow = true;
         wlt.remove();
     }
 };
