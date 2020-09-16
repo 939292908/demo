@@ -91,10 +91,10 @@ const openGView = {
                 highlightFlag: 1,
                 navList: [
                     { to: '/selfManage', title: I18n.$t('10051') /* '个人总览' */ },
-                    { to: '/securityManage', title: I18n.$t('10181') /* '账户安全' */ },
-                    { to: '', title: I18n.$t('10182') /* '身份认证' */ },
-                    { to: '', title: I18n.$t('10183') /* 'API管理' */ },
-                    { to: '', title: I18n.$t('10184') /* '邀请返佣' */ }
+                    { to: '/securityManage', title: I18n.$t('10181') /* '账户安全' */ }
+                    // { to: '', title: I18n.$t('10182') /* '身份认证' */ },
+                    // { to: '', title: I18n.$t('10183') /* 'API管理' */ },
+                    // { to: '', title: I18n.$t('10184') /* '邀请返佣' */ }
                 ]
             }),
             m('div', { class: `operation mb-7 has-bg-level-2` }, [
