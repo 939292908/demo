@@ -1,12 +1,14 @@
-.views-page-accountSecurity-modifyLoginPassword{
+.views-page-selfManage-antiFishingCode{
     .operation{
+        height: 57px;
         div{
             line-height: 57px;
         }
     }
     .center{
-        .center-center{
-            width: 381px;
+        height: 308px;
+        div{
+            width: 384px;
         }
         button{
             outline: none;
@@ -14,8 +16,5 @@
             width: 381px;
             height: 44px;
         }
-    }
-    .margin-LRauto{
-        margin: 0 auto;
     }
 }
