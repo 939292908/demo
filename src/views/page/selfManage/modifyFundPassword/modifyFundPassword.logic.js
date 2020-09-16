@@ -112,7 +112,7 @@ module.exports = {
             console.log('nzm', 'setWalletPwd success', arg);
             if (arg.result.code === 0) {
                 console.log('setWalletPwd success');
-                window.$message({ content: this.modifyFlag === 0 ? '设置资金密码成功' : '修改资金密码成功', type: 'success' });
+                window.$message({ content: this.modifyFlag === 0 ? '资金密码设置成功' : '资金密码修改成功', type: 'success' });
                 window.router.push('/securityManage');
             } else {
                 window.$message({ content: errCode.getWebApiErrorCode(arg.result.code), type: 'danger' });
@@ -138,7 +138,7 @@ module.exports = {
             settingType: 13, /* 设置类型，固定值 */
             settingKey: 'ucp' /* 设置类型的key，固定值 */
         }).then(function(arg) {
-            console.log('nzm', 'getWalletPwdStatus success', arg);
+            // console.log('nzm', 'getWalletPwdStatus success', arg);
             if (arg.result.code === 0) {
                 that.modifyFlag = arg.settingValue === '*' ? 1 : 0;
             } else {
