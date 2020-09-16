@@ -154,5 +154,60 @@ export default {
         } else {
             return str;
         }
+    },
+    /**
+     * 含pre标签的字符串处理
+     * @param s 含pre标签的字符串
+     * @returns {[]}
+     */
+    preToArr(s) {
+        let str = s;
+        const arr = [];
+        while (str.indexOf('<pre>') !== -1 && str.indexOf('</pre>') !== -1) {
+            const start = str.indexOf('<pre>');
+            const end = str.indexOf('</pre>');
+            if (start - 1 !== -1) {
+                arr.push({
+                    type: 'normal',
+                    value: str.slice(0, start)
+                });
+            }
+            arr.push({
+                type: 'pre',
+                value: str.slice(start + 5, end)
+            });
+            str = str.substring(end + 6, str.length);
+        }
+        if(str.length) {
+            arr.push({
+                type: 'normal',
+                value: str
+            });
+        }
+        return arr;
+    },
+    /**
+     * 含pre的多语言处理
+     * @param str 多语言id
+     * @param obj span的vnode参数数组
+     * @returns {[]|*}
+     */
+    $ft(str, obj = []) {
+        const arr = [];
+        if (Object.keys(di18n.messages).length > 0) {
+            let preArr = this.preToArr(di18n.$t(str));
+            let count = 0;
+            for(const item of preArr) {
+                if(item.type === 'normal') {
+                    arr.push(m('span',{},[item.value]));
+                } else {
+                    arr.push(m('span',obj[count] || {},[item.value]));
+                    count++;
+                }
+            }
+            return arr;
+        } else {
+            return str;
+        }
     }
 };

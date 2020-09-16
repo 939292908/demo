@@ -1,13 +1,13 @@
 const m = require('mithril');
 const assetTable = require('../assetTable/assetTable.view');
-const AssetRecords = require('@/models/asset/assetsRecords');
+const AssetRecords = require('@/models/myAssets/assetsRecords');
 const assetSelectBox = require('../assetSelectBox/assetSelectBox.view');
 const header = require('../../../components/indexHeader/indexHeader.view');
 const I18n = require('@/languages/I18n').default;
 require('./assetRecord.scss');
 module.exports = {
     oninit() {
-        AssetRecords.init(AssetRecords.recordObj[m.route.param().aType] ? m.route.param().aType : '03');
+        AssetRecords.init(AssetRecords.allAccount.includes(m.route.param().aType) ? m.route.param().aType : '03');
         AssetRecords.setLanguageListen();
     },
     onremove() {
