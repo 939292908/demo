@@ -1,5 +1,6 @@
 const m = require('mithril');
 const l180n = require('@/languages/I18n').default;
+require('./headerContent.scss');
 module.exports = {
     view: function () {
         return m('div.safety-header-cotent py-8', [

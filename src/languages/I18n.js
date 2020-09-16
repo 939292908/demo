@@ -187,7 +187,7 @@ export default {
         return arr;
     },
     /**
-     * 含span的多语言处理
+     * 含pre的多语言处理
      * @param str 多语言id
      * @param obj span的vnode参数数组
      * @returns {[]|*}
