@@ -1,8 +1,7 @@
 const m = require('mithril');
 const AssetSelectBox = require('./assetSelectBox.model');
-// const InputWithComponent = require('../../../components/inputWithComponent/inputWithComponent.view');
 const I18n = require('@/languages/I18n').default;
-const Dropdown = require('@/views/components/common/newDropdown/dropdown.view');
+const Dropdown = require('@/views/components/common/Dropdown/Dropdown.view');
 require('./assetSelectBox.scss');
 
 module.exports = {
@@ -12,23 +11,20 @@ module.exports = {
     view(vnode) {
         const coinList = [];
         coinList.push({
-            isActive: vnode.attrs.coin === 'all',
-            value: I18n.$t('10343')/* '全部币种' */,
-            key: 'all'
+            label: I18n.$t('10343')/* '全部币种' */,
+            id: 'all'
         });
         for (const item of vnode.attrs.coinList) {
             coinList.push({
-                isActive: vnode.attrs.coin === item,
-                value: item,
-                key: item
+                label: item,
+                id: item
             });
         }
         const typeList = [];
         for (const k in vnode.attrs.typeList) {
             typeList.push({
-                isActive: vnode.attrs.type === k,
-                value: vnode.attrs.typeList[k],
-                key: k
+                label: vnode.attrs.typeList[k],
+                id: k
             });
         }
         return m('div.assetSelectBox', {
@@ -67,7 +63,7 @@ module.exports = {
                                 m('input', {
                                     id: 'asset-select-box-time-selector',
                                     style: 'display:none',
-                                    autocomplete: "off",
+                                    autocomplete: 'off',
                                     oninput: e => {},
                                     value: AssetSelectBox.date
                                 }, [])
@@ -77,46 +73,30 @@ module.exports = {
                 ]),
                 m('div.column.is-3', {}, [
                     m(Dropdown, {
-                        id: 'assetSelectBox-coin-dropdown-list',
-                        class: 'w100',
-                        isActive: AssetSelectBox.coinIsActive,
-                        list: coinList,
-                        onchange: item => {
-                            AssetSelectBox.coinIsActive = false;
-                            AssetSelectBox.dateIsActive = false;
-                            vnode.attrs.onSelectCoin(item.key);
-                        },
-                        onActive: () => {
-                            AssetSelectBox.typeIsActive = false;
-                            AssetSelectBox.dateIsActive = false;
-                            AssetSelectBox.coinIsActive = !AssetSelectBox.coinIsActive;
-                        }
+                        evenKey: 'assetSelectBox-coin-dropdown-list',
+                        currentId: vnode.attrs.coin,
+                        showMenu: AssetSelectBox.coinIsActive,
+                        updateOption(option) { AssetSelectBox.coinIsActive = option.showMenu; },
+                        menuList() { return coinList; },
+                        menuClick(item) { vnode.attrs.onSelectCoin(item.id); }
                     })
                 ]),
                 m('div.column.is-3', {}, [
                     m(Dropdown, {
-                        id: 'assetSelectBox-type-dropdown-list',
-                        class: 'w100',
-                        isActive: AssetSelectBox.typeIsActive,
-                        list: typeList,
-                        onchange: item => {
-                            AssetSelectBox.typeIsActive = false;
-                            AssetSelectBox.dateIsActive = false;
-                            vnode.attrs.onSelectType(item.key);
-                        },
-                        onActive: () => {
-                            AssetSelectBox.coinIsActive = false;
-                            AssetSelectBox.dateIsActive = false;
-                            AssetSelectBox.typeIsActive = !AssetSelectBox.typeIsActive;
-                        }
+                        evenKey: 'assetSelectBox-type-dropdown-list',
+                        currentId: vnode.attrs.type,
+                        showMenu: AssetSelectBox.typeIsActive,
+                        updateOption(option) { AssetSelectBox.typeIsActive = option.showMenu; },
+                        menuList() { return typeList; },
+                        menuClick(item) { vnode.attrs.onSelectType(item.id); }
                     })
                 ]),
                 m('div.column', {}, [
-                    m("button.button.is-primary.font-size-2.has-text-white.modal-default-btn.button-large.mr-4.btn-width", {
-                        onclick () { vnode.attrs.onSearch(); }
+                    m('button.button.is-primary.font-size-2.has-text-white.modal-default-btn.button-large.mr-4.btn-width', {
+                        onclick() { vnode.attrs.onSearch(); }
                     }, [I18n.$t('10593')/* "查询" */]),
-                    m("button.button.is-primary.is-outlined.font-size-2.button-large.has-text-primary.btn-width", {
-                        onclick () {
+                    m('button.button.is-primary.is-outlined.font-size-2.button-large.has-text-primary.btn-width', {
+                        onclick() {
                             AssetSelectBox.date = '';
                             vnode.attrs.onClean();
                         }
