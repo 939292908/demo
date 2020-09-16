@@ -16,6 +16,7 @@ const Skip = require('../skip/skip');
 const Asset = require('../asset/asset.view');
 const Invitation = require('../invitation/invitation.view');
 const LogSsheet = require('../logSheet/logSheet.view');
+const Transfer = require('@/views/page/myAssets/transfer/transfer.view.js');
 require('./index.scss');
 
 module.exports = {
@@ -40,7 +41,8 @@ module.exports = {
                 m('div.dis-flex justify-between align-stretch', [
                     m(Invitation),
                     m(LogSsheet)
-                ])
+                ]),
+                m(Transfer)
             )
         );
     }

@@ -24,12 +24,27 @@
             outline: none;
         }
     }
+    ::-moz-selection{/*Mozilla Firefox 4 to 8*/
+        background-color: none;
+    }
+    ::-webkit-selection{/*Webkit browsers*/
+        background-color: none;
+    }
+    ::-ms-selection{/*Internet Explorer 10+*/
+        background-color: none;
+    }
+    .keyText::selection{
+        background-color: none;
+    }
     .margin-LRauto{
         margin: 0 auto;
     }
 }
 .views-page-accountSecurity-bindGoogle-open{
     .center{
+        .weightSix{
+            font-weight: 600;
+        }
         .center-top{
             display: flex;
             flex-direction: row;
@@ -68,35 +83,18 @@
                     width: 120px;
                     height: 120px;
                 }
-                .key{
-                    input{
-                        outline: none;
-                        border: none;
-                    }
-                    ::-moz-selection{/*Mozilla Firefox 4 to 8*/
-                        background-color: none;
-                    }
-                    ::-webkit-selection{/*Webkit browsers*/
-                        background-color: none;
-                    }
-                    ::-ms-selection{/*Internet Explorer 10+*/
-                        background-color: none;
-                    }
-                    input::selection{
-                        background-color: none;
-                    }
-                }
-            }   
+            }
             .stepThree{
                 height: 220px;
                 text-align: center;
-                .key{
-                    input{
-                        outline: none;
-                        border: none;
-                    }
-                }
             }
+            .stepTwo,.stepThree{
+                .key{
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: center;
+                }
+            }  
             .stepFour{
                 height: 450px;
                 .desc1{

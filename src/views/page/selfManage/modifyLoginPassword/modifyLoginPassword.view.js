@@ -81,10 +81,10 @@ const modifyLPView = {
                 highlightFlag: 1,
                 navList: [
                     { to: '/selfManage', title: I18n.$t('10051') /* '个人总览' */ },
-                    { to: '/securityManage', title: I18n.$t('10181') /* '账户安全' */ },
-                    { to: '', title: I18n.$t('10182') /* '身份认证' */ },
-                    { to: '', title: I18n.$t('10183') /* 'API管理' */ },
-                    { to: '', title: I18n.$t('10184') /* '邀请返佣' */ }
+                    { to: '/securityManage', title: I18n.$t('10181') /* '账户安全' */ }
+                    // { to: '', title: I18n.$t('10182') /* '身份认证' */ },
+                    // { to: '', title: I18n.$t('10183') /* 'API管理' */ },
+                    // { to: '', title: I18n.$t('10184') /* '邀请返佣' */ }
                 ]
             }),
             m('div', { class: `operation mb-7 has-bg-level-2` }, [
@@ -93,7 +93,7 @@ const modifyLPView = {
                     m('span', { class: `has-text-title my-4 ml-4 title-medium` }, I18n.$t('10275') /* '您正在绑定谷歌验证' */)
                 ])
             ]),
-            m('div', { class: `center content-width container has-bg-level-2 pt-8` }, [
+            m('div', { class: `center content-width container has-bg-level-2 pt-8 pb-8` }, [
                 m('div', { class: `center-center margin-LRauto` }, [
                     m('div', { class: `oldPwdDiv mb-5` }, [
                         m('span', { class: `body-5` }, I18n.$t('10276') /* '原密码' */),

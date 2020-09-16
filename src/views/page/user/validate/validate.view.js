@@ -22,8 +22,8 @@ module.exports = {
         validInput.push(m('div.has-text-level-2.body-5.mb-2', {}, [
             Validate.selectName()[Validate.selectType],
             m('span.ml-2.body-2.has-text-level-4', {}, [
-                Validate.selectType === 'sms' ? `(${utils.hideAccountNameInfo(validateModel.smsConfig.securePhone)})`
-                    : Validate.selectType === 'email' ? `(${utils.hideAccountNameInfo(validateModel.emailConfig.secureEmail)})`
+                Validate.selectType === 'sms' && validateModel.smsConfig.securePhone ? `(${utils.hideAccountNameInfo(validateModel.smsConfig.securePhone)})`
+                    : Validate.selectType === 'email' && validateModel.emailConfig.secureEmail ? `(${utils.hideAccountNameInfo(validateModel.emailConfig.secureEmail)})`
                         : ''
             ])
         ]));

@@ -26,7 +26,7 @@ module.exports = {
     },
     // 确认按钮事件
     confirmBtn: function() {
-        console.log(this.oldLpwd, this.newLpwd, this.confirmLpwd);
+        // console.log(this.oldLpwd, this.newLpwd, this.confirmLpwd);
         /* console.log(this.loginType, this.setting2fa, this.nationNo, this.phoneNum); */
         geetest.verify(); // 极验
     },
@@ -87,7 +87,7 @@ module.exports = {
             validate.activeSms(params, function() {
                 that.changePassword();
             });
-            console.log(2);
+            // console.log(2);
         } else if (typeFlag === 3) {
             params = {
                 smsConfig: {
@@ -113,7 +113,7 @@ module.exports = {
             console.log('nzm', 'changePasswd success', arg);
             if (arg.result.code === 0) {
                 // console.log('success');
-                window.$message({ content: '密码修改成功', type: 'danger' });
+                window.$message({ content: '登录密码修改成功', type: 'success' });
                 that.loginOut();
                 window.router.push('/login');
             } else {
