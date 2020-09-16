@@ -8,7 +8,7 @@ const assetsRecordsType = require('./assetsRecordsType');
 module.exports = {
     Record() {
         this['01'] = { // 合约账户
-            gift: [], // 合约赠金
+            other: [], // 合约赠金
             transfer: [] // 资产划转
         };
         this['02'] = { // 币币账户
@@ -353,7 +353,7 @@ module.exports = {
                         info: info
                     };
                     if (item.wType.includes('@GIFT')) { // 合约赠金
-                        this.recordObj[aType].gift.push(newLog);
+                        this.recordObj[aType].other.push(newLog);
                     } else if (item.addr.search("gf->btc") !== -1) { // GF兑换
                         this.recordObj[aType].other.push(newLog);
                     } else if (item.addr.search("EVT") !== -1) { // 活动资金
