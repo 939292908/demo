@@ -816,6 +816,6 @@ $primary-lighten: var(--c-primary-lighten);
     background-image: linear-gradient(transparent, var(--c-background-darken));
 }
 .button.is-primary.is-outlined:focus {
-    background-color: var(--c-fontwhite-base) !important;
+    background-color: initial !important;
     color: $primary-lighten !important;
 }
