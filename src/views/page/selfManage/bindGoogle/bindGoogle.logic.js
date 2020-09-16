@@ -9,8 +9,15 @@ const I18n = require('@/languages/I18n').default;
 const md5 = require('md5');
 const gM = require('@/models/globalModels');
 const errCode = require('@/util/errCode').default;
+const regExp = require('@/models/validate/regExp');
 
 module.exports = {
+    showPassword: false, /* 是否显示密码 */
+    tip1IsShow: false, /* 登录密码提示是否显示 */
+    tip1: null, /* 登录密码提示内容 */
+    tip2IsShow: false, /* 谷歌验证码提示是否显示 */
+    tip2: null, /* 谷歌验证码提示内容 */
+    totalFlag: false, /* 是否通过验证 */
     secret: '', /* 密钥 */
     IOSDLAdd: 'https://apps.apple.com/us/app/google-authenticator/id388497605',
     AndroidDLAdd: 'https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2',
@@ -24,10 +31,8 @@ module.exports = {
     IOSDLAddQrCodeSrc: null, // IOS下载二维码地址
     AndroidDLAddQrCodeSrc: null, // Android Q下载二维码地址
     secretQrCodeSrc: null, // 秘钥二维码地址
-    closeLcPWd: '', // 关闭验证中的登录密码值
-    closeLcCode: '', // 关闭验证中的谷歌验证码值
-    openLcPWd: '', // 开启验证中的登录密码值
-    openLcCode: '', // 开启验证中的谷歌验证码值
+    LcPWd: '', // 登录密码值
+    LcCode: '', // 谷歌验证码值
     switchSafetyVerifyModal (type) { // 安全校验弹框 显示/隐藏
         this.isShowVerifyView = type;
     },
@@ -66,9 +71,36 @@ module.exports = {
     },
     /* 生成IOS，Android，密钥二维码 end */
 
+    /* 登录密码校验是否符合规则 */
+    LcPWdCheck() {
+        /* 是否为空  */
+        const tip = regExp.validPassword(this.LcPWd);
+        if (tip) {
+            this.totalFlag = false;
+            this.tip1 = tip;
+            this.tip1IsShow = true;
+            return;
+        }
+        this.tip1IsShow = false;
+        this.totalFlag = true;
+    },
+    /* 谷歌验证码校验 */
+    LcCodeCheck() {
+        /* 是否为空  */
+        if (!this.LcCode) {
+            this.totalFlag = false;
+            this.tip2 = I18n.$t('10416'); /* '该字段不能为空' */
+            this.tip2IsShow = true;
+            return;
+        }
+        this.tip2IsShow = false;
+        this.totalFlag = true;
+    },
     confirmBtn: function () {
-        // console.log(this.loginType, this.setting2fa, this.email, this.nationNo, this.phoneNum);
-        console.log(this.openLcCode, this.openLcPWd, this.closeLcCode, this.closeLcPWd);
+        // console.log(this.loginType, this.setting2fa, this.email, this.nationNo, this.phoneNum, this.LcCode, this.LcPWd, this.totalFlag);
+        if (!this.totalFlag) {
+            return;
+        }
         geetest.verify(); /* 极验 */
     },
     // 加载极验
@@ -84,7 +116,6 @@ module.exports = {
                     // 成功则进入安全验证
                     console.log('success initGeetest');
                     m.redraw();
-                    // that.ChooseVerify();
                     that.checkGoogleCode();
                 } else {
                     console.log('error initGeetest');
@@ -98,15 +129,9 @@ module.exports = {
      */
     checkGoogleCode() {
         const that = this;
-        if (this.currentOperation === 'bind' ? (this.openLcCode === '') : (this.closeLcCode === '')) {
-            window.$message({
-                content: I18n.$t('10416') /* '该字段不能为空' */,
-                type: 'danger'
-            });
-            return;
-        }
         let params = {};
-        this.currentOperation === 'bind' ? params = { code: this.openLcCode, opInfo: this.secret } : params = { code: this.closeLcCode };
+        this.currentOperation === 'bind' ? params = { code: this.LcCode, opInfo: this.secret } : params = { code: this.LcCode };
+        console.log(params, 111);
         Http.googleCheck(params).then(res => {
             if (res.result.code === 0) {
                 m.redraw();
@@ -123,7 +148,6 @@ module.exports = {
     },
     // 选择验证方式
     ChooseVerify() {
-        console.log('ChooseVerify');
         if (this.setting2fa.email === 0 && this.setting2fa.phone === 0) {
             console.log('未绑定手机与邮箱');
             return;
@@ -195,9 +219,9 @@ module.exports = {
         // 密钥
         const opInfo = this.secret;
         // 用户密码
-        const password = this.openLcPWd;
+        const password = this.LcPWd;
         // google验证码
-        const code = this.openLcCode;
+        const code = this.LcCode;
 
         Http.bindGoogleAuth({
             opInfo: opInfo,
@@ -207,7 +231,7 @@ module.exports = {
             console.log('nzm', 'bindGoogleAuth success', arg);
             if (arg.result.code === 0) {
                 console.log('bindGoogle success');
-                window.$message({ content: '谷歌绑定成功', type: 'danger' });
+                window.$message({ content: '谷歌绑定成功', type: 'success' });
                 window.router.push({ path: '/securityManage' });
             } else {
                 window.$message({ content: errCode.getWebApiErrorCode(arg.result.code), type: 'danger' });
@@ -222,9 +246,10 @@ module.exports = {
     unbindGoogle: function() {
         const that = this;
         // 用户密码
-        const password = this.closeLcPWd;
+        const password = this.LcPWd;
         // google验证码
-        const code = this.closeLcCode;
+        const code = this.LcCode;
+
         Http.relieveGoogleAuth({
             password: md5(password),
             code: code
@@ -232,7 +257,7 @@ module.exports = {
             console.log('nzm', 'relieveGoogleAuth success', arg);
             if (arg.result.code === 0) {
                 console.log('unbindGoogle success');
-                window.$message({ content: '谷歌解绑成功', type: 'danger' });
+                window.$message({ content: '谷歌解绑成功', type: 'success' });
                 window.router.push({ path: '/securityManage' });
             } else {
                 window.$message({ content: errCode.getWebApiErrorCode(arg.result.code), type: 'danger' });
@@ -254,10 +279,8 @@ module.exports = {
         this.phoneNum = account.phone; // 用户手机号码
     },
     initFn: function() {
-        this.closeLcPWd = ''; // 关闭验证中的登录密码值初始化
-        this.closeLcCode = ''; // 关闭验证中的谷歌验证码值初始化
-        this.openLcPWd = ''; // 开启验证中的登录密码值初始化
-        this.openLcCode = ''; // 开启验证中的谷歌验证码值初始化
+        this.LcPWd = ''; // 登录密码值初始化
+        this.LcCode = ''; // 谷歌验证码值初始化
         broadcast.onMsg({
             key: 'index',
             cmd: broadcast.GET_USER_INFO_READY,

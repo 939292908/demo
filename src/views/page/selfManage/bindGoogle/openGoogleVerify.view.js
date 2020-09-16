@@ -9,8 +9,6 @@ const Header = require('@/views/components/indexHeader/indexHeader.view');
 const InputWithComponent = require('@/views/components/inputWithComponent/inputWithComponent.view');
 
 const openGView = {
-    // totalFlag: false, /* 是否满足校验  默认false不满足 */
-    showPassword1: false, /* 是否显示登录密码 */
     oninit: () => {
         openGLogic.currentOperation = 'bind';
         openGLogic.initFn();
@@ -24,6 +22,7 @@ const openGView = {
         });
         openGView.initNav();
         openGView.checkFlag = 1; /* 步驟初始化 */
+        openGView.myWidth = 25; /* '进度'初始化 */
     },
     nav: [], /* 导航（下载App，扫描二维码，备份密钥，开启谷歌验证） */
     checkFlag: 1, /* 当前选中哪个步骤 */
@@ -50,6 +49,15 @@ const openGView = {
     },
     modifyCheckFlag(type) { /* 上一步 下一步 */
         if (type === 'prev') {
+            /* 初始化 start */
+            openGLogic.LcCode = '';
+            openGLogic.LcPWd = '';
+            openGLogic.tip1 = null;
+            openGLogic.tip1IsShow = false;
+            openGLogic.tip2 = null;
+            openGLogic.tip2IsShow = false;
+            /* 初始化 end */
+
             openGView.checkFlag = openGView.checkFlag - 1;
             openGView.myWidth = openGView.myWidth - 25;
         } else {
@@ -139,17 +147,19 @@ const openGView = {
                                 hiddenLine: true,
                                 addClass: `mt-2`,
                                 options: {
-                                    type: openGView.showPassword1 ? 'text' : 'password',
+                                    type: openGLogic.showPassword ? 'text' : 'password',
                                     oninput: e => {
-                                        openGLogic.openLcPWd = e.target.value;
+                                        openGLogic.LcPWd = e.target.value;
                                     },
-                                    value: openGLogic.openLcPWd
+                                    onblur: () => { openGLogic.LcPWdCheck(); },
+                                    value: openGLogic.LcPWd
                                 },
                                 rightComponents: m('i.iconfont.mx-2', {
-                                    onclick: () => { openGView.showPassword1 = !openGView.showPassword1; },
-                                    class: openGView.showPassword1 ? 'icon-yincang' : 'icon-zichanzhengyan'
+                                    onclick: () => { openGLogic.showPassword = !openGLogic.showPassword; },
+                                    class: openGLogic.showPassword ? 'icon-yincang' : 'icon-zichanzhengyan'
                                 })
-                            })
+                            }),
+                            m('span', { class: `has-text-tip-error`, style: { display: openGLogic.tip1IsShow ? `` : `none` } }, openGLogic.tip1)
                         ]),
                         m('div', { class: `codeDiv margin-LRauto mb-8` }, [
                             m('span', { class: `body-5 mb-2` }, I18n.$t('10119') /* '谷歌验证码' */),
@@ -159,11 +169,13 @@ const openGView = {
                                 options: {
                                     addClass: `mt-2`,
                                     oninput: e => {
-                                        openGLogic.openLcCode = e.target.value;
+                                        openGLogic.LcCode = e.target.value;
                                     },
-                                    value: openGLogic.openLcCode
+                                    onblur: () => { openGLogic.LcCodeCheck(); },
+                                    value: openGLogic.LcCode
                                 }
-                            })
+                            }),
+                            m('span', { class: `has-text-tip-error`, style: { display: openGLogic.tip2IsShow ? `` : `none` } }, openGLogic.tip2)
                         ]),
                         /* m('div', { class: `tips mt-3` }, [
                             m('span', { class: ``, style: { display: openGLogic.pwdTipFlag ? `` : `none` } }, '登录密码错误请重新输入!'),
