@@ -3,6 +3,9 @@ const wlt = require('@/models/wlt/wlt');
 const l180n = require('@/languages/I18n').default;
 const transferLogic = require('@/views/page/myAssets/transfer/transfer.logic.js'); // 划转模块逻辑
 const broadcast = require('@/broadcast/broadcast');
+const utils = require('@/util/utils').default;
+
+const lockName = 'ISSHOWASSET';
 
 const manageAssetData = {
     walletAcId: 'all',
@@ -18,9 +21,9 @@ const manageAssetData = {
         NLToBTC: 0, // 可用保证金 BTC
         NLToCRN: 0 // 可用保证金 CRN
     },
-    isShow: true,
+    isShow: utils.getItem(lockName).toString() ? utils.getItem(lockName) : true,
     handleEditShow: function (judge) { // judge 是否是 页面切换
-        if (judge) this.isShow = !this.isShow;
+        if (judge) { utils.setItem(lockName, !this.isShow); this.isShow = !this.isShow; }
         if (this.isShow) return this.getAssetOverview();
         this.AssetOverview = {
             coinToBTC: '******',
@@ -32,12 +35,11 @@ const manageAssetData = {
         };
     },
     handleChangeWallet: function (item) {
-        this.walletAcId = item.activeId;
+        this.walletAcId = item ? item.activeId : 'all';
         if (!this.isShow) return this.handleEditShow(false);
         this.getAssetOverview();
     },
     handleClickLBItem: function (item) {
-        console.log(item, 9999);
         if (item.action === 'transfer') {
             const transferFrom = item.wallet;
             transferLogic.setTransferModalOption({
@@ -90,7 +92,7 @@ const manageAssetData = {
             { name: l180n.$t('10073') /* '币币账户' */, value: Number(wlt.coinTotalValueForBTC) },
             { name: l180n.$t('10074') /* '法币账户' */, value: Number(wlt.legalTotalValueForBTC) }
         ];
-        this.getAssetOverview();
+        this.handleChangeWallet();
     },
     initList: function () {
         this.walletList = [
@@ -148,7 +150,6 @@ const manageAssetData = {
             isall: true
         });
         this.walletAcId = 'all';
-        this.isShow = true;
         wlt.remove();
     }
 };
