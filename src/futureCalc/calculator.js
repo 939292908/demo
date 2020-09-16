@@ -40,7 +40,7 @@ let params = {
 
 function Calculator(curSym) {
     if(!curSym) return 
-    console.log("init Calculator=", curSym, this )
+    // console.log("init Calculator=", curSym, this )
     LotSz         = this.LotSz = curSym.LotSz
     PrzM          = this.PrzM  = curSym.PrzM
     FeeTkR        = this.FeeTkR  = curSym.FeeTkrR
