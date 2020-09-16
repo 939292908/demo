@@ -114,7 +114,10 @@ let obj = {
         if (!isUpdate) {
             this.wlt = {}
         }
-        this.params.WltBal = Number(obj.wlt.aWdrawable).toFixed2(8)
+        //判断是否含有该字段
+        if(this.wlt.hasOwnProperty('aWdrawable')){
+            this.params.WltBal = Number(obj.wlt.aWdrawable).toFixed2(8)
+        }
     },
     //做多/做空判断
     setDirType:function(type){
