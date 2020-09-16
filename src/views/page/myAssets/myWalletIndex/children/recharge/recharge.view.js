@@ -78,7 +78,7 @@ module.exports = {
                                 return m('button', {
                                     class: `mr-6 button button-small is-primary` + (rechargeIndex.btnCheckFlag === item ? ` has-text-white` : ` is-outlined`),
                                     key: item,
-                                    onclick: () => { rechargeIndex.changeBtnflag(item); }
+                                    onclick: () => { rechargeIndex.setTipsAndAddrAndCode(item); }
                                 }, item);
                             })
                         ])
@@ -87,7 +87,7 @@ module.exports = {
                         m('span', { class: `body-5` }, I18n.$t('10081') /* '充币地址' */)
                     ]),
                     m('div', { class: `currencyAddr border-radius-medium mt-2 mb-7` }, [
-                        m('div', { class: `currencyAddr-text ml-3 has-bg-level-3` }, rechargeIndex.rechargeAddr),
+                        m('div', { class: `currencyAddr-text ml-3 has-bg-level-3 mr-6` }, rechargeIndex.rechargeAddr),
                         m('div', { class: `currencyAddr-Operation ml-3` }, [
                             m('div', { class: `iImg mt-2` }, [
                                 m('i', { class: `iconfont icon-copy has-text-primary cursor-pointer mr-2`, onclick: () => { rechargeIndex.copyText(); } }),
