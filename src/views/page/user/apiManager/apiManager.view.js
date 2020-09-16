@@ -30,11 +30,11 @@ module.exports = {
                 m(Header, {
                     highlightFlag: 3,
                     navList: [
-                        { to: '/', title: I18n.$t('10051')/* '个人总览' */ },
-                        { to: '/', title: I18n.$t('10181')/* '账户安全' */ },
-                        { to: '/', title: I18n.$t('10182')/* '身份认证' */ },
-                        { to: '/', title: I18n.$t('10183')/* 'API管理' */ },
-                        { to: '/', title: I18n.$t('10184')/* '邀请返佣' */ }
+                        { to: '/selfManage', title: I18n.$t('10051') } /* 个人总览 */,
+                        { to: '/securityManage', title: I18n.$t('10181') } /* 账户安全 */,
+                        { to: '/selfManage', title: I18n.$t('10182') } /* 身份认证 */,
+                        { to: '/apiManager', title: I18n.$t('10183') } /* API管理 */,
+                        { to: '/selfManage', title: I18n.$t('10184') } /* 邀请返佣 */
                     ]
                 }),
                 m('div.is-align-items-center', {}, [
@@ -42,7 +42,7 @@ module.exports = {
                 ]),
                 m('div.is-align-items-center', {}, [
                     m('div.mt-3.has-text-level-4.body-4.content-width', {},
-                        [I18n.$t('10322')/* '本平台为您提供了强大的API，您可以通过 API 使用行情查询、自动交易等服务。通过 API文档 查看 如何使用。' */]
+                        I18n.$ft('10322')// '本平台为您提供了强大的API，您可以通过 API 使用行情查询、自动交易等服务。通过 API文档 查看 如何使用。'
                     )
                 ])
             ]),
@@ -82,7 +82,15 @@ module.exports = {
                     m('div.column.has-text-level-4.body-4.tips-line-height', {}, [
                         m('div.body-5.mb-2', {}, [I18n.$t('10082')/* '温馨提示' */]),
                         m('div', {},
-                            ['* ' + I18n.$t('10322')/* '本平台为您提供了强大的API，您可以通过 API 使用行情查询、自动交易等服务。通过 API文档 查看如何使用。' */]
+                            ['* '].concat(
+                                // '本平台为您提供了强大的API，您可以通过 API 使用行情查询、自动交易等服务。通过 API文档 查看如何使用。'
+                                I18n.$ft('10322', [{
+                                    class: 'cursor-pointer has-text-primary',
+                                    onclick() {
+                                        console.log('API文档');
+                                    }
+                                }])
+                            )
                         ),
                         m('div', {},
                             ['* ' + I18n.$t('10323')/* '每个用户最多创建10组APIKEY' */]

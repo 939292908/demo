@@ -743,8 +743,8 @@ export function setWalletPwd (params = {}, options = { withCredentials: false })
 /**
  * 查询是否已设置资金密码
  * @param {Object} params {
-        settingType: 13 // 设置类型，固定值
-        settingKey: 'ucp', // 设置类型的key，固定值
+        settingType: 13 // 查询类型，固定值
+        settingKey: 'ucp', // 查询类型的key，固定值
     }
  * @param {Object} options axios请求配置
  * @returns {Object} {

@@ -1,3 +1,11 @@
+/*
+ * @Author: your name
+ * @Date: 2020-09-15 17:54:03
+ * @LastEditTime: 2020-09-15 17:56:20
+ * @LastEditors: your name
+ * @Description: In User Settings Edit
+ * @FilePath: \website-project\src\views\page\selfManage\home\index\index.js
+ */
 const m = require('mithril');
 const I18n = require('@/languages/I18n').default;
 
@@ -19,10 +27,10 @@ module.exports = {
                         highlightFlag: 0,
                         navList: [
                             { to: '/selfManage', title: I18n.$t('10051') } /* 个人总览 */,
-                            { to: '/securityManage', title: I18n.$t('10181') } /* 账户安全 */,
-                            { to: '/selfManage', title: I18n.$t('10182') } /* 身份认证 */,
-                            { to: '/selfManage', title: I18n.$t('10183') } /* API管理 */,
-                            { to: '/selfManage', title: I18n.$t('10184') } /* 邀请返佣 */
+                            { to: '/securityManage', title: I18n.$t('10181') } /* 账户安全 */
+                            // { to: '/selfManage', title: I18n.$t('10182') } /* 身份认证 */,
+                            // { to: '/selfManage', title: I18n.$t('10183') } /* API管理 */,
+                            // { to: '/selfManage', title: I18n.$t('10184') } /* 邀请返佣 */
                         ]
                     }),
                     content: m('div', m(User))
