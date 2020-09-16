@@ -25,16 +25,16 @@ const tip = Object.freeze({
 });
 // 涨绿（行业色）
 const green = Object.freeze({
-    lighten: '#42DC3F',
+    lighten: '#4BAF73',
     lighten1: '#57BD7D',
-    darken: '#42DC3F',
+    darken: '#4BAF73',
     darken1: '#57BD7D'
 });
 // 跌红（行业色）
 const red = Object.freeze({
-    lighten: '#F33309',
+    lighten: '#EF5716',
     lighten1: '#E55764',
-    darken: '#F33309',
+    darken: '#EF5716',
     darken1: '#E55764'
 });
 // 标记颜色
