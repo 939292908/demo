@@ -174,10 +174,10 @@ const openGView = {
                         ])
                     ])
                 ]),
-                m('div', { class: `center-btn px-7`, style: { display: (openGView.checkFlag !== 4 ? '' : 'none') } }, [
+                m('div', { class: `center-btn px-7` }, [
                     m('button', {
                         class: `prev mt-6 border-radius-small cursor-pointer has-bg-level-2 has-line-primary px-4 py-2`,
-                        style: { display: (openGView.checkFlag === 1 || openGView.checkFlag === 4 ? 'none' : '') },
+                        style: { display: (openGView.checkFlag === 1 ? 'none' : '') },
                         onclick: () => { openGView.modifyCheckFlag('prev'); }
                     }, I18n.$t('10258') /* '上一步' */),
                     m('button', {
