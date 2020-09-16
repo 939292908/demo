@@ -1,3 +1,11 @@
+/*
+ * @Author: your name
+ * @Date: 2020-09-15 17:54:03
+ * @LastEditTime: 2020-09-15 17:56:20
+ * @LastEditors: your name
+ * @Description: In User Settings Edit
+ * @FilePath: \website-project\src\views\page\selfManage\home\index\index.js
+ */
 const m = require('mithril');
 const I18n = require('@/languages/I18n').default;
 
@@ -8,6 +16,7 @@ const Skip = require('../skip/skip');
 const Asset = require('../asset/asset.view');
 const Invitation = require('../invitation/invitation.view');
 const LogSsheet = require('../logSheet/logSheet.view');
+const Transfer = require('@/views/page/myAssets/transfer/transfer.view.js');
 require('./index.scss');
 
 module.exports = {
@@ -19,10 +28,10 @@ module.exports = {
                         highlightFlag: 0,
                         navList: [
                             { to: '/selfManage', title: I18n.$t('10051') } /* 个人总览 */,
-                            { to: '/securityManage', title: I18n.$t('10181') } /* 账户安全 */,
-                            { to: '/selfManage', title: I18n.$t('10182') } /* 身份认证 */,
-                            { to: '/apiManager', title: I18n.$t('10183') } /* API管理 */,
-                            { to: '/selfManage', title: I18n.$t('10184') } /* 邀请返佣 */
+                            { to: '/securityManage', title: I18n.$t('10181') } /* 账户安全 */
+                            // { to: '/selfManage', title: I18n.$t('10182') } /* 身份认证 */,
+                            // { to: '/selfManage', title: I18n.$t('10183') } /* API管理 */,
+                            // { to: '/selfManage', title: I18n.$t('10184') } /* 邀请返佣 */
                         ]
                     }),
                     content: m('div', m(User))
@@ -32,7 +41,8 @@ module.exports = {
                 m('div.dis-flex justify-between align-stretch', [
                     m(Invitation),
                     m(LogSsheet)
-                ])
+                ]),
+                m(Transfer)
             )
         );
     }

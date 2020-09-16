@@ -8,7 +8,6 @@ const Header = require('@/views/components/indexHeader/indexHeader.view');
 const InputWithComponent = require('@/views/components/inputWithComponent/inputWithComponent.view');
 
 const closeGView = {
-    showPassword: false, /* 是否显示密码 */
     oninit: () => {
         closeGLogic.currentOperation = 'unbind';
         closeGLogic.initFn();
@@ -44,17 +43,19 @@ const closeGView = {
                             hiddenLine: true,
                             addClass: `mt-2`,
                             options: {
-                                type: closeGView.showPassword ? 'text' : 'password',
+                                type: closeGLogic.showPassword ? 'text' : 'password',
                                 oninput: e => {
-                                    closeGLogic.closeLcPWd = e.target.value;
+                                    closeGLogic.LcPWd = e.target.value;
                                 },
-                                value: closeGLogic.closeLcPWd
+                                onblur: () => { closeGLogic.LcPWdCheck(); },
+                                value: closeGLogic.LcPWd
                             },
                             rightComponents: m('i.iconfont.mx-2', {
-                                onclick: () => { closeGView.showPassword = !closeGView.showPassword; },
-                                class: closeGView.showPassword ? 'icon-yincang' : 'icon-zichanzhengyan'
+                                onclick: () => { closeGLogic.showPassword = !closeGLogic.showPassword; },
+                                class: closeGLogic.showPassword ? 'icon-yincang' : 'icon-zichanzhengyan'
                             })
-                        })
+                        }),
+                        m('span', { class: `has-text-tip-error`, style: { display: closeGLogic.tip1IsShow ? `` : `none` } }, closeGLogic.tip1)
                     ]),
                     m('div', { class: `codeDiv margin-LRauto` }, [
                         m('span', { class: `body-5 mb-2` }, I18n.$t('10264') /* '原谷歌验证码' */),
@@ -64,11 +65,13 @@ const closeGView = {
                             addClass: `mt-2`,
                             options: {
                                 oninput: e => {
-                                    closeGLogic.closeLcCode = e.target.value;
+                                    closeGLogic.LcCode = e.target.value;
                                 },
-                                value: closeGLogic.closeLcCode
+                                onblur: () => { closeGLogic.LcCodeCheck(); },
+                                value: closeGLogic.LcCode
                             }
-                        })
+                        }),
+                        m('span', { class: `has-text-tip-error`, style: { display: closeGLogic.tip2IsShow ? `` : `none` } }, closeGLogic.tip2)
                     ]),
                     m('div', { class: `btn mt-8 margin-LRauto` }, [
                         m('button', { class: `has-bg-primary cursor-pointer`, onclick: () => { closeGLogic.confirmBtn(); } }, I18n.$t('10337') /* '确定' */)

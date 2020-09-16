@@ -343,7 +343,7 @@ const extract = {
             const account = globalModels.getAccount();
             if (extract.popUpData.show) return;
             if (account.iStatus === 0 || account.iStatus === 2) {
-                this.handleTotalShow({ content: l180n.$t('10534') /* ' 为了您的账户安全，请按照提示实名认证！' */, isLinshiErWeiMa: true });
+                this.handleTotalShow({ content: l180n.$t('10522') /* ' 为了您的账户安全，请按照提示实名认证！' */, isLinshiErWeiMa: true });
             } else if (account.iStatus === 1) {
                 this.handleTotalShow({ content: l180n.$t('10535') /* '为了您的账户安全，实名认证通过后才可提现！' */, isLinshiErWeiMa: false });
             }
@@ -353,7 +353,7 @@ const extract = {
         evenKey: "option111key",
         currentId: 2,
         showMenu: false,
-        setOption (option) {
+        updateOption (option) {
             this.showMenu = option.showMenu;
             this.currentId = option.currentId ? option.currentId : this.currentId;
         },
