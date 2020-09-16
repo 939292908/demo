@@ -9,6 +9,7 @@ const VerifyView = require('@/views/components/dialogVerify/dialogVerify.view');
 const config = require('@/config.js');
 const regExp = require('@/models/validate/regExp');
 const Modal = require('@/views/components/common/Modal');
+// const theBindingOrNot = require('@/views/components/theBindingOrNot/theBindingOrNot.view');
 
 const modifyFPView = {
     tipModalIsShow: true, /* 修改资金密码提示框 */
@@ -46,7 +47,7 @@ const modifyFPView = {
         /* 新旧密码是否是一致 */
         if (modifyFPLogic.oldFundPwd === modifyFPLogic.newFunPwd) {
             modifyFPView.totalFlag = false;
-            modifyFPView.tip2 = '新密码与原密码不可一致';
+            modifyFPView.tip2 = I18n.$t('10596'); /* '新密码与原密码不可一致' */
             modifyFPView.tip2IsShow = true;
             return;
         }
@@ -199,6 +200,7 @@ const modifyFPView = {
                     modifyFPView.tipModalIsShow = false;
                 }
             }),
+            // m(theBindingOrNot),
             modifyFPLogic.isShowVerifyView ? m(VerifyView, {
                 close: () => modifyFPLogic.switchSafetyVerifyModal(false),
                 isHandleVerify: true,
