@@ -111,7 +111,7 @@ const openGView = {
                             ])
                         ])
                     ]),
-                    m('div', { class: `stepTwo pt-7`, style: { display: `${openGView.checkFlag === 2 ? `` : `none`}` } }, [
+                    m('div', { class: `stepTwo pt-8`, style: { display: `${openGView.checkFlag === 2 ? `` : `none`}` } }, [
                         m('div', { class: `desc1 body-5` }, I18n.$t('10256') /* '使用谷歌验证App扫描以下二维码' */),
                         m('div', { class: `stepTwo-qrcode my-7 margin-LRauto` }, [
                             m('img', { class: ``, src: openGLogic.secretQrCodeSrc })
@@ -122,9 +122,9 @@ const openGView = {
                             m('i', { class: `iconfont icon-copy has-text-primary cursor-pointer`, onclick: () => { openGView.copyText('one'); } })
                         ])
                     ]),
-                    m('div', { class: `stepThree pt-7`, style: { display: `${openGView.checkFlag === 3 ? `` : `none`}` } }, [
-                        m('div', { class: `mb-1` }, I18n.$t('10257') + `!` /* '请妥善保管好该密钥，以免丢失' */),
-                        m('div', { class: `mb-7` }, I18n.$t('10260') /* '如果该密钥丢失，需要联系客服处理，这通常需要一定的时间' */),
+                    m('div', { class: `stepThree pt-8`, style: { display: `${openGView.checkFlag === 3 ? `` : `none`}` } }, [
+                        m('div', { class: `mb-1` }, `密钥用于遗失谷歌验证器时找回绑定的谷歌验证，绑定前请务必将该密钥备份保存`),
+                        m('div', { class: `mb-7 has-text-level-4` }, I18n.$t('10260') /* '如果该密钥丢失，需要联系客服处理，这通常需要一定的时间' */),
                         m('div', { class: `key` }, [
                             m('input', { class: `keyText title-small`, type: 'text', readOnly: `readOnly`, value: openGLogic.secret }),
                             m('i', { class: `iconfont icon-copy has-text-primary`, onclick: () => { openGView.copyText('two'); } })
@@ -174,10 +174,10 @@ const openGView = {
                         ])
                     ])
                 ]),
-                m('div', { class: `center-btn px-7`, style: { display: (openGView.checkFlag !== 4 ? '' : 'none') } }, [
+                m('div', { class: `center-btn px-7` }, [
                     m('button', {
                         class: `prev mt-6 border-radius-small cursor-pointer has-bg-level-2 has-line-primary px-4 py-2`,
-                        style: { display: (openGView.checkFlag === 1 || openGView.checkFlag === 4 ? 'none' : '') },
+                        style: { display: (openGView.checkFlag === 1 ? 'none' : '') },
                         onclick: () => { openGView.modifyCheckFlag('prev'); }
                     }, I18n.$t('10258') /* '上一步' */),
                     m('button', {

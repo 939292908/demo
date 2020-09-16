@@ -6,37 +6,64 @@ const config = require('@/config.js');
 const VerifyView = require('@/views/components/dialogVerify/dialogVerify.view');
 const Header = require('@/views/components/indexHeader/indexHeader.view');
 const InputWithComponent = require('@/views/components/inputWithComponent/inputWithComponent.view');
+const regExp = require('@/models/validate/regExp');
 
 const modifyLPView = {
-    pwdIsDifferent: false, // 【密码不一致】提示是否显示
-    oldAndnewIsDifferent: false, // 【原密码与新密码不可相同】提示是否显示
     totalFlag: false, /* 是否通过校验 */
     showPassword1: false, /* 是否显示密码 */
     showPassword2: false, /* 是否显示密码 */
     showPassword3: false, /* 是否显示密码 */
+    tip1IsShow: false, // 原密码下方提示是否显示
+    tip2IsShow: false, // 新密码下方提示是否显示
+    tip3IsShow: false, // 确认密码下方是否显示
+    tip1: null, /* 原密码下方提示 */
+    tip2: null, /* 新密码下方提示 */
+    tip3: null, /* 确认密码下方提示 */
     oninit: () => {
         modifyLPLogic.initFn();
     },
-    /* 校验【原密码与新密码不可相同】 */
-    newPwdCheck() {
-        /* 是否为空 新旧密码是否是一致 */
-        if (!modifyLPLogic.oldLpwd || !modifyLPLogic.newLpwd || modifyLPLogic.oldLpwd === modifyLPLogic.newLpwd) {
+    oldLpwdCheck() {
+        /* 是否为空  */
+        const tip = regExp.validPassword(modifyLPLogic.oldLpwd);
+        if (tip) {
             modifyLPView.totalFlag = false;
-            modifyLPView.oldAndnewIsDifferent = true;
+            modifyLPView.tip1 = tip;
+            modifyLPView.tip1IsShow = true;
             return;
         }
-        modifyLPView.oldAndnewIsDifferent = false;
+        modifyLPView.tip1IsShow = false;
+    },
+    /* 校验【新密码与原密码不可相同】 */
+    newPwdCheck() {
+        /* 是否为空  */
+        const tip = regExp.validPassword(modifyLPLogic.newLpwd);
+        if (tip) {
+            modifyLPView.totalFlag = false;
+            modifyLPView.tip2 = tip;
+            modifyLPView.tip2IsShow = true;
+            return;
+        }
+        /* 新旧密码是否是一致 */
+        if (modifyLPLogic.oldLpwd === modifyLPLogic.newLpwd) {
+            modifyLPView.totalFlag = false;
+            modifyLPView.tip2 = '新密码与原密码不可一致';
+            modifyLPView.tip2IsShow = true;
+            return;
+        }
+        modifyLPView.tip2IsShow = false;
         modifyLPView.totalFlag = true; // 通过校验
     },
     /* 校验新与确认【密码不一致】 */
     confirmPWdCheck() {
-        /* 是否为空 新 确认密码是否输入一致 */
-        if (!modifyLPLogic.oldLpwd || !modifyLPLogic.newLpwd || modifyLPLogic.newLpwd !== modifyLPLogic.confirmLpwd) {
+        /* 是否为空 校验新与确认【密码不一致】  */
+        const tip = regExp.validTwoPassword(modifyLPLogic.newLpwd, modifyLPLogic.confirmLpwd);
+        if (tip) {
             modifyLPView.totalFlag = false;
-            modifyLPView.pwdIsDifferent = true;
+            modifyLPView.tip3 = tip;
+            modifyLPView.tip3IsShow = true;
             return;
         }
-        modifyLPView.pwdIsDifferent = false;
+        modifyLPView.tip3IsShow = false; // 隐藏提示
         modifyLPView.totalFlag = true; // 通过校验
     },
     /* 确认按钮事件 */
@@ -66,7 +93,7 @@ const modifyLPView = {
                     m('span', { class: `has-text-title my-4 ml-4 title-medium` }, I18n.$t('10275') /* '您正在绑定谷歌验证' */)
                 ])
             ]),
-            m('div', { class: `center content-width container has-bg-level-2 pt-8` }, [
+            m('div', { class: `center content-width container has-bg-level-2 pt-8 pb-8` }, [
                 m('div', { class: `center-center margin-LRauto` }, [
                     m('div', { class: `oldPwdDiv mb-5` }, [
                         m('span', { class: `body-5` }, I18n.$t('10276') /* '原密码' */),
@@ -79,13 +106,15 @@ const modifyLPView = {
                                 oninput: e => {
                                     modifyLPLogic.oldLpwd = e.target.value;
                                 },
+                                onblur: () => { modifyLPView.oldLpwdCheck(); },
                                 value: modifyLPLogic.oldLpwd
                             },
                             rightComponents: m('i.iconfont.mx-2', {
                                 onclick: () => { modifyLPView.showPassword1 = !modifyLPView.showPassword1; },
                                 class: modifyLPView.showPassword1 ? 'icon-yincang' : 'icon-zichanzhengyan'
                             })
-                        })
+                        }),
+                        m('span', { class: `has-text-tip-error`, style: { display: modifyLPView.tip1IsShow ? `` : `none` } }, modifyLPView.tip1)
                     ]),
                     m('div', { class: `newPwdDiv mb-5` }, [
                         m('span', { class: `body-5 mb-2` }, I18n.$t('10210') /* '新密码' */),
@@ -106,7 +135,7 @@ const modifyLPView = {
                                 class: modifyLPView.showPassword2 ? 'icon-yincang' : 'icon-zichanzhengyan'
                             })
                         }),
-                        m('span', { class: `has-text-tip-error`, style: { display: modifyLPView.oldAndnewIsDifferent ? `` : `none` } }, '新密码与原密码不可相同')
+                        m('span', { class: `has-text-tip-error`, style: { display: modifyLPView.tip2IsShow ? `` : `none` } }, modifyLPView.tip2)
                     ]),
                     m('div', { class: `confirmPWdDiv mb-5` }, [
                         m('span', { class: `body-5 mb-2` }, I18n.$t('10211') /* '确认密码' */),
@@ -127,7 +156,7 @@ const modifyLPView = {
                                 class: modifyLPView.showPassword3 ? 'icon-yincang' : 'icon-zichanzhengyan'
                             })
                         }),
-                        m('span', { class: `has-text-tip-error`, style: { display: modifyLPView.pwdIsDifferent ? `` : `none` } }, I18n.$t('10277') /* '密码不一致' */)
+                        m('span', { class: `has-text-tip-error`, style: { display: modifyLPView.tip3IsShow ? `` : `none` } }, modifyLPView.tip3)
                     ]),
                     m('div', { class: `btn mt-8` }, [
                         m('button', { class: `has-bg-primary cursor-pointer`, onclick: () => { modifyLPView.confirmBtn(); } }, I18n.$t('10337') /* '确定' */)
