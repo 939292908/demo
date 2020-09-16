@@ -8,7 +8,7 @@ require('./index.scss');
 
 module.exports = {
     view: function () {
-        return m('div.self-manage-safety', [
+        return m('div.self-manage-safety theme--light', [
             m(Layout,
                 {
                     nav: m(Header, {

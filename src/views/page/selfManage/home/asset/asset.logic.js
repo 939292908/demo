@@ -1,6 +1,7 @@
 const m = require('mithril');
 const wlt = require('@/models/wlt/wlt');
 const l180n = require('@/languages/I18n').default;
+const transferLogic = require('@/views/page/myAssets/transfer/transfer.logic.js'); // 划转模块逻辑
 const broadcast = require('@/broadcast/broadcast');
 
 const manageAssetData = {
@@ -36,6 +37,15 @@ const manageAssetData = {
         this.getAssetOverview();
     },
     handleClickLBItem: function (item) {
+        console.log(item, 9999);
+        if (item.action === 'transfer') {
+            const transferFrom = item.wallet;
+            transferLogic.setTransferModalOption({
+                isShow: true,
+                transferFrom
+            });
+            return false;
+        }
         if (!item.toUrl) return window.$message({ title: l180n.$t('10410') /* '提示' */, content: l180n.$t('10594') /* 功能暂未开放，敬请期待 */, type: 'primary' });
         window.router.push(item.toUrl);
     },
@@ -97,15 +107,15 @@ const manageAssetData = {
             { name: l180n.$t('10074') /* '法币账户' */, value: 0 }
         ];
         this.LBList = [
-            { label: l180n.$t('10056') /* '充币' */, toUrl: '/recharge' },
-            { label: l180n.$t('10057') /* '提币' */, toUrl: '/extractCoin' },
-            { label: l180n.$t('10058') /* '内部转账' */, toUrl: '' },
-            { label: l180n.$t('10059') /* '资金划转' */, toUrl: '' }
+            { label: l180n.$t('10056') /* '充币' */, toUrl: '/recharge', action: '' },
+            { label: l180n.$t('10057') /* '提币' */, toUrl: '/extractCoin', action: '' },
+            { label: l180n.$t('10058') /* '内部转账' */, toUrl: '', action: '' },
+            { label: l180n.$t('10059') /* '资金划转' */, toUrl: '', action: 'transfer' }
         ];
         this.legalList = [
-            { label: l180n.$t('10220') /* '买' */, toUrl: '' },
-            { label: l180n.$t('10221') /* '买' */, toUrl: '' },
-            { label: l180n.$t('10071') /* '划转' */, toUrl: '' }
+            { label: l180n.$t('10220') /* '买' */, toUrl: '', action: '', wallet: '04' },
+            { label: l180n.$t('10221') /* '买' */, toUrl: '', action: '', wallet: '04' },
+            { label: l180n.$t('10071') /* '划转' */, toUrl: '', action: 'transfer', wallet: '04' }
         ];
     },
     oninit: function () {
