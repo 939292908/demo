@@ -78,7 +78,7 @@ module.exports = {
                                 return m('button', {
                                     class: `mr-6 button button-small is-primary` + (rechargeIndex.btnCheckFlag === item ? ` has-text-white` : ` is-outlined`),
                                     key: item,
-                                    onclick: () => { rechargeIndex.changeBtnflag(item); }
+                                    onclick: () => { rechargeIndex.setTipsAndAddrAndCode(item); }
                                 }, item);
                             })
                         ])
