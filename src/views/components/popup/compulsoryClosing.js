@@ -45,6 +45,7 @@ let obj = {
         }
         this.EV_CHANGESYM_UPD_unbinder = window.gEVBUS.on(gMkt.EV_CHANGESYM_UPD,arg=> {
             that.initFuture()
+            that.initWlt()
         })
 
         //监听多元
@@ -113,7 +114,7 @@ let obj = {
         if (!isUpdate) {
             this.wlt = {}
         }
-        this.params.WltBal = this.wlt.Wdrawable
+        this.params.WltBal = Number(obj.wlt.aWdrawable).toFixed2(8)
     },
     //做多/做空判断
     setDirType:function(type){
