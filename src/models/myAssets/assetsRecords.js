@@ -396,7 +396,7 @@ module.exports = {
                     assetsRecordsType.getRecordsType5Str(item.addr, item.wType) ||
                     I18n.$t('10140')/* 其他类型 */;
                 const newLog = {
-                    coin: item.wType,
+                    coin: this.removeGIFT(item.wType),
                     aType: item.aType,
                     num: utils.totalNumSub(num || item.num, 8),
                     time: utils.time(item.timestamp),
