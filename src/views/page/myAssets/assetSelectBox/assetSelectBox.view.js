@@ -51,7 +51,7 @@ module.exports = {
                             }, [
                                 m('span.w100', {}, [AssetSelectBox.date]),
                                 m('span.icon.is-small', { 'aria-hidden': true }, [
-                                    m('i.iconfont.icon-xiala.iconfont-small')
+                                    m('i.iconfont.icon-xiala.has-text-primary')
                                 ])
                             ])
                         ]),
