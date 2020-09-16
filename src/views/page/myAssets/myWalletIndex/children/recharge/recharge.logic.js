@@ -26,6 +26,7 @@ const model = {
     flagReq: false, // 优化请求
     pageIsShow: false, // loading
     setPageData() {
+        console.log(1);
         if (JSON.stringify(wlt.wallet['03']) !== '[]') {
             if (model.flagReq) {
                 return;
@@ -50,6 +51,7 @@ const model = {
                         item.networkNum = arg.trade.networkNum; // 网络数
                         model.pageData.push(item);
                         model.setTipsAndAddrAndCode();
+                        model.pageIsShow = true;
                         m.redraw();
                     }).catch(function(err) {
                         console.log('nzm', 'GetRechargeAddr error', err);
@@ -163,7 +165,6 @@ const model = {
 
                 model.setQrCodeImg(); // 当前选中币种的二维码
                 model.setLabelTips(); // 当前选中币种的标签提示语句
-                model.pageIsShow = true;
             }
         }
     },
@@ -240,6 +241,10 @@ const model = {
             model.coinParam = currencyType;
             model.option.currentId = currencyType;
             model.setPageData();
+        }
+
+        if (JSON.stringify(this.pageData) !== '[]') {
+            model.pageIsShow = true;
         }
 
         wlt.init();
