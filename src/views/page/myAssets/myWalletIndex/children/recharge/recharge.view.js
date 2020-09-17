@@ -7,6 +7,7 @@ const Tooltip = require('@/views/components/common/Tooltip/Tooltip.view');
 const Dropdown = require('@/views/components/common/Dropdown/Dropdown.view');
 const I18n = require('@/languages/I18n').default;
 const Header = require('@/views/components/indexHeader/indexHeader.view');
+const Loading = require('@/views/components/loading/loading.view');
 
 module.exports = {
     nameTips: null, // 链名称提示
@@ -40,70 +41,78 @@ module.exports = {
             ]),
             m('div', { class: `bottom content-width mb-7 border-radius-medium` }, [
                 m('div', { class: `bottom-upper has-bg-level-2 pl-8 pt-7` }, [
-                    m('div', { class: `form-item-title` }, I18n.$t('10063') /* '币种' */),
-                    m('div', { class: `form-item-content border-radius-medium mt-2 mb-7`, style: { width: `384px` } }, [
-                        m(Dropdown, rechargeIndex.option)
+                    m('div', { class: `myLoading ${rechargeIndex.isLoadingShow ? `` : `is-hidden`}` }, [
+                        m(Loading)
                     ]),
-                    m('div', { class: `xrpLable mb-7`, style: { display: rechargeIndex.memo ? (rechargeIndex.option.currentId === 'XRP' || rechargeIndex.option.currentId === 'EOS' ? '' : 'none') : 'none' } }, [
-                        m('div', { class: `labeltip` }, [
-                            m('span', {}, I18n.$t('10098') /* '标签' */),
-                            m('div.navbar-item.cursor-pointer', { class: `` }, [
-                                m(Tooltip, {
-                                    label: m('i', { class: `iconfont icon-Tooltip` }),
-                                    content: rechargeIndex.labelTips,
-                                    position: 'bottom',
-                                    direction: 'right'
+                    m('div', { class: `` }, [
+                        m('div', { class: `form-item-title` }, I18n.$t('10063') /* '币种' */),
+                        m('div', { class: `form-item-content border-radius-medium mt-2 mb-7`, style: { width: `384px` } }, [
+                            m(Dropdown, rechargeIndex.option)
+                        ]),
+                        m('div', { class: `xrpLable mb-7`, style: { display: rechargeIndex.item.memo ? (rechargeIndex.option.currentId === 'XRP' || rechargeIndex.option.currentId === 'EOS' ? '' : 'none') : 'none' } }, [
+                            m('div', { class: `labeltip` }, [
+                                m('span', {}, I18n.$t('10098') /* '标签' */),
+                                m('div.navbar-item.cursor-pointer', { class: `` }, [
+                                    m(Tooltip, {
+                                        label: m('i', { class: `iconfont icon-Tooltip` }),
+                                        content: rechargeIndex.labelTips,
+                                        position: 'bottom',
+                                        direction: 'right'
+                                    })
+                                ])
+                            ]),
+                            m('div', { class: `mt-2 px-2 has-text-primary border-radius-small tag is-primary is-light uid` }, rechargeIndex.item.uId)
+                        ]),
+                        m('div', { class: `usdtLable mb-7`, style: { display: rechargeIndex.item.openChains ? (rechargeIndex.option.currentId === 'USDT' ? '' : 'none') : 'none' } }, [
+                            m('div', { class: `labeltip` }, [
+                                m('span', {}, I18n.$t('10100') /* '链名称' */),
+                                m('div.navbar-item.cursor-pointer', { class: `` }, [
+                                    m(Tooltip, {
+                                        label: m('i', { class: `iconfont icon-Tooltip` }),
+                                        content: this.nameTips.map(item => {
+                                            return m('span', { key: item, class: `mt-1` }, item);
+                                        }),
+                                        width: `240px`,
+                                        position: `bottom`,
+                                        direction: `right`
+                                    })
+                                ])
+                            ]),
+                            m('div', { class: `mt-2` }, [
+                                rechargeIndex.chainList.map((item) => {
+                                    return m('button', {
+                                        class: `mr-6 button button-small is-primary` + (rechargeIndex.chainSelected === item.name ? ` has-text-white` : ` is-outlined`),
+                                        key: item.name,
+                                        onclick: () => {
+                                            rechargeIndex.chainSelected = item.name;
+                                            rechargeIndex.initItem();
+                                        }
+                                    }, item.name);
                                 })
                             ])
                         ]),
-                        m('div', { class: `mt-2 px-2 has-text-primary border-radius-small tag is-primary is-light uid` }, rechargeIndex.uId)
-                    ]),
-                    m('div', { class: `usdtLable mb-7`, style: { display: rechargeIndex.openChains ? (rechargeIndex.option.currentId === 'USDT' ? '' : 'none') : 'none' } }, [
-                        m('div', { class: `labeltip` }, [
-                            m('span', {}, I18n.$t('10100') /* '链名称' */),
-                            m('div.navbar-item.cursor-pointer', { class: `` }, [
-                                m(Tooltip, {
-                                    label: m('i', { class: `iconfont icon-Tooltip` }),
-                                    content: this.nameTips.map(item => {
-                                        return m('span', { key: item, class: `mt-1` }, item);
-                                    }),
-                                    width: `240px`,
-                                    position: `bottom`,
-                                    direction: `right`
-                                })
+                        m('div', {}, [
+                            m('span', { class: `body-5` }, I18n.$t('10081') /* '充币地址' */)
+                        ]),
+                        m('div', { class: `currencyAddr border-radius-medium mt-2 mb-7` }, [
+                            m('div', { class: `currencyAddr-text ml-3 has-bg-level-3 mr-6` }, rechargeIndex.item.rechargeAddr),
+                            m('div', { class: `currencyAddr-Operation ml-3` }, [
+                                m('div', { class: `iImg mt-2` }, [
+                                    m('i', { class: `iconfont icon-copy has-text-primary cursor-pointer mr-2`, onclick: () => { rechargeIndex.copyText(); } }),
+                                    m(Tooltip, {
+                                        label: m('i', { class: `iconfont icon-QrCode has-text-primary cursor-pointer` }),
+                                        content: m('img', { class: `addressImg`, src: rechargeIndex.rechargeAddrSrc }),
+                                        position: `bottom`,
+                                        direction: `right`
+                                    })
+                                ])
                             ])
                         ]),
-                        m('div', { class: `mt-2` }, [
-                            rechargeIndex.USDTLabel.map((item) => {
-                                return m('button', {
-                                    class: `mr-6 button button-small is-primary` + (rechargeIndex.btnCheckFlag === item ? ` has-text-white` : ` is-outlined`),
-                                    key: item,
-                                    onclick: () => { rechargeIndex.setTipsAndAddrAndCode(item); }
-                                }, item);
-                            })
+                        m('div', { class: `tips pb-6` }, [
+                            m('span', { class: `body-5` }, I18n.$t('10082') /* '温馨提示' */),
+                            m('br'),
+                            rechargeIndex.tipsAry.map((item, index) => m(`span.pb-1 body-4`, { class: index === 0 ? `has-text-primary` : `has-text-level-4`, key: item }, '*' + item))
                         ])
-                    ]),
-                    m('div', {}, [
-                        m('span', { class: `body-5` }, I18n.$t('10081') /* '充币地址' */)
-                    ]),
-                    m('div', { class: `currencyAddr border-radius-medium mt-2 mb-7` }, [
-                        m('div', { class: `currencyAddr-text ml-3 has-bg-level-3 mr-6` }, rechargeIndex.rechargeAddr),
-                        m('div', { class: `currencyAddr-Operation ml-3` }, [
-                            m('div', { class: `iImg mt-2` }, [
-                                m('i', { class: `iconfont icon-copy has-text-primary cursor-pointer mr-2`, onclick: () => { rechargeIndex.copyText(); } }),
-                                m(Tooltip, {
-                                    label: m('i', { class: `iconfont icon-QrCode has-text-primary cursor-pointer` }),
-                                    content: m('img', { class: `addressImg`, src: rechargeIndex.rechargeAddrSrc }),
-                                    position: `bottom`,
-                                    direction: `right`
-                                })
-                            ])
-                        ])
-                    ]),
-                    m('div', { class: `tips pb-6` }, [
-                        m('span', { class: `body-5` }, I18n.$t('10082') /* '温馨提示' */),
-                        m('br'),
-                        rechargeIndex.tipsAry.map((item, index) => m(`span.pb-1 body-4`, { class: index === 0 ? `has-text-primary` : `has-text-level-4`, key: item }, '*' + item))
                     ])
                 ]),
                 m('div.bottom-tab.has-bg-level-2.mt-5.pt-3.border-radius-medium', {}, [
