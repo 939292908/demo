@@ -82,8 +82,8 @@ module.exports = {
                                                 'USDT ' + I18n.$t('10033')
                                             ]),
                                             m('p', { class: `body-4 has-text-level-3` }, [
-                                                // " 最高百倍杠杆，交易简单"
-                                                I18n.$t('10591')
+                                                // 最高125倍杠杆，交易简单
+                                                'USDT ' + I18n.$t('10604')
                                             ])
                                         ])
                                     ])
@@ -99,13 +99,13 @@ module.exports = {
                                     m('div', { class: `media-content` }, [
                                         m('div', { class: `content` }, [
                                             m('span', { class: `title-small` }, [
-                                                // "全币种合约"
-                                                I18n.$t('10035')
+                                                // 合约训练营
+                                                'USDT ' + I18n.$t('10605')
                                             ]),
                                             m('span', { class: `header-new-info has-bg-primary px-3 ml-2` }, ["NEW"]),
                                             m('p', { class: `body-4 has-text-level-3` }, [
-                                                // " 小币种开仓，统一价格标的"
-                                                I18n.$t('10592')
+                                                // " 模拟交易，秒变合约高手"
+                                                'USDT ' + I18n.$t('10606')
                                             ])
                                         ])
                                     ])
