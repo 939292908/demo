@@ -381,6 +381,9 @@ let spotTick = {
     },
     //计算器
     getCalculatorView:function(){
+        if (!window.gWebAPI.isLogin()) {
+            return window.gWebAPI.needLogin()
+        }
         gEVBUS.emit(gEVBUS.EV_OPENCALCULATORVIEW_UPD, { Ev: gEVBUS.EV_OPENCALCULATORVIEW_UPD})
     },
     getRightTick: function(){

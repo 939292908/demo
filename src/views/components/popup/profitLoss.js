@@ -83,6 +83,7 @@ let obj = {
             }
         }
         let calculator = new Calculator(assetD);
+        //获取风险限额
         let RS = window.gTrd.RS[Sym] || null
         if(RS){
             this.maxLever = 1/RS.BaseMIR
