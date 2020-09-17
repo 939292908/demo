@@ -77,21 +77,24 @@ const modifyFPView = {
     },
     oninit: () => {
         /* 是否显示密码初始化 start */
-        this.showPassword1 = false;
-        this.showPassword2 = false;
-        this.showPassword3 = false;
+        modifyFPView.showPassword1 = false;
+        modifyFPView.showPassword2 = false;
+        modifyFPView.showPassword3 = false;
         /* 是否显示密码初始化 end */
 
         /* 密码下方提示是否显示初始化 start */
-        this.tip1IsShow = false;
-        this.tip2IsShow = false;
-        this.tip3IsShow = false;
+        modifyFPView.tip1IsShow = false;
+        modifyFPView.tip2IsShow = false;
+        modifyFPView.tip3IsShow = false;
         /* 密码下方提示是否显示初始化 end */
+
+        modifyFPView.totalFlag = false;
 
         modifyFPLogic.initFn();
     },
     view: () => {
         return m('div', { class: `views-page-selfManage-modifyFundPassword theme--light pb-8` }, [
+            // JSON.stringify(modifyFPView.showPassword1), JSON.stringify(modifyFPView.showPassword1), JSON.stringify(modifyFPView.showPassword1),
             m(Header, {
                 highlightFlag: 1,
                 navList: [
