@@ -106,7 +106,6 @@ let symSelect = {
         this.futureSymList = futureSymList
         this.spotSymList = spotSymList
 
-
         if (window.gMkt.CtxPlaying.pageTradeStatus == 1) {
             if (futureSymList.length > 0 && !futureSymList.includes(window.gMkt.CtxPlaying.Sym)) {
                 let futureActiveSymbol = utils.getItem('futureActiveSymbol')
@@ -123,7 +122,7 @@ let symSelect = {
                 let goodsActiveSymbol = utils.getItem('goodsActiveSymbol')
                 let Sym = goodsActiveSymbol || utils.getSpotName('BTC', 'USDT', assetD)
                 if (!assetD[Sym]) {
-                    Sym = futureSymList[0]
+                    Sym = spotSymList[0]
                 }
                 this.setSym(Sym)
             }else{
