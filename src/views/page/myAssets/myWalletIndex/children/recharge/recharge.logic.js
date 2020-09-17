@@ -24,7 +24,9 @@ const model = {
     chains: null, // 链名称
     chainAry: [], // 链名称数组
     flagReq: false, // 优化请求
+    pageIsShow: false, // loading
     setPageData() {
+        console.log(1);
         if (JSON.stringify(wlt.wallet['03']) !== '[]') {
             if (model.flagReq) {
                 return;
@@ -49,6 +51,7 @@ const model = {
                         item.networkNum = arg.trade.networkNum; // 网络数
                         model.pageData.push(item);
                         model.setTipsAndAddrAndCode();
+                        model.pageIsShow = true;
                         m.redraw();
                     }).catch(function(err) {
                         console.log('nzm', 'GetRechargeAddr error', err);
@@ -232,11 +235,16 @@ const model = {
         }
     },
     initFn: function () {
+        this.pageIsShow = false;
         const currencyType = window.router.getUrlInfo().params.wType;
         if (currencyType !== undefined) {
             model.coinParam = currencyType;
             model.option.currentId = currencyType;
             model.setPageData();
+        }
+
+        if (JSON.stringify(this.pageData) !== '[]') {
+            model.pageIsShow = true;
         }
 
         wlt.init();
