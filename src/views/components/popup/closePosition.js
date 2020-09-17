@@ -83,9 +83,15 @@ let obj = {
             }
         }
         let calculator = new Calculator(assetD);
+        //获取风险限额
         let RS = window.gTrd.RS[Sym] || null
         if(RS){
             this.maxLever = 1/RS.BaseMIR
+
+            if(!window.$config.future.setMIRMy){
+                this.params.Lever = this.maxLever
+            }
+
             for(let key in this.riskParams){
             this.riskParams[key] = RS[key]
             }
@@ -106,17 +112,17 @@ let obj = {
     getLever:function(e){
         let val = e.target.value
         if(val < 0){
-            this.params.Lever = null
+            this.params.Lever = ''
         }else if(val > this.maxLever){
             this.params.Lever = this.maxLever
         }else {
             this.params.Lever = val
         }
-        if(this.params.Lever){
-            this.leverClose = true
-        }else {
-            this.leverClose = false
-        }
+        // if(this.params.Lever){
+        //     this.leverClose = true
+        // }else {
+        //     this.leverClose = false
+        // }
         this.initFuture()
     },
     //清除杠杆数据
@@ -129,7 +135,7 @@ let obj = {
     getPosSz:function(e){
         let val = e.target.value
         if(val < 0){
-            this.params.SZ = null
+            this.params.SZ = ''
         }else {
             this.params.SZ = val
         }
@@ -139,7 +145,7 @@ let obj = {
     getPrzIni:function(e){
         let val = e.target.value
         if(val < 0){
-            this.params.PrzIni = null
+            this.params.PrzIni = ''
         }else {
             this.params.PrzIni = val
         }
@@ -154,7 +160,7 @@ let obj = {
     getprofit:function(e){
         let val = e.target.value
         if(val < 0){
-            this.params.profit = null
+            this.params.profit = ''
         }else {
             this.params.profit = val
         }
@@ -209,9 +215,10 @@ export default {
                         obj.getLever(e)
                     }}),
                     m('div',{class:"input-right"},[
-                        m('i',{class:"iconfont cursor-pointer " + (obj.leverClose?" iconclose" : ""),onclick:function(){
-                            obj.closeLever()
-                        }})
+                        // m('i',{class:"iconfont cursor-pointer " + (obj.leverClose?" iconclose" : ""),onclick:function(){
+                        //     obj.closeLever()
+                        // }})
+                        "X"
                     ])
                 ]),
                 m('div',{class:"is-flex input-border-lable mb-3 px-3"},[
