@@ -122,8 +122,8 @@ const rechargeLogic = {
                 }
             }
         }
-        console.log(JSON.stringify(rechargeLogic.item), 'rechargeLogic.item', 1111111111111);
-        if (rechargeLogic.item.wType !== null) {
+        // console.log(JSON.stringify(rechargeLogic.item), 'rechargeLogic.item', 1111111111111);
+        if (rechargeLogic.item.wType === rechargeLogic.option.currentId) {
             rechargeLogic.isLoadingShow = false;
             m.redraw();
         } else {
