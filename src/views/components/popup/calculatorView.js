@@ -63,6 +63,7 @@ let obj = {
     },
     closeLeverageMode: function () {
         this.open = false
+        obj.tabsActive = 0
     },
     //切换选中
     setTabsActive: function (param) {
@@ -124,6 +125,7 @@ export default {
                     class: "modal-background",
                     onclick: () => {
                         obj.open = false
+                        obj.tabsActive = 0
                     }
                 }),
                 m("div", {
