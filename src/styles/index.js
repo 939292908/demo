@@ -1,5 +1,5 @@
 import styles from '@/styles/styles';
-import utils from "@/util/utils";
+// import utils from "@/util/utils";
 let styleStr = ':root{';
 // 设置主题颜色相关html的css变量
 for (const key in styles) {
@@ -18,10 +18,10 @@ style.type = 'text/css';
 style.innerHTML = styleStr;
 document.getElementsByTagName('head').item(0).appendChild(style);
 // 设置全局变量
-let themeDark = true;
-const _themeDark = utils.getItem('themeDark');
-if (_themeDark === true || _themeDark === false) {
-    themeDark = _themeDark;
-}
+const themeDark = true;
+// const _themeDark = utils.getItem('themeDark');
+// if (_themeDark === true || _themeDark === false) {
+//     themeDark = _themeDark;
+// }
 window.themeDark = themeDark;
 window._styles = styles;
