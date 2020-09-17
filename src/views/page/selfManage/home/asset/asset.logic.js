@@ -21,7 +21,7 @@ const manageAssetData = {
         NLToBTC: 0, // 可用保证金 BTC
         NLToCRN: 0 // 可用保证金 CRN
     },
-    isShow: utils.getItem(lockName).toString() ? utils.getItem(lockName) : true,
+    isShow: utils.getItem(lockName)?.toString() ? utils.getItem(lockName) : true,
     handleEditShow: function (judge) { // judge 是否是 页面切换
         if (judge) { utils.setItem(lockName, !this.isShow); this.isShow = !this.isShow; }
         if (this.isShow) return this.getAssetOverview();
@@ -33,6 +33,7 @@ const manageAssetData = {
             NLToBTC: '******',
             NLToCRN: '******'
         };
+        m.redraw();
     },
     handleChangeWallet: function (item) {
         this.walletAcId = item ? item.activeId : 'all';
@@ -86,6 +87,8 @@ const manageAssetData = {
         return { UPNLToBTC, UPNLToCRN, NLToBTC, NLToCRN };
     },
     getWltData: function () {
+        /* eslint-disable */
+        // debugger
         this.pirData = [
             { name: l180n.$t('10055') /* '我的钱包' */, value: Number(wlt.walletTotalValueForBTC) },
             { name: l180n.$t('10072') /* '合约账户' */, value: Number(wlt.contractTotalValueForBTC) },

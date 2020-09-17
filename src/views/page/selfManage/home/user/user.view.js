@@ -1,5 +1,4 @@
 const m = require('mithril');
-// const img = require('./Image.png').default;
 const UserInfo = require('./user.logic');
 const utils = require('@/util/utils').default;
 const l180n = require('@/languages/I18n').default;
@@ -23,7 +22,7 @@ module.exports = {
     view: function () {
         return m('div.self-manage-user dis-flex justify-between align-center', [
             m('div.userInfo dis-flex align-center', [
-                m('.headPortrait', m('.imgBox.title-large has-text-white', m('div', UserInfo.info?.accountName?.split('')[0]))),
+                m('.headPortrait', { style: `background: url("${require('./Vector.png').default}") no-repeat center center` }, m('.imgBox.title-large has-text-white', m('div', UserInfo.info?.accountName?.split('')[0]))),
                 m('.userMessage', [
                     m('.name title-large has-text-white', [
                         m('span', `${utils.hideAccountNameInfo(UserInfo.info.accountName)}`)
