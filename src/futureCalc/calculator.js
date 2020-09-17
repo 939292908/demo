@@ -207,7 +207,12 @@ let formateLen = (data,len) => {
         } else if (key == "ProfitLossPer") {
             data[key] = Number(data[key].toString().split('%')[0]).toFixed2(2) + '%' //盈亏%保留两位小数
         }else {
-            data[key] = data[key].toFixed2(4) //仓位价值 、基础保证金、盈亏 四位小数
+            if(params.type == 1){
+                data[key] = data[key].toFixed2(4) //仓位价值 、基础保证金、盈亏 四位小数
+            }else {
+                data[key] = data[key].toFixed2(6) //仓位价值 、基础保证金、盈亏 六位小数
+            }
+            
         }
     }
     return data
