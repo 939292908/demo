@@ -380,6 +380,19 @@ let spotTick = {
         ])
     },
     //计算器
+    getCalculator:function(){
+        let pageTradeStatus = window.gMkt.CtxPlaying.pageTradeStatus
+        if(pageTradeStatus == 1){
+            return m('button', {class: "button is-rounded pub-header-tick-right-setting px-3",onclick:function(e){
+                spotTick.getCalculatorView()
+                window.stopBubble(e)
+            }}, [
+                m('span', {class: "icon is-medium"},[
+                    m('i', {class: "iconfont iconCalculator fas fa-2x has-text-1 icon-fixed", "aria-hidden": true })
+                ]),
+            ])
+        }
+    },
     getCalculatorView:function(){
         if (!window.gWebAPI.isLogin()) {
             return window.gWebAPI.needLogin()
@@ -400,14 +413,7 @@ let spotTick = {
                         ]),
                         spotTick.getSettingView()
                     ]),
-                    m('button', {class: "button is-rounded pub-header-tick-right-setting px-3",onclick:function(e){
-                        spotTick.getCalculatorView()
-                        window.stopBubble(e)
-                    }}, [
-                        m('span', {class: "icon is-medium"},[
-                            m('i', {class: "iconfont iconCalculator fas fa-2x has-text-1 icon-fixed", "aria-hidden": true })
-                        ]),
-                    ]),
+                    spotTick.getCalculator()
                 ])
             case 1:
                 return this.customRightTick()
