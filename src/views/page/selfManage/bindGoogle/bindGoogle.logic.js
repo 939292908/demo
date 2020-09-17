@@ -231,7 +231,7 @@ module.exports = {
             console.log('nzm', 'bindGoogleAuth success', arg);
             if (arg.result.code === 0) {
                 console.log('bindGoogle success');
-                window.$message({ content: '谷歌绑定成功', type: 'success' });
+                window.$message({ content: I18n.$t('10600') /* '谷歌绑定成功' */, type: 'success' });
                 window.router.push({ path: '/securityManage' });
             } else {
                 window.$message({ content: errCode.getWebApiErrorCode(arg.result.code), type: 'danger' });
@@ -257,7 +257,7 @@ module.exports = {
             console.log('nzm', 'relieveGoogleAuth success', arg);
             if (arg.result.code === 0) {
                 console.log('unbindGoogle success');
-                window.$message({ content: '谷歌解绑成功', type: 'success' });
+                window.$message({ content: I18n.$t('10599') /* '谷歌解绑成功' */, type: 'success' });
                 window.router.push({ path: '/securityManage' });
             } else {
                 window.$message({ content: errCode.getWebApiErrorCode(arg.result.code), type: 'danger' });
