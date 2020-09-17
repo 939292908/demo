@@ -46,7 +46,7 @@ const modifyLPView = {
         /* 新旧密码是否是一致 */
         if (modifyLPLogic.oldLpwd === modifyLPLogic.newLpwd) {
             modifyLPView.totalFlag = false;
-            modifyLPView.tip2 = '新密码与原密码不可一致';
+            modifyLPView.tip2 = I18n.$t('10596'); /* '新密码与原密码不可一致' */
             modifyLPView.tip2IsShow = true;
             return;
         }
