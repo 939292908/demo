@@ -1,0 +1,110 @@
+.components-dialog-verify {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, .8);
+  z-index: 99;
+
+  .dialog-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    box-sizing: border-box;
+    transform: translate(-50%, -50%);
+    border-radius: 4px;
+    background-color: #fff;
+
+    .dis-flex {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .headerPrompt { // 头部
+      padding: 32px;
+
+      .logotext, .promptTitle {
+        color: #1E2846;
+      }
+      .logotext {
+        opacity: 0.12;
+      }
+      .icomBox {
+        width: 24px;
+        height: 24px;
+        cursor: pointer;
+        position: relative;
+        border-radius: 50%;
+        background-color: #F7F7F8;
+        i.iconfont {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+        }
+      }
+    }
+
+    .mainPrompt { // 具体内容
+      width: 100%;
+      padding: 0px 32px;
+      border-top: 1px solid rgba(10, 13, 22, 0.04);
+
+      .promptText  { // 温馨提示 具体内容文字
+        font-weight: normal;
+        font-size: 16px;
+        line-height: 24px;
+        color: #585E71;
+        padding-bottom: 32px;
+      }
+
+      .verifyContentTitle { // 安全验证 内容名子
+        padding: 32px 0px 8px;
+      }
+
+      .control { // 重写输入框样式
+
+        .right-click-but {
+          position: absolute;
+          top: 50%;
+          right: 10px;
+          transform: translateY(-50%);
+
+          div {
+            //color: #FF8B00;
+            padding: 0px 12px;
+            cursor: pointer;
+            border-left: 1px solid rgba(30, 40, 70, 0.12);;
+          }
+        }
+
+      }
+
+
+      .butBox { // 按钮
+        width: 100%;
+        padding: 32px 0px;
+
+        .itemBut {
+          width: 47%;
+          color: #FF8B00;
+          cursor: pointer;
+          border: 1px solid #FF8B00;
+          text-align: center;
+          padding: 12px;
+          border-radius: 2px;
+        }
+        .bgBut {
+          color: #FFFFFF;
+          background-color: #FF8B00;
+        }
+      }
+    }
+  }
+
+  .warmPrompt {
+    width: 448px;
+  }
+}
