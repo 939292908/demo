@@ -1,6 +1,6 @@
 // https://mithril.js.org/simple-application.html
 require('./styles/mystyles.scss');
-
+import "core-js";
 import m from "mithril";
 
 //////////////////////////////////////////////////////////////////////

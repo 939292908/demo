@@ -1,10 +1,57 @@
 // import {dispose, init} from 'klinecharts'
-var m = require("mithril")
 
+
+// import candleStickDownStroke from '../../../../tplibs/svg/candle-stick-down-stroke.svg'
+// import candleStickOhlc from '../../../../tplibs/svg/candle-stick-ohlc.svg'
+// import candleStickSolid from '../../../../tplibs/svg/candle-stick-solid.svg'
+// import candleStickStroke from '../../../../tplibs/svg/candle-stick-stroke.svg'
+// import candleStickUpStroke from '../../../../tplibs/svg/candle-stick-up-stroke.svg'
+import deleteLine from '../../../../tplibs/svg/delete.svg'
+import fibonacciLine from '../../../../tplibs/svg/fibonacci-line.svg'
+import horizontalRayLine from '../../../../tplibs/svg/horizontal-ray-line.svg'
+import horizontalSegmentLine from '../../../../tplibs/svg/horizontal-segment-line.svg'
+import horizontalStraightLine from '../../../../tplibs/svg/horizontal-straight-line.svg'
+import parallelStraightLine from '../../../../tplibs/svg/parallel-straight-line.svg'
+import priceChannelLine from '../../../../tplibs/svg/price-channel-line.svg'
+import priceLine from '../../../../tplibs/svg/price-line.svg'
+import rayLine from '../../../../tplibs/svg/ray-line.svg'
+// import screenShot from '../../../../tplibs/svg/screen-shot.svg'
+import segmentLine from '../../../../tplibs/svg/segment-line.svg'
+import straightLine from '../../../../tplibs/svg/straight-line.svg'
+// import technicalLndicator from '../../../../tplibs/svg/technical-indicator.svg'
+import verticalRayLine from '../../../../tplibs/svg/vertical-ray-line.svg'
+import verticalSegmentLine from '../../../../tplibs/svg/vertical-segment-line.svg'
+import verticalStraightLine from '../../../../tplibs/svg/vertical-straight-line.svg'
+import headerLogo from '../../../../tplibs/img/header-logo.png'
+
+var m = require("mithril")
 
 let obj = {
     Sym: '',
     Typ: '',
+    lineData:[  //添加线条数据
+        // {site:candleStickDownStroke,name:'candleStickDownStroke'},
+        // {site:candleStickOhlc,name:'candleStickOhlc'},
+        // {site:candleStickSolid,name:'candleStickSolid'},
+        // {site:candleStickStroke,name:'candleStickStroke'},
+        // {site:candleStickUpStroke,name:'candleStickUpStroke'},
+        {site:fibonacciLine,name:'fibonacciLine'},
+        {site:horizontalRayLine,name:'horizontalRayLine'},
+        {site:horizontalSegmentLine,name:'horizontalSegmentLine'},
+        {site:horizontalStraightLine,name:'horizontalStraightLine'},
+        {site:parallelStraightLine,name:'parallelStraightLine'},
+        {site:priceChannelLine,name:'priceChannelLine'},
+        {site:priceLine,name:'priceLine'},
+        {site:rayLine,name:'rayLine'},
+        // {site:screenShot,name:'screenShot'},
+        {site:segmentLine,name:'segmentLine'},
+        {site:straightLine,name:'straightLine'},
+        // {site:technicalLndicator,name:'technicalLndicator'},
+        {site:verticalRayLine,name:'verticalRayLine'},
+        {site:verticalSegmentLine,name:'verticalSegmentLine'},
+        {site:verticalStraightLine,name:'verticalStraightLine'},
+        {site:deleteLine,name:'deleteLine'}
+    ],
     targetList_main: [ //指标
         // {title:'VOL',name:"Volume"},
         {
@@ -427,6 +474,37 @@ let obj = {
         console.log(obj.timeList[obj.Typ], this.Typ ,obj.timeList)
         this.setKlineData()
     },
+    // 点击添加线条 或 删除线条
+    addLine: function (data) {
+        console.log(data);
+        if(data=='deleteLine'){
+            window._chart.removeAllGraphicMark();
+        }else{
+            window._chart.addGraphicMark(data);
+        }
+    },
+    // 添加设置logo
+    addSettingLogo: function(){
+        let logoData={
+            width:'176',
+            height: '50',
+            x:'0',
+            y:'50',
+            imgUrl: headerLogo
+        }
+        window._chart.setLogoData(logoData);
+    },
+    // 截图
+    getScreenshots: function(){
+        var img = document.getElementById('testImg'); // 获取要下载的图片
+        // 参数有 1，是否需要包含浮层   2，是否需要图形标志  3，类型是'png'、'jpeg'、'bmp'   4，图表背景颜色
+        var url = window._chart.getConvertPictureUrl(true, true, 'png', '#171A21');// 获取图片地址
+        var a = document.createElement('a');          // 创建一个a节点插入的document
+        var event = new MouseEvent('click')           // 模拟鼠标click点击事件
+        a.download = '图表截图'                  // 设置a节点的download属性值
+        a.href = url;                                 // 将图片的src赋值给a节点的href
+        a.dispatchEvent(event)
+    },
     getTimeList: function(type){
         let that = this
         let timeList = Object.keys(this.timeList)
@@ -610,7 +688,6 @@ let obj = {
         window._chart.Sym = ''
         window._chart.Typ = ''
         this.setKlineData()
-
     },
     setKlineOptions: function(){
         let $color = window.themeColors
@@ -1174,6 +1251,7 @@ let obj = {
             window._chart.setOffsetRightSpace(50)
         }
         this.klineShow = false
+        obj.addSettingLogo();
     },
     updateKlineForTrade: function(param){
         if(!window._chart) return
@@ -1336,6 +1414,17 @@ export default {
     view: function (vnode) {
 
         return m("div", { class: "pub-kline"+(window.isMobile?'':' box') }, [
+
+            m('div.pub-kline-linellae', obj.lineData.map((data)=>{
+                    return m('div',[
+                        m('span'),
+                        m('img.svgImg',{src:data.site,onclick:function(){
+                            obj.addLine(data.name);
+                        }})
+                    ])
+                })
+            ),
+
             m('div', {class:"pub-kline-btns buttons has-addons is-hidden-desktop"}, [
                 m('div', {class:"dropdown is-hidden-desktop"+(obj.klineTimeListOpen?' is-active':'')}, [
                     m('div', {class:"dropdown-trigger", onclick: function(e){
@@ -1438,6 +1527,10 @@ export default {
                         ]),
                     ]),
                 ]),
+                m('span',{class:"has-text-2"}, ['|']),
+                m('button', {class:"button is-background-2 has-text-2", onclick: function(){
+                    obj.getScreenshots();
+                }}, '截屏'),
                 m('span',{class:"has-text-2"}, ['|']),
                 m('button', {class:"button is-background-2 has-text-2", onclick: function(){
                     obj.setFullscreen();

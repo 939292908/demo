@@ -398,6 +398,35 @@ hr {
     @extend %side-pa;
     height: 100%;
     width: 100%;
+    position: relative;
+    padding-left: 61px;
+    .pub-kline-linellae{
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100%;
+        overflow: auto;
+        padding: 10px 8px;
+        div{
+            margin: 0 auto;
+            width: 39px;
+            height: 39px;
+            border-radius: 4px;
+            display: flex;
+            display: -webkit-flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 8px;
+            cursor: pointer;
+            img{
+                width: 26px;
+                height: 26px;
+            }
+            &:hover{
+                background: #25272F;
+            }
+        }
+    }
     hr {
         @extend %ma-0;
         height: 1px;
