@@ -25,6 +25,7 @@ const antiFCView = {
         }
         /* 请输入4-20位字母或数字 */
         if (!reg.test(value)) {
+            antiFCView.totalFlag = false;
             antiFCView[type] = I18n.$t('10607'); /* '请输入4-20位字母或数字' */
             return;
         }
