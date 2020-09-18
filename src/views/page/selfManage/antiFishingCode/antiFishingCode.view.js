@@ -6,6 +6,7 @@ const Header = require('@/views/components/indexHeader/indexHeader.view');
 const InputWithComponent = require('@/views/components/inputWithComponent/inputWithComponent.view');
 const VerifyView = require('@/views/components/dialogVerify/dialogVerify.view');
 const config = require('@/config.js');
+const theBindingOrNot = require('@/views/components/theBindingOrNot/theBindingOrNot.view');
 
 const antiFCView = {
     totalFlag: false, /* 是否通过验证 */
@@ -119,9 +120,10 @@ const antiFCView = {
                         m('span', { class: `body-5 weightSix mb-2` }, I18n.$t('10282') /* '防钓鱼码在哪显示？' */),
                         m('span', { class: `body-4` }, I18n.$t('10283') /* '设置好后，每一封本平台发给用户的邮件都会带此串字符。' */)
                     ]),
-                    m('div', { class: `` }, [])
+                    m('img', { class: `mt-7`, src: require(`@/assets/img/selfManage/antiFishCode.svg`).default })
                 ])
             ]),
+            m(theBindingOrNot),
             antiFCLogic.isShowVerifyView ? m(VerifyView, {
                 close: () => antiFCLogic.switchSafetyVerifyModal(false),
                 isHandleVerify: true,
