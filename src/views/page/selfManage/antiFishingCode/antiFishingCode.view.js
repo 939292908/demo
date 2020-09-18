@@ -13,6 +13,7 @@ const antiFCView = {
     tip1: null, /* 新钓鱼码提示内容 */
     tip2IsShow: false, /* 新钓鱼码提示是否显示 */
     tip2: null, /* 新钓鱼码提示内容 */
+    reg: /[a-z0-9A-Z]{4,20}/, /* 请输入4-20位字母或数字 */
     oninit: () => {
         antiFCLogic.initFn();
     },
@@ -22,6 +23,12 @@ const antiFCView = {
         if (!antiFCLogic.newAntiFishingCodeValue) {
             antiFCView.totalFlag = false;
             antiFCView.tip1 = I18n.$t('10416'); /* '该字段不能为空' */
+            return;
+        }
+        /* 请输入4-20位字母或数字 */
+
+        if (!antiFCView.reg.test(antiFCLogic.newAntiFishingCodeValue)) {
+            antiFCView.tip1 = '请输入4-20位非特殊字符';
             return;
         }
         antiFCView.tip1 = '';
@@ -35,22 +42,22 @@ const antiFCView = {
             antiFCView.tip2 = I18n.$t('10416'); /* '该字段不能为空' */
             return;
         }
-        /* 请输入4-20位非特殊字符 */
+        /* 请输入4-20位字母或数字 */
 
-        // const reg = /[a-z0-9A-Z]{4,20}/;
-        // console.log(1, typeof antiFCLogic.antiFishingCodeValue, antiFCLogic.antiFishingCodeValue.tostring.test(reg));
-        // if (!antiFCLogic.antiFishingCodeValue.tostring.test(reg)) {
-        //     antiFCView.tip2 = '请输入4-20位非特殊字符';
-        //     return;
-        // }
+        if (!antiFCView.reg.test(antiFCLogic.antiFishingCodeValue)) {
+            antiFCView.tip2 = '请输入4-20位非特殊字符';
+            return;
+        }
         antiFCView.tip2 = '';
         antiFCView.totalFlag = true;
     },
     // 确认按钮事件
     confirmBtn: function() {
-        if (antiFCView.totalFlag) {
-            antiFCLogic.confirmBtn();
+        if (!antiFCView.totalFlag) {
+            // alert("不满足要求");
+            return;
         }
+        antiFCLogic.confirmBtn();
     },
     view: () => {
         return m('div', { class: `views-page-selfManage-antiFishingCode theme--light pb-7` }, [
