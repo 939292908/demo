@@ -107,21 +107,32 @@ module.exports = {
                     m('div.content-width.has-bg-level-2.border-radius-medium.content-center.mt-5', {}, [
                         m('div.mx-5.py-3.title-small', {}, [I18n.$t('10325')/* 我的APIKEY */]),
                         m('hr.ma-0'),
-                        m('div.mx-5.my-3', {}, [
-                            m('table.w100', {}, [
-                                m('thead', {}, [
-                                    m('tr', {}, [
-                                        m('th.body-4.has-text-level-4.font-weight-medium.tips-line-height', {}, [I18n.$t('10092')/* '备注' */]),
-                                        m('th.body-4.has-text-level-4.font-weight-medium.tips-line-height', {}, [I18n.$t('10326')/* '权限' */]),
-                                        m('th.body-4.has-text-level-4.font-weight-medium.tips-line-height', {}, [I18n.$t('10327')/* '访问密钥' */]),
-                                        m('th.body-4.has-text-level-4.font-weight-medium.tips-line-height', {}, [I18n.$t('10328')/* '绑定IP地址' */]),
-                                        m('th.body-4.has-text-level-4.font-weight-medium.tips-line-height', {}, [I18n.$t('10091')/* '时间' */]),
-                                        m('th.body-4.has-text-level-4.font-weight-medium.tips-line-height.has-text-right', {}, [I18n.$t('10068')/* '操作' */])
+                        tableBody.length
+                            ? m('div.mx-5.my-3', {}, [
+                                m('table.w100', {}, [
+                                    m('thead', {}, [
+                                        m('tr', {}, [
+                                            m('th.body-4.has-text-level-4.font-weight-medium.tips-line-height', {}, [I18n.$t('10092')/* '备注' */]),
+                                            m('th.body-4.has-text-level-4.font-weight-medium.tips-line-height', {}, [I18n.$t('10326')/* '权限' */]),
+                                            m('th.body-4.has-text-level-4.font-weight-medium.tips-line-height', {}, [I18n.$t('10327')/* '访问密钥' */]),
+                                            m('th.body-4.has-text-level-4.font-weight-medium.tips-line-height', {}, [I18n.$t('10328')/* '绑定IP地址' */]),
+                                            m('th.body-4.has-text-level-4.font-weight-medium.tips-line-height', {}, [I18n.$t('10091')/* '时间' */]),
+                                            m('th.body-4.has-text-level-4.font-weight-medium.tips-line-height.has-text-right', {}, [I18n.$t('10068')/* '操作' */])
+                                        ])
+                                    ]),
+                                    m('tbody', {}, tableBody)
+                                ])
+                            ])
+                            : m('div', {}, [
+                                m('div.is-align-items-center.mt-8.nodata-icon', {}, [
+                                    m('div.has-bg-level-1.mb-3.is-align-items-center', {}, [
+                                        m('img', { src: require(`@/assets/img/myAssets/noneData.svg`).default })
                                     ])
                                 ]),
-                                m('tbody', {}, tableBody)
-                            ])
-                        ])
+                                m('div.is-align-items-center.pb-8', {}, [
+                                    m('div.has-text-level-4', {}, I18n.$t('10515')/* '暂无数据' */)
+                                ])]
+                            )
                     ])
                 ])
             ]),
