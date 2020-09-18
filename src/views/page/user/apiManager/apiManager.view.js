@@ -5,6 +5,7 @@ const APIManager = require('./apiManager.model');
 const config = require('@/config.js');
 const VerifyView = require('@/views/components/dialogVerify/dialogVerify.view');
 const Modal = require('@/views/components/common/Modal');
+const regExp = require('@/models/validate/regExp');
 require('./apiManager.scss');
 module.exports = {
     oninit() { APIManager.oninit(); },
@@ -69,14 +70,16 @@ module.exports = {
                                 m('span.ml-1.body-4.checkbox-text', {}, [I18n.$t('10320')/* 交易 */])
                             ]),
                             m('div.mb-2.mt-5', {}, [I18n.$t('10321')/* '绑定的IP地址/IP段（选填）' */]),
-                            m('div.control.mb-7', {}, [
+                            m('div.control', {}, [
                                 m('textarea.textarea.has-fixed-size', {
                                     oninput(e) { APIManager.ip = e.target.value; },
                                     value: APIManager.ip
                                 }, [])
                             ]),
-                            m("button.button.has-bg-primary.button-large.is-fullwidth.has-text-white", {
-                                onclick() { APIManager.submit(); }
+                            m('div.body-3.has-text-tip-error', {}, [regExp.validAPIIP(APIManager.ip)]),
+                            m("button.button.has-bg-primary.button-large.is-fullwidth.has-text-white.mt-7", {
+                                onclick() { APIManager.submit(); },
+                                disabled: regExp.validAPIIP(APIManager.ip)
                             }, [I18n.$t('10337')/* '确定' */])
                         ]),
                         m('div.column.is-2', {}, []),
