@@ -17,9 +17,6 @@ const modifyFPView = {
     showPassword1: false, /* 是否显示密码 */
     showPassword2: false, /* 是否显示密码 */
     showPassword3: false, /* 是否显示密码 */
-    tip1IsShow: false, // 原密码下方提示是否显示
-    tip2IsShow: false, // 新密码下方提示是否显示
-    tip3IsShow: false, // 确认密码下方是否显示
     tip1: null, /* 原密码下方提示 */
     tip2: null, /* 新密码/资金密码下方提示 */
     tip3: null, /* 确认密码下方提示 */
@@ -29,10 +26,9 @@ const modifyFPView = {
         if (tip) {
             modifyFPView.totalFlag = false;
             modifyFPView.tip1 = tip;
-            modifyFPView.tip1IsShow = true;
             return;
         }
-        modifyFPView.tip1IsShow = false;
+        modifyFPView.tip1 = '';
         modifyFPView.totalFlag = true;
     },
     newFunPwdCheck() {
@@ -41,17 +37,15 @@ const modifyFPView = {
         if (tip) {
             modifyFPView.totalFlag = false;
             modifyFPView.tip2 = tip;
-            modifyFPView.tip2IsShow = true;
             return;
         }
         /* 新旧密码是否是一致 */
         if (modifyFPLogic.oldFundPwd === modifyFPLogic.newFunPwd) {
             modifyFPView.totalFlag = false;
             modifyFPView.tip2 = I18n.$t('10596'); /* '新密码与原密码不可一致' */
-            modifyFPView.tip2IsShow = true;
             return;
         }
-        modifyFPView.tip2IsShow = false;
+        modifyFPView.tip2 = '';
         modifyFPView.totalFlag = true;
     },
     confirmFunPwdCheck() {
@@ -60,10 +54,9 @@ const modifyFPView = {
         if (tip) {
             modifyFPView.totalFlag = false;
             modifyFPView.tip3 = tip;
-            modifyFPView.tip3IsShow = true;
             return;
         }
-        modifyFPView.tip3IsShow = false; // 隐藏提示
+        modifyFPView.tip3 = '';
         modifyFPView.totalFlag = true; // 通过校验
     },
     /* 确认按钮事件 */
@@ -81,12 +74,6 @@ const modifyFPView = {
         modifyFPView.showPassword2 = false;
         modifyFPView.showPassword3 = false;
         /* 是否显示密码初始化 end */
-
-        /* 密码下方提示是否显示初始化 start */
-        modifyFPView.tip1IsShow = false;
-        modifyFPView.tip2IsShow = false;
-        modifyFPView.tip3IsShow = false;
-        /* 密码下方提示是否显示初始化 end */
 
         modifyFPView.totalFlag = false;
 
@@ -140,7 +127,7 @@ const modifyFPView = {
                                 class: modifyFPView.showPassword1 ? 'icon-yincang' : 'icon-zichanzhengyan'
                             })
                         }),
-                        m('span', { class: `has-text-tip-error`, style: { display: modifyFPView.tip1IsShow ? `` : `none` } }, modifyFPView.tip1)
+                        m('span', { class: `has-text-tip-error`, style: { display: modifyFPView.tip1 ? `` : `none` } }, modifyFPView.tip1)
                     ]),
                     m('div', { class: `newPwdDiv mb-5` }, [
                         m('span', { class: `body-5 mb-2` }, modifyFPLogic.modifyFlag === 0 ? I18n.$t('10128') /* '资金密码' */ : I18n.$t('10210') /* '新密码' */),
@@ -161,7 +148,7 @@ const modifyFPView = {
                                 class: modifyFPView.showPassword2 ? 'icon-yincang' : 'icon-zichanzhengyan'
                             })
                         }),
-                        m('span', { class: `has-text-tip-error`, style: { display: modifyFPView.tip2IsShow ? `` : `none` } }, modifyFPView.tip2)
+                        m('span', { class: `has-text-tip-error`, style: { display: modifyFPView.tip2 ? `` : `none` } }, modifyFPView.tip2)
                     ]),
                     m('div', { class: `confirmPWdDiv mb-5` }, [
                         m('span', { class: `body-5 mb-2` }, I18n.$t('10211') /* '确认密码' */),
@@ -182,7 +169,7 @@ const modifyFPView = {
                                 class: modifyFPView.showPassword3 ? 'icon-yincang' : 'icon-zichanzhengyan'
                             })
                         }),
-                        m('span', { class: `has-text-tip-error`, style: { display: modifyFPView.tip3IsShow ? `` : `none` } }, modifyFPView.tip3)
+                        m('span', { class: `has-text-tip-error`, style: { display: modifyFPView.tip3s ? `` : `none` } }, modifyFPView.tip3)
                     ]),
                     m('div', { class: `btn mt-7` }, [
                         m('button', { class: `has-bg-primary cursor-pointer`, onclick: () => { modifyFPView.confirmBtn(); } }, I18n.$t('10337') /* '确定' */)
