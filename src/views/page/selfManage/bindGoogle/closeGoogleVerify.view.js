@@ -55,7 +55,7 @@ const closeGView = {
                                 class: closeGLogic.showPassword ? 'icon-yincang' : 'icon-zichanzhengyan'
                             })
                         }),
-                        m('span', { class: `has-text-tip-error`, style: { display: closeGLogic.tip1IsShow ? `` : `none` } }, closeGLogic.tip1)
+                        m('span', { class: `has-text-tip-error`, style: { display: closeGLogic.tip1 ? `` : `none` } }, closeGLogic.tip1)
                     ]),
                     m('div', { class: `codeDiv margin-LRauto` }, [
                         m('span', { class: `body-5 mb-2` }, I18n.$t('10264') /* '原谷歌验证码' */),
@@ -71,7 +71,7 @@ const closeGView = {
                                 value: closeGLogic.LcCode
                             }
                         }),
-                        m('span', { class: `has-text-tip-error`, style: { display: closeGLogic.tip2IsShow ? `` : `none` } }, closeGLogic.tip2)
+                        m('span', { class: `has-text-tip-error`, style: { display: closeGLogic.tip2 ? `` : `none` } }, closeGLogic.tip2)
                     ]),
                     m('div', { class: `btn mt-8 margin-LRauto` }, [
                         m('button', { class: `has-bg-primary cursor-pointer`, onclick: () => { closeGLogic.confirmBtn(); } }, I18n.$t('10337') /* '确定' */)
