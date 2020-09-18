@@ -33,14 +33,6 @@ const antiFCView = {
         antiFCView[type] = '';
         antiFCView.totalFlag = true;
     },
-    /* 新钓鱼码校验是否符合规则 */
-    newAntiFishingCodeValueCheck() {
-        antiFCView.check(antiFCLogic.newAntiFishingCodeValue, 'tip1');
-    },
-    /* 钓鱼码校验是否符合规则 */
-    antiFishingCodeValueCheck() {
-        antiFCView.check(antiFCLogic.antiFishingCodeValue, 'tip2');
-    },
     // 确认按钮事件
     confirmBtn: function() {
         if (!antiFCView.totalFlag) {
@@ -83,7 +75,9 @@ const antiFCView = {
                                 oninput: e => {
                                     antiFCLogic.newAntiFishingCodeValue = e.target.value;
                                 },
-                                onblur: antiFCView.newAntiFishingCodeValueCheck,
+                                onblur: () => {
+                                    antiFCView.check(antiFCLogic.antiFishingCodeValue, 'tip1');
+                                },
                                 value: antiFCLogic.newAntiFishingCodeValue
                             }
                         }),
@@ -102,7 +96,9 @@ const antiFCView = {
                                 oninput: e => {
                                     antiFCLogic.antiFishingCodeValue = e.target.value;
                                 },
-                                onblur: antiFCView.antiFishingCodeValueCheck,
+                                onblur: () => {
+                                    antiFCView.check(antiFCLogic.antiFishingCodeValue, 'tip2');
+                                },
                                 value: antiFCLogic.antiFishingCodeValue
                             }
                         }),
