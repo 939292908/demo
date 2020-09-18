@@ -168,7 +168,7 @@ module.exports = {
     },
     oninit() {},
     onremove() {
-        this.onlyRead = false;
+        // this.onlyRead = false;
         this.canTrade = false;
         this.showValid = false;
         this.showAPIKey = false;
