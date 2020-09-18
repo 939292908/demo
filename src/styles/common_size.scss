@@ -5,7 +5,9 @@
 
 html,
 body,
-.section {
+#app,
+.section,
+.route-box {
     padding: 0;
     height: 100%;
     overflow: auto;
@@ -14,11 +16,25 @@ body,
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     -webkit-tap-highlight-color: rgba(0,0,0,0);
+    
+    .pub-view {
+        height: 100%;
+        
+        .pub-header {
+            height: 48px;
+        }
+    
+        .pub-layout {
+            height: calc(100% - 48px);
+    
+        }
+    }
 }
 
+
 /* 内容宽度 */
-.content-width {
-    width: 1204px;
+.container {
+    max-width: 640px;
 }
 
 .w100 {
@@ -476,18 +492,6 @@ body,
 }
 
 /* 公共样式 end */
-
-@media screen and (min-width: 720px) {
-    .container {
-        max-width: 1204px;
-    }
-}
-
-@media screen and (max-width: 1024px) {
-    .container {
-        min-width: 300px;
-    }
-}
 
 .min-width-50 {
     min-width: 50px;

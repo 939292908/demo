@@ -20,13 +20,14 @@
 
 body,
 #app {
-    background-color: var(--c-background-darken);
-    color: var(--c-font-darken);
+    background-color: var(--c-background-lighten);
+    color: var(--c-font-lighten);
 }
+
 
 /* 黑夜 */
 .theme--dark {
-    background-color: var(--c-background-darken);
+    background-color: var(--c-background-darken1);
     color: var(--c-font-darken);
 }
 
@@ -370,7 +371,7 @@ body,
 /* dark UI库样式覆盖 end */
 /* 白天 */
 .theme--light {
-    background-color: var(--c-background-lighten);
+    background-color: var(--c-background-lighten1);
     color: var(--c-font-lighten);
 }
 

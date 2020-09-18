@@ -16,9 +16,8 @@
     // align-items: center;
 }
 
-.is-align-items-center {
+.is-align-center {
     display: flex;
-    justify-content: center;
     align-items: center;
 }
 
@@ -30,72 +29,6 @@
 
 .column {
     padding: 0;
-}
-
-// 左 斜切
-.skew-left {
-    position: relative;
-    border: none;
-
-    &::before {
-        display: block;
-        content: "";
-        width: 10px;
-        height: 100%;
-        position: absolute;
-        left: -4px;
-        background-color: inherit;
-        transform: skewX(-8deg);
-    }
-}
-
-// 右 斜切
-.skew-right {
-    position: relative;
-    border: none;
-
-    &::after {
-        display: block;
-        content: "";
-        width: 10px;
-        height: 100%;
-        position: absolute;
-        right: -4px;
-        background-color: inherit;
-        transform: skewX(-8deg);
-    }
-}
-
-// modal弹框 组件
-.my-modal {
-    &.theme--light {
-        background-color: initial;
-    }
-
-    .modal-card {
-        width: 448px;
-    }
-
-    .modal-card-head {
-        .modal-card-title {
-            .modal-card-title-log {
-                opacity: .12;
-            }
-        }
-
-        .icomBox {
-            width: var(--c-iconsz-level3);
-            height: var(--c-iconsz-level3);
-            border-radius: 50%;
-          }
-    }
-
-    .modal-card-foot {
-        border: none;
-        .button {
-            width: 100%;
-        }
-    }
 }
 
 // 下拉组件
@@ -248,52 +181,3 @@
 .tabs li:not(.is-active) a:hover {
     border: none;
 }
-/* End Tabs控件 */
-
-// /*  */
-// $lightpick-action-apply-background-color: $primary-lighten !default;
-// $lightpick-selected-date-background-color: $primary-lighten !default;
-// $lightpick-today-color: $primary-lighten !default;
-// $lightpick-selected-range-background-color: $primary-lighten !default;
-
-// @import "@/../node_modules/lightpick/scss/lightpick.scss";
-
-// .lightpick {
-//     &__day {
-//         &.is-today {
-//             background-size: 0 auto;
-//             &:hover {
-//                 color: #000;
-//             }
-//         }
-//         &.is-in-range {
-//             color: #000;
-//             &:hover {
-//                 color: #FFF;
-//                 background-image: none ;
-//                 background-color: $lightpick-selected-date-background-color;
-//             }
-//         }
-//         &:not(.is-disabled):hover {
-//             border-radius: 50%;
-//             background-image: none;
-//             background-color: $lightpick-selected-date-background-color;
-//         }
-//         &.is-in-range:not(.is-end-date):not(.is-start-date):hover {
-//             border-radius: initial;
-//         }
-//         &.is-end-date.is-in-range,
-//         &.is-start-date.is-in-range.is-flipped {
-//             border-radius: 0 50% 50% 0;
-//             background-color: $lightpick-selected-date-background-color;
-//             background-image: none;
-//         }
-//         &.is-start-date.is-in-range,
-//         &.is-end-date.is-in-range.is-flipped {
-//             border-radius: 50% 0 0 50%;
-//             background-color: $lightpick-selected-date-background-color;
-//             background-image: none;
-//         }
-//     }
-// }
-// /* End 日期选择控件 */

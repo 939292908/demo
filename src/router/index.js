@@ -8,7 +8,7 @@ class Router {
             // 是否需要需要身份验证
             requireAuth: false,
             onmatch: function () {
-                return import('@/views/page/home/index');
+                return import('@/views/page/giveRedPacket/giveRedPacket.view');
             }
         }
     };

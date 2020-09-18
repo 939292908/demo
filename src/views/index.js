@@ -1,6 +1,6 @@
 import m from 'mithril';
-import header from './page/main/header/header.view';
-import footer from './page/main/footer/footer.view.js';
+// import header from './components/common/header/header.view';
+// import footer from './page/main/footer/footer.view.js';
 import message from './page/main/message/message.view';
 import broadcast from '../broadcast/broadcast';
 // import utils from '../util/utils';
@@ -46,10 +46,10 @@ export default {
         broadcast.offMsg({ key: this.name, cmd: 'setTheme', isall: true });
     },
     view: function () {
-        return m('section.section' + (config.themeDark ? " .theme--dark" : " .theme--light"), [
-            m(header),
-            m('div.route-box'),
-            m(footer),
+        return m('section.section.container' + (config.themeDark ? " .theme--dark" : " .theme--light"), [
+            // m(header),
+            m('div.route-box.px-6'),
+            // m(footer),
             m(message)
         ]);
     }

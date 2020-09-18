@@ -1,0 +1,35 @@
+// modal弹框 组件
+.my-modal {
+    justify-content: flex-end;
+
+    &.theme--light {
+        background-color: initial;
+    }
+
+    .modal-card {
+        // width: 448px;
+    }
+
+    .modal-card-head {
+        border-bottom: none;
+
+        .modal-card-title {
+        }
+
+        .icomBox {
+            width: var(--c-iconsz-level3);
+            height: var(--c-iconsz-level3);
+            border-radius: 50%;
+          }
+    }
+
+    .modal-card-foot {
+        border: none;
+        .button:not(:last-child) {
+            margin-right: 17px;
+        }
+        .button {
+            width: 100%;
+        }
+    }
+}

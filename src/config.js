@@ -4,7 +4,7 @@ module.exports = {
     exchName: 'Xmex',
     DOCTitle: "【XMEX官网】XMEX交易所下载_XMEX全球数字货币合约交易领跑者",
     DOCTitleEn: "[XMEX Official Website] XMEX Exchange Download_XMEX Global Digital Currency Contract Trading Leader",
-    themeDark: true,
+    themeDark: false,
     exchInfo: {
         exchCoin: "",
         exchLogo: "",
