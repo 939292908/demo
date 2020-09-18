@@ -52,11 +52,18 @@ module.exports = {
                     m('div.content-width.has-bg-level-2.border-radius-medium.columns.pa-8.content-center', {}, [
                         m('div.column.body-5.has-text-level-1', {}, [
                             m('div.mb-2', {}, [I18n.$t('10092')/* '备注' */]),
-                            m('input.input.mb-5', {
-                                oninput(e) { APIManager.mark = e.target.value; },
-                                value: APIManager.mark
+                            m('input.input', {
+                                oninput(e) {
+                                    APIManager.keyName = e.target.value;
+                                    APIManager.showKeyNameValid = true;
+                                },
+                                onblur() {
+                                    APIManager.showKeyNameValid = true;
+                                },
+                                value: APIManager.keyName
                             }),
-                            m('div.mb-2', {}, [I18n.$t('10318')/* '权限设置' */]),
+                            m('div.body-3.has-text-tip-error', { hidden: !APIManager.showKeyNameValid }, [regExp.validAPIKeyName(APIManager.keyName)]),
+                            m('div.mb-2.mt-5', {}, [I18n.$t('10318')/* '权限设置' */]),
                             m('i.iconfont.mr-7.iconfont-medium.cursor-pointer', {
                                 class: APIManager.onlyRead ? 'icon-u_check-square has-text-primary' : 'icon-Unselected',
                                 onclick() { APIManager.onlyRead = !APIManager.onlyRead; }
@@ -79,7 +86,7 @@ module.exports = {
                             m('div.body-3.has-text-tip-error', {}, [regExp.validAPIIP(APIManager.ip)]),
                             m("button.button.has-bg-primary.button-large.is-fullwidth.has-text-white.mt-7", {
                                 onclick() { APIManager.submit(); },
-                                disabled: regExp.validAPIIP(APIManager.ip)
+                                disabled: regExp.validAPIIP(APIManager.ip) || regExp.validAPIKeyName(APIManager.keyName)
                             }, [I18n.$t('10337')/* '确定' */])
                         ]),
                         m('div.column.is-2', {}, []),

@@ -81,5 +81,7 @@ module.exports = {
     // 最近登录 IP
     USER_GET_EXTINFO: '/users/ipInfo',
     // 登陆的记录
-    USER_EXT_LIST: '/users/GetExtInfo'
+    USER_EXT_LIST: '/users/GetExtInfo',
+    // API管理接口
+    USER_API: '/users/api'
 };
