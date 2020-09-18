@@ -15,6 +15,7 @@ const rechargeLogic = {
     wTypeParam: null, // 传参的币种
     tipsAry: [], // 温馨提示列表
     isLoadingShow: true, // 加载中是否显示
+    nameTips: null, // 链名称提示
     item: {
         wType: null, // 币种名称
         memo: null, // 是否显示标签
@@ -177,6 +178,15 @@ const rechargeLogic = {
         rechargeLogic.initChainList();
         rechargeLogic.initItem();
     },
+    // 链名称提示初始化
+    initNameTips() {
+        this.nameTips =
+        [
+            I18n.$t('10400') /* 'USDT-ERC20是Tether泰达公司基于ETH网络发行的USDT，充币地址是ETH地址，充提币走ETH网络，USDT-ERC20使用的是ERC20协议。' */,
+            I18n.$t('10507') /* 'USDT-TRC20(USDT-TRON)是Tether泰达公司基于TRON网络发行的USDT，充币地址是TRON地址，充提币走TRON网络，USDT-TRC20(USDT-TRON)使用的是TRC20协议。' */,
+            I18n.$t('10508')/* 'USDT-Omni是Tether泰达公司基于BTC网络发行的USDT，充币地址是BTC地址，充提币走BTC网络，USDT-Omni使用的协议是建立在BTC区块链网络上的omni layer协议。' */
+        ];
+    },
     initFn() {
         wlt.init();
         let i = 0;
@@ -200,8 +210,11 @@ const rechargeLogic = {
             cmd: broadcast.MSG_LANGUAGE_UPD,
             cb: () => {
                 rechargeLogic.initTipsAry();
+                rechargeLogic.setLabelTips();
+                rechargeLogic.initNameTips();
             }
         });
+        rechargeLogic.initNameTips();
 
         broadcast.onMsg({
             key: 'index',
