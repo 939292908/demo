@@ -81,7 +81,6 @@ const modifyFPView = {
     },
     view: () => {
         return m('div', { class: `views-page-selfManage-modifyFundPassword theme--light pb-8` }, [
-            // JSON.stringify(modifyFPView.showPassword1), JSON.stringify(modifyFPView.showPassword1), JSON.stringify(modifyFPView.showPassword1),
             m(Header, {
                 highlightFlag: 1,
                 navList: [
@@ -95,15 +94,13 @@ const modifyFPView = {
             m('div', { class: `operation mb-7 has-bg-level-2` }, [
                 m('div', { class: `content-width container` }, [
                     m('i', { class: `iconfont icon-Return has-text-title cursor-pointer`, onclick: () => { window.router.go(-1); } }),
-                    m('span', { class: `has-text-title my-4 ml-4 title-medium` }, I18n.$t('10289') /* '您正在设置资金密码' */)
+                    m('span', { class: `has-text-title my-4 ml-4 title-medium` }, modifyFPLogic.modifyFlag === 0 ? I18n.$t('10289') /* '您正在设置资金密码' */ : I18n.$t('10289') /* '您正在修改资金密码' */)
                 ])
             ]),
             m('div', { class: `warning mb-3 pl-7 content-width container` }, [
                 m('i', { class: `iconfont icon-Tooltip pr-2 has-text-primary cursor-pointer` }),
                 m('span', { class: `has-text-level-3` },
-                    modifyFPLogic.modifyFlag === 0
-                        ? I18n.$t('10290') /* '资产密码将用于转账、法币交易、红包等功能，请妥善保管，避免泄露. 请不要忘记自己的资产密码，资产密码遗忘后，需要将身份证及个人信息发送至客服邮箱，客服在24小时内处理' */
-                        : I18n.$t('10205') /* '出于安全考虑，修改账户安全项之后，24h内禁止提币、内部转出与卖币操作' */
+                    modifyFPLogic.modifyFlag === 0 ? I18n.$t('10290') /* '资产密码将用于转账、法币交易、红包等功能，请妥善保管，避免泄露. 请不要忘记自己的资产密码，资产密码遗忘后，需要将身份证及个人信息发送至客服邮箱，客服在24小时内处理' */ : I18n.$t('10205') /* '出于安全考虑，修改账户安全项之后，24h内禁止提币、内部转出与卖币操作' */
                 )
             ]),
             m('div', { class: `center content-width container has-bg-level-2 margin-LRauto pt-7` }, [
@@ -169,7 +166,7 @@ const modifyFPView = {
                                 class: modifyFPView.showPassword3 ? 'icon-yincang' : 'icon-zichanzhengyan'
                             })
                         }),
-                        m('span', { class: `has-text-tip-error`, style: { display: modifyFPView.tip3s ? `` : `none` } }, modifyFPView.tip3)
+                        m('span', { class: `has-text-tip-error`, style: { display: modifyFPView.tip3 ? `` : `none` } }, modifyFPView.tip3)
                     ]),
                     m('div', { class: `btn mt-7` }, [
                         m('button', { class: `has-bg-primary cursor-pointer`, onclick: () => { modifyFPView.confirmBtn(); } }, I18n.$t('10337') /* '确定' */)
