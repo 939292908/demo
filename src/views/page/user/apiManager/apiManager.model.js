@@ -6,7 +6,7 @@ const Http = require('@/api').webApi;
 const config = require('@/config.js');
 const utils = require('@/util/utils').default;
 module.exports = {
-    onlyRead: false,
+    onlyRead: true,
     canTrade: false,
     showValid: false,
     showAPIKey: false,

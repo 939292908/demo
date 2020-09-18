@@ -65,8 +65,9 @@ module.exports = {
                             m('div.body-3.has-text-tip-error', { hidden: !APIManager.showKeyNameValid }, [regExp.validAPIKeyName(APIManager.keyName)]),
                             m('div.mb-2.mt-5', {}, [I18n.$t('10318')/* '权限设置' */]),
                             m('i.iconfont.mr-7.iconfont-medium.cursor-pointer', {
-                                class: APIManager.onlyRead ? 'icon-u_check-square has-text-primary' : 'icon-Unselected',
-                                onclick() { APIManager.onlyRead = !APIManager.onlyRead; }
+                                disabled: true,
+                                class: APIManager.onlyRead ? 'icon-u_check-square has-text-primary' : 'icon-Unselected'
+                                // onclick() { APIManager.onlyRead = !APIManager.onlyRead; }
                             }, [
                                 m('span.ml-1.body-4.checkbox-text', {}, [I18n.$t('10319')/* 只读 */])
                             ]),
