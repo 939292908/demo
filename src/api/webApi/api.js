@@ -776,5 +776,5 @@ export function getWalletPwdStatus (params = {}, options = { withCredentials: fa
     }
  */
 export function setFishCode (params = {}, options = { withCredentials: false }) {
-    return Http.post(API.FAVORITE_SETTING_V1, params, options);
+    return Http.post(API.ACCOUNT_SETTING, params, options);
 }

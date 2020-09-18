@@ -6,15 +6,27 @@
         }
     }
     .center{
-        height: 308px;
-        div{
-            width: 384px;
+        height: 404px;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        .leftDiv{
+            button{
+                outline: none;
+                border: none;
+                width: 381px;
+                height: 44px;
+            }
         }
-        button{
-            outline: none;
-            border: none;
-            width: 381px;
-            height: 44px;
+        .rightDiv{
+            width: 272px;
+            height: 340px;
+            span{
+                display: block;
+            }
+            .weightSix{
+                font-weight: 600;
+            }
         }
     }
 }

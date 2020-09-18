@@ -152,7 +152,7 @@ const openGView = {
                         ])
                     ]),
                     m('div', { class: `stepFour pt-7`, style: { display: `${openGView.checkFlag === 4 ? `` : `none`}` } }, [
-                        m('div', { class: `desc1 title-small mb-7` }, '完成以下验证，开启谷歌验证'),
+                        m('div', { class: `desc1 title-small mb-7` }, I18n.$t('10603') /* '完成以下验证，开启谷歌验证' */),
                         m('div', { class: `pwdDiv margin-LRauto mb-5` }, [
                             m('span', { class: `body-5` }, I18n.$t('10512') /* '登录密码' */),
                             m('br'),
