@@ -22,6 +22,7 @@ import straightLine from '../../../../tplibs/svg/straight-line.svg'
 import verticalRayLine from '../../../../tplibs/svg/vertical-ray-line.svg'
 import verticalSegmentLine from '../../../../tplibs/svg/vertical-segment-line.svg'
 import verticalStraightLine from '../../../../tplibs/svg/vertical-straight-line.svg'
+import headerLogo from '../../../../tplibs/img/header-logo.png'
 
 var m = require("mithril")
 
@@ -482,6 +483,17 @@ let obj = {
             window._chart.addGraphicMark(data);
         }
     },
+    // 添加设置logo
+    addSettingLogo: function(){
+        let logoData={
+            width:'176',
+            height: '50',
+            x:'0',
+            y:'50',
+            imgUrl: headerLogo
+        }
+        window._chart.setLogoData(logoData);
+    },
     // 截图
     getScreenshots: function(){
         var img = document.getElementById('testImg'); // 获取要下载的图片
@@ -676,7 +688,6 @@ let obj = {
         window._chart.Sym = ''
         window._chart.Typ = ''
         this.setKlineData()
-
     },
     setKlineOptions: function(){
         let $color = window.themeColors
@@ -1240,6 +1251,7 @@ let obj = {
             window._chart.setOffsetRightSpace(50)
         }
         this.klineShow = false
+        obj.addSettingLogo();
     },
     updateKlineForTrade: function(param){
         if(!window._chart) return
