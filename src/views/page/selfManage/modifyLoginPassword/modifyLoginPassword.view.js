@@ -7,6 +7,7 @@ const VerifyView = require('@/views/components/dialogVerify/dialogVerify.view');
 const Header = require('@/views/components/indexHeader/indexHeader.view');
 const InputWithComponent = require('@/views/components/inputWithComponent/inputWithComponent.view');
 const regExp = require('@/models/validate/regExp');
+const theBindingOrNot = require('@/views/components/theBindingOrNot/theBindingOrNot.view');
 
 const modifyLPView = {
     totalFlag: false, /* 是否通过校验 */
@@ -156,6 +157,7 @@ const modifyLPView = {
                     ])
                 ])
             ]),
+            m(theBindingOrNot),
             modifyLPLogic.isShowVerifyView ? m(VerifyView, {
                 close: () => modifyLPLogic.switchSafetyVerifyModal(false),
                 isHandleVerify: true,
