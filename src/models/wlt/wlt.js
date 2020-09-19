@@ -102,11 +102,18 @@ module.exports = {
             return 0;
         }
         // 处理浮点数
-        let num = Number(value);
+        let num = value;
         // 处理科学计数法数字
         const str = num.toString();
         if (/e/i.test(str)) {
             num = Number(num).toFixed(18).replace(/\.?0+$/, "");
+        }
+        const index = num.toString().split('.')[1]?.length;
+        if (index < n) {
+            for (let i = 0; i < n - index; i++) {
+                num += '0';
+            }
+            return num;
         }
         const pow = Math.pow(10, n);
         num = Number(num) * pow;
