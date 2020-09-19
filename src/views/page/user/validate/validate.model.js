@@ -28,6 +28,7 @@ module.exports = {
     code: '', // 验证码
     smsInt: null,
     emailInt: null,
+    loading: false, // 确认加载
     /**
      * 发送验证码
      */
