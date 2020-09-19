@@ -1,3 +1,4 @@
+const transferLogic = require('@/views/page/giveRedPacket/transfer/transfer.logic');
 
 const logic = {
     // 币种按钮list
@@ -6,6 +7,19 @@ const logic = {
     currentCoin: 'BTC',
     // 红包类型
     redPacketType: 1, // 1：普通/ 2：拼手气
+    // 资金密码
+    password: "",
+    // 资金密码 错误提示
+    passwordErrMsg: "",
+    // 资金密码 校验
+    passwordVerify(password) {
+        if (password === "") return "资金密码输入错误，请重新输入";
+    },
+    // 资金密码 input事件
+    passwordInput(e) {
+        logic.password = e.target.value;
+        logic.passwordErrMsg = logic.passwordVerify(logic.password);
+    },
     // 切换 红包类型
     switchRedPacketType() {
         this.redPacketType = this.redPacketType === 1 ? 2 : 1;
@@ -15,7 +29,8 @@ const logic = {
         this.coinBtnList = list.map(item => {
             const btnOption = {
                 label: item.name,
-                class: () => `is-primary is-rounded ${logic.currentCoin === item.name ? '' : 'is-outlined'}`,
+                class: () => `is-primary is-rounded mr-2 ${logic.currentCoin === item.name ? '' : 'is-outlined'}`,
+                size: 'size-2',
                 onclick() {
                     logic.currentCoin = item.name;
                 }
@@ -38,54 +53,44 @@ const logic = {
         }
     },
     // 金额 fomeItem组件配置
-    moneyFormItemOption: {
-        label: '总金额',
-        unit: 'USDT',
+    moneyFormItem: {
+        // label: () => logic.redPacketType === 1 ? '单个金额' : '总金额',
+        // unit: 'USDT',
         value: '',
-        placeholder: '输入红包金额',
-        updateOption(value) {
-            this.value = value;
+        // placeholder: '输入红包金额',
+        updateOption(params) {
+            Object.keys(params).forEach(key => (this[key] = params[key]));
         }
     },
     // 红包个数 fomeItem组件配置
-    numberFormItemOption: {
-        label: '红包个数',
-        unit: '个',
+    numberFormItem: {
         value: '',
-        placeholder: '输入红包个数',
-        updateOption(value) {
-            this.value = value;
+        updateOption(params) {
+            Object.keys(params).forEach(key => (this[key] = params[key]));
         }
     },
     // info信息 fomeItem组件配置
-    infoFormItemOption: {
-        content: "大吉大利，全天盈利"
+    infoFormItem: {
+        value: "大吉大利，全天盈利",
+        updateOption(params) {
+            Object.keys(params).forEach(key => (this[key] = params[key]));
+        }
     },
-    // 塞币进红包 Button组件配置
-    coinToRedButtonOption: {
-        label: "塞币进红包",
-        // class: 'is-primary',
-        width: 1,
-        disabled: () => logic.redPacketType === 2,
-        onclick() {
+    // 发红包 Modal组件配置
+    giveRedPModal: {
+        isShow: false,
+        updateOption(params) {
+            Object.keys(params).forEach(key => (this[key] = params[key]));
+        },
+        onOk() {
+            this.updateOption({ isShow: !this.isShow });
         }
     },
     // 划转按钮click
     transferBtnClick() {
-        logic.transferModalOption.isShow = true;
-    },
-    // 划转 Modal组件配置
-    transferModalOption: {
-        isShow: false,
-        updateOption(type) {
-            this.isShow = type;
-        },
-        onOk() {
-            this.isShow = !this.isShow;
-        },
-        onClose() {
-            this.isShow = !this.isShow;
-        }
+        transferLogic.updateOption({
+            isShow: true
+        });
     },
     oninit(vnode) {
         const data = [
@@ -107,7 +112,15 @@ const logic = {
             },
             {
                 id: 5,
-                name: 'ABC'
+                name: 'ABC1'
+            },
+            {
+                id: 6,
+                name: 'ABC2'
+            },
+            {
+                id: 7,
+                name: 'ABC3'
             }
         ];
         this.buildCoinBtnList(data);

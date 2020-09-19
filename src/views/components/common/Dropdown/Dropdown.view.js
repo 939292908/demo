@@ -21,6 +21,7 @@
 var m = require("mithril");
 require('./Dropdown.scss');
 const logic = require('./Dropdown.logic.js');
+const Button = require('@/views/components/common/Button/Button.view');
 
 module.exports = {
     oninit: vnode => logic.oninit(vnode),
@@ -31,17 +32,29 @@ module.exports = {
         return m('div', { class: `${vnode.attrs.class || ''} my-dropdown dropdown ${vnode.attrs.type === 'hover' ? " is-hoverable" : vnode.attrs.showMenu ? " is-active" : ''}` }, [
             // 选中header
             m('div', { class: "dropdown-trigger has-text-1" }, [
-                m('button', {
+                m(Button, {
+                    label: [
+                        logic.getHeader(vnode), // 内容
+                        m('i', { class: `my-trigger-icon iconfont icon-xiala has-text-primary` }) // icon
+                    ],
                     class: `button ${vnode.attrs.btnClass || ''}`,
                     style: (vnode.attrs.btnWidth ? `width:${vnode.attrs.btnWidth}px;` : '') +
                         (vnode.attrs.btnHeight ? `height:${vnode.attrs.btnHeight}px;` : ''),
                     onclick() {
                         logic.headerClick(vnode); // click
                     }
-                }, [
-                    logic.getHeader(vnode), // 内容
-                    m('i', { class: `my-trigger-icon iconfont icon-xiala has-text-primary` }) // icon
-                ])
+                })
+                // m('button', {
+                //     class: `button ${vnode.attrs.btnClass || ''}`,
+                //     style: (vnode.attrs.btnWidth ? `width:${vnode.attrs.btnWidth}px;` : '') +
+                //         (vnode.attrs.btnHeight ? `height:${vnode.attrs.btnHeight}px;` : ''),
+                //     onclick() {
+                //         logic.headerClick(vnode); // click
+                //     }
+                // }, [
+                //     logic.getHeader(vnode), // 内容
+                //     m('i', { class: `my-trigger-icon iconfont icon-xiala has-text-primary` }) // icon
+                // ])
             ]),
             // 菜单menu
             m('div', {

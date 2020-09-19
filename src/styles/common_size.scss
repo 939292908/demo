@@ -26,8 +26,14 @@ body,
     
         .pub-layout {
             height: calc(100% - 48px);
-    
+            position: relative;
+
+            .pub-layout-bottom-btn {
+                position: absolute;
+                bottom: 0;
+            }
         }
+
     }
 }
 
@@ -45,6 +51,13 @@ body,
     margin-left: 0;
     margin-right: 0;
     margin-top: 0;
+    margin-bottom: 0;
+    &:last-child {
+        margin-bottom: 0;
+    }
+    .column {
+        padding: 0;
+    }
 }
 
 
@@ -61,6 +74,11 @@ body,
     border-radius: var(--c-radius-level1);
     font-size: var(--c-fontsz-level4);
     height: var(--c-button-level2);
+}
+
+.button {
+    height: auto;
+    line-height: 1em;
 }
 
 /* 文字大小 根据pc和手机的尺寸不同来区分对应类名的字体大小 */

@@ -27,8 +27,13 @@
     align-items: end;
 }
 
-.column {
-    padding: 0;
+.border-none {
+    border: none;
+}
+
+// 不换行
+.no-wrap {
+    white-space: nowrap;
 }
 
 // 下拉组件

@@ -1,3 +1,10 @@
 .views-give-red-packet {
-    
+    .views-give-red-packet-coin {
+        border-bottom-width: 1px;
+        border-bottom-style: solid;
+    }
+    .views-give-red-packet-btn-list {
+        overflow-x: auto;
+        white-space: nowrap;
+    }
 }
