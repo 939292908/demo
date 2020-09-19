@@ -97,6 +97,25 @@ module.exports = {
     // 是否正在请求风险限额
     isReqRiskLimits: false,
 
+    toFixedForFloor (value, n) {
+        if (isNaN(value)) {
+            return 0;
+        }
+        // 处理浮点数
+        let num = Number(value);
+        // 处理科学计数法数字
+        const str = num.toString();
+        if (/e/i.test(str)) {
+            num = Number(num).toFixed(18).replace(/\.?0+$/, "");
+        }
+        const pow = Math.pow(10, n);
+        num = Number(num) * pow;
+        num = Math.floor(num);
+        num = num / pow;
+        num = num.toFixed(n);
+        return num;
+    },
+
     init: function () {
         // 初始化
         const that = this;
@@ -244,8 +263,8 @@ module.exports = {
                 this.wallet_obj[type][coin] = this.wltHandle(type, wlt[type][coin]);
                 this.wallet[type].push(this.wallet_obj[type][coin]);
 
-                wlt[type][coin].valueForUSDT = utils.toFixedForFloor(wlt[type][coin].valueForUSDT, 4);
-                wlt[type][coin].valueForBTC = utils.toFixedForFloor(wlt[type][coin].valueForBTC, 8);
+                wlt[type][coin].valueForUSDT = this.toFixedForFloor(wlt[type][coin].valueForUSDT, 4);
+                wlt[type][coin].valueForBTC = this.toFixedForFloor(wlt[type][coin].valueForBTC, 8);
 
                 // 总USDT估值
                 this.totalValueForUSDT += Number(this.wallet_obj[type][coin].valueForUSDT);
@@ -298,35 +317,35 @@ module.exports = {
         this.tradingAccountTotalValueForUSDT = Number(this.legalTotalValueForUSDT) + Number(this.contractTotalValueForUSDT) + Number(this.coinTotalValueForUSDT);
         this.totalCNYValue = Number(this.totalValueForUSDT) * this.prz;
 
-        this.totalValueForUSDT = utils.toFixedForFloor(this.totalValueForUSDT, 4);
-        this.totalValueForBTC = utils.toFixedForFloor(this.totalValueForBTC, 8);
-        this.totalValueForCNY = utils.toFixedForFloor(Number(this.totalValueForUSDT) * this.prz, 2);
+        this.totalValueForUSDT = this.toFixedForFloor(this.totalValueForUSDT, 4);
+        this.totalValueForBTC = this.toFixedForFloor(this.totalValueForBTC, 8);
+        this.totalValueForCNY = this.toFixedForFloor(Number(this.totalValueForUSDT) * this.prz, 2);
 
-        this.walletTotalValueForUSDT = utils.toFixedForFloor(this.walletTotalValueForUSDT, 4);
-        this.walletTotalValueForBTC = utils.toFixedForFloor(this.walletTotalValueForBTC, 8);
-        this.walletTotalValueForCNY = utils.toFixedForFloor(Number(this.walletTotalValueForUSDT) * this.prz, 2);
+        this.walletTotalValueForUSDT = this.toFixedForFloor(this.walletTotalValueForUSDT, 4);
+        this.walletTotalValueForBTC = this.toFixedForFloor(this.walletTotalValueForBTC, 8);
+        this.walletTotalValueForCNY = this.toFixedForFloor(Number(this.walletTotalValueForUSDT) * this.prz, 2);
 
-        this.tradingAccountTotalValueForUSDT = utils.toFixedForFloor(this.tradingAccountTotalValueForUSDT, 4);
-        this.tradingAccountTotalValueForBTC = utils.toFixedForFloor(this.tradingAccountTotalValueForBTC, 8);
-        this.tradingAccountTotalValueForCNY = utils.toFixedForFloor(Number(this.tradingAccountTotalValueForUSDT) * this.prz, 2);
+        this.tradingAccountTotalValueForUSDT = this.toFixedForFloor(this.tradingAccountTotalValueForUSDT, 4);
+        this.tradingAccountTotalValueForBTC = this.toFixedForFloor(this.tradingAccountTotalValueForBTC, 8);
+        this.tradingAccountTotalValueForCNY = this.toFixedForFloor(Number(this.tradingAccountTotalValueForUSDT) * this.prz, 2);
 
-        this.otherAccountTotalValueForUSDT = utils.toFixedForFloor(this.otherAccountTotalValueForUSDT, 4);
-        this.otherAccountTotalValueForBTC = utils.toFixedForFloor(this.otherAccountTotalValueForBTC, 8);
-        this.otherAccountTotalValueForCNY = utils.toFixedForFloor(Number(this.otherAccountTotalValueForUSDT) * this.prz, 2);
+        this.otherAccountTotalValueForUSDT = this.toFixedForFloor(this.otherAccountTotalValueForUSDT, 4);
+        this.otherAccountTotalValueForBTC = this.toFixedForFloor(this.otherAccountTotalValueForBTC, 8);
+        this.otherAccountTotalValueForCNY = this.toFixedForFloor(Number(this.otherAccountTotalValueForUSDT) * this.prz, 2);
 
-        this.coinTotalValueForUSDT = utils.toFixedForFloor(this.coinTotalValueForUSDT, 4);
-        this.coinTotalValueForBTC = utils.toFixedForFloor(this.coinTotalValueForBTC, 8);
-        this.coinTotalValueForCNY = utils.toFixedForFloor(Number(this.coinTotalValueForUSDT) * this.prz, 2);
+        this.coinTotalValueForUSDT = this.toFixedForFloor(this.coinTotalValueForUSDT, 4);
+        this.coinTotalValueForBTC = this.toFixedForFloor(this.coinTotalValueForBTC, 8);
+        this.coinTotalValueForCNY = this.toFixedForFloor(Number(this.coinTotalValueForUSDT) * this.prz, 2);
 
-        this.legalTotalValueForUSDT = utils.toFixedForFloor(this.legalTotalValueForUSDT, 4);
-        this.legalTotalValueForBTC = utils.toFixedForFloor(this.legalTotalValueForBTC, 8);
-        this.legalTotalValueForCNY = utils.toFixedForFloor(Number(this.legalTotalValueForUSDT) * this.prz, 2);
+        this.legalTotalValueForUSDT = this.toFixedForFloor(this.legalTotalValueForUSDT, 4);
+        this.legalTotalValueForBTC = this.toFixedForFloor(this.legalTotalValueForBTC, 8);
+        this.legalTotalValueForCNY = this.toFixedForFloor(Number(this.legalTotalValueForUSDT) * this.prz, 2);
 
-        this.contractTotalValueForUSDT = utils.toFixedForFloor(this.contractTotalValueForUSDT, 4);
-        this.contractTotalValueForBTC = utils.toFixedForFloor(this.contractTotalValueForBTC, 8);
-        this.contractTotalValueForCNY = utils.toFixedForFloor(Number(this.contractTotalValueForUSDT) * this.prz, 2);
+        this.contractTotalValueForUSDT = this.toFixedForFloor(this.contractTotalValueForUSDT, 4);
+        this.contractTotalValueForBTC = this.toFixedForFloor(this.contractTotalValueForBTC, 8);
+        this.contractTotalValueForCNY = this.toFixedForFloor(Number(this.contractTotalValueForUSDT) * this.prz, 2);
 
-        this.totalCNYValue = utils.toFixedForFloor(this.totalCNYValue, 2);
+        this.totalCNYValue = this.toFixedForFloor(this.totalCNYValue, 2);
 
         // console.log('nzm', 'this.wallet', this.wallet);
         // console.log('\n');
@@ -474,83 +493,83 @@ module.exports = {
             // console.log('ht', type, this.wltItemEx);
             TOTAL = Number(this.wltItemEx.Num || 0) + Number(this.wltItemEx.PNL || 0) + Number(this.wltItemEx.PNLISO || 0) + Number(this.wltItemEx.UPNL || 0) + Number(this.wltItemEx.Gift || 0);
             // 账户权益
-            this.wltItemEx.MgnBal = utils.toFixedForFloor(TOTAL, 8);
+            this.wltItemEx.MgnBal = this.toFixedForFloor(TOTAL, 8);
             // 可用赠金
-            this.wltItemEx.Gift = utils.toFixedForFloor(this.wltItemEx.Gift || 0, 8);
+            this.wltItemEx.Gift = this.toFixedForFloor(this.wltItemEx.Gift || 0, 8);
             // 可用保证金
             NL = Number(this.wltItemEx.wdrawable || 0) + Number(this.wltItemEx.Gift || 0);
-            this.wltItemEx.NL = utils.toFixedForFloor(NL, 8);
+            this.wltItemEx.NL = this.toFixedForFloor(NL, 8);
             // 可用保证金人民币估值
             // const NLToCRN = this.wltItemEx.NL * coinPrz;
-            this.wltItemEx.NLToCRN = utils.toFixedForFloor(Number(this.wltItemEx.NL * coinPrz) * this.prz, 2);
+            this.wltItemEx.NLToCRN = this.toFixedForFloor(Number(this.wltItemEx.NL * coinPrz) * this.prz, 2);
             // 可用保证金BTC估值
-            this.wltItemEx.NLToBTC = utils.toFixedForFloor(Number(this.wltItemEx.NL * coinPrz / btcPrz) * this.prz || 0, 8);
+            this.wltItemEx.NLToBTC = this.toFixedForFloor(Number(this.wltItemEx.NL * coinPrz / btcPrz) * this.prz || 0, 8);
             // 委托保证金
-            this.wltItemEx.MI = utils.toFixedForFloor(this.wltItemEx.MI || 0, 8);
+            this.wltItemEx.MI = this.toFixedForFloor(this.wltItemEx.MI || 0, 8);
             // 仓位保证金
-            this.wltItemEx.MM = utils.toFixedForFloor(this.wltItemEx.MM || 0, 8);
+            this.wltItemEx.MM = this.toFixedForFloor(this.wltItemEx.MM || 0, 8);
             // 已实现盈亏
-            this.wltItemEx.PNL = utils.toFixedForFloor(this.wltItemEx.PNL || 0, 8);
+            this.wltItemEx.PNL = this.toFixedForFloor(this.wltItemEx.PNL || 0, 8);
             // 未实现盈亏
-            this.wltItemEx.UPNL = utils.toFixedForFloor(this.wltItemEx.UPNL || 0, 8);
+            this.wltItemEx.UPNL = this.toFixedForFloor(this.wltItemEx.UPNL || 0, 8);
             // 为实现盈亏人民币估值
-            this.wltItemEx.UPNLToCRN = utils.toFixedForFloor(Number(this.wltItemEx.UPNL * coinPrz) * this.prz, 2);
+            this.wltItemEx.UPNLToCRN = this.toFixedForFloor(Number(this.wltItemEx.UPNL * coinPrz) * this.prz, 2);
             // 为实现盈亏BTC估值
-            this.wltItemEx.UPNLToBTC = utils.toFixedForFloor(Number(this.wltItemEx.UPNL * coinPrz / btcPrz) || 0, 8);
+            this.wltItemEx.UPNLToBTC = this.toFixedForFloor(Number(this.wltItemEx.UPNL * coinPrz / btcPrz) || 0, 8);
             // 账户可提金额，用于资产划转
-            this.wltItemEx.wdrawable = utils.toFixedForFloor(this.wltItemEx.wdrawable || 0, 8);
+            this.wltItemEx.wdrawable = this.toFixedForFloor(this.wltItemEx.wdrawable || 0, 8);
             break;
         case '02':
             // 币币账户
             // console.log('ht', type, this.wltItemEx); c
             TOTAL = Number(this.wltItemEx.wdrawable || 0) + Number(this.wltItemEx.Frz || 0);
             // 账户总额
-            this.wltItemEx.TOTAL = utils.toFixedForFloor(TOTAL, 8);
+            this.wltItemEx.TOTAL = this.toFixedForFloor(TOTAL, 8);
 
             // 冻结金额
             // console.log('nzm', 'this.wltItemEx.Gift   ', this.wltItemEx.Gift);
-            this.wltItemEx.Frz = utils.toFixedForFloor(this.wltItemEx.Frz || 0, 8);
+            this.wltItemEx.Frz = this.toFixedForFloor(this.wltItemEx.Frz || 0, 8);
 
             // 可用金额
-            this.wltItemEx.NL = utils.toFixedForFloor(this.wltItemEx.wdrawable, 8);
+            this.wltItemEx.NL = this.toFixedForFloor(this.wltItemEx.wdrawable, 8);
             // 账户可提金额，用于资产划转
-            this.wltItemEx.wdrawable = utils.toFixedForFloor(this.wltItemEx.wdrawable, 8);
+            this.wltItemEx.wdrawable = this.toFixedForFloor(this.wltItemEx.wdrawable, 8);
             break;
         case '03':
             // 主钱包
             // console.log('ht', type, this.wltItemEx);
             TOTAL = Number(this.wltItemEx.mainBal || 0) + Number(this.wltItemEx.financeBal || 0) + Number(this.wltItemEx.mainLock || 0) + Number(this.wltItemEx.depositLock || 0) + Number(this.wltItemEx.pawnBal || 0) + Number(this.wltItemEx.creditNum || 0);
             // 账户总额
-            this.wltItemEx.TOTAL = utils.toFixedForFloor(TOTAL, 8);
+            this.wltItemEx.TOTAL = this.toFixedForFloor(TOTAL, 8);
             // 矿池
-            this.wltItemEx.mainLock = utils.toFixedForFloor(this.wltItemEx.mainLock || 0, 8);
+            this.wltItemEx.mainLock = this.toFixedForFloor(this.wltItemEx.mainLock || 0, 8);
             // 锁定
-            this.wltItemEx.depositLock = utils.toFixedForFloor(this.wltItemEx.depositLock || 0, 8);
+            this.wltItemEx.depositLock = this.toFixedForFloor(this.wltItemEx.depositLock || 0, 8);
             // 理财
-            this.wltItemEx.financeBal = utils.toFixedForFloor(this.wltItemEx.financeBal || 0, 8);
+            this.wltItemEx.financeBal = this.toFixedForFloor(this.wltItemEx.financeBal || 0, 8);
             // 质押
-            this.wltItemEx.pawnBal = utils.toFixedForFloor(this.wltItemEx.pawnBal || 0, 8);
+            this.wltItemEx.pawnBal = this.toFixedForFloor(this.wltItemEx.pawnBal || 0, 8);
             // 可用金额
-            this.wltItemEx.NL = utils.toFixedForFloor(this.wltItemEx.mainBal, 8);
+            this.wltItemEx.NL = this.toFixedForFloor(this.wltItemEx.mainBal, 8);
             // 账户可提金额，用于资产划转以及提现
-            this.wltItemEx.wdrawable = utils.toFixedForFloor(this.wltItemEx.mainBal, 8);
+            this.wltItemEx.wdrawable = this.toFixedForFloor(this.wltItemEx.mainBal, 8);
             break;
         case '04':
             // 法币钱包
             // console.log('ht', type, this.wltItemEx);
             TOTAL = Number(this.wltItemEx.otcLock || 0) + Number(this.wltItemEx.otcBal || 0);
             // 账户总额
-            this.wltItemEx.TOTAL = utils.toFixedForFloor(TOTAL, 8);
+            this.wltItemEx.TOTAL = this.toFixedForFloor(TOTAL, 8);
             // 锁定(冻结)
-            this.wltItemEx.otcLock = utils.toFixedForFloor(this.wltItemEx.otcLock || 0, 8);
+            this.wltItemEx.otcLock = this.toFixedForFloor(this.wltItemEx.otcLock || 0, 8);
             // 理财
-            this.wltItemEx.financeBal = utils.toFixedForFloor(this.wltItemEx.financeBal || 0, 8);
+            this.wltItemEx.financeBal = this.toFixedForFloor(this.wltItemEx.financeBal || 0, 8);
             // 质押
-            this.wltItemEx.pawnBal = utils.toFixedForFloor(this.wltItemEx.pawnBal || 0, 8);
+            this.wltItemEx.pawnBal = this.toFixedForFloor(this.wltItemEx.pawnBal || 0, 8);
             // 可用金额
-            this.wltItemEx.NL = utils.toFixedForFloor(this.wltItemEx.otcBal, 8);
+            this.wltItemEx.NL = this.toFixedForFloor(this.wltItemEx.otcBal, 8);
             // 账户可提金额，用于资产划转以及提现
-            this.wltItemEx.wdrawable = utils.toFixedForFloor(this.wltItemEx.otcBal, 8);
+            this.wltItemEx.wdrawable = this.toFixedForFloor(this.wltItemEx.otcBal, 8);
             break;
         case '05':
             // 算力钱包
@@ -570,11 +589,11 @@ module.exports = {
         // USDT估值
         valueForUSDT = TOTAL * coinPrz;
         // console.log('ht', 'usdt value', TOTAL, coinPrz, TOTAL * coinPrz);
-        this.wltItemEx.valueForUSDT = utils.toFixedForFloor(valueForUSDT, 8);
+        this.wltItemEx.valueForUSDT = this.toFixedForFloor(valueForUSDT, 8);
         // BTC估值
         valueForBTC = TOTAL * coinPrz / btcPrz;
         // console.log('ht', 'btc value', TOTAL, coinPrz, btcPrz, TOTAL * coinPrz);
-        this.wltItemEx.valueForBTC = utils.toFixedForFloor(valueForBTC, 8);
+        this.wltItemEx.valueForBTC = this.toFixedForFloor(valueForBTC, 8);
         // console.log('ht', 'btc value', valueForUSDT, valueForBTC);
         // 币种价格
         this.wltItemEx.coinPrz = coinPrz;
@@ -669,33 +688,33 @@ module.exports = {
             if (this.wallet_obj['01'][item.Coin]) {
                 const coinPrz = this.getPrz(item.Coin);
                 const btcPrz = this.getPrz('BTC');
-                this.wallet_obj['01'][item.Coin].MgnBal = utils.toFixedForFloor(item.MgnBal, 8);
+                this.wallet_obj['01'][item.Coin].MgnBal = this.toFixedForFloor(item.MgnBal, 8);
                 // 可用赠金
-                this.wallet_obj['01'][item.Coin].Gift = utils.toFixedForFloor(item.aGift, 8);
+                this.wallet_obj['01'][item.Coin].Gift = this.toFixedForFloor(item.aGift, 8);
                 // 可用保证金
-                this.wallet_obj['01'][item.Coin].NL = utils.toFixedForFloor(item.aWdrawable, 8);
+                this.wallet_obj['01'][item.Coin].NL = this.toFixedForFloor(item.aWdrawable, 8);
                 // 可用保证金人民币估值
-                this.wallet_obj['01'][item.Coin].NLToCRN = utils.toFixedForFloor(Number(item.aWdrawable * coinPrz) * this.prz, 2);
+                this.wallet_obj['01'][item.Coin].NLToCRN = this.toFixedForFloor(Number(item.aWdrawable * coinPrz) * this.prz, 2);
                 // 可用保证金BTC估值
-                this.wallet_obj['01'][item.Coin].NLToBTC = utils.toFixedForFloor(Number(item.aWdrawable * coinPrz / btcPrz) * this.prz || 0, 8);
+                this.wallet_obj['01'][item.Coin].NLToBTC = this.toFixedForFloor(Number(item.aWdrawable * coinPrz / btcPrz) * this.prz || 0, 8);
                 // 委托保证金
-                this.wallet_obj['01'][item.Coin].MI = utils.toFixedForFloor(item.aMI || 0, 8);
+                this.wallet_obj['01'][item.Coin].MI = this.toFixedForFloor(item.aMI || 0, 8);
                 // 仓位保证金
-                this.wallet_obj['01'][item.Coin].MM = utils.toFixedForFloor(item.aMM || 0, 8);
+                this.wallet_obj['01'][item.Coin].MM = this.toFixedForFloor(item.aMM || 0, 8);
                 // 已实现盈亏
-                this.wallet_obj['01'][item.Coin].PNL = utils.toFixedForFloor(item.PNL || 0, 8);
+                this.wallet_obj['01'][item.Coin].PNL = this.toFixedForFloor(item.PNL || 0, 8);
                 // 未实现盈亏
-                this.wallet_obj['01'][item.Coin].UPNL = utils.toFixedForFloor(item.aUPNL || 0, 8);
+                this.wallet_obj['01'][item.Coin].UPNL = this.toFixedForFloor(item.aUPNL || 0, 8);
                 // 为实现盈亏人民币估值
-                this.wallet_obj['01'][item.Coin].UPNLToCRN = utils.toFixedForFloor(Number(item.aUPNL * coinPrz) * this.prz, 2);
+                this.wallet_obj['01'][item.Coin].UPNLToCRN = this.toFixedForFloor(Number(item.aUPNL * coinPrz) * this.prz, 2);
                 // 为实现盈亏BTC估值
-                this.wallet_obj['01'][item.Coin].UPNLToBTC = utils.toFixedForFloor(Number(item.aUPNL * coinPrz / btcPrz) || 0, 8);
+                this.wallet_obj['01'][item.Coin].UPNLToBTC = this.toFixedForFloor(Number(item.aUPNL * coinPrz / btcPrz) || 0, 8);
                 // 账户可提金额，用于资产划转
-                this.wallet_obj['01'][item.Coin].wdrawable = utils.toFixedForFloor(item.maxTransfer || 0, 8);
+                this.wallet_obj['01'][item.Coin].wdrawable = this.toFixedForFloor(item.maxTransfer || 0, 8);
                 // USDT估值
-                this.wallet_obj['01'][item.Coin].valueForUSDT = utils.toFixedForFloor(item.MgnBal * coinPrz, 4);
+                this.wallet_obj['01'][item.Coin].valueForUSDT = this.toFixedForFloor(item.MgnBal * coinPrz, 4);
                 // BTC估值
-                this.wallet_obj['01'][item.Coin].valueForBTC = utils.toFixedForFloor(item.MgnBal * coinPrz / btcPrz, 8);
+                this.wallet_obj['01'][item.Coin].valueForBTC = this.toFixedForFloor(item.MgnBal * coinPrz / btcPrz, 8);
             }
         }
         broadcast.emit({
