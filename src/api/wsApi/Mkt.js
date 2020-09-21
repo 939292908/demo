@@ -632,7 +632,11 @@ class Mkt {
         }
     }
 
-    clearConf() {}
+    clearConf() {
+        this.RT = {
+            Authrized: this.AUTH_ST_NO
+        };
+    }
 
     WSCallTrade (aCmd, aParam, aFunc) {
         const s = this;
