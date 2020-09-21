@@ -100,7 +100,7 @@ const modifyFPView = {
             m('div', { class: `operation mb-7 has-bg-level-2` }, [
                 m('div', { class: `content-width container` }, [
                     m('i', { class: `iconfont icon-Return has-text-title cursor-pointer`, onclick: () => { window.router.go(-1); } }),
-                    m('span', { class: `has-text-title my-4 ml-4 title-medium` }, modifyFPLogic.modifyFlag === 0 ? I18n.$t('10289') /* '您正在设置资金密码' */ : I18n.$t('10289') /* '您正在修改资金密码' */)
+                    m('span', { class: `has-text-title my-4 ml-4 title-medium` }, modifyFPLogic.modifyFlag === 0 ? I18n.$t('10289') /* '您正在设置资金密码' */ : I18n.$t('10291') /* '您正在修改资金密码' */)
                 ])
             ]),
             m('div', { class: `warning mb-3 pl-7 content-width container` }, [
