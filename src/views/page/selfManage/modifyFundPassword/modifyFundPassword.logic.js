@@ -113,6 +113,7 @@ module.exports = {
             if (arg.result.code === 0) {
                 console.log('setWalletPwd success');
                 window.$message({ content: this.modifyFlag === 0 ? I18n.$t('10601') /* '资金密码设置成功' */ : I18n.$t('10602') /* '资金密码修改成功' */, type: 'success' });
+                that.setUserInfo();
                 window.router.push('/securityManage');
             } else {
                 window.$message({ content: errCode.getWebApiErrorCode(arg.result.code), type: 'danger' });
@@ -121,6 +122,18 @@ module.exports = {
             m.redraw();
         }).catch(function(err) {
             console.log('nzm', 'setWalletPwd error', err);
+        });
+    },
+    // 设置用户信息
+    setUserInfo() {
+        Http.getUserInfo({}).then(data => {
+            if (data.result.code === 0) {
+                console.log(data.account);
+                gM.setAccount(data.account);
+                broadcast.emit({ cmd: broadcast.GET_USER_INFO_READY, data: data.account });
+            }
+        }).catch(err => {
+            console.log(err);
         });
     },
     // 获取用户信息
