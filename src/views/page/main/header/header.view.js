@@ -83,7 +83,7 @@ module.exports = {
                                             ]),
                                             m('p', { class: `body-4 has-text-level-3` }, [
                                                 // 最高125倍杠杆，交易简单
-                                                'USDT ' + I18n.$t('10604')
+                                                I18n.$t('10604')
                                             ])
                                         ])
                                     ])
@@ -100,12 +100,12 @@ module.exports = {
                                         m('div', { class: `content` }, [
                                             m('span', { class: `title-small` }, [
                                                 // 合约训练营
-                                                'USDT ' + I18n.$t('10605')
+                                                I18n.$t('10605')
                                             ]),
                                             m('span', { class: `header-new-info has-bg-primary px-3 ml-2` }, ["NEW"]),
                                             m('p', { class: `body-4 has-text-level-3` }, [
                                                 // " 模拟交易，秒变合约高手"
-                                                'USDT ' + I18n.$t('10606')
+                                                I18n.$t('10606')
                                             ])
                                         ])
                                     ])
