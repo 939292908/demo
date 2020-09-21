@@ -28,9 +28,9 @@ module.exports = {
                         highlightFlag: 0,
                         navList: [
                             { to: '/selfManage', title: I18n.$t('10051') } /* 个人总览 */,
-                            { to: '/securityManage', title: I18n.$t('10181') } /* 账户安全 */
+                            { to: '/securityManage', title: I18n.$t('10181') }, /* 账户安全 */
                             // { to: '/selfManage', title: I18n.$t('10182') } /* 身份认证 */,
-                            // { to: '/selfManage', title: I18n.$t('10183') } /* API管理 */,
+                            { to: '/apiManager', title: I18n.$t('10183') } /* API管理 */
                             // { to: '/selfManage', title: I18n.$t('10184') } /* 邀请返佣 */
                         ]
                     }),

@@ -1,7 +1,7 @@
 /*
  * @Author: leez
  * @Date: 2020-08-19 10:55:34
- * @LastEditTime: 2020-08-19 18:00:31
+ * @LastEditTime: 2020-09-21 17:57:29
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \website-project\src\api\index.js
@@ -777,4 +777,20 @@ export function getWalletPwdStatus (params = {}, options = { withCredentials: fa
  */
 export function setFishCode (params = {}, options = { withCredentials: false }) {
     return Http.post(API.ACCOUNT_SETTING, params, options);
+}
+/* API管理接口
+ * @param params
+ * {
+ *     opType: '1' // 操作： 1-添加Api，2-删除Api，3-获取Api列表，4-激活apiKey（刷新使用时间戳）
+ *     apiKeyName: 'api1' // apiKey的名称
+ *     cidr: '124.79.95.77'  // opType=1时，地址限制
+ *     role: '11111' // opType=1时，权限（按位存放）
+ *     delKey: '' // opType=2时，要删除的key
+ *     token: 'XwAAyGcymWYyM5mMmTN2McRMzM2TbA07cDtxZ3ZmbPTsIwfx' // 用户登陆成功获得的令牌
+ * }
+ * @param options
+ * @returns {*}
+ */
+export function userAPI (params = {}, options = { withCredentials: false }) {
+    return Http.post(API.USER_API, params, options);
 }
