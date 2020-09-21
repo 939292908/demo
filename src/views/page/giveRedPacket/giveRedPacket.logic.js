@@ -5,34 +5,101 @@ const logic = {
     coinBtnList: [],
     // 当前选中币种
     currentCoin: 'BTC',
-    // 红包类型
-    redPacketType: 1, // 1：普通/ 2：拼手气
-    // 资金密码
-    password: "",
-    // 资金密码 错误提示
-    passwordErrMsg: "",
-    // 资金密码 校验
-    passwordVerify(password) {
-        if (password === "") return "资金密码输入错误，请重新输入";
+    // 红包类型 // 1：普通/ 2：拼手气
+    redPacketType: 1,
+    // 钱包可用金额
+    wltMoney: '100',
+    // 资金密码 模块
+    passwordModel: {
+        // 密码
+        value: "",
+        // 错误提示
+        errMsg: "",
+        // 更新密码
+        updateValue(password) {
+            this.value = password;
+        },
+        // 校验密码
+        verifyPassword() {
+            if (this.value === "") {
+                return this.updateErrMsg("资金密码输入错误，请重新输入");
+            }
+            return true;
+        },
+        // 更新提示
+        updateErrMsg(msg) {
+            this.errMsg = msg;
+        }
     },
-    // 资金密码 input事件
-    passwordInput(e) {
-        logic.password = e.target.value;
-        logic.passwordErrMsg = logic.passwordVerify(logic.password);
+    // 发红包表单 模块
+    formModel: {
+        // 获取表单
+        getFormData() {
+            return {
+                coin: logic.currentCoin, // 币种
+                money: logic.moneyFormItem.value, // 金额
+                num: logic.numberFormItem.value, // 数量
+                info: logic.infoFormItem.value // 祝福
+            };
+        },
+        // 校验表单
+        verifyFormData() {
+            this.updateErrMsg(''); // 清空提示
+            const data = this.getFormData(); // 表单数据
+            const maxNum = parseInt(logic.wltMoney / data.money); // 最多可发个数
+
+            // 钱包可用资产不足，请及时划转！
+            if (this.getTotalCoin() > logic.wltMoney) {
+                return this.updateErrMsg("钱包可用资产不足，请及时划转！");
+            }
+            // 请输入红包个数
+            if (!data.num || data.num === '0') {
+                return this.updateErrMsg("请输入红包个数");
+            }
+            // ============= 普通 / 拼手气 红包校验 =============
+            if (logic.redPacketType === 1) { // 普通
+                // 一次最多可发xx个红包
+                if (data.num > maxNum) {
+                    return this.updateErrMsg(`一次最多可发${maxNum}个红包`);
+                }
+            } else { // 拼手气
+                // 一次最多可发xx个红包
+                if (data.num > 10000) {
+                    return this.updateErrMsg(`一次最多可发${10000}个红包`);
+                }
+            }
+
+            return true;
+        },
+        // 错误提示
+        formErrMsg: "",
+        // 更新提示
+        updateErrMsg(msg) {
+            this.errMsg = msg;
+        },
+        // 获取总金额
+        getTotalCoin() {
+            if (logic.redPacketType === 1) { // 普通红包
+                return (logic.numberFormItem.value * logic.moneyFormItem.value || '0');
+            } else { // 拼手气红包
+                return logic.moneyFormItem.value || '0';
+            }
+        }
     },
-    // 切换 红包类型
+    // 切换红包类型
     switchRedPacketType() {
         this.redPacketType = this.redPacketType === 1 ? 2 : 1;
     },
     // 币种按钮list
-    buildCoinBtnList(list) {
+    getCoinBtnList(list) {
         this.coinBtnList = list.map(item => {
             const btnOption = {
                 label: item.name,
-                class: () => `is-primary is-rounded mr-2 ${logic.currentCoin === item.name ? '' : 'is-outlined'}`,
+                class: () => `is-primary is-rounded mr-2 font-weight-bold ${logic.currentCoin === item.name ? '' : 'is-outlined'}`,
                 size: 'size-2',
                 onclick() {
-                    logic.currentCoin = item.name;
+                    logic.currentCoin = item.name; // 更新数据
+                    logic.formModel.verifyFormData(); // 校验表单
                 }
             };
             return btnOption;
@@ -54,10 +121,7 @@ const logic = {
     },
     // 金额 fomeItem组件配置
     moneyFormItem: {
-        // label: () => logic.redPacketType === 1 ? '单个金额' : '总金额',
-        // unit: 'USDT',
         value: '',
-        // placeholder: '输入红包金额',
         updateOption(params) {
             Object.keys(params).forEach(key => (this[key] = params[key]));
         }
@@ -83,15 +147,15 @@ const logic = {
             Object.keys(params).forEach(key => (this[key] = params[key]));
         },
         onOk() {
-            this.updateOption({ isShow: !this.isShow });
+            console.log(logic.formModel.getFormData());
+            logic.passwordModel.verifyPassword() && this.updateOption({ isShow: !this.isShow });
         }
     },
     // 划转按钮click
     transferBtnClick() {
-        transferLogic.updateOption({
-            isShow: true
-        });
+        transferLogic.updateOption({ isShow: true });
     },
+
     oninit(vnode) {
         const data = [
             {
@@ -123,7 +187,7 @@ const logic = {
                 name: 'ABC3'
             }
         ];
-        this.buildCoinBtnList(data);
+        this.getCoinBtnList(data);
     },
     oncreate(vnode) {
     },

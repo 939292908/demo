@@ -24,8 +24,8 @@ const index = require('./views/index');
 const root = document.querySelector('#app');
 m.mount(root, index.default);
 // iconfont
-// import('./assets/iconfont/iconfont.js');
-// import('./assets/iconfont/iconfont.css');
+import('./assets/iconfont/iconfont.js');
+import('./assets/iconfont/iconfont.css');
 require('@/router/index');
 models.getFunList();
 if (utils.getItem('ex-session')) {

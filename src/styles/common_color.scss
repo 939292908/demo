@@ -285,19 +285,19 @@ body,
 
 /* 线颜色四级 */
 .theme--dark .has-line-level-1 {
-    border-color: var(--c-line-darken);
+    border-color: var(--c-line-darken) !important;
 }
 
 .theme--dark .has-line-level-2 {
-    border-color: var(--c-line-darken1);
+    border-color: var(--c-line-darken1) !important;
 }
 
 .theme--dark .has-line-level-3 {
-    border-color: var(--c-line-darken2);
+    border-color: var(--c-line-darken2) !important;
 }
 
 .theme--dark .has-line-level-4 {
-    border-color: var(--c-line-darken3);
+    border-color: var(--c-line-darken3) !important;
 }
 
 /* 提示颜色 */
@@ -637,19 +637,19 @@ body,
 
 /* 线颜色四级 */
 .theme--light .has-line-level-1 {
-    border-color: var(--c-line-lighten);
+    border-color: var(--c-line-lighten) !important;
 }
 
 .theme--light .has-line-level-2 {
-    border-color: var(--c-line-lighten1);
+    border-color: var(--c-line-lighten1) !important;
 }
 
 .theme--light .has-line-level-3 {
-    border-color: var(--c-line-lighten2);
+    border-color: var(--c-line-lighten2) !important;
 }
 
 .theme--light .has-line-level-4 {
-    border-color: var(--c-line-lighten3);
+    border-color: var(--c-line-lighten3) !important;
 }
 
 /* 提示颜色 */
@@ -819,4 +819,10 @@ $primary-lighten: var(--c-primary-lighten);
 .button.is-primary.is-outlined:focus {
     background-color: initial !important;
     color: $primary-lighten !important;
+}
+
+// 按钮禁用样式
+.button[disabled] {
+    background-color: #9EA2AF !important;
+    opacity: 1;
 }

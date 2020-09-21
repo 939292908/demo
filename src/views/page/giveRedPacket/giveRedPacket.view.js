@@ -22,8 +22,9 @@ module.exports = {
                         m('p', { class: `` }, '分享红包'),
                         m('p', { class: `mt-2` }, '红包资产可用来提现，交易')
                     ]),
-                    m('div', { class: `column is-5` }, [
-                        '图片'
+                    // 图片
+                    m('div', { class: `column is-5 has-text-right` }, [
+                        m('iframe', { src: require("@/assets/img/people.svg").default, width: "106", height: "106" })
                     ])
                 ]),
                 // 币种
@@ -31,13 +32,13 @@ module.exports = {
                     m('span', { class: `body-3 mr-2` }, '币种'),
                     m('span', { class: `title-small` }, logic.currentCoin)
                 ]),
-                // 币种btn 列表
+                // 币种btnList 列表
                 m('div', { class: `views-give-red-packet-btn-list mt-7` }, [
                     logic.coinBtnList.map(btnOption => m(Button, btnOption))
                 ]),
                 // 划转
                 m('div', { class: `has-text-right mt-7 mb-2` }, [
-                    m('span', { class: `` }, '钱包可用：0.00USDT '),
+                    m('span', { class: `` }, `钱包可用：${logic.wltMoney}USDT `),
                     m('span', { class: `has-text-primary`, onclick() { logic.transferBtnClick(); } }, ' 划转')
                 ]),
                 // 单个金额/总金额
@@ -48,7 +49,8 @@ module.exports = {
                     type: 'number',
                     value: logic.moneyFormItem.value,
                     updateOption(params) {
-                        logic.moneyFormItem.updateOption(params);
+                        logic.moneyFormItem.updateOption(params); // 更新数据
+                        logic.formModel.verifyFormData(); // 校验表单
                     }
                 }),
                 // 切换 普通/拼手气红包
@@ -64,7 +66,10 @@ module.exports = {
                     placeholder: '输入红包个数',
                     type: 'number',
                     value: logic.numberFormItem.value,
-                    updateOption: params => logic.numberFormItem.updateOption(params)
+                    updateOption: params => {
+                        logic.numberFormItem.updateOption(params); // 更新数据
+                        logic.formModel.verifyFormData(); // 校验表单
+                    }
                 }),
                 // 祝福信息
                 m(FormItem, {
@@ -77,11 +82,11 @@ module.exports = {
                         }
                     })
                 }),
-                // 错误消息
-                m('div', { class: `has-text-up has-text-centered mt-5` }, "单个红包金额不可超过 ?"),
+                // 表单错误提示
+                m('div', { class: `has-text-up has-text-centered mt-5` }, logic.formModel.errMsg),
                 // 显示总金额
                 m('div', { class: `has-text-centered mt-7` }, [
-                    m('p', { class: `title-medium` }, "共 1 BTC"),
+                    m('p', { class: `title-medium` }, `共 ${logic.formModel.getTotalCoin()} ${logic.currentCoin}`),
                     m('p', { class: `` }, " ≈¥78009.7")
                 ]),
                 // 塞币进红包 btn
@@ -89,9 +94,10 @@ module.exports = {
                     label: "塞币进红包",
                     class: 'pub-layout-bottom-btn is-primary mb-3',
                     width: 1,
-                    disabled: logic.redPacketType === 2,
+                    disabled: !logic.formModel.verifyFormData(),
                     onclick() {
-                        logic.giveRedPModal.updateOption({ isShow: true });
+                        // console.log(logic.formModel.getFormData(), 666);
+                        logic.formModel.verifyFormData() && logic.giveRedPModal.updateOption({ isShow: true });
                     }
                 }),
                 // 划转 Modal
@@ -107,34 +113,42 @@ module.exports = {
                     },
                     slot: {
                         body: [
-                            m('div', { class: `columns is-mobile` }, [
+                            // 红包币种
+                            m('div', { class: `columns is-mobile mb-3 mt-7` }, [
                                 m('div', { class: `column is-4` }, "红包币种"),
-                                m('div', { class: `column is-8` }, "USDT")
+                                m('div', { class: `column is-8 font-weight-bold` }, logic.currentCoin)
                             ]),
-                            m('div', { class: `columns is-mobile` }, [
+                            // 红包类型
+                            m('div', { class: `columns is-mobile mb-3` }, [
                                 m('div', { class: `column is-4` }, "红包类型"),
-                                m('div', { class: `column is-8` }, "拼手气红包")
+                                m('div', { class: `column is-8 font-weight-bold` }, logic.redPacketType === 1 ? "普通红包" : "拼手气红包")
                             ]),
-                            m('div', { class: `columns is-mobile` }, [
+                            // 红包金额
+                            m('div', { class: `columns is-mobile mb-3` }, [
                                 m('div', { class: `column is-4` }, "红包金额"),
-                                m('div', { class: `column is-8` }, "5 USDT")
+                                m('div', { class: `column is-8 font-weight-bold` }, (logic.moneyFormItem.value || "0") + " " + logic.currentCoin)
                             ]),
-                            m('div', { class: `columns is-mobile` }, [
+                            // 红包个数
+                            m('div', { class: `columns is-mobile mb-3` }, [
                                 m('div', { class: `column is-4` }, "红包个数"),
-                                m('div', { class: `column is-8` }, "5 个")
+                                m('div', { class: `column is-8 font-weight-bold` }, (logic.numberFormItem.value || "0") + " 个")
                             ]),
                             // 资金密码 input
-                            m('div', { class: `is-flex is-align-center` }, [
+                            m('div', { class: `views-give-red-packet-password is-flex is-align-center has-line-level-4 px-3 mt-7` }, [
                                 m('div', { class: `no-wrap` }, "资金密码"),
                                 m('input', {
-                                    class: `input`,
+                                    class: `input border-none`,
                                     type: "password",
                                     placeholder: "资金密码",
-                                    value: logic.password,
-                                    oninput(e) { logic.passwordInput(e); }
+                                    value: logic.passwordModel.value,
+                                    oninput(e) {
+                                        logic.passwordModel.updateValue(e.target.value); // 更新密码
+                                        logic.passwordModel.verifyPassword(); // 校验
+                                    }
                                 })
                             ]),
-                            m('div', { class: `has-text-up mt-3` }, logic.passwordErrMsg)
+                            // 密码错误提示
+                            m('div', { class: `has-text-up mt-3` }, logic.passwordModel.errMsg)
                         ]
                     }
                 })

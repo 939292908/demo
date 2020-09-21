@@ -1,10 +1,15 @@
 .views-give-red-packet {
     .views-give-red-packet-coin {
-        border-bottom-width: 1px;
-        border-bottom-style: solid;
+        border-bottom: 1px solid;
     }
     .views-give-red-packet-btn-list {
         overflow-x: auto;
         white-space: nowrap;
+        &::-webkit-scrollbar {
+            display: none;
+        }
+    }
+    .views-give-red-packet-password {
+        border: 1px solid;
     }
 }

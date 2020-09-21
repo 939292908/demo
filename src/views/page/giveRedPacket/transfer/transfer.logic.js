@@ -1,6 +1,6 @@
 
 const logic = {
-    isShow: false,
+    isShow: true, // 显示划转弹框
     updateOption(params) {
         Object.keys(params).forEach(key => (this[key] = params[key]));
     },
@@ -10,6 +10,7 @@ const logic = {
     onClose() {
         this.updateOption({ isShow: !this.isShow });
     },
+    // form钱包 列表
     fromWltList: [
         {
             id: "01",
@@ -33,6 +34,7 @@ const logic = {
         evenKey: "fromMenuOption",
         showMenu: false,
         currentId: "",
+        menuHeight: 120,
         updateOption (option) {
             Object.keys(option).forEach(key => (this[key] = option[key]));
         },
@@ -48,6 +50,7 @@ const logic = {
         evenKey: "toMenuOption",
         showMenu: false,
         currentId: "",
+        menuHeight: 120,
         updateOption (option) {
             Object.keys(option).forEach(key => (this[key] = option[key]));
         },

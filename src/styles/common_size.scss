@@ -349,6 +349,26 @@ body,
     border-radius: 0 var(--c-radius-level3) var(--c-radius-level3) 0 !important;
 }
 
+.border-radius-large-2 {
+    border-radius: var(--c-radius-level4) !important;
+}
+
+.border-radius-large-2-top {
+    border-radius: var(--c-radius-level4) var(--c-radius-level4) 0 0 !important;
+}
+
+.border-radius-large-2-bottom {
+    border-radius: 0 0 var(--c-radius-level4) var(--c-radius-level4) !important;
+}
+
+.border-radius-large-2-left {
+    border-radius: var(--c-radius-level4) 0 0 var(--c-radius-level4) !important;
+}
+
+.border-radius-large-2-right {
+    border-radius: 0 var(--c-radius-level4) var(--c-radius-level4) 0 !important;
+}
+
 .border-radius-none {
     border-radius: 0 !important;
 }

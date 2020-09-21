@@ -1,8 +1,8 @@
 // 主题色
 const primary = Object.freeze({
-    lighten: '#83D0E1',
+    lighten: '#FF6F1E',
 
-    darken: '#83D0E1'
+    darken: '#FF6F1E'
 });
 // 辅助色
 const sub = Object.freeze({
@@ -138,7 +138,7 @@ const fontsz = {
     level11: '72px'
 };
 const iconsz = {
-    level0: '6px',
+    level0: '6 px',
     level1: '10px',
     level2: '16px',
     level3: '24px',
