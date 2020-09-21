@@ -76,7 +76,7 @@ const antiFCView = {
                                     antiFCLogic.newAntiFishingCodeValue = e.target.value;
                                 },
                                 onblur: () => {
-                                    antiFCView.check(antiFCLogic.antiFishingCodeValue, 'tip1');
+                                    antiFCView.check(antiFCLogic.newAntiFishingCodeValue, 'tip1');
                                 },
                                 value: antiFCLogic.newAntiFishingCodeValue
                             }
