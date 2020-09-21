@@ -12,15 +12,12 @@ const globalModels = require('@/models/globalModels');
 
 const extract = {
     locale: '',
-    initWType: '',
+    currentWType: '',
     name: 'FROM_DATA',
     promptText: l180n.$t('10407'),
     // promptText: '如果您希望将本地数字资产提出至某地址，则该地址及为您的提币地址。 *某些地址可能需要您提供地址的标签，请务必填写，否则有丢失币的风险 *填写错误可能导致资产损失，请仔细核对 *完成LV3身份认证后，24h提币额度提升至100BTC，如需更多请联系客服',
     UserInfo: {},
     showCurrencyMenu: false, // 选币打开 关闭
-    selectActiveId: {
-        wType: ''
-    },
     selectList: [],
     linkButtonList: [],
     currentExtractableNum: '0', // 可提
@@ -80,16 +77,11 @@ const extract = {
     },
     getSelectListData: function () {
         const selectList = [...wlt.wallet['03']];
-        let index = 0;
         for (let i = 0; i < selectList.length; i++) {
             selectList[i].label = selectList[i].wType + ' | ' + wlt.wltFullName[selectList[i].wType].name;
             selectList[i].id = selectList[i].wType;
-            if (this.initWType === selectList[i].wType) {
-                index = i;
-                this.selectActiveId.wType = selectList[i].wType;
-            }
         }
-        this.selectActiveId.wType = selectList.id;
+        const index = selectList.findIndex(item => item.wType === this.currentWType) > -1 ? selectList.findIndex(item => item.wType === this.currentWType) : 0;
         this.selectList = selectList;
         this.currentSelect = this.selectList[index];
         this.checkIdcardVerify();
@@ -98,6 +90,7 @@ const extract = {
     },
     getlinkButtonListData: function () {
         this.currenLinkBut = '';
+        this.currentWType = this.currentSelect.wType; // 读语言 redraw 时 判断当钱应该显示币种
         this.errCodeToNull();
         this.getCurrentFeesChange();
         if (this.currentSelect.wType !== 'USDT') {
@@ -260,7 +253,7 @@ const extract = {
         const self = this;
         wlt.init();
         this.initGeetest();
-        this.initWType = initWType;
+        this.currentWType = initWType;
         this.locale = l180n.getLocale();
         self.UserInfo = UserInfo.getAccount();
         if (Object.keys(self.UserInfo).length > 0) {
@@ -302,14 +295,20 @@ const extract = {
             cmd: broadcast.GET_USER_INFO_READY,
             isall: true
         });
-        // broadcast.offMsg({
-        //     key: this.name,
-        //     cmd: broadcast.MSG_WLT_READY,
-        //     isall: true
-        // });
+        broadcast.offMsg({
+            key: this.name,
+            cmd: broadcast.MSG_WLT_READY,
+            isall: true
+        });
+        broadcast.offMsg({
+            key: this.name,
+            cmd: broadcast.MSG_ASSETD_UPD,
+            isall: true
+        });
         // 生命周期结束清空列表选中字段并关闭列表
+        this.currentWType = '';
         this.showCurrencyMenu = false;
-        this.selectActiveId.wType = '';
+        this.currentSelect = {};
         this.errCodeToNull();
         wlt.remove();
     },
