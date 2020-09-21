@@ -246,11 +246,11 @@ const extract = {
         //     return this.handleTotalShow({ content: l180n.$t('10540') /* '提币需邮件确认，请先绑定邮箱 为了您的账户安全，还需绑定手机或谷歌' */, isLinshiErWeiMa: true });
         // }
         if (this.UserInfo.setting2fa.email !== 1) {
-            return this.handleTotalShow({ content: l180n.$t('10404') /* '提币需邮件确认，请先绑定邮箱' */, buttonText: l180n.$t('10229') /* '邮箱验证' */, buttonClick: () => { m.route.set("/my"); } });
+            return this.handleTotalShow({ content: l180n.$t('10404') /* '提币需邮件确认，请先绑定邮箱' */, buttonText: l180n.$t('10229') /* '邮箱验证' */, buttonClick: () => { m.route.set("/bindEmail"); } });
         }
         const doubleButtonCof = [
-            { text: l180n.$t('10227') /* '谷歌验证' */, issolid: false, click: () => { m.route.set("/my"); } },
-            { text: l180n.$t('10228') /* '手机验证' */, issolid: true, click: () => { m.route.set("/my"); } }
+            { text: l180n.$t('10227') /* '谷歌验证' */, issolid: false, click: () => { m.route.set("/openGoogleVerify"); } },
+            { text: l180n.$t('10228') /* '手机验证' */, issolid: true, click: () => { m.route.set("/bindPhone"); } }
         ];
         if (this.UserInfo.setting2fa.google !== 1 && this.UserInfo.setting2fa.phone !== 1) {
             return this.handleTotalShow({ content: l180n.$t('10405')/* '为了您的账户安全，请先绑定手机或谷歌' */, doubleButton: true, doubleButtonCof });
