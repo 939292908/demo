@@ -45,8 +45,8 @@ module.exports = {
         if (!ip) {
             return '';
         } else if (!this.apiIP.test(ip)) {
-            return 'IP格式不正确';
-            // return I18n.$t('10532');
+            // return 'IP格式不正确';
+            return I18n.$t('10612');
         } else {
             return '';
         }
@@ -56,7 +56,8 @@ module.exports = {
             // return '该字段不能为空'; /* '该字段不能为空' */
             return I18n.$t('10416');
         } else if (name.length > 20) {
-            return '备注名不能超过20个字符';
+            // return '备注名不能超过20个字符';
+            return I18n.$t('10613');
         } else {
             return '';
         }

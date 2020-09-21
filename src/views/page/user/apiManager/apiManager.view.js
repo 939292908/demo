@@ -103,7 +103,7 @@ module.exports = {
                                     I18n.$ft('10322', [{
                                         class: 'cursor-pointer has-text-primary',
                                         onclick() {
-                                            console.log('API文档');
+                                            window.open('https://github.com/gmex/api-doc');
                                         }
                                     }])
                                 )

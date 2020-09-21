@@ -26,7 +26,8 @@ module.exports = {
     submit() {
         if (this.table.length >= 10) {
             return window.$message({
-                content: '最多可创建10组API KEY',
+                // content: '最多可创建10组API KEY',
+                content: I18n.$t('10611'),
                 type: 'danger'
             });
         }
