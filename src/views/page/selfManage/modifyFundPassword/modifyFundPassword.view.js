@@ -75,6 +75,12 @@ const modifyFPView = {
         modifyFPView.showPassword3 = false;
         /* 是否显示密码初始化 end */
 
+        /* 提示初始化 start */
+        modifyFPView.tip1 = null;
+        modifyFPView.tip2 = null;
+        modifyFPView.tip3 = null;
+        /* 提示初始化 end */
+
         modifyFPView.totalFlag = false;
 
         modifyFPLogic.initFn();
@@ -103,7 +109,7 @@ const modifyFPView = {
                     modifyFPLogic.modifyFlag === 0 ? I18n.$t('10290') /* '资产密码将用于转账、法币交易、红包等功能，请妥善保管，避免泄露. 请不要忘记自己的资产密码，资产密码遗忘后，需要将身份证及个人信息发送至客服邮箱，客服在24小时内处理' */ : I18n.$t('10205') /* '出于安全考虑，修改账户安全项之后，24h内禁止提币、内部转出与卖币操作' */
                 )
             ]),
-            m('div', { class: `center content-width container has-bg-level-2 margin-LRauto pt-7` }, [
+            m('div', { class: `center content-width container has-bg-level-2 margin-LRauto pt-7 pb-8` }, [
                 m('div', { class: `center-content content-width container` }, [
                     m('div', { class: `oldPwdDiv mb-5`, style: { display: `${modifyFPLogic.modifyFlag === 0 ? `none` : ``}` } }, [
                         m('span', { class: `body-5` }, I18n.$t('10276') /* '原密码' */),
