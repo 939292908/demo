@@ -191,6 +191,9 @@ const modifyFPView = {
                 // 弹框确认
                 onOk() {
                     modifyFPView.tipModalIsShow = false;
+                },
+                onClose() {
+                    modifyFPView.tipModalIsShow = false;
                 }
             }),
             m(theBindingOrNot),
