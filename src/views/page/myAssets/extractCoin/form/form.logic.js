@@ -62,15 +62,6 @@ const extract = {
     getCoinInfo: function () {
         extract.coinInfo = wlt.coinInfo;
         extract.getCurrentCoinFees();
-        // const params = { locale: extract.locale, vp: Conf.exchId };
-        // webApi.getCoinInfo(params).then(res => {
-        //     if (res.result.code === 0) {
-        //         extract.coinInfo = res.result.data;
-        //         return extract.getCurrentCoinFees();
-        //         // return extract.getSelectListData();
-        //     }
-        //     window.$message({ content: errCode.getWebApiErrorCode(res.result.code), type: 'danger' });
-        // });
     },
     getCurrentCoinFees: function () {
         const self = this;
@@ -251,19 +242,19 @@ const extract = {
         m.redraw();
     },
     handleUserCanAction: function () {
-        if (this.UserInfo.setting2fa.email !== 1 || (this.UserInfo.setting2fa.google !== 1 && this.UserInfo.setting2fa.phone !== 1)) {
-            return this.handleTotalShow({ content: l180n.$t('10540') /* '提币需邮件确认，请先绑定邮箱 为了您的账户安全，还需绑定手机或谷歌' */, isLinshiErWeiMa: true });
+        // if (this.UserInfo.setting2fa.email !== 1 || (this.UserInfo.setting2fa.google !== 1 && this.UserInfo.setting2fa.phone !== 1)) {
+        //     return this.handleTotalShow({ content: l180n.$t('10540') /* '提币需邮件确认，请先绑定邮箱 为了您的账户安全，还需绑定手机或谷歌' */, isLinshiErWeiMa: true });
+        // }
+        if (this.UserInfo.setting2fa.email !== 1) {
+            return this.handleTotalShow({ content: l180n.$t('10404') /* '提币需邮件确认，请先绑定邮箱' */, buttonText: l180n.$t('10229') /* '邮箱验证' */, buttonClick: () => { m.route.set("/my"); } });
         }
-        // if (this.UserInfo.setting2fa.email !== 1) {
-        //     return this.handleTotalShow({ content: l180n.$t('10404') /* '提币需邮件确认，请先绑定邮箱' */, buttonText: l180n.$t('10229') /* '邮箱验证' */, buttonClick: () => { m.route.set("/my"); } });
-        // }
-        // const doubleButtonCof = [
-        //     { text: l180n.$t('10227') /* '谷歌验证' */, issolid: false, click: () => { m.route.set("/my"); } },
-        //     { text: l180n.$t('10228') /* '手机验证' */, issolid: true, click: () => { m.route.set("/my"); } }
-        // ];
-        // if (this.UserInfo.setting2fa.google !== 1 && this.UserInfo.setting2fa.phone !== 1) {
-        //     return this.handleTotalShow({ content: l180n.$t('10405')/* '为了您的账户安全，请先绑定手机或谷歌' */, doubleButton: true, doubleButtonCof });
-        // }
+        const doubleButtonCof = [
+            { text: l180n.$t('10227') /* '谷歌验证' */, issolid: false, click: () => { m.route.set("/my"); } },
+            { text: l180n.$t('10228') /* '手机验证' */, issolid: true, click: () => { m.route.set("/my"); } }
+        ];
+        if (this.UserInfo.setting2fa.google !== 1 && this.UserInfo.setting2fa.phone !== 1) {
+            return this.handleTotalShow({ content: l180n.$t('10405')/* '为了您的账户安全，请先绑定手机或谷歌' */, doubleButton: true, doubleButtonCof });
+        }
     },
     oninit: function (initWType) {
         const self = this;

@@ -179,13 +179,18 @@ const rechargeLogic = {
     },
     initFn() {
         wlt.init();
+        let i = 0;
         rechargeLogic.wTypeParam = window.router.getUrlInfo().params.wType;
 
         broadcast.onMsg({
             key: 'index',
             cmd: broadcast.MSG_WLT_READY,
             cb: () => {
-                rechargeLogic.inits();
+                if (i === 0) {
+                    rechargeLogic.inits();
+                    // console.log('MSG_WLT_READY.........');
+                }
+                i = i + 1;
             }
         });
         rechargeLogic.inits();
