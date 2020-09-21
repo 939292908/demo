@@ -128,7 +128,7 @@ class Router {
             // 带参数的路由，解析路由参数
             if (param.includes('?')) {
                 const paramStr = param.split('?');
-                const paramsArr = paramStr.split('&');
+                const paramsArr = paramStr[1].split('&');
                 const params = {};
                 for (const item of paramsArr) {
                     const key = item.split('=')[0];
