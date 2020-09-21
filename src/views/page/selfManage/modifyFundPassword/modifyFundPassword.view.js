@@ -9,7 +9,7 @@ const VerifyView = require('@/views/components/dialogVerify/dialogVerify.view');
 const config = require('@/config.js');
 const regExp = require('@/models/validate/regExp');
 const Modal = require('@/views/components/common/Modal');
-// const theBindingOrNot = require('@/views/components/theBindingOrNot/theBindingOrNot.view');
+const theBindingOrNot = require('@/views/components/theBindingOrNot/theBindingOrNot.view');
 
 const modifyFPView = {
     tipModalIsShow: true, /* 修改资金密码提示框 */
@@ -75,13 +75,18 @@ const modifyFPView = {
         modifyFPView.showPassword3 = false;
         /* 是否显示密码初始化 end */
 
+        /* 提示初始化 start */
+        modifyFPView.tip1 = null;
+        modifyFPView.tip2 = null;
+        modifyFPView.tip3 = null;
+        /* 提示初始化 end */
+
         modifyFPView.totalFlag = false;
 
         modifyFPLogic.initFn();
     },
     view: () => {
         return m('div', { class: `views-page-selfManage-modifyFundPassword theme--light pb-8` }, [
-            // JSON.stringify(modifyFPView.showPassword1), JSON.stringify(modifyFPView.showPassword1), JSON.stringify(modifyFPView.showPassword1),
             m(Header, {
                 highlightFlag: 1,
                 navList: [
@@ -95,18 +100,16 @@ const modifyFPView = {
             m('div', { class: `operation mb-7 has-bg-level-2` }, [
                 m('div', { class: `content-width container` }, [
                     m('i', { class: `iconfont icon-Return has-text-title cursor-pointer`, onclick: () => { window.router.go(-1); } }),
-                    m('span', { class: `has-text-title my-4 ml-4 title-medium` }, I18n.$t('10289') /* '您正在设置资金密码' */)
+                    m('span', { class: `has-text-title my-4 ml-4 title-medium` }, modifyFPLogic.modifyFlag === 0 ? I18n.$t('10289') /* '您正在设置资金密码' */ : I18n.$t('10291') /* '您正在修改资金密码' */)
                 ])
             ]),
             m('div', { class: `warning mb-3 pl-7 content-width container` }, [
                 m('i', { class: `iconfont icon-Tooltip pr-2 has-text-primary cursor-pointer` }),
                 m('span', { class: `has-text-level-3` },
-                    modifyFPLogic.modifyFlag === 0
-                        ? I18n.$t('10290') /* '资产密码将用于转账、法币交易、红包等功能，请妥善保管，避免泄露. 请不要忘记自己的资产密码，资产密码遗忘后，需要将身份证及个人信息发送至客服邮箱，客服在24小时内处理' */
-                        : I18n.$t('10205') /* '出于安全考虑，修改账户安全项之后，24h内禁止提币、内部转出与卖币操作' */
+                    modifyFPLogic.modifyFlag === 0 ? I18n.$t('10290') /* '资产密码将用于转账、法币交易、红包等功能，请妥善保管，避免泄露. 请不要忘记自己的资产密码，资产密码遗忘后，需要将身份证及个人信息发送至客服邮箱，客服在24小时内处理' */ : I18n.$t('10205') /* '出于安全考虑，修改账户安全项之后，24h内禁止提币、内部转出与卖币操作' */
                 )
             ]),
-            m('div', { class: `center content-width container has-bg-level-2 margin-LRauto pt-7` }, [
+            m('div', { class: `center content-width container has-bg-level-2 margin-LRauto pt-7 pb-8` }, [
                 m('div', { class: `center-content content-width container` }, [
                     m('div', { class: `oldPwdDiv mb-5`, style: { display: `${modifyFPLogic.modifyFlag === 0 ? `none` : ``}` } }, [
                         m('span', { class: `body-5` }, I18n.$t('10276') /* '原密码' */),
@@ -169,7 +172,7 @@ const modifyFPView = {
                                 class: modifyFPView.showPassword3 ? 'icon-yincang' : 'icon-zichanzhengyan'
                             })
                         }),
-                        m('span', { class: `has-text-tip-error`, style: { display: modifyFPView.tip3s ? `` : `none` } }, modifyFPView.tip3)
+                        m('span', { class: `has-text-tip-error`, style: { display: modifyFPView.tip3 ? `` : `none` } }, modifyFPView.tip3)
                     ]),
                     m('div', { class: `btn mt-7` }, [
                         m('button', { class: `has-bg-primary cursor-pointer`, onclick: () => { modifyFPView.confirmBtn(); } }, I18n.$t('10337') /* '确定' */)
@@ -190,7 +193,7 @@ const modifyFPView = {
                     modifyFPView.tipModalIsShow = false;
                 }
             }),
-            // m(theBindingOrNot),
+            m(theBindingOrNot),
             modifyFPLogic.isShowVerifyView ? m(VerifyView, {
                 close: () => modifyFPLogic.switchSafetyVerifyModal(false),
                 isHandleVerify: true,
