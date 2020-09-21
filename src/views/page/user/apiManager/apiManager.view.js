@@ -60,8 +60,10 @@ module.exports = {
                 ])
             ]),
             m('div.has-bg-level-1.pb-8', {}, [
-                m('div.content-bg', {}, [
-                    m('div.content-width.has-bg-level-2.border-radius-medium.columns.pa-8.content-center', {}, [
+                m('div.content-width.has-bg-level-2.border-radius-medium.content-center.content-bg', {}, [
+                    m('div.mx-5.py-3.title-small', {}, ['创建API']),
+                    m('hr.ma-0'),
+                    m('div.columns.pa-8', {}, [
                         m('div.column.body-5.has-text-level-1', {}, [
                             m('div.mb-2', {}, [I18n.$t('10092')/* '备注' */]),
                             m('input.input', {
@@ -121,39 +123,39 @@ module.exports = {
                             ),
                             m('div', {},
                                 ['* ' + I18n.$t('10324') +/* '请不要泄露您的APIKEY，以免造成资产损失。出于安全考虑，建议为APIKEY绑定IP，每个APIKEY最多绑定20个IP地址或IP段。单个IP地址或IP段直接填写，多个IP地址或IP段用半角逗号分隔，如：' */
-                                '192.168.1.1,192.168.1.2,192.168.0.1/24'
+                                    '192.168.1.1,192.168.1.2,192.168.0.1/24'
                                 ]
                             )
                         ]),
                         m('div.column.is-1', {}, [])
-                    ]),
-                    m('div.content-width.has-bg-level-2.border-radius-medium.content-center.mt-5', {}, [
-                        m('div.mx-5.py-3.title-small', {}, [I18n.$t('10325')/* 我的APIKEY */]),
-                        m('hr.ma-0'),
-                        APIManager.loading ? m('div.is-align-items-center.py-8', {}, [m(Loading)])
-                            : tableBody.length
-                                ? m('div.mx-5.my-3', {}, [
-                                    m('div.columns.is-variable.is-6', {}, [
-                                        m('div.column.is-2.body-4.has-text-level-4.font-weight-medium.tips-line-height', {}, [I18n.$t('10092')/* '备注' */]),
-                                        m('div.column.is-1.body-4.has-text-level-4.font-weight-medium.tips-line-height', {}, [I18n.$t('10326')/* '权限' */]),
-                                        m('div.column.is-3.body-4.has-text-level-4.font-weight-medium.tips-line-height', {}, [I18n.$t('10327')/* '访问密钥' */]),
-                                        m('div.column.is-3.body-4.has-text-level-4.font-weight-medium.tips-line-height', {}, [I18n.$t('10328')/* '绑定IP地址' */]),
-                                        m('div.column.is-2.body-4.has-text-level-4.font-weight-medium.tips-line-height', {}, [I18n.$t('10091')/* '时间' */]),
-                                        m('div.column.is-1.body-4.has-text-level-4.font-weight-medium.tips-line-height.has-text-right', {}, [I18n.$t('10068')/* '操作' */])
-                                    ]),
-                                    tableBody
-                                ])
-                                : m('div', {}, [
-                                    m('div.is-align-items-center.mt-8.nodata-icon', {}, [
-                                        m('div.has-bg-level-1.mb-3.is-align-items-center', {}, [
-                                            m('img', { src: require(`@/assets/img/myAssets/noneData.svg`).default })
-                                        ])
-                                    ]),
-                                    m('div.is-align-items-center.pb-8', {}, [
-                                        m('div.has-text-level-4', {}, I18n.$t('10515')/* '暂无数据' */)
-                                    ])]
-                                )
                     ])
+                ]),
+                m('div.content-width.has-bg-level-2.border-radius-medium.content-center.mt-5.content-bg', {}, [
+                    m('div.mx-5.py-3.title-small', {}, [I18n.$t('10325')/* 我的APIKEY */]),
+                    m('hr.ma-0'),
+                    APIManager.loading ? m('div.is-align-items-center.py-8', {}, [m(Loading)])
+                        : tableBody.length
+                            ? m('div.mx-5.my-3', {}, [
+                                m('div.columns.is-variable.is-6', {}, [
+                                    m('div.column.is-2.body-4.has-text-level-4.font-weight-medium.tips-line-height', {}, [I18n.$t('10092')/* '备注' */]),
+                                    m('div.column.is-1.body-4.has-text-level-4.font-weight-medium.tips-line-height', {}, [I18n.$t('10326')/* '权限' */]),
+                                    m('div.column.is-3.body-4.has-text-level-4.font-weight-medium.tips-line-height', {}, [I18n.$t('10327')/* '访问密钥' */]),
+                                    m('div.column.is-3.body-4.has-text-level-4.font-weight-medium.tips-line-height', {}, [I18n.$t('10328')/* '绑定IP地址' */]),
+                                    m('div.column.is-2.body-4.has-text-level-4.font-weight-medium.tips-line-height', {}, [I18n.$t('10091')/* '时间' */]),
+                                    m('div.column.is-1.body-4.has-text-level-4.font-weight-medium.tips-line-height.has-text-right', {}, [I18n.$t('10068')/* '操作' */])
+                                ]),
+                                tableBody
+                            ])
+                            : m('div', {}, [
+                                m('div.is-align-items-center.mt-8.nodata-icon', {}, [
+                                    m('div.has-bg-level-1.mb-3.is-align-items-center', {}, [
+                                        m('img', { src: require(`@/assets/img/myAssets/noneData.svg`).default })
+                                    ])
+                                ]),
+                                m('div.is-align-items-center.pb-8', {}, [
+                                    m('div.has-text-level-4', {}, I18n.$t('10515')/* '暂无数据' */)
+                                ])]
+                            )
                 ])
             ]),
             APIManager.showValid ? m(VerifyView, {
