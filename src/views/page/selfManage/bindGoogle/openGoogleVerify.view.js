@@ -53,9 +53,7 @@ const openGView = {
             openGLogic.LcCode = '';
             openGLogic.LcPWd = '';
             openGLogic.tip1 = null;
-            openGLogic.tip1IsShow = false;
             openGLogic.tip2 = null;
-            openGLogic.tip2IsShow = false;
             /* 初始化 end */
 
             openGView.checkFlag = openGView.checkFlag - 1;
