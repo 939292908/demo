@@ -14,6 +14,11 @@ const antiFCView = {
     tip2: null, /* 新钓鱼码提示内容 */
     oninit: () => {
         antiFCLogic.initFn();
+
+        /* 新钓鱼码提示内容初始化 start */
+        antiFCView.tip1 = null;
+        antiFCView.tip2 = null;
+        /* 新钓鱼码提示内容初始化 end */
     },
     /* 校验 */
     check(value, type) {
