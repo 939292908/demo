@@ -123,9 +123,7 @@ module.exports = {
     },
     doubleButtonVnode: function () {
         return m('div.butBox dis-flex', [
-            this.props.doubleButtonCof.map(item => m('div.itemBut', { class: item.issolid ? 'bgBut' : '' }, item.text))
-            // m('div.itemBut', '谷歌验证'),
-            // m('div.itemBut bgBut', '手机验证')
+            this.props.doubleButtonCof.map(item => m('div.itemBut', { class: item.issolid ? 'bgBut' : '', onclick: item.click }, item.text))
         ]);
     },
     verifyVnode: function (vNode) {

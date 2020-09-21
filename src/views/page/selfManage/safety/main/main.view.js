@@ -21,10 +21,10 @@ module.exports = {
                         mainLogic.user?.setting2fa?.google ? m('div.but py-1 px-4', { onclick: this.handleToUrl.bind(this, '/closeGoogleVerify') }, l180n.$t('10245') /* '解绑' */) : m('div.but py-1 px-4', { onclick: this.handleToUrl.bind(this, '/openGoogleVerify') }, l180n.$t('10231') /* '绑定' */)
                     ]))),
                     m('div.addPadding py-5', m(Block, { Icon: m('i.iconfont icon-PhoneVerification'), title: l180n.$t('10228') /* '手机验证' */, subhead: l180n.$t('10243') /* '用于提现和修改安全设置' */ }, m('div.dis-flex', [
-                        mainLogic.user?.setting2fa?.phone ? m('div.has-text-primary', utils.hideAccountNameInfo(mainLogic.user?.phone)) : m('div.but py-1 px-4', { onclick: this.handleToUrl.bind(this, '/bindPhone') }, l180n.$t('10231') /* '绑定' */)
+                        mainLogic.user?.phone ? m('div.has-text-primary', utils.hideAccountNameInfo(mainLogic.user?.phone)) : m('div.but py-1 px-4', { onclick: this.handleToUrl.bind(this, '/bindPhone') }, l180n.$t('10231') /* '绑定' */)
                     ]))),
                     m('div', m(Block, { Icon: m('i.iconfont icon-Mailbox'), title: l180n.$t('10229') /* '邮箱验证' */, subhead: l180n.$t('10243') /* '用于提现和修改安全设置' */ }, m('div.dis-flex', [
-                        mainLogic.user?.setting2fa?.email ? m('div.has-text-primary', utils.hideAccountNameInfo(mainLogic.user?.email)) : m('div.but py-1 px-4', { onclick: this.handleToUrl.bind(this, '/bindEmail') }, l180n.$t('10231') /* '绑定' */)
+                        mainLogic.user?.email ? m('div.has-text-primary', utils.hideAccountNameInfo(mainLogic.user?.email)) : m('div.but py-1 px-4', { onclick: this.handleToUrl.bind(this, '/bindEmail') }, l180n.$t('10231') /* '绑定' */)
                     ])))
                 ]),
                 m('div.rightBox', [
