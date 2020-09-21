@@ -13,9 +13,7 @@ const regExp = require('@/models/validate/regExp');
 
 module.exports = {
     showPassword: false, /* 是否显示密码 */
-    tip1IsShow: false, /* 登录密码提示是否显示 */
     tip1: null, /* 登录密码提示内容 */
-    tip2IsShow: false, /* 谷歌验证码提示是否显示 */
     tip2: null, /* 谷歌验证码提示内容 */
     totalFlag: false, /* 是否通过验证 */
     secret: '', /* 密钥 */
@@ -78,10 +76,9 @@ module.exports = {
         if (tip) {
             this.totalFlag = false;
             this.tip1 = tip;
-            this.tip1IsShow = true;
             return;
         }
-        this.tip1IsShow = false;
+        this.tip1 = '';
         this.totalFlag = true;
     },
     /* 谷歌验证码校验 */
@@ -90,10 +87,9 @@ module.exports = {
         if (!this.LcCode) {
             this.totalFlag = false;
             this.tip2 = I18n.$t('10416'); /* '该字段不能为空' */
-            this.tip2IsShow = true;
             return;
         }
-        this.tip2IsShow = false;
+        this.tip2 = '';
         this.totalFlag = true;
     },
     confirmBtn: function () {

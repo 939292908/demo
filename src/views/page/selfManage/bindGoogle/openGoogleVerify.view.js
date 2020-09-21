@@ -53,9 +53,7 @@ const openGView = {
             openGLogic.LcCode = '';
             openGLogic.LcPWd = '';
             openGLogic.tip1 = null;
-            openGLogic.tip1IsShow = false;
             openGLogic.tip2 = null;
-            openGLogic.tip2IsShow = false;
             /* 初始化 end */
 
             openGView.checkFlag = openGView.checkFlag - 1;
@@ -172,7 +170,7 @@ const openGView = {
                                     class: openGLogic.showPassword ? 'icon-yincang' : 'icon-zichanzhengyan'
                                 })
                             }),
-                            m('span', { class: `has-text-tip-error`, style: { display: openGLogic.tip1IsShow ? `` : `none` } }, openGLogic.tip1)
+                            m('span', { class: `has-text-tip-error`, style: { display: openGLogic.tip1 ? `` : `none` } }, openGLogic.tip1)
                         ]),
                         m('div', { class: `codeDiv margin-LRauto mb-8` }, [
                             m('span', { class: `body-5 mb-2` }, I18n.$t('10119') /* '谷歌验证码' */),
@@ -188,7 +186,7 @@ const openGView = {
                                     value: openGLogic.LcCode
                                 }
                             }),
-                            m('span', { class: `has-text-tip-error`, style: { display: openGLogic.tip2IsShow ? `` : `none` } }, openGLogic.tip2)
+                            m('span', { class: `has-text-tip-error`, style: { display: openGLogic.tip2 ? `` : `none` } }, openGLogic.tip2)
                         ]),
                         /* m('div', { class: `tips mt-3` }, [
                             m('span', { class: ``, style: { display: openGLogic.pwdTipFlag ? `` : `none` } }, '登录密码错误请重新输入!'),

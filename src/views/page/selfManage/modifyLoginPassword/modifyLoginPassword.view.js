@@ -7,15 +7,13 @@ const VerifyView = require('@/views/components/dialogVerify/dialogVerify.view');
 const Header = require('@/views/components/indexHeader/indexHeader.view');
 const InputWithComponent = require('@/views/components/inputWithComponent/inputWithComponent.view');
 const regExp = require('@/models/validate/regExp');
+const theBindingOrNot = require('@/views/components/theBindingOrNot/theBindingOrNot.view');
 
 const modifyLPView = {
     totalFlag: false, /* 是否通过校验 */
     showPassword1: false, /* 是否显示密码 */
     showPassword2: false, /* 是否显示密码 */
     showPassword3: false, /* 是否显示密码 */
-    tip1IsShow: false, // 原密码下方提示是否显示
-    tip2IsShow: false, // 新密码下方提示是否显示
-    tip3IsShow: false, // 确认密码下方是否显示
     tip1: null, /* 原密码下方提示 */
     tip2: null, /* 新密码下方提示 */
     tip3: null, /* 确认密码下方提示 */
@@ -28,10 +26,9 @@ const modifyLPView = {
         if (tip) {
             modifyLPView.totalFlag = false;
             modifyLPView.tip1 = tip;
-            modifyLPView.tip1IsShow = true;
             return;
         }
-        modifyLPView.tip1IsShow = false;
+        modifyLPView.tip1 = '';
     },
     /* 校验【新密码与原密码不可相同】 */
     newPwdCheck() {
@@ -40,17 +37,15 @@ const modifyLPView = {
         if (tip) {
             modifyLPView.totalFlag = false;
             modifyLPView.tip2 = tip;
-            modifyLPView.tip2IsShow = true;
             return;
         }
         /* 新旧密码是否是一致 */
         if (modifyLPLogic.oldLpwd === modifyLPLogic.newLpwd) {
             modifyLPView.totalFlag = false;
             modifyLPView.tip2 = I18n.$t('10596'); /* '新密码与原密码不可一致' */
-            modifyLPView.tip2IsShow = true;
             return;
         }
-        modifyLPView.tip2IsShow = false;
+        modifyLPView.tip2 = '';
         modifyLPView.totalFlag = true; // 通过校验
     },
     /* 校验新与确认【密码不一致】 */
@@ -60,10 +55,9 @@ const modifyLPView = {
         if (tip) {
             modifyLPView.totalFlag = false;
             modifyLPView.tip3 = tip;
-            modifyLPView.tip3IsShow = true;
             return;
         }
-        modifyLPView.tip3IsShow = false; // 隐藏提示
+        modifyLPView.tip3 = '';
         modifyLPView.totalFlag = true; // 通过校验
     },
     /* 确认按钮事件 */
@@ -114,7 +108,7 @@ const modifyLPView = {
                                 class: modifyLPView.showPassword1 ? 'icon-yincang' : 'icon-zichanzhengyan'
                             })
                         }),
-                        m('span', { class: `has-text-tip-error`, style: { display: modifyLPView.tip1IsShow ? `` : `none` } }, modifyLPView.tip1)
+                        m('span', { class: `has-text-tip-error`, style: { display: modifyLPView.tip1 ? `` : `none` } }, modifyLPView.tip1)
                     ]),
                     m('div', { class: `newPwdDiv mb-5` }, [
                         m('span', { class: `body-5 mb-2` }, I18n.$t('10210') /* '新密码' */),
@@ -135,7 +129,7 @@ const modifyLPView = {
                                 class: modifyLPView.showPassword2 ? 'icon-yincang' : 'icon-zichanzhengyan'
                             })
                         }),
-                        m('span', { class: `has-text-tip-error`, style: { display: modifyLPView.tip2IsShow ? `` : `none` } }, modifyLPView.tip2)
+                        m('span', { class: `has-text-tip-error`, style: { display: modifyLPView.tip2 ? `` : `none` } }, modifyLPView.tip2)
                     ]),
                     m('div', { class: `confirmPWdDiv mb-5` }, [
                         m('span', { class: `body-5 mb-2` }, I18n.$t('10211') /* '确认密码' */),
@@ -156,13 +150,14 @@ const modifyLPView = {
                                 class: modifyLPView.showPassword3 ? 'icon-yincang' : 'icon-zichanzhengyan'
                             })
                         }),
-                        m('span', { class: `has-text-tip-error`, style: { display: modifyLPView.tip3IsShow ? `` : `none` } }, modifyLPView.tip3)
+                        m('span', { class: `has-text-tip-error`, style: { display: modifyLPView.tip3 ? `` : `none` } }, modifyLPView.tip3)
                     ]),
                     m('div', { class: `btn mt-8` }, [
                         m('button', { class: `has-bg-primary cursor-pointer`, onclick: () => { modifyLPView.confirmBtn(); } }, I18n.$t('10337') /* '确定' */)
                     ])
                 ])
             ]),
+            m(theBindingOrNot),
             modifyLPLogic.isShowVerifyView ? m(VerifyView, {
                 close: () => modifyLPLogic.switchSafetyVerifyModal(false),
                 isHandleVerify: true,
