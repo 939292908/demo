@@ -7,6 +7,7 @@ const VerifyView = require('@/views/components/dialogVerify/dialogVerify.view');
 const Modal = require('@/views/components/common/Modal');
 const regExp = require('@/models/validate/regExp');
 const Loading = require('@/views/components/loading/loading.view');
+const Tooltip = require('@/views/components/common/Tooltip/Tooltip.view');
 const utils = require('@/util/utils').default;
 require('./apiManager.scss');
 module.exports = {
@@ -20,7 +21,14 @@ module.exports = {
                     m('div.column.is-2.py-4.body-4.font-weight-medium', {}, [item.name]),
                     m('div.column.is-1.py-4.body-4.font-weight-medium', {}, [APIManager.getAuth(item.role)]),
                     m('div.column.is-3.py-4.body-4.font-weight-medium', {}, [item.k]),
-                    m('div.column.is-3.py-4.body-4.font-weight-medium.break-word', {}, [item.cidr]),
+                    m('div.column.is-3.py-4.body-4.font-weight-medium', {}, [
+                        m(Tooltip, {
+                            label: m('div.ip-content.w100', {}, [item.cidr]),
+                            content: item.cidr.length > 40 ? item.cidr : '',
+                            class: 'w100 break-word',
+                            width: '300px'
+                        })
+                    ]),
                     m('div.column.is-2.py-4.body-4.font-weight-medium', {}, [utils.formatDate(new Date(item.ctime * 1000))]),
                     m('div.column.is-1.py-4.body-4.font-weight-medium.has-text-right', {}, [
                         m('a.has-text-primary.cursor-pointer', {
@@ -33,13 +41,13 @@ module.exports = {
         return m('div.theme--light.page-user-api-manager', {}, [
             m('div.has-bg-sub-level-1.header-bg', {}, [
                 m(Header, {
-                    highlightFlag: 3,
+                    highlightFlag: 2,
                     navList: [
                         { to: '/selfManage', title: I18n.$t('10051') } /* 个人总览 */,
                         { to: '/securityManage', title: I18n.$t('10181') } /* 账户安全 */,
-                        { to: '/selfManage', title: I18n.$t('10182') } /* 身份认证 */,
-                        { to: '/apiManager', title: I18n.$t('10183') } /* API管理 */,
-                        { to: '/selfManage', title: I18n.$t('10184') } /* 邀请返佣 */
+                        // { to: '/selfManage', title: I18n.$t('10182') } /* 身份认证 */,
+                        { to: '/apiManager', title: I18n.$t('10183') } /* API管理 */
+                        // { to: '/selfManage', title: I18n.$t('10184') } /* 邀请返佣 */
                     ]
                 }),
                 m('div.is-align-items-center', {}, [

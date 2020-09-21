@@ -32,4 +32,15 @@
     .break-word {
         word-wrap: break-word !important;
     }
+
+    .ip-content {
+        position: absolute;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+    }
+
+    .my-tooltip .dropdown-menu.my-tooltip-position-bottom {
+        top: 20px !important;
+    }
 }
