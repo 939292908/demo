@@ -14,6 +14,7 @@ module.exports = {
     selectName: '',
     anotherName: '',
     code: '',
+    canConfirm: false, // 发送验证码后才能点确定
     /**
      * 发送验证码
      */
@@ -22,11 +23,13 @@ module.exports = {
             this.setSmsCd();
         }
         validate.sendSmsCode().then(res => {
-            if (res.result.code === -1) {
+            if (res.result.code === 0) {
+                this.canConfirm = true;
+            } else if (res.result.code === -1) {
                 this.cleanSmsCd();
                 this.geetestCallBackType = 'sms';
                 geetest.verify();
-            } else if (res.result.code !== 0) {
+            } else {
                 this.cleanSmsCd();
                 window.$message({
                     content: errCode.getWebApiErrorCode(res.result.code),
@@ -46,11 +49,13 @@ module.exports = {
             this.setEmailCd();
         }
         validate.sendEmailCode().then(res => {
-            if (res.result.code === -1) {
+            if (res.result.code === 0) {
+                this.canConfirm = true;
+            } else if (res.result.code === -1) {
                 this.cleanEmailCd();
                 self.geetestCallBackType = 'email';
                 geetest.verify();
-            } else if (res.result.code !== 0) {
+            } else {
                 this.cleanEmailCd();
                 window.$message({
                     content: errCode.getWebApiErrorCode(res.result.code),
@@ -217,6 +222,7 @@ module.exports = {
         this.code = '';
         this.selectType = '';
         this.anotherType = '';
+        this.canConfirm = false;
         broadcast.offMsg({
             key: 'validate',
             cmd: 'geetestMsg',

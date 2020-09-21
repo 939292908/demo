@@ -32,6 +32,7 @@ const register = {
     int: null,
     checkbox: false, // 条款同意
     geetestCallBackType: '',
+    canConfirm: false, // 发送验证码后才能点确定
     /**
      * 必须填写邀请码
      * @returns {boolean}
@@ -161,11 +162,13 @@ const register = {
             this.setCd();
         }
         validate.sendSmsCode().then(res => {
-            if (res.result.code === -1) {
+            if (res.result.code === 0) {
+                this.canConfirm = true;
+            } else if (res.result.code === -1) {
                 this.cleanCd();
                 this.geetestCallBackType = 'sms';
                 geetest.verify();
-            } else if (res.result.code !== 0) {
+            } else {
                 this.cleanCd();
                 window.$message({ content: errCode.getWebApiErrorCode(res.result.code), type: 'danger' });
             }
@@ -181,11 +184,13 @@ const register = {
             this.setCd();
         }
         validate.sendEmailCode().then(res => {
-            if (res.result.code === -1) {
+            if (res.result.code === 0) {
+                this.canConfirm = true;
+            } else if (res.result.code === -1) {
                 this.cleanCd();
                 self.geetestCallBackType = 'email';
                 geetest.verify();
-            } else if (res.result.code !== 0) {
+            } else {
                 this.cleanCd();
                 window.$message({ content: errCode.getWebApiErrorCode(res.result.code), type: 'danger' });
             }
@@ -284,6 +289,7 @@ const register = {
     onremove() {
         this.cleanUp();
         this.cd = 0;
+        this.canConfirm = false;
         if (this.int) {
             clearInterval(this.int);
             this.int = null;
