@@ -183,7 +183,6 @@ module.exports = {
         }
         // console.log(this.tableNewAry, '----------');
         this.tableNewAry.length === 0 ? this.isShowNoneData = true : this.isShowNoneData = false;
-        m.redraw();
     },
     initFlag: function () {
         const fun = gM.getFunctions();
