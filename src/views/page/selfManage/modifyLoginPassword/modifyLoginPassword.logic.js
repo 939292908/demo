@@ -79,9 +79,12 @@ module.exports = {
             });
         } else if (typeFlag === 2) {
             params = {
+                securePhone: that.nationNo + '-' + utils.hideMobileInfo(that.phoneNum),
                 areaCode: that.nationNo, // 区号
                 phoneNum: that.nationNo + '-' + that.phoneNum, // 手机号
+                resetPwd: true, // 是否重置密码
                 lang: I18n.getLocale(),
+                phone: that.phoneNum,
                 mustCheckFn: "" // 验证类型
             };
             validate.activeSms(params, function() {
@@ -90,12 +93,13 @@ module.exports = {
             // console.log(2);
         } else if (typeFlag === 3) {
             params = {
-                smsConfig: {
-                    areaCode: that.nationNo, // 区号
-                    phoneNum: that.nationNo + '-' + that.phoneNum, // 手机号
-                    lang: I18n.getLocale(),
-                    mustCheckFn: "" // 验证类型
-                }
+                securePhone: that.nationNo + '-' + utils.hideMobileInfo(that.phoneNum),
+                areaCode: that.nationNo, // 区号
+                phoneNum: that.nationNo + '-' + that.phoneNum, // 手机号
+                resetPwd: true, // 是否重置密码
+                lang: I18n.getLocale(),
+                phone: that.phoneNum,
+                mustCheckFn: "" // 验证类型
             };
             console.log(params);
             validate.activeSmsAndGoogle(params, function() {

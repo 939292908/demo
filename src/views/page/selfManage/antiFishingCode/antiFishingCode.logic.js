@@ -6,6 +6,7 @@ const geetest = require('@/models/validate/geetest').default;
 const validate = require('@/models/validate/validate').default;
 const I18n = require('@/languages/I18n').default;
 const gM = require('@/models/globalModels');
+const utils = require('@/util/utils').default;
 
 module.exports = {
     antiFishCodeFlag: null, /* 当前是设置钓鱼码还是修改钓鱼码 */
@@ -73,6 +74,7 @@ module.exports = {
             });
         } else if (typeFlag === 2) {
             params = {
+                securePhone: that.nationNo + '-' + utils.hideMobileInfo(that.phoneNum),
                 areaCode: that.nationNo, // 区号
                 phoneNum: that.nationNo + '-' + that.phoneNum, // 手机号
                 resetPwd: true, // 是否重置密码
@@ -85,14 +87,13 @@ module.exports = {
             });
         } else if (typeFlag === 3) {
             params = {
-                smsConfig: {
-                    areaCode: that.nationNo, // 区号
-                    phoneNum: that.nationNo + '-' + that.phoneNum, // 手机号
-                    resetPwd: true, // 是否重置密码
-                    lang: I18n.getLocale(),
-                    phone: that.phoneNum,
-                    mustCheckFn: "" // 验证类型
-                }
+                securePhone: that.nationNo + '-' + utils.hideMobileInfo(that.phoneNum),
+                areaCode: that.nationNo, // 区号
+                phoneNum: that.nationNo + '-' + that.phoneNum, // 手机号
+                resetPwd: true, // 是否重置密码
+                lang: I18n.getLocale(),
+                phone: that.phoneNum,
+                mustCheckFn: "" // 验证类型
             };
             validate.activeSmsAndGoogle(params, function() {
                 that.setFishCode();

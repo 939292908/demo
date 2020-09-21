@@ -10,6 +10,7 @@ const md5 = require('md5');
 const gM = require('@/models/globalModels');
 const errCode = require('@/util/errCode').default;
 const regExp = require('@/models/validate/regExp');
+const utils = require('@/util/utils').default;
 
 module.exports = {
     showPassword: false, /* 是否显示密码 */
@@ -152,15 +153,15 @@ module.exports = {
             console.log('未绑定手机与邮箱');
             return;
         }
-        if (this.setting2fa.email === 1 && this.setting2fa.phone === 0) {
-            console.log('已绑定邮箱');
-            this.initSecurityVerification(1);
+        if (this.setting2fa.email === 1 && this.setting2fa.phone === 1) {
+            console.log('已绑定手机和邮箱');
+            this.initSecurityVerification(3);
         } else if (this.setting2fa.email === 0 && this.setting2fa.phone === 1) {
             console.log('已绑定手机');
             this.initSecurityVerification(2);
-        } else if (this.setting2fa.email === 1 && this.setting2fa.phone === 1) {
-            console.log('已绑定手机和邮箱');
-            this.initSecurityVerification(3);
+        } else if (this.setting2fa.email === 1 && this.setting2fa.phone === 0) {
+            console.log('已绑定邮箱');
+            this.initSecurityVerification(1);
         }
         this.switchSafetyVerifyModal(true); // 打开弹框
     },
@@ -180,6 +181,7 @@ module.exports = {
             });
         } else if (typeFlag === 2) {
             params = {
+                securePhone: that.nationNo + '-' + utils.hideMobileInfo(that.phoneNum),
                 areaCode: that.nationNo, // 区号
                 phoneNum: that.nationNo + '-' + that.phoneNum, // 手机号
                 resetPwd: true, // 是否重置密码
@@ -192,13 +194,14 @@ module.exports = {
             });
         } else if (typeFlag === 3) {
             params = {
-                emailConfig: {
+                emailconfig: {
                     secureEmail: that.email,
                     host: config.official,
                     fn: 'be',
                     lang: I18n.getLocale()
                 },
-                smsConfig: {
+                smsconfig: {
+                    securePhone: that.nationNo + '-' + utils.hideMobileInfo(that.phoneNum),
                     areaCode: that.nationNo, // 区号
                     phoneNum: that.nationNo + '-' + that.phoneNum, // 手机号
                     resetPwd: true, // 是否重置密码
