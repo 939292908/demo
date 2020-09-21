@@ -183,6 +183,7 @@ module.exports = {
         }
         // console.log(this.tableNewAry, '----------');
         this.tableNewAry.length === 0 ? this.isShowNoneData = true : this.isShowNoneData = false;
+        m.redraw();
     },
     initFlag: function () {
         const fun = gM.getFunctions();
@@ -263,7 +264,6 @@ module.exports = {
         }
         if (this.oldHideMoneyFlag !== vnode.attrs.hideMoneyFlag) {
             this.oldHideMoneyFlag = vnode.attrs.hideMoneyFlag;
-            m.redraw();
         }
         this.oldValue = vnode.attrs.swValue;
         this.oldHideMoneyFlag = vnode.attrs.hideMoneyFlag;
