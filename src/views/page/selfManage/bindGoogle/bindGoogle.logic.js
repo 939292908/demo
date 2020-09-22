@@ -14,8 +14,8 @@ const utils = require('@/util/utils').default;
 
 module.exports = {
     showPassword: false, /* 是否显示密码 */
-    tip1: null, /* 登录密码提示内容 */
-    tip2: null, /* 谷歌验证码提示内容 */
+    tip1: '', /* 登录密码提示内容 */
+    tip2: '', /* 谷歌验证码提示内容 */
     totalFlag: false, /* 是否通过验证 */
     secret: '', /* 密钥 */
     IOSDLAdd: 'https://apps.apple.com/us/app/google-authenticator/id388497605',
@@ -280,6 +280,10 @@ module.exports = {
     initFn: function() {
         this.LcPWd = ''; // 登录密码值初始化
         this.LcCode = ''; // 谷歌验证码值初始化
+        this.showPassword = false;
+        this.totalFlag = false;
+        this.tip1 = '';
+        this.tip2 = '';
         broadcast.onMsg({
             key: 'index',
             cmd: broadcast.GET_USER_INFO_READY,

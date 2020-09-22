@@ -152,19 +152,6 @@ module.exports = {
     },
     initFn: function() {
         const that = this;
-        // Http.getWalletPwdStatus({
-        //     settingType: 13, /* 设置类型，固定值 */
-        //     settingKey: 'ucp' /* 设置类型的key，固定值 */
-        // }).then(function(arg) {
-        //     // console.log('nzm', 'getWalletPwdStatus success', arg);
-        //     if (arg.result.code === 0) {
-        //         that.modifyFlag = arg.settingValue === '*' ? 1 : 0;
-        //     } else {
-        //         window.$message({ content: errCode.getWebApiErrorCode(arg.result.code), type: 'danger' });
-        //     }
-        // }).catch(function(err) {
-        //     console.log('nzm', 'getWalletPwdStatus error', err);
-        // });
 
         this.modifyFlag = Number(window.router.getUrlInfo().params.type);
         this.oldFundPwd = null; // 输入的旧密码初始化
