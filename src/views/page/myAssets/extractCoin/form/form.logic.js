@@ -22,6 +22,7 @@ const extract = {
     linkButtonList: [],
     currentExtractableNum: '0', // 可提
     currentSelect: {}, // 选中的币种
+    isChangeSelect: false, // 是否是切换币种
     currenLinkBut: '', // 选中链名字
     currentFees: {}, // 最小值 手续费
     isChangeClose: false, // 是否修改弹框关闭事件
@@ -89,12 +90,13 @@ const extract = {
         m.redraw();
     },
     getlinkButtonListData: function () {
-        this.currenLinkBut = '';
         this.currentWType = this.currentSelect.wType; // 读语言 redraw 时 判断当钱应该显示币种
         this.errCodeToNull();
         this.getCurrentFeesChange();
         if (this.currentSelect.wType !== 'USDT') {
             this.linkButtonList = [];
+            this.currenLinkBut = '';
+            this.isChangeSelect = false;
             return;
         }
         const canWithdrawChains = {};
@@ -109,9 +111,10 @@ const extract = {
             return canWithdrawChains[`${'canWithdraw' + item.attr}`];
         });
         if (this.linkButtonList.length > 0) {
-            this.currenLinkBut = this.linkButtonList[0].attr;
+            this.currenLinkBut = this.currenLinkBut ? this.currenLinkBut : this.linkButtonList[0].attr;
             this.getCurrentFeesChange(true);
         }
+        this.isChangeSelect = false;
     },
     getCurrentFeesChange: function (isLinkBut) {
         const wType = isLinkBut ? this.currenLinkBut : this.currentSelect.wType;
@@ -351,6 +354,7 @@ const extract = {
             extract.currentSelect = item;
             // // 检查是否需要身份认证
             extract.checkIdcardVerify();
+            extract.isChangeSelect = true;
             extract.getlinkButtonListData();
         },
         menuList() {
