@@ -24,10 +24,10 @@ module.exports = {
         ip: ''
     },
     submit() {
-        if (this.table.length >= 10) {
+        if (this.table.length >= 5) {
             return window.$message({
                 // content: '最多可创建10组API KEY',
-                content: I18n.$t('10611'),
+                content: I18n.$t('10611', { value: 5 }),
                 type: 'danger'
             });
         }

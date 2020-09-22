@@ -61,7 +61,7 @@ module.exports = {
             ]),
             m('div.has-bg-level-1.pb-8', {}, [
                 m('div.content-width.has-bg-level-2.border-radius-medium.content-center.content-bg', {}, [
-                    m('div.mx-5.py-3.title-small', {}, ['创建API']),
+                    m('div.mx-5.py-3.title-small', {}, [I18n.$t('10614')/* '创建API' */]),
                     m('hr.ma-0'),
                     m('div.columns.pa-8', {}, [
                         m('div.column.body-5.has-text-level-1', {}, [
@@ -113,7 +113,7 @@ module.exports = {
                                     I18n.$ft('10322', [{
                                         class: 'cursor-pointer has-text-primary',
                                         onclick() {
-                                            window.open('https://github.com/gmex/api-doc');
+                                            window.open('https://github.com/vbit-lab/api-doc');
                                         }
                                     }])
                                 )

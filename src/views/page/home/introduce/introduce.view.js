@@ -77,7 +77,7 @@ module.exports = {
                     ]),
                     // 下载按钮
                     m('div', { class: `h100 ${utils.isMobile() ? 'pl-8 mt-5' : 'home-download-btn-vbit'}` }, [
-                        m('div', { class: `dropdown is-hoverable` }, [
+                        m('div', { class: `dropdown is-hoverable is-up` }, [
                             m('div', { class: "dropdown-trigger has-text-1" }, [
                                 // Android 按钮
                                 m('a', { class: `border-radius-medium  Android-button button is-info is-inverted is-outlined download-ios mr-4   ${utils.isMobile() ? 'title-small  mb-6 ml-7' : 'pc才有的类名xx'}`, target: "_blank", href: "https://vbit.me/m#/downloadApp" }, [
@@ -91,7 +91,7 @@ module.exports = {
                                 ])
                             ])
                         ]),
-                        m('div', { class: `dropdown is-hoverable` }, [
+                        m('div', { class: `dropdown is-hoverable is-up` }, [
                             m('div', { class: "dropdown-trigger has-text-1" }, [
                                 // iOS 按钮
                                 m('a', { class: `border-radius-medium  IOS-button button is-info is-inverted is-outlined download-iOS ${utils.isMobile() ? 'title-small  mb-7 ml-7' : 'pc才有的类名xx'} `, target: "_blank", href: "https://vbit.me/m#/downloadApp" }, [
