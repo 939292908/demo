@@ -12,10 +12,6 @@ module.exports = {
         FromDataMode.oninit(initWType);
         FromDataMode.option2.currentId = initWType;
     },
-    // handleSelectChange: function (e) {
-    //     FromDataMode.currentSelect = FromDataMode.selectList[e.target.selectedIndex];
-    //     FromDataMode.getlinkButtonListData();
-    // },
     handleLabelVal: function (e) {
         FromDataMode.extractCoin.linkName = e.target.value;
     },
