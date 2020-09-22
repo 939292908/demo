@@ -1,3 +1,11 @@
+/*
+ * @Author: your name
+ * @Date: 2020-09-21 17:55:32
+ * @LastEditTime: 2020-09-21 17:56:44
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: \website-project\src\api\config\apiText.js
+ */
 module.exports = {
     // 获取用户信息
     REQ_USER_INFO: '/users/userInfo',
@@ -85,5 +93,7 @@ module.exports = {
     // 设置自选、资金密码等
     FAVORITE_SETTING_V1: '/v1/users/favoriteSetting',
     // 账户设置，设置防钓鱼码等
-    ACCOUNT_SETTING: '/users/AccountSetting'
+    ACCOUNT_SETTING: '/users/AccountSetting',
+    // API管理接口
+    USER_API: '/users/api'
 };

@@ -3,18 +3,44 @@
         width: 100%;
         height: 284px !important;
     }
+
     .content-bg {
         position: relative;
         top: -44px;
         z-index: 1;
     }
+
     .tips-line-height {
         line-height: 20px;
     }
+
     .checkbox-text {
         vertical-align: middle;
     }
+
     .content-center {
         margin: 0 auto;
+    }
+
+    .nodata-icon div {
+        margin: 0 auto;
+        width: 88px;
+        height: 88px;
+        border-radius: 50%;
+    }
+
+    .break-word {
+        word-wrap: break-word !important;
+    }
+
+    .ip-content {
+        position: absolute;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+    }
+
+    .my-tooltip .dropdown-menu.my-tooltip-position-bottom {
+        top: 20px !important;
     }
 }

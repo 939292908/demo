@@ -8,21 +8,13 @@ const Dropdown = require('@/views/components/common/Dropdown/Dropdown.view');
 const I18n = require('@/languages/I18n').default;
 const Header = require('@/views/components/indexHeader/indexHeader.view');
 const Loading = require('@/views/components/loading/loading.view');
+const rechargeLogic = require('./recharge.logic');
 
 module.exports = {
-    nameTips: null, // 链名称提示
     oninit: () => {
         rechargeIndex.initFn();
         AssetRecords.init('03', 'recharge', 1, 10);
         AssetRecords.setLanguageListen();
-        this.nameTips =
-        [
-            I18n.$t('10400') /* 'USDT-ERC20是Tether泰达公司基于ETH网络发行的USDT，充币地址是ETH地址，充提币走ETH网络，USDT-ERC20使用的是ERC20协议。' */,
-
-            I18n.$t('10507') /* 'USDT-TRC20(USDT-TRON)是Tether泰达公司基于TRON网络发行的USDT，充币地址是TRON地址，充提币走TRON网络，USDT-TRC20(USDT-TRON)使用的是TRC20协议。' */,
-
-            I18n.$t('10508')/* 'USDT-Omni是Tether泰达公司基于BTC网络发行的USDT，充币地址是BTC地址，充提币走BTC网络，USDT-Omni使用的协议是建立在BTC区块链网络上的omni layer协议。' */
-        ];
     },
     oncreate: () => {
     },
@@ -69,7 +61,7 @@ module.exports = {
                                 m('div.navbar-item.cursor-pointer', { class: `` }, [
                                     m(Tooltip, {
                                         label: m('i', { class: `iconfont icon-Tooltip` }),
-                                        content: this.nameTips.map(item => {
+                                        content: rechargeLogic.nameTips.map(item => {
                                             return m('span', { key: item, class: `mt-1` }, item);
                                         }),
                                         width: `240px`,

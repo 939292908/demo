@@ -283,6 +283,17 @@ module.exports = {
                                         });
                                     }
                                 }, [
+                                    // '个人总览'
+                                    I18n.$t('10051')
+                                ]),
+                                m('a', {
+                                    class: `navbar-item columns has-text-primary-hover min-width-200 ma-0 px-6 py-4 body-5`,
+                                    onclick: function () {
+                                        window.router.push({
+                                            path: '/securityManage'
+                                        });
+                                    }
+                                }, [
                                     // '账户安全'
                                     I18n.$t('10181')
                                 ]),
@@ -293,7 +304,12 @@ module.exports = {
                                     I18n.$t('10182')
                                 ]),
                                 m('a', {
-                                    class: `navbar-item columns has-text-primary-hover min-width-200 ma-0 px-6 py-4 body-5 is-hidden`
+                                    class: `navbar-item columns has-text-primary-hover min-width-200 ma-0 px-6 py-4 body-5`,
+                                    onclick: function () {
+                                        window.router.push({
+                                            path: '/apiManager'
+                                        });
+                                    }
                                 }, [
                                     // 'API管理'
                                     I18n.$t('10183')

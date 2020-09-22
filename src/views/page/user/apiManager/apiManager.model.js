@@ -1,29 +1,36 @@
+const m = require('mithril');
 const validate = require('@/models/validate/validate').default;
 const globalModels = require('@/models/globalModels');
 const I18n = require('@/languages/I18n').default;
+const errCode = require('@/util/errCode').default;
+const Http = require('@/api').webApi;
 const config = require('@/config.js');
 const utils = require('@/util/utils').default;
+const broadcast = require('@/broadcast/broadcast');
 module.exports = {
-    onlyRead: false,
+    onlyRead: true,
     canTrade: false,
     showValid: false,
     showAPIKey: false,
-    mark: '',
+    loading: false,
+    showKeyNameValid: false,
+    keyName: '',
     ip: '',
-    table: [{
-        mark: '交易01',
-        auth: '交易',
-        key: 'jdklclnsjc11dcc',
-        ip: '148.132.6.23',
-        time: '2020-08-06 12:05:20'
-    }, {
-        mark: '交易01',
-        auth: '交易',
-        key: 'jdklclnsjc11dcc',
-        ip: '148.132.6.23',
-        time: '2020-08-06 12:05:20'
-    }],
+    table: [],
+    modal: {
+        key: '',
+        password: '',
+        auth: '',
+        ip: ''
+    },
     submit() {
+        if (this.table.length >= 10) {
+            return window.$message({
+                // content: '最多可创建10组API KEY',
+                content: I18n.$t('10611'),
+                type: 'danger'
+            });
+        }
         if (globalModels.getAccount().loginType === 'phone') {
             const smsParam = {
                 securePhone: globalModels.getAccount().nationNo + '-' + globalModels.getAccount().phone, // 加密手机号带区号
@@ -34,13 +41,11 @@ module.exports = {
             };
             if (globalModels.getAccount().googleId) {
                 validate.activeSmsAndGoogle(smsParam, () => {
-                    this.showValid = false;
-                    this.showAPIKey = true;
+                    this.createAPI();
                 });
             } else {
                 validate.activeSms(smsParam, () => {
-                    this.showValid = false;
-                    this.showAPIKey = true;
+                    this.createAPI();
                 });
             }
         } else {
@@ -53,13 +58,11 @@ module.exports = {
             };
             if (globalModels.getAccount().googleId) {
                 validate.activeEmailAndGoogle(emailParam, () => {
-                    this.showValid = false;
-                    this.showAPIKey = true;
+                    this.createAPI();
                 });
             } else {
                 validate.activeEmail(emailParam, () => {
-                    this.showValid = false;
-                    this.showAPIKey = true;
+                    this.createAPI();
                 });
             }
         }
@@ -77,13 +80,170 @@ module.exports = {
         }
         document.body.removeChild(input);
     },
-    oninit() {},
+    getAPIList() {
+        this.loading = true;
+        m.redraw();
+        Http.userAPI({
+            opType: 3,
+            token: globalModels.getAccount().token,
+            checkCode: new Date().valueOf().toString(32)
+        }).then(res => {
+            this.loading = false;
+            m.redraw();
+            if (res.result.code === 0) {
+                this.fillData(res.apiKeys);
+            } else {
+                window.$message({
+                    content: errCode.getWebApiErrorCode(res.result.code),
+                    type: 'danger'
+                });
+            }
+        }).catch(e => {
+            this.loading = false;
+            m.redraw();
+            console.log(e);
+            window.$message({
+                content: I18n.$t('10340')/* '网络异常，请稍后重试' */,
+                type: 'danger'
+            });
+        });
+    },
+    fillData(apiKeys) {
+        this.table = apiKeys;
+        m.redraw();
+    },
+    getAuth(role) {
+        let auth = '';
+        if ((role & 2) === 2) {
+            auth += `${I18n.$t('10319')/* 只读 */} `;
+        }
+        if ((role & 4) === 4 && (role & 8) === 8 && (role & 16) === 16) {
+            auth += `${I18n.$t('10320')/* 交易 */} `;
+        }
+        return auth;
+    },
+    delAPI(key) {
+        this.loading = true;
+        m.redraw();
+        Http.userAPI({
+            opType: 2,
+            delKey: key,
+            token: globalModels.getAccount().token,
+            checkCode: new Date().valueOf().toString(32)
+        }).then(res => {
+            this.loading = false;
+            m.redraw();
+            if (res.result.code === 0) {
+                for (const i in this.table) {
+                    if (this.table[i].k === key) {
+                        this.table.splice(i, 1);
+                        m.redraw();
+                        return;
+                    }
+                }
+            } else {
+                window.$message({
+                    content: errCode.getWebApiErrorCode(res.result.code),
+                    type: 'danger'
+                });
+            }
+        }).catch(e => {
+            this.loading = false;
+            m.redraw();
+            console.log(e);
+            window.$message({
+                content: I18n.$t('10340')/* '网络异常，请稍后重试' */,
+                type: 'danger'
+            });
+        });
+    },
+    createAPI() {
+        validate.loading = true;
+        m.redraw();
+        let role = 0;
+        if (this.onlyRead) {
+            role = role | 2;
+        }
+        if (this.canTrade) {
+            role = role | 4 | 8 | 16;
+        }
+        const item = {
+            opType: 1,
+            apiKeyName: this.keyName,
+            cidr: this.ip,
+            role: parseInt(role).toString(2),
+            token: globalModels.getAccount().token,
+            checkCode: new Date().valueOf().toString(32)
+        };
+        Http.userAPI(item).then(res => {
+            validate.loading = false;
+            m.redraw();
+            if (res.result.code === 0) {
+                this.showValid = false;
+                this.showAPIKey = true;
+                let auth = '';
+                if (this.onlyRead) {
+                    auth += `${I18n.$t('10319')/* 只读 */} `;
+                }
+                if (this.canTrade) {
+                    auth += `${I18n.$t('10320')/* 交易 */} `;
+                }
+                this.modal = {
+                    key: res.apiKey,
+                    password: res.apiKeyValue,
+                    auth: auth,
+                    ip: this.ip
+                };
+                this.keyName = '';
+                this.ip = '';
+                this.canTrade = false;
+                this.showKeyNameValid = false;
+                this.getAPIList();
+            } else {
+                window.$message({
+                    content: errCode.getWebApiErrorCode(res.result.code),
+                    type: 'danger'
+                });
+            }
+        }).catch(e => {
+            console.log(e);
+            validate.loading = false;
+            m.redraw();
+            window.$message({
+                content: I18n.$t('10340')/* '网络异常，请稍后重试' */,
+                type: 'danger'
+            });
+        });
+    },
+    oninit() {
+        if (globalModels.getAccount().token) {
+            this.getAPIList();
+        }
+
+        broadcast.onMsg({
+            key: 'apiManager',
+            cmd: broadcast.GET_USER_INFO_READY,
+            cb: arg => {
+                this.getAPIList();
+            }
+        });
+    },
     onremove() {
-        this.onlyRead = false;
+        // this.onlyRead = false;
         this.canTrade = false;
         this.showValid = false;
         this.showAPIKey = false;
-        this.mark = '';
+        this.loading = false;
+        this.showKeyNameValid = false;
+        this.table = [];
+        this.keyName = '';
         this.ip = '';
+        this.modal = {
+            key: '',
+            password: '',
+            auth: '',
+            ip: ''
+        };
+        broadcast.offMsg({ key: 'apiManager', isall: true });
     }
 };
