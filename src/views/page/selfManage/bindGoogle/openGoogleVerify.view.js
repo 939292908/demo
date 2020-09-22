@@ -133,7 +133,7 @@ const openGView = {
                         ])
                     ]),
                     m('div', { class: `stepThree pt-8`, style: { display: `${openGView.checkFlag === 3 ? `` : `none`}` } }, [
-                        m('div', { class: `mb-1 weightSix` }, `密钥用于遗失谷歌验证器时找回绑定的谷歌验证，绑定前请务必将该密钥备份保存`),
+                        m('div', { class: `mb-1 weightSix` }, I18n.$t('10597') /* `密钥用于遗失谷歌验证器时找回绑定的谷歌验证，绑定前请务必将该密钥备份保存` */),
                         m('div', { class: `mb-7 has-text-level-4` }, I18n.$t('10260') /* '如果该密钥丢失，需要联系客服处理，这通常需要一定的时间' */),
                         m('div', { class: `key` }, [
                             m('div', { class: `keyText title-small mr-1` }, openGLogic.secret),
