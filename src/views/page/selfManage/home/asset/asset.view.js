@@ -62,18 +62,18 @@ const assetView = {
         return m.fragment(m('div.data-item mb-7', [
             m('div.data-text mb-1', I18n.$t('10076') /* '账户权益' */),
             m('div.data-price has-text-title title-small mb-1', `${AssetData.AssetOverview.coinToBTC} BTC`),
-            m('div.data-text has-text-level-4 body-4', `≈ ￥${AssetData.AssetOverview.coinToCNY} CNY`)
+            m('div.data-text has-text-level-4 body-4', `≈ ${AssetData.AssetOverview.coinToCNY} CNY`)
         ]),
         m('div.dis-flex align-center', [
             m('div.data-item mr-9', [
                 m('div.data-text mb-1', I18n.$t('10219') /* '保证金余额' */),
                 m('div.data-price has-text-title title-small mb-1', `${AssetData.AssetOverview.NLToBTC} BTC`),
-                m('div.data-text has-text-level-4 body-4', `≈ ￥${AssetData.AssetOverview.NLToCRN} CNY`)
+                m('div.data-text has-text-level-4 body-4', `≈ ${AssetData.AssetOverview.NLToCRN} CNY`)
             ]),
             m('div.data-item', [
                 m('div.data-text mb-1', I18n.$t('10077') /* '未实现盈亏' */),
                 m('div.data-price has-text-title title-small mb-1', `${AssetData.AssetOverview.UPNLToBTC} BTC`),
-                m('div.data-text has-text-level-4 body-4', `≈ ￥${AssetData.AssetOverview.UPNLToCRN} CNY`)
+                m('div.data-text has-text-level-4 body-4', `≈ ${AssetData.AssetOverview.UPNLToCRN} CNY`)
             ])
         ]));
     },
