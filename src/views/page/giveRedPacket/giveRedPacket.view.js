@@ -17,10 +17,10 @@ module.exports = {
             m(Header, logic.headerOption),
             m('div', { class: `pub-layout` }, [
                 // title
-                m('div', { class: `views-give-red-packet-title columns is-mobile` }, [
+                m('div', { class: `views-give-red-packet-title pt-7 mb-0 columns is-mobile` }, [
                     m('div', { class: `column is-7` }, [
-                        m('p', { class: `` }, '分享红包'),
-                        m('p', { class: `mt-2` }, '红包资产可用来提现，交易')
+                        m('p', { class: `title-large has-text-primary mt-2` }, '分享红包'),
+                        m('p', { class: `mt-1` }, '红包资产可用来提现，交易')
                     ]),
                     // 图片
                     m('div', { class: `column is-5 has-text-right` }, [
@@ -108,8 +108,10 @@ module.exports = {
                     updateOption(params) {
                         logic.giveRedPModal.updateOption(params);
                     },
-                    onOk() {
-                        logic.giveRedPModal.onOk();
+                    ok: {
+                        onclick() {
+                            logic.giveRedPModal.onOk();
+                        }
                     },
                     slot: {
                         body: [

@@ -21,15 +21,17 @@ module.exports = {
         if (vnode.attrs.slot?.footer) { // 传入的底部
             return vnode.attrs.slot.footer;
         } else { // 默认底部
-            const closeBtn = vnode.attrs.onClose ? m(Button, {
+            const closeBtn = vnode.attrs.cancel ? m(Button, {
                 class: "is-primary font-size-2 modal-default-btn is-outlined",
-                label: '取消', // '取消'
-                onclick() { vnode.attrs.onClose(); }
+                label: vnode.attrs.cancel.label || '取消', // '取消'
+                disabled: vnode.attrs.cancel.disabled,
+                onclick() { vnode.attrs.cancel.onclick && vnode.attrs.cancel.onclick(); }
             }) : "";
-            const okBtn = vnode.attrs.onOk ? m(Button, {
+            const okBtn = vnode.attrs.ok ? m(Button, {
                 class: "is-primary font-size-2 modal-default-btn",
-                label: I18n.$t('10337'), // '确定'
-                onclick() { vnode.attrs.onOk(); }
+                label: vnode.attrs.ok.label || I18n.$t('10337'), // '确定'
+                disabled: vnode.attrs.ok.disabled,
+                onclick() { vnode.attrs.ok.onclick && vnode.attrs.ok.onclick(); }
             }) : "";
             return [closeBtn, okBtn];
         }
@@ -46,12 +48,11 @@ module.exports = {
                     ]),
                     // 关闭按钮
                     m('i', { class: `iconfont icon-tianxieshanchu cursor-pointer`, onclick() { vnode.attrs.updateOption({ isShow: false }); } })
-                    // m("div", { class: "icomBox has-bg-level-1 cursor-pointer", onclick: vnode.attrs.onClose }, )
                 ]),
                 // 内容
                 m("section", { class: "modal-card-body has-bg-level-2 pa-0" }, vnode.attrs.slot ? vnode.attrs.slot.body ? vnode.attrs.slot.body : ['内容部分'] : ['内容部分']),
                 // 底部
-                m("footer", { class: "modal-card-foot has-bg-level-2 pa-0 mt-7" + ((vnode.attrs.slot?.footer || vnode.attrs.onOk || vnode.attrs.onClose) ? '' : ' is-hidden') },
+                m("footer", { class: "modal-card-foot has-bg-level-2 pa-0 mt-7" + ((vnode.attrs.slot?.footer || vnode.attrs.ok || vnode.attrs.cancel) ? '' : ' is-hidden') },
                     vnode.state.getFooter(vnode)
                 )
             ])

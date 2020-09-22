@@ -14,12 +14,17 @@ module.exports = {
                 logic.updateOption(type);
             },
             // 确认按钮事件
-            onOk() {
-                logic.onOk();
+            ok: {
+                disabled: !logic.verifyForm(),
+                onclick() {
+                    logic.onOk();
+                }
             },
             // 取消按钮事件
-            onClose() {
-                logic.onClose();
+            cancel: {
+                onclick() {
+                    logic.onClose();
+                }
             },
             slot: {
                 header: "资金划转",
@@ -27,27 +32,30 @@ module.exports = {
                     // 下拉钱包
                     m('div', { class: `is-between is-align-center` }, [
                         m(Dropdown, logic.fromDropdown),
-                        // m('div', { class: `mx-2` }, [">"]),
-                        m('i', { class: `iconfont icon-arrow-right mx-2` }),
+                        m('i', { class: `iconfont icon-arrow-right mx-2 iconfont-min` }),
                         m(Dropdown, logic.toDropdown)
                     ]),
                     m('div', { class: `mt-5 font-weight-bold body-6 mb-2` }, ["划转数量"]),
                     // 数量input
                     m('div', { class: `pub-transfer-num columns is-mobile is-align-center has-line-level-4 mb-2` }, [
                         m('input', {
-                            class: `input column is-6 border-none`,
-                            placeholder: "请输入划转数量"
+                            class: `input column is-8 border-none`,
+                            placeholder: "请输入划转数量",
+                            value: logic.transferMoney,
+                            oninput(e) {
+                                logic.transferMoney = e.target.value;
+                            }
                         }),
-                        m('span', { class: `column is-6 has-text-right` }, [
-                            m('span', { class: `` }, "USDT"),
+                        m('span', { class: `column is-4 has-text-right` }, [
+                            m('span', { class: `` }, logic.coin), // 币种
                             m('span', { class: `px-2` }, "|"),
-                            m('span', { class: `has-text-primary` }, "全部")
+                            m('span', { class: `has-text-primary`, onclick() { logic.transferMoney = logic.usableMoney; } }, "全部")
                         ])
                     ]),
                     // 可用
                     m('div', { class: `is-between` }, [
                         m('span', { class: `` }, "可用"),
-                        m('span', { class: `` }, "1000.0000 USDT")
+                        m('span', { class: `` }, `${logic.usableMoney} ${logic.coin}`)
                     ])
                 ]
             }

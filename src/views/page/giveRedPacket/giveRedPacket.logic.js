@@ -39,9 +39,12 @@ const logic = {
                 coin: logic.currentCoin, // 币种
                 money: logic.moneyFormItem.value, // 金额
                 num: logic.numberFormItem.value, // 数量
-                info: logic.infoFormItem.value // 祝福
+                info: logic.infoFormItem.value, // 祝福
+                password: logic.passwordModel.value // 密码
             };
         },
+        // 错误提示
+        formErrMsg: "",
         // 校验表单
         verifyFormData() {
             this.updateErrMsg(''); // 清空提示
@@ -71,8 +74,6 @@ const logic = {
 
             return true;
         },
-        // 错误提示
-        formErrMsg: "",
         // 更新提示
         updateErrMsg(msg) {
             this.errMsg = msg;
@@ -153,7 +154,11 @@ const logic = {
     },
     // 划转按钮click
     transferBtnClick() {
-        transferLogic.updateOption({ isShow: true });
+        transferLogic.updateOption({
+            isShow: true,
+            usableMoney: logic.wltMoney,
+            coin: logic.currentCoin
+        });
     },
 
     oninit(vnode) {
