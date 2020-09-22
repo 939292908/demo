@@ -40,20 +40,20 @@ module.exports = {
                         content: errCode.getWebApiErrorCode(data.result.code),
                         type: 'danger'
                     });
-                } else {
+                } else if (utils.getItem('loginState')) {
                     this.logout();
                 }
                 // 获取个人信息不成功
             }
         }).catch(err => {
             console.log(err);
-            if (needTip) {
+            if (utils.getItem('loginState')) {
+                this.logout();
+            } else {
                 window.$message({
                     content: I18n.$t('10340')/* '网络异常，请稍后重试' */,
                     type: 'danger'
                 });
-            } else {
-                this.logout();
             }
         });
     },
