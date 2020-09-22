@@ -1,4 +1,5 @@
 const transferLogic = require('@/views/page/giveRedPacket/transfer/transfer.logic');
+const globalModels = require('@/models/globalModels');
 
 const logic = {
     // 币种按钮list
@@ -45,33 +46,47 @@ const logic = {
         },
         // 错误提示
         formErrMsg: "",
-        // 校验表单
-        verifyFormData() {
-            this.updateErrMsg(''); // 清空提示
+        // 校验金额
+        verifyMoney(isUpdateMsg = true) {
+            // 钱包可用资产不足，请及时划转！
+            if (this.getTotalCoin() > logic.wltMoney * 1) {
+                isUpdateMsg && this.updateErrMsg("钱包可用资产不足，请及时划转！");
+                return false;
+            }
+            isUpdateMsg && this.updateErrMsg(''); // 清空提示
+            return true;
+        },
+        // 校验红包个数
+        verifyNumber(isUpdateMsg = true) {
             const data = this.getFormData(); // 表单数据
             const maxNum = parseInt(logic.wltMoney / data.money); // 最多可发个数
 
-            // 钱包可用资产不足，请及时划转！
-            if (this.getTotalCoin() > logic.wltMoney) {
-                return this.updateErrMsg("钱包可用资产不足，请及时划转！");
-            }
             // 请输入红包个数
             if (!data.num || data.num === '0') {
-                return this.updateErrMsg("请输入红包个数");
+                isUpdateMsg && this.updateErrMsg("请输入红包个数");
+                return false;
             }
             // ============= 普通 / 拼手气 红包校验 =============
             if (logic.redPacketType === 1) { // 普通
                 // 一次最多可发xx个红包
                 if (data.num > maxNum) {
-                    return this.updateErrMsg(`一次最多可发${maxNum}个红包`);
+                    isUpdateMsg && this.updateErrMsg(`一次最多可发${maxNum}个红包`);
+                    return false;
                 }
             } else { // 拼手气
                 // 一次最多可发xx个红包
                 if (data.num > 10000) {
-                    return this.updateErrMsg(`一次最多可发${10000}个红包`);
+                    isUpdateMsg && this.updateErrMsg(`一次最多可发${10000}个红包`);
+                    return false;
                 }
             }
-
+            isUpdateMsg && this.updateErrMsg(''); // 清空提示
+            return true;
+        },
+        // 校验表单 isUpdateMsg/是否更新错误消息
+        verifyFormData(isUpdateMsg = true) {
+            if (!this.verifyMoney(isUpdateMsg)) return; // 钱包可用资产不足，请及时划转！
+            if (!this.verifyNumber(isUpdateMsg)) return; // 校验红包个数
             return true;
         },
         // 更新提示
@@ -160,7 +175,16 @@ const logic = {
             coin: logic.currentCoin
         });
     },
-
+    // 获取币种的人民币估值
+    getRMBByCoinMoney() {
+        const coinMoney = logic.moneyFormItem.value; // 币种金额
+        const rate = globalModels.getForexRate().rate; // 换算人民币汇率
+        if (rate) {
+            return coinMoney * rate;
+        } else {
+            return 0;
+        }
+    },
     oninit(vnode) {
         const data = [
             {

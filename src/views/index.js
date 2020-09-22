@@ -48,7 +48,7 @@ export default {
     view: function () {
         return m('section.section.container' + (config.themeDark ? " .theme--dark" : " .theme--light"), [
             // m(header),
-            m('div.route-box.px-6'),
+            m('div.route-box'),
             // m(footer),
             m(message)
         ]);

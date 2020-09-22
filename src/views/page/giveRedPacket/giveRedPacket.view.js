@@ -13,7 +13,7 @@ module.exports = {
     onupdate: vnode => logic.onupdate(vnode),
     onremove: vnode => logic.onremove(vnode),
     view(vnode) {
-        return m('div', { class: `pub-view views-give-red-packet` }, [
+        return m('div', { class: `pub-view views-give-red-packet px-6` }, [
             m(Header, logic.headerOption),
             m('div', { class: `pub-layout` }, [
                 // title
@@ -28,7 +28,7 @@ module.exports = {
                     ])
                 ]),
                 // 币种
-                m('div', { class: `views-give-red-packet-coin py-3 has-line-level-4` }, [
+                m('div', { class: `has-border-bottom py-3 has-line-level-4` }, [
                     m('span', { class: `body-3 mr-2` }, '币种'),
                     m('span', { class: `title-small` }, logic.currentCoin)
                 ]),
@@ -50,7 +50,7 @@ module.exports = {
                     value: logic.moneyFormItem.value,
                     updateOption(params) {
                         logic.moneyFormItem.updateOption(params); // 更新数据
-                        logic.formModel.verifyFormData(); // 校验表单
+                        logic.formModel.verifyMoney(); // 校验表单
                     }
                 }),
                 // 切换 普通/拼手气红包
@@ -68,7 +68,7 @@ module.exports = {
                     value: logic.numberFormItem.value,
                     updateOption: params => {
                         logic.numberFormItem.updateOption(params); // 更新数据
-                        logic.formModel.verifyFormData(); // 校验表单
+                        logic.formModel.verifyNumber(); // 校验表单
                     }
                 }),
                 // 祝福信息
@@ -85,16 +85,16 @@ module.exports = {
                 // 表单错误提示
                 m('div', { class: `has-text-up has-text-centered mt-5` }, logic.formModel.errMsg),
                 // 显示总金额
-                m('div', { class: `has-text-centered mt-7` }, [
+                m('div', { class: `has-text-centered mt-7 ${!logic.formModel.verifyFormData(false) ? 'is-hidden' : ''}` }, [
                     m('p', { class: `title-medium` }, `共 ${logic.formModel.getTotalCoin()} ${logic.currentCoin}`),
-                    m('p', { class: `` }, " ≈¥78009.7")
+                    m('p', { class: `` }, ` ≈¥${logic.getRMBByCoinMoney()}`)
                 ]),
                 // 塞币进红包 btn
                 m(Button, {
                     label: "塞币进红包",
                     class: 'pub-layout-bottom-btn is-primary mb-3',
                     width: 1,
-                    disabled: !logic.formModel.verifyFormData(),
+                    disabled: !logic.formModel.verifyFormData(false),
                     onclick() {
                         // console.log(logic.formModel.getFormData(), 666);
                         logic.formModel.verifyFormData() && logic.giveRedPModal.updateOption({ isShow: true });
@@ -139,7 +139,7 @@ module.exports = {
                             m('div', { class: `views-give-red-packet-password is-flex is-align-center has-line-level-4 px-3 mt-7` }, [
                                 m('div', { class: `no-wrap` }, "资金密码"),
                                 m('input', {
-                                    class: `input border-none`,
+                                    class: `input has-border-none`,
                                     type: "password",
                                     placeholder: "资金密码",
                                     value: logic.passwordModel.value,

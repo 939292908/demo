@@ -4,11 +4,36 @@ import utils from '@/util/utils';
 class Router {
     defaultRoutePath = "/";
     routerList = {
-        '/': {
+        // 发红包
+        '/give': {
             // 是否需要需要身份验证
             requireAuth: false,
             onmatch: function () {
                 return import('@/views/page/giveRedPacket/giveRedPacket.view');
+            }
+        },
+        // 领取红包
+        '/': {
+            // 是否需要需要身份验证
+            requireAuth: false,
+            onmatch: function () {
+                return import('@/views/page/receiveRedPacket/receiveRedPacket.view');
+            }
+        },
+        // 领取红包结果
+        '/receiveResult': {
+            // 是否需要需要身份验证
+            requireAuth: false,
+            onmatch: function () {
+                return import('@/views/page/receiveRedPacket/receiveResult/receiveResult.view');
+            }
+        },
+        // 我的红包
+        '/myRedPacket': {
+            // 是否需要需要身份验证
+            requireAuth: false,
+            onmatch: function () {
+                return import('@/views/page/myRedPacket/myRedPacket.view');
             }
         }
     };
