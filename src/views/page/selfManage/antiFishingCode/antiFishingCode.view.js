@@ -10,15 +10,16 @@ const theBindingOrNot = require('@/views/components/theBindingOrNot/theBindingOr
 
 const antiFCView = {
     totalFlag: false, /* 是否通过验证 */
-    tip1: null, /* 新钓鱼码提示内容 */
-    tip2: null, /* 新钓鱼码提示内容 */
+    tip1: '', /* 新钓鱼码提示内容 */
+    tip2: '', /* 新钓鱼码提示内容 */
     oninit: () => {
         antiFCLogic.initFn();
 
         /* 新钓鱼码提示内容初始化 start */
-        antiFCView.tip1 = null;
-        antiFCView.tip2 = null;
+        antiFCView.tip1 = '';
+        antiFCView.tip2 = '';
         /* 新钓鱼码提示内容初始化 end */
+        antiFCView.totalFlag = false;
     },
     /* 校验 */
     check(value, type) {

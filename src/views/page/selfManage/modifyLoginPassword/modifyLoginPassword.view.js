@@ -14,10 +14,17 @@ const modifyLPView = {
     showPassword1: false, /* 是否显示密码 */
     showPassword2: false, /* 是否显示密码 */
     showPassword3: false, /* 是否显示密码 */
-    tip1: null, /* 原密码下方提示 */
-    tip2: null, /* 新密码下方提示 */
-    tip3: null, /* 确认密码下方提示 */
+    tip1: '', /* 原密码下方提示 */
+    tip2: '', /* 新密码下方提示 */
+    tip3: '', /* 确认密码下方提示 */
     oninit: () => {
+        modifyLPView.tip1 = '';
+        modifyLPView.tip2 = '';
+        modifyLPView.tip3 = '';
+        modifyLPView.showPassword1 = false;
+        modifyLPView.showPassword2 = false;
+        modifyLPView.showPassword3 = false;
+        modifyLPView.totalFlag = false;
         modifyLPLogic.initFn();
     },
     oldLpwdCheck() {

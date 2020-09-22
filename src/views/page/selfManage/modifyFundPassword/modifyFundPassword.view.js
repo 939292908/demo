@@ -17,9 +17,9 @@ const modifyFPView = {
     showPassword1: false, /* 是否显示密码 */
     showPassword2: false, /* 是否显示密码 */
     showPassword3: false, /* 是否显示密码 */
-    tip1: null, /* 原密码下方提示 */
-    tip2: null, /* 新密码/资金密码下方提示 */
-    tip3: null, /* 确认密码下方提示 */
+    tip1: '', /* 原密码下方提示 */
+    tip2: '', /* 新密码/资金密码下方提示 */
+    tip3: '', /* 确认密码下方提示 */
     oldFundPwdCheck() {
         /* 是否为空  */
         const tip = regExp.validPassword(modifyFPLogic.oldFundPwd);
@@ -76,9 +76,9 @@ const modifyFPView = {
         /* 是否显示密码初始化 end */
 
         /* 提示初始化 start */
-        modifyFPView.tip1 = null;
-        modifyFPView.tip2 = null;
-        modifyFPView.tip3 = null;
+        modifyFPView.tip1 = '';
+        modifyFPView.tip2 = '';
+        modifyFPView.tip3 = '';
         /* 提示初始化 end */
 
         modifyFPView.totalFlag = false;

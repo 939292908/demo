@@ -52,8 +52,8 @@ const openGView = {
             /* 初始化 start */
             openGLogic.LcCode = '';
             openGLogic.LcPWd = '';
-            openGLogic.tip1 = null;
-            openGLogic.tip2 = null;
+            openGLogic.tip1 = '';
+            openGLogic.tip2 = '';
             /* 初始化 end */
 
             openGView.checkFlag = openGView.checkFlag - 1;
