@@ -749,7 +749,7 @@ module.exports = {
         this.showList = this.showList.filter(item => {
             return (this.coin === 'all' || this.coin === item.coin) &&
                 (!this.filterTime.length || !this.filterTime[0] || !this.filterTime[1] ||
-                    (this.filterTime[0] <= Number(item.timestamp) && this.filterTime[1] >= Number(item.timestamp))
+                    (this.compareDate(this.filterTime[1], Number(item.timestamp)) && this.compareDate(Number(item.timestamp), this.filterTime[0]))
                 );
         });
         this.showList.sort((a, b) => {
@@ -759,5 +759,22 @@ module.exports = {
             this.showList.splice(this.length);
         }
         m.redraw();
+    },
+    compareDate(d1, d2) {
+        const date1 = new Date(d1 * 1000);
+        const date2 = new Date(d2 * 1000);
+        let result = false;
+        if (date1.getFullYear() > date2.getFullYear()) {
+            result = true;
+        } else if (date1.getFullYear() === date2.getFullYear()) {
+            if (date1.getMonth() > date2.getMonth()) {
+                result = true;
+            } else if (date1.getMonth() === date2.getMonth()) {
+                if (date1.getDate() >= date2.getDate()) {
+                    result = true;
+                }
+            }
+        }
+        return result;
     }
 };
