@@ -3,7 +3,7 @@ const model = require('../bind.logic');
 const VerifyView = require('@/views/components/dialogVerify/dialogVerify.view');
 const InputWithComponent = require('@/views/components/inputWithComponent/inputWithComponent.view');
 const AreaCodeSelect = require('@/views/page/user/login/areaCodeSelect/areaCodeSelect.view');
-const header = require('@/views/components/indexHeader/indexHeader.view');
+const header = require('@/views/page/selfManage/header/header');
 const config = require('@/config.js');
 require('@/views/page/user/bind/bind.scss');
 require('./bindPhone.scss');
@@ -17,20 +17,7 @@ module.exports = {
     view(vnode) {
         console.log(model.showValid);
         return m('div', { class: `theme--light` }, [
-            m('div.px-3.has-bg-sub-level-1.is-align-items-center', {}, [
-                m('div.content-width', {}, [
-                    m(header, {
-                        highlightFlag: 1,
-                        navList: [
-                            { to: '/', title: I18n.$t('10051')/* '个人总览' */ },
-                            { to: '/', title: I18n.$t('10181')/* '账户安全' */ },
-                            { to: '/', title: I18n.$t('10182')/* '身份认证' */ },
-                            { to: '/', title: I18n.$t('10183')/* 'API管理' */ },
-                            { to: '/', title: I18n.$t('10184')/* '邀请返佣' */ }
-                        ]
-                    })
-                ])
-            ]),
+            m(header),
             m('div', { class: `bind-content has-bg-level-1 pb-7` }, [
                 // 标题
                 m('div', { class: `bind-content-title has-bg-level-2 py-4` }, [
