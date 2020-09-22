@@ -1,3 +1,4 @@
+const I18n = require('@/languages/I18n').default;
 const utils = {};
 const DBG_TAG = "UTILS";
 
@@ -341,6 +342,20 @@ utils.copyTab = function(a, b) {
     for (const key in b) {
         a[key] = b[key];
     }
+};
+
+// 复制文本到剪贴板
+utils.copyText = function(txt) {
+    const input = document.createElement('input');
+    input.setAttribute('readonly', 'readonly');
+    input.setAttribute('value', txt);
+    document.body.appendChild(input);
+    input.select();
+    if (document.execCommand('copy')) {
+        document.execCommand('copy');
+        window.$message({ title: I18n.$t('10410') /* '提示' */, content: I18n.$t('10546') /* '复制成功' */, type: 'success' });
+    }
+    document.body.removeChild(input);
 };
 
 export default utils;

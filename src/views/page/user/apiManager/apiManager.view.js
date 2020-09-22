@@ -187,14 +187,14 @@ module.exports = {
                         m('div.body-5.has-text-level-1.break-word', {}, [
                             m('span', {}, [APIManager.modal.key]),
                             m('i.iconfont.icon-copy.has-text-primary.iconfont-small.cursor-pointer.ml-1', {
-                                onclick() { APIManager.copyText(APIManager.modal.key); }
+                                onclick() { utils.copyText(APIManager.modal.key); }
                             }, [])
                         ]),
                         m('div.body-4.has-text-level-4.mt-7', {}, [I18n.$t('10332')/* 访问密码 */]),
                         m('div.body-5.has-text-level-1.break-word', {}, [
                             m('span', {}, [APIManager.modal.password]),
                             m('i.iconfont.icon-copy.has-text-primary.iconfont-small.cursor-pointer.ml-1', {
-                                onclick() { APIManager.copyText(APIManager.modal.password); }
+                                onclick() { utils.copyText(APIManager.modal.password); }
                             }, [])
                         ]),
                         m('div.body-4.has-text-level-4.mt-7', {}, [I18n.$t('10326')/* 权限 */]),

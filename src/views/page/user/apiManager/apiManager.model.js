@@ -76,18 +76,6 @@ module.exports = {
         }
         this.showValid = true;
     },
-    copyText(txt) {
-        const input = document.createElement('input');
-        input.setAttribute('readonly', 'readonly');
-        input.setAttribute('value', txt);
-        document.body.appendChild(input);
-        input.select();
-        if (document.execCommand('copy')) {
-            document.execCommand('copy');
-            window.$message({ title: I18n.$t('10410') /* '提示' */, content: I18n.$t('10546') /* '复制成功' */, type: 'success' });
-        }
-        document.body.removeChild(input);
-    },
     getAPIList() {
         this.loading = true;
         m.redraw();

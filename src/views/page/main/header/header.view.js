@@ -270,7 +270,10 @@ module.exports = {
                                                 utils.hideAccountNameInfo(globalModels.getAccount().accountName || '--')
                                             ]),
                                             m('p', { class: `body-4 has-text-level-2` }, [
-                                                'UID:' + (globalModels.getAccount().uid || '--')
+                                                'UID:' + (globalModels.getAccount().uid || '--'),
+                                                m('i.iconfont.icon-copy.has-text-primary.iconfont-small.cursor-pointer.ml-1', {
+                                                    onclick() { utils.copyText(globalModels.getAccount().uid || '--'); }
+                                                }, [])
                                             ])
                                         ])
                                     ])
