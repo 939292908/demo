@@ -21,3 +21,14 @@
         }
     }
 }
+
+@media screen and (max-width: 1300px) {
+    .views-pages-home-picture {
+        .button-prev{
+            left: -30px;
+        }
+        .button-next{
+            right: -30px;
+        }
+    }
+}

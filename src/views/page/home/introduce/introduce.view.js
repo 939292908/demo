@@ -24,11 +24,11 @@ module.exports = {
                 // 内容
                 m('div', { class: `container ` }, [
                     m('div', { class: `pt-8 title-x-large` }, [
-                        m('p', { class: `font-weight-regular ${utils.isMobile() ? 'ml-7 title-small ' : ''}` }, [
+                        m('p', { class: `font-weight-regular ${utils.isMobile() ? 'ml-7 title-small ' : 'title-x-large'}` }, [
                             // "世界领先的专业数字资产衍生品交易平台"
                             I18n.$t('10022')
                         ]),
-                        m('img', { class: `mb-5 ml-2 ${utils.isMobile() ? 'ml-7 ' : 'ml-2'}`, src: require("@/assets/img/home/rectangle1.png").default })
+                        m('img.world-line', { class: `mb-5 ${utils.isMobile() ? 'ml-7 ' : 'ml-2'}`, src: require("@/assets/img/home/rectangle1.png").default })
                     ]),
                     m('div', { class: `has-text-level-2 body-6 ${utils.isMobile() ? 'ml-7 mr-7' : 'pt-8'}` }, [
                         // "Vbit平台金融量化团队均来自JP摩根、摩根士丹利、OKCoin、Binance等知名金融机构。Vbit平台由国际化各领域专家团队研发运营,确保平台拥有最前沿的技术，用户享有最极致的产品体验。"
@@ -86,8 +86,8 @@ module.exports = {
                                 ])
                             ]),
                             m('div.dropdown-menu', {}, [
-                                m('div', { class: "dropdown-content pa-4" }, [
-                                    m('img', { class: ``, width: "156px", src: require("@/assets/img/home/download.png").default })
+                                m('div', { class: "dropdown-content pa-4", style: 'width: 163px' }, [
+                                    m('img', { class: ``, width: "131px", src: require("@/assets/img/home/download.png").default })
                                 ])
                             ])
                         ]),
@@ -100,8 +100,8 @@ module.exports = {
                                 ])
                             ]),
                             m('div.dropdown-menu', {}, [
-                                m('div', { class: "dropdown-content pa-4" }, [
-                                    m('img', { class: ``, width: "156px", src: require("@/assets/img/home/download.png").default })
+                                m('div', { class: "dropdown-content pa-4", style: 'width: 163px' }, [
+                                    m('img', { class: ``, width: "131px", src: require("@/assets/img/home/download.png").default })
                                 ])
                             ])
                         ])
