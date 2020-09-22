@@ -143,13 +143,15 @@ const register = {
                 // 注册成功
                 window.$message({ content: I18n.$t('10539')/* '注册成功' */, type: 'success' });
                 window.router.push('/login');
-            } else if (res.result.code === -1) {
-                this.geetestCallBackType = 'register';
-                geetest.verify();
             } else {
                 // 输入信息有误
                 window.$message({ content: errCode.getWebApiErrorCode(res.result.code), type: 'danger' });
             }
+
+            // else if (res.result.code === -1) {
+            //     this.geetestCallBackType = 'register';
+            //     geetest.verify();
+            // }
         }).catch(() => {
             window.$message({ content: I18n.$t('10340')/* '网络异常，请稍后重试' */, type: 'danger' });
         });

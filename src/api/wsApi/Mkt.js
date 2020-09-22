@@ -171,8 +171,6 @@ class Mkt {
             },
             CONNECTING: {
                 do: (aObj) => {
-                    // console.log(API_TAG, 'CONNECTING', aObj);
-                    // return 'AUTHORIZING'
                     switch (aObj.ws.readyState) {
                     case WebSocket.CONNECTING:
                         if (Date.now() - aObj.openStart > aObj.timeoutOpen) {
@@ -200,7 +198,7 @@ class Mkt {
                             也就是获取到Token后，应该修改 Trd 的 Conf
 
                             */
-                            aObj.Conf.Authrized = aObj.AUTH_ST_WT;
+                            aObj.RT.Authrized = aObj.AUTH_ST_WT;
                             // 登录交易前先校对时间
                             aObj.ReqTime(arg => {
                                 aObj.ReqTrdLogin({ // 服务端所需的参数
@@ -249,6 +247,9 @@ class Mkt {
             },
             AUTHORIZING: {
                 do: (aObj) => {
+                    if (!aObj.Conf) {
+                        return 'IDLE';
+                    }
                     switch (aObj.Conf.Typ) {
                     case "mkt":
                         aObj.ReqAssetD({ vp: aObj.Conf.vp });
@@ -631,7 +632,11 @@ class Mkt {
         }
     }
 
-    clearConf() {}
+    clearConf() {
+        this.RT = {
+            Authrized: this.AUTH_ST_NO
+        };
+    }
 
     WSCallTrade (aCmd, aParam, aFunc) {
         const s = this;

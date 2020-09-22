@@ -125,10 +125,24 @@ class Router {
             if (this.checkRoute({ path: param })) {
                 return;
             }
+            // 带参数的路由，解析路由参数
+            if (param.includes('?')) {
+                const paramStr = param.split('?');
+                const paramsArr = paramStr[1].split('&');
+                const params = {};
+                for (const item of paramsArr) {
+                    const key = item.split('=')[0];
+                    const data = item.split('=')[1];
+                    params[key] = data;
+                }
+                this.path = paramStr[0];
+                this.params = params;
+            } else {
+                this.path = param;
+            }
             if (!replace && this.path && this.path !== param) {
                 this.historyRouteList.unshift({ path: this.path, data: this.params });
             }
-            this.path = param;
             this.route.set(param, {}, { replace });
         } else {
             if (this.checkRoute(param)) {

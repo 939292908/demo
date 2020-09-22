@@ -3,16 +3,16 @@ import utils from './util/utils';
 import models from './models';
 import m from 'mithril';
 // 主题颜色
-import("./styles/index");
+require("./styles/index");
 // UI库
-import('./styles/bluma.scss');
+require('./styles/bluma.scss');
 // 公用样式
 // import('./styles/common_size.scss');
 // import('./styles/common_color.scss');
 // import('./styles/common_other.scss');
 
 // 轮播
-import('swiper/swiper-bundle.css');
+require('swiper/swiper-bundle.css');
 // 极验
 import('./libs/gt');
 // import('./libs/echarts');
