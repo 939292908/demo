@@ -198,7 +198,7 @@ class Mkt {
                             也就是获取到Token后，应该修改 Trd 的 Conf
 
                             */
-                            aObj.Conf.Authrized = aObj.AUTH_ST_WT;
+                            aObj.RT.Authrized = aObj.AUTH_ST_WT;
                             // 登录交易前先校对时间
                             aObj.ReqTime(arg => {
                                 aObj.ReqTrdLogin({ // 服务端所需的参数
