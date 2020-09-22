@@ -23,6 +23,14 @@ module.exports = {
         auth: '',
         ip: ''
     },
+    hasSame() {
+        for (const item of this.table) {
+            if (item.name === this.keyName) {
+                return '备注不能重名';
+            }
+        }
+        return '';
+    },
     submit() {
         if (this.table.length >= 5) {
             return window.$message({
@@ -110,6 +118,9 @@ module.exports = {
     },
     fillData(apiKeys) {
         this.table = apiKeys;
+        this.table.sort((a, b) => {
+            return b.ctime - a.ctime;
+        });
         m.redraw();
     },
     getAuth(role) {

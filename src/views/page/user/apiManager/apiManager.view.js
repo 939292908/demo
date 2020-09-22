@@ -76,7 +76,7 @@ module.exports = {
                                 },
                                 value: APIManager.keyName
                             }),
-                            m('div.body-3.has-text-tip-error', { hidden: !APIManager.showKeyNameValid }, [regExp.validAPIKeyName(APIManager.keyName)]),
+                            m('div.body-3.has-text-tip-error', { hidden: !APIManager.showKeyNameValid }, [regExp.validAPIKeyName(APIManager.keyName) || APIManager.hasSame()]),
                             m('div.mb-2.mt-5', {}, [I18n.$t('10318')/* '权限设置' */]),
                             m('i.iconfont.mr-7.iconfont-medium.cursor-pointer', {
                                 disabled: true,
@@ -101,7 +101,7 @@ module.exports = {
                             m('div.body-3.has-text-tip-error', {}, [regExp.validAPIIP(APIManager.ip)]),
                             m("button.button.has-bg-primary.button-large.is-fullwidth.has-text-white.mt-7", {
                                 onclick() { APIManager.submit(); },
-                                disabled: regExp.validAPIIP(APIManager.ip) || regExp.validAPIKeyName(APIManager.keyName)
+                                disabled: regExp.validAPIIP(APIManager.ip) || regExp.validAPIKeyName(APIManager.keyName) || APIManager.hasSame()
                             }, [I18n.$t('10337')/* '确定' */])
                         ]),
                         m('div.column.is-2', {}, []),
