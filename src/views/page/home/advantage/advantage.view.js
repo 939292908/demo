@@ -14,7 +14,7 @@ module.exports = {
                         // m('div', { class: `advantage-div` }, [
                         // 平台优势
                         // 1
-                        m('div', { class: `introduce-item column is-3 mt-6` }, [
+                        m('div', { class: `introduce-item column is-3 mt-8` }, [
                             m('img', { class: '', src: require("@/assets/img/home/Object1.png").default }),
                             m('div', { class: `has-text-primary title-large font-weight-regular is-12 ${utils.isMobile() ? 'ml-8 mr-8' : 'ml-7 mr-7'}` }, [
                                 // "安全保障"
