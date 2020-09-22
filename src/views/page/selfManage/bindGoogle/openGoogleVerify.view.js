@@ -5,7 +5,7 @@ const I18n = require('@/languages/I18n').default;
 const broadcast = require('@/broadcast/broadcast');
 const VerifyView = require('@/views/components/dialogVerify/dialogVerify.view');
 const config = require('@/config.js');
-const Header = require('@/views/components/indexHeader/indexHeader.view');
+const header = require('@/views/page/selfManage/header/header');
 const InputWithComponent = require('@/views/components/inputWithComponent/inputWithComponent.view');
 
 const openGView = {
@@ -85,16 +85,7 @@ const openGView = {
     },
     view: () => {
         return m('div', { class: `views-page-accountSecurity-bindGoogle-open theme--light pb-8` }, [
-            m(Header, {
-                highlightFlag: 1,
-                navList: [
-                    { to: '/selfManage', title: I18n.$t('10051') /* '个人总览' */ },
-                    { to: '/securityManage', title: I18n.$t('10181') /* '账户安全' */ }
-                    // { to: '', title: I18n.$t('10182') /* '身份认证' */ },
-                    // { to: '', title: I18n.$t('10183') /* 'API管理' */ },
-                    // { to: '', title: I18n.$t('10184') /* '邀请返佣' */ }
-                ]
-            }),
+            m(header),
             m('div', { class: `operation mb-7 has-bg-level-2` }, [
                 m('div', { class: `content-width container` }, [
                     m('i', { class: `iconfont icon-Return has-text-title cursor-pointer`, onclick: () => { window.router.go(-1); } }),
@@ -142,7 +133,7 @@ const openGView = {
                         ])
                     ]),
                     m('div', { class: `stepThree pt-8`, style: { display: `${openGView.checkFlag === 3 ? `` : `none`}` } }, [
-                        m('div', { class: `mb-1 weightSix` }, `密钥用于遗失谷歌验证器时找回绑定的谷歌验证，绑定前请务必将该密钥备份保存`),
+                        m('div', { class: `mb-1 weightSix` }, I18n.$t('10597') /* `密钥用于遗失谷歌验证器时找回绑定的谷歌验证，绑定前请务必将该密钥备份保存` */),
                         m('div', { class: `mb-7 has-text-level-4` }, I18n.$t('10260') /* '如果该密钥丢失，需要联系客服处理，这通常需要一定的时间' */),
                         m('div', { class: `key` }, [
                             m('div', { class: `keyText title-small mr-1` }, openGLogic.secret),
