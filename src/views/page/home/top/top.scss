@@ -21,8 +21,8 @@
         position: relative;
         top: 50%;
         left: 50%;
-        width: 1920px;
-        margin-left: -960px;
+        width: 2840px;
+        margin-left: -1420px;
         right: 50%;
         overflow: hidden;
     }
@@ -38,16 +38,6 @@
 
         .top-banner {
             height: 174px;
-        }
-    }
-}
-
-@media screen and (min-width: 1921px) {
-    .views-pages-home-top {
-        .bg-img {
-            top: 0;
-            width: 3840px;
-            margin-left: -1920px;
         }
     }
 }
