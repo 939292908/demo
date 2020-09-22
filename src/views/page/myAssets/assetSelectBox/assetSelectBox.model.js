@@ -93,7 +93,6 @@ module.exports = {
         const time = [];
         time[0] = start / 1000;
         time[1] = end / 1000 + 24 * 60 * 60;
-        if (time[0] === this.time[0] || time[1] === this.time[1]) return;
         this.time = time;
         this.date = str;
         vnode.attrs.onSelectTime(this.time);
@@ -117,6 +116,8 @@ module.exports = {
         window.onclick = null;
     },
     openDate(vnode, e) {
+        this.date = '';
+        this.picker.setDateRange(0, 0);
         this.typeIsActive = false;
         this.coinIsActive = false;
         this.dateIsActive = !this.dateIsActive;
