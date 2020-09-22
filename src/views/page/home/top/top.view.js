@@ -16,7 +16,7 @@ module.exports = function (props) {
         ]),
         // 顶部
         m('div.top', { class: ` has-text-centered pt-7` }, [
-            m('p', { class: `font-weight-regular pt-9 title-x-large-1 ${utils.isMobile() ? 'ml-7 mr-7' : 'pc才有的类名xx'}` }, [
+            m('p', { class: `font-weight-regular title-x-large-1 ${utils.isMobile() ? 'ml-7 mr-7 pt-7' : 'pt-9'}` }, [
                 // '最值得信任的数字资产交易平台'
                 I18n.$t('10008')
             ]),
