@@ -9,8 +9,10 @@ module.exports = function (props) {
     const { banneList, noticeList } = props.data;
     return m('div.views-pages-home-top ', {
     }, [
-        m('div.bg.has-bg-sub-level-1', {}, [
-            m('img.bg-img', { src: require("@/assets/img/home/vector.png").default }, [])
+        m('div.bg-father.w100', {}, [
+            m('div.bg.has-bg-sub-level-1', {}, [
+                m('img.bg-img', { src: require("@/assets/img/home/vector.png").default }, [])
+            ])
         ]),
         // 顶部
         m('div.top', { class: ` has-text-centered pt-7` }, [
