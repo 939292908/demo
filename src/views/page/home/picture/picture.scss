@@ -12,3 +12,12 @@
         margin-top: -200px;
     }
 }
+
+
+@media screen and (min-width: 768px) and (max-width: 969px) {
+    .views-pages-home-picture {
+        .picture-layer {
+            margin-top: -100px;
+        }
+    }
+}
