@@ -154,7 +154,7 @@ module.exports = {
             }
         ).then(res => {
             if (res.result.code === 0) {
-                models.getUserInfo(true);
+                models.getUserInfo();
             } else {
                 this.loading = false;
                 window.$message({ content: errCode.getWebApiErrorCode(res.result.code), type: 'danger' });
