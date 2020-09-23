@@ -112,7 +112,6 @@ module.exports = {
                 console.log('setFishCode success');
                 window.$message({ content: that.antiFishCodeFlag === '' || that.antiFishCodeFlag === undefined ? I18n.$t('10608') /* '防钓鱼码设置成功' */ : I18n.$t('10609') /* '防钓鱼码修改成功' */, type: 'success' });
                 that.setUserInfo();
-                window.router.push('/securityManage');
             } else {
                 window.$message({ content: errCode.getWebApiErrorCode(arg.result.code), type: 'danger' });
             }
@@ -129,6 +128,7 @@ module.exports = {
                 console.log(data.account);
                 gM.setAccount(data.account);
                 broadcast.emit({ cmd: broadcast.GET_USER_INFO_READY, data: data.account });
+                window.router.push('/securityManage');
             }
         }).catch(err => {
             console.log(err);

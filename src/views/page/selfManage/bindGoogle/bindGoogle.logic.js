@@ -231,7 +231,7 @@ module.exports = {
             if (arg.result.code === 0) {
                 console.log('bindGoogle success');
                 window.$message({ content: I18n.$t('10600') /* '谷歌绑定成功' */, type: 'success' });
-                window.router.push({ path: '/securityManage' });
+                that.setUserInfo();
             } else {
                 window.$message({ content: errCode.getWebApiErrorCode(arg.result.code), type: 'danger' });
             }
@@ -257,7 +257,7 @@ module.exports = {
             if (arg.result.code === 0) {
                 console.log('unbindGoogle success');
                 window.$message({ content: I18n.$t('10599') /* '谷歌解绑成功' */, type: 'success' });
-                window.router.push({ path: '/securityManage' });
+                that.setUserInfo();
             } else {
                 window.$message({ content: errCode.getWebApiErrorCode(arg.result.code), type: 'danger' });
             }
@@ -265,6 +265,19 @@ module.exports = {
             m.redraw();
         }).catch(function(err) {
             console.log('nzm', 'relieveGoogleAuth error', err);
+        });
+    },
+    // 设置用户信息
+    setUserInfo() {
+        Http.getUserInfo({}).then(data => {
+            if (data.result.code === 0) {
+                console.log(data.account);
+                gM.setAccount(data.account);
+                broadcast.emit({ cmd: broadcast.GET_USER_INFO_READY, data: data.account });
+                window.router.push({ path: '/securityManage' });
+            }
+        }).catch(err => {
+            console.log(err);
         });
     },
     // 获取用户信息
