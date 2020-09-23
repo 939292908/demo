@@ -90,7 +90,7 @@ module.exports = {
                         class: `is-between py-5 has-border-bottom-1 has-line-level-4 mx-6`,
                         key: index,
                         onclick() {
-                            logic.toGiveRedPacketDetail(); // 跳转发的红包详情
+                            logic.toSendRedPacketDetail(); // 跳转发的红包详情
                         }
                     }, [
                         // 左边

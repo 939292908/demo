@@ -1,4 +1,4 @@
-const transferLogic = require('@/views/page/giveRedPacket/transfer/transfer.logic');
+const transferLogic = require('@/views/page/sendRedPacket/transfer/transfer.logic');
 const globalModels = require('@/models/globalModels');
 
 const logic = {

@@ -47,8 +47,8 @@ const logic = {
         window.router.push('/receiveRedPacketDetail');
     },
     // 跳转已发红包详情
-    toGiveRedPacketDetail() {
-        window.router.push('/giveRedPacketDetail');
+    toSendRedPacketDetail() {
+        window.router.push('/sendRedPacketDetail');
     },
     oninit(vnode) {
     },

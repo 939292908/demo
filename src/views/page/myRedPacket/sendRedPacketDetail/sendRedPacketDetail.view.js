@@ -1,6 +1,6 @@
 const m = require('mithril');
-require('./giveRedPacketDetail.scss');
-const logic = require('./giveRedPacketDetail.logic');
+require('./sendRedPacketDetail.scss');
+const logic = require('./sendRedPacketDetail.logic');
 const Header = require('@/views/components/common/Header/Header.view');
 const Button = require('@/views/components/common/Button/Button.view');
 
@@ -46,7 +46,7 @@ module.exports = {
                         width: 1,
                         onclick() {
                             if (logic.redPacketState === 2) { // 继续发送该红包
-                                window.router.push("/giveRedPacket");
+                                window.router.push("/sendRedPacket");
                             } else { // 知道了
                                 window.router.back();
                             }

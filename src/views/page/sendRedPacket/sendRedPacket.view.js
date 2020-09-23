@@ -1,11 +1,11 @@
 const m = require('mithril');
-require('./giveRedPacket.scss');
-const logic = require('./giveRedPacket.logic');
+require('./sendRedPacket.scss');
+const logic = require('./sendRedPacket.logic');
 const Header = require('@/views/components/common/Header/Header.view');
 const FormItem = require('@/views/components/common/FormItem/FormItem.view');
 const Button = require('@/views/components/common/Button/Button.view');
 const Modal = require('@/views/components/common/Modal/Modal.view');
-const transfer = require('@/views/page/giveRedPacket/transfer/transfer.view');
+const transfer = require('@/views/page/sendRedPacket/transfer/transfer.view');
 
 module.exports = {
     oninit: vnode => logic.oninit(vnode),
