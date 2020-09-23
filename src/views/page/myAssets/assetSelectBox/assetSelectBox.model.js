@@ -92,7 +92,7 @@ module.exports = {
         }
         const time = [];
         time[0] = start / 1000;
-        time[1] = end / 1000 + 24 * 60 * 60;
+        time[1] = end / 1000;
         this.time = time;
         this.date = str;
         vnode.attrs.onSelectTime(this.time);
