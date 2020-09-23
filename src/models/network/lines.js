@@ -4,6 +4,7 @@ const TradeNetSpeed = require('./TradeNetSpeed').default;
 const HttpNetSpeed = require('./HttpNetSpeed').default;
 const { gMktApi, gTrdApi } = require('../../api/wsApi/index.js');
 const { Http } = require('../../api/webApi/request.js');
+const broadcast = require('@/broadcast/broadcast');
 const lines = {
     // 线路
     netLines: [],
@@ -16,7 +17,7 @@ const lines = {
     testStartTime: 0,
     initLines: function () {
         lines.netLines = apiLines.GetLines().netLines;
-        lines.activeLine = apiLines.GetActive();
+        lines.setLinesActive(lines.netLines[0].Id);
         lines.apiResponseSpeed = [];
         lines.wsResponseSpeed = [];
         lines.testTick();
@@ -33,6 +34,10 @@ const lines = {
         gTrdApi.setSocketUrl(this.activeLine.WSTRD);
         // 切换WebApi的线路
         Http.setBaseUrl(this.activeLine.WebAPI);
+        broadcast.emit({
+            cmd: broadcast.MSG_NET_LINES_UPD,
+            data: this.activeLine
+        });
         m.redraw();
     },
     getActive() {
