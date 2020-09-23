@@ -50,6 +50,8 @@ module.exports = {
     EV_ORD_UPD: 'EV_ORD_UPD',
     // 交易获取资金费率ready
     EV_GET_RS_READY: 'EV_GET_RS_READY',
+    // 切换线路全局广播
+    MSG_NET_LINES_UPD: 'MSG_NET_LINES_UPD',
     /**
      * 发送广播
      * @param {string} cmd
