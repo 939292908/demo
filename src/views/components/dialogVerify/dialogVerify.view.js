@@ -124,7 +124,7 @@ module.exports = {
                 onclick: () => {
                     Validate.emailCd <= 0 && Validate.sendEmailCode();
                 }
-            }, m('div', Validate.emailCd > 0 ? `${Validate.emailCd} s` : I18n.$t('10117')/* '获取验证码' */))
+            }, m('div.has-text-primary', Validate.emailCd > 0 ? `${Validate.emailCd} s` : I18n.$t('10117')/* '获取验证码' */))
         ]);
     },
     doubleButtonVnode: function () {
