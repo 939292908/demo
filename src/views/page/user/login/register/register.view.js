@@ -40,6 +40,7 @@ module.exports = {
                                             Register.code = e.target.value.replace(/[^\d]/g, '');
                                         },
                                         onkeyup: e => {
+                                            if (!Register.canConfirm) return;
                                             if (e.keyCode === 13) {
                                                 Register.checkCode();
                                             }
