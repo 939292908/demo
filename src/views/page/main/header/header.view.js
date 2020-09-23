@@ -272,7 +272,7 @@ module.exports = {
                                             ]),
                                             m('p', { class: `body-4 has-text-level-2` }, [
                                                 'UID:' + (globalModels.getAccount().uid || '--'),
-                                                m('i.iconfont.icon-copy.has-text-primary.iconfont-small.cursor-pointer.ml-1', {
+                                                m('i.iconfont.icon-copy.has-text-primary.iconfont-medium.cursor-pointer.ml-1', {
                                                     onclick() { utils.copyText(globalModels.getAccount().uid || '--'); }
                                                 }, [])
                                             ])
