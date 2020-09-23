@@ -169,6 +169,18 @@ module.exports = {
                 }
             }) : null,
             m(Modal, {
+                isShow: APIManager.showBindEmail, // 弹框显示/隐藏
+                slot: {
+                    header: I18n.$t('10082'), // '温馨提示',
+                    body: '为了正常使用API功能，请先绑定邮箱',
+                    footer: m("button.button.is-primary.font-size-2.has-text-white.modal-default-btn.button-large", {
+                        onclick() {
+                            window.router.push('/bindEmail');
+                        }
+                    }, [I18n.$t('10229')/* '邮箱验证' */])
+                }
+            }),
+            m(Modal, {
                 isShow: APIManager.showAPIKey, // 弹框显示/隐藏
                 onClose () {
                     APIManager.showAPIKey = false;

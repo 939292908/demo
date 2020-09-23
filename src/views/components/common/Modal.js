@@ -35,7 +35,7 @@ module.exports = {
                         vnode.attrs.slot ? vnode.attrs.slot.header ? vnode.attrs.slot.header : ['头部标题'] : ['头部标题']
                     ]),
                     // 关闭按钮
-                    m("div", { class: "icomBox has-bg-level-1 cursor-pointer", onclick: vnode.attrs.onClose }, m('i', { class: `iconfont icon-TurnOff` }))
+                    m("div", { class: `icomBox has-bg-level-1 cursor-pointer ${vnode.attrs.onClose ? '' : 'is-hidden'}`, onclick: vnode.attrs.onClose }, m('i', { class: `iconfont icon-TurnOff` }))
                 ]),
                 // 内容
                 m("section", { class: "modal-card-body has-bg-level-2 pa-7" }, vnode.attrs.slot ? vnode.attrs.slot.body ? vnode.attrs.slot.body : ['内容部分'] : ['内容部分']),
