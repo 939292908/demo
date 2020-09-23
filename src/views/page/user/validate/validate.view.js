@@ -102,7 +102,8 @@ module.exports = {
             onclick: () => {
                 Validate.check();
             },
-            class: Validate.loading ? 'is-loading' : ''
+            class: Validate.loading ? 'is-loading' : '',
+            disabled: !Validate.canConfirm && Validate.selectType !== 'google'
         }, [I18n.$t('10337')/* '确定' */]));
 
         return m('div', {}, validInput);

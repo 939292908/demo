@@ -14,6 +14,7 @@ module.exports = {
     showAPIKey: false,
     loading: false,
     showKeyNameValid: false,
+    showBindEmail: false,
     keyName: '',
     ip: '',
     table: [],
@@ -23,11 +24,19 @@ module.exports = {
         auth: '',
         ip: ''
     },
+    hasSame() {
+        for (const item of this.table) {
+            if (item.name === this.keyName) {
+                return '备注不能重名';
+            }
+        }
+        return '';
+    },
     submit() {
-        if (this.table.length >= 10) {
+        if (this.table.length >= 5) {
             return window.$message({
                 // content: '最多可创建10组API KEY',
-                content: I18n.$t('10611'),
+                content: I18n.$t('10611', { value: 5 }),
                 type: 'danger'
             });
         }
@@ -68,18 +77,6 @@ module.exports = {
         }
         this.showValid = true;
     },
-    copyText(txt) {
-        const input = document.createElement('input');
-        input.setAttribute('readonly', 'readonly');
-        input.setAttribute('value', txt);
-        document.body.appendChild(input);
-        input.select();
-        if (document.execCommand('copy')) {
-            document.execCommand('copy');
-            window.$message({ title: I18n.$t('10410') /* '提示' */, content: I18n.$t('10546') /* '复制成功' */, type: 'success' });
-        }
-        document.body.removeChild(input);
-    },
     getAPIList() {
         this.loading = true;
         m.redraw();
@@ -110,6 +107,9 @@ module.exports = {
     },
     fillData(apiKeys) {
         this.table = apiKeys;
+        this.table.sort((a, b) => {
+            return b.ctime - a.ctime;
+        });
         m.redraw();
     },
     getAuth(role) {
@@ -216,7 +216,9 @@ module.exports = {
         });
     },
     oninit() {
-        if (globalModels.getAccount().token) {
+        if (!globalModels.getAccount().email) {
+            this.showBindEmail = true;
+        } else if (globalModels.getAccount().token) {
             this.getAPIList();
         }
 
@@ -224,7 +226,12 @@ module.exports = {
             key: 'apiManager',
             cmd: broadcast.GET_USER_INFO_READY,
             cb: arg => {
-                this.getAPIList();
+                console.log(globalModels.getAccount());
+                if (!globalModels.getAccount().email) {
+                    this.showBindEmail = true;
+                } else {
+                    this.getAPIList();
+                }
             }
         });
     },
@@ -235,6 +242,7 @@ module.exports = {
         this.showAPIKey = false;
         this.loading = false;
         this.showKeyNameValid = false;
+        this.showBindEmail = false;
         this.table = [];
         this.keyName = '';
         this.ip = '';

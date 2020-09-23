@@ -11,6 +11,7 @@ module.exports = {
     geetestCallBackType: '', // 极验回调类型 用于判断是邮箱还是短信的回调
     selectType: '', // 当前验证类型
     anotherType: '', // 另一种验证类型
+    canConfirm: false, // 发送验证码后才能点确定
     selectName() {
         return {
             sms: I18n.$t('10118')/* '短信验证码' */,
@@ -37,11 +38,13 @@ module.exports = {
             this.setSmsCd();
         }
         validate.sendSmsCode().then(res => {
-            if (res.result.code === -1) {
+            if (res.result.code === 0) {
+                this.canConfirm = true;
+            } else if (res.result.code === -1) {
                 this.cleanSmsCd();
                 this.geetestCallBackType = 'sms';
                 geetest.verify();
-            } else if (res.result.code !== 0) {
+            } else {
                 this.cleanSmsCd();
                 window.$message({
                     content: errCode.getWebApiErrorCode(res.result.code),
@@ -61,11 +64,13 @@ module.exports = {
             this.setEmailCd();
         }
         validate.sendEmailCode().then(res => {
-            if (res.result.code === -1) {
+            if (res.result.code === 0) {
+                this.canConfirm = true;
+            } else if (res.result.code === -1) {
                 this.cleanEmailCd();
                 self.geetestCallBackType = 'email';
                 geetest.verify();
-            } else if (res.result.code !== 0) {
+            } else {
                 this.cleanEmailCd();
                 window.$message({
                     content: errCode.getWebApiErrorCode(res.result.code),
@@ -216,6 +221,7 @@ module.exports = {
         this.code = '';
         this.selectType = '';
         this.anotherType = '';
+        this.canConfirm = false;
         broadcast.offMsg({
             key: 'validate',
             cmd: 'geetestMsg',

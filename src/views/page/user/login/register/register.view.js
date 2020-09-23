@@ -63,6 +63,7 @@ module.exports = {
                             ]),
                             m('button.button.my-3.has-bg-primary.button-medium.is-fullwidth.has-text-white.mb-2',
                                 {
+                                    disabled: !Register.canConfirm,
                                     onclick: () => { Register.checkCode(); }
                                 }, [I18n.$t('10007')/* '注册' */])
                         ] : [

@@ -7,11 +7,16 @@ require('@/views/page/home/top/top.scss');
 
 module.exports = function (props) {
     const { banneList, noticeList } = props.data;
-    return m('div.views-pages-home-top has-bg-sub-level-1 ', {
+    return m('div.views-pages-home-top ', {
     }, [
+        m('div.bg-father.w100', {}, [
+            m('div.bg.has-bg-sub-level-1', {}, [
+                m('img.bg-img', { src: require("@/assets/img/home/vector.png").default }, [])
+            ])
+        ]),
         // 顶部
-        m('div', { class: ` has-text-centered pt-7`, style: `background: url(${require("@/assets/img/home/vector.png").default}) no-repeat center center / 100%;` }, [
-            m('p', { class: `font-weight-regular pt-9 title-x-large-1 ${utils.isMobile() ? 'ml-7 mr-7' : 'pc才有的类名xx'}` }, [
+        m('div.top', { class: ` has-text-centered pt-7` }, [
+            m('p', { class: `font-weight-regular title-x-large-1 ${utils.isMobile() ? 'ml-7 mr-7 pt-7' : 'pt-9'}` }, [
                 // '最值得信任的数字资产交易平台'
                 I18n.$t('10008')
             ]),
