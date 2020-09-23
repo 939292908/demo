@@ -19,6 +19,11 @@ body {
     // align-items: center;
 }
 
+.is-content-center {
+    display: flex;
+    justify-content: center;
+}
+
 .is-align-center {
     display: flex;
     align-items: center;
@@ -34,17 +39,19 @@ body {
 .has-border-none {
     border: none;
 }
-.has-border-top {
-    border-top: 1px solid;
-}
-.has-border-bottom {
-    border-bottom: 1px solid;
-}
-.has-border-left {
-    border-left: 1px solid;
-}
-.has-border-right {
-    border-right: 1px solid;
+@for $i from 1 through 3 {
+    .has-border-top-#{$i} {
+        border-top: #{$i}px solid;
+    }
+    .has-border-bottom-#{$i} {
+        border-bottom: #{$i}px solid;
+    }
+    .has-border-left-#{$i} {
+        border-left: #{$i}px solid;
+    }
+    .has-border-right-#{$i} {
+        border-right: #{$i}px solid;
+    }
 }
 
 // 不换行

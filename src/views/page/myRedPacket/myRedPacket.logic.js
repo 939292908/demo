@@ -13,8 +13,20 @@ const logic = {
             label: "我的红包"
         }
     },
+    currentNavId: 1,
+    navList: [
+        {
+            id: 1,
+            label: "已领取",
+            class: "mr-7"
+        },
+        {
+            id: 2,
+            label: "已领取"
+        }
+    ],
     // 已抢红包列表
-    redPacketList: [
+    receiveRedPacketList: [
         {
             phone: "138****000",
             time: "2020/8/21  14:20",

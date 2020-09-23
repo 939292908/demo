@@ -28,7 +28,7 @@ module.exports = {
                     ])
                 ]),
                 // 币种
-                m('div', { class: `has-border-bottom py-3 has-line-level-4` }, [
+                m('div', { class: `has-border-bottom-1 py-3 has-line-level-4` }, [
                     m('span', { class: `body-3 mr-2` }, '币种'),
                     m('span', { class: `title-small` }, logic.currentCoin)
                 ]),

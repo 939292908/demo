@@ -27,7 +27,8 @@ body,
         .pub-layout {
             height: calc(100% - 48px);
             position: relative;
-
+            overflow: auto;
+            
             .pub-layout-bottom-btn {
                 position: absolute;
                 bottom: 0;

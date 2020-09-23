@@ -1,8 +1,7 @@
 const m = require('mithril');
-require('./receiveRedPacket.scss');
-const logic = require('./receiveRedPacket.logic');
+require('./redPacketDetail.scss');
+const logic = require('./redPacketDetail.logic');
 const Header = require('@/views/components/common/Header/Header.view');
-const FormItem = require('@/views/components/common/FormItem/FormItem.view');
 const Button = require('@/views/components/common/Button/Button.view');
 
 module.exports = {
@@ -11,7 +10,7 @@ module.exports = {
     onupdate: vnode => logic.onupdate(vnode),
     onremove: vnode => logic.onremove(vnode),
     view(vnode) {
-        return m('div', { class: `pub-view views-receive-red-packet` }, [
+        return m('div', { class: `pub-view views-red-packet-detail` }, [
             m(Header, logic.headerOption),
             m('div', { class: `pub-layout has-text-centered` }, [
                 m('div', { class: `has-border-bottom-1 px-6 pb-7 has-line-level-4` }, [
@@ -23,21 +22,8 @@ module.exports = {
                     m('div', { class: `title-large mb-3` }, "拼手气红包"),
                     m('div', { class: `` }, "“我们都活在暮光之城，黄昏之后我送你10USDT”"),
                     m('iframe', { src: require("@/assets/img/people.svg").default, width: "110", height: "110", class: "mt-3 mb-7" }),
-                    m('div', { class: `` }, "您有机会获得"),
                     m('div', { class: `has-text-primary title-medium` }, "10 USDT"),
-                    m(FormItem, {
-                        class: "is-around py-3 mt-7 mb-3",
-                        content: "1886 8555 8994"
-                    }),
-                    m(Button, {
-                        label: "抢",
-                        class: 'is-primary',
-                        width: 1,
-                        onclick() {
-                            console.log("抢红包啦!");
-                            window.router.push("/receiveResult");
-                        }
-                    })
+                    m('div', { class: `mb-3` }, "钱包账户，可直接提现、交易")
                 ]),
                 // 领取概况
                 m('div', { class: `has-text-left mt-7 px-6` }, [
@@ -46,7 +32,7 @@ module.exports = {
                 ]),
                 // 领取列表
                 m('div', { class: `has-text-left px-6 pb-3` }, logic.redPacketList.map((item, index) => {
-                    return m('div', { class: `is-between py-5 has-border-bottom-1 has-line-level-4` }, [
+                    return m('div', { class: `is-between py-5 has-border-bottom-1 has-line-level-4`, key: index }, [
                         m('div', { class: `` }, [
                             m('div', { class: `has-text-primary font-weight-bold` }, item.phone),
                             m('div', { class: `body-4` }, item.time)
@@ -56,7 +42,20 @@ module.exports = {
                             m('span', { class: `` }, item.coin)
                         ])
                     ]);
-                }))
+                })),
+                // 底部
+                m('div', { class: `views-receive-result-footer px-6` }, [
+                    m(Button, {
+                        label: "查看我的红包",
+                        class: 'views-receive-result-look-my-red-packet-btn is-primary',
+                        width: 1,
+                        onclick() {
+                            // console.log("查看我的红包!");
+                            window.router.push("/myRedPacket");
+                        }
+                    }),
+                    m('div', { class: `pt-2 body-4` }, "下载APP  收发红包 小事一桩")
+                ])
             ])
         ]);
     }

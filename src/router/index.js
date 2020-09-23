@@ -35,6 +35,14 @@ class Router {
             onmatch: function () {
                 return import('@/views/page/myRedPacket/myRedPacket.view');
             }
+        },
+        // 红包详情
+        '/redPacketDetail': {
+            // 是否需要需要身份验证
+            requireAuth: false,
+            onmatch: function () {
+                return import('@/views/page/myRedPacket/redPacketDetail/redPacketDetail.view');
+            }
         }
     };
 

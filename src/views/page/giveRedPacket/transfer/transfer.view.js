@@ -37,7 +37,7 @@ module.exports = {
                     ]),
                     m('div', { class: `mt-5 font-weight-bold body-6 mb-2` }, ["划转数量"]),
                     // 数量input
-                    m('div', { class: `columns is-mobile is-align-center has-border-bottom has-line-level-4 mb-2` }, [
+                    m('div', { class: `columns is-mobile is-align-center has-border-bottom-1 has-line-level-4 mb-2` }, [
                         m('input', {
                             class: `input column is-8 has-border-none`,
                             placeholder: "请输入划转数量",
