@@ -235,13 +235,13 @@ module.exports = {
             cb: function () {
                 console.log('outlogin...');
                 // 资产清空
-                this.wallet_obj = {
+                that.wallet_obj = {
                     '01': {}, // 合约账户
                     '02': {}, // 币币账户
                     '03': {}, // 主钱包
                     '04': {} // 法币账户
                 };
-                this.wallet = {
+                that.wallet = {
                     '01': [], // 合约账户
                     '02': [], // 币币账户
                     '03': [], // 主钱包
