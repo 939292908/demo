@@ -3,6 +3,7 @@ require('./receiveRedPacketDetail.scss');
 const logic = require('./receiveRedPacketDetail.logic');
 const Header = require('@/views/components/common/Header/Header.view');
 // const Button = require('@/views/components/common/Button/Button.view');
+const Modal = require('@/views/components/common/Modal/Modal.view');
 
 module.exports = {
     oninit: vnode => logic.oninit(vnode),
@@ -41,7 +42,27 @@ module.exports = {
                         ])
                     ]);
                 }))
-            ])
+            ]),
+            // 分享抢红包详情 弹框
+            m(Modal, {
+                isShow: logic.isShowShareDetailModal,
+                updateOption(params) {
+                    logic.isShowShareDetailModal = params.isShow;
+                },
+                content: m('div', { class: `my-modal-content has-bg-level-2 px-7 py-5 has-text-centered` }, [
+                    logic.isLucky ? m('i', { class: `iconfont icon-huiyuan` }) : m('iframe', { src: require("@/assets/img/people.svg").default, width: 64, height: 64 }),
+                    m('div', { class: `` }, [logic.isLucky ? "手气最佳" : "我抢到了"]),
+                    m('div', { class: `` }, `8 USDT`),
+                    m('div', { class: `` }, `我抢到了来自178****7894的拼手气红包`),
+                    m('div', { class: `has-border-top-1 has-line-level-2 has-text-left is-between py-6` }, [
+                        m('div', { class: `` }, [
+                            m('iframe', { src: require("@/assets/img/logo.svg").default, height: "12", style: "width: 100px;" }),
+                            m('div', { class: `body-3` }, "下载注册APP，轻松交易")
+                        ]),
+                        m('img', { class: `views-receive-red-packet-detail-footer-ewm`, width: 42, src: logic.ewmImg })
+                    ])
+                ])
+            })
         ]);
     }
 };

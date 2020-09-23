@@ -826,3 +826,13 @@ $primary-lighten: var(--c-primary-lighten);
     background-color: #9EA2AF !important;
     opacity: 1;
 }
+
+.is-gradient-bg-primary {
+    background-image: linear-gradient(359.82deg, #FFE294 24.29%, #FFFBEF 76.28%);
+}
+
+.is-gradient-text-primary {
+    background-image: linear-gradient(359.82deg, #FFE294 24.29%, #FFFBEF 76.28%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}

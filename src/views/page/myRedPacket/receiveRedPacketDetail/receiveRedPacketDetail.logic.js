@@ -1,6 +1,15 @@
 const m = require('mithril');
+const Qrcode = require('qrcode');
 
 const logic = {
+    // 红包详情分享 弹框
+    isShowShareDetailModal: true,
+    // 是否是手气最佳
+    isLucky: false,
+    // 二维码链接
+    ewmLink: "www.baidu.com",
+    // 二维码img
+    ewmImg: "",
     // 头部 组件配置
     headerOption: {
         class: "px-6",
@@ -15,7 +24,13 @@ const logic = {
         right: {
             label: m('i', { class: `iconfont icon-otc-editName` }),
             onclick() {
-                console.log("分享");
+                // 生成二维码
+                Qrcode.toDataURL(logic.ewmLink || '无').then(url => {
+                    logic.ewmImg = url;
+                }).catch(err => {
+                    console.log(err);
+                });
+                logic.isShowShareDetailModal = true;
             }
         }
     },

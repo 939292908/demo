@@ -102,7 +102,7 @@ module.exports = {
                 }),
                 // 划转 Modal
                 m(transfer),
-                // 发红包确认框
+                // 发红包确认 弹框
                 m(Modal, {
                     isShow: logic.giveRedPModal.isShow,
                     updateOption(params) {
@@ -154,7 +154,34 @@ module.exports = {
                         ]
                     }
                 }),
-                // 未分析红包提示
+                // 分享内容 弹框
+                m(Modal, {
+                    isShow: logic.isShowShareModal,
+                    updateOption(params) {
+                        logic.isShowShareModal = params.isShow;
+                    },
+                    content: m('div', {
+                        class: `view-share-content has-bg-level-2`,
+                        style: `background:url(${require('@/assets/img/shareBg.png').default}) no-repeat;background-size: 100%;`
+                    }, [
+                        m('div', { class: `is-gradient-text-primary title-x-large has-text-centered mt-5` }, "分享红包"),
+                        m('div', { class: `is-content-center` }, [
+                            m('div', { class: `view-share-content-title is-gradient-bg-primary px-5 font-weight-bold` }, "红包资产可用来提现，交易")
+                        ]),
+                        m('div', { class: `view-share-content-footer pa-3` }, [
+                            m('div', { class: `pa-3` }, [
+                                m('div', { class: `is-between has-bg-level-2 px-3 py-2` }, [
+                                    m('div', { class: `` }, [
+                                        m('iframe', { src: require("@/assets/img/logo.svg").default, height: "12", style: "width: 100px;" }),
+                                        m('div', { class: `body-3` }, "下载注册APP，轻松交易")
+                                    ]),
+                                    m('img', { class: `view-share-content-footer-ewm`, src: logic.ewmImg })
+                                ])
+                            ])
+                        ])
+                    ])
+                }),
+                // 取消分享红包 提示弹框
                 m(Modal, {
                     isShow: logic.isShowNotShareModal,
                     updateOption(params) {
@@ -165,8 +192,39 @@ module.exports = {
                             m('i', { class: `iconfont icon-about-us has-text-primary` })
                         ]),
                         m('div', { class: `title-small mb-3` }, "您还未分享红包"),
-                        m('div', { class: `mb-7` }, "退出后可在我的红包-已发送  中选中目标红包继续发送"),
-                        m('div', { class: `mb-7 has-text-primary font-weight-bold`, onclick() { logic.isShowNotShareModal = false; } }, "知道了")
+                        m('div', { class: `mb-5` }, "退出后可在我的红包-已发送  中选中目标红包继续发送"),
+                        // 按钮
+                        m('div', { class: `is-content-center is-align-center mb-7` }, [
+                            m('div', {
+                                class: `font-weight-bold mr-4 px-3 py-2`,
+                                onclick() {
+                                    logic.isShowNotShareModal = false;
+                                }
+                            }, "知道了"),
+                            m(Button, {
+                                class: 'is-primary',
+                                size: "size-2",
+                                label: "继续分享",
+                                onclick() {
+                                    logic.isShowNotShareModal = false;
+                                    // window.router.push('/sendRedPacket');
+                                }
+                            })
+                        ])
+                    ])
+                }),
+                // 实名认证/资金密码 提示弹框
+                m(Modal, {
+                    isShow: logic.isShowVerifyAuthModal,
+                    updateOption(params) {
+                        logic.isShowVerifyAuthModal = params.isShow;
+                    },
+                    content: m('div', { class: `my-modal-content px-5 has-bg-level-2 has-text-centered` }, [
+                        m('div', { class: `my-5 is-content-center` }, [
+                            m('i', { class: `iconfont icon-about-us has-text-primary` })
+                        ]),
+                        m('div', { class: `title-small mb-3` }, "需要完成以下设置"),
+                        m('div', { class: `mb-7 has-text-primary font-weight-bold`, onclick() { logic.isShowVerifyAuthModal = false; } }, "知道了")
                     ])
                 })
             ])

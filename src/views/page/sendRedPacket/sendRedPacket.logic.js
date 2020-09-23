@@ -1,5 +1,6 @@
 const transferLogic = require('@/views/page/sendRedPacket/transfer/transfer.logic');
 const globalModels = require('@/models/globalModels');
+const Qrcode = require('qrcode');
 
 const logic = {
     // 币种按钮list
@@ -10,8 +11,16 @@ const logic = {
     redPacketType: 1,
     // 钱包可用金额
     wltMoney: '100',
-    // 未分享提示弹框
+    // 分享 弹框
+    isShowShareModal: false,
+    // 取消分享提示 弹框
     isShowNotShareModal: false,
+    // 校验实名认证/资金密码 弹框
+    isShowVerifyAuthModal: false,
+    // 二维码链接
+    ewmLink: "www.baidu.com",
+    // 二维码img
+    ewmImg: "",
     // 资金密码 模块
     passwordModel: {
         // 密码
@@ -166,7 +175,19 @@ const logic = {
         },
         onOk() {
             console.log(logic.formModel.getFormData());
-            logic.passwordModel.verifyPassword() && this.updateOption({ isShow: !this.isShow });
+            if (logic.passwordModel.verifyPassword()) {
+                this.updateOption({ isShow: !this.isShow }); // 关闭自己
+                // 校验实名认证/资金密码 弹框
+                logic.isShowVerifyAuthModal = true;
+                // 生成二维码
+                Qrcode.toDataURL(logic.ewmLink || '无').then(url => {
+                    logic.ewmImg = url;
+                }).catch(err => {
+                    console.log(err);
+                });
+                // 分享弹框
+                logic.isShowShareModal = true;
+            }
         }
     },
     // 划转按钮click

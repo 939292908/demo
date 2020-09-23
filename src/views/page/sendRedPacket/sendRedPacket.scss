@@ -1,9 +1,36 @@
 .views-give-red-packet {
+    
     .views-give-red-packet-btn-list {
         overflow-x: auto;
         white-space: nowrap;
+
         &::-webkit-scrollbar {
             display: none;
         }
     }
+
+    // 分享
+    .view-share-content {
+        width: 270px;
+        height: 416px;
+        position: relative;
+        
+        .view-share-content-title {
+            height: 30px;
+            line-height: 30px;
+            border-radius: 15px;
+        }
+
+        .view-share-content-footer {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            
+            .view-share-content-footer-ewm {
+                width: 40px;
+                height: 40px;
+            }
+        }
+    }
+
 }
