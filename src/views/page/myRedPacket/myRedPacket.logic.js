@@ -31,13 +31,15 @@ const logic = {
             phone: "138****000",
             time: "2020/8/21  14:20",
             num: 3,
-            coin: "USDT"
+            coin: "USDT",
+            redPacketType: "拼手气红包"
         },
         {
             phone: "138****000",
             time: "2020/7/10  08:10",
             num: 2,
-            coin: "USDT"
+            coin: "USDT",
+            redPacketType: "普通红包"
         }
     ],
     oninit(vnode) {

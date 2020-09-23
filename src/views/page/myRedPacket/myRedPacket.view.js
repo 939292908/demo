@@ -44,7 +44,10 @@ module.exports = {
                     return m('div', { class: `is-between py-5 has-border-bottom-1 has-line-level-4 mx-6`, key: index }, [
                         // 左边
                         m('div', { class: `` }, [
-                            m('div', { class: `has-text-primary font-weight-bold` }, item.phone),
+                            m('div', { class: `font-weight-bold` }, [
+                                m('span', { class: `` }, item.phone),
+                                m('span', { class: `has-text-primary body-4` }, ' ' + item.redPacketType)
+                            ]),
                             m('div', { class: `body-4` }, item.time)
                         ]),
                         // 右边
@@ -81,7 +84,7 @@ module.exports = {
                     return m('div', { class: `is-between py-5 has-border-bottom-1 has-line-level-4 mx-6`, key: index }, [
                         // 左边
                         m('div', { class: `` }, [
-                            m('div', { class: `has-text-primary font-weight-bold` }, item.phone),
+                            m('div', { class: `has-text-primary font-weight-bold` }, item.redPacketType),
                             m('div', { class: `body-4` }, item.time)
                         ]),
                         // 右边
