@@ -227,6 +227,28 @@ module.exports = {
                 that.trdDataOnFun();
             }
         });
+
+        // 退出登录全局广播
+        broadcast.onMsg({
+            key: this.name,
+            cmd: broadcast.MSG_LOG_OUT,
+            cb: function () {
+                console.log('outlogin...');
+                // 资产清空
+                that.wallet_obj = {
+                    '01': {}, // 合约账户
+                    '02': {}, // 币币账户
+                    '03': {}, // 主钱包
+                    '04': {} // 法币账户
+                };
+                that.wallet = {
+                    '01': [], // 合约账户
+                    '02': [], // 币币账户
+                    '03': [], // 主钱包
+                    '04': [] // 法币账户
+                };
+            }
+        });
     },
     remove: function () {
         broadcast.offMsg({
