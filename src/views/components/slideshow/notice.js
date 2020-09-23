@@ -1,6 +1,7 @@
 import m from 'mithril';
 import Swiper from "swiper";
 import trumpet from '@/assets/img/home/trumpet.png';
+const I18n = require('@/languages/I18n').default;
 require('@/styles/components/slideshow.scss');
 
 const vertical = {
@@ -33,10 +34,10 @@ export default {
         return m('div', { class: 'components-slideshow-trumpet' }, [
             m('div.slideshow-trumpet-icon', [
                 m('img', { src: trumpet }),
-                m('span', '最新公告:')
+                m('span', I18n.$t('10012')/* '最新公告' */)
             ]),
             m('div.slideshow-trumpet-content', this.swiperVnode(vnode)),
-            m('div.slideshow-trumpet-more', { onclick: this.handleClickMore }, '更多')
+            m('div.slideshow-trumpet-more', { onclick: this.handleClickMore }, I18n.$t('10013')/* '更多' */)
         ]);
     },
     onremove: function () {
