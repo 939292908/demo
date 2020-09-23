@@ -34,7 +34,6 @@ module.exports = {
                         class: 'is-primary',
                         width: 1,
                         onclick() {
-                            console.log("抢红包啦!");
                             window.router.push("/receiveResult");
                         }
                     })

@@ -1,15 +1,16 @@
-const m = require('mithril');
 
 const logic = {
+    redPacketState: 2, // 红包状态 1: 领完了 2: 未领完 3: 已过期
     // 头部 组件配置
     headerOption: {
         class: "px-6",
         left: {
-            label: m('i', { class: `iconfont icon-tianxieshanchu` }),
             onclick() {
-                // console.log(this.label);
                 window.router.back();
             }
+        },
+        center: {
+            label: "详情记录"
         }
     },
     // 已抢红包列表

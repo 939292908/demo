@@ -50,7 +50,6 @@ module.exports = {
                         class: 'views-receive-result-look-my-red-packet-btn is-primary',
                         width: 1,
                         onclick() {
-                            // console.log("查看我的红包!");
                             window.router.push("/myRedPacket");
                         }
                     }),

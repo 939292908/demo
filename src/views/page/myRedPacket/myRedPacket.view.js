@@ -34,14 +34,19 @@ module.exports = {
     },
     getNavContent() {
         const key = logic.currentNavId;
-        console.log(key);
         switch (key) {
         case 1:
             // 已领取
             return m('div', { class: `` }, [
                 m('div', { class: `mx-6 mt-7` }, "领取红包总金额：? USDT"),
                 logic.receiveRedPacketList.map((item, index) => {
-                    return m('div', { class: `is-between py-5 has-border-bottom-1 has-line-level-4 mx-6`, key: index }, [
+                    return m('div', {
+                        class: `is-between py-5 has-border-bottom-1 has-line-level-4 mx-6`,
+                        key: index,
+                        onclick() {
+                            logic.toReceiveRedPacketDetail(); // 跳转领的红包详情
+                        }
+                    }, [
                         // 左边
                         m('div', { class: `` }, [
                             m('div', { class: `font-weight-bold` }, [
@@ -81,7 +86,13 @@ module.exports = {
                     ]
                 }),
                 logic.receiveRedPacketList.map((item, index) => {
-                    return m('div', { class: `is-between py-5 has-border-bottom-1 has-line-level-4 mx-6`, key: index }, [
+                    return m('div', {
+                        class: `is-between py-5 has-border-bottom-1 has-line-level-4 mx-6`,
+                        key: index,
+                        onclick() {
+                            logic.toGiveRedPacketDetail(); // 跳转发的红包详情
+                        }
+                    }, [
                         // 左边
                         m('div', { class: `` }, [
                             m('div', { class: `has-text-primary font-weight-bold` }, item.redPacketType),

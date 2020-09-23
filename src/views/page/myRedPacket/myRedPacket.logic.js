@@ -6,7 +6,7 @@ const logic = {
         class: "px-6",
         left: {
             onclick() {
-                console.log(this.label);
+                window.router.back();
             }
         },
         center: {
@@ -22,7 +22,7 @@ const logic = {
         },
         {
             id: 2,
-            label: "已领取"
+            label: "已发送"
         }
     ],
     // 已抢红包列表
@@ -42,6 +42,14 @@ const logic = {
             redPacketType: "普通红包"
         }
     ],
+    // 跳转已领红包详情
+    toReceiveRedPacketDetail() {
+        window.router.push('/receiveRedPacketDetail');
+    },
+    // 跳转已发红包详情
+    toGiveRedPacketDetail() {
+        window.router.push('/giveRedPacketDetail');
+    },
     oninit(vnode) {
     },
     oncreate(vnode) {

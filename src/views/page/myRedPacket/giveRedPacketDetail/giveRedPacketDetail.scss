@@ -1,5 +1,7 @@
-.views-red-packet-detail {
-    padding-bottom: 70px;
+.views-give-red-packet-detail {
+    &.has-bottom-btn {
+        padding-bottom: calc(70px + 12px);
+    }
     
     .pub-layout {
 

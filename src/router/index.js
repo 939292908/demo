@@ -5,7 +5,7 @@ class Router {
     defaultRoutePath = "/";
     routerList = {
         // 发红包
-        '/give': {
+        '/giveRedPacket': {
             // 是否需要需要身份验证
             requireAuth: false,
             onmatch: function () {
@@ -36,12 +36,20 @@ class Router {
                 return import('@/views/page/myRedPacket/myRedPacket.view');
             }
         },
-        // 红包详情
-        '/redPacketDetail': {
+        // 发的红包详情
+        '/giveRedPacketDetail': {
             // 是否需要需要身份验证
             requireAuth: false,
             onmatch: function () {
-                return import('@/views/page/myRedPacket/redPacketDetail/redPacketDetail.view');
+                return import('@/views/page/myRedPacket/giveRedPacketDetail/giveRedPacketDetail.view');
+            }
+        },
+        // 领的红包详情
+        '/receiveRedPacketDetail': {
+            // 是否需要需要身份验证
+            requireAuth: false,
+            onmatch: function () {
+                return import('@/views/page/myRedPacket/receiveRedPacketDetail/receiveRedPacketDetail.view');
             }
         }
     };
