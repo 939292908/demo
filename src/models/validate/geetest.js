@@ -5,7 +5,7 @@ import { webApi } from '../../api';
 const geetest = {
     isLoading: false,
     readyCallBack: null,
-    captchaOb: null,
+    captchaObj: null,
     /**
      * 初始化完成回调
      */
@@ -98,6 +98,7 @@ const geetest = {
      * @callback readyCallBack 初始化回调
      */
     init(readyCallBack) {
+        const self = this;
         this.isLoading = true;
         this.readyCallBack = readyCallBack;
         const lang = I18n.getLocale()
@@ -116,15 +117,15 @@ const geetest = {
                 product: 'bind',
                 lang: lang
             }, captchaObj => {
-                this.captchaObj = captchaObj;
+                self.captchaObj = captchaObj;
                 captchaObj
-                    .onReady(this.onReady)
-                    .onSuccess(this.onSuccess)
-                    .onError(this.onError)
-                    .onClose(this.onClose);
+                    .onReady(self.onReady)
+                    .onSuccess(self.onSuccess)
+                    .onError(self.onError)
+                    .onClose(self.onClose);
             });
         }).catch(() => {
-            this.isloading = false;
+            self.isloading = false;
         });
     },
     verify(errCallBack) {

@@ -7,11 +7,8 @@ require("./styles/index");
 // UI库
 require('./styles/bluma.scss');
 
-// 轮播
-// import('swiper/swiper-bundle.css');
 // 极验
-// import('./libs/gt');
-// import('./libs/echarts');
+import('./libs/gt');
 
 // 重写console.log
 // require('@/util/log');

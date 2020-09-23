@@ -34,7 +34,7 @@ module.exports = {
                         class: 'is-primary',
                         width: 1,
                         onclick() {
-                            window.router.push("/receiveResult");
+                            logic.receiveClick();
                         }
                     })
                 ]),

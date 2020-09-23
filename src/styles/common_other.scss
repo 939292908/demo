@@ -40,6 +40,9 @@ body {
     border: none;
 }
 @for $i from 1 through 3 {
+    .has-border-#{$i} {
+        border: #{$i}px solid;
+    }
     .has-border-top-#{$i} {
         border-top: #{$i}px solid;
     }

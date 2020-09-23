@@ -10,6 +10,8 @@ const logic = {
     redPacketType: 1,
     // 钱包可用金额
     wltMoney: '100',
+    // 未分享提示弹框
+    isShowNotShareModal: false,
     // 资金密码 模块
     passwordModel: {
         // 密码

@@ -136,7 +136,7 @@ module.exports = {
                                 m('div', { class: `column is-8 font-weight-bold` }, (logic.numberFormItem.value || "0") + " 个")
                             ]),
                             // 资金密码 input
-                            m('div', { class: `views-give-red-packet-password is-flex is-align-center has-line-level-4 px-3 mt-7` }, [
+                            m('div', { class: `has-border-1 is-flex is-align-center has-line-level-4 px-3 mt-7` }, [
                                 m('div', { class: `no-wrap` }, "资金密码"),
                                 m('input', {
                                     class: `input has-border-none`,
@@ -153,6 +153,21 @@ module.exports = {
                             m('div', { class: `has-text-up mt-3` }, logic.passwordModel.errMsg)
                         ]
                     }
+                }),
+                // 未分析红包提示
+                m(Modal, {
+                    isShow: logic.isShowNotShareModal,
+                    updateOption(params) {
+                        logic.isShowNotShareModal = params.isShow;
+                    },
+                    content: m('div', { class: `my-modal-content px-5 has-bg-level-2 has-text-centered` }, [
+                        m('div', { class: `my-5 is-content-center` }, [
+                            m('i', { class: `iconfont icon-about-us has-text-primary` })
+                        ]),
+                        m('div', { class: `title-small mb-3` }, "您还未分享红包"),
+                        m('div', { class: `mb-7` }, "退出后可在我的红包-已发送  中选中目标红包继续发送"),
+                        m('div', { class: `mb-7 has-text-primary font-weight-bold`, onclick() { logic.isShowNotShareModal = false; } }, "知道了")
+                    ])
                 })
             ])
         ]);

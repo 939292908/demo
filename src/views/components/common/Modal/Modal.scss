@@ -1,9 +1,17 @@
 // modal弹框 组件
 .my-modal {
-    justify-content: flex-end;
+    &.my-modal-flex-end {
+        justify-content: flex-end;
+    }
 
     &.theme--light {
         background-color: initial;
+    }
+
+    .my-modal-content {
+        z-index: 1;
+        width: 70%;
+        border-radius: var(--c-radius-level1);
     }
 
     .modal-card {
