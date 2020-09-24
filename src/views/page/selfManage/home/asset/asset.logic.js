@@ -120,7 +120,7 @@ const manageAssetData = {
         this.legalList = [
             { label: l180n.$t('10220') /* '买' */, toUrl: '', action: '', wallet: '04' },
             { label: l180n.$t('10221') /* '买' */, toUrl: '', action: '', wallet: '04' },
-            { label: l180n.$t('10071') /* '划转' */, toUrl: '', action: 'transfer', wallet: '04' }
+            { label: l180n.$t('10059') /* '资金划转' */, toUrl: '', action: 'transfer', wallet: '04' }
         ];
     },
     oninit: function () {
