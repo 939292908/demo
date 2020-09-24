@@ -186,8 +186,7 @@ const model = {
         // 从xx钱包
         this.fromMenuOption.currentId = buildFromWalletValue(this.fromMenuOption.currentId || '03');
         // 到xx钱包
-        // this.toMenuOption.currentId = buildToWalletValue(this.toMenuOption.currentId);
-        this.toMenuOption.currentId = buildToWalletValue("");
+        this.toMenuOption.currentId = buildToWalletValue(this.toMenuOption.currentId);
         // console.log(this.fromMenuOption.currentId, this.toMenuOption.currentId);
     },
     // 初始化 2个钱包list （依赖钱包value 和 coin）
@@ -248,8 +247,6 @@ const model = {
         currentId: "",
         menuHeight: 260,
         updateOption (option) {
-            /* eslint-disable */
-            // debugger
             Object.keys(option).forEach(key => (this[key] = option[key]));
         },
         menuClick (item) {
