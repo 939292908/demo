@@ -45,6 +45,7 @@ const model = {
      * } } option
      */
     setTransferModalOption(option) {
+        this.reset(); // 重置
         model.isShowTransferModal = option.isShow;
         if (option.successCallback) model.successCallback = option.successCallback;
         if (option.transferFrom) model.fromMenuOption.currentId = option.transferFrom;
@@ -187,7 +188,7 @@ const model = {
         this.fromMenuOption.currentId = buildFromWalletValue(this.fromMenuOption.currentId || '03');
         // 到xx钱包
         this.toMenuOption.currentId = buildToWalletValue(this.toMenuOption.currentId);
-        // console.log(this.fromMenuOption.currentId, this.toMenuOption.currentId);
+        console.log(this.fromMenuOption.currentId, this.toMenuOption.currentId);
     },
     // 初始化 2个钱包list （依赖钱包value 和 coin）
     initFromAndToWalletListByValue () {
