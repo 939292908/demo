@@ -32,6 +32,12 @@ module.exports = {
         }
         return '';
     },
+    has20IP() {
+        if (this.ip.split(',').length > 20) {
+            return I18n.$t('10621', { value: 20 }); // '最多绑定20个IP地址或IP段';
+        }
+        return '';
+    },
     submit() {
         if (this.table.length >= 5) {
             return window.$message({
@@ -87,6 +93,9 @@ module.exports = {
         }).then(res => {
             this.loading = false;
             m.redraw();
+            if (!res.result) {
+                return;
+            }
             if (res.result.code === 0) {
                 this.fillData(res.apiKeys);
             } else {
@@ -115,11 +124,12 @@ module.exports = {
     getAuth(role) {
         let auth = '';
         if ((role & 2) === 2) {
-            auth += `${I18n.$t('10319')/* 只读 */} `;
+            auth += `${I18n.$t('10319')/* 只读 */}${I18n.getLocale() === 'en' ? ' ' : '、'}`;
         }
         if ((role & 4) === 4 && (role & 8) === 8 && (role & 16) === 16) {
-            auth += `${I18n.$t('10320')/* 交易 */} `;
+            auth += `${I18n.$t('10320')/* 交易 */}${I18n.getLocale() === 'en' ? ' ' : '、'}`;
         }
+        auth = auth.substr(0, auth.length - 1);
         return auth;
     },
     delAPI(key) {
@@ -183,11 +193,12 @@ module.exports = {
                 this.showAPIKey = true;
                 let auth = '';
                 if (this.onlyRead) {
-                    auth += `${I18n.$t('10319')/* 只读 */} `;
+                    auth += `${I18n.$t('10319')/* 只读 */}${I18n.getLocale() === 'en' ? ' ' : '、'}`;
                 }
                 if (this.canTrade) {
-                    auth += `${I18n.$t('10320')/* 交易 */} `;
+                    auth += `${I18n.$t('10320')/* 交易 */}${I18n.getLocale() === 'en' ? ' ' : '、'}`;
                 }
+                auth = auth.substr(0, auth.length - 1);
                 this.modal = {
                     key: res.apiKey,
                     password: res.apiKeyValue,
