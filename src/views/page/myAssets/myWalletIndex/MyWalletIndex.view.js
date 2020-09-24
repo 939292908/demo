@@ -138,6 +138,8 @@ module.exports = {
     },
     oncreate() {
         myWalletIndex.createFn();
+        document.body.scrollTop = localStorage.getItem('isReload') === 'true' ? localStorage.getItem('scollTop') : 0;
+        localStorage.setItem('isReload', false);
     },
     onremove() {
         myWalletIndex.removeFn();

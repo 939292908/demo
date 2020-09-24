@@ -398,7 +398,17 @@ module.exports = {
                                             class: `navbar-item has-text-primary-hover min-width-200 ma-0 px-6 py-4 body-5`,
                                             onclick: function() {
                                                 I18n.setLocale(item, res => {
-                                                    location.reload();
+                                                    const whiteList = [
+                                                        'home',
+                                                        'myWalletIndex',
+                                                        'recharge',
+                                                        'extractCoin'
+                                                    ];
+                                                    localStorage.setItem('isReload', true);
+                                                    if (whiteList.includes(window.router.getUrlInfo().path.split('/')[1])) {
+                                                        localStorage.setItem('scollTop', document.body.scrollTop + document.documentElement.scrollTop);
+                                                        location.reload();
+                                                    }
                                                 });
                                             }
                                         }, [
