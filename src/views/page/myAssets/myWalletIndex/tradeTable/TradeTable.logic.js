@@ -39,6 +39,7 @@ module.exports = {
     isShowNoneData: false, // 表格是否有数据
     setPageFlag: function (param) {
         this.pageFlag = param;
+        // console.log(param, '000000000000000000000');
         if (param === '01') {
             this.coinType = 'contract';
             this.tableDateList = 'contractData';
