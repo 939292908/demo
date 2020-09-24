@@ -35,6 +35,7 @@ module.exports = {
                         Validate.code = e.target.value.replace(/[^\d]/g, '');
                     },
                     onkeyup: e => {
+                        if (!Validate.canConfirm && Validate.selectType !== 'google') return;
                         if (e.keyCode === 13) Validate.check();
                     },
                     maxlength: '6',
@@ -59,6 +60,7 @@ module.exports = {
                         Validate.code = e.target.value.replace(/[^\d]/g, '');
                     },
                     onkeyup: e => {
+                        if (!Validate.canConfirm && Validate.selectType !== 'google') return;
                         if (e.keyCode === 13) Validate.check();
                     },
                     maxlength: '6',
@@ -82,6 +84,7 @@ module.exports = {
                     Validate.code = e.target.value.replace(/[^\d]/g, '');
                 },
                 onkeyup: e => {
+                    if (!Validate.canConfirm && Validate.selectType !== 'google') return;
                     if (e.keyCode === 13) Validate.check();
                 },
                 maxlength: '6',

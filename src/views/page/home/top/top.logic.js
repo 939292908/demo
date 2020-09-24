@@ -59,15 +59,11 @@ module.exports = {
             }
         });
     },
-    handleNoticeClick(item) {
-        if (item) window.open(item.html_url);
-    },
     view: function () {
         const props = {
             data: this.data,
             toPage: this.toPage,
-            toTrade: this.toTrade,
-            handleNoticeClick: this.handleNoticeClick
+            toTrade: this.toTrade
         };
         return TopView(props);
     }

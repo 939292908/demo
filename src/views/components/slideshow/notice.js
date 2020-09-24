@@ -25,6 +25,7 @@ export default {
         window.open('https://vbithelp.zendesk.com/hc/zh-cn/categories/360003415534-%E5%85%AC%E5%91%8A%E4%B8%AD%E5%BF%83');
     },
     handleClickItem: function (data) {
+        // eslint-disable-next-line camelcase
         window.open(data[this.mySwiper.realIndex]?.html_url);
     },
     swiperVnode: function (vnode) {
