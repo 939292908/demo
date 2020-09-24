@@ -231,6 +231,8 @@ module.exports = {
         this.selectType = '';
         this.anotherType = '';
         this.canConfirm = false;
+        this.cleanEmailCd();
+        this.cleanSmsCd();
         broadcast.offMsg({
             key: 'validate',
             cmd: 'geetestMsg',
