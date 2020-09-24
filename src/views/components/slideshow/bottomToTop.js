@@ -35,7 +35,7 @@ module.exports = {
             return m('div.swiper-slide', [
                 item.map((item, i) => {
                     const srcUrl = item.image.indexOf('http') === 0 ? item.image : ActiveLine.WebAPI + item.image;
-                    return m('div', { class: "imgBox" }, m('img', { class: "border-radius-large", src: srcUrl, listI: i }));
+                    return m('div', { class: `imgBox ${item.htmlUrl ? 'cur-pointer' : ''}` }, m('img', { class: "border-radius-large", src: srcUrl, listI: i }));
                 })
             ]);
         });
