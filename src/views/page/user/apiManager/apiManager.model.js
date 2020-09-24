@@ -27,7 +27,7 @@ module.exports = {
     hasSame() {
         for (const item of this.table) {
             if (item.name === this.keyName) {
-                return '备注不能重名';
+                return I18n.$t('10616'); // '备注不能重名';
             }
         }
         return '';
@@ -35,7 +35,7 @@ module.exports = {
     submit() {
         if (this.table.length >= 5) {
             return window.$message({
-                // content: '最多可创建10组API KEY',
+                // content: '最多可创建5组API KEY',
                 content: I18n.$t('10611', { value: 5 }),
                 type: 'danger'
             });

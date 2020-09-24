@@ -37,11 +37,11 @@ module.exports = function (props) {
             m('div', { class: `top-bottom-box mt-9 container is-hidden-mobile` }, [
                 // 轮播
                 m('div', { class: `top-banner ` }, [
-                    banneList.length > 0 ? m(Slideshow, { banneList, click: props.handleNoticeClick }) : null
+                    banneList.length > 0 ? m(Slideshow, { banneList }) : null
                 ]),
                 // 公告
                 m('div', { class: `mt-6 mb-8` }, [
-                    noticeList.length > 0 ? m(SlideshowNotice, { noticeList, click: props.handleNoticeClick }) : null
+                    noticeList.length > 0 ? m(SlideshowNotice, { noticeList }) : null
                 ])
             ])
         ])
