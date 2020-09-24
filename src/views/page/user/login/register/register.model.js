@@ -163,18 +163,22 @@ const register = {
         if (!this.int) {
             this.setCd();
         }
+        this.canConfirm = true;
         validate.sendSmsCode().then(res => {
             if (res.result.code === 0) {
                 this.canConfirm = true;
             } else if (res.result.code === -1) {
+                this.canConfirm = false;
                 this.cleanCd();
                 this.geetestCallBackType = 'sms';
                 geetest.verify();
             } else {
+                this.canConfirm = false;
                 this.cleanCd();
                 window.$message({ content: errCode.getWebApiErrorCode(res.result.code), type: 'danger' });
             }
         }).catch(() => {
+            this.canConfirm = false;
             this.cleanCd();
         });
     },
@@ -185,18 +189,22 @@ const register = {
         if (!this.int) {
             this.setCd();
         }
+        this.canConfirm = true;
         validate.sendEmailCode().then(res => {
             if (res.result.code === 0) {
                 this.canConfirm = true;
             } else if (res.result.code === -1) {
+                this.canConfirm = false;
                 this.cleanCd();
                 self.geetestCallBackType = 'email';
                 geetest.verify();
             } else {
+                this.canConfirm = false;
                 this.cleanCd();
                 window.$message({ content: errCode.getWebApiErrorCode(res.result.code), type: 'danger' });
             }
         }).catch(() => {
+            this.canConfirm = false;
             this.cleanCd();
         });
     },
