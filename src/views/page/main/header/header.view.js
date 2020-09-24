@@ -398,6 +398,7 @@ module.exports = {
                                             onclick: function() {
                                                 I18n.setLocale(item, res => {
                                                     // window._console.log('header setLocale', res);
+                                                    header.handleChangeWindowTitle();
                                                 });
                                             }
                                         }, [
