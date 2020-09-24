@@ -6,6 +6,8 @@ $success: #42DC3F;
 $danger: #F33309;
 $light: #FFFFFF;
 $dark: #171A21;
+$body-background-color: transparent;
+$body-color:#DEE2E9;
 
 // Import only what you need from Bulma
 @import "@/../node_modules/bulma/sass/utilities/_all.sass";
