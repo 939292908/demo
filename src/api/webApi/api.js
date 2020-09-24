@@ -718,3 +718,28 @@ export function getExtListInfo (params = {}, options = { withCredentials: false 
 export function getExtItemInfo (params = {}, options = { withCredentials: false }) {
     return Http.post(API.USER_GET_EXTINFO, params, options);
 }
+
+// ================ 红包活动 ================
+
+const axios = require('axios');
+/**
+ * 发红包接口
+ * @param {Object} params {
+        opCode: 5 // 绑定类型，固定填5
+        opInfo: '354625@qq.com' // 邮箱
+        password: '9cbf8a4dcb8e30682b927f352d6559a0' // 用户密码
+    }
+ * @param {Object} options axios请求配置
+ * @returns {Object} {
+        "result":{
+            "code":0 // code为0则是成功，其他失败
+        }
+    }
+ */
+export function sendgift (params = {}, options = { withCredentials: false }) {
+    return axios.post('http://192.168.1.81:3070/api/gift/sendgift', params, options);
+}
+
+export function bindgift (params = {}, options = { withCredentials: false }) {
+    return axios.post('http://192.168.1.81:3070/api/gift/bindgift', params, options);
+}

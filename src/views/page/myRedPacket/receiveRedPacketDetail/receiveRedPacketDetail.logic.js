@@ -3,9 +3,9 @@ const Qrcode = require('qrcode');
 
 const logic = {
     // 红包详情分享 弹框
-    isShowShareDetailModal: true,
+    isShowShareDetailModal: false,
     // 是否是手气最佳
-    isLucky: false,
+    isLucky: true,
     // 二维码链接
     ewmLink: "www.baidu.com",
     // 二维码img

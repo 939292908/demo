@@ -13,9 +13,9 @@ module.exports = {
     onupdate: vnode => logic.onupdate(vnode),
     onremove: vnode => logic.onremove(vnode),
     view(vnode) {
-        return m('div', { class: `pub-view views-give-red-packet px-6` }, [
+        return m('div', { class: `pub-view views-give-red-packet` }, [
             m(Header, logic.headerOption),
-            m('div', { class: `pub-layout` }, [
+            m('div', { class: `pub-layout mx-6` }, [
                 // title
                 m('div', { class: `views-give-red-packet-title pt-7 mb-0 columns is-mobile` }, [
                     m('div', { class: `column is-7` }, [
@@ -96,22 +96,16 @@ module.exports = {
                     width: 1,
                     disabled: !logic.formModel.verifyFormData(false),
                     onclick() {
-                        // console.log(logic.formModel.getFormData(), 666);
-                        logic.formModel.verifyFormData() && logic.giveRedPModal.updateOption({ isShow: true });
+                        logic.coinToRedPacketBtnClick();
                     }
                 }),
                 // 划转 Modal
                 m(transfer),
                 // 发红包确认 弹框
                 m(Modal, {
-                    isShow: logic.giveRedPModal.isShow,
+                    isShow: logic.sendRedPModal.isShow,
                     updateOption(params) {
-                        logic.giveRedPModal.updateOption(params);
-                    },
-                    ok: {
-                        onclick() {
-                            logic.giveRedPModal.onOk();
-                        }
+                        logic.sendRedPModal.updateOption(params);
                     },
                     slot: {
                         body: [
@@ -152,32 +146,55 @@ module.exports = {
                             // 密码错误提示
                             m('div', { class: `has-text-up mt-3` }, logic.passwordModel.errMsg)
                         ]
+                    },
+                    ok: {
+                        onclick() {
+                            logic.sendRedPModal.onOk();
+                        }
                     }
                 }),
-                // 分享内容 弹框
+                // 分享结果 弹框
                 m(Modal, {
                     isShow: logic.isShowShareModal,
                     updateOption(params) {
                         logic.isShowShareModal = params.isShow;
                     },
-                    content: m('div', {
-                        class: `view-share-content has-bg-level-2`,
-                        style: `background:url(${require('@/assets/img/shareBg.png').default}) no-repeat;background-size: 100%;`
-                    }, [
-                        m('div', { class: `is-gradient-text-primary title-x-large has-text-centered mt-5` }, "分享红包"),
-                        m('div', { class: `is-content-center` }, [
-                            m('div', { class: `view-share-content-title is-gradient-bg-primary px-5 font-weight-bold` }, "红包资产可用来提现，交易")
-                        ]),
-                        m('div', { class: `view-share-content-footer pa-3` }, [
-                            m('div', { class: `pa-3` }, [
-                                m('div', { class: `is-between has-bg-level-2 px-3 py-2` }, [
-                                    m('div', { class: `` }, [
-                                        m('iframe', { src: require("@/assets/img/logo.svg").default, height: "12", style: "width: 100px;" }),
-                                        m('div', { class: `body-3` }, "下载注册APP，轻松交易")
-                                    ]),
-                                    m('img', { class: `view-share-content-footer-ewm`, src: logic.ewmImg })
+                    content: m('div', { class: `view-share-box` }, [
+                        m('div', {
+                            class: `view-share-content has-bg-level-2`,
+                            style: `background:url(${require('@/assets/img/shareBg.png').default}) no-repeat;background-size: 100%;`
+                        }, [
+                            m('div', { class: `is-gradient-text-primary title-x-large has-text-centered mt-5` }, "分享红包"),
+                            m('div', { class: `is-content-center` }, [
+                                m('div', { class: `view-share-content-title is-gradient-bg-primary px-5 font-weight-bold` }, "红包资产可用来提现，交易")
+                            ]),
+                            m('div', { class: `view-share-content-footer pa-3` }, [
+                                m('div', { class: `pa-3` }, [
+                                    m('div', { class: `is-between has-bg-level-2 px-3 py-2` }, [
+                                        m('div', { class: `` }, [
+                                            m('iframe', { src: require("@/assets/img/logo.svg").default, height: "12", style: "width: 100px;" }),
+                                            m('div', { class: `body-3` }, "下载注册APP，轻松交易")
+                                        ]),
+                                        m('img', { class: `view-share-content-footer-ewm`, src: logic.ewmImg })
+                                    ])
                                 ])
                             ])
+                        ]),
+                        // 底部分享
+                        m('div', { class: `view-share-footer has-bg-level-2 border-radius-large-2-top` }, [
+                            m('div', { class: `pt-7 has-text-centered` }, "图片已保存，快去分享给你的好友吧！"),
+                            m('div', { class: `is-around has-border-bottom-1 has-line-level-4 py-5` }, logic.shareBtnList.map((item, index) => {
+                                return m('div', { class: `has-text-centered`, key: index }, [
+                                    m('i', { class: `iconfont ${item.icon} iconfont-x-large-2` }),
+                                    m('div', { class: `body-4 mt-1` }, item.label)
+                                ]);
+                            })),
+                            m('div', {
+                                class: `has-text-centered pt-5 pb-7`,
+                                onclick() {
+                                    logic.cancelShareBtnClick();
+                                }
+                            }, "取消")
                         ])
                     ])
                 }),
@@ -207,13 +224,14 @@ module.exports = {
                                 label: "继续分享",
                                 onclick() {
                                     logic.isShowNotShareModal = false;
+                                    logic.isShowShareModal = true; // 分享弹框
                                     // window.router.push('/sendRedPacket');
                                 }
                             })
                         ])
                     ])
                 }),
-                // 实名认证/资金密码 提示弹框
+                // 发红包 必须的权限 弹框 (实名认证/资金密码)
                 m(Modal, {
                     isShow: logic.isShowVerifyAuthModal,
                     updateOption(params) {
@@ -224,7 +242,38 @@ module.exports = {
                             m('i', { class: `iconfont icon-about-us has-text-primary` })
                         ]),
                         m('div', { class: `title-small mb-3` }, "需要完成以下设置"),
-                        m('div', { class: `mb-7 has-text-primary font-weight-bold`, onclick() { logic.isShowVerifyAuthModal = false; } }, "知道了")
+                        // 实名认证
+                        m('div', { class: `is-between mb-2` }, [
+                            m('div', { class: `` }, "实名认证"),
+                            m('div', { class: `` }, [
+                                logic.mustAuth.authentication ? m('span', { class: `` }, "已认证") : m('span', {
+                                    class: `has-text-primary`,
+                                    onclick() {
+                                        alert("去认证");
+                                    }
+                                }, "去认证")
+                            ])
+                        ]),
+                        // 资金密码
+                        m('div', { class: `is-between` }, [
+                            m('div', { class: `` }, "资金密码"),
+                            m('div', { class: `` }, [
+                                logic.mustAuth.moneyPassword ? m('span', { class: `` }, "已设置") : m('span', {
+                                    class: `has-text-primary`,
+                                    onclick() {
+                                        alert("去设置");
+                                    }
+                                }, "去设置")
+                            ])
+                        ]),
+                        m(Button, {
+                            class: 'is-primary font-weight-bold my-5',
+                            width: 1,
+                            label: "知道了",
+                            onclick() {
+                                logic.verifyAuthModalOkBtnClick();
+                            }
+                        })
                     ])
                 })
             ])

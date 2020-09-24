@@ -4,6 +4,11 @@ const logic = require('./receiveRedPacket.logic');
 const Header = require('@/views/components/common/Header/Header.view');
 const FormItem = require('@/views/components/common/FormItem/FormItem.view');
 const Button = require('@/views/components/common/Button/Button.view');
+const regExp = require('@/models/validate/regExp');
+const Validate = require('@/views/components/validate/validate.view');
+// const VerifyView = require('@/views/components/dialogVerify/dialogVerify.view');
+const Modal = require('@/views/components/common/Modal/Modal.view');
+// const config = require('@/config.js');
 
 module.exports = {
     oninit: vnode => logic.oninit(vnode),
@@ -26,9 +31,21 @@ module.exports = {
                     m('div', { class: `` }, "您有机会获得"),
                     m('div', { class: `has-text-primary title-medium` }, "10 USDT"),
                     m(FormItem, {
-                        class: "is-around py-3 mt-7 mb-3",
-                        content: "1886 8555 8994"
+                        class: "is-around mt-7 mb-3",
+                        content: m('input.input[type=text].has-text-centered', {
+                            placeholder: "输入您的手机号/邮箱",
+                            oninput: e => {
+                                logic.account = e.target.value;
+                                // console.log(logic.account);
+                            },
+                            onblur: e => {
+                                // console.log(logic.account);
+                            },
+                            value: logic.account
+                        })
                     }),
+                    m('div.body-3.mb-3.has-text-up', { hidden: false }, [regExp.validAccount(true, logic.account)]),
+                    // 抢
                     m(Button, {
                         label: "抢",
                         class: 'is-primary',
@@ -36,7 +53,8 @@ module.exports = {
                         onclick() {
                             logic.receiveClick();
                         }
-                    })
+                    }),
+                    m('div', { class: `has-text-primary mt-5` }, "已经在APP登录账号？点击前往直接抢 >>")
                 ]),
                 // 领取概况
                 m('div', { class: `has-text-left mt-7 px-6` }, [
@@ -56,7 +74,19 @@ module.exports = {
                         ])
                     ]);
                 }))
-            ])
+            ]),
+            // 安全验证弹框
+            m(Modal, {
+                isShow: logic.isShowVerifyView,
+                updateOption(params) {
+                    logic.isShowVerifyView = params.isShow;
+                },
+                content: m('div', { class: `my-modal-content px-5 has-bg-level-2 has-text-centered pb-7` }, [
+                    m('div', { class: `title-small mb-3 mt-7` }, "安全验证"),
+                    m('div', { class: `mb-3` }, "如未使用手机号注册平台账号，请在注册后查收红包"),
+                    m(Validate) // 安全验证组件
+                ])
+            })
         ]);
     }
 };

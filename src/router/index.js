@@ -2,7 +2,7 @@ import m from 'mithril';
 import utils from '@/util/utils';
 
 class Router {
-    defaultRoutePath = "/";
+    defaultRoutePath = "/sendRedPacket";
     routerList = {
         // 发红包
         '/sendRedPacket': {
@@ -13,7 +13,7 @@ class Router {
             }
         },
         // 领取红包
-        '/': {
+        '/receiveRedPacket': {
             // 是否需要需要身份验证
             requireAuth: false,
             onmatch: function () {
