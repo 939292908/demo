@@ -398,7 +398,9 @@ module.exports = {
                                             class: `navbar-item has-text-primary-hover min-width-200 ma-0 px-6 py-4 body-5`,
                                             onclick: function() {
                                                 I18n.setLocale(item, res => {
-                                                    location.reload();
+                                                    // location.reload();
+                                                    // window._console.log('header setLocale', res);
+                                                    header.handleChangeWindowTitle();
                                                 });
                                             }
                                         }, [
