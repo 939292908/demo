@@ -18,12 +18,12 @@ module.exports = {
         for (const item of APIManager.table) {
             tableBody.push(
                 m('div.columns.is-variable.is-3', {}, [
-                    m('div.column.is-2.py-4.body-4.font-weight-medium', {}, [item.name]),
-                    m('div.column.is-1.py-4.body-4.font-weight-medium', {}, [APIManager.getAuth(item.role)]),
+                    m('div.column.is-1.py-4.body-4.font-weight-medium', {}, [item.name]),
+                    m('div.column.is-2.py-4.body-4.font-weight-medium', {}, [APIManager.getAuth(item.role)]),
                     m('div.column.is-3.py-4.body-4.font-weight-medium', {}, [item.k]),
                     m('div.column.is-3.py-4.body-4.font-weight-medium', {}, [
                         m(Tooltip, {
-                            label: m('div.ip-content.w100', {}, [item.cidr]),
+                            label: m('div.ip-content.w100', {}, [item.cidr || I18n.$t('10620')/* 无 */]),
                             content: item.cidr.length > 40 ? item.cidr : '',
                             class: 'w100 break-word',
                             width: '300px'
@@ -137,8 +137,8 @@ module.exports = {
                         : tableBody.length
                             ? m('div.mx-5.my-3', {}, [
                                 m('div.columns.is-variable.is-3', {}, [
-                                    m('div.column.is-2.body-4.has-text-level-4.font-weight-medium.tips-line-height', {}, [I18n.$t('10092')/* '备注' */]),
-                                    m('div.column.is-1.body-4.has-text-level-4.font-weight-medium.tips-line-height', {}, [I18n.$t('10326')/* '权限' */]),
+                                    m('div.column.is-1.body-4.has-text-level-4.font-weight-medium.tips-line-height', {}, [I18n.$t('10092')/* '备注' */]),
+                                    m('div.column.is-2.body-4.has-text-level-4.font-weight-medium.tips-line-height', {}, [I18n.$t('10326')/* '权限' */]),
                                     m('div.column.is-3.body-4.has-text-level-4.font-weight-medium.tips-line-height', {}, [I18n.$t('10327')/* '访问密钥' */]),
                                     m('div.column.is-3.body-4.has-text-level-4.font-weight-medium.tips-line-height', {}, [I18n.$t('10328')/* '绑定IP地址' */]),
                                     m('div.column.is-2.body-4.has-text-level-4.font-weight-medium.tips-line-height', {}, [I18n.$t('10091')/* '时间' */]),
