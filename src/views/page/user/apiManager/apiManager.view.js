@@ -170,6 +170,9 @@ module.exports = {
             }) : null,
             m(Modal, {
                 isShow: APIManager.showBindEmail, // 弹框显示/隐藏
+                onClose() {
+                    window.router.go(-1);
+                },
                 slot: {
                     header: I18n.$t('10082'), // '温馨提示',
                     body: I18n.$t('10617'), // '为了正常使用API功能，请先绑定邮箱',
