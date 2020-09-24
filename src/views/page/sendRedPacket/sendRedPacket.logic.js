@@ -6,6 +6,8 @@ const md5 = require('md5');
 const m = require('mithril');
 const share = require('../main/share/share.logic.js');
 const { HtmlConst, GetBase64 } = require('@/models/plus/index.js');
+const wlt = require('@/models/wlt/wlt');
+const broadcast = require('@/broadcast/broadcast');
 
 const logic = {
     // 币种按钮list
@@ -24,6 +26,7 @@ const logic = {
     isShowNotShareModal: false,
     // 发红包 必须的权限 弹框 (实名认证/资金密码)
     isShowVerifyAuthModal: false,
+
     // 发红包 必须的权限
     mustAuth: {
         authentication: true,
@@ -33,6 +36,11 @@ const logic = {
     ewmLink: "www.baidu.com",
     // 二维码img
     ewmImg: "",
+    allWalletList: [],
+    contractList: [], // 合约钱包 币种list
+    bibiList: [], // 币币钱包 币种list
+    myWalletList: [], // 我的钱包 币种list
+    legalTenderList: [], // 法币钱包 币种list
     // 资金密码 模块
     passwordModel: {
         // 密码
@@ -130,19 +138,20 @@ const logic = {
         this.redPacketType = this.redPacketType === 1 ? 2 : 1;
     },
     // 币种按钮list
-    getCoinBtnList(list) {
+    buildCoinBtnList(list) {
         this.coinBtnList = list.map(item => {
             const btnOption = {
-                label: item.name,
-                class: () => `is-primary is-rounded mr-2 font-weight-bold ${logic.currentCoin === item.name ? '' : 'is-outlined'}`,
+                label: item.coin,
+                class: () => `is-primary is-rounded mr-2 font-weight-bold ${logic.currentCoin === item.coin ? '' : 'is-outlined'}`,
                 size: 'size-2',
                 onclick() {
-                    logic.currentCoin = item.name; // 更新数据
+                    logic.currentCoin = item.coin; // 更新数据
                     logic.formModel.verifyFormData(); // 校验表单
                 }
             };
             return btnOption;
         });
+        m.redraw();
     },
     // 头部 组件配置
     headerOption: {
@@ -211,6 +220,20 @@ const logic = {
             coin: logic.currentCoin
         });
     },
+    // 设置 最大划转 (依赖钱包名称, 币种)
+    setMaxTransfer () {
+        if (wlt.wallet) { // 所有钱包 和 从xx钱包id 都存在
+            const wallet = wlt.wallet["03"]; // 对应钱包
+            for (const item of wallet) {
+                if (item.wType === this.coinMenuOption.currentId) { // 找到对应币种
+                    this.wltMoney = item.wdrawable || 0; // 设置最大可以金额
+                }
+            }
+        } else {
+            this.wltMoney = "--";
+        }
+        console.log(this.wltMoney, wlt.wallet, 77777);
+    },
     // 获取币种的人民币估值
     getRMBByCoinMoney() {
         const coinMoney = logic.moneyFormItem.value; // 币种金额
@@ -277,8 +300,11 @@ const logic = {
     // 跳转过来继续发红包
     continueSendRedPacket() {
         console.log("logic.redPacketLink", logic.redPacketLink);
-        logic.updateEwm(logic.redPacketLink); // 更新二维码
-        logic.isShowShareModal = true; // 分享结果弹框
+        logic.redPacketLink = m.route.param().redPacketLink;
+        if (logic.redPacketLink) {
+            logic.updateEwm(logic.redPacketLink); // 更新二维码
+            logic.isShowShareModal = true; // 分享结果弹框
+        }
     },
     // 重置
     reset() {
@@ -288,48 +314,99 @@ const logic = {
         logic.infoFormItem.value = ""; // 祝福
         logic.passwordModel.value = ""; // 密码
     },
-    oninit(vnode) {
-        logic.redPacketLink = m.route.param().redPacketLink;
-        if (logic.redPacketLink) {
-            logic.continueSendRedPacket(); // 跳转过来继续发红包
-        }
-        const data = [
-            {
-                id: 1,
-                name: 'USDT'
+    // 初始化划转
+    initTransferInfo () {
+        // console.log(123, wlt.wallet);
+
+        this.contractList = wlt.wallet['01'].filter(item => item.Setting.canTransfer); // 合约钱包 币种list
+        this.bibiList = wlt.wallet['02'].filter(item => item.Setting.canTransfer); // 币币钱包 币种list
+        this.myWalletList = wlt.wallet['03'].filter(item => item.Setting.canTransfer); // 我的钱包 币种list
+        this.legalTenderList = wlt.wallet['04'].filter(item => item.Setting.canTransfer); // 法币钱包 币种list
+        // 钱包列表
+        this.allWalletList = [
+            { // 我的钱包
+                id: "03",
+                list: this.myWalletList
             },
-            {
-                id: 2,
-                name: 'BTC'
+            { // 合约钱包
+                id: "01",
+                list: this.contractList
             },
-            {
-                id: 3,
-                name: 'ETH'
+            { // 币币钱包
+                id: "02",
+                list: this.bibiList
             },
-            {
-                id: 4,
-                name: 'EOS'
-            },
-            {
-                id: 5,
-                name: 'ABC1'
-            },
-            {
-                id: 6,
-                name: 'ABC2'
-            },
-            {
-                id: 7,
-                name: 'ABC3'
+            { // 法币钱包
+                id: "04",
+                list: this.legalTenderList
             }
         ];
-        this.getCoinBtnList(data);
+        this.initCoinList(); // 初始化 币种下拉列表
+        // m.redraw();
+        // this.initCoinValue();// 初始化 币种下拉value
+        // this.initWalletListByWTypeAndValue(this.coinMenuOption.currentId); // 初始化钱包 list和value
+        this.setMaxTransfer(); // 设置 最大划转
+    },
+    // 初始化 币种下拉列表
+    initCoinList () {
+        this.coinBtnList = [];
+        // this.coinBtnList：逻辑：每一项至少出现在2个钱包 且 列表去重
+        this.allWalletList.forEach((data, index) => {
+            // 遍历每个钱包的币种
+            data.list.forEach(item => {
+                // 币种是否重复
+                if (!this.coinBtnList.some(item3 => item3.wType === item.wType)) {
+                    item.id = item.wType;
+                    item.label = item.wType;
+                    item.coinName = wlt.wltFullName[item.wType].name;
+                    this.coinBtnList.push(item); // push
+                }
+            });
+        });
+        // 初始化 币种默认选中
+        if (this.coinBtnList[0]) {
+            this.currentCoin = m.route.param().currentCoin || this.coinBtnList[0].coin;
+        }
+        this.buildCoinBtnList(this.coinBtnList);
+        console.log(this.coinBtnList, 9999999999);
+        // console.log("币种下拉", this.coinBtnList);
+    },
+    oninit(vnode) {
+        wlt.init(); // 更新数据
+        this.initTransferInfo();
+        logic.continueSendRedPacket(); // 跳转过来继续发红包
+        broadcast.onMsg({
+            key: "sendRedP",
+            cmd: broadcast.MSG_WLT_READY,
+            cb: () => {
+                this.initTransferInfo();
+            }
+        });
+        broadcast.onMsg({
+            key: "sendRedP",
+            cmd: broadcast.MSG_WLT_UPD,
+            cb: () => {
+                // this.initTransferInfo();
+                // console.log(456, wlt.wallet);
+            }
+        });
     },
     oncreate(vnode) {
     },
     onupdate(vnode) {
     },
     onremove(vnode) {
+        wlt.remove();
+        broadcast.offMsg({
+            key: "sendRedP",
+            cmd: broadcast.MSG_WLT_READY,
+            isall: true
+        });
+        broadcast.offMsg({
+            key: "sendRedP",
+            cmd: broadcast.MSG_WLT_UPD,
+            isall: true
+        });
     },
     toShare: function() {
         if (window.plus) {

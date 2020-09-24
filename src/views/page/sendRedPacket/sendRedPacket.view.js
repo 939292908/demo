@@ -34,7 +34,8 @@ module.exports = {
                 ]),
                 // 币种btnList 列表
                 m('div', { class: `views-give-red-packet-btn-list mt-7` }, [
-                    logic.coinBtnList.map(btnOption => m(Button, btnOption))
+                    // logic.coinBtnList.map((item) => m('div', { class: `` }, [item.wType]))
+                    logic.coinBtnList.map((btnOption) => m(Button, btnOption))
                 ]),
                 // 划转
                 m('div', { class: `has-text-right mt-7 mb-2` }, [
