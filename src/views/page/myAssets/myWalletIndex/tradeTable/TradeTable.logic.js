@@ -111,7 +111,6 @@ module.exports = {
     // 表格中充币，提币，划转，去交易的点击事件
     jump: function (row, item) {
         const that = this;
-        transferLogic.initTransferInfo(); // 初始化弹框
         if (item.operation === I18n.$t('10071') /* '划转' */) {
             if (this.transferFlag === 1 && row.Setting.canTransfer) {
                 transferLogic.setTransferModalOption({

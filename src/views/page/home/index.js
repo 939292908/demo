@@ -17,5 +17,9 @@ module.exports = {
             // // 平台介绍+平台优势+交易
             m(introduce)
         ]);
+    },
+    oncreate() {
+        document.body.scrollTop = localStorage.getItem('isReload') === 'true' ? localStorage.getItem('scollTop') : 0;
+        localStorage.setItem('isReload', false);
     }
 };
