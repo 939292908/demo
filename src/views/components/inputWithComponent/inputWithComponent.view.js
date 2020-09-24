@@ -18,18 +18,18 @@ module.exports = {
         const inside = [];
         if (vnode.attrs.leftComponents) {
             inside.push(vnode.attrs.leftComponents);
-            if (!vnode.attrs.hiddenLine) { inside.push(m('span.line', {}, [])); }
+            // if (!vnode.attrs.hiddenLine) { inside.push(m('span.line', {}, [])); }
         }
-        inside.push(m('input.input.without-border.in-input', vnode.attrs.options, []));
+        inside.push(m('input.input.without-border.in-input.column.is-8', vnode.attrs.options, []));
         if (vnode.attrs.rightComponents) {
-            if (!vnode.attrs.hiddenLine) { inside.push(m('span.line', {}, [])); }
+            // if (!vnode.attrs.hiddenLine) { inside.push(m('span.line', {}, [])); }
             inside.push(vnode.attrs.rightComponents);
         }
 
         return m('div.input-with-components', {
             class: vnode.attrs.addClass
         }, [
-            m('div.input.px-1', {}, inside)
+            m('div.input.px-1.columns', {}, inside)
         ]);
     }
 };

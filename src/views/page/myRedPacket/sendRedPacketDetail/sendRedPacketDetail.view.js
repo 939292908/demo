@@ -46,7 +46,12 @@ module.exports = {
                         width: 1,
                         onclick() {
                             if (logic.redPacketState === 2) { // 继续发送该红包
-                                window.router.push("/sendRedPacket");
+                                window.router.push({
+                                    path: "/sendRedPacket",
+                                    data: {
+                                        redPacketLink: "123"
+                                    }
+                                });
                             } else { // 知道了
                                 window.router.back();
                             }

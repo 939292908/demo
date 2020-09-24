@@ -50,11 +50,15 @@ module.exports = {
                     logic.isShowShareDetailModal = params.isShow;
                 },
                 content: m('div', { class: `my-modal-content has-bg-level-2 px-7 py-5 has-text-centered` }, [
-                    logic.isLucky ? m('i', { class: `iconfont icon-huiyuan` }) : m('iframe', { src: require("@/assets/img/people.svg").default, width: 64, height: 64 }),
-                    m('div', { class: `` }, [logic.isLucky ? "手气最佳" : "我抢到了"]),
-                    m('div', { class: `` }, `8 USDT`),
-                    m('div', { class: `` }, `我抢到了来自178****7894的拼手气红包`),
-                    m('div', { class: `has-border-top-1 has-line-level-2 has-text-left is-between py-6` }, [
+                    logic.isLucky ? m('i', { class: `iconfont icon-VipCrown iconfont-x-large-4 has-text-primary` }) : m('iframe', { src: require("@/assets/img/people.svg").default, width: 64, height: 64 }),
+                    m('div', { class: `title-medium` }, [logic.isLucky ? "手气最佳" : "我抢到了"]),
+                    m('div', { class: `title-medium has-text-primary` }, `8 USDT`),
+                    m('div', { class: `` }, [
+                        m('span', { class: `` }, "我抢到了来自"),
+                        m('span', { class: `has-text-primary` }, "178****7894"),
+                        m('span', { class: `` }, "的拼手气红包")
+                    ]),
+                    m('div', { class: `has-border-top-1 has-line-level-2 has-text-left is-between py-6 mt-7` }, [
                         m('div', { class: `` }, [
                             m('iframe', { src: require("@/assets/img/logo.svg").default, height: "12", style: "width: 100px;" }),
                             m('div', { class: `body-3` }, "下载注册APP，轻松交易")

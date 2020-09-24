@@ -1,6 +1,9 @@
 const transferLogic = require('@/views/page/sendRedPacket/transfer/transfer.logic');
 const globalModels = require('@/models/globalModels');
 const Qrcode = require('qrcode');
+const Http = require('@/api').webApi;
+const md5 = require('md5');
+const m = require('mithril');
 
 const logic = {
     // 币种按钮list
@@ -11,12 +14,19 @@ const logic = {
     redPacketType: 1,
     // 钱包可用金额
     wltMoney: '100',
-    // 分享 弹框
+    // 红包link地址
+    redPacketLink: "",
+    // 分享结果 弹框
     isShowShareModal: false,
     // 取消分享提示 弹框
     isShowNotShareModal: false,
-    // 校验实名认证/资金密码 弹框
+    // 发红包 必须的权限 弹框 (实名认证/资金密码)
     isShowVerifyAuthModal: false,
+    // 发红包 必须的权限
+    mustAuth: {
+        authentication: true,
+        moneyPassword: true
+    },
     // 二维码链接
     ewmLink: "www.baidu.com",
     // 二维码img
@@ -113,6 +123,42 @@ const logic = {
             }
         }
     },
+    // 分享按钮list
+    shareBtnList: [
+        {
+            label: "微信好友",
+            icon: "icon-shareWeixin",
+            onclick() {
+                console.log(this.label);
+            }
+        },
+        {
+            label: "朋友圈",
+            icon: "icon-shareFriends",
+            onclick() {
+                console.log(this.label);
+            }
+        },
+        {
+            label: "复制链接",
+            icon: "icon-qiehuan3",
+            onclick() {
+                console.log(this.label);
+            }
+        },
+        {
+            label: "保存图片",
+            icon: "icon-xiaqiehuan",
+            onclick() {
+                console.log(this.label);
+            }
+        }
+    ],
+    // 取消 分享红包 click
+    cancelShareBtnClick() {
+        logic.isShowShareModal = false; // 关闭自己
+        logic.isShowNotShareModal = true; // 取消分享弹框
+    },
     // 切换红包类型
     switchRedPacketType() {
         this.redPacketType = this.redPacketType === 1 ? 2 : 1;
@@ -137,12 +183,13 @@ const logic = {
         left: {
             onclick() {
                 console.log(this.label);
+                logic.sendgift();
             }
         },
         right: {
             label: '我的红包',
             onclick() {
-                console.log(this.label);
+                window.router.push('/myRedPacket');
             }
         }
     },
@@ -168,7 +215,7 @@ const logic = {
         }
     },
     // 发红包 Modal组件配置
-    giveRedPModal: {
+    sendRedPModal: {
         isShow: false,
         updateOption(params) {
             Object.keys(params).forEach(key => (this[key] = params[key]));
@@ -176,19 +223,19 @@ const logic = {
         onOk() {
             console.log(logic.formModel.getFormData());
             if (logic.passwordModel.verifyPassword()) {
-                this.updateOption({ isShow: !this.isShow }); // 关闭自己
-                // 校验实名认证/资金密码 弹框
-                logic.isShowVerifyAuthModal = true;
-                // 生成二维码
-                Qrcode.toDataURL(logic.ewmLink || '无').then(url => {
-                    logic.ewmImg = url;
-                }).catch(err => {
-                    console.log(err);
-                });
-                // 分享弹框
-                logic.isShowShareModal = true;
+                logic.bindgift(); // 绑定红包
             }
         }
+    },
+    // 生成二维码
+    updateEwm(link = logic.ewmLink) {
+        // 生成二维码
+        Qrcode.toDataURL(link || '无').then(url => {
+            logic.ewmImg = url;
+            m.redraw();
+        }).catch(err => {
+            console.log(err);
+        });
     },
     // 划转按钮click
     transferBtnClick() {
@@ -208,7 +255,75 @@ const logic = {
             return 0;
         }
     },
+    // 塞币进红包 click
+    coinToRedPacketBtnClick() {
+        if (logic.mustAuth.authentication && logic.mustAuth.moneyPassword) { // 实名认证/资金密码全部开通
+            logic.sendRedPModal.updateOption({ isShow: true }); // 发红包弹框
+        } else {
+            logic.isShowVerifyAuthModal = true; // 实名认证/资金密码 弹框
+        }
+    },
+    // 实名认证/资金密码弹框 OKbtn click
+    verifyAuthModalOkBtnClick() {
+        logic.isShowVerifyAuthModal = false; // 关闭自己
+        // // 必须实名认证/设置资金密码
+        // if (logic.mustAuth.authentication && logic.mustAuth.moneyPassword) {
+        //     logic.sendRedPModal.updateOption({ isShow: true });
+        // }
+    },
+    // 发红包接口
+    sendgift() {
+        const params = {
+            vp: 0,
+            guid: '123',
+            coin: 'USDT',
+            type: 0,
+            quota: 10,
+            count: 10,
+            des: '留言',
+            passd: md5('123456')
+        };
+        Http.sendgift(params).then(function(arg) {
+            console.log('sendRedPacket success', arg);
+        }).catch(function(err) {
+            console.log('sendRedPacket error', err);
+        });
+    },
+    // 绑定红包接口
+    bindgift() {
+        const params = {
+            uid: "11",
+            tel: "13911223344",
+            email: "123456@qq.com"
+        };
+        Http.bindgift(params).then(function(arg) {
+            console.log('bindgift success', arg);
+            logic.sendRedPModal.updateOption({ isShow: !logic.sendRedPModal.isShow }); // 关闭发红包弹框
+            logic.updateEwm("链接地址"); // 更新二维码
+            logic.isShowShareModal = true; // 分享结果弹框
+        }).catch(function(err) {
+            console.log('bindgift error', err);
+        });
+    },
+    // 跳转过来继续发红包
+    continueSendRedPacket() {
+        console.log("logic.redPacketLink", logic.redPacketLink);
+        logic.updateEwm(logic.redPacketLink); // 更新二维码
+        logic.isShowShareModal = true; // 分享结果弹框
+    },
+    // 重置
+    reset() {
+        logic.currentCoin = "BTC";// 币种
+        logic.moneyFormItem.value = ""; // 金额
+        logic.numberFormItem.value = ""; // 数量
+        logic.infoFormItem.value = ""; // 祝福
+        logic.passwordModel.value = ""; // 密码
+    },
     oninit(vnode) {
+        logic.redPacketLink = m.route.param().redPacketLink;
+        if (logic.redPacketLink) {
+            logic.continueSendRedPacket(); // 跳转过来继续发红包
+        }
         const data = [
             {
                 id: 1,

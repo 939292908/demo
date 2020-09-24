@@ -138,14 +138,14 @@ const fontsz = {
     level11: '72px'
 };
 const iconsz = {
-    level0: '6 px',
+    level0: '6px',
     level1: '10px',
     level2: '16px',
     level3: '24px',
     level4: '26px',
     level5: '32px',
-    level6: '46px',
-    level7: '68px'
+    level6: '48px',
+    level7: '64px'
 };
 
 const padding = {

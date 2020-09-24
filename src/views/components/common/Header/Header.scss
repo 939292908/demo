@@ -1,7 +1,10 @@
-// .pub-header {
-//     // height: 48px;
-//     display: flex;
-//     justify-content: space-between;
-//     align-items: center;
-    
-// }
+.pub-header {
+    > button {
+        height: 100%;
+        min-width: 48px;
+        border: none;
+        background-color: transparent;
+        outline: none;
+        padding: 0;
+    }
+}
