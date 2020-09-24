@@ -65,7 +65,7 @@ module.exports = {
                     m('hr.ma-0'),
                     m('div.columns.pa-8', {}, [
                         m('div.column.body-5.has-text-level-1', {}, [
-                            m('div.mb-2', {}, [I18n.$t('10092')/* '备注' */]),
+                            m('div.mb-2.not-select', {}, [I18n.$t('10092')/* '备注' */]),
                             m('input.input', {
                                 oninput(e) {
                                     APIManager.keyName = e.target.value;
@@ -77,7 +77,7 @@ module.exports = {
                                 value: APIManager.keyName
                             }),
                             m('div.body-3.has-text-tip-error', { hidden: !APIManager.showKeyNameValid }, [regExp.validAPIKeyName(APIManager.keyName) || APIManager.hasSame()]),
-                            m('div.mb-2.mt-5', {}, [I18n.$t('10318')/* '权限设置' */]),
+                            m('div.mb-2.mt-5.not-select', {}, [I18n.$t('10318')/* '权限设置' */]),
                             m('i.iconfont.mr-7.iconfont-medium.cursor-pointer', {
                                 disabled: true,
                                 class: APIManager.onlyRead ? 'icon-u_check-square has-text-primary' : 'icon-Unselected'
@@ -91,7 +91,7 @@ module.exports = {
                             }, [
                                 m('span.ml-1.body-4.checkbox-text.not-select', {}, [I18n.$t('10320')/* 交易 */])
                             ]),
-                            m('div.mb-2.mt-5', {}, [I18n.$t('10321')/* '绑定的IP地址/IP段（选填）' */]),
+                            m('div.mb-2.mt-5.not-select', {}, [I18n.$t('10321')/* '绑定的IP地址/IP段（选填）' */]),
                             m('div.control', {}, [
                                 m('textarea.textarea.has-fixed-size', {
                                     oninput(e) { APIManager.ip = e.target.value; },
