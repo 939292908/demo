@@ -10,6 +10,7 @@ const logic = {
             label: m('i', { class: `iconfont icon-tianxieshanchu` }),
             onclick() {
                 console.log(this.label);
+                window.router.back();
             }
         }
     },
