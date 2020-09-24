@@ -16,10 +16,6 @@ module.exports = {
         AssetRecords.init('03', 'recharge', 1, 10);
         AssetRecords.setLanguageListen();
     },
-    oncreate: () => {
-        document.body.scrollTop = localStorage.getItem('isReload') === 'true' ? localStorage.getItem('scollTop') : 0;
-        localStorage.setItem('isReload', false);
-    },
     view: () => {
         return m('div', { class: `views-page-myAssets-myWalletIndex-childer-recharge theme--light pb-7` }, [
             m(Header, {

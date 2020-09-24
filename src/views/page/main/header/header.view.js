@@ -401,8 +401,7 @@ module.exports = {
                                                     const whiteList = [
                                                         'home',
                                                         'myWalletIndex',
-                                                        'recharge',
-                                                        'extractCoin'
+                                                        'assetRecords'
                                                     ];
                                                     localStorage.setItem('isReload', true);
                                                     if (whiteList.includes(window.router.getUrlInfo().path.split('/')[1])) {
