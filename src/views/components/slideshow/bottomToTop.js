@@ -27,14 +27,15 @@ module.exports = {
         this.mySwiper = new Swiper('#slideShowBTT', vertical);
     },
     handleClickItem: function (data, event) {
-        event.target.title && data[this.mySwiper.realIndex][event.target.title]?.htmlUrl && window.open(data[this.mySwiper.realIndex][event.target.title]?.htmlUrl);
+        const index = event.target.attributes.listi.value;
+        index && data[this.mySwiper.realIndex][index]?.htmlUrl && window.open(data[this.mySwiper.realIndex][index]?.htmlUrl);
     },
     bottomToTop: function (banneList) {
         return banneList.map(item => {
             return m('div.swiper-slide', [
                 item.map((item, i) => {
                     const srcUrl = item.image.indexOf('http') === 0 ? item.image : ActiveLine.WebAPI + item.image;
-                    return m('div', { class: "imgBox" }, m('img', { class: "border-radius-large", src: srcUrl, title: i }));
+                    return m('div', { class: "imgBox" }, m('img', { class: "border-radius-large", src: srcUrl, listI: i }));
                 })
             ]);
         });

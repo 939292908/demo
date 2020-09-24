@@ -1,3 +1,11 @@
+/*
+ * @Author: your name
+ * @Date: 2020-09-24 15:28:40
+ * @LastEditTime: 2020-09-24 15:29:44
+ * @LastEditors: your name
+ * @Description: In User Settings Edit
+ * @FilePath: \website-project\src\views\components\slideshow\leftToRight.js
+ */
 const m = require("mithril");
 const Swiper = require('swiper/bundle').default;
 const market = require('@/models/market/market');
@@ -46,7 +54,7 @@ module.exports = {
                 m('div.imgBox', [
                     m('div.marketTitle', [
                         m('div.marketName', { class: 'title-small' }, data[item]?.distSym || '--'),
-                        m('div.marketGrowth body-6', { class: data[item]?.rfpreColor < 0 ? 'has-bg-up' : data[item]?.rfpreColor === 0 ? 'is0Colorbg' : 'has-bg-down' }, data[item]?.rfpre || '--')
+                        m('div.marketGrowth body-6', { class: data[item]?.rfpreColor < 0 ? 'has-bg-up' : data[item]?.rfpreColor === 0 ? 'is0Colorbg' : 'has-bg-down' }, `${data[item]?.rfpreColor > 0 ? '+' : ''}${data[item]?.rfpre || '--'}`)
                     ]),
                     m('div.marketPrice title-large', { class: data[item]?.rfpreColor < 0 ? 'has-text-up' : data[item]?.rfpreColor === 0 ? 'is0ColorTxt' : 'has-text-down' }, `$${data[item]?.LastPrz || '--'}`),
                     m('div.marketNumber body-5', `24H ${I18n.$t('10618')/* '量' */} ${data[item]?.Volume24 || '--'}`),
