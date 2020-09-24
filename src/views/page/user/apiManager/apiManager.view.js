@@ -178,7 +178,7 @@ module.exports = {
                     body: I18n.$t('10617'), // '为了正常使用API功能，请先绑定邮箱',
                     footer: m("button.button.is-primary.font-size-2.has-text-white.modal-default-btn.button-large", {
                         onclick() {
-                            window.router.push('/bindEmail');
+                            window.router.push({ path: '/bind', data: { type: 'email' } });
                         }
                     }, [I18n.$t('10229')/* '邮箱验证' */])
                 }

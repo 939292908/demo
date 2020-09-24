@@ -15,6 +15,7 @@ module.exports = {
     showPasswordValidate: false,
     showEmailValidate: false,
     showValid: false,
+    showPassword: false,
     password: '',
     bindType: '',
     bind: '',
@@ -223,6 +224,7 @@ module.exports = {
         this.showEmailValidate = false;
         this.showPasswordValidate = false;
         this.showValid = false;
+        this.showPassword = false;
         this.password = '';
         this.bind = '';
         this.bindType = '';
