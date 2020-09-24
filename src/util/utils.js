@@ -1,26 +1,48 @@
 const utils = {};
-const DBG_TAG = "UTILS";
 
-utils.setItem = function (key, val) {
+utils.setItem = function(key, val) {
+    if (window.window.plus) {
+        try {
+            window.plus.storage.setItem(key, JSON.stringify(val));
+        } catch (e) {
+            console.log(JSON.stringify(e));
+        }
+    }
     try {
         window.localStorage.setItem(key, JSON.stringify(val));
     } catch (e) {
-        window._console.log(DBG_TAG, JSON.stringify(e));
+        console.log(JSON.stringify(e));
     }
 };
 
-utils.getItem = function (key) {
-    try {
-        return JSON.parse(window.localStorage.getItem(key));
-    } catch (e) {
-        return null;
+utils.getItem = function(key) {
+    if (window.window.plus) {
+        try {
+            return JSON.parse(window.plus.storage.getItem(key));
+        } catch (e) {
+            return null;
+        }
+    } else {
+        try {
+            return JSON.parse(window.localStorage.getItem(key));
+        } catch (e) {
+            return null;
+        }
     }
 };
-utils.removeItem = function (key) {
+utils.removeItem = function(key) {
+    if (window.window.plus) {
+        try {
+            window.plus.storage.removeItem(key);
+        } catch (e) {
+            console.log(JSON.stringify(e));
+        }
+    }
+
     try {
         window.localStorage.removeItem(key);
     } catch (e) {
-        window._console.log(DBG_TAG, JSON.stringify(e));
+        console.log(JSON.stringify(e));
     }
 };
 

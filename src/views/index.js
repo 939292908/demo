@@ -46,7 +46,7 @@ export default {
         broadcast.offMsg({ key: this.name, cmd: 'setTheme', isall: true });
     },
     view: function () {
-        return m('section.section.container' + (config.themeDark ? " .theme--dark" : " .theme--light"), [
+        return m('section.section.container' + (window.themeDark ? " .theme--dark" : " .theme--light"), [
             // m(header),
             m('div.route-box'),
             // m(footer),

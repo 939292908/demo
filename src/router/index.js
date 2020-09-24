@@ -111,12 +111,27 @@ class Router {
      * 路由返回
      */
     back() {
-        let routeData = this.historyRouteList.splice(0, 1);
-        routeData = routeData[0] || { path: this.defaultRoutePath };
-        this.path = routeData.path;
-        this.params = routeData.data || {};
-        // this.push(routeData, false);
-        history.back();
+        const that = this;
+        if (window.plus) {
+            const ws = window.plus.webview.currentWebview();
+            ws.canBack(function(e) {
+                if (e.canBack) {
+                    ws.back();
+                    let routeData = that.historyRouteList.splice(0, 1);
+                    routeData = routeData[0] || { path: that.defaultRoutePath };
+                    that.path = routeData.path;
+                    that.params = routeData.data || {};
+                } else {
+                    ws.close('pop-out');
+                }
+            });
+        } else {
+            let routeData = that.historyRouteList.splice(0, 1);
+            routeData = routeData[0] || { path: that.defaultRoutePath };
+            that.path = routeData.path;
+            that.params = routeData.data || {};
+            history.back();
+        }
     }
 
     /**
@@ -155,6 +170,12 @@ class Router {
      * 获取浏览器地址栏路由和参数
      */
     getUrlInfo() {
+        if (window.location.href.includes(this.route.prefix) === false) {
+            return {
+                path: '/',
+                params: {}
+            };
+        }
         const arr = window.location.href.split(this.route.prefix);
         const path = arr[1].split('?')[0];
         const queryStr = arr[1].split('?')[1];

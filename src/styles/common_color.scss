@@ -18,10 +18,11 @@
     border-radius: 20px;
 }
 
+html,
 body,
 #app {
-    background-color: var(--c-background-lighten);
-    color: var(--c-font-lighten);
+    background-color: transparent;
+    color: var(--c-font-darken);
 }
 
 
