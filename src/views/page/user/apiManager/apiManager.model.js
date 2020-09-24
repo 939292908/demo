@@ -216,7 +216,7 @@ module.exports = {
         });
     },
     oninit() {
-        if (!globalModels.getAccount().email) {
+        if (Object.keys(globalModels.getAccount()).length && !globalModels.getAccount().email) {
             this.showBindEmail = true;
         } else if (globalModels.getAccount().token) {
             this.getAPIList();
@@ -227,8 +227,9 @@ module.exports = {
             cmd: broadcast.GET_USER_INFO_READY,
             cb: arg => {
                 console.log(globalModels.getAccount());
-                if (!globalModels.getAccount().email) {
+                if (Object.keys(globalModels.getAccount()).length && !globalModels.getAccount().email) {
                     this.showBindEmail = true;
+                    m.redraw();
                 } else {
                     this.getAPIList();
                 }

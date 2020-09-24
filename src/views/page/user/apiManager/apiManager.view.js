@@ -83,13 +83,13 @@ module.exports = {
                                 class: APIManager.onlyRead ? 'icon-u_check-square has-text-primary' : 'icon-Unselected'
                                 // onclick() { APIManager.onlyRead = !APIManager.onlyRead; }
                             }, [
-                                m('span.ml-1.body-4.checkbox-text', {}, [I18n.$t('10319')/* 只读 */])
+                                m('span.ml-1.body-4.checkbox-text.not-select', {}, [I18n.$t('10319')/* 只读 */])
                             ]),
                             m('i.iconfont.iconfont-medium.cursor-pointer', {
                                 class: APIManager.canTrade ? 'icon-u_check-square has-text-primary' : 'icon-Unselected',
                                 onclick() { APIManager.canTrade = !APIManager.canTrade; }
                             }, [
-                                m('span.ml-1.body-4.checkbox-text', {}, [I18n.$t('10320')/* 交易 */])
+                                m('span.ml-1.body-4.checkbox-text.not-select', {}, [I18n.$t('10320')/* 交易 */])
                             ]),
                             m('div.mb-2.mt-5', {}, [I18n.$t('10321')/* '绑定的IP地址/IP段（选填）' */]),
                             m('div.control', {}, [
@@ -200,22 +200,22 @@ module.exports = {
                     body: m('div', {}, [
                         m('div.body-4.has-text-level-4', {}, ['SECRET KEY']),
                         m('div.body-5.has-text-level-1.break-word', {}, [
-                            m('span', {}, [APIManager.modal.key]),
-                            m('i.iconfont.icon-copy.has-text-primary.iconfont-small.cursor-pointer.ml-1', {
+                            m('span.font-weight-bold', {}, [APIManager.modal.key]),
+                            m('i.iconfont.icon-copy.has-text-primary.iconfont-medium.cursor-pointer.ml-1', {
                                 onclick() { utils.copyText(APIManager.modal.key); }
                             }, [])
                         ]),
                         m('div.body-4.has-text-level-4.mt-7', {}, [I18n.$t('10332')/* 访问密码 */]),
                         m('div.body-5.has-text-level-1.break-word', {}, [
-                            m('span', {}, [APIManager.modal.password]),
-                            m('i.iconfont.icon-copy.has-text-primary.iconfont-small.cursor-pointer.ml-1', {
+                            m('span.font-weight-bold', {}, [APIManager.modal.password]),
+                            m('i.iconfont.icon-copy.has-text-primary.iconfont-medium.cursor-pointer.ml-1', {
                                 onclick() { utils.copyText(APIManager.modal.password); }
                             }, [])
                         ]),
                         m('div.body-4.has-text-level-4.mt-7', {}, [I18n.$t('10326')/* 权限 */]),
-                        m('div.body-5.has-text-level-1', {}, [APIManager.modal.auth]),
+                        m('div.body-5.has-text-level-1.font-weight-bold', {}, [APIManager.modal.auth]),
                         m('div.body-4.has-text-level-4.mt-7', {}, [I18n.$t('10334')/* 绑定ip */]),
-                        m('div.body-5.has-text-level-1.break-word', {}, [APIManager.modal.ip]),
+                        m('div.body-5.has-text-level-1.break-word.font-weight-bold', {}, [APIManager.modal.ip || I18n.$t('10620')/* 无 */]),
                         m('div.body-5.has-text-level-4.mt-7', {}, [I18n.$t('10082')/* '温馨提示' */]),
                         m('div.body-4.has-text-level-4.mt-2', {}, [
                             '* ' + I18n.$t('10335')/* '请不要泄露您的访问密钥和secretkey，以免造成资产损失。' */
