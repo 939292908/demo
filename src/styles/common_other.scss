@@ -40,10 +40,11 @@
     &::before {
         display: block;
         content: "";
-        width: 10px;
+        width: 12px;
         height: 100%;
         position: absolute;
         left: -4px;
+        top: 0;
         background-color: inherit;
         transform: skewX(-8deg);
     }
@@ -57,10 +58,11 @@
     &::after {
         display: block;
         content: "";
-        width: 10px;
+        width: 12px;
         height: 100%;
         position: absolute;
         right: -4px;
+        top: 0;
         background-color: inherit;
         transform: skewX(-8deg);
     }
@@ -224,7 +226,7 @@
 .break-word {
     word-wrap: break-word!important;
 }
-// 
+//
 .modal-card-title {
     flex-shrink: initial;
 }
