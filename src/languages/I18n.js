@@ -140,8 +140,10 @@ export default {
             di18n.setLocale(lang, res => {
                 locale = lang;
                 localStorage.setItem('language', lang);
+                localStorage.setItem("scrollTop", document.body.scrollTop + document.documentElement.scrollTop);
                 broadcast.emit({cmd:broadcast.MSG_LANGUAGE_UPD,data:lang});
                 m.redraw();
+                document.body.scrollTop = localStorage.getItem("scrollTop");
             });
         });
     },
