@@ -94,7 +94,10 @@ module.exports = {
             this.loading = false;
             m.redraw();
             if (!res.result) {
-                return;
+                return window.$message({
+                    content: I18n.$t('10515'), // '暂无数据'
+                    type: 'danger'
+                });
             }
             if (res.result.code === 0) {
                 this.fillData(res.apiKeys);
