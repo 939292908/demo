@@ -3,6 +3,7 @@ const globalModels = require('@/models/globalModels');
 const { logOut } = require('@/api/').webApi;
 const broadcast = require('@/broadcast/broadcast');
 const m = require('mithril');
+const wlt = require('@/models/wlt/wlt');
 
 const header = {
     openNavbarDropdown: false,
@@ -12,6 +13,8 @@ const header = {
     },
     loginOut: function () {
         logOut().then(res => {
+            wlt.walletState = 0;
+            wlt.walletEmpty();
             utils.removeItem("ex-session");
             utils.setItem('loginState', false);
             globalModels.setAccount({});
