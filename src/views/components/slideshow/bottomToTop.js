@@ -26,21 +26,24 @@ module.exports = {
     oncreate: function (vnode) {
         this.mySwiper = new Swiper('#slideShowBTT', vertical);
     },
-    bottomToTop: function (vnode) {
-        const { banneList, click } = vnode.attrs;
+    handleClickItem: function (data, event) {
+        event.target.title && data[this.mySwiper.realIndex][event.target.title]?.htmlUrl && window.open(data[this.mySwiper.realIndex][event.target.title]?.htmlUrl);
+    },
+    bottomToTop: function (banneList) {
         return banneList.map(item => {
             return m('div.swiper-slide', [
-                item.map(item => {
+                item.map((item, i) => {
                     const srcUrl = item.image.indexOf('http') === 0 ? item.image : ActiveLine.WebAPI + item.image;
-                    return m('div', { class: "imgBox", onclick: click.bind(this, item) }, m('img', { class: "border-radius-large", src: srcUrl }));
+                    return m('div', { class: "imgBox" }, m('img', { class: "border-radius-large", src: srcUrl, title: i }));
                 })
             ]);
         });
     },
     view: function (vnode) {
-        return m('div', { class: 'swiper-container', id: "slideShowBTT" }, [
+        const { banneList } = vnode.attrs;
+        return m('div', { class: 'swiper-container', id: "slideShowBTT", onclick: this.handleClickItem.bind(this, banneList) }, [
             m('div.swiper-wrapper', [
-                this.bottomToTop(vnode)
+                this.bottomToTop(banneList)
             ]),
             m('div.swiper-pagination')
         ]);
