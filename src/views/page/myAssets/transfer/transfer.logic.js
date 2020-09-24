@@ -247,8 +247,6 @@ const model = {
         currentId: "",
         menuHeight: 260,
         updateOption (option) {
-            /* eslint-disable */
-            // debugger
             Object.keys(option).forEach(key => (this[key] = option[key]));
         },
         menuClick (item) {

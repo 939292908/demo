@@ -16,8 +16,6 @@ module.exports = {
         AssetRecords.init('03', 'recharge', 1, 10);
         AssetRecords.setLanguageListen();
     },
-    oncreate: () => {
-    },
     view: () => {
         return m('div', { class: `views-page-myAssets-myWalletIndex-childer-recharge theme--light pb-7` }, [
             m(Header, {

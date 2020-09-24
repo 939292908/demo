@@ -135,13 +135,14 @@ export default {
             cb && cb(arg)
         })
     },
-    setLocale(lang) {
+    setLocale(lang, cb) {
         this.setLocaleMessages(lang, arg => {
             di18n.setLocale(lang, res => {
                 locale = lang;
                 localStorage.setItem('language', lang);
                 broadcast.emit({cmd:broadcast.MSG_LANGUAGE_UPD,data:lang});
                 m.redraw();
+                cb && cb();
             });
         });
     },
