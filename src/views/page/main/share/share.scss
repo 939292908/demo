@@ -1,0 +1,38 @@
+// 分享
+.view-share-box {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+
+    .view-share-content {
+        width: 270px;
+        height: 416px;
+        position: relative;
+        
+        .view-share-content-title {
+            height: 30px;
+            line-height: 30px;
+            border-radius: 15px;
+        }
+
+        .view-share-content-footer {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            
+            .view-share-content-footer-ewm {
+                width: 40px;
+                height: 40px;
+            }
+        }
+    }
+
+    .view-share-footer {
+        margin-top: 72px;
+        width: 100%;
+        // height: 230px;
+    }
+}

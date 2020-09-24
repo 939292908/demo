@@ -6,7 +6,6 @@ const FormItem = require('@/views/components/common/FormItem/FormItem.view');
 const Button = require('@/views/components/common/Button/Button.view');
 const Modal = require('@/views/components/common/Modal/Modal.view');
 const transfer = require('@/views/page/sendRedPacket/transfer/transfer.view');
-const share = require('@/views/page/main/share/share.view');
 
 module.exports = {
     oninit: vnode => logic.oninit(vnode),
@@ -152,18 +151,6 @@ module.exports = {
                         onclick() {
                             logic.sendRedPModal.onOk();
                         }
-                    }
-                }),
-                // 分享结果 弹框
-                m(share, {
-                    isShow: logic.isShowShareModal,
-                    ewmImg: logic.ewmImg,
-                    shareBtnList: logic.shareBtnList,
-                    updateOption(params) {
-                        logic.isShowShareModal = params.isShow;
-                    },
-                    cancelShareBtnClick() {
-                        logic.cancelShareBtnClick();
                     }
                 }),
                 // 取消分享红包 提示弹框

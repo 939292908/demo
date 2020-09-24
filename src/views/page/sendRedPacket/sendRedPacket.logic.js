@@ -4,6 +4,8 @@ const Qrcode = require('qrcode');
 const Http = require('@/api').webApi;
 const md5 = require('md5');
 const m = require('mithril');
+const share = require('../main/share/share.logic.js');
+const { HtmlConst, GetBase64 } = require('@/models/plus/index.js');
 
 const logic = {
     // 币种按钮list
@@ -122,42 +124,6 @@ const logic = {
                 return logic.moneyFormItem.value || '0';
             }
         }
-    },
-    // 分享按钮list
-    shareBtnList: [
-        {
-            label: "微信好友",
-            icon: "icon-shareWeixin",
-            onclick() {
-                console.log(this.label);
-            }
-        },
-        {
-            label: "朋友圈",
-            icon: "icon-shareFriends",
-            onclick() {
-                console.log(this.label);
-            }
-        },
-        {
-            label: "复制链接",
-            icon: "icon-qiehuan3",
-            onclick() {
-                console.log(this.label);
-            }
-        },
-        {
-            label: "保存图片",
-            icon: "icon-xiaqiehuan",
-            onclick() {
-                console.log(this.label);
-            }
-        }
-    ],
-    // 取消 分享红包 click
-    cancelShareBtnClick() {
-        logic.isShowShareModal = false; // 关闭自己
-        logic.isShowNotShareModal = true; // 取消分享弹框
     },
     // 切换红包类型
     switchRedPacketType() {
@@ -291,6 +257,7 @@ const logic = {
     },
     // 绑定红包接口
     bindgift() {
+        const that = this;
         const params = {
             uid: "11",
             tel: "13911223344",
@@ -300,7 +267,9 @@ const logic = {
             console.log('bindgift success', arg);
             logic.sendRedPModal.updateOption({ isShow: !logic.sendRedPModal.isShow }); // 关闭发红包弹框
             logic.updateEwm("链接地址"); // 更新二维码
-            logic.isShowShareModal = true; // 分享结果弹框
+            // logic.isShowShareModal = true; // 分享结果弹框
+            console.log('share', share);
+            that.toShare();
         }).catch(function(err) {
             console.log('bindgift error', err);
         });
@@ -361,6 +330,23 @@ const logic = {
     onupdate(vnode) {
     },
     onremove(vnode) {
+    },
+    toShare: function() {
+        if (window.plus) {
+            const demo = HtmlConst.demo('test webview img', 'http://192.168.2.89:8888/imgs/banner/30_zh_b0ed4c346df49b17476de3528efbe58e.jpg');
+            console.log(demo);
+            GetBase64.loadImageUrlArray(['http://192.168.2.89:8888/imgs/banner/30_zh_b0ed4c346df49b17476de3528efbe58e.jpg'], arg => {
+                console.log('GetBase64 loadImageUrlArray', arg);
+                GetBase64.getWebView({
+                    data: HtmlConst.demo('test webview img', arg[0]),
+                    w: '375px',
+                    h: '667px'
+                }, res => {
+                    console.log('GetBase64 getWebView', res);
+                    share.openShare({ needShareImg: res });
+                });
+            });
+        }
     }
 };
 

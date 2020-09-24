@@ -6,6 +6,7 @@ import broadcast from '../broadcast/broadcast';
 // import utils from '../util/utils';
 import config from '../config';
 import l180n from '@/languages/I18n';
+const share = require('@/views/page/main/share/share.view');
 
 export default {
     name: 'views_index',
@@ -50,7 +51,8 @@ export default {
             // m(header),
             m('div.route-box'),
             // m(footer),
-            m(message)
+            m(message),
+            m(share)
         ]);
     }
 };
