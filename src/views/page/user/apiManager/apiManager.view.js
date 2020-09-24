@@ -32,7 +32,7 @@ module.exports = {
                     m('div.column.is-2.py-4.body-4.font-weight-medium', {}, [utils.formatDate(new Date(item.ctime * 1000))]),
                     m('div.column.is-1.py-4.body-4.font-weight-medium.has-text-right', {}, [
                         m('a.has-text-primary.cursor-pointer', {
-                            onclick() { APIManager.delAPI(item.k); }
+                            onclick() { APIManager.delete(item.k); }
                         }, [I18n.$t('10272')/* 删除 */])
                     ])
                 ])

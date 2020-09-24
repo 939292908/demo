@@ -46,6 +46,9 @@ module.exports = {
                 type: 'danger'
             });
         }
+        this.validate(() => { this.createAPI(); });
+    },
+    validate(fn) {
         if (globalModels.getAccount().loginType === 'phone') {
             const smsParam = {
                 securePhone: globalModels.getAccount().nationNo + '-' + globalModels.getAccount().phone, // 加密手机号带区号
@@ -56,11 +59,11 @@ module.exports = {
             };
             if (globalModels.getAccount().googleId) {
                 validate.activeSmsAndGoogle(smsParam, () => {
-                    this.createAPI();
+                    fn();
                 });
             } else {
                 validate.activeSms(smsParam, () => {
-                    this.createAPI();
+                    fn();
                 });
             }
         } else {
@@ -73,11 +76,11 @@ module.exports = {
             };
             if (globalModels.getAccount().googleId) {
                 validate.activeEmailAndGoogle(emailParam, () => {
-                    this.createAPI();
+                    fn();
                 });
             } else {
                 validate.activeEmail(emailParam, () => {
-                    this.createAPI();
+                    fn();
                 });
             }
         }
@@ -135,6 +138,9 @@ module.exports = {
         auth = auth.substr(0, auth.length - 1);
         return auth;
     },
+    delete(key) {
+        this.validate(() => { this.delAPI(key); });
+    },
     delAPI(key) {
         this.loading = true;
         m.redraw();
@@ -147,6 +153,8 @@ module.exports = {
             this.loading = false;
             m.redraw();
             if (res.result.code === 0) {
+                this.showValid = false;
+                window.$message({ title: I18n.$t('10410') /* '提示' */, content: I18n.$t('10623') /* '删除成功' */, type: 'success' });
                 for (const i in this.table) {
                     if (this.table[i].k === key) {
                         this.table.splice(i, 1);
