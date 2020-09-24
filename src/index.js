@@ -28,3 +28,11 @@ models.getFunList();
 if (utils.getItem('ex-session')) {
     models.getUserInfo();
 }
+
+const plusReady = function(arg) {
+    console.log('red-packet plus is ready', arg);
+};
+if (window.plus) {
+    plusReady();
+}
+document.addEventListener("plusready", plusReady, false);
