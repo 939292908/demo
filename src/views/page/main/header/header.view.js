@@ -17,6 +17,7 @@ module.exports = {
         // 初始化线路数据
         // apiLines.initLines();
         apiLines.updateLines();
+        header.handleChangeWindowTitle();
     },
     view: function () {
         return m('nav.navbar.is-fixed-top.theme--darken.body-5', {
@@ -398,9 +399,17 @@ module.exports = {
                                             class: `navbar-item has-text-primary-hover min-width-200 ma-0 px-6 py-4 body-5`,
                                             onclick: function() {
                                                 I18n.setLocale(item, res => {
-                                                    // location.reload();
-                                                    // window._console.log('header setLocale', res);
                                                     header.handleChangeWindowTitle();
+                                                    const whiteList = [
+                                                        'home',
+                                                        'myWalletIndex',
+                                                        'assetRecords'
+                                                    ];
+                                                    localStorage.setItem('isReload', true);
+                                                    if (whiteList.includes(window.router.getUrlInfo().path.split('/')[1])) {
+                                                        localStorage.setItem('scollTop', document.body.scrollTop + document.documentElement.scrollTop);
+                                                        location.reload();
+                                                    }
                                                 });
                                             }
                                         }, [

@@ -10,6 +10,10 @@ module.exports = {
         AssetRecords.init(AssetRecords.recordObj[m.route.param().aType] ? m.route.param().aType : '03');
         AssetRecords.setLanguageListen();
     },
+    oncreate: () => {
+        document.body.scrollTop = localStorage.getItem('isReload') === 'true' ? localStorage.getItem('scollTop') : 0;
+        localStorage.setItem('isReload', false);
+    },
     onremove() {
         AssetRecords.destroy();
     },

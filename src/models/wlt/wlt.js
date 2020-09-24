@@ -123,6 +123,22 @@ module.exports = {
         return num;
     },
 
+    // 资产清空
+    walletEmpty () {
+        this.wallet_obj = {
+            '01': {}, // 合约账户
+            '02': {}, // 币币账户
+            '03': {}, // 主钱包
+            '04': {} // 法币账户
+        };
+        this.wallet = {
+            '01': [], // 合约账户
+            '02': [], // 币币账户
+            '03': [], // 主钱包
+            '04': [] // 法币账户
+        };
+    },
+
     init: function () {
         // 初始化
         const that = this;
@@ -225,28 +241,6 @@ module.exports = {
             cb: function (arg) {
                 // console.log('MSG_TICK_UPD', arg);
                 that.trdDataOnFun();
-            }
-        });
-
-        // 退出登录全局广播
-        broadcast.onMsg({
-            key: this.name,
-            cmd: broadcast.MSG_LOG_OUT,
-            cb: function () {
-                console.log('outlogin...');
-                // 资产清空
-                that.wallet_obj = {
-                    '01': {}, // 合约账户
-                    '02': {}, // 币币账户
-                    '03': {}, // 主钱包
-                    '04': {} // 法币账户
-                };
-                that.wallet = {
-                    '01': [], // 合约账户
-                    '02': [], // 币币账户
-                    '03': [], // 主钱包
-                    '04': [] // 法币账户
-                };
             }
         });
     },
@@ -376,7 +370,7 @@ module.exports = {
 
         this.totalCNYValue = this.toFixedForFloor(this.totalCNYValue, 2);
 
-        // console.log('nzm', 'this.wallet', this.wallet);
+        console.log('nzm', 'this.wallet', this.wallet);
         // console.log('\n');
         // console.log('nzm', 'totalCNYValue', this.totalCNYValue, 'totalValueForUSDT', this.totalValueForUSDT);
         // console.log('\n');
@@ -484,7 +478,7 @@ module.exports = {
                         // 此处跳过数据更新
                         break;
                     default:
-                        // console.log('default', key, item[key]);
+                        // console.log('default', key, item[key], this.wallet_obj['01'], this.wallet_obj['01'][item], item);
                         this.wallet_obj['01'][item.wType][key] = item[key];
                     }
                 }
