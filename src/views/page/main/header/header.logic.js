@@ -3,7 +3,7 @@ const globalModels = require('@/models/globalModels');
 const { logOut } = require('@/api/').webApi;
 const broadcast = require('@/broadcast/broadcast');
 const m = require('mithril');
-const I18n = require("@/languages/I18n").default;
+// const I18n = require("@/languages/I18n").default;
 
 const header = {
     openNavbarDropdown: false,
@@ -12,7 +12,7 @@ const header = {
         header.openNavbarDropdown = !header.openNavbarDropdown;
     },
     handleChangeWindowTitle: function () {
-        document.title = I18n.$t('10622');
+        // document.title = I18n.$t('10622');
     },
     loginOut: function () {
         logOut().then(res => {
