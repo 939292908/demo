@@ -56,7 +56,7 @@ module.exports = {
                         m('div.marketName', { class: 'title-small' }, data[item]?.distSym || '--'),
                         m('div.marketGrowth body-6', { class: data[item]?.rfpreColor < 0 ? 'has-bg-up' : data[item]?.rfpreColor === 0 ? 'is0Colorbg' : 'has-bg-down' }, `${data[item]?.rfpreColor > 0 ? '+' : ''}${data[item]?.rfpre || '--'}`)
                     ]),
-                    m('div.marketPrice title-large', { class: data[item]?.rfpreColor < 0 ? 'has-text-up' : data[item]?.rfpreColor === 0 ? 'is0ColorTxt' : 'has-text-down' }, `$${data[item]?.LastPrz || '--'}`),
+                    m('div.marketPrice title-large', { class: data[item]?.rfpreColor > 0 ? 'has-text-up' : data[item]?.rfpreColor === 0 ? 'is0ColorTxt' : 'has-text-down' }, `$${data[item]?.LastPrz || '--'}`),
                     m('div.marketNumber body-5', `24H ${I18n.$t('10618')/* '量' */} ${data[item]?.Volume24 || '--'}`),
                     m('div.marketNumber body-5', `24H ${I18n.$t('10619')/* '额' */} ${data[item]?.Turnover24 || '--'}`)
                 ])
