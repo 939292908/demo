@@ -98,7 +98,7 @@ module.exports = {
             m.redraw();
             if (!res.result) {
                 return window.$message({
-                    content: I18n.$t('10515'), // '暂无数据'
+                    content: I18n.$t('10570'), /* '未知错误' */
                     type: 'danger'
                 });
             }
