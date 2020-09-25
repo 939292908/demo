@@ -13,6 +13,7 @@ share.photo = function(img, cb, errcb) {
     if (window.plus) {
         let bitmap = null;
         let path = null;
+        console.log('savePhoto', img);
         bitmap = new window.plus.nativeObj.Bitmap('share');
         bitmap.loadBase64Data(img, function() {
             path = '_doc/share' + new Date().getTime() + '.jpg';
@@ -20,16 +21,15 @@ share.photo = function(img, cb, errcb) {
                 window.plus.gallery.save(path, function() {
                     bitmap.clear();
                     cb && cb();
-                    window.$message('保存图片成功', 'success');
+                    window.$message({ content: '保存图片成功', type: 'success' });
                 });
             }, function(e1) {
                 errcb && errcb();
-                window.$message('保存图片失败', 'error');
+                window.$message({ content: '保存图片失败', type: 'danger' });
             });
         }, function(err) {
             errcb && errcb();
-            window.$message(`加载Base64图片数据失败${err.code + err.message}`,
-                'error');
+            window.$message({ content: `加载Base64图片数据失败${err.code + err.message}`, type: 'danger' });
         });
     } else {
         errcb && errcb();
@@ -41,14 +41,14 @@ share.photo = function(img, cb, errcb) {
  * @param img //图片
  * @param type //分享类型好友或朋友圈（WXSceneSession,WXSceneTimeline）
  */
-share.ShareIDForUrl = function(id, img, type, cb, errcb) {
+share.ShareImgForUrl = function(id, img, type, cb, errcb) {
     // 发送分享
     function doShare(srv, msg) {
         srv.send(msg, function() {
             // vm.$message(`分享到${srv.description}成功！`, 'success');
             cb && cb();
         }, function(e) {
-            // vm.$message(`分享到${srv.description}失败`, 'error');
+            // vm.$message(`分享到${srv.description}失败`, 'danger');
             errcb && errcb();
         });
     }
@@ -75,9 +75,9 @@ share.ShareIDForUrl = function(id, img, type, cb, errcb) {
         }, function(e) {
             errcb && errcb();
             if (e.code === -8) {
-                window.$message(`客户端未安装`, 'error');
+                window.$message({ content: `客户端未安装`, type: 'danger' });
             } else {
-                window.$message(`${e.message}`, 'error');
+                window.$message({ content: e.message, type: 'danger' });
             }
         });
     }
@@ -88,7 +88,7 @@ share.ShareIDForUrl = function(id, img, type, cb, errcb) {
  * @param img //图片
  * @param type //分享类型好友或朋友圈（WXSceneSession,WXSceneTimeline）
  */
-share.ShareID = function(id, img, type, cb, errcb) {
+share.ShareBase64 = function(id, img, type, cb, errcb) {
     let bitmap = null;
     let path = null;
     bitmap = new window.plus.nativeObj.Bitmap('share');
@@ -105,7 +105,7 @@ share.ShareID = function(id, img, type, cb, errcb) {
                     // vm.$message(`分享到${srv.description}成功！`, 'success');
                     cb && cb();
                 }, function(e) {
-                    // vm.$message(`分享到${srv.description}失败`, 'error');
+                    // vm.$message(`分享到${srv.description}失败`, 'danger');
                     errcb && errcb();
                 });
             }
@@ -132,20 +132,20 @@ share.ShareID = function(id, img, type, cb, errcb) {
                 }, function(e) {
                     errcb && errcb();
                     if (e.code === -8) {
-                        window.$message(`客户端未安装`, 'error');
+                        window.$message({ content: `客户端未安装`, type: 'danger' });
                     } else {
-                        window.$message(`${e.message}`, 'error');
+                        window.$message({ content: e.message, type: 'danger' });
                     }
                 });
             }
             // });
         }, function(e1) {
-            errcb && errcb();
-            window.$message(window.$t('11207') /* '保存图片失败' */, 'error');
+            errcb && errcb(e1);
+            window.$message({ content: '保存图片失败', type: 'danger' });
         });
-    }, function(err) {
-        errcb && errcb();
-        window.$message(window.$t(`加载Base64图片数据失败${err.code + err.message}`), 'error');
+    }, (err) => {
+        errcb && errcb(err);
+        window.$message({ content: `加载Base64图片数据失败${err.code + err.message}`, type: 'danger' });
     });
 };
 share.ShareService = function(id, img, type, cb, errcb) { // 获取可用的分享列表
@@ -154,13 +154,13 @@ share.ShareService = function(id, img, type, cb, errcb) { // 获取可用的分�
             for (const item of services) {
                 if (item.id === id) {
                     share[id] = item;
-                    share.ShareID(id, img, type, cb, errcb);
+                    share.ShareBase64(id, img, type, cb, errcb);
                 }
             }
         },
         function(err) {
             errcb && errcb();
-            window.$message(`获取分享服务列表失败：: ${err.code + err.message}`, 'error');
+            window.$message({ content: `获取分享服务列表失败：: ${err.code + err.message}`, type: 'danger' });
         });
     } else {
         errcb && errcb();
@@ -172,13 +172,13 @@ share.ShareServiceForUrl = function(id, img, type, cb, errcb) { // 获取可用�
             for (const item of services) {
                 if (item.id === id) {
                     share[id] = item;
-                    share.ShareIDForUrl(id, img, type, cb, errcb);
+                    share.ShareImgForUrl(id, img, type, cb, errcb);
                 }
             }
         },
         function(err) {
             errcb && errcb();
-            window.$message(`获取分享服务列表失败：: ${err.code + err.message}`, 'error');
+            window.$message({ content: `获取分享服务列表失败：: ${err.code + err.message}`, type: 'danger' });
         });
     } else {
         errcb && errcb();
