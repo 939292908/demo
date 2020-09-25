@@ -7,6 +7,9 @@ require("./styles/index");
 // UI库
 require('./styles/bluma.scss');
 
+if ((navigator.userAgent.indexOf('iPhone') > -1 || navigator.userAgent.indexOf('Mac OS') > -1)) {
+    require('./styles/Adaptive.css');
+}
 // 极验
 import('./libs/gt');
 
