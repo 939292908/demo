@@ -22,14 +22,14 @@ module.exports = {
                 m('div', { class: `has-border-bottom-1 px-6 pb-7 has-line-level-4` }, [
                     m('div', { class: `pt-7` }, [
                         m('span', { class: `` }, "来自"),
-                        m('span', { class: `has-text-primary` }, "178****0000"),
+                        m('span', { class: `has-text-primary` }, logic.fromName),
                         m('span', { class: `` }, "的")
                     ]),
-                    m('div', { class: `title-large mb-3` }, "拼手气红包"),
-                    m('div', { class: `` }, "“我们都活在暮光之城，黄昏之后我送你10USDT”"),
+                    m('div', { class: `title-large mb-3` }, logic.redPacketType * 1 > 0 ? "普通红包" : "拼手气红包"),
+                    m('div', { class: `` }, logic.redPacketDes),
                     m('iframe', { src: require("@/assets/img/people.svg").default, width: "110", height: "110", class: "mt-3 mb-7" }),
                     m('div', { class: `` }, "您有机会获得"),
-                    m('div', { class: `has-text-primary title-medium` }, "10 USDT"),
+                    m('div', { class: `has-text-primary title-medium` }, `${logic.quota} ${logic.coin}`),
                     m(FormItem, {
                         class: "is-around mt-7 mb-3",
                         content: m('input.input[type=text].has-text-centered', {
@@ -59,7 +59,7 @@ module.exports = {
                 // 领取概况
                 m('div', { class: `has-text-left mt-7 px-6` }, [
                     // m('span', { class: `` }, "已领取2/3个红包,共5/7 USDT"),
-                    m('span', { class: `` }, "3个红包共12 EOS，5分钟被抢光")
+                    m('span', { class: `` }, `${logic.count}个红包共${logic.quota} ${logic.coin}，${logic.timeOver}分钟被抢光`)
                 ]),
                 // 领取列表
                 m('div', { class: `has-text-left px-6 pb-3` }, logic.redPacketList.map((item, index) => {

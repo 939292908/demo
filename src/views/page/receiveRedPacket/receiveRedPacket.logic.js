@@ -8,6 +8,16 @@ const Http = require('@/api').webApi;
 
 const logic = {
     account: "15155395909", // 邮箱/手机号
+    fromName: "", // 发红包人
+    redPacketType: 0, // 红包类型 0:拼手气 >0:普通
+    redPacketState: 2, // 红包状态 1: 领完了 2: 未领完 3: 已过期
+    redPacketDes: "", // 祝福留言
+    coin: "", // 红包币种
+    quota: "", // 总金额
+    quota2: "", // 未领金额
+    count: "", // 总红包数量
+    count2: "", // 未领红包数量
+    timeOver: "", // 抢完用时
     isShowVerifyView: false, // 安全验证 弹框
     // 头部 组件配置
     headerOption: {
@@ -100,7 +110,7 @@ const logic = {
             }
         });
     },
-    // 领红包 api
+    // 领红包 接口
     recvgift() {
         const params = {
             rtype: 3, // '领取方式，1：已注册通过uid领取，2：未注册邮箱领取，3：未注册手机领取,4:注册后领取2,3状态到ruid,5:已失效'
@@ -115,7 +125,9 @@ const logic = {
                 window.router.push({
                     path: "/receiveRedPacketDetail",
                     data: {
-                        gid: arg.data.data.gid
+                        gid: arg.data.data.gid, // 红包id
+                        best: arg.data.data.best, // 手气最佳(0:否 1:是)
+                        quota: arg.data.data.quota // 抢的金额
                     }
                 }); // 领取结果页  receiveResult
             }
@@ -123,7 +135,7 @@ const logic = {
             console.log('领取 error', err);
         });
     },
-    // 红包详情 api
+    // 红包领取记录 接口
     getgiftrec() {
         const params = {
             gid: m.route.param().gid
@@ -131,14 +143,38 @@ const logic = {
         Http.getgiftrec(params).then(arg => {
             console.log(arg.data, 66);
             if (arg.data.code === 0) {
-                // logic.isLucky = arg.data.data.best * 1 === 1;
-                // logic.fromTel = arg.data.data.best * 1 === 1;
                 // 领取列表
                 this.redPacketList = arg.data.data.map(item => {
                     item.time = utils.formatDate(item.ctm, 'yyyy-MM-dd hh:mm'); // 领取时间
                     item.phone = utils.hideAccountNameInfo(item.rtel); // 领取人手机号
                     return item;
                 });
+                m.redraw();
+                console.log('领取记录 success', arg.data);
+            } else {
+                logic.passwordModel.updateErrMsg(arg.data.err_msg);
+            }
+        }).catch(function(err) {
+            console.log('领取记录 error', err);
+        });
+    },
+    // 红包详情 接口
+    getdetails() {
+        const params = {
+            gid: m.route.param().gid
+        };
+        Http.getdetails(params).then(function(arg) {
+            if (arg.data.code === 0) {
+                const data = arg.data.data;
+                logic.fromName = data.guid; // 发红包人
+                logic.redPacketType = data.type; // 红包类型
+                logic.redPacketDes = data.des; // 祝福留言
+                logic.coin = data.coin; // 红包币种
+                logic.quota = data.quota; // 总金额
+                logic.quota2 = data.quota2; // 未领金额
+                logic.count = data.count; // 总红包数量
+                logic.count2 = data.count2; // 未领红包数量
+                logic.timeOver = (data.otm - data.ctm) / 1000 / 60; // 抢完用时
                 m.redraw();
                 console.log('红包详情 success', arg.data);
             } else {
@@ -149,8 +185,9 @@ const logic = {
         });
     },
     oninit(vnode) {
-        this.initGeetest();
-        this.getgiftrec();
+        this.initGeetest(); // 极验
+        this.getdetails(); // 红包详情
+        this.getgiftrec(); // 红包领取记录
     },
     oncreate(vnode) {
     },

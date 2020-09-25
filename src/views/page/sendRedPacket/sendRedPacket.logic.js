@@ -8,12 +8,13 @@ const share = require('../main/share/share.logic.js');
 const { HtmlConst, GetBase64 } = require('@/models/plus/index.js');
 const wlt = require('@/models/wlt/wlt');
 const broadcast = require('@/broadcast/broadcast');
+const utils = require('@/util/utils').default;
 
 const logic = {
     // 币种按钮list
     coinBtnList: [],
     // 当前选中币种
-    currentCoin: 'BTC',
+    currentCoin: '',
     // 红包类型 // >1：普通/ 0：拼手气
     redPacketType: 1,
     // 钱包可用金额
@@ -121,7 +122,7 @@ const logic = {
         // 获取总金额
         getTotalCoin() {
             if (logic.redPacketType > 0) { // 普通红包
-                return (logic.numberFormItem.value * logic.moneyFormItem.value || '0');
+                return utils.toFixedForFloor((logic.numberFormItem.value * logic.moneyFormItem.value || '0'), 3);
             } else { // 拼手气红包
                 return logic.moneyFormItem.value || '0';
             }
@@ -281,7 +282,7 @@ const logic = {
         logic.gid = m.route.param().gid;
         if (logic.gid) {
             logic.toShare({
-                link: logic.gid
+                link: `/receiveRedPacket?gid=${logic.gid}`
             });
             m.redraw();
         }

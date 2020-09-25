@@ -51,7 +51,7 @@ module.exports = {
         case 1:
             // 已领取
             return m('div', { class: `` }, [
-                m('div', { class: `mx-6 mt-7 body-4` }, "领取红包总金额：? USDT"),
+                m('div', { class: `mx-6 mt-7 body-4` }, `领取红包总金额：${logic.receiveMoneySum} USDT`),
                 logic.receiveRedPacketList.map((item, index) => {
                     return m('div', {
                         class: `is-between py-5 has-border-bottom-1 has-line-level-4 mx-6`,
@@ -71,7 +71,7 @@ module.exports = {
                         // 右边
                         m('div', { class: `` }, [
                             m('div', { class: `has-text-primary font-weight-bold has-text-right` }, [
-                                m('span', { class: `` }, item.num),
+                                m('span', { class: `` }, item.quota),
                                 m('span', { class: `` }, item.coin)
                             ])
                             // m('div', { class: `` }, "≈￥70.5")
@@ -89,12 +89,12 @@ module.exports = {
                         // 左边
                         m('div', { class: `` }, [
                             m('p', { class: `` }, "已经发送红包总金额"),
-                            m('p', { class: `title-small` }, "80 USDT")
+                            m('p', { class: `title-small` }, `${logic.sendMoneySum} USDT`)
                         ]),
                         // 右边
                         m('div', { class: `has-text-right` }, [
                             m('p', { class: `` }, "已退回红包总金额"),
-                            m('p', { class: `title-small` }, "20 USDT")
+                            m('p', { class: `title-small` }, `${logic.sendMoneySumBack} USDT`)
                         ])
                     ]
                 }),
@@ -108,7 +108,7 @@ module.exports = {
                     }, [
                         // 左边
                         m('div', { class: `` }, [
-                            m('div', { class: `has-text-primary font-weight-bold` }, item.redPacketType > 0 ? "普通红包" : "拼手气红包"),
+                            m('div', { class: `has-text-primary font-weight-bold` }, item.type > 0 ? "普通红包" : "拼手气红包"),
                             m('div', { class: `body-4` }, item.time)
                         ]),
                         // 右边
