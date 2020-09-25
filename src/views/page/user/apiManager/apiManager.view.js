@@ -23,7 +23,7 @@ module.exports = {
                     m('div.column.is-3.py-4.body-4.font-weight-medium', {}, [item.k]),
                     m('div.column.is-3.py-4.body-4.font-weight-medium', {}, [
                         m(Tooltip, {
-                            label: m('div.ip-content.w100', {}, [item.cidr || I18n.$t('10620')/* 无 */]),
+                            label: m('div.ip-content.w100', {}, [item.cidr || '--']),
                             content: item.cidr.length > 40 ? item.cidr : '',
                             class: 'w100 break-word',
                             width: '300px'
@@ -32,7 +32,7 @@ module.exports = {
                     m('div.column.is-2.py-4.body-4.font-weight-medium', {}, [utils.formatDate(new Date(item.ctime * 1000))]),
                     m('div.column.is-1.py-4.body-4.font-weight-medium.has-text-right', {}, [
                         m('a.has-text-primary.cursor-pointer', {
-                            onclick() { APIManager.delAPI(item.k); }
+                            onclick() { APIManager.delete(item.k); }
                         }, [I18n.$t('10272')/* 删除 */])
                     ])
                 ])
@@ -65,7 +65,7 @@ module.exports = {
                     m('hr.ma-0'),
                     m('div.columns.pa-8', {}, [
                         m('div.column.body-5.has-text-level-1', {}, [
-                            m('div.mb-2', {}, [I18n.$t('10092')/* '备注' */]),
+                            m('div.mb-2.not-select', {}, [I18n.$t('10092')/* '备注' */]),
                             m('input.input', {
                                 oninput(e) {
                                     APIManager.keyName = e.target.value;
@@ -77,7 +77,7 @@ module.exports = {
                                 value: APIManager.keyName
                             }),
                             m('div.body-3.has-text-tip-error', { hidden: !APIManager.showKeyNameValid }, [regExp.validAPIKeyName(APIManager.keyName) || APIManager.hasSame()]),
-                            m('div.mb-2.mt-5', {}, [I18n.$t('10318')/* '权限设置' */]),
+                            m('div.mb-2.mt-5.not-select', {}, [I18n.$t('10318')/* '权限设置' */]),
                             m('i.iconfont.mr-7.iconfont-medium.cursor-pointer', {
                                 disabled: true,
                                 class: APIManager.onlyRead ? 'icon-u_check-square has-text-primary' : 'icon-Unselected'
@@ -91,7 +91,7 @@ module.exports = {
                             }, [
                                 m('span.ml-1.body-4.checkbox-text.not-select', {}, [I18n.$t('10320')/* 交易 */])
                             ]),
-                            m('div.mb-2.mt-5', {}, [I18n.$t('10321')/* '绑定的IP地址/IP段（选填）' */]),
+                            m('div.mb-2.mt-5.not-select', {}, [I18n.$t('10321')/* '绑定的IP地址/IP段（选填）' */]),
                             m('div.control', {}, [
                                 m('textarea.textarea.has-fixed-size', {
                                     oninput(e) { APIManager.ip = e.target.value; },
@@ -105,7 +105,7 @@ module.exports = {
                             }, [I18n.$t('10337')/* '确定' */])
                         ]),
                         m('div.column.is-2', {}, []),
-                        m('div.column.has-text-level-4.body-4.tips-line-height', {}, [
+                        m('div.column.has-text-level-4.body-4.tips-line-height.pr-8', {}, [
                             m('div.body-5.mb-2', {}, [I18n.$t('10082')/* '温馨提示' */]),
                             m('div', {},
                                 ['* '].concat(
@@ -126,8 +126,7 @@ module.exports = {
                                     '192.168.1.1,192.168.1.2,192.168.0.1/24'
                                 ]
                             )
-                        ]),
-                        m('div.column.is-1', {}, [])
+                        ])
                     ])
                 ]),
                 m('div.content-width.has-bg-level-2.border-radius-medium.content-center.mt-5.content-bg', {}, [
@@ -198,7 +197,7 @@ module.exports = {
                         ])
                     ]),
                     body: m('div', {}, [
-                        m('div.body-4.has-text-level-4', {}, ['SECRET KEY']),
+                        m('div.body-4.has-text-level-4', {}, [I18n.$t('10327')/* 访问秘钥 */]),
                         m('div.body-5.has-text-level-1.break-word', {}, [
                             m('span.font-weight-bold', {}, [APIManager.modal.key]),
                             m('i.iconfont.icon-copy.has-text-primary.iconfont-medium.cursor-pointer.ml-1', {
@@ -215,7 +214,7 @@ module.exports = {
                         m('div.body-4.has-text-level-4.mt-7', {}, [I18n.$t('10326')/* 权限 */]),
                         m('div.body-5.has-text-level-1.font-weight-bold', {}, [APIManager.modal.auth]),
                         m('div.body-4.has-text-level-4.mt-7', {}, [I18n.$t('10334')/* 绑定ip */]),
-                        m('div.body-5.has-text-level-1.break-word.font-weight-bold', {}, [APIManager.modal.ip || I18n.$t('10620')/* 无 */]),
+                        m('div.body-5.has-text-level-1.break-word.font-weight-bold', {}, [APIManager.modal.ip || '--']),
                         m('div.body-5.has-text-level-4.mt-7', {}, [I18n.$t('10082')/* '温馨提示' */]),
                         m('div.body-4.has-text-level-4.mt-2', {}, [
                             '* ' + I18n.$t('10335')/* '请不要泄露您的访问密钥和secretkey，以免造成资产损失。' */
