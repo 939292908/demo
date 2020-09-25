@@ -76,6 +76,8 @@ module.exports = {
                 self.onSelect(vnode, start, end);
             }
         });
+        const e = document.getElementsByClassName('lightpick')[0];
+        e.onclick = e => { this.stopFunc(e); };
     },
     onSelect(vnode, start, end) {
         let str = '';
