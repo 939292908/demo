@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>测试分享图片生成</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            padding: 0;
+            margin: 0;
+            font-family: PingFang SC;
+            font-style: normal;
+        }
+        html,
+        body{
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            line-height: 1.5;
+        }
+        .box {
+            padding: 32px;
+        }
+        .box .top > div {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 50%;
+            text-align: center;
+        }
+        .box .top > div > div > * {
+            display: inline-block;
+            padding-bottom: 10px;
+        }
+        .box .top .title {
+            font-size: 24px;
+            color: #181818;
+        }
+        .box .top .lucky {
+            font-size: 24px;
+            color: #FF6F1E;
+        }
+        .box .top .sub-title {
+            font-size: 14px;
+            color: #212941;
+            text-align: center;
+            padding-bottom: 32px;
+        }
+        .box .top .sub-title > span {
+            color: #FF6F1E;
+        }
+        .box hr {
+            background-color: #F5F5F5;
+            height: 1px;
+            border: none;
+        }
+        .box .bottom {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .box .bottom-content {
+            width: 100%;
+            display: flex;
+            padding: 20px 0;
+        }
+        .box .bottom-content>div:first-child {
+            width: calc(100% - 68px);
+            height: 68px;
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            color: #9EA2AF;
+        }
+        .box .bottom-content>div:last-child {
+            width: 68px;
+            height: 68px;
+        }
+    </style>
+</head>
+<body>
+    <div class="box">
+        <div class="top">
+            <div>
+                <div>
+                    <img src="../src/assets/img/people.svg" width="60px" alt="">
+                    <br>
+                    <h1 class="title">手气最佳</h1>
+                    <br>
+                    <h2 class="lucky">8 USDT</h2>
+                    <br>
+                    <div class="sub-title">
+                        我抢到了来自<span>178****7894</span>的拼手气红包
+                    </div>
+                </div>
+            </div>
+        </div>
+        <hr>
+        <div class="bottom">
+            <div class="bottom-content">
+                <div>
+                    <div>
+                        <p>
+                            <img src="../src/assets/img/logo.svg" width="100px" alt="">
+                        </p>
+                        <p>下载注册APP，轻松交易</p>
+                    </div>
+                </div>
+                <div>
+                    <img src="./download.png" width="100%" alt="">
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
