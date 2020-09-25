@@ -786,7 +786,7 @@ $primary-lighten: var(--c-primary-lighten);
 
 .button:focus,
 .button.is-focused {
-    border-color: $primary-lighten !important;
+    border-color: transparent !important;
 }
 
 .button:focus:not(:active),
