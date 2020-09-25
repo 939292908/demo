@@ -2,6 +2,8 @@ const m = require('mithril');
 const Qrcode = require('qrcode');
 const Http = require('@/api').webApi;
 const utils = require('@/util/utils').default;
+const { HtmlConst, GetBase64 } = require('@/models/plus/index.js');
+const share = require('../../main/share/share.logic.js');
 
 const logic = {
     // 红包详情分享 弹框
@@ -28,12 +30,10 @@ const logic = {
             label: m('i', { class: `iconfont icon-otc-editName` }),
             onclick() {
                 // 生成二维码
-                Qrcode.toDataURL(logic.ewmLink || '无').then(url => {
-                    logic.ewmImg = url;
-                }).catch(err => {
-                    console.log(err);
+                logic.doShare({
+                    link: 'http://192.168.2.89:8888/register',
+                    textArr: ['手气最佳', '8 USDT', '我抢到了来自', '178****7894', '的拼手气红包', '下载注册APP，轻松交易']
                 });
-                logic.isShowShareDetailModal = true;
             }
         }
     },
@@ -61,6 +61,29 @@ const logic = {
         }).catch(function(err) {
             console.log('红包详情 error', err);
         });
+    },
+    doShare(param) {
+        const link = param.link; // 需要分享的链接
+        const img1 = window.location.origin + window.location.pathname + require('@/assets/img/work.png').default;
+        const img2 = window.location.origin + window.location.pathname + require('@/assets/img/logo.png').default;
+        console.log(img1, img2);
+        if (window.plus) {
+            Qrcode.toDataURL(link).then(base64 => {
+                GetBase64.loadImageUrlArray([img1, img2, base64], arg => {
+                    console.log('GetBase64 loadImageUrlArray', arg);
+                    GetBase64.getWebView({
+                        data: HtmlConst.shareLucky(param.textArr, arg),
+                        W: 276,
+                        H: 390
+                    }, res => {
+                        console.log('GetBase64 getWebView', res);
+                        share.openShare({ needShareImg: res, link: link });
+                    });
+                });
+            }).catch(err => {
+                console.log(err);
+            });
+        }
     },
     // 已抢红包列表
     redPacketList: [],

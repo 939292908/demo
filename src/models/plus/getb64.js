@@ -63,7 +63,8 @@ getb64.mewWebviewPreview = (cb) => {
             errorCallback: err => {
                 newWebview.removeEventListener('show', getb64.mewWebviewPreview);
                 newWebview.close();
-                window.$message(err.code + err.message, 'error');
+                console.log(err.code + err.message);
+                window.$message({ content: err.code + err.message, type: 'danger' });
                 if (cb) {
                     cb(err);
                 }
@@ -88,7 +89,8 @@ getb64.mewWebviewPreview1 = (cb) => {
             errorCallback: err => {
                 newWebview.removeEventListener('loaded', getb64.mewWebviewPreview);
                 newWebview.close();
-                window.$message(err.code + err.message, 'error');
+                console.log(err.code + err.message);
+                window.$message({ content: err.code + err.message, type: 'danger' });
                 if (cb) {
                     cb(err);
                 }
@@ -150,7 +152,8 @@ const bitmapLoadImg = (url, next, close) => {
             bitmap.clear();
             next && next(toBase64);
         }, function(e) {
-            window.$message("logo加载失败" + JSON.stringify(e), 'error');
+            console.log("logo加载失败" + JSON.stringify(e));
+            window.$message({ content: "logo加载失败" + JSON.stringify(e), type: 'danger' });
             bitmap.clear();
             close && close(e);
         });
