@@ -408,20 +408,27 @@ const logic = {
             isall: true
         });
     },
-    toShare: function() {
+    toShare: function(param) {
+        const link = 'http://192.168.2.89:8888/register'; // 需要分享的链接
+        // share.openShare({ needShareImg: require('../../../../htmlConst/redPacketshare.jpg').default });
+        const img1 = window.location.origin + window.location.pathname + require('@/assets/img/shareBg.png').default;
+        const img2 = window.location.origin + window.location.pathname + require('@/assets/img/logo.png').default;
+        console.log(img1, img2);
         if (window.plus) {
-            const demo = HtmlConst.demo('test webview img', 'http://192.168.2.89:8888/imgs/banner/30_zh_b0ed4c346df49b17476de3528efbe58e.jpg');
-            console.log(demo);
-            GetBase64.loadImageUrlArray(['http://192.168.2.89:8888/imgs/banner/30_zh_b0ed4c346df49b17476de3528efbe58e.jpg'], arg => {
-                console.log('GetBase64 loadImageUrlArray', arg);
-                GetBase64.getWebView({
-                    data: HtmlConst.demo('test webview img', arg[0]),
-                    w: '375px',
-                    h: '667px'
-                }, res => {
-                    console.log('GetBase64 getWebView', res);
-                    share.openShare({ needShareImg: res });
+            Qrcode.toDataURL(link).then(base64 => {
+                GetBase64.loadImageUrlArray([img1, img2, base64], arg => {
+                    console.log('GetBase64 loadImageUrlArray', arg);
+                    GetBase64.getWebView({
+                        data: HtmlConst.shareRedPacket(['分享红包', '红包资产可用来提现，交易', '下载注册APP，轻松交易'], arg),
+                        W: 375,
+                        H: 667
+                    }, res => {
+                        console.log('GetBase64 getWebView', res);
+                        share.openShare({ needShareImg: res, link: link });
+                    });
                 });
+            }).catch(err => {
+                console.log(err);
             });
         }
     }
