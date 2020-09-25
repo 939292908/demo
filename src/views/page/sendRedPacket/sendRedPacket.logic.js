@@ -292,7 +292,7 @@ const logic = {
             logic.updateEwm("链接地址"); // 更新二维码
             // logic.isShowShareModal = true; // 分享结果弹框
             console.log('share', share);
-            that.toShare();
+            that.toShare({ link: 'http:192.168.2.89:11080/m/register/' });
         }).catch(function(err) {
             console.log('bindgift error', err);
         });
@@ -409,8 +409,7 @@ const logic = {
         });
     },
     toShare: function(param) {
-        const link = 'http://192.168.2.89:8888/register'; // 需要分享的链接
-        // share.openShare({ needShareImg: require('../../../../htmlConst/redPacketshare.jpg').default });
+        const link = param.link; // 需要分享的链接
         const img1 = window.location.origin + window.location.pathname + require('@/assets/img/shareBg.png').default;
         const img2 = window.location.origin + window.location.pathname + require('@/assets/img/logo.png').default;
         console.log(img1, img2);
