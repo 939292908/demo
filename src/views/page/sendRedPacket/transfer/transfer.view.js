@@ -8,7 +8,7 @@ const logic = require('./transfer.logic.js');
 module.exports = {
     view (vnode) {
         return m(Modal, {
-            class: "pub-transfer",
+            class: "pub-transfer bottom-sheet",
             isShow: logic.isShow,
             updateOption(type) {
                 logic.updateOption(type);

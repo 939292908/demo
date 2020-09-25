@@ -49,7 +49,7 @@ module.exports = {
                                 window.router.push({
                                     path: "/sendRedPacket",
                                     data: {
-                                        redPacketLink: "123"
+                                        gid: "123"
                                     }
                                 });
                             } else { // 知道了

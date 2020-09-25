@@ -1,3 +1,5 @@
+const Http = require('@/api').webApi;
+const m = require('mithril');
 
 const logic = {
     redPacketState: 2, // 红包状态 1: 领完了 2: 未领完 3: 已过期
@@ -52,7 +54,24 @@ const logic = {
             coin: "USDT"
         }
     ],
+    // 红包详情接口
+    getgiftrec() {
+        const params = {
+            gid: m.route.param().gid
+        };
+        Http.getgiftrec(params).then(function(arg) {
+            if (arg.data.code === 0) {
+                m.redraw();
+                console.log('红包详情接口 success', arg.data);
+            } else {
+                logic.passwordModel.updateErrMsg(arg.data.err_msg);
+            }
+        }).catch(function(err) {
+            console.log('红包详情接口 error', err);
+        });
+    },
     oninit(vnode) {
+        this.getgiftrec();
     },
     oncreate(vnode) {
     },

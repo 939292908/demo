@@ -17,7 +17,7 @@ module.exports = {
                 m('div', { class: `has-border-bottom-1 px-6 pb-7 has-line-level-4` }, [
                     m('div', { class: `pt-7` }, [
                         m('span', { class: `` }, '来自'),
-                        m('span', { class: `has-text-primary` }, '178****0000'),
+                        m('span', { class: `has-text-primary` }, logic.fromTel),
                         m('span', { class: `` }, '的')
                     ]),
                     m('div', { class: `title-medium mb-3` }, "拼手气红包"),
@@ -37,7 +37,8 @@ module.exports = {
                             m('div', { class: `body-4` }, item.time)
                         ]),
                         m('div', { class: `font-weight-bold has-text-primary` }, [
-                            m('span', { class: `` }, item.num),
+                            item.bestm * 1 === 1 ? ('i', { class: `iconfont icon-VipCrown iconfont-medium` }) : "",
+                            m('span', { class: `` }, item.quota),
                             m('span', { class: `` }, item.coin)
                         ])
                     ]);

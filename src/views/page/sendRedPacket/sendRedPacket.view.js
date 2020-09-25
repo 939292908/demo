@@ -44,7 +44,7 @@ module.exports = {
                 ]),
                 // 单个金额/总金额
                 m(FormItem, {
-                    label: logic.redPacketType === 1 ? '单个金额' : '总金额',
+                    label: logic.redPacketType > 0 ? '单个金额' : '总金额',
                     unit: 'USDT',
                     placeholder: '输入红包金额',
                     type: 'number',
@@ -56,8 +56,8 @@ module.exports = {
                 }),
                 // 切换 普通/拼手气红包
                 m('div', { class: `mt-2 mb-7` }, [
-                    m('span', { class: `` }, [`当前为${logic.redPacketType === 1 ? '普通红包' : '拼手气红包'}，改为 `]),
-                    m('span', { class: `has-text-primary`, onclick() { logic.switchRedPacketType(); } }, [logic.redPacketType === 1 ? '拼手气红包' : '普通红包'])
+                    m('span', { class: `` }, [`当前为${logic.redPacketType > 0 ? '普通红包' : '拼手气红包'}，改为 `]),
+                    m('span', { class: `has-text-primary`, onclick() { logic.switchRedPacketType(); } }, [logic.redPacketType > 0 ? '拼手气红包' : '普通红包'])
                 ]),
                 // 红包个数
                 m(FormItem, {
@@ -105,6 +105,7 @@ module.exports = {
                 // 发红包确认 弹框
                 m(Modal, {
                     isShow: logic.sendRedPModal.isShow,
+                    class: "bottom-sheet",
                     updateOption(params) {
                         logic.sendRedPModal.updateOption(params);
                     },
@@ -118,7 +119,7 @@ module.exports = {
                             // 红包类型
                             m('div', { class: `columns is-mobile mb-3` }, [
                                 m('div', { class: `column is-4` }, "红包类型"),
-                                m('div', { class: `column is-8 font-weight-bold` }, logic.redPacketType === 1 ? "普通红包" : "拼手气红包")
+                                m('div', { class: `column is-8 font-weight-bold` }, logic.redPacketType > 0 ? "普通红包" : "拼手气红包")
                             ]),
                             // 红包金额
                             m('div', { class: `columns is-mobile mb-3` }, [

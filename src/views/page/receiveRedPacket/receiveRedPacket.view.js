@@ -63,7 +63,7 @@ module.exports = {
                 ]),
                 // 领取列表
                 m('div', { class: `has-text-left px-6 pb-3` }, logic.redPacketList.map((item, index) => {
-                    return m('div', { class: `is-between py-5 has-border-bottom-1 has-line-level-4` }, [
+                    return m('div', { class: `is-between py-5 has-border-bottom-1 has-line-level-4`, key: index }, [
                         m('div', { class: `` }, [
                             m('div', { class: `has-text-primary font-weight-bold` }, item.phone),
                             m('div', { class: `body-4` }, item.time)

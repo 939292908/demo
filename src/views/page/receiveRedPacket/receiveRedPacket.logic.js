@@ -4,6 +4,7 @@ const broadcast = require('@/broadcast/broadcast');
 const validate = require('@/models/validate/validate').default;
 const utils = require('@/util/utils').default;
 const I18n = require('@/languages/I18n').default;
+const Http = require('@/api').webApi;
 
 const logic = {
     account: "15155395909", // 邮箱/手机号
@@ -61,7 +62,7 @@ const logic = {
             validate.activeSms(params, () => {
                 console.log("successPhone");
                 logic.isShowVerifyView = false; // 关闭安全校验弹框
-                window.router.push("/receiveResult"); // 领取结果页
+                this.recvgift(); // 领红包
             });
         // 邮箱
         } else if (logic.getVerifyType() === "email") {
@@ -74,7 +75,7 @@ const logic = {
             validate.activeEmail(params, function() {
                 console.log("successEmail");
                 logic.isShowVerifyView = false; // 关闭安全校验弹框
-                window.router.push("/receiveResult"); // 领取结果页
+                this.recvgift(); // 领红包
             });
         }
         // 更新组件
@@ -99,9 +100,57 @@ const logic = {
             }
         });
     },
+    // 领红包 api
+    recvgift() {
+        const params = {
+            rtype: 3, // '领取方式，1：已注册通过uid领取，2：未注册邮箱领取，3：未注册手机领取,4:注册后领取2,3状态到ruid,5:已失效'
+            gid: m.route.param().gid, // 红包id
+            ruid: '123', // 领取人uid
+            rtel: logic.account, // 电话
+            remail: logic.account // 邮箱
+        };
+        Http.recvgift(params).then(arg => {
+            if (arg.data.code === 0) {
+                console.log('领取 success', arg.data);
+                window.router.push({
+                    path: "/receiveRedPacketDetail",
+                    data: {
+                        gid: arg.data.data.gid
+                    }
+                }); // 领取结果页  receiveResult
+            }
+        }).catch(function(err) {
+            console.log('领取 error', err);
+        });
+    },
+    // 红包详情 api
+    getgiftrec() {
+        const params = {
+            gid: m.route.param().gid
+        };
+        Http.getgiftrec(params).then(arg => {
+            console.log(arg.data, 66);
+            if (arg.data.code === 0) {
+                // logic.isLucky = arg.data.data.best * 1 === 1;
+                // logic.fromTel = arg.data.data.best * 1 === 1;
+                // 领取列表
+                this.redPacketList = arg.data.data.map(item => {
+                    item.time = utils.formatDate(item.ctm, 'yyyy-MM-dd hh:mm'); // 领取时间
+                    item.phone = utils.hideAccountNameInfo(item.rtel); // 领取人手机号
+                    return item;
+                });
+                m.redraw();
+                console.log('红包详情 success', arg.data);
+            } else {
+                logic.passwordModel.updateErrMsg(arg.data.err_msg);
+            }
+        }).catch(function(err) {
+            console.log('红包详情 error', err);
+        });
+    },
     oninit(vnode) {
         this.initGeetest();
-        logic.initVerifyView(); // ---------- 测试 ----------
+        this.getgiftrec();
     },
     oncreate(vnode) {
     },
