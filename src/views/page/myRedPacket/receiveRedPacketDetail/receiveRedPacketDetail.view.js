@@ -23,7 +23,7 @@ module.exports = {
                     m('div', { class: `title-medium mb-3` }, logic.redPacketType * 1 > 0 ? "普通红包" : "拼手气红包"),
                     m('div', { class: `` }, logic.redPacketDes),
                     m('iframe', { src: require("@/assets/img/people.svg").default, width: "110", height: "110", class: "mt-3 mb-7" }),
-                    m('div', { class: `has-text-primary title-medium` }, `${logic.quota} ${logic.coin}`)
+                    m('div', { class: `has-text-primary title-medium` }, `${logic.currentQuota} ${logic.coin}`)
                 ]),
                 // 领取概况
                 m('div', { class: `has-text-left mt-7 px-6` }, [

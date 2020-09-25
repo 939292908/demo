@@ -16,6 +16,7 @@ const logic = {
     count: "", // 总红包数量
     count2: "", // 未领红包数量
     isLucky: true, // 是否是手气最佳
+    currentQuota: "", // 当前抢到金额
     // 头部 组件配置
     headerOption: {
         class: "",
@@ -66,8 +67,9 @@ const logic = {
         };
         Http.getdetails(params).then(function(arg) {
             if (arg.data.code === 0) {
-                logic.isLucky = (arg.data.data.quota - arg.data.data.quota2);
-                logic.fromName = arg.data.data.guid;
+                logic.isLucky = m.route.param().best * 1 === 1; // 是否手气最佳
+                logic.currentQuota = m.route.param().quota; // 当前抢到金额
+                logic.fromName = arg.data.data.guid; // 红包来源
                 logic.redPacketType = arg.data.data.type; // 红包类型
                 logic.redPacketDes = arg.data.data.des; // 祝福留言
                 logic.coin = arg.data.data.coin; // 红包币种
