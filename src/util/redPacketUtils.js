@@ -17,7 +17,7 @@ redPacketUtils.buildGiftrecData = function(list) {
                     item.build_rtm = utils.formatDate(item.rtm, 'yyyy-MM-dd hh:mm'); // 领取时间 格式化
                     item.build_ftm = utils.formatDate(item.ftm, 'yyyy-MM-dd hh:mm'); // 失效时间 格式化
                     item.build_rtel = utils.hideAccountNameInfo(item.rtel); // 领取人手机号 **隐藏
-                    item.build_rmb = (wlt.getPrz(item.coin) * item.quota) * wlt.prz; // 领取人手机号 **隐藏
+                    item.build_rmb = (wlt.getPrz(item.coin) * item.quota) * wlt.prz; // 人民币
                     return item;
                 });
                 resolve(newData);

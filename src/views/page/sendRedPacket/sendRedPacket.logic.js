@@ -1,5 +1,5 @@
 const transferLogic = require('@/views/page/sendRedPacket/transfer/transfer.logic');
-const globalModels = require('@/models/globalModels');
+// const globalModels = require('@/models/globalModels');
 const Qrcode = require('qrcode');
 const Http = require('@/api').webApi;
 const md5 = require('md5');
@@ -213,12 +213,10 @@ const logic = {
     },
     // 获取币种的人民币估值
     getRMBByCoinMoney() {
-        const coinMoney = logic.moneyFormItem.value; // 币种金额
-        const rate = globalModels.getForexRate().rate; // 换算人民币汇率
-        if (rate) {
-            return coinMoney * rate;
-        } else {
-            return 0;
+        if (logic.redPacketType * 1 === 0) { // 拼手气红包
+            return wlt.getPrz(logic.currentCoin) * logic.moneyFormItem.value * wlt.prz;
+        } else { // 普通红包
+            return wlt.getPrz(logic.currentCoin) * logic.moneyFormItem.value * logic.numberFormItem.value * wlt.prz;
         }
     },
     // 塞币进红包 click
