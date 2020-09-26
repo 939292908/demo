@@ -150,6 +150,7 @@ module.exports = {
                         ]
                     },
                     ok: {
+                        loading: logic.shareLoading,
                         onclick() {
                             logic.sendRedPModal.onOk();
                         }
@@ -182,7 +183,6 @@ module.exports = {
                                 onclick() {
                                     logic.isShowNotShareModal = false;
                                     logic.isShowShareModal = true; // 分享弹框
-                                    // window.router.push('/sendRedPacket');
                                 }
                             })
                         ])

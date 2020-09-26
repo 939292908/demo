@@ -1,16 +1,8 @@
 const Http = require('@/api').webApi;
 const m = require('mithril');
-const { default: utils } = require('../../../../util/utils');
+const redPacketUtils = require('@/util/redPacketUtils').default;
 
 const logic = {
-    redPacketType: 0, // 红包类型 0:拼手气 >0:普通
-    redPacketState: 2, // 红包状态 1: 领完了 2: 未领完 3: 已过期
-    redPacketDes: "", // 祝福留言
-    coin: "", // 红包币种
-    quota: "", // 总金额
-    quota2: "", // 未领金额
-    count: "", // 总红包数量
-    count2: "", // 未领红包数量
     // 头部 组件配置
     headerOption: {
         left: {
@@ -22,6 +14,25 @@ const logic = {
             label: "详情记录"
         }
     },
+    // 红包top 组件配置
+    redPacketTopOption: {
+        // guid: "", // 来源 (空为自己)
+        // type: "", // 红包类型 type 0:为拼手气 / >0:普通红包
+        // des: "", // 留言
+        // quota: "", // 金额
+        // coin: "", // 币种
+        // msg: "" // 提示消息 (空为没有)
+        // msg2: "" // 提示消息 (空为没有)
+    },
+    // 红包info 组件配置
+    redPacketInfoOption: {
+        // status: "", // 状态：0待领取，1已领完，2红包到期
+        // count: "", // 总数
+        // count2: "", // 未领数
+        // quota: "", // 总额
+        // quota2: "", // 未领额
+        // coin: "" // 币种
+    },
     // 已抢红包列表
     redPacketList: [],
     // 红包已领取记录 接口
@@ -31,10 +42,9 @@ const logic = {
         };
         Http.getgiftrec(params).then(arg => {
             if (arg.data.code === 0) {
-                this.redPacketList = arg.data.data.map(item => {
-                    item.phone = utils.hideAccountNameInfo(item.rtel); // 隐藏手机号
-                    item.time = utils.formatDate(item.rtm, 'yyyy-MM-dd hh:mm'); // 领取时间
-                    return item;
+                redPacketUtils.buildGiftrecData(arg.data.data).then(data => {
+                    logic.redPacketList = data;
+                    m.redraw();
                 });
                 m.redraw();
                 console.log('红包已领取记录 success', arg.data);
@@ -52,13 +62,13 @@ const logic = {
         };
         Http.getdetails(params).then(function(arg) {
             if (arg.data.code === 0) {
-                logic.redPacketType = arg.data.data.type; // 红包类型
-                logic.redPacketDes = arg.data.data.des; // 祝福留言
-                logic.coin = arg.data.data.coin; // 红包币种
-                logic.quota = arg.data.data.quota; // 总金额
-                logic.quota2 = arg.data.data.quota2; // 未领金额
-                logic.count = arg.data.data.count; // 总红包数量
-                logic.count2 = arg.data.data.count2; // 未领红包数量
+                const data = arg.data.data;
+                // 红包top 组件配置
+                logic.redPacketTopOption = JSON.parse(JSON.stringify(data));
+                logic.redPacketTopOption.guid = ""; // 红包来源 空为自己
+                logic.redPacketTopOption.msg = logic.redPacketTopOption.status * 1 === 2 ? "红包已过期" : ""; // msg
+                // 红包Info 组件配置
+                logic.redPacketInfoOption = JSON.parse(JSON.stringify(data));
                 m.redraw();
                 console.log('红包详情 success', arg.data);
             } else {

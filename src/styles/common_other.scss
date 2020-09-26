@@ -37,8 +37,9 @@ body {
 
 // boder 线
 .has-border-none {
-    border: none;
+    border: none !important;
 }
+
 @for $i from 1 through 3 {
     .has-border-#{$i} {
         border: #{$i}px solid;
@@ -113,6 +114,13 @@ body {
 
 .navbar-item img {
     max-height: none;
+}
+
+// 最后一个子元素 无底边框
+.has-last-child-border-none {
+    &:last-child {
+        border-bottom: none !important;
+    }
 }
 
 /* 动画相关 start */

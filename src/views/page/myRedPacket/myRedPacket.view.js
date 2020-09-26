@@ -34,7 +34,7 @@ module.exports = {
     },
     getNavContent() {
         // 红包状态获取
-        const getRedPacketStatus = function (item) {
+        const getTextByStatus = function (item) {
             const status = item.status * 1;
             if (status === 0) return m('span', { class: `has-text-primary` }, "未抢完");
             if (status === 1) return m('span', { class: `` }, "已抢完");
@@ -54,7 +54,7 @@ module.exports = {
                 m('div', { class: `mx-6 mt-7 body-4` }, `领取红包总金额：${logic.receiveMoneySum} USDT`),
                 logic.receiveRedPacketList.map((item, index) => {
                     return m('div', {
-                        class: `is-between py-5 has-border-bottom-1 has-line-level-4 mx-6`,
+                        class: `is-between py-5 has-border-bottom-1 has-line-level-4 has-last-child-border-none mx-6`,
                         key: index,
                         onclick() {
                             logic.toReceiveRedPacketDetail(item); // 跳转领的红包详情
@@ -71,6 +71,7 @@ module.exports = {
                         // 右边
                         m('div', { class: `` }, [
                             m('div', { class: `has-text-primary font-weight-bold has-text-right` }, [
+                                item.best * 1 === 1 ? m('i', { class: `iconfont icon-VipCrown iconfont-medium` }) : "",
                                 m('span', { class: `` }, item.quota),
                                 m('span', { class: `` }, item.coin)
                             ])
@@ -100,7 +101,7 @@ module.exports = {
                 }),
                 logic.sendRedPacketList.map((item, index) => {
                     return m('div', {
-                        class: `is-between py-5 has-border-bottom-1 has-line-level-4 mx-6`,
+                        class: `is-between py-5 has-border-bottom-1 has-line-level-4 has-last-child-border-none mx-6`,
                         key: index,
                         onclick() {
                             logic.toSendRedPacketDetail(item); // 跳转发的红包详情
@@ -117,7 +118,7 @@ module.exports = {
                                 m('span', { class: `` }, item.quota),
                                 m('span', { class: `` }, item.coin)
                             ]),
-                            m('div', { class: `font-weight-regular body-4` }, getRedPacketStatus(item))
+                            m('div', { class: `font-weight-regular body-4` }, getTextByStatus(item))
                         ])
                     ]);
                 })

@@ -6,22 +6,14 @@
 const m = require('mithril');
 const Qrcode = require('qrcode');
 const Http = require('@/api').webApi;
-const utils = require('@/util/utils').default;
+const redPacketUtils = require('@/util/redPacketUtils').default;
 const { HtmlConst, GetBase64 } = require('@/models/plus/index.js');
 const share = require('../../main/share/share.logic.js');
 
 const logic = {
-    fromName: "", // 发红包人
-    redPacketType: 0, // 红包类型 0:拼手气 >0:普通
-    redPacketState: 2, // 红包状态 1: 领完了 2: 未领完 3: 已过期
-    redPacketDes: "", // 祝福留言
-    coin: "", // 红包币种
-    quota: "", // 总金额
-    quota2: "", // 未领金额
-    count: "", // 总红包数量
-    count2: "", // 未领红包数量
-    isLucky: true, // 是否是手气最佳
-    currentQuota: "", // 当前抢到金额
+    // isLucky: true, // 是否是手气最佳
+    // 已抢红包列表
+    redPacketList: [],
     // 头部 组件配置
     headerOption: {
         left: {
@@ -34,7 +26,9 @@ const logic = {
         },
         right: {
             label: m('i', { class: `iconfont icon-otc-editName` }),
+            loading: false, // 分享按钮loading
             onclick() {
+                logic.headerOption.right.loading = true; // 分享按钮loading
                 // 生成二维码
                 logic.doShare({
                     link: 'http://192.168.2.89:8888/register',
@@ -42,6 +36,24 @@ const logic = {
                 });
             }
         }
+    },
+    // 红包top 组件配置
+    redPacketTopOption: {
+        // guid: "", // 来源 (空为自己)
+        // type: "", // 红包类型 type 0:为拼手气 / >0:普通红包
+        // des: "", // 留言
+        // quota: "", // 金额
+        // coin: "", // 币种
+        // msg: "" // 提示消息 (空为没有)
+    },
+    // 红包info 组件配置
+    redPacketInfoOption: {
+        // status: "", // 状态：0待领取，1已领完，2红包到期
+        // count: "", // 总数
+        // count2: "", // 未领数
+        // quota: "", // 总额
+        // quota2: "", // 未领额
+        // coin: "" // 币种
     },
     // 领取记录 接口
     getgiftrec() {
@@ -51,12 +63,10 @@ const logic = {
         Http.getgiftrec(params).then(arg => {
             if (arg.data.code === 0) {
                 // 领取记录列表
-                this.redPacketList = arg.data.data.map(item => {
-                    item.time = utils.formatDate(item.rtm, 'yyyy-MM-dd hh:mm'); // 领取时间
-                    item.phone = utils.hideAccountNameInfo(item.rtel); // 领取人手机号
-                    return item;
+                redPacketUtils.buildGiftrecData(arg.data.data).then(data => {
+                    logic.redPacketList = data;
+                    m.redraw();
                 });
-                m.redraw();
                 console.log('领取记录 success', arg.data);
             }
         }).catch(function(err) {
@@ -70,16 +80,13 @@ const logic = {
         };
         Http.getdetails(params).then(function(arg) {
             if (arg.data.code === 0) {
-                logic.isLucky = m.route.param().best * 1 === 1; // 是否手气最佳
-                logic.currentQuota = m.route.param().quota; // 当前抢到金额
-                logic.fromName = arg.data.data.guid; // 红包来源
-                logic.redPacketType = arg.data.data.type; // 红包类型
-                logic.redPacketDes = arg.data.data.des; // 祝福留言
-                logic.coin = arg.data.data.coin; // 红包币种
-                logic.quota = arg.data.data.quota; // 总金额
-                logic.quota2 = arg.data.data.quota2; // 未领金额
-                logic.count = arg.data.data.count; // 总红包数量
-                logic.count2 = arg.data.data.count2; // 未领红包数量
+                const data = arg.data.data;
+                logic.redPacketTopOption = JSON.parse(JSON.stringify(data)); // 红包top 组件配置
+                logic.redPacketTopOption.quota = m.route.param().quota; // 自定义修改当前抢到金额
+
+                logic.redPacketInfoOption = JSON.parse(JSON.stringify(data)); // 红包Info 组件配置
+
+                // logic.isLucky = m.route.param().best * 1 === 1; // 是否手气最佳
                 m.redraw();
                 console.log('红包详情 success', arg.data);
             }
@@ -103,6 +110,7 @@ const logic = {
                     }, res => {
                         console.log('GetBase64 getWebView', res);
                         share.openShare({ needShareImg: res, link: link });
+                        logic.headerOption.right.loading = false; // 分享按钮loading
                     });
                 });
             }).catch(err => {
@@ -110,8 +118,6 @@ const logic = {
             });
         }
     },
-    // 已抢红包列表
-    redPacketList: [],
     oninit(vnode) {
         this.getdetails();// 红包详情
         this.getgiftrec();// 领取记录

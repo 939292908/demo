@@ -32,6 +32,7 @@ module.exports = {
                 class: "is-primary font-size-2 modal-default-btn",
                 label: vnode.attrs.ok.label || I18n.$t('10337'), // '确定'
                 disabled: vnode.attrs.ok.disabled,
+                loading: vnode.attrs.ok.loading,
                 onclick() { vnode.attrs.ok.onclick && vnode.attrs.ok.onclick(); }
             }) : "";
             return [closeBtn, okBtn];
