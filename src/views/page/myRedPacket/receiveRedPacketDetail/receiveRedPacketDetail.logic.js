@@ -1,3 +1,8 @@
+// 路由接收参数
+// gid, // 红包id
+// best, // 手气最佳(0:否 1:是)
+// quota // 抢的金额
+
 const m = require('mithril');
 const Qrcode = require('qrcode');
 const Http = require('@/api').webApi;
@@ -19,7 +24,6 @@ const logic = {
     currentQuota: "", // 当前抢到金额
     // 头部 组件配置
     headerOption: {
-        class: "",
         left: {
             onclick() {
                 window.router.back();
@@ -45,7 +49,6 @@ const logic = {
             gid: m.route.param().gid
         };
         Http.getgiftrec(params).then(arg => {
-            console.log(arg.data, 66);
             if (arg.data.code === 0) {
                 // 领取记录列表
                 this.redPacketList = arg.data.data.map(item => {

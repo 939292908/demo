@@ -37,20 +37,22 @@ const logic = {
     // 已发红包列表
     sendRedPacketList: [],
     // 跳转已领红包详情
-    toReceiveRedPacketDetail(gid) {
+    toReceiveRedPacketDetail(item) {
         window.router.push({
             path: "/receiveRedPacketDetail",
             data: {
-                gid: gid
+                gid: item.gid, // 红包id
+                best: item.best, // 手气最佳(0:否 1:是)
+                quota: item.quota // 抢的金额
             }
         });
     },
     // 跳转已发红包详情
-    toSendRedPacketDetail(gid) {
+    toSendRedPacketDetail(item) {
         window.router.push({
             path: "/sendRedPacketDetail",
             data: {
-                gid: gid
+                gid: item.gid // 红包id
             }
         });
     },

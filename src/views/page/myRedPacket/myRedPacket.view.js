@@ -57,7 +57,7 @@ module.exports = {
                         class: `is-between py-5 has-border-bottom-1 has-line-level-4 mx-6`,
                         key: index,
                         onclick() {
-                            logic.toReceiveRedPacketDetail(item.gid); // 跳转领的红包详情
+                            logic.toReceiveRedPacketDetail(item); // 跳转领的红包详情
                         }
                     }, [
                         // 左边
@@ -103,7 +103,7 @@ module.exports = {
                         class: `is-between py-5 has-border-bottom-1 has-line-level-4 mx-6`,
                         key: index,
                         onclick() {
-                            logic.toSendRedPacketDetail(item.gid); // 跳转发的红包详情
+                            logic.toSendRedPacketDetail(item); // 跳转发的红包详情
                         }
                     }, [
                         // 左边
