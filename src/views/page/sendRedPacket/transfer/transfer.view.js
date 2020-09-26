@@ -2,8 +2,8 @@ var m = require("mithril");
 require('./transfer.scss');
 const Modal = require('@/views/components/common/Modal/Modal.view');
 const Dropdown = require('@/views/components/common/Dropdown/Dropdown.view');
-
-const logic = require('./transfer.logic.js');
+// const logic = require('./transfer.logic.js');
+const logic = require('@/views/page/sendRedPacket/transfer/transfer.logic');
 
 module.exports = {
     view (vnode) {
@@ -49,13 +49,13 @@ module.exports = {
                         m('span', { class: `column is-4 has-text-right` }, [
                             m('span', { class: `` }, logic.coin), // 币种
                             m('span', { class: `px-2` }, "|"),
-                            m('span', { class: `has-text-primary`, onclick() { logic.transferMoney = logic.usableMoney; } }, "全部")
+                            m('span', { class: `has-text-primary`, onclick() { logic.transferMoney = logic.maxMoney; } }, "全部")
                         ])
                     ]),
                     // 可用
                     m('div', { class: `is-between` }, [
                         m('span', { class: `` }, "可用"),
-                        m('span', { class: `` }, `${logic.usableMoney} ${logic.coin}`)
+                        m('span', { class: `` }, `${logic.maxMoney} ${logic.coin}`)
                     ])
                 ]
             }

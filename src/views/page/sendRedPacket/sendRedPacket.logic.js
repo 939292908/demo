@@ -207,7 +207,7 @@ const logic = {
     transferBtnClick() {
         transferLogic.updateOption({
             isShow: true,
-            usableMoney: logic.wltMoney,
+            // maxMoney: logic.wltMoney,
             coin: logic.currentCoin
         });
     },
@@ -329,7 +329,7 @@ const logic = {
         });
         // 初始化 币种默认选中
         if (this.coinBtnList[0]) {
-            this.currentCoin = m.route.param().currentCoin || this.coinBtnList[0].coin;
+            this.currentCoin = m.route.param().currentCoin || this.currentCoin || this.coinBtnList[0].coin;
         }
         this.buildCoinBtnList(this.coinBtnList);
         // console.log(this.coinBtnList, 9999999999);
@@ -340,7 +340,6 @@ const logic = {
             const wallet = wlt.wallet["03"]; // 对应钱包
             for (const item of wallet) {
                 if (item.coin === this.currentCoin) { // 找到对应币种
-                    console.log(item, 666666);
                     this.wltMoney = item.wdrawable || 0; // 设置最大可以金额
                 }
             }
@@ -351,7 +350,6 @@ const logic = {
     },
     oninit(vnode) {
         wlt.init(); // 更新数据
-        // this.initTransferInfo();
         logic.continueSendRedPacket(); // 跳转过来继续发红包
         broadcast.onMsg({
             key: "sendRedP",
@@ -365,7 +363,6 @@ const logic = {
             cmd: broadcast.MSG_WLT_UPD,
             cb: () => {
                 // this.initTransferInfo();
-                // console.log(456, wlt.wallet);
             }
         });
     },
