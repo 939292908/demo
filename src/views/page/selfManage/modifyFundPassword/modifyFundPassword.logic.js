@@ -53,6 +53,7 @@ module.exports = {
         if (this.setting2fa.google === 0 && this.setting2fa.phone === 0) {
             console.log('未绑定手机和谷歌');
             this.setWalletPwd();
+            return;
         }
         if (this.setting2fa.google === 1 && this.setting2fa.phone === 0) {
             console.log('已绑定谷歌');
