@@ -117,7 +117,7 @@ module.exports = {
             console.log('nzm', 'setWalletPwd success', arg);
             if (arg.result.code === 0) {
                 console.log('setWalletPwd success');
-                window.$message({ content: this.modifyFlag === 0 ? I18n.$t('10601') /* '资金密码设置成功' */ : I18n.$t('10602') /* '资金密码修改成功' */, type: 'success' });
+                window.$message({ content: that.modifyFlag === 0 ? I18n.$t('10601') /* '资金密码设置成功' */ : I18n.$t('10602') /* '资金密码修改成功' */, type: 'success' });
                 that.setUserInfo();
             } else {
                 window.$message({ content: errCode.getWebApiErrorCode(arg.result.code), type: 'danger' });
