@@ -172,8 +172,9 @@ module.exports = {
         let params = null;
         if (typeFlag === 1) {
             params = {
-                secureEmail: that.email,
-                host: config.official,
+                secureEmail: that.email, // 邮箱地址
+                email: utils.hideAccountNameInfo(that.email), // 邮箱地址
+                host: config.official, // 域名
                 fn: 'be',
                 lang: I18n.getLocale()
             };
