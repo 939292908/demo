@@ -693,36 +693,46 @@ class Mkt {
     WSCallTrade (aCmd, aParam, aFunc) {
         const s = this;
         if (DBG_WSCALL) { console.log(__filename, "WSCallTrade", aCmd, aParam); }
-        const tm = Date.now();
-        s.lastSendTm = tm;
+        if (s.isPlusApp) {
+            Rpc.tradeRequest({
+                Api: aCmd,
+                data: aParam,
+                cb: arg => {
+                    aFunc && aFunc(s, arg);
+                }
+            });
+        } else {
+            const tm = Date.now();
+            s.lastSendTm = tm;
 
-        const msg = {
-            req: aCmd,
-            rid: String(++s.rid),
-            args: aParam,
-            expires: tm + s.netLag + s.timeoutMsg
-        };
-        if (aParam) {
-            msg.args = aParam;
+            const msg = {
+                req: aCmd,
+                rid: String(++s.rid),
+                args: aParam,
+                expires: tm + s.netLag + s.timeoutMsg
+            };
+            if (aParam) {
+                msg.args = aParam;
+            }
+            const texts = [
+                msg.req,
+                msg.rid,
+                aParam ? JSON.stringify(msg.args) : "",
+                String(msg.expires),
+                s.Conf.SecretKey
+            ];
+            const textjoined = texts.join("");
+            const signature = md5(textjoined);
+            msg.signature = signature;
+            const msgStr = JSON.stringify(msg);
+            try {
+                s.ws.send(msgStr);
+            } catch (e) {
+                console.log(e);
+            }
+            msg.cb = aFunc;
+            s.Reqs[msg.rid] = msg;
         }
-        const texts = [
-            msg.req,
-            msg.rid,
-            aParam ? JSON.stringify(msg.args) : "",
-            String(msg.expires),
-            s.Conf.SecretKey
-        ];
-        const textjoined = texts.join("");
-        const signature = md5(textjoined);
-        msg.signature = signature;
-        const msgStr = JSON.stringify(msg);
-        try {
-            s.ws.send(msgStr);
-        } catch (e) {
-            console.log(e);
-        }
-        msg.cb = aFunc;
-        s.Reqs[msg.rid] = msg;
     }
 
     ReqTrdLogin(aParam, aFunc) {
