@@ -70,8 +70,8 @@ const logic = {
             };
             validate.activeSms(params, () => {
                 console.log("successPhone");
-                this.queryUserInfo();
-                // this.recvgift(); // 领红包
+                this.recvgift();// 领红包
+                // this.queryUserInfo();
                 // this.bindgift(); // 绑红包
             });
         // 邮箱
@@ -84,8 +84,8 @@ const logic = {
             };
             validate.activeEmail(params, () => {
                 console.log("successEmail");
-                this.queryUserInfo();
-                // this.recvgift(); // 领红包
+                this.recvgift(); // 领红包
+                // this.queryUserInfo();
                 // this.bindgift(); // 绑红包
             });
         }
@@ -140,12 +140,15 @@ const logic = {
     recvgift() {
         logic.isShowVerifyView = false; // 关闭安全校验弹框
         const params = {
-            rtype: 3, // '领取方式，1：已注册通过uid领取，2：未注册邮箱领取，3：未注册手机领取,4:注册后领取2,3状态到ruid,5:已失效'
-            gid: m.route.param().gid, // 红包id
-            ruid: globalModels.getAccount().uid, // 领取人uid
-            rtel: logic.account, // 电话
-            remail: logic.account // 邮箱
+            gid: m.route.param().gid // 红包id
         };
+        if (logic.getVerifyType() === "phone") {
+            params.rtel = logic.account; // 电话
+        }
+        if (logic.getVerifyType() === "email") {
+            params.remail = logic.account; // 邮箱
+        }
+
         Http.recvgift(params).then(arg => {
             if (arg.code === 0) {
                 console.log('领取 success', arg);

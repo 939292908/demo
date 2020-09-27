@@ -719,6 +719,25 @@ export function getExtItemInfo (params = {}, options = { withCredentials: false 
     return Http.post(API.USER_GET_EXTINFO, params, options);
 }
 
+/**
+ * 查询是否已设置资金密码
+ * @param {Object} params {
+        settingType: 13 // 查询类型，固定值
+        settingKey: 'ucp', // 查询类型的key，固定值
+    }
+ * @param {Object} options axios请求配置
+ * @returns {Object} {
+        "result":{
+            "code":0 // code为0则是成功，其他失败
+        },
+        settingKey: "ucp",
+        settingValue: "*" // "*"代表已设置，""代表未设置
+    }
+ */
+export function getWalletPwdStatus (params = {}, options = { withCredentials: false }) {
+    return Http.post(API.FAVORITE_SETTING_V1, params, options);
+}
+
 // ================ 红包活动 ================
 
 // const axios = require('axios');
