@@ -33,35 +33,49 @@ module.exports = {
         ]);
     },
     getNavContent() {
+        // 红包状态获取
+        const getTextByStatus = function (item) {
+            const status = item.status * 1;
+            if (status === 0) return m('span', { class: `has-text-primary` }, "未抢完");
+            if (status === 1) return m('span', { class: `` }, "已抢完");
+            if (status === 2) {
+                if (item.quota === item.quota2) {
+                    return m('span', { class: `` }, "已全额退款");
+                } else {
+                    return m('span', { class: `` }, `已退款 ${item.quota2} ${item.coin}`);
+                }
+            }
+        };
         const key = logic.currentNavId;
         switch (key) {
         case 1:
             // 已领取
             return m('div', { class: `` }, [
-                m('div', { class: `mx-6 mt-7` }, "领取红包总金额：? USDT"),
+                m('div', { class: `mx-6 mt-7 body-4` }, `领取红包总金额：${logic.receiveMoneySum} USDT`),
                 logic.receiveRedPacketList.map((item, index) => {
                     return m('div', {
-                        class: `is-between py-5 has-border-bottom-1 has-line-level-4 mx-6`,
+                        class: `is-between py-5 has-border-bottom-1 has-line-level-4 has-last-child-border-none mx-6`,
                         key: index,
                         onclick() {
-                            logic.toReceiveRedPacketDetail(); // 跳转领的红包详情
+                            logic.toReceiveRedPacketDetail(item); // 跳转领的红包详情
                         }
                     }, [
                         // 左边
                         m('div', { class: `` }, [
                             m('div', { class: `font-weight-bold` }, [
                                 m('span', { class: `` }, item.phone),
-                                m('span', { class: `has-text-primary body-4` }, ' ' + item.redPacketType)
+                                m('span', { class: `has-text-primary body-4` }, ' ' + item.type)
                             ]),
                             m('div', { class: `body-4` }, item.time)
                         ]),
                         // 右边
                         m('div', { class: `` }, [
                             m('div', { class: `has-text-primary font-weight-bold has-text-right` }, [
-                                m('span', { class: `` }, item.num),
+                                item.best * 1 === 1 ? m('i', { class: `iconfont icon-VipCrown iconfont-medium` }) : "",
+                                m('span', { class: `` }, item.quota),
                                 m('span', { class: `` }, item.coin)
-                            ]),
-                            m('div', { class: `` }, "≈￥70.5")
+                            ])
+                            // m('div', { class: `` }, "≈￥70.5")
                         ])
                     ]);
                 })
@@ -76,35 +90,35 @@ module.exports = {
                         // 左边
                         m('div', { class: `` }, [
                             m('p', { class: `` }, "已经发送红包总金额"),
-                            m('p', { class: `title-small` }, "80 USDT")
+                            m('p', { class: `title-small` }, `${logic.sendMoneySum} USDT`)
                         ]),
                         // 右边
                         m('div', { class: `has-text-right` }, [
                             m('p', { class: `` }, "已退回红包总金额"),
-                            m('p', { class: `title-small` }, "20 USDT")
+                            m('p', { class: `title-small` }, `${logic.sendMoneySumBack} USDT`)
                         ])
                     ]
                 }),
-                logic.receiveRedPacketList.map((item, index) => {
+                logic.sendRedPacketList.map((item, index) => {
                     return m('div', {
-                        class: `is-between py-5 has-border-bottom-1 has-line-level-4 mx-6`,
+                        class: `is-between py-5 has-border-bottom-1 has-line-level-4 has-last-child-border-none mx-6`,
                         key: index,
                         onclick() {
-                            logic.toSendRedPacketDetail(); // 跳转发的红包详情
+                            logic.toSendRedPacketDetail(item); // 跳转发的红包详情
                         }
                     }, [
                         // 左边
                         m('div', { class: `` }, [
-                            m('div', { class: `has-text-primary font-weight-bold` }, item.redPacketType),
+                            m('div', { class: `has-text-primary font-weight-bold` }, item.type > 0 ? "普通红包" : "拼手气红包"),
                             m('div', { class: `body-4` }, item.time)
                         ]),
                         // 右边
-                        m('div', { class: `` }, [
-                            m('div', { class: `has-text-primary font-weight-bold has-text-right` }, [
-                                m('span', { class: `` }, item.num),
+                        m('div', { class: `has-text-right` }, [
+                            m('div', { class: `has-text-primary font-weight-bold` }, [
+                                m('span', { class: `` }, item.quota),
                                 m('span', { class: `` }, item.coin)
                             ]),
-                            m('div', { class: `has-text-primary font-weight-regular body-4` }, "未抢完")
+                            m('div', { class: `font-weight-regular body-4` }, getTextByStatus(item))
                         ])
                     ]);
                 })
