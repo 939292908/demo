@@ -7,6 +7,7 @@
  * @FilePath: \website-project\src\views\page\selfManage\safety\main\main.view.js
  */
 const m = require('mithril');
+const { Conf } = require('@/api');
 const Block = require('../../home/block');
 const mainLogic = require('./main.logic');
 const utils = require('@/util/utils').default;
@@ -48,7 +49,7 @@ module.exports = {
                             },
                             mainLogic.moneyPasswordIsExist ? l180n.$t('10239') /* '修改' */ : l180n.$t('10233')/* '设置' */)
                     ]))),
-                    m('div', { class: 'mb-5' }, m(Block, { Icon: m('i.iconfont icon-AntiFishing'), title: l180n.$t('10232') /* '防钓鱼码' */, subhead: l180n.$t('10247', { value: 'XXX' }) /* 'XXXX给您发送邮件内容将包含您设置的防钓鱼码' */ }, m('div.dis-flex', [
+                    m('div', { class: 'mb-5' }, m(Block, { Icon: m('i.iconfont icon-AntiFishing'), title: l180n.$t('10232') /* '防钓鱼码' */, subhead: l180n.$t('10247', { value: Conf.exchName }) /* 'XXXX给您发送邮件内容将包含您设置的防钓鱼码' */ }, m('div.dis-flex', [
                         m('div.but py-1 px-4',
                             {
                                 onclick: () => {
