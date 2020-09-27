@@ -60,19 +60,12 @@ const modifyFPView = {
     },
     /* 确认按钮事件 */
     confirmBtn: function() {
-        if (modifyFPLogic.modifyFlag === 1 && !modifyFPLogic.oldFundPwd) {
+        if (modifyFPLogic.modifyFlag === 1) {
             // 修改密码
             modifyFPView.oldFundPwdCheck();
-            return;
         }
-        if (!modifyFPLogic.newFunPwd) {
-            modifyFPView.newFunPwdCheck();
-            return;
-        }
-        if (!modifyFPLogic.confirmFunPwd) {
-            modifyFPView.confirmFunPwdCheck();
-            return;
-        }
+        modifyFPView.newFunPwdCheck();
+        modifyFPView.confirmFunPwdCheck();
         if (!modifyFPView.totalFlag) {
             // alert("不满足要求");
             return;

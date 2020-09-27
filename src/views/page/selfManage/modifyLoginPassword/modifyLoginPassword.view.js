@@ -70,18 +70,9 @@ const modifyLPView = {
     /* 确认按钮事件 */
     confirmBtn: function() {
         // console.log(modifyLPView.totalFlag);
-        if (!modifyLPLogic.oldLpwd) {
-            modifyLPView.oldLpwdCheck();
-            return;
-        }
-        if (!modifyLPLogic.newLpwd) {
-            modifyLPView.newPwdCheck();
-            return;
-        }
-        if (!modifyLPLogic.confirmLpwd) {
-            modifyLPView.confirmPWdCheck();
-            return;
-        }
+        modifyLPView.oldLpwdCheck();
+        modifyLPView.newPwdCheck();
+        modifyLPView.confirmPWdCheck();
         if (!modifyLPView.totalFlag) {
             // alert("不满足要求");
             return;

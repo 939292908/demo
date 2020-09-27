@@ -23,6 +23,7 @@ const antiFCView = {
     },
     /* 校验 */
     check(value, type) {
+        console.log(value, type);
         const reg = /^[a-z0-9A-Z]{4,20}$/;
         /* 是否为空  */
         if (!value) {
@@ -47,14 +48,10 @@ const antiFCView = {
     },
     // 确认按钮事件
     confirmBtn: function() {
-        if (!antiFCLogic.newAntiFishingCodeValue && (antiFCLogic.antiFishCodeFlag !== '' && antiFCLogic.antiFishCodeFlag !== undefined)) {
+        if (antiFCLogic.antiFishCodeFlag !== '' && antiFCLogic.antiFishCodeFlag !== undefined) {
             antiFCView.check(antiFCLogic.newAntiFishingCodeValue, 'tip1');
-            return;
         }
-        if (!antiFCLogic.antiFishingCodeValue) {
-            antiFCView.check(antiFCLogic.antiFishingCodeValue, 'tip2');
-            return;
-        }
+        antiFCView.check(antiFCLogic.antiFishingCodeValue, 'tip2');
         if (!antiFCView.totalFlag) {
             // alert("不满足要求");
             return;

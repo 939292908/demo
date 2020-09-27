@@ -51,7 +51,8 @@ module.exports = {
     ChooseVerify: function () {
         // console.log(this.setting2fa);
         if (this.setting2fa.google === 0 && this.setting2fa.phone === 0) {
-            console.log('未绑定手机与谷歌');
+            console.log('未绑定手机和谷歌');
+            this.setWalletPwd();
             return;
         }
         if (this.setting2fa.google === 1 && this.setting2fa.phone === 0) {
@@ -69,39 +70,28 @@ module.exports = {
     // 初始化安全验证   typeFlag: 1：谷歌 2：手机 3：谷歌手机双切换验证
     initSecurityVerification: function (typeFlag) {
         const that = this;
-        let params = null;
+        const params = {
+            securePhone: that.nationNo + '-' + utils.hideMobileInfo(that.phoneNum),
+            areaCode: that.nationNo, // 区号
+            phoneNum: that.nationNo + '-' + that.phoneNum, // 手机号
+            resetPwd: true, // 是否重置密码
+            lang: I18n.getLocale(),
+            phone: that.phoneNum,
+            mustCheckFn: "" // 验证类型
+        };
         if (typeFlag === 1) {
             validate.activeGoogle(function() {
                 that.setWalletPwd();
             });
         } else if (typeFlag === 2) {
-            params = {
-                securePhone: that.nationNo + '-' + utils.hideMobileInfo(that.phoneNum),
-                areaCode: that.nationNo, // 区号
-                phoneNum: that.nationNo + '-' + that.phoneNum, // 手机号
-                resetPwd: true, // 是否重置密码
-                lang: I18n.getLocale(),
-                phone: that.phoneNum,
-                mustCheckFn: "" // 验证类型
-            };
             validate.activeSms(params, function() {
                 that.setWalletPwd();
             });
         } else if (typeFlag === 3) {
-            params = {
-                securePhone: that.nationNo + '-' + utils.hideMobileInfo(that.phoneNum),
-                areaCode: that.nationNo, // 区号
-                phoneNum: that.nationNo + '-' + that.phoneNum, // 手机号
-                resetPwd: true, // 是否重置密码
-                lang: I18n.getLocale(),
-                phone: that.phoneNum,
-                mustCheckFn: "" // 验证类型
-            };
             validate.activeSmsAndGoogle(params, function() {
                 that.setWalletPwd();
             });
         }
-        console.log(params);
     },
     setWalletPwd() { /* 设置 || 修改密码 */
         const that = this;
@@ -117,7 +107,7 @@ module.exports = {
             console.log('nzm', 'setWalletPwd success', arg);
             if (arg.result.code === 0) {
                 console.log('setWalletPwd success');
-                window.$message({ content: this.modifyFlag === 0 ? I18n.$t('10601') /* '资金密码设置成功' */ : I18n.$t('10602') /* '资金密码修改成功' */, type: 'success' });
+                window.$message({ content: that.modifyFlag === 0 ? I18n.$t('10601') /* '资金密码设置成功' */ : I18n.$t('10602') /* '资金密码修改成功' */, type: 'success' });
                 that.setUserInfo();
             } else {
                 window.$message({ content: errCode.getWebApiErrorCode(arg.result.code), type: 'danger' });
