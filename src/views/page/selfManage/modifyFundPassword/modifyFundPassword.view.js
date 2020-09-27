@@ -8,7 +8,7 @@ const VerifyView = require('@/views/components/dialogVerify/dialogVerify.view');
 const config = require('@/config.js');
 const regExp = require('@/models/validate/regExp');
 const Modal = require('@/views/components/common/Modal');
-const theBindingOrNot = require('@/views/components/theBindingOrNot/theBindingOrNot.view');
+// const theBindingOrNot = require('@/views/components/theBindingOrNot/theBindingOrNot.view');
 
 const modifyFPView = {
     tipModalIsShow: true, /* 修改资金密码提示框 */
@@ -186,7 +186,7 @@ const modifyFPView = {
                     modifyFPView.tipModalIsShow = false;
                 }
             }),
-            m(theBindingOrNot),
+            // m(theBindingOrNot),
             modifyFPLogic.isShowVerifyView ? m(VerifyView, {
                 close: () => modifyFPLogic.switchSafetyVerifyModal(false),
                 isHandleVerify: true,
