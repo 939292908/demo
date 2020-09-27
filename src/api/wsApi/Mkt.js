@@ -378,11 +378,16 @@ class Mkt {
 
     wsOnMessage(aObj, evt) {
         aObj.lastRecvTm = Date.now();
-        try {
-            var msg = JSON.parse(evt.data);
-        } catch (e) {
-            return;
+        console.log(aObj, evt);
+        let msg = evt.data;
+        if (typeof msg === 'string') {
+            msg = JSON.parse(evt.data);
         }
+        // try {
+        //     var msg = JSON.parse(evt.data);
+        // } catch (e) {
+        //     return;
+        // }
         /* 这个是下线的指令？
         if (msg.subj === CMD_KICK) {
             self.onPush(msg.subj, msg.data);

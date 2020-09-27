@@ -1,3 +1,5 @@
+const broadcast = require('../../../broadcast/broadcast.js');
+
 require('./lib/rpc-server.js');
 require('./lib/rpc-client.js');
 
@@ -28,6 +30,7 @@ module.exports = {
     },
     // 订阅主webview的消息
     subMsg: function() {
+        const self = this;
         console.log('应用首页webview id', window.plus.webview.getLaunchWebview().id);
         // 通过 RpcClient.invoke() 调用另一个 WebView 中的服务函数
         window.RpcClient.invoke(window.plus.webview.getLaunchWebview().id, 'rpc-sub-message', {
@@ -39,8 +42,30 @@ module.exports = {
         // 当前webview提供一个服务函数，用于接收主webview发送来的消息
         window.subRpcServer.expose('rpc-on-message', function(params, finish) {
             console.log('rpc-on-message', params);
+            self.onMsg(params);
             finish('is ok');
         });
+    },
+    onMsg: function(param) {
+        const Arr = param.data.cmd.split('-');
+        switch (Arr[0]) {
+        case 'mkt':
+
+            // gMktApi.wsOnMessage(gMktApi, param.data.data);
+            break;
+        case 'trd':
+            // gTrdApi.wsOnMessage(gTrdApi, param.data.data);
+            broadcast.emit({
+                cmd: broadcast.WV_ON_MESSAGE,
+                data: {
+                    data: {
+                        subj: Arr[1],
+                        data: param.data.data
+                    }
+                }
+            });
+            break;
+        }
     },
     // 订阅行情
     marketRequest: function(param) {
