@@ -8,10 +8,10 @@ module.exports = {
                 m('div.Icon mr-5', vnode.attrs.Icon),
                 m('div.content-block', [
                     m('.blockTitle title-small has-text-title', vnode.attrs.title),
-                    m('.blockSubhead body-5 has-text-level-3', vnode.attrs.subhead)
+                    m('.blockSubhead body-5 has-text-level-3', { title: vnode.attrs.subhead }, vnode.attrs.subhead)
                 ])
             ]),
-            m('.rightDom', vnode.children)
+            m('.rightDom pl-4', vnode.children)
         ]);
     }
 };
