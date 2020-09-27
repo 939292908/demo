@@ -1,7 +1,7 @@
 /**
  * 以当前的 WebView 为媒介，向其它 WebView 中的 js 提供服务接口。
  */
-window.RpcServer = {
+window.subRpcServer = {
 /**
  * 服务提供者调用此函数注册一个服务接口。
  * @param {String} serviceName 接口名称

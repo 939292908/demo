@@ -37,7 +37,7 @@ module.exports = {
             console.log('invoke demo-rpc-server demo-rpc-service', JSON.stringify(resp));
         });
         // 当前webview提供一个服务函数，用于接收主webview发送来的消息
-        window.RpcServer.expose('rpc-on-message', function(params, finish) {
+        window.subRpcServer.expose('rpc-on-message', function(params, finish) {
             console.log('rpc-on-message', params);
             finish('is ok');
         });
