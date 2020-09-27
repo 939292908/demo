@@ -9,6 +9,7 @@ const { HtmlConst, GetBase64 } = require('@/models/plus/index.js');
 const wlt = require('@/models/wlt/wlt');
 const broadcast = require('@/broadcast/broadcast');
 const utils = require('@/util/utils').default;
+const globalModels = require('@/models/globalModels');
 
 const logic = {
     // 币种按钮list
@@ -239,7 +240,7 @@ const logic = {
     sendgift() {
         const params = {
             vp: 0,
-            guid: '123',
+            guid: globalModels.getAccount().uid,
             coin: logic.currentCoin, // 币种
             type: logic.redPacketType > 0 ? logic.moneyFormItem.value : 0, // 类型 0:拼手气, >0:普通红包且数字是单个红包金额
             quota: logic.moneyFormItem.value, // 金额
@@ -358,13 +359,13 @@ const logic = {
                 this.initTransferInfo();
             }
         });
-        broadcast.onMsg({
-            key: "sendRedP",
-            cmd: broadcast.MSG_WLT_UPD,
-            cb: () => {
-                // this.initTransferInfo();
-            }
-        });
+        // broadcast.onMsg({
+        //     key: "sendRedP",
+        //     cmd: broadcast.MSG_WLT_UPD,
+        //     cb: () => {
+        //         // this.initTransferInfo();
+        //     }
+        // });
     },
     oncreate(vnode) {
     },
@@ -377,11 +378,11 @@ const logic = {
             cmd: broadcast.MSG_WLT_READY,
             isall: true
         });
-        broadcast.offMsg({
-            key: "sendRedP",
-            cmd: broadcast.MSG_WLT_UPD,
-            isall: true
-        });
+        // broadcast.offMsg({
+        //     key: "sendRedP",
+        //     cmd: broadcast.MSG_WLT_UPD,
+        //     isall: true
+        // });
     },
     toShare: function(param) {
         const link = param.link; // 需要分享的链接

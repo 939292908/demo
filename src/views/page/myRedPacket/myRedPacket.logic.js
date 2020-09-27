@@ -3,6 +3,7 @@ const Http = require('@/api').webApi;
 const utils = require('@/util/utils').default;
 const wlt = require('@/models/wlt/wlt');
 const broadcast = require('@/broadcast/broadcast');
+const globalModels = require('@/models/globalModels');
 
 const logic = {
     receiveMoneySum: 0, // 领取总金额
@@ -89,7 +90,7 @@ const logic = {
     // 获取领取记录
     getrecv() {
         const params = {
-            uid: '123'
+            uid: globalModels.getAccount().uid
         };
         Http.getrecv(params).then(arg => {
             if (arg.data.code === 0) {
@@ -103,7 +104,7 @@ const logic = {
     // 获取发送记录
     getsendrec() {
         const params = {
-            uid: '123'
+            uid: globalModels.getAccount().uid
         };
         Http.getsendrec(params).then(arg => {
             if (arg.data.code === 0) {

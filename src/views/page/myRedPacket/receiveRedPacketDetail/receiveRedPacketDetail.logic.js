@@ -11,7 +11,7 @@ const { HtmlConst, GetBase64 } = require('@/models/plus/index.js');
 const share = require('../../main/share/share.logic.js');
 
 const logic = {
-    // isLucky: true, // 是否是手气最佳
+    best: 0, // 手气最佳(0:否 1:是)
     // 已抢红包列表
     redPacketList: [],
     // 头部 组件配置
@@ -29,10 +29,19 @@ const logic = {
             loading: false, // 分享按钮loading
             onclick() {
                 logic.headerOption.right.loading = true; // 分享按钮loading
+                console.log(logic.redPacketTopOption, 65555);
+                const params = logic.redPacketTopOption;
                 // 生成二维码
                 logic.doShare({
                     link: 'http://192.168.2.89:8888/register',
-                    textArr: ['手气最佳', '8 USDT', '我抢到了来自', '178****7894', '的拼手气红包', '下载注册APP，轻松交易']
+                    // textArr: ['手气最佳', '8 USDT', '我抢到了来自', '178****7894', '的拼手气红包', '下载注册APP，轻松交易']
+                    textArr: [
+                        `${logic.best === 1 ? '手气最佳' : '我抢到了'}`,
+                        `${params.quota} ${params.coin}`,
+                        '我抢到了来自',
+                        `${params.guid}`,
+                        `的${params.type * 1 === 0 ? '拼手气红包' : '普通红包'}`,
+                        `下载注册APP，轻松交易`]
                 });
             }
         }
@@ -86,7 +95,6 @@ const logic = {
 
                 logic.redPacketInfoOption = JSON.parse(JSON.stringify(data)); // 红包Info 组件配置
 
-                // logic.isLucky = m.route.param().best * 1 === 1; // 是否手气最佳
                 m.redraw();
                 console.log('红包详情 success', arg.data);
             }
@@ -121,6 +129,7 @@ const logic = {
     oninit(vnode) {
         this.getdetails();// 红包详情
         this.getgiftrec();// 领取记录
+        logic.best = m.route.param().best * 1; // 是否手气最佳
     },
     oncreate(vnode) {
     },

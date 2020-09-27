@@ -6,6 +6,8 @@ const utils = require('@/util/utils').default;
 const I18n = require('@/languages/I18n').default;
 const Http = require('@/api').webApi;
 const redPacketUtils = require('@/util/redPacketUtils').default;
+const config = require('@/config.js');
+const globalModels = require('@/models/globalModels');
 
 const logic = {
     account: "15155395909", // 邮箱/手机号
@@ -68,7 +70,8 @@ const logic = {
             };
             validate.activeSms(params, () => {
                 console.log("successPhone");
-                this.recvgift(); // 领红包
+                this.queryUserInfo();
+                // this.recvgift(); // 领红包
                 // this.bindgift(); // 绑红包
             });
         // 邮箱
@@ -81,7 +84,8 @@ const logic = {
             };
             validate.activeEmail(params, function() {
                 console.log("successEmail");
-                this.recvgift(); // 领红包
+                this.queryUserInfo();
+                // this.recvgift(); // 领红包
                 // this.bindgift(); // 绑红包
             });
         }
@@ -107,13 +111,37 @@ const logic = {
             }
         });
     },
+    // 查询账号是否注册
+    queryUserInfo() {
+        const params = {
+            loginType: logic.getVerifyType(), // 账户类型
+            loginName: logic.account, // 用户名
+            nationNo: '0086', // 电话号码区号
+            exChannel: config.exchId // 渠道号
+        };
+        Http.queryUserInfo(params).then(arg => {
+            if (arg.result.code === 0) {
+                if (arg.exists === 1) { // 已存在
+                    this.recvgift();// 领红包
+                }
+                if (arg.exists === 2) { // 不存在
+                    this.bindgift();// 绑红包
+                }
+                console.log('查询账号是否注册 success', arg);
+            } else {
+                window.$message({ content: '查询账号是否注册失败', type: 'danger' });
+            }
+        }).catch(function(err) {
+            console.log('查询账号是否注册 error', err);
+        });
+    },
     // 领红包 接口
     recvgift() {
         logic.isShowVerifyView = false; // 关闭安全校验弹框
         const params = {
             rtype: 3, // '领取方式，1：已注册通过uid领取，2：未注册邮箱领取，3：未注册手机领取,4:注册后领取2,3状态到ruid,5:已失效'
             gid: m.route.param().gid, // 红包id
-            ruid: '123', // 领取人uid
+            ruid: globalModels.getAccount().uid, // 领取人uid
             rtel: logic.account, // 电话
             remail: logic.account // 邮箱
         };
@@ -140,7 +168,7 @@ const logic = {
     bindgift() {
         // const that = this;
         const params = {
-            uid: "123",
+            uid: globalModels.getAccount().uid,
             tel: logic.account, // 电话
             email: logic.account // 邮箱
         };
