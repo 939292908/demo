@@ -36,8 +36,8 @@ module.exports = {
             m('div.skip-item', { onclick: this.skipTo.bind(this, '') }, m(Block, {
                 Icon: m('div.imgBox has-bg-primary', m('i.iconfont icon-Authentication1')),
                 title: l180n.$t('10182') /* '身份认证' */,
-                subhead: `${l180n.$t('10222') /* '您的等级：' */} ${this.info?.iStatus === 1 ? l180n.$t('10523') /* '确认中' */ : this.info?.iStatus === 2 ? l180n.$t('10223') /* '未认证' */ : this.info?.iStatus === 9 ? l180n.$t('10146') /* '已认证' */ : l180n.$t('10223') /* '未认证' */}`
-            }, m('i.iconfont icon-arrow-right')))
+                subhead: l180n.$t('10234') /* '完成认证获得更高提币额度' */
+            }, m('span.has-text-primary', `${this.info?.iStatus === 1 ? l180n.$t('10523') /* '确认中' */ : this.info?.iStatus === 2 ? l180n.$t('10223') /* '未认证' */ : this.info?.iStatus === 9 ? l180n.$t('10146') /* '已认证' */ : l180n.$t('10223') /* '未认证' */}`)))
         ]);
     },
     onremove: function () {
