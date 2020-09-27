@@ -38,10 +38,13 @@ const antiFCView = {
         }
         /* '两次输入的防钓鱼码不一致' */
         if (type === 'tip2') {
-            if (antiFCLogic.newAntiFishingCodeValue !== antiFCLogic.antiFishingCodeValue) {
-                antiFCView.totalFlag = false;
-                antiFCView[type] = I18n.$t('10615'); /* '两次输入的防钓鱼码不一致' */
-                return;
+            if (antiFCLogic.antiFishCodeFlag !== '' && antiFCLogic.antiFishCodeFlag !== undefined) {
+                console.log(antiFCLogic.antiFishCodeFlag);
+                if (antiFCLogic.newAntiFishingCodeValue !== antiFCLogic.antiFishingCodeValue) {
+                    antiFCView.totalFlag = false;
+                    antiFCView[type] = I18n.$t('10615'); /* '两次输入的防钓鱼码不一致' */
+                    return;
+                }
             }
         }
         antiFCView[type] = '';
