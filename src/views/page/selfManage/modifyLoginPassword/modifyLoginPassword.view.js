@@ -70,6 +70,18 @@ const modifyLPView = {
     /* 确认按钮事件 */
     confirmBtn: function() {
         // console.log(modifyLPView.totalFlag);
+        if (!modifyLPLogic.oldLpwd) {
+            modifyLPView.oldLpwdCheck();
+            return;
+        }
+        if (!modifyLPLogic.newLpwd) {
+            modifyLPView.newPwdCheck();
+            return;
+        }
+        if (!modifyLPLogic.confirmLpwd) {
+            modifyLPView.confirmPWdCheck();
+            return;
+        }
         if (!modifyLPView.totalFlag) {
             // alert("不满足要求");
             return;
@@ -82,7 +94,7 @@ const modifyLPView = {
             m('div', { class: `operation mb-7 has-bg-level-2` }, [
                 m('div', { class: `content-width container` }, [
                     m('i', { class: `iconfont icon-Return has-text-title cursor-pointer`, onclick: () => { window.router.go(-1); } }),
-                    m('span', { class: `has-text-title my-4 ml-4 title-medium` }, I18n.$t('10275') /* '您正在绑定谷歌验证' */)
+                    m('span', { class: `has-text-title my-4 ml-4 title-medium` }, I18n.$t('10275') /* '您正在修改登录密码' */)
                 ])
             ]),
             m('div', { class: `center content-width container has-bg-level-2 pt-8 pb-8` }, [
