@@ -6,6 +6,8 @@ const utils = require('@/util/utils').default;
 const I18n = require('@/languages/I18n').default;
 const Http = require('@/api').webApi;
 const redPacketUtils = require('@/util/redPacketUtils').default;
+const config = require('@/config.js');
+const globalModels = require('@/models/globalModels');
 
 const logic = {
     account: "15155395909", // 邮箱/手机号
@@ -68,7 +70,8 @@ const logic = {
             };
             validate.activeSms(params, () => {
                 console.log("successPhone");
-                this.recvgift(); // 领红包
+                this.recvgift();// 领红包
+                // this.queryUserInfo();
                 // this.bindgift(); // 绑红包
             });
         // 邮箱
@@ -79,9 +82,10 @@ const logic = {
                 fn: 'be',
                 lang: I18n.getLocale()
             };
-            validate.activeEmail(params, function() {
+            validate.activeEmail(params, () => {
                 console.log("successEmail");
                 this.recvgift(); // 领红包
+                // this.queryUserInfo();
                 // this.bindgift(); // 绑红包
             });
         }
@@ -107,26 +111,54 @@ const logic = {
             }
         });
     },
+    // 查询账号是否注册
+    queryUserInfo() {
+        const params = {
+            loginType: logic.getVerifyType(), // 账户类型
+            loginName: logic.account, // 用户名
+            nationNo: '0086', // 电话号码区号
+            exChannel: config.exchId // 渠道号
+        };
+        Http.queryUserInfo(params).then(arg => {
+            if (arg.result.code === 0) {
+                if (arg.exists === 1) { // 已存在
+                    this.recvgift();// 领红包
+                }
+                if (arg.exists === 2) { // 不存在
+                    // this.bindgift();// 绑红包
+                    this.recvgift();// 绑红包
+                }
+                console.log('查询账号是否注册 success', arg);
+            } else {
+                window.$message({ content: '查询账号是否注册失败', type: 'danger' });
+            }
+        }).catch(function(err) {
+            console.log('查询账号是否注册 error', err);
+        });
+    },
     // 领红包 接口
     recvgift() {
         logic.isShowVerifyView = false; // 关闭安全校验弹框
         const params = {
-            rtype: 3, // '领取方式，1：已注册通过uid领取，2：未注册邮箱领取，3：未注册手机领取,4:注册后领取2,3状态到ruid,5:已失效'
-            gid: m.route.param().gid, // 红包id
-            ruid: '123', // 领取人uid
-            rtel: logic.account, // 电话
-            remail: logic.account // 邮箱
+            gid: m.route.param().gid // 红包id
         };
+        if (logic.getVerifyType() === "phone") {
+            params.rtel = logic.account; // 电话
+        }
+        if (logic.getVerifyType() === "email") {
+            params.remail = logic.account; // 邮箱
+        }
+
         Http.recvgift(params).then(arg => {
-            if (arg.data.code === 0) {
-                console.log('领取 success', arg.data);
+            if (arg.code === 0) {
+                console.log('领取 success', arg);
                 window.router.push({
                     path: "/receiveResult", // 跳转抢红包结果
                     data: {
-                        gid: arg.data.data.gid, // 红包id
-                        best: arg.data.data.best, // 手气最佳(0:否 1:是)
-                        quota: arg.data.data.quota, // 抢的金额
-                        status: arg.data.data.status // 红包状态
+                        gid: arg.data.gid, // 红包id
+                        best: arg.data.best, // 手气最佳(0:否 1:是)
+                        quota: arg.data.quota, // 抢的金额
+                        status: arg.data.status // 红包状态
                     }
                 }); // 领取结果页  receiveResult
             } else {
@@ -140,7 +172,7 @@ const logic = {
     bindgift() {
         // const that = this;
         const params = {
-            uid: "123",
+            uid: globalModels.getAccount().uid,
             tel: logic.account, // 电话
             email: logic.account // 邮箱
         };
@@ -156,16 +188,15 @@ const logic = {
             gid: m.route.param().gid
         };
         Http.getgiftrec(params).then(arg => {
-            console.log(arg.data, 66);
-            if (arg.data.code === 0) {
+            if (arg.code === 0) {
                 // 领取记录列表
-                redPacketUtils.buildGiftrecData(arg.data.data).then(data => {
+                redPacketUtils.buildGiftrecData(arg.data).then(data => {
                     logic.redPacketList = data;
                     m.redraw();
                 });
-                console.log('领取记录 success', arg.data);
+                console.log('领取记录 success', arg);
             } else {
-                logic.passwordModel.updateErrMsg(arg.data.err_msg);
+                logic.passwordModel.updateErrMsg(arg.err_msg);
             }
         }).catch(function(err) {
             console.log('领取记录 error', err);
@@ -177,8 +208,8 @@ const logic = {
             gid: m.route.param().gid
         };
         Http.getdetails(params).then(function(arg) {
-            if (arg.data.code === 0) {
-                const data = arg.data.data;
+            if (arg.code === 0) {
+                const data = arg.data;
                 // 红包头部 组件配置
                 logic.redPacketTopOption = JSON.parse(JSON.stringify(data));
                 logic.redPacketTopOption.msg2 = "您有机会获得"; // msg2
@@ -186,9 +217,9 @@ const logic = {
                 // 红包Info 组件配置
                 logic.redPacketInfoOption = JSON.parse(JSON.stringify(data));
                 m.redraw();
-                console.log('红包详情 success', arg.data);
+                console.log('红包详情 success', arg);
             } else {
-                logic.passwordModel.updateErrMsg(arg.data.err_msg);
+                logic.passwordModel.updateErrMsg(arg.err_msg);
             }
         }).catch(function(err) {
             console.log('红包详情 error', err);

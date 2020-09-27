@@ -9,6 +9,7 @@ const { HtmlConst, GetBase64 } = require('@/models/plus/index.js');
 const wlt = require('@/models/wlt/wlt');
 const broadcast = require('@/broadcast/broadcast');
 const utils = require('@/util/utils').default;
+const globalModels = require('@/models/globalModels');
 
 const logic = {
     // 币种按钮list
@@ -78,6 +79,7 @@ const logic = {
         // 校验金额
         verifyMoney(isUpdateMsg = true) {
             // 钱包可用资产不足，请及时划转！
+            // console.log(this.getTotalCoin(), logic.wltMoney, 999);
             if (this.getTotalCoin() > logic.wltMoney * 1) {
                 isUpdateMsg && this.updateErrMsg("钱包可用资产不足，请及时划转！");
                 return false;
@@ -140,8 +142,8 @@ const logic = {
     buildCoinBtnList(list) {
         const btnClick = function (item) {
             logic.currentCoin = item.coin; // 更新选中币种
-            logic.formModel.verifyMoney(); // 校验表单
             logic.setMaxTransfer(); // 设置最大划转
+            logic.formModel.verifyMoney(); // 校验表单
         };
         this.coinBtnList = list.map(item => {
             const btnOption = {
@@ -221,11 +223,33 @@ const logic = {
     },
     // 塞币进红包 click
     coinToRedPacketBtnClick() {
-        if (logic.mustAuth.authentication && logic.mustAuth.moneyPassword) { // 实名认证/资金密码全部开通
-            logic.sendRedPModal.updateOption({ isShow: true }); // 发红包弹框
-        } else {
-            logic.isShowVerifyAuthModal = true; // 实名认证/资金密码 弹框
+        // logic.initMustAuth();
+        logic.sendRedPModal.updateOption({ isShow: true }); // -------------- 临时发红包 跳过权限验证 --------------
+    },
+    // 初始化 需要的权限
+    initMustAuth() {
+        const account = globalModels.getAccount();
+        // 实名认证通过 iStatus: 9
+        if (account.iStatus === 9) {
+            logic.mustAuth.authentication = true;
         }
+        // if (account.iStatus === 0 || account.iStatus === 2) {
+        //     // 为了您的账户安全，请按照提示实名认证！
+        // }
+        // if (account.iStatus === 1) {
+        //     // 为了您的账户安全，实名认证通过后才可提现！
+        // }
+        // 设置资金密码通过 settingValue：'*'
+        Http.getWalletPwdStatus({ settingType: 13, settingKey: 'ucp' }).then(res => {
+            if (res.result.code === 0) {
+                logic.mustAuth.moneyPassword = res?.settingValue === '*';
+                if (logic.mustAuth.authentication && logic.mustAuth.moneyPassword) { // 实名认证和资金密码全部开通
+                    logic.sendRedPModal.updateOption({ isShow: true }); // 发红包弹框
+                } else {
+                    logic.isShowVerifyAuthModal = true; // 实名认证/资金密码 弹框
+                }
+            }
+        });
     },
     // 实名认证/资金密码弹框 OK click
     verifyAuthModalOkBtnClick() {
@@ -238,8 +262,6 @@ const logic = {
     // 发红包接口
     sendgift() {
         const params = {
-            vp: 0,
-            guid: '123',
             coin: logic.currentCoin, // 币种
             type: logic.redPacketType > 0 ? logic.moneyFormItem.value : 0, // 类型 0:拼手气, >0:普通红包且数字是单个红包金额
             quota: logic.moneyFormItem.value, // 金额
@@ -358,13 +380,13 @@ const logic = {
                 this.initTransferInfo();
             }
         });
-        broadcast.onMsg({
-            key: "sendRedP",
-            cmd: broadcast.MSG_WLT_UPD,
-            cb: () => {
-                // this.initTransferInfo();
-            }
-        });
+        // broadcast.onMsg({
+        //     key: "sendRedP",
+        //     cmd: broadcast.MSG_WLT_UPD,
+        //     cb: () => {
+        //         // this.initTransferInfo();
+        //     }
+        // });
     },
     oncreate(vnode) {
     },
@@ -377,11 +399,11 @@ const logic = {
             cmd: broadcast.MSG_WLT_READY,
             isall: true
         });
-        broadcast.offMsg({
-            key: "sendRedP",
-            cmd: broadcast.MSG_WLT_UPD,
-            isall: true
-        });
+        // broadcast.offMsg({
+        //     key: "sendRedP",
+        //     cmd: broadcast.MSG_WLT_UPD,
+        //     isall: true
+        // });
     },
     toShare: function(param) {
         const link = param.link; // 需要分享的链接

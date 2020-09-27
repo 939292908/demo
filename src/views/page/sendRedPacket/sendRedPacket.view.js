@@ -39,13 +39,13 @@ module.exports = {
                 ]),
                 // 划转
                 m('div', { class: `has-text-right mt-7 mb-2` }, [
-                    m('span', { class: `` }, `钱包可用：${logic.wltMoney}USDT `),
+                    m('span', { class: `` }, `钱包可用：${logic.wltMoney}${logic.currentCoin} `),
                     m('span', { class: `has-text-primary`, onclick() { logic.transferBtnClick(); } }, ' 划转')
                 ]),
                 // 单个金额/总金额
                 m(FormItem, {
                     label: logic.redPacketType > 0 ? '单个金额' : '总金额',
-                    unit: 'USDT',
+                    unit: logic.currentCoin,
                     placeholder: '输入红包金额',
                     type: 'number',
                     value: logic.moneyFormItem.value,
@@ -206,7 +206,7 @@ module.exports = {
                                 logic.mustAuth.authentication ? m('span', { class: `` }, "已认证") : m('span', {
                                     class: `has-text-primary`,
                                     onclick() {
-                                        alert("去认证");
+                                        // alert("去认证");
                                     }
                                 }, "去认证")
                             ])
@@ -218,7 +218,7 @@ module.exports = {
                                 logic.mustAuth.moneyPassword ? m('span', { class: `` }, "已设置") : m('span', {
                                     class: `has-text-primary`,
                                     onclick() {
-                                        alert("去设置");
+                                        // alert("去设置");
                                     }
                                 }, "去设置")
                             ])

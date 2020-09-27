@@ -5,6 +5,7 @@ const Header = require('@/views/components/common/Header/Header.view');
 const Button = require('@/views/components/common/Button/Button.view');
 const redPacketTop = require('@/views/components/redPacketTop/redPacketTop.view');
 const redPacketInfo = require('@/views/components/redPacketInfo/redPacketInfo.view');
+const redPacketUtils = require('@/util/redPacketUtils').default;
 
 module.exports = {
     oninit: vnode => logic.oninit(vnode),
@@ -40,14 +41,12 @@ module.exports = {
                 }))
             ]),
             m('div', { class: `views-receive-result-footer px-6 pb-3 has-text-centered` }, [
-                m(Button, {
+                m('a', { href: redPacketUtils.getDownloadAppUrl() }, m(Button, {
                     label: "查看我的红包",
                     class: 'is-primary',
-                    width: 1,
-                    onclick() {
-                    }
-                }),
-                m('div', { class: `pt-2 body-4` }, "下载APP  收发红包 小事一桩")
+                    width: 1
+                })),
+                m('a', { class: `pt-2 body-4`, href: redPacketUtils.getDownloadAppUrl() }, "下载APP  收发红包 小事一桩")
             ])
         ]);
     }

@@ -41,15 +41,15 @@ const logic = {
             gid: m.route.param().gid
         };
         Http.getgiftrec(params).then(arg => {
-            if (arg.data.code === 0) {
-                redPacketUtils.buildGiftrecData(arg.data.data).then(data => {
+            if (arg.code === 0) {
+                redPacketUtils.buildGiftrecData(arg.data).then(data => {
                     logic.redPacketList = data;
                     m.redraw();
                 });
                 m.redraw();
-                console.log('红包已领取记录 success', arg.data);
+                console.log('红包已领取记录 success', arg);
             } else {
-                logic.passwordModel.updateErrMsg(arg.data.err_msg);
+                logic.passwordModel.updateErrMsg(arg.err_msg);
             }
         }).catch(function(err) {
             console.log('红包已领取记录 error', err);
@@ -61,8 +61,8 @@ const logic = {
             gid: m.route.param().gid
         };
         Http.getdetails(params).then(function(arg) {
-            if (arg.data.code === 0) {
-                const data = arg.data.data;
+            if (arg.code === 0) {
+                const data = arg.data;
                 // 红包top 组件配置
                 logic.redPacketTopOption = JSON.parse(JSON.stringify(data));
                 logic.redPacketTopOption.guid = ""; // 红包来源 空为自己
@@ -70,9 +70,9 @@ const logic = {
                 // 红包Info 组件配置
                 logic.redPacketInfoOption = JSON.parse(JSON.stringify(data));
                 m.redraw();
-                console.log('红包详情 success', arg.data);
+                console.log('红包详情 success', arg);
             } else {
-                logic.passwordModel.updateErrMsg(arg.data.err_msg);
+                logic.passwordModel.updateErrMsg(arg.err_msg);
             }
         }).catch(function(err) {
             console.log('红包详情 error', err);
