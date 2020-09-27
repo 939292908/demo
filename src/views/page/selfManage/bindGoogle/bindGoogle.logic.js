@@ -21,10 +21,9 @@ module.exports = {
     IOSDLAdd: 'https://apps.apple.com/us/app/google-authenticator/id388497605',
     AndroidDLAdd: 'https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2',
     loginType: null, // 账户类型
-    setting2fa: null, // 账户绑定状态
-    email: null, // 用户邮箱
+    email: '', // 用户邮箱
     nationNo: null, // 区号
-    phoneNum: null, // 手机号码
+    phoneNum: '', // 手机号码
     currentOperation: 'bind', // 当前为解绑/绑定操作
     isShowVerifyView: false, // 安全校验弹框 show
     IOSDLAddQrCodeSrc: null, // IOS下载二维码地址
@@ -94,9 +93,14 @@ module.exports = {
         this.totalFlag = true;
     },
     confirmBtn: function () {
-        // console.log(this.loginType, this.setting2fa, this.email, this.nationNo, this.phoneNum, this.LcCode, this.LcPWd, this.totalFlag);
         this.LcPWdCheck();
+        if (this.tip1) {
+            return;
+        }
         this.LcCodeCheck();
+        if (this.tip2) {
+            return;
+        }
         if (!this.totalFlag) {
             return;
         }
@@ -130,7 +134,6 @@ module.exports = {
         const that = this;
         let params = {};
         this.currentOperation === 'bind' ? params = { code: this.LcCode, opInfo: this.secret } : params = { code: this.LcCode };
-        console.log(params, 111);
         Http.googleCheck(params).then(res => {
             if (res.result.code === 0) {
                 m.redraw();
@@ -147,17 +150,17 @@ module.exports = {
     },
     // 选择验证方式
     ChooseVerify() {
-        if (this.setting2fa.email === 0 && this.setting2fa.phone === 0) {
+        if (!this.email && !this.phoneNum) {
             console.log('未绑定手机与邮箱');
             return;
         }
-        if (this.setting2fa.email === 1 && this.setting2fa.phone === 1) {
+        if (this.email && this.phoneNum) {
             console.log('已绑定手机和邮箱');
             this.initSecurityVerification(3);
-        } else if (this.setting2fa.email === 0 && this.setting2fa.phone === 1) {
+        } else if (!this.email && this.phoneNum) {
             console.log('已绑定手机');
             this.initSecurityVerification(2);
-        } else if (this.setting2fa.email === 1 && this.setting2fa.phone === 0) {
+        } else if (this.email && !this.phoneNum) {
             console.log('已绑定邮箱');
             this.initSecurityVerification(1);
         }
@@ -286,7 +289,6 @@ module.exports = {
         const account = gM.getAccount();
         // console.log(account);
         this.loginType = account.loginType; // 账户类型
-        this.setting2fa = account.setting2fa; // 账户绑定状态
         this.email = account.email; // 用户邮箱
         this.nationNo = account.nationNo; // 区号
         this.phoneNum = account.phone; // 用户手机号码

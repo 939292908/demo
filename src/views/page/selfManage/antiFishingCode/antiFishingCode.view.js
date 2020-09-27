@@ -50,8 +50,14 @@ const antiFCView = {
     confirmBtn: function() {
         if (antiFCLogic.antiFishCodeFlag !== '' && antiFCLogic.antiFishCodeFlag !== undefined) {
             antiFCView.check(antiFCLogic.newAntiFishingCodeValue, 'tip1');
+            if (antiFCView.tip1) {
+                return;
+            }
         }
         antiFCView.check(antiFCLogic.antiFishingCodeValue, 'tip2');
+        if (antiFCView.tip2) {
+            return;
+        }
         if (!antiFCView.totalFlag) {
             // alert("不满足要求");
             return;
