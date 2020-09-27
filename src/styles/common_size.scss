@@ -31,13 +31,20 @@ body,
             overflow: auto;
 
             &.has-pub-footer {
-                height: calc(100% - 116px); // 48 + 68
+                height: calc(100% - 112px); // 48 + 12 + 40 + 12
+            }
+
+            &.has-pub-footer-1 {
+                height: calc(100% - 138px); // 48 + 12 + 40 + 12 + 26
             }
         }
 
         // 底部
         .pub-footer {
-            height: 68px;
+            height: 64px;
+        }
+        .pub-footer-1 {
+            height: 90px;
         }
     }
 }

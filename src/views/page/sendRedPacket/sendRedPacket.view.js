@@ -20,7 +20,7 @@ module.exports = {
                 m('div', { class: `views-give-red-packet-title pt-7 mb-0 columns is-mobile` }, [
                     m('div', { class: `column is-7` }, [
                         m('p', { class: `title-large has-text-primary mt-2` }, '分享红包'),
-                        m('p', { class: `mt-1` }, '红包资产可用来提现，交易')
+                        m('p', { class: `mt-1 has-text-level-3` }, '红包资产可用来提现，交易')
                     ]),
                     // 图片
                     m('div', { class: `column is-5 has-text-right` }, [
@@ -29,8 +29,8 @@ module.exports = {
                 ]),
                 // 币种
                 m('div', { class: `has-border-bottom-1 py-3 has-line-level-4` }, [
-                    m('span', { class: `body-3 mr-2` }, '币种'),
-                    m('span', { class: `title-small` }, logic.currentCoin)
+                    m('span', { class: `body-3 mr-2 has-text-level-4` }, '币种'),
+                    m('span', { class: `title-small has-text-level-1` }, logic.currentCoin)
                 ]),
                 // 币种btnList 列表
                 m('div', { class: `views-give-red-packet-btn-list mt-7` }, [
@@ -39,7 +39,7 @@ module.exports = {
                 ]),
                 // 划转
                 m('div', { class: `has-text-right mt-7 mb-2` }, [
-                    m('span', { class: `` }, `钱包可用：${logic.wltMoney}${logic.currentCoin} `),
+                    m('span', { class: `has-text-level-4` }, `钱包可用：${logic.wltMoney}${logic.currentCoin} `),
                     m('span', { class: `has-text-primary`, onclick() { logic.transferBtnClick(); } }, ' 划转')
                 ]),
                 // 单个金额/总金额
@@ -55,7 +55,7 @@ module.exports = {
                     }
                 }),
                 // 切换 普通/拼手气红包
-                m('div', { class: `mt-2 mb-7` }, [
+                m('div', { class: `mt-2 mb-7 has-text-level-4` }, [
                     m('span', { class: `` }, [`当前为${logic.redPacketType > 0 ? '普通红包' : '拼手气红包'}，改为 `]),
                     m('span', { class: `has-text-primary`, onclick() { logic.switchRedPacketType(); } }, [logic.redPacketType > 0 ? '拼手气红包' : '普通红包'])
                 ]),
@@ -75,7 +75,7 @@ module.exports = {
                 // 祝福信息
                 m(FormItem, {
                     content: m('input', {
-                        class: `input`,
+                        class: `input has-text-level-1`,
                         value: logic.infoFormItem.value,
                         placeholder: "请输入祝福语",
                         oninput(e) {
@@ -87,8 +87,8 @@ module.exports = {
                 m('div', { class: `has-text-up has-text-centered mt-5` }, logic.formModel.errMsg),
                 // 显示总金额
                 m('div', { class: `has-text-centered mt-7 ${!logic.formModel.verifyFormData(false) ? 'is-hidden' : ''}` }, [
-                    m('p', { class: `title-medium` }, `共 ${logic.formModel.getTotalCoin()} ${logic.currentCoin}`),
-                    m('p', { class: `` }, ` ≈¥${logic.getRMBByCoinMoney()}`)
+                    m('p', { class: `title-medium has-text-level-1` }, `共 ${logic.formModel.getTotalCoin()} ${logic.currentCoin}`),
+                    m('p', { class: `has-text-level-3` }, ` ≈¥${logic.getRMBByCoinMoney()}`)
                 ]),
                 // 划转 Modal
                 m(transfer),

@@ -9,7 +9,7 @@ module.exports = {
                 vnode.attrs.left?.label || m('i', { class: `iconfont icon-arrow-left` })
             ]),
             // 中
-            m('button.button', { onclick() { vnode.attrs.center?.onclick && vnode.attrs.center?.onclick(); } }, [
+            m('button.button.has-text-level-1', { onclick() { vnode.attrs.center?.onclick && vnode.attrs.center?.onclick(); } }, [
                 vnode.attrs.center?.label || ''
             ]),
             // 右

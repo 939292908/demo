@@ -37,7 +37,7 @@ module.exports = {
                         logic.getHeader(vnode), // 内容
                         m('i', { class: `my-trigger-icon iconfont icon-xiala iconfont-min has-text-primary` }) // icon
                     ],
-                    class: `button ${vnode.attrs.btnClass || ''}`,
+                    class: `button has-text-level-1 ${vnode.attrs.btnClass || ''}`,
                     style: (vnode.attrs.btnWidth ? `width:${vnode.attrs.btnWidth}px;` : '') +
                         (vnode.attrs.btnHeight ? `height:${vnode.attrs.btnHeight}px;` : ''),
                     onclick() {

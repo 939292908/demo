@@ -162,7 +162,7 @@ const logic = {
     headerOption: {
         left: {
             onclick() {
-                console.log(this.label);
+                window.router.back();
             }
         },
         right: {
@@ -380,13 +380,13 @@ const logic = {
                 this.initTransferInfo();
             }
         });
-        // broadcast.onMsg({
-        //     key: "sendRedP",
-        //     cmd: broadcast.MSG_WLT_UPD,
-        //     cb: () => {
-        //         // this.initTransferInfo();
-        //     }
-        // });
+        broadcast.onMsg({
+            key: "sendRedP",
+            cmd: broadcast.MSG_WLT_UPD,
+            cb: () => {
+                this.initTransferInfo();
+            }
+        });
     },
     oncreate(vnode) {
     },
@@ -399,11 +399,11 @@ const logic = {
             cmd: broadcast.MSG_WLT_READY,
             isall: true
         });
-        // broadcast.offMsg({
-        //     key: "sendRedP",
-        //     cmd: broadcast.MSG_WLT_UPD,
-        //     isall: true
-        // });
+        broadcast.offMsg({
+            key: "sendRedP",
+            cmd: broadcast.MSG_WLT_UPD,
+            isall: true
+        });
     },
     toShare: function(param) {
         const link = param.link; // 需要分享的链接

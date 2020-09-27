@@ -21,11 +21,11 @@ module.exports = {
                 // 领取概况
                 m(redPacketInfo, logic.redPacketInfoOption),
                 // 领取列表
-                m('div', { class: `has-text-left px-6` }, logic.redPacketList.map((item, index) => {
+                m('div', { class: `has-text-left side-px` }, logic.redPacketList.map((item, index) => {
                     return m('div', { class: `is-between py-5 has-border-bottom-1 has-line-level-4 has-last-child-border-none`, key: index }, [
                         m('div', { class: `` }, [
                             m('div', { class: `font-weight-bold has-text-primary` }, item.build_rtel),
-                            m('div', { class: `body-4` }, item.build_rtm)
+                            m('div', { class: `body-4 has-text-level-3` }, item.build_rtm)
                         ]),
                         m('div', { class: `has-text-right` }, [
                             m('div', { class: `font-weight-bold has-text-primary` }, [
@@ -33,7 +33,7 @@ module.exports = {
                                 m('span', { class: `` }, item.quota),
                                 m('span', { class: `` }, item.coin)
                             ]),
-                            m('div', { class: `body-4` }, `≈￥${item.build_rmb}`)
+                            m('div', { class: `body-4 has-text-level-4` }, `≈￥${item.build_rmb}`)
                         ])
                     ]);
                 }))

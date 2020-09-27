@@ -1,5 +1,6 @@
 const wlt = require('@/models/wlt/wlt');
 const Http = require('@/api').webApi;
+const broadcast = require('@/broadcast/broadcast');
 
 const logic = {
     isShow: false, // 显示划转弹框
@@ -173,6 +174,36 @@ const logic = {
     // 重置
     reset() {
         this.transferMoney = "";
+    },
+    oninit(vnode) {
+        wlt.init(); // 更新数据
+        broadcast.onMsg({
+            key: "Transfer",
+            cmd: broadcast.MSG_WLT_READY,
+            cb: () => {
+                // this.initTransferInfo();
+            }
+        });
+        broadcast.onMsg({
+            key: "Transfer",
+            cmd: broadcast.MSG_WLT_UPD,
+            cb: () => {
+                // this.initTransferInfo();
+            }
+        });
+    },
+    onremove(vnode) {
+        wlt.remove();
+        broadcast.offMsg({
+            key: "Transfer",
+            cmd: broadcast.MSG_WLT_READY,
+            isall: true
+        });
+        broadcast.offMsg({
+            key: "Transfer",
+            cmd: broadcast.MSG_WLT_UPD,
+            isall: true
+        });
     }
 };
 module.exports = logic;
