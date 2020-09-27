@@ -54,8 +54,7 @@ module.exports = {
     ChooseVerify: function () {
         // console.log(this.setting2fa);
         if (this.setting2fa.google === 0 && this.setting2fa.phone === 0) {
-            console.log('未绑定手机与谷歌');
-            return;
+            this.changePassword();
         }
         if (this.setting2fa.google === 1 && this.setting2fa.phone === 0) {
             console.log('已绑定谷歌');
