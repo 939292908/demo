@@ -10,7 +10,7 @@ const m = require('mithril');
 // }
 module.exports = {
     view(vnode) {
-        return m('div', { class: `has-border-bottom-1 px-6 pb-3 has-line-level-4 ${vnode.attrs.class || ''}` }, [
+        return m('div', { class: `has-border-bottom-1 side-px pb-3 has-line-level-4 ${vnode.attrs.class || ''}` }, [
             // 来源 guid (空 为来源自己)
             vnode.attrs.guid ? m('div', { class: `pt-5` }, [
                 m('span', { class: `` }, '来自'),

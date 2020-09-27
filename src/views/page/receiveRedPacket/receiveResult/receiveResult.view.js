@@ -19,9 +19,7 @@ module.exports = {
                 // 红包头部
                 m(redPacketTop, logic.redPacketTopOption),
                 // 领取概况
-                m('div', { class: `has-text-left mt-7 px-6` }, [
-                    m(redPacketInfo, logic.redPacketInfoOption)
-                ]),
+                m(redPacketInfo, logic.redPacketInfoOption),
                 // 领取列表
                 m('div', { class: `has-text-left px-6` }, logic.redPacketList.map((item, index) => {
                     return m('div', { class: `is-between py-5 has-border-bottom-1 has-line-level-4 has-last-child-border-none`, key: index }, [

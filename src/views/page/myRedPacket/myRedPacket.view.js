@@ -50,9 +50,9 @@ module.exports = {
         switch (key) {
         case 1:
             // 已领取
-            return m('div', { class: `` }, [
+            return m('div', { class: `side-px` }, [
                 m(FormItem, {
-                    class: `mx-6 py-5 px-3 mt-7`,
+                    class: `py-5 px-3 mt-7 mb-3`,
                     content: [
                         // 左边
                         m('div', { class: `` }, [
@@ -66,7 +66,7 @@ module.exports = {
                 }),
                 logic.receiveRedPacketList.map((item, index) => {
                     return m('div', {
-                        class: `is-between py-5 has-border-bottom-1 has-line-level-4 has-last-child-border-none mx-6`,
+                        class: `is-between py-5 has-border-bottom-1 has-line-level-4 has-last-child-border-none`,
                         key: index,
                         onclick() {
                             logic.toReceiveRedPacketDetail(item); // 跳转领的红包详情
@@ -95,9 +95,9 @@ module.exports = {
 
         case 2:
             // 已发送
-            return m('div', { class: `` }, [
+            return m('div', { class: `side-px` }, [
                 m(FormItem, {
-                    class: `mx-6 py-5 px-3 mt-7`,
+                    class: `py-5 px-3 mt-7 mb-3`,
                     content: [
                         // 左边
                         m('div', { class: `` }, [
@@ -113,7 +113,7 @@ module.exports = {
                 }),
                 logic.sendRedPacketList.map((item, index) => {
                     return m('div', {
-                        class: `is-between py-5 has-border-bottom-1 has-line-level-4 has-last-child-border-none mx-6`,
+                        class: `is-between py-5 has-border-bottom-1 has-line-level-4 has-last-child-border-none`,
                         key: index,
                         onclick() {
                             logic.toSendRedPacketDetail(item); // 跳转发的红包详情

@@ -21,21 +21,23 @@ module.exports = {
             m('div', { class: `pub-content has-text-centered` }, [
                 // 抢红包头部
                 m(redPacketTop, logic.redPacketTopOption),
-                m(FormItem, {
-                    class: "is-around mx-6 mb-3",
-                    content: m('input.input[type=text].has-text-centered', {
-                        placeholder: "输入您的手机号/邮箱",
-                        oninput: e => {
-                            logic.account = e.target.value;
-                        },
-                        onblur: e => {
-                        },
-                        value: logic.account
+                m('div', { class: `side-px` }, [
+                    m(FormItem, {
+                        class: "is-around mb-3",
+                        content: m('input.input[type=text].has-text-centered', {
+                            placeholder: "输入您的手机号/邮箱",
+                            oninput: e => {
+                                logic.account = e.target.value;
+                            },
+                            onblur: e => {
+                            },
+                            value: logic.account
+                        })
                     })
-                }),
+                ]),
                 m('div.body-3.mb-3.mx-6.has-text-up', { hidden: false }, [regExp.validAccount(true, logic.account)]),
                 // 抢
-                m('div', { class: `px-6` }, m(Button, {
+                m('div', { class: `side-px` }, m(Button, {
                     label: "抢",
                     class: 'is-primary',
                     width: 1,
@@ -45,11 +47,9 @@ module.exports = {
                 })),
                 m('div', { class: `has-text-primary mt-5` }, "已经在APP登录账号？点击前往直接抢 >>"),
                 // 领取概况
-                m('div', { class: `has-text-left mt-7 px-6` }, [
-                    m(redPacketInfo, logic.redPacketInfoOption)
-                ]),
+                m(redPacketInfo, logic.redPacketInfoOption),
                 // 领取列表
-                m('div', { class: `has-text-left px-6 pb-3` }, logic.redPacketList.map((item, index) => {
+                m('div', { class: `has-text-left side-px pb-3` }, logic.redPacketList.map((item, index) => {
                     return m('div', { class: `is-between py-5 has-border-bottom-1 has-line-level-4 has-last-child-border-none`, key: index }, [
                         m('div', { class: `` }, [
                             m('div', { class: `font-weight-bold` }, item.build_rtel),
