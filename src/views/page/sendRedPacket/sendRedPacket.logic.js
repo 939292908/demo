@@ -79,6 +79,7 @@ const logic = {
         // 校验金额
         verifyMoney(isUpdateMsg = true) {
             // 钱包可用资产不足，请及时划转！
+            // console.log(this.getTotalCoin(), logic.wltMoney, 999);
             if (this.getTotalCoin() > logic.wltMoney * 1) {
                 isUpdateMsg && this.updateErrMsg("钱包可用资产不足，请及时划转！");
                 return false;
@@ -141,8 +142,8 @@ const logic = {
     buildCoinBtnList(list) {
         const btnClick = function (item) {
             logic.currentCoin = item.coin; // 更新选中币种
-            logic.formModel.verifyMoney(); // 校验表单
             logic.setMaxTransfer(); // 设置最大划转
+            logic.formModel.verifyMoney(); // 校验表单
         };
         this.coinBtnList = list.map(item => {
             const btnOption = {
