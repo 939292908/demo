@@ -20,21 +20,25 @@ body,
     .pub-view {
         height: 100%;
         
+        // 头
         .pub-header {
             height: 48px;
         }
-    
-        .pub-layout {
+        
+        // 内容
+        .pub-content {
             height: calc(100% - 48px);
-            position: relative;
             overflow: auto;
-            
-            .pub-layout-bottom-btn {
-                position: absolute;
-                bottom: 0;
+
+            &.has-pub-footer {
+                height: calc(100% - 116px); // 48 + 68
             }
         }
 
+        // 底部
+        .pub-footer {
+            height: 68px;
+        }
     }
 }
 

@@ -18,7 +18,7 @@ module.exports = {
     view(vnode) {
         return m('div', { class: `pub-view views-receive-red-packet` }, [
             m(Header, logic.headerOption),
-            m('div', { class: `pub-layout has-text-centered` }, [
+            m('div', { class: `pub-content has-text-centered` }, [
                 // 抢红包头部
                 m(redPacketTop, logic.redPacketTopOption),
                 m(FormItem, {
