@@ -594,12 +594,14 @@ module.exports = {
         if (coin === 'USDT') {
             const InitValue = (this.wallet_obj['03'] && this.wallet_obj['03'][coin] && this.wallet_obj['03'][coin].initValue) || 0;
             return InitValue;
-        } else {
+        } else if (gMktApi) {
             const AssetD = gMktApi.AssetD;
             const SymName = utils.getSpotName(AssetD, coin, 'USDT');
             const InitValue = (this.wallet_obj['03'] && this.wallet_obj['03'][coin] && this.wallet_obj['03'][coin].initValue) || 0;
             const Prz = (AssetD[SymName] && AssetD[SymName].PrzLatest) || InitValue;
             return Prz;
+        } else {
+            return 0;
         }
     },
     trdDataOnFun: function() {
@@ -728,6 +730,9 @@ module.exports = {
     // 获取钱包计算所需风险限额
     getRiskLimits: function() {
         // ReqTrdGetRiskLimits
+        if (!gTrdApi) {
+            return;
+        }
         const that = this;
         const Authrized = gTrdApi.RT.Authrized;// aObj.AUTH_ST_OK
         const AssetD = gMktApi.AssetD;
