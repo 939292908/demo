@@ -34,6 +34,8 @@ if (utils.getItem('ex-session')) {
 
 const plusReady = function(arg) {
     console.log('red-packet plus is ready', arg);
+    const Rpc = require('./models/plus/rpc/rpc.js');
+    Rpc.init();
 };
 if (window.plus) {
     plusReady();
