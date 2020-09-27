@@ -95,14 +95,8 @@ module.exports = {
     },
     confirmBtn: function () {
         // console.log(this.loginType, this.setting2fa, this.email, this.nationNo, this.phoneNum, this.LcCode, this.LcPWd, this.totalFlag);
-        if (!this.LcPWd) {
-            this.LcPWdCheck();
-            return;
-        }
-        if (!this.LcCode) {
-            this.LcCodeCheck();
-            return;
-        }
+        this.LcPWdCheck();
+        this.LcCodeCheck();
         if (!this.totalFlag) {
             return;
         }
