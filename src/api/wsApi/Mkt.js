@@ -3,7 +3,9 @@ const API_TAG = 'WS';
 const DBG_WSCALL = true;
 const broadcast = require('@/broadcast/broadcast');
 const md5 = require('md5');
+const Rpc = require('../../models/plus/rpc/rpc.js');
 class Mkt {
+    isPlusApp = false;
     Conf = null;
     RT = {
         Authrized: this.AUTH_ST_NO
@@ -126,6 +128,7 @@ class Mkt {
 
     constructor(arg) {
         this.Conf = arg;
+        this.isPlusApp = window.navigator.userAgent.includes('Html5Plus');
         this.initStately(arg);
     }
 
@@ -133,8 +136,12 @@ class Mkt {
         this.stately = Stately.machine({
             IDLE: {
                 do: (aObj) => {
-                    if (aObj.Conf && aObj.Conf.baseUrl) {
+                    if (aObj.isPlusApp) {
                         return 'PRECONNECT';
+                    } else {
+                        if (aObj.Conf && aObj.Conf.baseUrl) {
+                            return 'PRECONNECT';
+                        }
                     }
                 }
             },
@@ -148,102 +155,125 @@ class Mkt {
                         aObj.booking[propName].done = false;
                     }
 
-                    if (aObj.ws) {
-                        aObj.ws.close();
-                    }
+                    if (aObj.isPlusApp) {
+                        broadcast.onMsg({
+                            key: aObj.Conf.Typ,
+                            cmd: broadcast.WV_ON_MESSAGE,
+                            cb: arg => {
+                                aObj.wsOnMessage(aObj, arg);
+                            }
+                        });
+                    } else {
+                        if (aObj.ws) {
+                            aObj.ws.close();
+                        }
 
-                    aObj.openStart = Date.now();
-                    aObj.ws = new WebSocket(aObj.Conf.baseUrl);
+                        aObj.openStart = Date.now();
+                        aObj.ws = new WebSocket(aObj.Conf.baseUrl);
 
-                    if (!aObj.ws.onopen) {
-                        aObj.ws.onopen = (arg) => {
-                            aObj.wsOnOpen(aObj, arg);
-                        };
-                    }
+                        if (!aObj.ws.onopen) {
+                            aObj.ws.onopen = (arg) => {
+                                aObj.wsOnOpen(aObj, arg);
+                            };
+                        }
 
-                    if (!aObj.ws.onmessage) {
-                        aObj.ws.onmessage = (arg) => {
-                            aObj.wsOnMessage(aObj, arg);
-                        };
+                        if (!aObj.ws.onmessage) {
+                            aObj.ws.onmessage = (arg) => {
+                                aObj.wsOnMessage(aObj, arg);
+                            };
+                        }
                     }
                     return 'CONNECTING';
                 }
             },
             CONNECTING: {
                 do: (aObj) => {
-                    // console.log(API_TAG, 'CONNECTING', aObj);
-                    // return 'AUTHORIZING'
-                    switch (aObj.ws.readyState) {
-                    case WebSocket.CONNECTING:
-                        if (Date.now() - aObj.openStart > aObj.timeoutOpen) {
-                            return 'PRECONNECT';
-                        }
-                        break;
-                    case WebSocket.OPEN:
-                        aObj.lastRecvTm = Date.now();
-                        aObj.lastSendTm = aObj.lastRecvTm;
-
+                    if (aObj.isPlusApp) {
                         switch (aObj.Conf.Typ) {
                         case "mkt":
                             return 'AUTHORIZING';
                         case "trd":
-                            /*
-
-                            如果 使用用户名获取的token
-                            则:
-                            ReqTrdLogin()
-                            let userData = {
-                                UserName: store.state.account.email ? store.state.account.email : store.state.account.phone,
-                                AuthType: 2,
-                                UserCred: store.state.account.token,
-                            }
-                            也就是获取到Token后，应该修改 Trd 的 Conf
-
-                            */
-                            aObj.Conf.Authrized = aObj.AUTH_ST_WT;
-                            // 登录交易前先校对时间
-                            aObj.ReqTime(arg => {
-                                aObj.ReqTrdLogin({ // 服务端所需的参数
-                                    UserName: aObj.Conf.UserName,
-                                    UserSecr: aObj.Conf.UserSecr, // 如果有API Key
-                                    UserCred: aObj.Conf.UserCred, // token ,或者 UserCred
-                                    AuthType: aObj.Conf.AuthType ? aObj.Conf.AuthType : 0
-                                }, function (aObj, aRaw) {
-                                    /*
-                                    {
-                                    "rid":"0",
-                                    "code":0,
-                                    "data":{
-                                        "UserName":"gmex-test@gmail.com",
-                                        "UserId":"1234567"
-                                        }
-                                    }
-                                    */
-                                    const d = aRaw.data;
-                                    console.log("ReqTrdLogin", aRaw);
-                                    switch (aRaw.code) {
-                                    case 0:
-
-                                        aObj.RT.Authrized = aObj.AUTH_ST_OK;
-                                        for (const prop in d) {
-                                            aObj.RT[prop] = d[prop];
-                                        }
-                                        // aObj.CtxPlaying.UId = aObj.RT.UserId;
-
-                                        break;
-                                    default:
-                                        aObj.RT.Authrized = aObj.AUTH_ST_NO;
-                                        break;
-                                    }
-                                });
-                            });
+                            aObj.RT.Authrized = aObj.AUTH_ST_OK;
+                            aObj.RT.UserId = aObj.Conf.UserId;
                             return 'AUTHORIZING';
                         }
-                        break;
-                    case WebSocket.CLOSING:
-                        break;
-                    case WebSocket.CLOSED:
-                        return 'PRECONNECT';
+                    } else {
+                        switch (aObj.ws.readyState) {
+                        case WebSocket.CONNECTING:
+                            if (Date.now() - aObj.openStart > aObj.timeoutOpen) {
+                                return 'PRECONNECT';
+                            }
+                            break;
+                        case WebSocket.OPEN:
+                            aObj.lastRecvTm = Date.now();
+                            aObj.lastSendTm = aObj.lastRecvTm;
+
+                            switch (aObj.Conf.Typ) {
+                            case "mkt":
+                                return 'AUTHORIZING';
+                            case "trd":
+                                /*
+
+                                如果 使用用户名获取的token
+                                则:
+                                ReqTrdLogin()
+                                let userData = {
+                                    UserName: store.state.account.email ? store.state.account.email : store.state.account.phone,
+                                    AuthType: 2,
+                                    UserCred: store.state.account.token,
+                                }
+                                也就是获取到Token后，应该修改 Trd 的 Conf
+
+                                */
+                                if (aObj.isPlusApp) {
+                                    aObj.RT.Authrized = aObj.AUTH_ST_OK;
+                                } else {
+                                    aObj.RT.Authrized = aObj.AUTH_ST_WT;
+                                    // 登录交易前先校对时间
+                                    aObj.ReqTime(arg => {
+                                        aObj.ReqTrdLogin({ // 服务端所需的参数
+                                            UserName: aObj.Conf.UserName,
+                                            UserSecr: aObj.Conf.UserSecr, // 如果有API Key
+                                            UserCred: aObj.Conf.UserCred, // token ,或者 UserCred
+                                            AuthType: aObj.Conf.AuthType ? aObj.Conf.AuthType : 0
+                                        }, function (aObj, aRaw) {
+                                            /*
+                                            {
+                                            "rid":"0",
+                                            "code":0,
+                                            "data":{
+                                                "UserName":"gmex-test@gmail.com",
+                                                "UserId":"1234567"
+                                                }
+                                            }
+                                            */
+                                            const d = aRaw.data;
+                                            console.log("ReqTrdLogin", aRaw);
+                                            switch (aRaw.code) {
+                                            case 0:
+
+                                                aObj.RT.Authrized = aObj.AUTH_ST_OK;
+                                                for (const prop in d) {
+                                                    aObj.RT[prop] = d[prop];
+                                                }
+                                                // aObj.CtxPlaying.UId = aObj.RT.UserId;
+
+                                                break;
+                                            default:
+                                                aObj.RT.Authrized = aObj.AUTH_ST_NO;
+                                                break;
+                                            }
+                                        });
+                                    });
+                                }
+                                return 'AUTHORIZING';
+                            }
+                            break;
+                        case WebSocket.CLOSING:
+                            break;
+                        case WebSocket.CLOSED:
+                            return 'PRECONNECT';
+                        }
                     }
                 }
             },
@@ -457,23 +487,46 @@ class Mkt {
     WSCallMkt(aCmd, aParam, aFunc) {
         const s = this;
         if (DBG_WSCALL) { /** console.log(API_TAG, __filename, "WSCallMkt", aCmd, aParam); */ }
-        const tm = Date.now();
-        s.lastSendTm = tm;
+        if (s.isPlusApp) {
+            switch (s.Conf.Typ) {
+            case "mkt":
+                Rpc.marketRequest({
+                    Api: aCmd,
+                    data: aParam,
+                    cb: arg => {
+                        aFunc && aFunc(s, arg);
+                    }
+                });
+                break;
+            case "trd":
+                Rpc.tradeRequest({
+                    Api: aCmd,
+                    data: aParam,
+                    cb: arg => {
+                        aFunc && aFunc(s, arg);
+                    }
+                });
+                break;
+            }
+        } else {
+            const tm = Date.now();
+            s.lastSendTm = tm;
 
-        var msg = {
-            req: aCmd,
-            rid: String(++s.rid),
-            args: aParam,
-            expires: tm + s.netLag + s.timeoutMsg
-        };
-        const msgStr = JSON.stringify(msg);
-        try {
-            s.ws.send(msgStr);
-        } catch (e) {
-            console(API_TAG, e);
+            var msg = {
+                req: aCmd,
+                rid: String(++s.rid),
+                args: aParam,
+                expires: tm + s.netLag + s.timeoutMsg
+            };
+            const msgStr = JSON.stringify(msg);
+            try {
+                s.ws.send(msgStr);
+            } catch (e) {
+                console(API_TAG, e);
+            }
+            msg.cb = aFunc;
+            s.Reqs[msg.rid] = msg;
         }
-        msg.cb = aFunc;
-        s.Reqs[msg.rid] = msg;
     }
 
     ReqTime(aFunc) {
@@ -589,16 +642,20 @@ class Mkt {
     }
 
     CheckAndSendHeartbeat(aObj) {
-        const now = Date.now();
-        const diff = now - aObj.lastRecvTm;
-        if (diff > aObj.timeoutClose) {
-            return true;
-        } else if (now - aObj.lastRecvTm > aObj.timeoutIdle) {
-            if (now - aObj.lastSendTm > aObj.timeoutMsg) {
-                aObj.ReqTime();
+        if (aObj.isPlusApp) {
+            return false;
+        } else {
+            const now = Date.now();
+            const diff = now - aObj.lastRecvTm;
+            if (diff > aObj.timeoutClose) {
+                return true;
+            } else if (now - aObj.lastRecvTm > aObj.timeoutIdle) {
+                if (now - aObj.lastSendTm > aObj.timeoutMsg) {
+                    aObj.ReqTime();
+                }
             }
+            return false;
         }
-        return false;
     }
 
     utilPushToHead(aArray, aElement, aMaxLen) {
@@ -636,36 +693,46 @@ class Mkt {
     WSCallTrade (aCmd, aParam, aFunc) {
         const s = this;
         if (DBG_WSCALL) { console.log(__filename, "WSCallTrade", aCmd, aParam); }
-        const tm = Date.now();
-        s.lastSendTm = tm;
+        if (s.isPlusApp) {
+            Rpc.tradeRequest({
+                Api: aCmd,
+                data: aParam,
+                cb: arg => {
+                    aFunc && aFunc(s, arg);
+                }
+            });
+        } else {
+            const tm = Date.now();
+            s.lastSendTm = tm;
 
-        const msg = {
-            req: aCmd,
-            rid: String(++s.rid),
-            args: aParam,
-            expires: tm + s.netLag + s.timeoutMsg
-        };
-        if (aParam) {
-            msg.args = aParam;
+            const msg = {
+                req: aCmd,
+                rid: String(++s.rid),
+                args: aParam,
+                expires: tm + s.netLag + s.timeoutMsg
+            };
+            if (aParam) {
+                msg.args = aParam;
+            }
+            const texts = [
+                msg.req,
+                msg.rid,
+                aParam ? JSON.stringify(msg.args) : "",
+                String(msg.expires),
+                s.Conf.SecretKey
+            ];
+            const textjoined = texts.join("");
+            const signature = md5(textjoined);
+            msg.signature = signature;
+            const msgStr = JSON.stringify(msg);
+            try {
+                s.ws.send(msgStr);
+            } catch (e) {
+                console.log(e);
+            }
+            msg.cb = aFunc;
+            s.Reqs[msg.rid] = msg;
         }
-        const texts = [
-            msg.req,
-            msg.rid,
-            aParam ? JSON.stringify(msg.args) : "",
-            String(msg.expires),
-            s.Conf.SecretKey
-        ];
-        const textjoined = texts.join("");
-        const signature = md5(textjoined);
-        msg.signature = signature;
-        const msgStr = JSON.stringify(msg);
-        try {
-            s.ws.send(msgStr);
-        } catch (e) {
-            console.log(e);
-        }
-        msg.cb = aFunc;
-        s.Reqs[msg.rid] = msg;
     }
 
     ReqTrdLogin(aParam, aFunc) {

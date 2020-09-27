@@ -30,7 +30,8 @@ broadcast.onMsg({
             vp: config.exchId,
             UserName: arg.accountName,
             AuthType: 2,
-            UserCred: arg.token
+            UserCred: arg.token,
+            UserId: arg.uid
         };
     }
 });

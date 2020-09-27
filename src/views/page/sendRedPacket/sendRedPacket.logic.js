@@ -271,7 +271,7 @@ const logic = {
         };
         logic.shareLoading = true;
         Http.sendgift(params).then(function(arg) {
-            if (arg.data.code === 0) {
+            if (arg.code === 0) {
                 logic.toShare({
                     link: `/receiveRedPacket?gid=${logic.gid}`
                 });
