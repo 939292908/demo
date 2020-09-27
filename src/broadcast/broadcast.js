@@ -50,6 +50,8 @@ module.exports = {
     EV_ORD_UPD: 'EV_ORD_UPD',
     // 交易获取资金费率ready
     EV_GET_RS_READY: 'EV_GET_RS_READY',
+    // 通过plus webview推送来的消息
+    WV_ON_MESSAGE: 'WV_ON_MESSAGE',
     /**
      * 发送广播
      * @param {string} cmd
