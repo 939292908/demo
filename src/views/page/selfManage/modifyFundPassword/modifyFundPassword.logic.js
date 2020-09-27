@@ -16,7 +16,7 @@ module.exports = {
     phoneNum: null, // 用户手机号码
     oldFundPwd: null, // 原密码
     newFunPwd: null, // 新密码/资金密码
-    confirmFunPwd: null, // 新密码/资金密码
+    confirmFunPwd: null, // 确认密码
     isShowVerifyView: false, // 安全校验弹框 show
     switchSafetyVerifyModal (type) { // 安全校验弹框 显示/隐藏
         this.isShowVerifyView = type;

@@ -47,6 +47,14 @@ const antiFCView = {
     },
     // 确认按钮事件
     confirmBtn: function() {
+        if (!antiFCLogic.newAntiFishingCodeValue && (antiFCLogic.antiFishCodeFlag !== '' && antiFCLogic.antiFishCodeFlag !== undefined)) {
+            antiFCView.check(antiFCLogic.newAntiFishingCodeValue, 'tip1');
+            return;
+        }
+        if (!antiFCLogic.antiFishingCodeValue) {
+            antiFCView.check(antiFCLogic.antiFishingCodeValue, 'tip2');
+            return;
+        }
         if (!antiFCView.totalFlag) {
             // alert("不满足要求");
             return;
