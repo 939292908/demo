@@ -102,7 +102,7 @@ const assetView = {
                 m('div.asset-data-block dis-flex justify-between align-center', [
                     m('div.asset-data', [
                         AssetData.walletAcId === '01' ? this.getContractVnode() : this.getallMoneyVnode(),
-                        AssetData.walletAcId === 'all' ? m('div.but-list dis-flex align-center mt-5', [
+                        AssetData.walletAcId === '03' ? m('div.but-list dis-flex align-center mt-5', [
                             AssetData.LBList.map(item => m('div.but-item has-text-primary body-4 mr-3 py-1 px-6', { onclick: () => { AssetData.handleClickLBItem(item); } }, item.label))
                         ]) : null,
                         AssetData.walletAcId === '04' ? m('div.but-list dis-flex align-center mt-5', [
