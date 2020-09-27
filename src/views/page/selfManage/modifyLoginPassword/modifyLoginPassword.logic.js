@@ -13,13 +13,13 @@ const globalModels = require('@/models/globalModels');
 
 module.exports = {
     loginType: null, // 登录类型
-    setting2fa: null, // 账户绑定状态
     nationNo: null, // 区号
     phoneNum: null, // 用户手机号码
     isShowVerifyView: false, // 安全校验弹框 show
     oldLpwd: '', // 输入的旧密码
     newLpwd: '', // 输入的新密码
     confirmLpwd: '', // 输入的确认密码
+    googleId: '', // 谷歌
     // 安全校验弹框 显示/隐藏
     switchSafetyVerifyModal (type) {
         this.isShowVerifyView = type;
@@ -27,7 +27,6 @@ module.exports = {
     // 确认按钮事件
     confirmBtn: function() {
         // console.log(this.oldLpwd, this.newLpwd, this.confirmLpwd);
-        /* console.log(this.loginType, this.setting2fa, this.nationNo, this.phoneNum); */
         geetest.verify(); // 极验
     },
     // 加载极验
@@ -52,19 +51,18 @@ module.exports = {
     },
     // 选择验证方式
     ChooseVerify: function () {
-        // console.log(this.setting2fa);
-        if (this.setting2fa.google === 0 && this.setting2fa.phone === 0) {
+        if (!this.googleId && !this.phoneNum) {
             console.log('未绑定手机和谷歌');
             this.changePassword();
             return;
         }
-        if (this.setting2fa.google === 1 && this.setting2fa.phone === 0) {
+        if (this.googleId && !this.phoneNum) {
             console.log('已绑定谷歌');
             this.initSecurityVerification(1);
-        } else if (this.setting2fa.google === 0 && this.setting2fa.phone === 1) {
+        } else if (!this.googleId && this.phoneNum) {
             console.log('已绑定手机');
             this.initSecurityVerification(2);
-        } else if (this.setting2fa.google === 1 && this.setting2fa.phone === 1) {
+        } else if (this.googleId && this.phoneNum) {
             console.log('已绑定手机和谷歌');
             this.initSecurityVerification(3);
         }
@@ -143,9 +141,9 @@ module.exports = {
         const account = gM.getAccount();
         // console.log(account);
         this.loginType = account.loginType; // 账户类型
-        this.setting2fa = account.setting2fa; // 账户绑定状态
         this.nationNo = account.nationNo; // 区号
         this.phoneNum = account.phone; // 用户手机号码
+        this.googleId = account.googleId; // 谷歌
     },
     initFn: function() {
         this.oldLpwd = ''; // 输入的旧密码初始化

@@ -18,6 +18,7 @@ module.exports = {
     newFunPwd: null, // 新密码/资金密码
     confirmFunPwd: null, // 确认密码
     isShowVerifyView: false, // 安全校验弹框 show
+    googleId: '', // 谷歌
     switchSafetyVerifyModal (type) { // 安全校验弹框 显示/隐藏
         this.isShowVerifyView = type;
     },
@@ -50,18 +51,17 @@ module.exports = {
     // 选择验证方式
     ChooseVerify: function () {
         // console.log(this.setting2fa);
-        if (this.setting2fa.google === 0 && this.setting2fa.phone === 0) {
+        if (!this.googleId && !this.phoneNum) {
             console.log('未绑定手机和谷歌');
-            this.setWalletPwd();
             return;
         }
-        if (this.setting2fa.google === 1 && this.setting2fa.phone === 0) {
+        if (this.googleId && !this.phoneNum) {
             console.log('已绑定谷歌');
             this.initSecurityVerification(1);
-        } else if (this.setting2fa.google === 0 && this.setting2fa.phone === 1) {
+        } else if (!this.googleId && this.phoneNum) {
             console.log('已绑定手机');
             this.initSecurityVerification(2);
-        } else if (this.setting2fa.google === 1 && this.setting2fa.phone === 1) {
+        } else if (this.googleId && this.phoneNum) {
             console.log('已绑定手机和谷歌');
             this.initSecurityVerification(3);
         }
@@ -139,6 +139,7 @@ module.exports = {
         this.setting2fa = account.setting2fa; // 账户绑定状态
         this.nationNo = account.nationNo; // 区号
         this.phoneNum = account.phone; // 用户手机号码
+        this.googleId = account.googleId; // 谷歌
     },
     initFn: function() {
         const that = this;

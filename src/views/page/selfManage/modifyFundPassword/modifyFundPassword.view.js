@@ -63,11 +63,23 @@ const modifyFPView = {
         if (modifyFPLogic.modifyFlag === 1) {
             // 修改密码
             modifyFPView.oldFundPwdCheck();
+            if (modifyFPView.tip1) {
+                return;
+            }
         }
+
         modifyFPView.newFunPwdCheck();
+        if (modifyFPView.tip2) {
+            return;
+        }
+
         modifyFPView.confirmFunPwdCheck();
+        if (modifyFPView.tip3) {
+            return;
+        }
+
         if (!modifyFPView.totalFlag) {
-            // alert("不满足要求");
+            alert("不满足要求");
             return;
         }
         modifyFPLogic.confirmBtn();
