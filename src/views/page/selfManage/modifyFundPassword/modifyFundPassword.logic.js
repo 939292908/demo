@@ -70,34 +70,24 @@ module.exports = {
     // 初始化安全验证   typeFlag: 1：谷歌 2：手机 3：谷歌手机双切换验证
     initSecurityVerification: function (typeFlag) {
         const that = this;
-        let params = null;
+        const params = {
+            securePhone: that.nationNo + '-' + utils.hideMobileInfo(that.phoneNum),
+            areaCode: that.nationNo, // 区号
+            phoneNum: that.nationNo + '-' + that.phoneNum, // 手机号
+            resetPwd: true, // 是否重置密码
+            lang: I18n.getLocale(),
+            phone: that.phoneNum,
+            mustCheckFn: "" // 验证类型
+        };
         if (typeFlag === 1) {
             validate.activeGoogle(function() {
                 that.setWalletPwd();
             });
         } else if (typeFlag === 2) {
-            params = {
-                securePhone: that.nationNo + '-' + utils.hideMobileInfo(that.phoneNum),
-                areaCode: that.nationNo, // 区号
-                phoneNum: that.nationNo + '-' + that.phoneNum, // 手机号
-                resetPwd: true, // 是否重置密码
-                lang: I18n.getLocale(),
-                phone: that.phoneNum,
-                mustCheckFn: "" // 验证类型
-            };
             validate.activeSms(params, function() {
                 that.setWalletPwd();
             });
         } else if (typeFlag === 3) {
-            params = {
-                securePhone: that.nationNo + '-' + utils.hideMobileInfo(that.phoneNum),
-                areaCode: that.nationNo, // 区号
-                phoneNum: that.nationNo + '-' + that.phoneNum, // 手机号
-                resetPwd: true, // 是否重置密码
-                lang: I18n.getLocale(),
-                phone: that.phoneNum,
-                mustCheckFn: "" // 验证类型
-            };
             validate.activeSmsAndGoogle(params, function() {
                 that.setWalletPwd();
             });
