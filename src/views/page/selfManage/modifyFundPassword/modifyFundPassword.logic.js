@@ -11,7 +11,6 @@ const utils = require('@/util/utils').default;
 
 module.exports = {
     modifyFlag: null, /* 当前是设置密码还是修改密码 */
-    setting2fa: null, // 账户绑定状态
     nationNo: null, // 区号
     phoneNum: null, // 用户手机号码
     oldFundPwd: null, // 原密码
@@ -25,7 +24,6 @@ module.exports = {
     // 确认按钮事件
     confirmBtn: function() {
         /* console.log(this.oldFundPwd, this.newFunPwd, this.confirmFunPwd); */
-        /* console.log(this.loginType, this.setting2fa, this.nationNo, this.phoneNum); */
         geetest.verify(); // 极验
     },
     // 加载极验
@@ -50,7 +48,6 @@ module.exports = {
     },
     // 选择验证方式
     ChooseVerify: function () {
-        // console.log(this.setting2fa);
         if (!this.googleId && !this.phoneNum) {
             console.log('未绑定手机和谷歌');
             return;
@@ -136,7 +133,6 @@ module.exports = {
         const account = gM.getAccount();
         // console.log(account);
         this.loginType = account.loginType; // 账户类型
-        this.setting2fa = account.setting2fa; // 账户绑定状态
         this.nationNo = account.nationNo; // 区号
         this.phoneNum = account.phone; // 用户手机号码
         this.googleId = account.googleId; // 谷歌
