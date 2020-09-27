@@ -197,8 +197,9 @@ module.exports = {
         } else if (typeFlag === 3) {
             params = {
                 emailconfig: {
-                    secureEmail: that.email,
-                    host: config.official,
+                    secureEmail: that.email, // 邮箱地址
+                    email: utils.hideAccountNameInfo(that.email), // 邮箱地址
+                    host: config.official, // 域名
                     fn: 'be',
                     lang: I18n.getLocale()
                 },
