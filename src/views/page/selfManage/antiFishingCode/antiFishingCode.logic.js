@@ -99,7 +99,6 @@ module.exports = {
                 that.setFishCode();
             });
         }
-        // console.log(params, 777777);
     },
     setFishCode() { /* 设置 || 修改防钓鱼码 */
         const that = this;

@@ -208,7 +208,6 @@ module.exports = {
                     mustCheckFn: "" // 验证类型
                 }
             };
-            console.log(params);
             validate.activeSmsAndEmail(params, function() {
                 that.currentOperation === 'bind' ? that.bindGoogle() : that.unbindGoogle();
             });

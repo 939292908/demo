@@ -51,6 +51,7 @@ module.exports = {
     ChooseVerify: function () {
         // console.log(this.setting2fa);
         if (this.setting2fa.google === 0 && this.setting2fa.phone === 0) {
+            console.log('未绑定手机和谷歌');
             this.setWalletPwd();
         }
         if (this.setting2fa.google === 1 && this.setting2fa.phone === 0) {
@@ -100,7 +101,6 @@ module.exports = {
                 that.setWalletPwd();
             });
         }
-        console.log(params);
     },
     setWalletPwd() { /* 设置 || 修改密码 */
         const that = this;

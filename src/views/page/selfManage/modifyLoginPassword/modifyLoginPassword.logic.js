@@ -54,6 +54,7 @@ module.exports = {
     ChooseVerify: function () {
         // console.log(this.setting2fa);
         if (this.setting2fa.google === 0 && this.setting2fa.phone === 0) {
+            console.log('未绑定手机和谷歌');
             this.changePassword();
         }
         if (this.setting2fa.google === 1 && this.setting2fa.phone === 0) {
@@ -89,7 +90,6 @@ module.exports = {
             validate.activeSms(params, function() {
                 that.changePassword();
             });
-            // console.log(2);
         } else if (typeFlag === 3) {
             params = {
                 securePhone: that.nationNo + '-' + utils.hideMobileInfo(that.phoneNum),
@@ -100,7 +100,7 @@ module.exports = {
                 phone: that.phoneNum,
                 mustCheckFn: "" // 验证类型
             };
-            console.log(params);
+            // console.log(params);
             validate.activeSmsAndGoogle(params, function() {
                 that.changePassword();
             });
