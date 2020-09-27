@@ -22,14 +22,17 @@ module.exports = {
         if (!this.smsInt) {
             this.setSmsCd();
         }
+        this.canConfirm = true;
         validate.sendSmsCode().then(res => {
             if (res.result.code === 0) {
                 this.canConfirm = true;
             } else if (res.result.code === -1) {
+                this.canConfirm = false;
                 this.cleanSmsCd();
                 this.geetestCallBackType = 'sms';
                 geetest.verify();
             } else {
+                this.canConfirm = false;
                 this.cleanSmsCd();
                 window.$message({
                     content: errCode.getWebApiErrorCode(res.result.code),
@@ -37,6 +40,7 @@ module.exports = {
                 });
             }
         }).catch(err => {
+            this.canConfirm = false;
             this.cleanSmsCd();
             console.log(err);
         });
@@ -48,14 +52,17 @@ module.exports = {
         if (!this.emailInt) {
             this.setEmailCd();
         }
+        this.canConfirm = true;
         validate.sendEmailCode().then(res => {
             if (res.result.code === 0) {
                 this.canConfirm = true;
             } else if (res.result.code === -1) {
+                this.canConfirm = false;
                 this.cleanEmailCd();
                 self.geetestCallBackType = 'email';
                 geetest.verify();
             } else {
+                this.canConfirm = false;
                 this.cleanEmailCd();
                 window.$message({
                     content: errCode.getWebApiErrorCode(res.result.code),
@@ -63,6 +70,7 @@ module.exports = {
                 });
             }
         }).catch(err => {
+            this.canConfirm = false;
             this.cleanEmailCd();
             console.log(err);
         });
@@ -223,6 +231,8 @@ module.exports = {
         this.selectType = '';
         this.anotherType = '';
         this.canConfirm = false;
+        this.cleanEmailCd();
+        this.cleanSmsCd();
         broadcast.offMsg({
             key: 'validate',
             cmd: 'geetestMsg',

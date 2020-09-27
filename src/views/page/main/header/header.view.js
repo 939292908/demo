@@ -15,7 +15,9 @@ require('@/styles/pages/header');
 module.exports = {
     oncreate: function() {
         // 初始化线路数据
-        apiLines.initLines();
+        // apiLines.initLines();
+        apiLines.updateLines();
+        header.handleChangeWindowTitle();
     },
     view: function () {
         return m('nav.navbar.is-fixed-top.theme--darken.body-5', {
@@ -271,7 +273,7 @@ module.exports = {
                                             ]),
                                             m('p', { class: `body-4 has-text-level-2` }, [
                                                 'UID:' + (globalModels.getAccount().uid || '--'),
-                                                m('i.iconfont.icon-copy.has-text-primary.iconfont-small.cursor-pointer.ml-1', {
+                                                m('i.iconfont.icon-copy.has-text-primary.iconfont-medium.cursor-pointer.ml-1', {
                                                     onclick() { utils.copyText(globalModels.getAccount().uid || '--'); }
                                                 }, [])
                                             ])
@@ -416,7 +418,17 @@ module.exports = {
                                             class: `navbar-item has-text-primary-hover min-width-200 ma-0 px-6 py-4 body-5`,
                                             onclick: function() {
                                                 I18n.setLocale(item, res => {
-                                                    // window._console.log('header setLocale', res);
+                                                    header.handleChangeWindowTitle();
+                                                    const whiteList = [
+                                                        'home',
+                                                        'myWalletIndex',
+                                                        'assetRecords'
+                                                    ];
+                                                    localStorage.setItem('isReload', true);
+                                                    if (whiteList.includes(window.router.getUrlInfo().path.split('/')[1])) {
+                                                        localStorage.setItem('scollTop', document.body.scrollTop + document.documentElement.scrollTop);
+                                                        location.reload();
+                                                    }
                                                 });
                                             }
                                         }, [

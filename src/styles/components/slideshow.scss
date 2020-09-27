@@ -24,7 +24,9 @@
   }
 
   .swiper-slide {
-    cursor: pointer;
+    .cur-pointer {
+      cursor: pointer;
+    }
     .imgBox {
       margin-right: 20px;
       border-radius: 10px;

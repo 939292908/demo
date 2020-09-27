@@ -40,6 +40,13 @@
         text-overflow: ellipsis;
     }
 
+    .not-select {
+        -webkit-user-select:none;
+        -moz-user-select:none;
+        -ms-user-select:none;
+        user-select:none;
+    }
+
     .my-tooltip .dropdown-menu.my-tooltip-position-bottom {
         top: 20px !important;
     }

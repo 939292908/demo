@@ -36,3 +36,12 @@ import('./views/index').then(arg => {
         models.getUserInfo();
     }
 });
+
+broadcast.onMsg({
+    key: 'main',
+    cmd: broadcast.MSG_NET_LINES_UPD,
+    cb: function (arg) {
+        models.getFunList();
+        models.getUserInfo();
+    }
+});

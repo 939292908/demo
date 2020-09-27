@@ -98,7 +98,10 @@ module.exports = {
         return m('.control has-icons-right', [
             m('input.input', {
                 oninput: e => { Validate.code = e.target.value.replace(/[^\d]/g, ''); },
-                onkeyup: e => { if (e.keyCode === 13) Validate.check(); },
+                onkeyup: e => {
+                    if (!Validate.canConfirm && Validate.selectType !== 'google') return;
+                    if (e.keyCode === 13) Validate.check();
+                },
                 maxlength: '6',
                 value: Validate.code
             }),
@@ -109,7 +112,10 @@ module.exports = {
         return m('.control has-icons-right', [
             m('input.input', {
                 oninput: e => { Validate.code = e.target.value.replace(/[^\d]/g, ''); },
-                onkeyup: e => { if (e.keyCode === 13) Validate.check(); },
+                onkeyup: e => {
+                    if (!Validate.canConfirm && Validate.selectType !== 'google') return;
+                    if (e.keyCode === 13) Validate.check();
+                },
                 maxlength: '6',
                 value: Validate.code
             }),
@@ -117,7 +123,7 @@ module.exports = {
                 onclick: () => {
                     Validate.emailCd <= 0 && Validate.sendEmailCode();
                 }
-            }, m('div', Validate.emailCd > 0 ? `${Validate.emailCd} s` : I18n.$t('10117')/* '获取验证码' */))
+            }, m('div.has-text-primary', Validate.emailCd > 0 ? `${Validate.emailCd} s` : I18n.$t('10117')/* '获取验证码' */))
         ]);
     },
     doubleButtonVnode: function () {
@@ -141,6 +147,7 @@ module.exports = {
                     Validate.code = e.target.value.replace(/[^\d]/g, '');
                 },
                 onkeyup: e => {
+                    if (!Validate.canConfirm && Validate.selectType !== 'google') return;
                     if (e.keyCode === 13) Validate.check();
                 },
                 maxlength: '6',

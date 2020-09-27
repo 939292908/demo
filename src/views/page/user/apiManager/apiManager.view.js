@@ -17,13 +17,13 @@ module.exports = {
         const tableBody = [];
         for (const item of APIManager.table) {
             tableBody.push(
-                m('div.columns.is-variable.is-6', {}, [
-                    m('div.column.is-2.py-4.body-4.font-weight-medium', {}, [item.name]),
-                    m('div.column.is-1.py-4.body-4.font-weight-medium', {}, [APIManager.getAuth(item.role)]),
+                m('div.columns.is-variable.is-3', {}, [
+                    m('div.column.is-1.py-4.body-4.font-weight-medium', {}, [item.name]),
+                    m('div.column.is-2.py-4.body-4.font-weight-medium', {}, [APIManager.getAuth(item.role)]),
                     m('div.column.is-3.py-4.body-4.font-weight-medium', {}, [item.k]),
                     m('div.column.is-3.py-4.body-4.font-weight-medium', {}, [
                         m(Tooltip, {
-                            label: m('div.ip-content.w100', {}, [item.cidr]),
+                            label: m('div.ip-content.w100', {}, [item.cidr || '--']),
                             content: item.cidr.length > 40 ? item.cidr : '',
                             class: 'w100 break-word',
                             width: '300px'
@@ -32,7 +32,7 @@ module.exports = {
                     m('div.column.is-2.py-4.body-4.font-weight-medium', {}, [utils.formatDate(new Date(item.ctime * 1000))]),
                     m('div.column.is-1.py-4.body-4.font-weight-medium.has-text-right', {}, [
                         m('a.has-text-primary.cursor-pointer', {
-                            onclick() { APIManager.delAPI(item.k); }
+                            onclick() { APIManager.delete(item.k); }
                         }, [I18n.$t('10272')/* 删除 */])
                     ])
                 ])
@@ -65,7 +65,7 @@ module.exports = {
                     m('hr.ma-0'),
                     m('div.columns.pa-8', {}, [
                         m('div.column.body-5.has-text-level-1', {}, [
-                            m('div.mb-2', {}, [I18n.$t('10092')/* '备注' */]),
+                            m('div.mb-2.not-select', {}, [I18n.$t('10092')/* '备注' */]),
                             m('input.input', {
                                 oninput(e) {
                                     APIManager.keyName = e.target.value;
@@ -77,35 +77,35 @@ module.exports = {
                                 value: APIManager.keyName
                             }),
                             m('div.body-3.has-text-tip-error', { hidden: !APIManager.showKeyNameValid }, [regExp.validAPIKeyName(APIManager.keyName) || APIManager.hasSame()]),
-                            m('div.mb-2.mt-5', {}, [I18n.$t('10318')/* '权限设置' */]),
+                            m('div.mb-2.mt-5.not-select', {}, [I18n.$t('10318')/* '权限设置' */]),
                             m('i.iconfont.mr-7.iconfont-medium.cursor-pointer', {
                                 disabled: true,
                                 class: APIManager.onlyRead ? 'icon-u_check-square has-text-primary' : 'icon-Unselected'
                                 // onclick() { APIManager.onlyRead = !APIManager.onlyRead; }
                             }, [
-                                m('span.ml-1.body-4.checkbox-text', {}, [I18n.$t('10319')/* 只读 */])
+                                m('span.ml-1.body-4.checkbox-text.not-select', {}, [I18n.$t('10319')/* 只读 */])
                             ]),
                             m('i.iconfont.iconfont-medium.cursor-pointer', {
                                 class: APIManager.canTrade ? 'icon-u_check-square has-text-primary' : 'icon-Unselected',
                                 onclick() { APIManager.canTrade = !APIManager.canTrade; }
                             }, [
-                                m('span.ml-1.body-4.checkbox-text', {}, [I18n.$t('10320')/* 交易 */])
+                                m('span.ml-1.body-4.checkbox-text.not-select', {}, [I18n.$t('10320')/* 交易 */])
                             ]),
-                            m('div.mb-2.mt-5', {}, [I18n.$t('10321')/* '绑定的IP地址/IP段（选填）' */]),
+                            m('div.mb-2.mt-5.not-select', {}, [I18n.$t('10321')/* '绑定的IP地址/IP段（选填）' */]),
                             m('div.control', {}, [
                                 m('textarea.textarea.has-fixed-size', {
                                     oninput(e) { APIManager.ip = e.target.value; },
                                     value: APIManager.ip
                                 }, [])
                             ]),
-                            m('div.body-3.has-text-tip-error', {}, [regExp.validAPIIP(APIManager.ip)]),
+                            m('div.body-3.has-text-tip-error', {}, [regExp.validAPIIP(APIManager.ip) || APIManager.has20IP()]),
                             m("button.button.has-bg-primary.button-large.is-fullwidth.has-text-white.mt-7", {
                                 onclick() { APIManager.submit(); },
-                                disabled: regExp.validAPIIP(APIManager.ip) || regExp.validAPIKeyName(APIManager.keyName) || APIManager.hasSame()
+                                disabled: regExp.validAPIIP(APIManager.ip) || regExp.validAPIKeyName(APIManager.keyName) || APIManager.hasSame() || APIManager.has20IP()
                             }, [I18n.$t('10337')/* '确定' */])
                         ]),
                         m('div.column.is-2', {}, []),
-                        m('div.column.has-text-level-4.body-4.tips-line-height', {}, [
+                        m('div.column.has-text-level-4.body-4.tips-line-height.pr-8', {}, [
                             m('div.body-5.mb-2', {}, [I18n.$t('10082')/* '温馨提示' */]),
                             m('div', {},
                                 ['* '].concat(
@@ -119,15 +119,14 @@ module.exports = {
                                 )
                             ),
                             m('div', {},
-                                ['* ' + I18n.$t('10323')/* '每个用户最多创建10组APIKEY' */]
+                                ['* ' + I18n.$t('10323', { value: 5 })/* '每个用户最多创建5组APIKEY' */]
                             ),
                             m('div', {},
                                 ['* ' + I18n.$t('10324') +/* '请不要泄露您的APIKEY，以免造成资产损失。出于安全考虑，建议为APIKEY绑定IP，每个APIKEY最多绑定20个IP地址或IP段。单个IP地址或IP段直接填写，多个IP地址或IP段用半角逗号分隔，如：' */
                                     '192.168.1.1,192.168.1.2,192.168.0.1/24'
                                 ]
                             )
-                        ]),
-                        m('div.column.is-1', {}, [])
+                        ])
                     ])
                 ]),
                 m('div.content-width.has-bg-level-2.border-radius-medium.content-center.mt-5.content-bg', {}, [
@@ -136,9 +135,9 @@ module.exports = {
                     APIManager.loading ? m('div.is-align-items-center.py-8', {}, [m(Loading)])
                         : tableBody.length
                             ? m('div.mx-5.my-3', {}, [
-                                m('div.columns.is-variable.is-6', {}, [
-                                    m('div.column.is-2.body-4.has-text-level-4.font-weight-medium.tips-line-height', {}, [I18n.$t('10092')/* '备注' */]),
-                                    m('div.column.is-1.body-4.has-text-level-4.font-weight-medium.tips-line-height', {}, [I18n.$t('10326')/* '权限' */]),
+                                m('div.columns.is-variable.is-3', {}, [
+                                    m('div.column.is-1.body-4.has-text-level-4.font-weight-medium.tips-line-height', {}, [I18n.$t('10092')/* '备注' */]),
+                                    m('div.column.is-2.body-4.has-text-level-4.font-weight-medium.tips-line-height', {}, [I18n.$t('10326')/* '权限' */]),
                                     m('div.column.is-3.body-4.has-text-level-4.font-weight-medium.tips-line-height', {}, [I18n.$t('10327')/* '访问密钥' */]),
                                     m('div.column.is-3.body-4.has-text-level-4.font-weight-medium.tips-line-height', {}, [I18n.$t('10328')/* '绑定IP地址' */]),
                                     m('div.column.is-2.body-4.has-text-level-4.font-weight-medium.tips-line-height', {}, [I18n.$t('10091')/* '时间' */]),
@@ -170,12 +169,15 @@ module.exports = {
             }) : null,
             m(Modal, {
                 isShow: APIManager.showBindEmail, // 弹框显示/隐藏
+                onClose() {
+                    window.router.go(-1);
+                },
                 slot: {
                     header: I18n.$t('10082'), // '温馨提示',
-                    body: '为了正常使用API功能，请先绑定邮箱',
+                    body: I18n.$t('10617'), // '为了正常使用API功能，请先绑定邮箱',
                     footer: m("button.button.is-primary.font-size-2.has-text-white.modal-default-btn.button-large", {
                         onclick() {
-                            window.router.push('/bindEmail');
+                            window.router.push({ path: '/bind', data: { type: 'email' } });
                         }
                     }, [I18n.$t('10229')/* '邮箱验证' */])
                 }
@@ -195,24 +197,24 @@ module.exports = {
                         ])
                     ]),
                     body: m('div', {}, [
-                        m('div.body-4.has-text-level-4', {}, ['SECRET KEY']),
+                        m('div.body-4.has-text-level-4', {}, [I18n.$t('10327')/* 访问秘钥 */]),
                         m('div.body-5.has-text-level-1.break-word', {}, [
-                            m('span', {}, [APIManager.modal.key]),
-                            m('i.iconfont.icon-copy.has-text-primary.iconfont-small.cursor-pointer.ml-1', {
+                            m('span.font-weight-bold', {}, [APIManager.modal.key]),
+                            m('i.iconfont.icon-copy.has-text-primary.iconfont-medium.cursor-pointer.ml-1', {
                                 onclick() { utils.copyText(APIManager.modal.key); }
                             }, [])
                         ]),
                         m('div.body-4.has-text-level-4.mt-7', {}, [I18n.$t('10332')/* 访问密码 */]),
                         m('div.body-5.has-text-level-1.break-word', {}, [
-                            m('span', {}, [APIManager.modal.password]),
-                            m('i.iconfont.icon-copy.has-text-primary.iconfont-small.cursor-pointer.ml-1', {
+                            m('span.font-weight-bold', {}, [APIManager.modal.password]),
+                            m('i.iconfont.icon-copy.has-text-primary.iconfont-medium.cursor-pointer.ml-1', {
                                 onclick() { utils.copyText(APIManager.modal.password); }
                             }, [])
                         ]),
                         m('div.body-4.has-text-level-4.mt-7', {}, [I18n.$t('10326')/* 权限 */]),
-                        m('div.body-5.has-text-level-1', {}, [APIManager.modal.auth]),
+                        m('div.body-5.has-text-level-1.font-weight-bold', {}, [APIManager.modal.auth]),
                         m('div.body-4.has-text-level-4.mt-7', {}, [I18n.$t('10334')/* 绑定ip */]),
-                        m('div.body-5.has-text-level-1.break-word', {}, [APIManager.modal.ip]),
+                        m('div.body-5.has-text-level-1.break-word.font-weight-bold', {}, [APIManager.modal.ip || '--']),
                         m('div.body-5.has-text-level-4.mt-7', {}, [I18n.$t('10082')/* '温馨提示' */]),
                         m('div.body-4.has-text-level-4.mt-2', {}, [
                             '* ' + I18n.$t('10335')/* '请不要泄露您的访问密钥和secretkey，以免造成资产损失。' */

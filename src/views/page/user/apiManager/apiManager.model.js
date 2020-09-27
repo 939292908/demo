@@ -27,19 +27,28 @@ module.exports = {
     hasSame() {
         for (const item of this.table) {
             if (item.name === this.keyName) {
-                return '备注不能重名';
+                return I18n.$t('10616'); // '备注不能重名';
             }
+        }
+        return '';
+    },
+    has20IP() {
+        if (this.ip.split(',').length > 20) {
+            return I18n.$t('10621', { value: 20 }); // '最多绑定20个IP地址或IP段';
         }
         return '';
     },
     submit() {
         if (this.table.length >= 5) {
             return window.$message({
-                // content: '最多可创建10组API KEY',
+                // content: '最多可创建5组API KEY',
                 content: I18n.$t('10611', { value: 5 }),
                 type: 'danger'
             });
         }
+        this.validate(() => { this.createAPI(); });
+    },
+    validate(fn) {
         if (globalModels.getAccount().loginType === 'phone') {
             const smsParam = {
                 securePhone: globalModels.getAccount().nationNo + '-' + globalModels.getAccount().phone, // 加密手机号带区号
@@ -50,11 +59,11 @@ module.exports = {
             };
             if (globalModels.getAccount().googleId) {
                 validate.activeSmsAndGoogle(smsParam, () => {
-                    this.createAPI();
+                    fn();
                 });
             } else {
                 validate.activeSms(smsParam, () => {
-                    this.createAPI();
+                    fn();
                 });
             }
         } else {
@@ -67,11 +76,11 @@ module.exports = {
             };
             if (globalModels.getAccount().googleId) {
                 validate.activeEmailAndGoogle(emailParam, () => {
-                    this.createAPI();
+                    fn();
                 });
             } else {
                 validate.activeEmail(emailParam, () => {
-                    this.createAPI();
+                    fn();
                 });
             }
         }
@@ -87,6 +96,12 @@ module.exports = {
         }).then(res => {
             this.loading = false;
             m.redraw();
+            if (!res.result) {
+                return window.$message({
+                    content: I18n.$t('10570'), /* '未知错误' */
+                    type: 'danger'
+                });
+            }
             if (res.result.code === 0) {
                 this.fillData(res.apiKeys);
             } else {
@@ -115,12 +130,16 @@ module.exports = {
     getAuth(role) {
         let auth = '';
         if ((role & 2) === 2) {
-            auth += `${I18n.$t('10319')/* 只读 */} `;
+            auth += `${I18n.$t('10319')/* 只读 */}${I18n.getLocale() === 'en' ? '/' : '、'}`;
         }
         if ((role & 4) === 4 && (role & 8) === 8 && (role & 16) === 16) {
-            auth += `${I18n.$t('10320')/* 交易 */} `;
+            auth += `${I18n.$t('10320')/* 交易 */}${I18n.getLocale() === 'en' ? '/' : '、'}`;
         }
+        auth = auth.substr(0, auth.length - 1);
         return auth;
+    },
+    delete(key) {
+        this.validate(() => { this.delAPI(key); });
     },
     delAPI(key) {
         this.loading = true;
@@ -134,6 +153,8 @@ module.exports = {
             this.loading = false;
             m.redraw();
             if (res.result.code === 0) {
+                this.showValid = false;
+                window.$message({ title: I18n.$t('10410') /* '提示' */, content: I18n.$t('10623') /* '删除成功' */, type: 'success' });
                 for (const i in this.table) {
                     if (this.table[i].k === key) {
                         this.table.splice(i, 1);
@@ -183,11 +204,12 @@ module.exports = {
                 this.showAPIKey = true;
                 let auth = '';
                 if (this.onlyRead) {
-                    auth += `${I18n.$t('10319')/* 只读 */} `;
+                    auth += `${I18n.$t('10319')/* 只读 */}${I18n.getLocale() === 'en' ? '/' : '、'}`;
                 }
                 if (this.canTrade) {
-                    auth += `${I18n.$t('10320')/* 交易 */} `;
+                    auth += `${I18n.$t('10320')/* 交易 */}${I18n.getLocale() === 'en' ? '/' : '、'}`;
                 }
+                auth = auth.substr(0, auth.length - 1);
                 this.modal = {
                     key: res.apiKey,
                     password: res.apiKeyValue,
@@ -216,7 +238,7 @@ module.exports = {
         });
     },
     oninit() {
-        if (!globalModels.getAccount().email) {
+        if (Object.keys(globalModels.getAccount()).length && !globalModels.getAccount().email) {
             this.showBindEmail = true;
         } else if (globalModels.getAccount().token) {
             this.getAPIList();
@@ -227,8 +249,9 @@ module.exports = {
             cmd: broadcast.GET_USER_INFO_READY,
             cb: arg => {
                 console.log(globalModels.getAccount());
-                if (!globalModels.getAccount().email) {
+                if (Object.keys(globalModels.getAccount()).length && !globalModels.getAccount().email) {
                     this.showBindEmail = true;
+                    m.redraw();
                 } else {
                     this.getAPIList();
                 }

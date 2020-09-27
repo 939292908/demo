@@ -60,13 +60,9 @@ class Router {
             requireAuth: true,
             onmatch: () => import('@/views/page/accountSecurity/modifyLoginPassword/changePassword.view')
         },
-        '/bindEmail': {
+        '/bind': {
             requireAuth: true,
-            onmatch: () => import('@/views/page/user/bind/bindEmail/bindEmail.view')
-        },
-        '/bindPhone': {
-            requireAuth: true,
-            onmatch: () => import('@/views/page/user/bind/bindPhone/bindPhone.view')
+            onmatch: () => import('@/views/page/user/bind/bind.view')
         },
         '/openGoogleVerify': {
             requireAuth: true,
