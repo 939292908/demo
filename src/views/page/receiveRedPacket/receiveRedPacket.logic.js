@@ -82,7 +82,7 @@ const logic = {
                 fn: 'be',
                 lang: I18n.getLocale()
             };
-            validate.activeEmail(params, function() {
+            validate.activeEmail(params, () => {
                 console.log("successEmail");
                 this.queryUserInfo();
                 // this.recvgift(); // 领红包
@@ -125,7 +125,8 @@ const logic = {
                     this.recvgift();// 领红包
                 }
                 if (arg.exists === 2) { // 不存在
-                    this.bindgift();// 绑红包
+                    // this.bindgift();// 绑红包
+                    this.recvgift();// 绑红包
                 }
                 console.log('查询账号是否注册 success', arg);
             } else {
@@ -146,15 +147,15 @@ const logic = {
             remail: logic.account // 邮箱
         };
         Http.recvgift(params).then(arg => {
-            if (arg.data.code === 0) {
-                console.log('领取 success', arg.data);
+            if (arg.code === 0) {
+                console.log('领取 success', arg);
                 window.router.push({
                     path: "/receiveResult", // 跳转抢红包结果
                     data: {
-                        gid: arg.data.data.gid, // 红包id
-                        best: arg.data.data.best, // 手气最佳(0:否 1:是)
-                        quota: arg.data.data.quota, // 抢的金额
-                        status: arg.data.data.status // 红包状态
+                        gid: arg.data.gid, // 红包id
+                        best: arg.data.best, // 手气最佳(0:否 1:是)
+                        quota: arg.data.quota, // 抢的金额
+                        status: arg.data.status // 红包状态
                     }
                 }); // 领取结果页  receiveResult
             } else {
@@ -184,16 +185,15 @@ const logic = {
             gid: m.route.param().gid
         };
         Http.getgiftrec(params).then(arg => {
-            console.log(arg.data, 66);
-            if (arg.data.code === 0) {
+            if (arg.code === 0) {
                 // 领取记录列表
-                redPacketUtils.buildGiftrecData(arg.data.data).then(data => {
+                redPacketUtils.buildGiftrecData(arg.data).then(data => {
                     logic.redPacketList = data;
                     m.redraw();
                 });
-                console.log('领取记录 success', arg.data);
+                console.log('领取记录 success', arg);
             } else {
-                logic.passwordModel.updateErrMsg(arg.data.err_msg);
+                logic.passwordModel.updateErrMsg(arg.err_msg);
             }
         }).catch(function(err) {
             console.log('领取记录 error', err);
@@ -205,8 +205,8 @@ const logic = {
             gid: m.route.param().gid
         };
         Http.getdetails(params).then(function(arg) {
-            if (arg.data.code === 0) {
-                const data = arg.data.data;
+            if (arg.code === 0) {
+                const data = arg.data;
                 // 红包头部 组件配置
                 logic.redPacketTopOption = JSON.parse(JSON.stringify(data));
                 logic.redPacketTopOption.msg2 = "您有机会获得"; // msg2
@@ -214,9 +214,9 @@ const logic = {
                 // 红包Info 组件配置
                 logic.redPacketInfoOption = JSON.parse(JSON.stringify(data));
                 m.redraw();
-                console.log('红包详情 success', arg.data);
+                console.log('红包详情 success', arg);
             } else {
-                logic.passwordModel.updateErrMsg(arg.data.err_msg);
+                logic.passwordModel.updateErrMsg(arg.err_msg);
             }
         }).catch(function(err) {
             console.log('红包详情 error', err);

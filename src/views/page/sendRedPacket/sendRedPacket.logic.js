@@ -239,8 +239,8 @@ const logic = {
     // 发红包接口
     sendgift() {
         const params = {
-            vp: 0,
-            guid: globalModels.getAccount().uid,
+            // vp: 0,
+            // guid: globalModels.getAccount().uid,
             coin: logic.currentCoin, // 币种
             type: logic.redPacketType > 0 ? logic.moneyFormItem.value : 0, // 类型 0:拼手气, >0:普通红包且数字是单个红包金额
             quota: logic.moneyFormItem.value, // 金额
@@ -272,6 +272,24 @@ const logic = {
             });
             m.redraw();
         }
+    },
+    // 初始化 需要的权限
+    initMustAuth() {
+        // mustAuth: {
+        //     authentication: true,
+        //     moneyPassword: true
+        // },
+        const account = globalModels.getAccount();
+        // iStatus: 9 实名认证通过
+        if (account.iStatus === 9) {
+            logic.mustAuth.authentication = true;
+        }
+        // if (account.iStatus === 0 || account.iStatus === 2) {
+        //     // 为了您的账户安全，请按照提示实名认证！
+        // }
+        // if (account.iStatus === 1) {
+        //     // 为了您的账户安全，实名认证通过后才可提现！
+        // }
     },
     // 重置
     reset() {

@@ -206,7 +206,7 @@ module.exports = {
                                 logic.mustAuth.authentication ? m('span', { class: `` }, "已认证") : m('span', {
                                     class: `has-text-primary`,
                                     onclick() {
-                                        alert("去认证");
+                                        // alert("去认证");
                                     }
                                 }, "去认证")
                             ])
@@ -218,7 +218,7 @@ module.exports = {
                                 logic.mustAuth.moneyPassword ? m('span', { class: `` }, "已设置") : m('span', {
                                     class: `has-text-primary`,
                                     onclick() {
-                                        alert("去设置");
+                                        // alert("去设置");
                                     }
                                 }, "去设置")
                             ])

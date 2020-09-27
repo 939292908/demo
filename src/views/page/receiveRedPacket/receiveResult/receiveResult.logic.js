@@ -48,13 +48,13 @@ const logic = {
             gid: m.route.param().gid
         };
         Http.getgiftrec(params).then(arg => {
-            if (arg.data.code === 0) {
+            if (arg.code === 0) {
                 // 领取记录列表
-                redPacketUtils.buildGiftrecData(arg.data.data).then(data => {
+                redPacketUtils.buildGiftrecData(arg.data).then(data => {
                     logic.redPacketList = data;
                     m.redraw();
                 });
-                console.log('领取记录 success', arg.data);
+                console.log('领取记录 success', arg);
             }
         }).catch(function(err) {
             console.log('领取记录 error', err);
@@ -66,8 +66,8 @@ const logic = {
             gid: m.route.param().gid
         };
         Http.getdetails(params).then(function(arg) {
-            if (arg.data.code === 0) {
-                const data = arg.data.data;
+            if (arg.code === 0) {
+                const data = arg.data;
                 logic.redPacketTopOption = JSON.parse(JSON.stringify(data)); // 红包top 组件配置
                 logic.redPacketTopOption.quota = m.route.param().quota; // 自定义金额(当前抢到)
                 switch (m.route.param().status * 1) {
@@ -88,7 +88,7 @@ const logic = {
                 }
                 logic.redPacketInfoOption = JSON.parse(JSON.stringify(data)); // 红包Info 组件配置
                 m.redraw();
-                console.log('红包详情 success', arg.data);
+                console.log('红包详情 success', arg);
             }
         }).catch(function(err) {
             console.log('红包详情 error', err);

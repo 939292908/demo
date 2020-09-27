@@ -721,7 +721,7 @@ export function getExtItemInfo (params = {}, options = { withCredentials: false 
 
 // ================ 红包活动 ================
 
-const axios = require('axios');
+// const axios = require('axios');
 /**
  * 发红包接口
  * @param {Object} params {
@@ -736,31 +736,32 @@ const axios = require('axios');
         }
     }
  */
+// http://192.168.1.81:3070/api/gift/bindgift
 // 发红包 vp:0, guid:'123', coin:'USDT',type:0, quota:10, count:10,des:'留言', passd: CryptoJS.MD5('123456')
 export function sendgift (params = {}, options = { withCredentials: false }) {
-    return axios.post('http://192.168.1.81:3070/api/gift/sendgift', params, options);
+    return Http.post('v1/gift/sendgift', params, options);
 }
 // 绑定 uid tel email
 export function bindgift (params = {}, options = { withCredentials: false }) {
-    return axios.post('http://192.168.1.81:3070/api/gift/bindgift', params, options);
+    return Http.post('v1/gift/bindgift', params, options);
 }
 // 领红包 rtype gid ruid rtel remail
 export function recvgift (params = {}, options = { withCredentials: false }) {
-    return axios.post('http://192.168.1.81:3070/api/gift/recvgift', params, options);
+    return Http.post('v1/gift/recvgift', params, options);
 }
 // 发送记录 uid
 export function getsendrec (params = {}, options = { withCredentials: false }) {
-    return axios.post('http://192.168.1.81:3070/api/gift/getsendrec', params, options);
+    return Http.post('v1/gift/getsendrec', params, options);
 }
 // 领取记录 uid
 export function getrecv (params = {}, options = { withCredentials: false }) {
-    return axios.post('http://192.168.1.81:3070/api/gift/getrecv', params, options);
+    return Http.post('v1/gift/getrecv', params, options);
 }
 // 红包详情 gid
 export function getgiftrec (params = {}, options = { withCredentials: false }) {
-    return axios.post('http://192.168.1.81:3070/api/gift/getgiftrec', params, options);
+    return Http.post('v1/gift/getgiftrec', params, options);
 }
 // 红包详情 gid
 export function getdetails (params = {}, options = { withCredentials: false }) {
-    return axios.post('http://192.168.1.81:3070/api/gift/getdetails', params, options);
+    return Http.post('v1/gift/getdetails', params, options);
 }
