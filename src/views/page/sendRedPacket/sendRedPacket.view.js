@@ -15,7 +15,7 @@ module.exports = {
     view(vnode) {
         return m('div', { class: `pub-view views-give-red-packet` }, [
             m(Header, logic.headerOption),
-            m('div', { class: `pub-layout mx-6` }, [
+            m('div', { class: `pub-content has-pub-footer side-px` }, [
                 // title
                 m('div', { class: `views-give-red-packet-title pt-7 mb-0 columns is-mobile` }, [
                     m('div', { class: `column is-7` }, [
@@ -90,16 +90,6 @@ module.exports = {
                     m('p', { class: `title-medium` }, `共 ${logic.formModel.getTotalCoin()} ${logic.currentCoin}`),
                     m('p', { class: `` }, ` ≈¥${logic.getRMBByCoinMoney()}`)
                 ]),
-                // 塞币进红包 btn
-                m(Button, {
-                    label: "塞币进红包",
-                    class: 'pub-layout-bottom-btn is-primary mb-3',
-                    width: 1,
-                    disabled: !logic.formModel.verifyFormData(false),
-                    onclick() {
-                        logic.coinToRedPacketBtnClick();
-                    }
-                }),
                 // 划转 Modal
                 m(transfer),
                 // 发红包确认 弹框
@@ -232,6 +222,18 @@ module.exports = {
                             }
                         })
                     ])
+                })
+            ]),
+            // 塞币进红包 btn
+            m('div', { class: `pub-footer side-px` }, [
+                m(Button, {
+                    label: "塞币进红包",
+                    class: 'is-primary mt-3',
+                    width: 1,
+                    disabled: !logic.formModel.verifyFormData(false),
+                    onclick() {
+                        logic.coinToRedPacketBtnClick();
+                    }
                 })
             ])
         ]);

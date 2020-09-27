@@ -10,9 +10,9 @@ const m = require('mithril');
 // }
 module.exports = {
     view(vnode) {
-        return m('div', { class: `has-border-bottom-1 px-6 pb-7 has-line-level-4 ${vnode.attrs.class || ''}` }, [
+        return m('div', { class: `has-border-bottom-1 px-6 pb-3 has-line-level-4 ${vnode.attrs.class || ''}` }, [
             // 来源 guid (空 为来源自己)
-            vnode.attrs.guid ? m('div', { class: `pt-7` }, [
+            vnode.attrs.guid ? m('div', { class: `pt-5` }, [
                 m('span', { class: `` }, '来自'),
                 m('span', { class: `has-text-primary` }, vnode.attrs.guid),
                 m('span', { class: `` }, '的')
@@ -20,9 +20,9 @@ module.exports = {
             // 红包类型 type 0:为拼手气 / >0:普通红包
             m('div', { class: `title-medium mb-3` }, vnode.attrs.type * 1 > 0 ? "普通红包" : "拼手气红包"),
             // 留言 des
-            m('div', { class: `` }, vnode.attrs.des),
+            m('div', { class: `mb-5` }, vnode.attrs.des),
             // img
-            m('iframe', { src: require("@/assets/img/people.svg").default, width: "110", height: "110", class: "mt-3 mb-7" }),
+            // m('iframe', { src: require("@/assets/img/people.svg").default, width: "110", height: "110", class: "mt-3 mb-7" }),
             // 提示2
             vnode.attrs.msg2 ? m('div', { class: `` }, vnode.attrs.msg2) : '',
             // 金额

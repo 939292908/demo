@@ -13,7 +13,7 @@ module.exports = {
     view(vnode) {
         return m('div', { class: `pub-view view-my-red-packet` }, [
             m(Header, logic.headerOption),
-            m('div', { class: `pub-layout` }, [
+            m('div', { class: `pub-content` }, [
                 // nav导航
                 m('div', { class: `view-my-red-packet-nav-box is-content-center pt-5` },
                     logic.navList.map((item, index) => {
@@ -51,7 +51,19 @@ module.exports = {
         case 1:
             // 已领取
             return m('div', { class: `` }, [
-                m('div', { class: `mx-6 mt-7 body-4` }, `领取红包总金额：${logic.receiveMoneySum} USDT`),
+                m(FormItem, {
+                    class: `mx-6 py-5 px-3 mt-7`,
+                    content: [
+                        // 左边
+                        m('div', { class: `` }, [
+                            m('p', { class: `` }, "领取红包总金额"),
+                            m('p', { class: `title-small` }, `${logic.receiveMoneySum} USDT`)
+                        ]),
+                        // 右边
+                        m('div', { class: `has-text-right` }, [
+                        ])
+                    ]
+                }),
                 logic.receiveRedPacketList.map((item, index) => {
                     return m('div', {
                         class: `is-between py-5 has-border-bottom-1 has-line-level-4 has-last-child-border-none mx-6`,
@@ -85,7 +97,7 @@ module.exports = {
             // 已发送
             return m('div', { class: `` }, [
                 m(FormItem, {
-                    class: `mx-6 pa-5 mt-7`,
+                    class: `mx-6 py-5 px-3 mt-7`,
                     content: [
                         // 左边
                         m('div', { class: `` }, [
