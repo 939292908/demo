@@ -156,11 +156,16 @@ module.exports = {
             break;
         }
 
-        validInput.push(m('div.butBox', { onclick: () => { Validate.check(); } },
-            m('button.button is-fullwidth has-bg-primary', {
-                class: vNode.attrs.loading || validateModel.loading ? 'is-loading' : '',
-                disabled: !Validate.canConfirm && Validate.selectType !== 'google'
-            }, this.props.buttonText || I18n.$t('10337')/* '确定' */)));
+        validInput.push(m('div.butBox', {
+            onclick: () => {
+                if (!Validate.canConfirm && Validate.selectType !== 'google') return;
+                Validate.check();
+            }
+        },
+        m('button.button is-fullwidth has-bg-primary', {
+            class: vNode.attrs.loading || validateModel.loading ? 'is-loading' : '',
+            disabled: !Validate.canConfirm && Validate.selectType !== 'google'
+        }, this.props.buttonText || I18n.$t('10337')/* '确定' */)));
         return m('div.mainPrompt', validInput);
     },
     view: function (vNode) {
