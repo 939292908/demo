@@ -24,6 +24,7 @@ const logic = {
     },
     // 红包top 组件配置
     redPacketTopOption: {
+        hiddenLine: true
         // guid: "", // 来源 (空为自己)
         // type: "", // 红包类型 type 0:为拼手气 / >0:普通红包
         // des: "", // 留言
@@ -63,7 +64,7 @@ const logic = {
                 securePhone: "0086" + '-' + utils.hideMobileInfo(logic.account), // 隐藏中间数字
                 areaCode: "0086", // 区号
                 phoneNum: "0086" + '-' + logic.account, // 手机号
-                resetPwd: true, // 是否重置密码
+                // resetPwd: true, // 是否重置密码
                 lang: I18n.getLocale(),
                 phone: logic.account,
                 mustCheckFn: "" // 验证类型
@@ -213,7 +214,7 @@ const logic = {
                 // 红包头部 组件配置
                 logic.redPacketTopOption = JSON.parse(JSON.stringify(data));
                 logic.redPacketTopOption.msg2 = "您有机会获得"; // msg2
-                logic.redPacketTopOption.class = "has-border-none"; // class
+                logic.redPacketTopOption.hiddenLine = true; // 隐藏底部线条
                 // 红包Info 组件配置
                 logic.redPacketInfoOption = JSON.parse(JSON.stringify(data));
                 m.redraw();

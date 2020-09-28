@@ -19,7 +19,7 @@ module.exports = {
         const validInput = [];
         validInput.push(m('div.has-text-level-2.body-5.mb-2', {}, [
             Validate.selectName()[Validate.selectType],
-            m('span.ml-2.body-2.has-text-level-4', {}, [
+            m('span.ml-2.body-5.has-text-level-4', {}, [
                 Validate.selectType === 'sms' ? `(${utils.hideAccountNameInfo(validateModel.smsConfig.securePhone)})`
                     : Validate.selectType === 'email' ? `(${utils.hideAccountNameInfo(validateModel.emailConfig.secureEmail)})`
                         : ''
@@ -39,7 +39,7 @@ module.exports = {
                     maxlength: '6',
                     value: Validate.code
                 },
-                rightComponents: m('a.body-1.has-text-primary.px-2',
+                rightComponents: m('a.body-5.has-text-primary.px-2',
                     {
                         onclick: () => {
                             if (Validate.smsCd > 0) return;
@@ -64,7 +64,7 @@ module.exports = {
                     maxlength: '6',
                     value: Validate.code
                 },
-                rightComponents: m('a.body-1.has-text-primary.px-2',
+                rightComponents: m('a.body-5.has-text-primary.px-2',
                     {
                         onclick: () => {
                             if (Validate.emailCd > 0) return;
