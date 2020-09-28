@@ -8,7 +8,7 @@
     "watch": "cross-env BUILD_ENV=dev webpack --config webpack/webpack.prod.conf.js --watch",
     "build_dev": "cross-env BUILD_ENV=dev  webpack --config webpack/webpack.prod.conf.js -p",
     "build": "cross-env BUILD_ENV=prod  webpack --config webpack/webpack.prod.conf.js -p",
-    "dev": "cross-env BUILD_ENV=dev webpack-dev-server --open --config webpack/webpack.dev.conf.js",
+    "dev": "cross-env BUILD_ENV=dev webpack-dev-server --open --config webpack/webpack.dev.conf.js --host 192.168.3.2",
     "start": "npm run dev",
     "prod": "cross-env BUILD_ENV=prod webpack-dev-server --open --config webpack/webpack.dev.conf.js"
   },

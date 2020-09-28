@@ -1,8 +1,12 @@
 const Http = require('@/api').webApi;
 const m = require('mithril');
 const redPacketUtils = require('@/util/redPacketUtils').default;
+const share = require('@/views/page/main/share/share.logic');
+const { HtmlConst, GetBase64 } = require('@/models/plus/index.js');
+const Qrcode = require('qrcode');
 
 const logic = {
+    shareLoading: false, // 分享按钮loading
     // 头部 组件配置
     headerOption: {
         left: {
@@ -78,6 +82,17 @@ const logic = {
             console.log('红包详情 error', err);
         });
     },
+    // 底部按钮click
+    footerBtnClick() {
+        if (logic.redPacketInfoOption.status === 0) { // 继续发送该红包
+            logic.shareLoading = true;
+            logic.toShare({
+                link: `/receiveRedPacket?gid=${logic.gid}`
+            });
+        } else { // 知道了
+            window.router.back();
+        }
+    },
     oninit(vnode) {
         this.getgiftrec(); // 红包已领取记录
         this.getdetails(); // 红包详情
@@ -87,6 +102,31 @@ const logic = {
     onupdate(vnode) {
     },
     onremove(vnode) {
+    },
+    toShare: function(param) {
+        const link = param.link; // 需要分享的链接
+        const img1 = window.location.origin + window.location.pathname + require('@/assets/img/shareBg.png').default;
+        const img2 = window.location.origin + window.location.pathname + require('@/assets/img/logo.png').default;
+        console.log(img1, img2);
+        if (window.plus) {
+            Qrcode.toDataURL(link).then(base64 => {
+                GetBase64.loadImageUrlArray([img1, img2, base64], arg => {
+                    console.log('GetBase64 loadImageUrlArray', arg);
+                    GetBase64.getWebView({
+                        data: HtmlConst.shareRedPacket(['分享红包', '红包资产可用来提现，交易', '下载注册APP，轻松交易'], arg),
+                        W: 375,
+                        H: 667
+                    }, res => {
+                        console.log('GetBase64 getWebView', res);
+                        share.openShare({ needShareImg: res, link: link }); // 打开分享弹框
+                        logic.shareLoading = false;
+                        m.redraw();
+                    });
+                });
+            }).catch(err => {
+                console.log(err);
+            });
+        }
     }
 };
 
