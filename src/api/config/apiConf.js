@@ -96,17 +96,21 @@ class Conf {
             // 如果是在app内部，则读本地储存的线路信息
             const activeLine = utils.getItem('networks.svrline');
             console.log('app当前选中的线路', activeLine, window.plus);
-            this.Active = {
-                Id: 0,
-                Name: activeLine.name,
-                WebAPI: activeLine.node,
-                WSMKT: activeLine.market,
-                WSTRD: activeLine.trade,
-                // 邀请链接
-                INVITE: activeLine.inviteUrl,
-                // 网站地址
-                WEBSITE: activeLine.webSite
-            };
+            if (activeLine) {
+                this.Active = this.M[aKey].netLines[0];
+            } else {
+                this.Active = {
+                    Id: 0,
+                    Name: activeLine.name,
+                    WebAPI: activeLine.node,
+                    WSMKT: activeLine.market,
+                    WSTRD: activeLine.trade,
+                    // 邀请链接
+                    INVITE: activeLine.inviteUrl,
+                    // 网站地址
+                    WEBSITE: activeLine.webSite
+                };
+            }
         } else {
             this.Active = this.M[aKey].netLines[0];
             let lines = window.localStorage.getItem('net_lines_config_web');
@@ -147,6 +151,10 @@ class Conf {
         const pool = [];
         for (const url of s.GetLines().data) {
             pool.push(axios.get(url + '?timestamp=' + (new Date()).getTime()));
+        }
+        if (pool.length === 0) {
+            CallBack && CallBack();
+            return;
         }
         Promise.race(pool).then((arg) => {
             console.log(arg);

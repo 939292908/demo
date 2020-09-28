@@ -10,17 +10,25 @@ const config = require('@/config.js');
 // const globalModels = require('@/models/globalModels');
 const regExp = require('@/models/validate/regExp');
 const errCode = require('@/util/errCode').default;
+const apiLines = require('@/models/network/lines.js');
 
 const logic = {
     account: "", // 邮箱/手机号
     errText: "", // 错误提示
     isShowVerifyView: false, // 安全验证 弹框
+    isShowSwitchLinesView: false, // 线路切换 弹框
     // 头部 组件配置
     headerOption: {
         left: {
             label: m('i', { class: `iconfont icon-close` }),
             onclick() {
                 window.router.back();
+            }
+        },
+        right: {
+            label: '线路',
+            onclick() {
+                logic.openSwitchLineView();
             }
         }
     },
@@ -248,11 +256,20 @@ const logic = {
         this.getgiftrec(); // 红包领取记录
     },
     oncreate(vnode) {
+        apiLines.updateLines();
     },
     onupdate(vnode) {
     },
     onremove(vnode) {
         broadcast.offMsg({ key: 'receiveRedPaclet', isall: true });
+    },
+    openSwitchLineView: function() {
+        this.isShowSwitchLinesView = true;
+        m.redraw();
+    },
+    closeSwitchLineView: function() {
+        this.isShowSwitchLinesView = false;
+        m.redraw();
     }
 };
 

@@ -5,6 +5,8 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const Uglifyjs = require('uglifyjs-webpack-plugin');
 
+const publicPath = "";
+
 module.exports = {
     mode: "production",
     entry: {
@@ -12,7 +14,8 @@ module.exports = {
     },
     output: {
         filename: 'static/js/[name].[chunkhash].js',
-        path: path.resolve(__dirname, '../dist')
+        path: path.resolve(__dirname, '../dist'),
+        publicPath: publicPath
     },
     optimization: {
         minimize: true, // 是否开启压缩
@@ -21,11 +24,11 @@ module.exports = {
                 uglifyOptions: {
                     compress: {
                         warnings: false,
-                        drop_debugger: true,
-                        drop_console: true
+                        drop_debugger: false,
+                        drop_console: false
                     }
                 },
-                sourceMap: false,
+                sourceMap: true,
                 parallel: true
             })
         ]
@@ -102,6 +105,7 @@ module.exports = {
                         loader: 'url-loader',
                         options: {
                             name: '[name].[hash:5].[ext]',
+                            limit: 1,
                             outputPath: "static/img/"
                         }
                     }
@@ -114,6 +118,7 @@ module.exports = {
                         loader: 'file-loader',
                         options: {
                             name: '[name].[hash:5].[ext]',
+                            limit: 1,
                             outputPath: "static/font/"
                         }
                     }

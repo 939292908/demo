@@ -8,6 +8,7 @@ const Validate = require('@/views/components/validate/validate.view');
 const Modal = require('@/views/components/common/Modal/Modal.view');
 const redPacketTop = require('@/views/components/redPacketTop/redPacketTop.view');
 const redPacketInfo = require('@/views/components/redPacketInfo/redPacketInfo.view');
+const apiLines = require('@/models/network/lines.js');
 
 module.exports = {
     oninit: vnode => logic.oninit(vnode),
@@ -73,7 +74,60 @@ module.exports = {
                     m('div', { class: `mb-3` }, "如未使用手机号注册平台账号，请在注册后查收红包"),
                     m(Validate) // 安全验证组件
                 ])
-            })
+            }),
+            // 线路切换弹窗
+            m('div.modal' + (logic.isShowSwitchLinesView ? '.is-active' : ''), {}, [
+                m('div.modal-background'),
+                m('div.modal-card.w80.border-radius-small', {}, [
+                    m('header.modal-card-head.border-radius-small-top.has-bg-level-2.border-0.side-pa', {}, [
+                        m('p.modal-card-title.body-5.has-text-title.font-weight-medium', {}, [
+                            `线路切换(${apiLines.netLines.length})`
+                        ]),
+                        m('button.button.is-light.pa-3', {
+                            onclick: function() {
+                                // logic.closeSwitchLineView();
+                            }
+                        }, [
+                            m('i.iconfont.icon-Order')
+                        ]),
+                        m('button.button.is-light.pa-3', {
+                            onclick: function() {
+                                logic.closeSwitchLineView();
+                            }
+                        }, [
+                            m('span.delete')
+                        ])
+                    ]),
+                    m('div.modal-card-body.side-px', {}, [
+                        apiLines.netLines.map((item, i) => {
+                            return m('div', {
+                                class: ``
+                            }, [
+                                m('a', {
+                                    class: `ma-0 py-4 body-5 has-text-level-2 is-flex`,
+                                    onclick: function() {
+                                        apiLines.setLinesActive(item.Id);
+                                    }
+                                }, [
+                                    m('i.iconfont.icon-dot' + (item.Id !== apiLines.activeLine.Id ? '.opacity-0' : '.has-text-primary')),
+                                    m('span', {}, [
+                                        item.Name
+                                    ]),
+                                    m('span.pl-2' + (item.Id !== apiLines.activeLine.Id ? '.opacity-0' : '.has-text-primary'), {}, [
+                                        '当前'
+                                    ]),
+                                    m('span.spacer'),
+                                    m('span.has-text-left' + (item.Id !== apiLines.activeLine.Id ? '' : '.has-text-primary'), {}, [
+                                        '延迟 ' + apiLines.wsResponseSpeed[i] + '/' + apiLines.apiResponseSpeed[i] + 'ms'
+                                        // I18n.$t('10155') + ' ' + (apiLines.wsResponseSpeed[i] || '--') + '/' + (apiLines.apiResponseSpeed[i] || '--') + 'ms'
+                                    ])
+                                ]),
+                                m('hr.ma-0.has-bg-level-1')
+                            ]);
+                        })
+                    ])
+                ])
+            ])
         ]);
     }
 };
