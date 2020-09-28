@@ -12,10 +12,10 @@ const MainData = {
     },
     getFlishCodeIsExist: function () {
         const self = this;
-        if (!webApi.getWalletPwdStatus) return;
         webApi.getWalletPwdStatus({ settingType: 13, settingKey: 'ucp' }).then(res => {
             if (res.result.code === 0) {
                 self.moneyPasswordIsExist = res?.settingValue === '*';
+                m.redraw();
             }
         });
     },
