@@ -12,6 +12,7 @@ const utils = require('@/util/utils').default;
 const globalModels = require('@/models/globalModels');
 
 const logic = {
+    gid: '', // 红包id
     // 币种按钮list
     coinBtnList: [],
     // 当前选中币种
@@ -20,8 +21,6 @@ const logic = {
     redPacketType: 1,
     // 钱包可用金额
     wltMoney: '',
-    // 分享结果 弹框
-    isShowShareModal: false,
     // 取消分享提示 弹框
     isShowNotShareModal: false,
     // 发红包 必须的权限 弹框 (实名认证/资金密码)
@@ -270,8 +269,9 @@ const logic = {
         logic.shareLoading = true;
         Http.sendgift(params).then(function(arg) {
             if (arg.code === 0) {
+                logic.gid = arg.data.gid;
                 logic.toShare({
-                    link: window.location.origin + window.location.pathname + `/#!/receiveRedPacket?gid=${arg.data.gid}`
+                    link: window.location.origin + window.location.pathname + `/#!/receiveRedPacket?gid=${logic.gid}`
                 });
                 console.log('发红包 success', arg.data);
             } else {
@@ -279,6 +279,17 @@ const logic = {
             }
         }).catch(function(err) {
             console.log('发红包 error', err);
+        });
+    },
+    // 取消分享后 弹框的知道了按钮
+    notShareModalCancel() {
+        logic.isShowNotShareModal = false;
+    },
+    // 取消分享后 弹框的继续分享按钮
+    notShareModalToShareClick() {
+        logic.isShowNotShareModal = false;
+        logic.toShare({
+            link: window.location.origin + window.location.pathname + `/#!/receiveRedPacket?gid=${logic.gid}`
         });
     },
     // 重置
@@ -392,10 +403,16 @@ const logic = {
             isall: true
         });
     },
+    // 取消分享回调
+    cancelCallback() {
+        this.isShowNotShareModal = true;
+    },
+    // 分享
     toShare: function(param) {
         const link = param.link; // 需要分享的链接
         const img1 = window.location.origin + window.location.pathname + require('@/assets/img/shareBg.png').default;
         const img2 = window.location.origin + window.location.pathname + require('@/assets/img/logo.png').default;
+        const cancelCallback = logic.cancelCallback; // 取消分享回调
         console.log(img1, img2);
         if (window.plus) {
             Qrcode.toDataURL(link).then(base64 => {
@@ -407,7 +424,7 @@ const logic = {
                         H: 667
                     }, res => {
                         console.log('GetBase64 getWebView', res);
-                        share.openShare({ needShareImg: res, link: link }); // 打开分享弹框
+                        share.openShare({ needShareImg: res, link: link, cancelCallback }); // 打开分享弹框
                         logic.sendRedPModal.updateOption({ isShow: false });// 关闭发红包弹框
                         logic.reset(); // 重置
                         logic.shareLoading = false;
