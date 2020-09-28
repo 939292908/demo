@@ -2,9 +2,9 @@ const m = require('mithril');
 const model = require('./bind.logic');
 const VerifyView = require('@/views/components/dialogVerify/dialogVerify.view');
 const config = require('@/config.js');
-const header = require('@/views/components/indexHeader/indexHeader.view');
 const InputWithComponent = require('@/views/components/inputWithComponent/inputWithComponent.view');
 const AreaCodeSelect = require('@/views/page/user/login/areaCodeSelect/areaCodeSelect.view');
+const header = require('@/views/page/selfManage/header/header');
 const regExp = require('@/models/validate/regExp');
 // const Modal = require('@/views/components/common/Modal');
 const I18n = require('@/languages/I18n').default;
@@ -15,20 +15,7 @@ module.exports = {
     onremove: vnode => model.onremove(vnode),
     view(vnode) {
         return m('div.bind-content', { class: `theme--light` }, [
-            m('div.px-3.header.has-bg-sub-level-1.is-align-items-center', {}, [
-                m('div.content-width', {}, [
-                    m(header, {
-                        highlightFlag: 1,
-                        navList: [
-                            { to: '/selfManage', title: I18n.$t('10051') } /* 个人总览 */,
-                            { to: '/securityManage', title: I18n.$t('10181') } /* 账户安全 */,
-                            // { to: '/selfManage', title: I18n.$t('10182') } /* 身份认证 */,
-                            { to: '/apiManager', title: I18n.$t('10183') } /* API管理 */
-                            // { to: '/selfManage', title: I18n.$t('10184') } /* 邀请返佣 */
-                        ]
-                    })
-                ])
-            ]),
+            m(header),
             m('div.has-bg-level-1.pb-7', {}, [
                 // 标题
                 m('div', { class: `bind-content-title has-bg-level-2 py-4` }, [
