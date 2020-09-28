@@ -8,9 +8,11 @@ const Http = require('@/api').webApi;
 const redPacketUtils = require('@/util/redPacketUtils').default;
 const config = require('@/config.js');
 const globalModels = require('@/models/globalModels');
+const regExp = require('@/models/validate/regExp');
 
 const logic = {
     account: "", // 邮箱/手机号
+    errText: "", // 错误提示
     isShowVerifyView: false, // 安全验证 弹框
     // 头部 组件配置
     headerOption: {
@@ -40,6 +42,11 @@ const logic = {
         // quota: "", // 总额
         // quota2: "", // 未领额
         // coin: "" // 币种
+    },
+    // 输入账户input
+    numberOnInput(e) {
+        logic.account = e.target.value;
+        logic.errText = regExp.validAccount(true, logic.account); // 错误提示
     },
     // 已抢红包列表
     redPacketList: [],

@@ -4,7 +4,6 @@ const logic = require('./receiveRedPacket.logic');
 const Header = require('@/views/components/common/Header/Header.view');
 const FormItem = require('@/views/components/common/FormItem/FormItem.view');
 const Button = require('@/views/components/common/Button/Button.view');
-const regExp = require('@/models/validate/regExp');
 const Validate = require('@/views/components/validate/validate.view');
 const Modal = require('@/views/components/common/Modal/Modal.view');
 const redPacketTop = require('@/views/components/redPacketTop/redPacketTop.view');
@@ -27,7 +26,7 @@ module.exports = {
                         content: m('input.input[type=text].has-text-centered', {
                             placeholder: "输入您的手机号/邮箱",
                             oninput: e => {
-                                logic.account = e.target.value;
+                                logic.numberOnInput(e);
                             },
                             onblur: e => {
                             },
@@ -35,7 +34,7 @@ module.exports = {
                         })
                     })
                 ]),
-                m('div.body-3.mb-3.mx-6.has-text-up', { hidden: false }, [regExp.validAccount(true, logic.account)]),
+                m('div.body-3.mb-3.mx-6.has-text-up', { hidden: false }, logic.errText),
                 // 抢
                 m('div', { class: `side-px` }, m(Button, {
                     label: "抢",
