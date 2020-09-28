@@ -17,7 +17,7 @@ const logic = {
     // 头部 组件配置
     headerOption: {
         left: {
-            label: m('i', { class: `iconfont icon-tianxieshanchu` }),
+            label: m('i', { class: `iconfont icon-close` }),
             onclick() {
                 window.router.back();
             }
