@@ -97,6 +97,8 @@ const modifyFPView = {
         modifyFPView.tip3 = '';
         /* 提示初始化 end */
 
+        modifyFPView.tipModalIsShow = true; // 弹框初始化
+
         modifyFPView.totalFlag = false;
 
         modifyFPLogic.initFn();
@@ -107,18 +109,18 @@ const modifyFPView = {
             m('div', { class: `operation mb-7 has-bg-level-2` }, [
                 m('div', { class: `content-width container` }, [
                     m('i', { class: `iconfont icon-Return has-text-title cursor-pointer`, onclick: () => { window.router.go(-1); } }),
-                    m('span', { class: `has-text-title my-4 ml-4 title-medium` }, modifyFPLogic.modifyFlag === 0 ? I18n.$t('10289') /* '您正在设置资金密码' */ : I18n.$t('10291') /* '您正在修改资金密码' */)
+                    m('span', { class: `has-text-title my-4 ml-4 title-medium` }, !modifyFPLogic.modifyFlag ? I18n.$t('10289') /* '您正在设置资金密码' */ : I18n.$t('10291') /* '您正在修改资金密码' */)
                 ])
             ]),
             m('div', { class: `warning mb-3 pl-7 content-width container` }, [
                 m('i', { class: `iconfont icon-Tooltip pr-2 has-text-primary cursor-pointer` }),
                 m('span', { class: `has-text-level-3` },
-                    modifyFPLogic.modifyFlag === 0 ? I18n.$t('10290') /* '资产密码将用于转账、法币交易、红包等功能，请妥善保管，避免泄露. 请不要忘记自己的资产密码，资产密码遗忘后，需要将身份证及个人信息发送至客服邮箱，客服在24小时内处理' */ : I18n.$t('10263') /* '出于安全考虑，修改账户安全项之后，24h内禁止提币' */
+                    !modifyFPLogic.modifyFlag ? I18n.$t('10290') /* '资产密码将用于转账、法币交易、红包等功能，请妥善保管，避免泄露. 请不要忘记自己的资产密码，资产密码遗忘后，需要将身份证及个人信息发送至客服邮箱，客服在24小时内处理' */ : I18n.$t('10263') /* '出于安全考虑，修改账户安全项之后，24h内禁止提币' */
                 )
             ]),
             m('div', { class: `center content-width container has-bg-level-2 margin-LRauto pt-7 pb-8` }, [
                 m('div', { class: `center-content content-width container` }, [
-                    m('div', { class: `oldPwdDiv mb-5`, style: { display: `${modifyFPLogic.modifyFlag === 0 ? `none` : ``}` } }, [
+                    m('div', { class: `oldPwdDiv mb-5`, style: { display: `${!modifyFPLogic.modifyFlag ? `none` : ``}` } }, [
                         m('span', { class: `body-5` }, I18n.$t('10276') /* '原密码' */),
                         m('br'),
                         m(InputWithComponent, {
@@ -140,7 +142,7 @@ const modifyFPView = {
                         m('span', { class: `has-text-tip-error`, style: { display: modifyFPView.tip1 ? `` : `none` } }, modifyFPView.tip1)
                     ]),
                     m('div', { class: `newPwdDiv mb-5` }, [
-                        m('span', { class: `body-5 mb-2` }, modifyFPLogic.modifyFlag === 0 ? I18n.$t('10128') /* '资金密码' */ : I18n.$t('10210') /* '新密码' */),
+                        m('span', { class: `body-5 mb-2` }, !modifyFPLogic.modifyFlag ? I18n.$t('10128') /* '资金密码' */ : I18n.$t('10210') /* '新密码' */),
                         m('br'),
                         m(InputWithComponent, {
                             hiddenLine: true,
@@ -194,7 +196,7 @@ const modifyFPView = {
                         header: m('div', {}, [
                             m('div', {}, I18n.$t('10410') /* '提示' */)
                         ]),
-                        body: m('div', {}, I18n.$t('10290') /* '资产密码将用于转账、法币交易、红包等功能，请妥善保管，避免泄露. 请不要忘记自己的资产密码，资产密码遗忘后，需要将身份证及个人信息发送至客服邮箱，客服在24小时内处理' */)
+                        body: m('div', {}, I18n.$t('10290') /* '资产密码将用于转账、法币交易、红包等功能，请妥善保管，避免泄露。请不要忘记自己的资产密码，资产密码遗忘后，需要将身份证及个人信息发送至客服邮箱，客服在24小时内处理' */)
                     },
                     // 弹框确认
                     onOk() {

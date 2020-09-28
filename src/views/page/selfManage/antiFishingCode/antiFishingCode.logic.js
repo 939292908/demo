@@ -97,7 +97,7 @@ module.exports = {
             console.log('nzm', 'setFishCode success', arg);
             if (arg.result.code === 0) {
                 console.log('setFishCode success');
-                window.$message({ content: that.antiFishCodeFlag === '' || that.antiFishCodeFlag === undefined ? I18n.$t('10608') /* '防钓鱼码设置成功' */ : I18n.$t('10609') /* '防钓鱼码修改成功' */, type: 'success' });
+                window.$message({ content: !that.antiFishCodeFlag ? I18n.$t('10608') /* '防钓鱼码设置成功' */ : I18n.$t('10609') /* '防钓鱼码修改成功' */, type: 'success' });
                 that.setUserInfo();
             } else {
                 window.$message({ content: errCode.getWebApiErrorCode(arg.result.code), type: 'danger' });
