@@ -167,7 +167,7 @@ const modifyLPView = {
                     ])
                 ])
             ]),
-            m(theBindingOrNot),
+            !modifyLPLogic.googleId && !modifyLPLogic.phoneNum ? m(theBindingOrNot) : null,
             modifyLPLogic.isShowVerifyView ? m(VerifyView, {
                 close: () => modifyLPLogic.switchSafetyVerifyModal(false),
                 isHandleVerify: true,
