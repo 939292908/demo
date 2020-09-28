@@ -5,7 +5,7 @@ const I18n = require('@/languages/I18n').default;
 const InputWithComponent = require('@/views/components/inputWithComponent/inputWithComponent.view');
 const VerifyView = require('@/views/components/dialogVerify/dialogVerify.view');
 const config = require('@/config.js');
-// const theBindingOrNot = require('@/views/components/theBindingOrNot/theBindingOrNot.view');
+const theBindingOrNot = require('@/views/components/theBindingOrNot/theBindingOrNot.view');
 const header = require('@/views/page/selfManage/header/header');
 
 const antiFCView = {
@@ -133,7 +133,7 @@ const antiFCView = {
                     m('img', { class: `mt-7`, src: require(`@/assets/img/selfManage/antiFishCode.svg`).default })
                 ])
             ]),
-            // m(theBindingOrNot),
+            m(theBindingOrNot),
             antiFCLogic.isShowVerifyView ? m(VerifyView, {
                 close: () => antiFCLogic.switchSafetyVerifyModal(false),
                 isHandleVerify: true,

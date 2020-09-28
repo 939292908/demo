@@ -50,6 +50,7 @@ module.exports = {
     ChooseVerify: function () {
         if (!this.googleId && !this.phoneNum) {
             console.log('未绑定手机和谷歌');
+            this.setWalletPwd();
             return;
         }
         if (this.googleId && !this.phoneNum) {
