@@ -39,11 +39,12 @@ module.exports = {
                 ]),
                 m('div.hideZeroAsset mr-7', {}, [
                     m('i', { class: t.hideZeroFlag ? `iconfont icon-u_check-square cursor-pointer` : `iconfont icon-Unselected cursor-pointer`, onclick: () => { t.setHideZeroFlag(); } }),
-                    m('span', { class: `ml-2` }, I18n.$t('10062') /* `隐藏0资产` */)
+                    m('span', { class: `ml-1` }, I18n.$t('10062') /* `隐藏0资产` */)
                 ]),
                 m('div.fundRecords mr-7 cursor-pointer', {}, [
                     m('i', { class: 'iconfont icon-AssetRecord' }),
                     m('span', {
+                        class: `ml-1`,
                         onclick: function () {
                             window.router.push({
                                 path: '/assetRecords',
