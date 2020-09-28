@@ -1,103 +1,124 @@
 import axios from 'axios';
+import utils from '@/util/utils.js';
 class Conf {
+    isPlusApp = false;
+    Active = {};
+    M = {
+        dev: {
+            data: [],
+            netLines: [
+                {
+                    Id: 0,
+                    Name: "测试线路1",
+                    WebAPI: "http://192.168.2.89:8888",
+                    WSMKT: "ws://192.168.2.85:20080/v1/market",
+                    WSTRD: "ws://192.168.2.85:50301/v1/trade",
+                    // 邀请链接
+                    INVITE: "http://192.168.2.89:10180",
+                    // 网站地址
+                    WEBSITE: "http://192.168.2.89:10180"
+                },
+                {
+                    Id: 1,
+                    Name: "测试线路2",
+                    WebAPI: "http://192.168.2.89:8888",
+                    WSMKT: "ws://192.168.2.85:20080/v1/market",
+                    WSTRD: "ws://192.168.2.85:50301/v1/trade",
+                    // 邀请链接
+                    INVITE: "http://192.168.2.89:10180",
+                    // 网站地址
+                    WEBSITE: "http://192.168.2.89:10180"
+                },
+                {
+                    Id: 2,
+                    Name: "测试线路3",
+                    WebAPI: "http://gs.eeeecloud.com:8888",
+                    WSMKT: "ws://gs.eeeecloud.com:20080/v1/market",
+                    WSTRD: "ws://gs.eeeecloud.com:50301/v1/trade",
+                    // 邀请链接
+                    INVITE: "http://192.168.2.89:10180",
+                    // 网站地址
+                    WEBSITE: "http://192.168.2.89:10180"
+                }
+            ]
+        },
+        prod: {
+            data: [
+                "https://exsoss.oss-cn-hongkong.aliyuncs.com/svrs/xmex_lines_conf.json",
+                "https://np-oss-web.oss-cn-shanghai.aliyuncs.com/svrs/xmex_lines_conf.json"
+            ],
+            netLines: [
+                {
+                    Id: 0,
+                    Name: "S00",
+                    // HTTP请求地址
+                    WebAPI: "https://cdn00.mcdztelegram.com/www",
+                    // 行情websocket地址
+                    WSMKT: "wss://cdn00.mcdztelegram.com/v1/market",
+                    // 交易websocket地址
+                    WSTRD: "wss://cdn00.mcdztelegram.com/v1/trade",
+                    // 邀请链接
+                    INVITE: "https://y2.xmex.co",
+                    // 网站地址
+                    WEBSITE: "https://w2.xmex.co"
+                },
+                {
+                    Id: 1,
+                    Name: "S01",
+                    WebAPI: "https://cdn00.yh334.top/www",
+                    WSMKT: "wss://cdn00.yh334.top/v1/market",
+                    WSTRD: "wss://cdn00.yh334.top/v1/trade",
+                    // 邀请链接
+                    INVITE: "https://y2.xmex.co",
+                    // 网站地址
+                    WEBSITE: "https://w2.xmex.co"
+                },
+                {
+                    Id: 2,
+                    Name: "S02",
+                    WebAPI: "https://cdn00.jiyouai.top/www",
+                    WSMKT: "wss://cdn00.jiyouai.top/v1/market",
+                    WSTRD: "wss://cdn00.jiyouai.top/v1/trade",
+                    // 邀请链接
+                    INVITE: "https://y2.xmex.co",
+                    // 网站地址
+                    WEBSITE: "https://w2.xmex.co"
+                }
+            ]
+        }
+    };
+
     constructor(aKey) {
         this.BUILD_ENV = aKey;
-        this.Active = {};
-        this.M = {
-            dev: {
-                data: [],
-                netLines: [
-                    {
-                        Id: 0,
-                        Name: "测试线路1",
-                        WebAPI: "http://192.168.2.89:8888",
-                        WSMKT: "ws://192.168.2.85:20080/v1/market",
-                        WSTRD: "ws://192.168.2.85:50301/v1/trade",
-                        // 邀请链接
-                        INVITE: "http://192.168.2.89:10180",
-                        // 网站地址
-                        WEBSITE: "http://192.168.2.89:10180"
-                    },
-                    {
-                        Id: 1,
-                        Name: "测试线路2",
-                        WebAPI: "http://192.168.2.89:8888",
-                        WSMKT: "ws://192.168.2.85:20080/v1/market",
-                        WSTRD: "ws://192.168.2.85:50301/v1/trade",
-                        // 邀请链接
-                        INVITE: "http://192.168.2.89:10180",
-                        // 网站地址
-                        WEBSITE: "http://192.168.2.89:10180"
-                    },
-                    {
-                        Id: 2,
-                        Name: "测试线路3",
-                        WebAPI: "http://gs.eeeecloud.com:8888",
-                        WSMKT: "ws://gs.eeeecloud.com:20080/v1/market",
-                        WSTRD: "ws://gs.eeeecloud.com:50301/v1/trade",
-                        // 邀请链接
-                        INVITE: "http://192.168.2.89:10180",
-                        // 网站地址
-                        WEBSITE: "http://192.168.2.89:10180"
-                    }
-                ]
-            },
-            prod: {
-                data: [
-                    "https://exsoss.oss-cn-hongkong.aliyuncs.com/svrs/xmex_lines_conf.json",
-                    "https://np-oss-web.oss-cn-shanghai.aliyuncs.com/svrs/xmex_lines_conf.json"
-                ],
-                netLines: [
-                    {
-                        Id: 0,
-                        Name: "S00",
-                        // HTTP请求地址
-                        WebAPI: "https://cdn00.mcdztelegram.com/www",
-                        // 行情websocket地址
-                        WSMKT: "wss://cdn00.mcdztelegram.com/v1/market",
-                        // 交易websocket地址
-                        WSTRD: "wss://cdn00.mcdztelegram.com/v1/trade",
-                        // 邀请链接
-                        INVITE: "https://y2.xmex.co",
-                        // 网站地址
-                        WEBSITE: "https://w2.xmex.co"
-                    },
-                    {
-                        Id: 1,
-                        Name: "S01",
-                        WebAPI: "https://cdn00.yh334.top/www",
-                        WSMKT: "wss://cdn00.yh334.top/v1/market",
-                        WSTRD: "wss://cdn00.yh334.top/v1/trade",
-                        // 邀请链接
-                        INVITE: "https://y2.xmex.co",
-                        // 网站地址
-                        WEBSITE: "https://w2.xmex.co"
-                    },
-                    {
-                        Id: 2,
-                        Name: "S02",
-                        WebAPI: "https://cdn00.jiyouai.top/www",
-                        WSMKT: "wss://cdn00.jiyouai.top/v1/market",
-                        WSTRD: "wss://cdn00.jiyouai.top/v1/trade",
-                        // 邀请链接
-                        INVITE: "https://y2.xmex.co",
-                        // 网站地址
-                        WEBSITE: "https://w2.xmex.co"
-                    }
-                ]
-            }
-        };
+        this.isPlusApp = window.navigator.userAgent.includes('Html5Plus');
         // 设置默认线路
-        this.Active = this.M[aKey].netLines[0];
-        let lines = window.localStorage.getItem('net_lines_config_web');
-        if (lines) {
-            lines = JSON.parse(lines);
-            this.M[aKey].netLines = lines;
-        }
-        let active = window.localStorage.getItem('net_lines_active_web');
-        if (active) {
-            active = JSON.parse(active);
-            this.Active = active;
+        if (this.isPlusApp) {
+            // 如果是在app内部，则读本地储存的线路信息
+            const activeLine = utils.getItem('networks.svrline');
+            console.log('app当前选中的线路', activeLine, window.plus);
+            this.Active = {
+                Id: 0,
+                Name: activeLine.name,
+                WebAPI: activeLine.node,
+                WSMKT: activeLine.market,
+                WSTRD: activeLine.trade,
+                // 邀请链接
+                INVITE: activeLine.inviteUrl,
+                // 网站地址
+                WEBSITE: activeLine.webSite
+            };
+        } else {
+            this.Active = this.M[aKey].netLines[0];
+            let lines = window.localStorage.getItem('net_lines_config_web');
+            if (lines) {
+                lines = JSON.parse(lines);
+                this.M[aKey].netLines = lines;
+            }
+            let active = window.localStorage.getItem('net_lines_active_web');
+            if (active) {
+                active = JSON.parse(active);
+                this.Active = active;
+            }
         }
     }
 

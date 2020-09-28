@@ -1,9 +1,8 @@
-import broadcast from './broadcast/broadcast';
-import utils from './util/utils';
-import models from './models';
-import m from 'mithril';
-
 function init() {
+    const broadcast = require('./broadcast/broadcast');
+    const utils = require('./util/utils').default;
+    const models = require('./models');
+    const m = require('mithril');
     // require('./api/index.js');
     // 主题颜色
     require("./styles/index");
