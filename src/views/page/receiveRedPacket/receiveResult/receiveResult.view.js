@@ -44,7 +44,7 @@ module.exports = {
                     class: 'is-primary',
                     width: 1
                 })),
-                m('a', { class: `pt-2 body-4`, href: redPacketUtils.getDownloadAppUrl() }, "下载APP  收发红包 小事一桩")
+                m('a', { class: `pt-2 body-4 has-text-level-3`, href: redPacketUtils.getDownloadAppUrl() }, "下载APP  收发红包 小事一桩")
             ])
         ]);
     }

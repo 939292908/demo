@@ -20,8 +20,6 @@ const logic = {
     redPacketType: 1,
     // 钱包可用金额
     wltMoney: '',
-    // 红包id
-    gid: "",
     // 分享结果 弹框
     isShowShareModal: false,
     // 取消分享提示 弹框
@@ -273,7 +271,7 @@ const logic = {
         Http.sendgift(params).then(function(arg) {
             if (arg.code === 0) {
                 logic.toShare({
-                    link: window.location.origin + window.location.pathname + `/#!/receiveRedPacket?gid=${logic.gid}`
+                    link: window.location.origin + window.location.pathname + `/#!/receiveRedPacket?gid=${arg.data.gid}`
                 });
                 console.log('发红包 success', arg.data);
             } else {
@@ -282,17 +280,6 @@ const logic = {
         }).catch(function(err) {
             console.log('发红包 error', err);
         });
-    },
-    // 跳转过来继续发红包
-    continueSendRedPacket() {
-        console.log("logic.gid", logic.gid);
-        logic.gid = m.route.param().gid;
-        if (logic.gid) {
-            logic.toShare({
-                link: window.location.origin + window.location.pathname + `/#!/receiveRedPacket?gid=${logic.gid}`
-            });
-            m.redraw();
-        }
     },
     // 重置
     reset() {
@@ -373,7 +360,6 @@ const logic = {
     },
     oninit(vnode) {
         wlt.init(); // 更新数据
-        logic.continueSendRedPacket(); // 跳转过来继续发红包
         broadcast.onMsg({
             key: "sendRedP",
             cmd: broadcast.MSG_WLT_READY,

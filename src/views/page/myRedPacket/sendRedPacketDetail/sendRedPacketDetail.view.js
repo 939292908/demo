@@ -40,20 +40,12 @@ module.exports = {
             // 底部
             m('div', { class: `pub-footer-1 side-px pt-3` }, [
                 m(Button, {
+                    class: 'is-primary',
                     label: logic.redPacketInfoOption.status === 0 ? "继续发送该红包" : "知道了",
-                    class: 'views-receive-result-look-my-red-packet-btn is-primary',
                     width: 1,
+                    loading: logic.shareLoading,
                     onclick() {
-                        if (logic.redPacketInfoOption.status === 0) { // 继续发送该红包
-                            window.router.push({
-                                path: "/sendRedPacket",
-                                data: {
-                                    gid: m.route.param().gid
-                                }
-                            });
-                        } else { // 知道了
-                            window.router.back();
-                        }
+                        logic.footerBtnClick();
                     }
                 }),
                 m('div', { class: `pt-2 body-4 has-text-centered has-text-level-3` }, "24小时未领取红包，资产将会返还到您的钱包账户")
