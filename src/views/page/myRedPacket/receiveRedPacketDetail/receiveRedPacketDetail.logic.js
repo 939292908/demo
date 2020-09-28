@@ -9,6 +9,7 @@ const Http = require('@/api').webApi;
 const redPacketUtils = require('@/util/redPacketUtils').default;
 const { HtmlConst, GetBase64 } = require('@/models/plus/index.js');
 const share = require('../../main/share/share.logic.js');
+const errCode = require('@/util/errCode').default;
 
 const logic = {
     best: 0, // 手气最佳(0:否 1:是)
@@ -77,6 +78,11 @@ const logic = {
                     m.redraw();
                 });
                 console.log('领取记录 success', arg);
+            } else {
+                window.$message({
+                    content: errCode.getRedPacketErrorCode(arg.code),
+                    type: 'danger'
+                });
             }
         }).catch(function(err) {
             console.log('领取记录 error', err);
@@ -97,6 +103,11 @@ const logic = {
 
                 m.redraw();
                 console.log('红包详情 success', arg);
+            } else {
+                window.$message({
+                    content: errCode.getRedPacketErrorCode(arg.code),
+                    type: 'danger'
+                });
             }
         }).catch(function(err) {
             console.log('红包详情 error', err);

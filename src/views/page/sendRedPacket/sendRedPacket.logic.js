@@ -10,6 +10,7 @@ const wlt = require('@/models/wlt/wlt');
 const broadcast = require('@/broadcast/broadcast');
 const utils = require('@/util/utils').default;
 const globalModels = require('@/models/globalModels');
+const errCode = require('@/util/errCode').default;
 
 const logic = {
     gid: '', // 红包id
@@ -245,6 +246,11 @@ const logic = {
                 } else {
                     logic.isShowVerifyAuthModal = true; // 实名认证/资金密码 弹框
                 }
+            } else {
+                window.$message({
+                    content: errCode.getRedPacketErrorCode(res.result.code),
+                    type: 'danger'
+                });
             }
         });
     },
@@ -275,6 +281,10 @@ const logic = {
                 });
                 console.log('发红包 success', arg.data);
             } else {
+                window.$message({
+                    content: errCode.getRedPacketErrorCode(arg.code),
+                    type: 'danger'
+                });
                 logic.passwordModel.updateErrMsg(arg.data.err_msg);
             }
         }).catch(function(err) {

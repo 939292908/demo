@@ -7,8 +7,9 @@ const I18n = require('@/languages/I18n').default;
 const Http = require('@/api').webApi;
 const redPacketUtils = require('@/util/redPacketUtils').default;
 const config = require('@/config.js');
-const globalModels = require('@/models/globalModels');
+// const globalModels = require('@/models/globalModels');
 const regExp = require('@/models/validate/regExp');
+const errCode = require('@/util/errCode').default;
 
 const logic = {
     account: "", // 邮箱/手机号
@@ -169,26 +170,29 @@ const logic = {
                     }
                 }); // 领取结果页  receiveResult
             } else {
-                window.$message({ content: '领取失败', type: 'danger' });
+                window.$message({
+                    content: errCode.getRedPacketErrorCode(arg.code),
+                    type: 'danger'
+                });
             }
         }).catch(function(err) {
             console.log('领取 error', err);
         });
     },
     // 绑红包 接口
-    bindgift() {
-        // const that = this;
-        const params = {
-            uid: globalModels.getAccount().uid,
-            tel: logic.account, // 电话
-            email: logic.account // 邮箱
-        };
-        Http.bindgift(params).then(function(arg) {
-            console.log('绑红包 success', arg);
-        }).catch(function(err) {
-            console.log('绑红包 error', err);
-        });
-    },
+    // bindgift() {
+    //     // const that = this;
+    //     const params = {
+    //         uid: globalModels.getAccount().uid,
+    //         tel: logic.account, // 电话
+    //         email: logic.account // 邮箱
+    //     };
+    //     Http.bindgift(params).then(function(arg) {
+    //         console.log('绑红包 success', arg);
+    //     }).catch(function(err) {
+    //         console.log('绑红包 error', err);
+    //     });
+    // },
     // 红包领取记录 接口
     getgiftrec() {
         const params = {
@@ -203,7 +207,10 @@ const logic = {
                 });
                 console.log('领取记录 success', arg);
             } else {
-                logic.passwordModel.updateErrMsg(arg.err_msg);
+                window.$message({
+                    content: errCode.getRedPacketErrorCode(arg.code),
+                    type: 'danger'
+                });
             }
         }).catch(function(err) {
             console.log('领取记录 error', err);
@@ -226,7 +233,10 @@ const logic = {
                 m.redraw();
                 console.log('红包详情 success', arg);
             } else {
-                logic.passwordModel.updateErrMsg(arg.err_msg);
+                window.$message({
+                    content: errCode.getRedPacketErrorCode(arg.code),
+                    type: 'danger'
+                });
             }
         }).catch(function(err) {
             console.log('红包详情 error', err);

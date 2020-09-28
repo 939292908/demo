@@ -7,6 +7,7 @@
 const m = require('mithril');
 const Http = require('@/api').webApi;
 const redPacketUtils = require('@/util/redPacketUtils').default;
+const errCode = require('@/util/errCode').default;
 
 const logic = {
     // isLucky: true, // 是否是手气最佳
@@ -55,6 +56,11 @@ const logic = {
                     m.redraw();
                 });
                 console.log('领取记录 success', arg);
+            } else {
+                window.$message({
+                    content: errCode.getRedPacketErrorCode(arg.code),
+                    type: 'danger'
+                });
             }
         }).catch(function(err) {
             console.log('领取记录 error', err);
@@ -89,6 +95,11 @@ const logic = {
                 logic.redPacketInfoOption = JSON.parse(JSON.stringify(data)); // 红包Info 组件配置
                 m.redraw();
                 console.log('红包详情 success', arg);
+            } else {
+                window.$message({
+                    content: errCode.getRedPacketErrorCode(arg.code),
+                    type: 'danger'
+                });
             }
         }).catch(function(err) {
             console.log('红包详情 error', err);

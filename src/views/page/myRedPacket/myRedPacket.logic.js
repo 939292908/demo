@@ -4,6 +4,7 @@ const utils = require('@/util/utils').default;
 const wlt = require('@/models/wlt/wlt');
 const broadcast = require('@/broadcast/broadcast');
 const globalModels = require('@/models/globalModels');
+const errCode = require('@/util/errCode').default;
 
 const logic = {
     receiveMoneySum: 0, // 领取总金额
@@ -96,6 +97,11 @@ const logic = {
             if (arg.code === 0) {
                 this.buildReceiveRedPacketList(arg.data);
                 console.log('领取记录 success', arg);
+            } else {
+                window.$message({
+                    content: errCode.getRedPacketErrorCode(arg.code),
+                    type: 'danger'
+                });
             }
         }).catch(function(err) {
             console.log('领取记录 error', err);
@@ -111,6 +117,11 @@ const logic = {
             if (arg.code === 0) {
                 this.buildSendRedPacketList(arg.data);
                 console.log('发送记录 success', arg);
+            } else {
+                window.$message({
+                    content: errCode.getRedPacketErrorCode(arg.code),
+                    type: 'danger'
+                });
             }
         }).catch(function(err) {
             console.log('发送记录 error', err);

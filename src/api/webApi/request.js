@@ -40,6 +40,10 @@ Http.interceptors.response.use(function (response) {
     }
     return response.data;
 }, function (error) {
+    window.$message({
+        content: "api错误",
+        type: 'danger'
+    });
     return Promise.reject(error);
 });
 

@@ -776,7 +776,7 @@ export function getsendrec (params = {}, options = { withCredentials: false }) {
 export function getrecv (params = {}, options = { withCredentials: false }) {
     return Http.post('v1/gift/getrecv', params, options);
 }
-// 红包详情 gid
+// 红包领取情况 gid
 export function getgiftrec (params = {}, options = { withCredentials: false }) {
     return Http.post('v1/gift/getgiftrec', params, options);
 }

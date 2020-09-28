@@ -4,6 +4,7 @@ const redPacketUtils = require('@/util/redPacketUtils').default;
 const share = require('@/views/page/main/share/share.logic');
 const { HtmlConst, GetBase64 } = require('@/models/plus/index.js');
 const Qrcode = require('qrcode');
+const errCode = require('@/util/errCode').default;
 
 const logic = {
     shareLoading: false, // 分享按钮loading
@@ -53,7 +54,10 @@ const logic = {
                 m.redraw();
                 console.log('红包已领取记录 success', arg);
             } else {
-                logic.passwordModel.updateErrMsg(arg.err_msg);
+                window.$message({
+                    content: errCode.getRedPacketErrorCode(arg.code),
+                    type: 'danger'
+                });
             }
         }).catch(function(err) {
             console.log('红包已领取记录 error', err);
@@ -76,7 +80,10 @@ const logic = {
                 m.redraw();
                 console.log('红包详情 success', arg);
             } else {
-                logic.passwordModel.updateErrMsg(arg.err_msg);
+                window.$message({
+                    content: errCode.getRedPacketErrorCode(arg.code),
+                    type: 'danger'
+                });
             }
         }).catch(function(err) {
             console.log('红包详情 error', err);
