@@ -25,7 +25,7 @@ const LogSheet = {
         webApi.getExtItemInfo({ ip }).then(res => {
             if (res.result.code === 0) {
                 self.logList[index].country = res.result.ipInfo?.country;
-                self.logList[index].regionName = res.result.ipInfo?.city;
+                self.logList[index].regionName = res.result.ipInfo?.regionName;
                 m.redraw();
             }
         });
