@@ -186,24 +186,24 @@ const modifyFPView = {
                     ])
                 ])
             ]),
-            // 修改资金密码提示框
-            m(Modal, {
-                isShow: modifyFPView.tipModalIsShow, // 弹框显示/隐藏
-                slot: { // 插槽
-                    header: m('div', {}, [
-                        m('div', {}, I18n.$t('10410') /* '提示' */)
-                    ]),
-                    body: m('div', {}, I18n.$t('10290') /* '资产密码将用于转账、法币交易、红包等功能，请妥善保管，避免泄露. 请不要忘记自己的资产密码，资产密码遗忘后，需要将身份证及个人信息发送至客服邮箱，客服在24小时内处理' */)
-                },
-                // 弹框确认
-                onOk() {
-                    modifyFPView.tipModalIsShow = false;
-                },
-                onClose() {
-                    modifyFPView.tipModalIsShow = false;
-                }
-            }),
-            m(theBindingOrNot),
+            !modifyFPLogic.googleId && !modifyFPLogic.phoneNum
+                ? m(theBindingOrNot)
+                : m(Modal, { // 修改资金密码提示框
+                    isShow: modifyFPView.tipModalIsShow, // 弹框显示/隐藏
+                    slot: { // 插槽
+                        header: m('div', {}, [
+                            m('div', {}, I18n.$t('10410') /* '提示' */)
+                        ]),
+                        body: m('div', {}, I18n.$t('10290') /* '资产密码将用于转账、法币交易、红包等功能，请妥善保管，避免泄露. 请不要忘记自己的资产密码，资产密码遗忘后，需要将身份证及个人信息发送至客服邮箱，客服在24小时内处理' */)
+                    },
+                    // 弹框确认
+                    onOk() {
+                        modifyFPView.tipModalIsShow = false;
+                    },
+                    onClose() {
+                        modifyFPView.tipModalIsShow = false;
+                    }
+                }),
             modifyFPLogic.isShowVerifyView ? m(VerifyView, {
                 close: () => modifyFPLogic.switchSafetyVerifyModal(false),
                 isHandleVerify: true,
