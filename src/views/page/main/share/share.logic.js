@@ -48,7 +48,7 @@ module.exports = {
     cancelShareBtnClick() {
         this.options.isShow = false;
         this.options.needShareImg = null;
-        this.options.cancelCallback();
+        this.options.cancelCallback && this.options.cancelCallback();
         m.redraw();
     },
     doShare: function(param) {

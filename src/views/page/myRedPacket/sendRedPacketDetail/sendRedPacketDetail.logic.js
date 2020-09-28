@@ -87,7 +87,7 @@ const logic = {
         if (logic.redPacketInfoOption.status === 0) { // 继续发送该红包
             logic.shareLoading = true;
             logic.toShare({
-                link: `/receiveRedPacket?gid=${logic.gid}`
+                link: window.location.origin + window.location.pathname + `/#!/receiveRedPacket?gid=${logic.gid}`
             });
         } else { // 知道了
             window.router.back();
