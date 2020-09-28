@@ -45,7 +45,7 @@ module.exports = {
                         logic.receiveClick();
                     }
                 })),
-                m('div', { class: `has-text-primary mt-5` }, "已经在APP登录账号？点击前往直接抢 >>"),
+                // m('div', { class: `has-text-primary mt-5` }, "已经在APP登录账号？点击前往直接抢 >>"),
                 // 领取概况
                 m(redPacketInfo, logic.redPacketInfoOption),
                 // 领取列表

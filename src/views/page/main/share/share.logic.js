@@ -4,7 +4,8 @@ module.exports = {
     options: {
         isShow: false,
         needShareImg: null,
-        link: null
+        link: null,
+        cancelCallback: () => {} // 取消按钮回调
     },
     // 分享按钮list
     shareBtnList: [
@@ -39,6 +40,7 @@ module.exports = {
         this.options.isShow = true;
         this.options.needShareImg = param.needShareImg;
         this.options.link = param.link;
+        this.options.cancelCallback = param.cancelCallback;
         m.redraw();
         console.log('options', this.options);
     },
@@ -46,6 +48,7 @@ module.exports = {
     cancelShareBtnClick() {
         this.options.isShow = false;
         this.options.needShareImg = null;
+        this.options.cancelCallback();
         m.redraw();
     },
     doShare: function(param) {

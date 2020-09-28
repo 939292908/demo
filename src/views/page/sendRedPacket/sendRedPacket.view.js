@@ -163,7 +163,7 @@ module.exports = {
                             m('div', {
                                 class: `font-weight-bold mr-4 px-3 py-2`,
                                 onclick() {
-                                    logic.isShowNotShareModal = false;
+                                    logic.notShareModalCancel();
                                 }
                             }, "知道了"),
                             m(Button, {
@@ -171,8 +171,7 @@ module.exports = {
                                 size: "size-2",
                                 label: "继续分享",
                                 onclick() {
-                                    logic.isShowNotShareModal = false;
-                                    logic.isShowShareModal = true; // 分享弹框
+                                    logic.notShareModalToShareClick();
                                 }
                             })
                         ])
