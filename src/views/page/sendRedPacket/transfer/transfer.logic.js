@@ -1,6 +1,7 @@
 const wlt = require('@/models/wlt/wlt');
 const Http = require('@/api').webApi;
 const broadcast = require('@/broadcast/broadcast');
+// const m = require('mithril');
 
 const logic = {
     isShow: false, // 显示划转弹框
@@ -129,17 +130,18 @@ const logic = {
     setMaxTransfer () {
         if (wlt.wallet) { // 所有钱包 和 从xx钱包id 都存在
             const wallet = wlt.wallet[logic.fromDropdown.currentId]; // 对应钱包
-            for (const item of wallet) {
-                if (item.coin === this.currentCoin) { // 找到对应币种
-                    this.maxMoney = item.wdrawable || 0; // 设置最大可以金额
-                } else {
-                    this.maxMoney = "--";
-                }
+            const arr = wallet.filter(t => {
+                return t.wType === logic.coin;
+            });
+            if (arr.length > 0) {
+                this.maxMoney = arr[0].wdrawable || 0; // 设置最大可以金额
+            } else {
+                this.maxMoney = "--";
             }
         } else {
             this.maxMoney = "--";
         }
-        // console.log(this.maxMoney, 77777);
+        // m.redraw();
     },
     // 提交
     submit () {
