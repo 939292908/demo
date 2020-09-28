@@ -28,8 +28,8 @@ const logic = {
     isShowVerifyAuthModal: false,
     // 发红包 必须的权限
     mustAuth: {
-        authentication: true,
-        moneyPassword: true
+        authentication: false, // 是否实名认证
+        moneyPassword: false // 是否设置资金密码
     },
     // 分享按钮 loading
     shareLoading: false,
