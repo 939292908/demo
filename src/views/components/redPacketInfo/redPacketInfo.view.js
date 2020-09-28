@@ -1,4 +1,6 @@
 const m = require('mithril');
+const utils = require('@/util/utils').default;
+
 // {
 //     status: "", // 状态：0待领取，1已领完，2红包到期
 //     count: "", // 总数
@@ -18,7 +20,7 @@ module.exports = {
         // 已领完
         if (vnode.attrs.status * 1 === 1) {
             return m('div', { class: `has-text-left mt-3 side-px has-text-level-3 ${vnode.attrs.class || ''}` }, [
-                `${vnode.attrs.count}个红包共${vnode.attrs.quota} ${vnode.attrs.coin}，${(vnode.attrs.otm - vnode.attrs.ctm) / 1000 / 60}分钟被抢光`
+                `${vnode.attrs.count}个红包共${vnode.attrs.quota} ${vnode.attrs.coin}，${utils.toFixedForFloor((vnode.attrs.ltm - vnode.attrs.ctm) / 1000 / 60, 1)}分钟被抢光`
             ]);
         }
     }
