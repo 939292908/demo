@@ -1,4 +1,5 @@
-var m = require("mithril");
+const m = require("mithril");
+const utils = require('@/util/utils.js').default;
 
 require('./message.css');
 const l180n = require('@/languages/I18n').default;
@@ -8,7 +9,7 @@ const l180n = require('@/languages/I18n').default;
 
 const msg = {
     DBG_MESSAGE: true,
-    DEL_INTERVAL: 10 * 1000,
+    DEL_INTERVAL: 5 * 1000,
     messageContent: [],
     initMsg: function() {
         // 全局message事件
@@ -38,7 +39,7 @@ const msg = {
     createMsg: function ({ title, content, type }) {
         const that = this;
         const tm = Date.now();
-        if (window.isMobile) {
+        if (utils.isMobile()) {
             return m('article', { class: "message " + (' is-' + type), key: tm }, [
                 m('div', { class: "message-header" }, [
                     m('p', { class: "" }, [
