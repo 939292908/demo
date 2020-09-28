@@ -59,6 +59,18 @@ body,
 .w100 {
     width: 100% !important;
 }
+.w90 {
+    width: 90% !important;
+}
+.w80 {
+    width: 80% !important;
+}
+.w70 {
+    width: 70% !important;
+}
+.w60 {
+    width: 60% !important;
+}
 
 .columns {
     margin-left: 0;
@@ -258,6 +270,9 @@ body,
 }
 
 /* 边框 */
+.border-0 {
+    border-width: 0px;
+}
 
 .border-1 {
     border-width: 1px;
