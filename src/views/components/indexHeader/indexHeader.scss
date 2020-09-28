@@ -6,10 +6,11 @@
     border-bottom: none;
     ul{
         li{
+            border-bottom-color: none;;
             border-bottom-width: 1px;
             border-bottom-style: solid !important;
             a{
-                height: 50px;
+                height: 51px;
             }
         }
     }
