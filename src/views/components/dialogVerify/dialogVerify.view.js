@@ -74,7 +74,7 @@ module.exports = {
         if (this.props.isLinshiErWeiMa) return this.isLinshiErWeiMaVnode(); // 临时
         return m('div.mainPrompt', [
             m('div.promptText', this.props.content || I18n.$t('10396')/* '已提交提币申请，请前往邮件进行提币确认，邮件确认 后才能进入出金环节。' */),
-            !this.props.doubleButton ? m('div.butBox', { onclick: this.props.buttonClick || this.handlecloseDialog.bind(this) }, m('button.button is-fullwidth has-bg-primary', this.props.buttonText || I18n.$t('10415')/* '知道了' */)) : this.doubleButtonVnode()
+            !this.props.doubleButton ? m('div.butBox', m('button.button is-fullwidth has-bg-primary', { onclick: this.props.buttonClick || this.handlecloseDialog.bind(this) }, this.props.buttonText || I18n.$t('10415')/* '知道了' */)) : this.doubleButtonVnode()
         ]);
     },
     verifyContentTitle: function () { // 验证 title
