@@ -137,6 +137,7 @@ module.exports = {
         this.nationNo = account.nationNo; // 区号
         this.phoneNum = account.phone; // 用户手机号码
         this.googleId = account.googleId; // 谷歌
+        m.redraw();
     },
     initFn: function() {
         const that = this;
