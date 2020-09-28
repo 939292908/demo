@@ -76,7 +76,7 @@ module.exports = {
                         m('div', { class: `` }, [
                             m('div', { class: `font-weight-bold` }, [
                                 m('span', { class: `has-text-level-1` }, item.phone),
-                                m('span', { class: `has-text-primary body-4` }, ' ' + item.type)
+                                m('span', { class: `has-text-primary body-4` }, ' ' + item.type > 0 ? "普通红包" : "拼手气红包")
                             ]),
                             m('div', { class: `body-4 has-text-level-4` }, item.time)
                         ]),
