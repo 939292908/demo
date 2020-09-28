@@ -5,6 +5,8 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const Uglifyjs = require('uglifyjs-webpack-plugin');
 
+const publicPath = "";
+
 module.exports = {
     mode: "production",
     entry: {
@@ -12,7 +14,8 @@ module.exports = {
     },
     output: {
         filename: 'static/js/[name].[chunkhash].js',
-        path: path.resolve(__dirname, '../dist')
+        path: path.resolve(__dirname, '../dist'),
+        publicPath: publicPath
     },
     optimization: {
         minimize: true, // 是否开启压缩
