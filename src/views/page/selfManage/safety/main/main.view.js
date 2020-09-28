@@ -27,13 +27,13 @@ module.exports = {
             m('div.liftingBox content-width dis-flex justify-between align-stretch', [
                 m('div.leftBox', [
                     m('div', m(Block, { Icon: m('i.iconfont icon-GoogleVerification'), title: l180n.$t('10227') /* '谷歌验证' */, subhead: l180n.$t('10243') /* '用于提现和修改安全设置' */ }, m('div.dis-flex', [
-                        mainLogic.user?.googleId ? m('div.but py-1 px-4', { onclick: this.handleToUrl.bind(this, '/closeGoogleVerify') }, l180n.$t('10245') /* '解绑' */) : m('div.but py-1 px-4', { onclick: this.handleToUrl.bind(this, '/openGoogleVerify') }, l180n.$t('10231') /* '绑定' */)
+                        mainLogic.user?.googleId ? m('div.but has-bg-primary py-1 px-4', { onclick: this.handleToUrl.bind(this, '/closeGoogleVerify') }, l180n.$t('10245') /* '解绑' */) : m('div.but has-bg-primary py-1 px-4', { onclick: this.handleToUrl.bind(this, '/openGoogleVerify') }, l180n.$t('10231') /* '绑定' */)
                     ]))),
                     m('div.addPadding py-5', m(Block, { Icon: m('i.iconfont icon-PhoneVerification'), title: l180n.$t('10228') /* '手机验证' */, subhead: l180n.$t('10243') /* '用于提现和修改安全设置' */ }, m('div.dis-flex', [
-                        mainLogic.user?.phone ? m('div.has-text-primary', utils.hideAccountNameInfo(mainLogic.user?.phone)) : mainLogic.user?.phone + '' ? null : m('div.but py-1 px-4', { onclick: this.handleToUrl.bind(this, { path: '/bind', data: { type: 'phone' } }) }, l180n.$t('10231') /* '绑定' */)
+                        mainLogic.user?.phone ? m('div.has-text-primary', utils.hideAccountNameInfo(mainLogic.user?.phone)) : mainLogic.user?.phone + '' ? null : m('div.but has-bg-primary py-1 px-4', { onclick: this.handleToUrl.bind(this, { path: '/bind', data: { type: 'phone' } }) }, l180n.$t('10231') /* '绑定' */)
                     ]))),
                     m('div', m(Block, { Icon: m('i.iconfont icon-Mailbox'), title: l180n.$t('10229') /* '邮箱验证' */, subhead: l180n.$t('10243') /* '用于提现和修改安全设置' */ }, m('div.dis-flex', [
-                        mainLogic.user?.email ? m('div.has-text-primary', utils.hideAccountNameInfo(mainLogic.user?.email)) : mainLogic.user?.email + '' ? null : m('div.but py-1 px-4', { onclick: this.handleToUrl.bind(this, { path: '/bind', data: { type: 'email' } }) }, l180n.$t('10231') /* '绑定' */)
+                        mainLogic.user?.email ? m('div.has-text-primary', utils.hideAccountNameInfo(mainLogic.user?.email)) : mainLogic.user?.email + '' ? null : m('div.but has-bg-primary py-1 px-4', { onclick: this.handleToUrl.bind(this, { path: '/bind', data: { type: 'email' } }) }, l180n.$t('10231') /* '绑定' */)
                     ])))
                 ]),
                 m('div.rightBox', [
@@ -41,7 +41,7 @@ module.exports = {
                         m('div.has-text-primary', mainLogic.user?.iStatus === 1 ? l180n.$t('10523') /* '确认中' */ : mainLogic.user?.iStatus === 2 ? l180n.$t('10223') /* '未认证' */ : mainLogic.user?.iStatus === 9 ? l180n.$t('10146') /* '已认证' */ : l180n.$t('10223') /* '未认证' */)
                     ]))),
                     m('div', { class: 'mb-5' }, m(Block, { Icon: m('i.iconfont icon-FundPassword'), title: l180n.$t('10128') /* '资金密码 */, subhead: l180n.$t('10235') /* '用于内部转账和法币交易确认 */ }, m('div.dis-flex', [
-                        m('div.but py-1 px-4',
+                        m('div.but has-bg-primary py-1 px-4',
                             {
                                 onclick: () => {
                                     window.router.push({ path: '/modifyFundPassword', data: { type: mainLogic.moneyPasswordIsExist ? 1 : 0 } });
@@ -50,7 +50,7 @@ module.exports = {
                             mainLogic.moneyPasswordIsExist ? l180n.$t('10239') /* '修改' */ : l180n.$t('10233')/* '设置' */)
                     ]))),
                     m('div', { class: 'mb-5' }, m(Block, { Icon: m('i.iconfont icon-AntiFishing'), title: l180n.$t('10232') /* '防钓鱼码' */, subhead: l180n.$t('10247', { value: Conf.exchName }) /* 'XXXX给您发送邮件内容将包含您设置的防钓鱼码' */ }, m('div.dis-flex', [
-                        m('div.but py-1 px-4',
+                        m('div.but has-bg-primary py-1 px-4',
                             {
                                 onclick: () => {
                                     window.router.push({ path: '/antiFishingCode', data: { type: mainLogic.user?.antiFishCode ? 1 : 0 } });
