@@ -38,7 +38,7 @@ const antiFCView = {
             return;
         }
         /* '两次输入的防钓鱼码不一致' */
-        if (type === 'tip2' && (antiFCLogic.antiFishCodeFlag !== '' && antiFCLogic.antiFishCodeFlag !== undefined) && (antiFCLogic.newAntiFishingCodeValue !== antiFCLogic.antiFishingCodeValue)) {
+        if (type === 'tip2' && antiFCLogic.antiFishCodeFlag && (antiFCLogic.newAntiFishingCodeValue !== antiFCLogic.antiFishingCodeValue)) {
             antiFCView.totalFlag = false;
             antiFCView[type] = I18n.$t('10615'); /* '两次输入的防钓鱼码不一致' */
             return;
@@ -70,17 +70,17 @@ const antiFCView = {
             m('div', { class: `operation mb-7 has-bg-level-2` }, [
                 m('div', { class: `content-width container` }, [
                     m('i', { class: `iconfont icon-Return has-text-title cursor-pointer`, onclick: () => { window.router.go(-1); } }),
-                    m('span', { class: `has-text-title my-4 ml-4 title-medium` }, antiFCLogic.antiFishCodeFlag === '' || antiFCLogic.antiFishCodeFlag === undefined ? I18n.$t('10278') /* '您正在设置防钓鱼码' */ : I18n.$t('10285') /* '您正在修改防钓鱼码' */)
+                    m('span', { class: `has-text-title my-4 ml-4 title-medium` }, !antiFCLogic.antiFishCodeFlag ? I18n.$t('10278') /* '您正在设置防钓鱼码' */ : I18n.$t('10285') /* '您正在修改防钓鱼码' */)
                 ])
             ]),
             m('div', { class: `center container content-width has-bg-level-2 pt-7` }, [
                 m('div', { class: `leftDiv` }, [
-                    m('div', { class: `mb-5 ${antiFCLogic.antiFishCodeFlag === '' || antiFCLogic.antiFishCodeFlag === undefined ? `is-hidden` : ``}` }, [
+                    m('div', { class: `mb-5 ${!antiFCLogic.antiFishCodeFlag ? `is-hidden` : ``}` }, [
                         m('span', { class: `body-5 weightSix mb-1` }, I18n.$t('10286') /* '原防钓鱼码' */),
                         m('br'),
                         m('span', { class: `` }, antiFCLogic.antiFishCodeFlag)
                     ]),
-                    m('div', { class: `mb-5 ${antiFCLogic.antiFishCodeFlag === '' || antiFCLogic.antiFishCodeFlag === undefined ? `is-hidden` : ``}` }, [
+                    m('div', { class: `mb-5 ${!antiFCLogic.antiFishCodeFlag ? `is-hidden` : ``}` }, [
                         m('span', { class: `` }, I18n.$t('10287') /* '新防钓鱼码' */),
                         m(InputWithComponent, {
                             hiddenLine: true,
@@ -99,7 +99,7 @@ const antiFCView = {
                     ]),
                     m('div', { class: `` }, [
                         m('span', { class: `` },
-                            antiFCLogic.antiFishCodeFlag === '' || antiFCLogic.antiFishCodeFlag === undefined
+                            !antiFCLogic.antiFishCodeFlag
                                 ? I18n.$t('10232') /* '防钓鱼码' */
                                 : I18n.$t('10288') /* '确认新防钓鱼码' */
                         ),
@@ -123,7 +123,7 @@ const antiFCView = {
                     ])
                 ]),
                 m('div', { style: `width:140px` }),
-                m('div', { class: `rightDiv ${antiFCLogic.antiFishCodeFlag === '' || antiFCLogic.antiFishCodeFlag === undefined ? `` : `is-hidden`}` }, [
+                m('div', { class: `rightDiv ${!antiFCLogic.antiFishCodeFlag ? `` : `is-hidden`}` }, [
                     m('div', { class: `` }, [
                         m('span', { class: `body-5 weightSix mb-2` }, I18n.$t('10280') /* '什么是防钓鱼码？' */),
                         m('span', { class: `body-4 mb-7` }, I18n.$t('10281') /* '防钓鱼码是用户设置的一串字符，能够帮助识别仿冒本平台的网站或者邮件' */),
