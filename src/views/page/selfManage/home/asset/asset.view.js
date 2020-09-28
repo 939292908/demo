@@ -103,10 +103,10 @@ const assetView = {
                     m('div.asset-data', [
                         AssetData.walletAcId === '01' ? this.getContractVnode() : this.getallMoneyVnode(),
                         AssetData.walletAcId === '03' ? m('div.but-list dis-flex align-center mt-5', [
-                            AssetData.LBList.map(item => m('div.but-item has-text-primary body-4 mr-3 py-1 px-6', { onclick: () => { AssetData.handleClickLBItem(item); } }, item.label))
+                            AssetData.LBList.map(item => m('div.but-item has-text-primary has-line-primary body-4 mr-3 py-1 px-6', { onclick: () => { AssetData.handleClickLBItem(item); } }, item.label))
                         ]) : null,
                         AssetData.walletAcId === '04' ? m('div.but-list dis-flex align-center mt-5', [
-                            AssetData.legalList.map(item => m('div.but-item has-text-primary body-4 mr-3 py-1 px-6', { onclick: () => { AssetData.handleClickLBItem(item); } }, item.label))
+                            AssetData.legalList.map(item => m('div.but-item has-text-primary has-line-primary body-4 mr-3 py-1 px-6', { onclick: () => { AssetData.handleClickLBItem(item); } }, item.label))
                         ]) : null
                     ]),
                     m('div.data-echarts', m('div#AssetsPie', { style: 'width: 528px;height: 220px' }))
