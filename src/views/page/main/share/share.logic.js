@@ -11,7 +11,7 @@ module.exports = {
         {
             key: "WXSceneSession",
             label: "微信好友",
-            icon: "#icon-shareWeixin"
+            icon: "#icon-color-wechat"
         },
         {
             key: "WXSceneTimeline",
@@ -21,12 +21,12 @@ module.exports = {
         {
             key: "CopyLink",
             label: "复制链接",
-            icon: "#icon-qiehuan3"
+            icon: "#icon-CopyLink"
         },
         {
             key: "savePhoto",
             label: "保存图片",
-            icon: "#icon-xiaqiehuan"
+            icon: "#icon-sharePhoto"
         }
     ],
     /**

@@ -10,14 +10,13 @@ const config = require('@/config.js');
 const globalModels = require('@/models/globalModels');
 
 const logic = {
-    account: "15155395909", // 邮箱/手机号
+    account: "", // 邮箱/手机号
     isShowVerifyView: false, // 安全验证 弹框
     // 头部 组件配置
     headerOption: {
         left: {
             label: m('i', { class: `iconfont icon-tianxieshanchu` }),
             onclick() {
-                console.log(this.label);
                 window.router.back();
             }
         }
