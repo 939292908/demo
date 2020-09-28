@@ -242,7 +242,7 @@ const extract = {
         //     return this.handleTotalShow({ content: l180n.$t('10540') /* '提币需邮件确认，请先绑定邮箱 为了您的账户安全，还需绑定手机或谷歌' */, isLinshiErWeiMa: true });
         // }
         if (this.UserInfo.setting2fa.email !== 1) {
-            return this.handleTotalShow({ content: l180n.$t('10404') /* '提币需邮件确认，请先绑定邮箱' */, buttonText: l180n.$t('10229') /* '邮箱验证' */, buttonClick: () => { window.router.push({ path: '/bind', data: { type: 'phone' } }); } });
+            return this.handleTotalShow({ content: l180n.$t('10404') /* '提币需邮件确认，请先绑定邮箱' */, buttonText: l180n.$t('10229') /* '邮箱验证' */, buttonClick: () => { window.router.push({ path: '/bind', data: { type: 'email' } }); } });
         }
         const doubleButtonCof = [
             { text: l180n.$t('10227') /* '谷歌验证' */, issolid: false, click: () => { m.route.set("/openGoogleVerify"); } },
