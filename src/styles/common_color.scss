@@ -829,6 +829,10 @@ $primary-lighten: var(--c-primary-lighten);
     opacity: 1;
 }
 
+.button:focus {
+    box-shadow: none !important;
+}
+
 .is-gradient-bg-primary {
     background-image: linear-gradient(359.82deg, #FFE294 24.29%, #FFFBEF 76.28%);
 }

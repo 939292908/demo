@@ -66,6 +66,11 @@ body {
     white-space: nowrap;
 }
 
+// 不能选中
+.no-select {
+    user-select: none;
+}
+
 // 下拉组件
 .my-dropdown {
     width: 100%;

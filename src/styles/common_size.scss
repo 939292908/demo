@@ -16,16 +16,17 @@ body,
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     -webkit-tap-highlight-color: rgba(0,0,0,0);
-    
+
+    // 页面
     .pub-view {
         height: 100%;
         
-        // 头
+        // 公共头部
         .pub-header {
             height: 48px;
         }
         
-        // 内容
+        // 公共内容
         .pub-content {
             height: calc(100% - 48px);
             overflow: auto;
@@ -39,7 +40,7 @@ body,
             }
         }
 
-        // 底部
+        // 公共底部
         .pub-footer {
             height: 64px;
         }

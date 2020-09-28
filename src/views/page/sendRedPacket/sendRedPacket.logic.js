@@ -134,7 +134,7 @@ const logic = {
     },
     // 切换红包类型
     switchRedPacketType() {
-        this.redPacketType = this.redPacketType > 0 ? 0 : logic.numberFormItem.value;
+        this.redPacketType = this.redPacketType > 0 ? 0 : (logic.numberFormItem.value || 1);
     },
     // 币种按钮list
     buildCoinBtnList(list) {

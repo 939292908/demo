@@ -36,8 +36,8 @@ module.exports = {
         // 红包状态获取
         const getTextByStatus = function (item) {
             const status = item.status * 1;
-            if (status === 0) return m('span', { class: `has-text-primary` }, "未抢完");
-            if (status === 1) return m('span', { class: `has-text-level-3` }, "已抢完");
+            if (status === 0) return m('span', { class: `has-text-primary no-select` }, "未抢完");
+            if (status === 1) return m('span', { class: `has-text-level-3 no-select` }, "已抢完");
             if (status === 2) {
                 if (item.quota === item.quota2) {
                     return m('span', { class: `has-text-level-3` }, "已全额退款");
