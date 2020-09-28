@@ -148,6 +148,10 @@ class Conf {
         for (const url of s.GetLines().data) {
             pool.push(axios.get(url + '?timestamp=' + (new Date()).getTime()));
         }
+        if (pool.length === 0) {
+            CallBack && CallBack();
+            return;
+        }
         Promise.race(pool).then((arg) => {
             console.log(arg);
             const data = arg.data;

@@ -2,8 +2,8 @@ const m = require('mithril');
 const { apiLines } = require('@/api/index.js');
 const TradeNetSpeed = require('./TradeNetSpeed').default;
 const HttpNetSpeed = require('./HttpNetSpeed').default;
-const { gMktApi, gTrdApi } = require('../../api/wsApi/index.js');
-const { Http } = require('../../api/webApi/request.js');
+// const { gMktApi, gTrdApi } = require('../../api/wsApi/index.js');
+// const { Http } = require('../../api/webApi/request.js');
 const lines = {
     // 线路
     netLines: [],
@@ -28,12 +28,13 @@ const lines = {
     setLinesActive(id) {
         apiLines.SetActive(id);
         this.activeLine = apiLines.GetActive();
-        // 切换ws的线路
-        gMktApi.setSocketUrl(this.activeLine.WSMKT);
-        gTrdApi.setSocketUrl(this.activeLine.WSTRD);
-        // 切换WebApi的线路
-        Http.setBaseUrl(this.activeLine.WebAPI);
-        m.redraw();
+        // // 切换ws的线路
+        // gMktApi.setSocketUrl(this.activeLine.WSMKT);
+        // gTrdApi.setSocketUrl(this.activeLine.WSTRD);
+        // // 切换WebApi的线路
+        // Http.setBaseUrl(this.activeLine.WebAPI);
+        // m.redraw();
+        window.location.reload();
     },
     getActive() {
         return apiLines.GetActive();
