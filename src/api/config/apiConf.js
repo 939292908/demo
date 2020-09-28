@@ -97,8 +97,6 @@ class Conf {
             const activeLine = utils.getItem('networks.svrline');
             console.log('app当前选中的线路', activeLine, window.plus);
             if (activeLine) {
-                this.Active = this.M[aKey].netLines[0];
-            } else {
                 this.Active = {
                     Id: 0,
                     Name: activeLine.name,
@@ -110,6 +108,8 @@ class Conf {
                     // 网站地址
                     WEBSITE: activeLine.webSite
                 };
+            } else {
+                this.Active = this.M[aKey].netLines[0];
             }
         } else {
             this.Active = this.M[aKey].netLines[0];
