@@ -5,7 +5,7 @@ const InputWithComponent = require('@/views/components/inputWithComponent/inputW
 const AreaCodeSelect = require('@/views/page/user/login/areaCodeSelect/areaCodeSelect.view');
 const header = require('@/views/page/selfManage/header/header');
 const config = require('@/config.js');
-require('@/views/page/user/bind/bind.scss');
+require('@/views/page/selfManage/bind/bind.scss');
 require('./bindPhone.scss');
 const regExp = require('@/models/validate/regExp');
 // const Modal = require('@/views/components/common/Modal');

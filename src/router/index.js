@@ -62,7 +62,7 @@ class Router {
         },
         '/bind': {
             requireAuth: true,
-            onmatch: () => import('@/views/page/user/bind/bind.view')
+            onmatch: () => import('@/views/page/selfManage/bind/bind.view')
         },
         '/openGoogleVerify': {
             requireAuth: true,
@@ -78,7 +78,7 @@ class Router {
         },
         '/apiManager': {
             requireAuth: true,
-            onmatch: () => import('@/views/page/user/apiManager/apiManager.view')
+            onmatch: () => import('@/views/page/selfManage/apiManager/apiManager.view')
         },
         '/securityManage': {
             requireAuth: true,
