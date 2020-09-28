@@ -15,7 +15,7 @@ require('@/styles/pages/header');
 module.exports = {
     oncreate: function() {
         // 初始化线路数据
-        // apiLines.initLines();
+        apiLines.initLines();
         apiLines.updateLines();
         header.handleChangeWindowTitle();
     },
