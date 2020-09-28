@@ -31,6 +31,7 @@ module.exports = {
     secretQrCodeSrc: null, // 秘钥二维码地址
     LcPWd: '', // 登录密码值
     LcCode: '', // 谷歌验证码值
+    antiFishCode: '', // 钓鱼码
     switchSafetyVerifyModal (type) { // 安全校验弹框 显示/隐藏
         this.isShowVerifyView = type;
     },
@@ -173,10 +174,11 @@ module.exports = {
         if (typeFlag === 1) {
             params = {
                 secureEmail: that.email, // 邮箱地址
-                email: utils.hideAccountNameInfo(that.email), // 邮箱地址
+                email: that.email, // 邮箱地址
                 host: config.official, // 域名
                 fn: 'be',
-                lang: I18n.getLocale()
+                lang: I18n.getLocale(),
+                fishCode: that.antiFishCode
             };
             validate.activeEmail(params, function() {
                 that.currentOperation === 'bind' ? that.bindGoogle() : that.unbindGoogle();
@@ -198,10 +200,11 @@ module.exports = {
             params = {
                 emailconfig: {
                     secureEmail: that.email, // 邮箱地址
-                    email: utils.hideAccountNameInfo(that.email), // 邮箱地址
+                    email: that.email, // 邮箱地址
                     host: config.official, // 域名
                     fn: 'be',
-                    lang: I18n.getLocale()
+                    lang: I18n.getLocale(),
+                    fishCode: that.antiFishCode
                 },
                 smsconfig: {
                     securePhone: that.nationNo + '-' + utils.hideMobileInfo(that.phoneNum),
@@ -294,6 +297,8 @@ module.exports = {
         this.email = account.email; // 用户邮箱
         this.nationNo = account.nationNo; // 区号
         this.phoneNum = account.phone; // 用户手机号码
+        this.antiFishCode = account.antiFishCode; // 钓鱼码
+        m.redraw();
     },
     initFn: function() {
         this.LcPWd = ''; // 登录密码值初始化
