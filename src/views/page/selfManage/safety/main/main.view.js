@@ -61,7 +61,7 @@ module.exports = {
                 ])
             ]),
             m('div', { class: 'mb-5' }, m(Block, { Icon: m('i.iconfont icon-FundPassword'), title: l180n.$t('10512') /* '登录密码' */, subhead: l180n.$t('10241') /* '通过设置登录密码，您将可以使用账号和登录密码直接登录' */ }, m('div.dis-flex', [
-                m('div', { class: 'but py-1 px-4', onclick: this.handleToUrl.bind(this, '/modifyLoginPassword') }, l180n.$t('10239') /* '修改' */)
+                m('div', { class: 'buthas-bg-primary py-1 px-4', onclick: this.handleToUrl.bind(this, '/modifyLoginPassword') }, l180n.$t('10239') /* '修改' */)
             ])))
             // m('div', { class: 'mb-5' }, m(Block, { Icon: m('i.iconfont icon-sWithdrawalAddress'), title: l180n.$t('10269') /* '提币地址管理' */, subhead: '地址管理能够让您记录您的提现地址信息。可选的白名单功能允许您通过启用白名单地址来保护您的资金。' }, m('div.dis-flex', [
             //     m('div', { class: 'but py-1 px-4', onclick: this.handleToUrl.bind(this, '') }, l180n.$t('10240') /* '管理' */)
