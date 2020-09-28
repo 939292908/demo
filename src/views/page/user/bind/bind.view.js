@@ -33,7 +33,7 @@ module.exports = {
                 // 标题
                 m('div', { class: `bind-content-title has-bg-level-2 py-4` }, [
                     m('p', { class: `container title-small has-text-level-1 ` }, [
-                        m('span', {
+                        m('span.cursor-pointer', {
                             class: `mr-7`,
                             onclick: () => {
                                 window.router.push('/securityManage');
