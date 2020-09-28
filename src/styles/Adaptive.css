@@ -1,18 +1,18 @@
 @media screen and (height: 768px){
     #app .section,
     #app .bottom-sheet{
-      padding-bottom: 24px;
+      padding-bottom: 24px!important;
     }
 }
 @media screen and (height: 794px){
     #app .section,
     #app .bottom-sheet{
-        padding-bottom: 24px;
+        padding-bottom: 24px!important;
     }
 }
 @media screen and (height: 852px){
     #app .section,
     #app .bottom-sheet{
-        padding-bottom: 24px;
+        padding-bottom: 24px!important;
     }
 }
