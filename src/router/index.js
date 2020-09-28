@@ -91,10 +91,6 @@ class Router {
         '/modifyFundPassword': {
             requireAuth: true,
             onmatch: () => import('@/views/page/selfManage/modifyFundPassword/modifyFundPassword.view')
-        },
-        '/h': {
-            requireAuth: true,
-            onmatch: () => import('@/views/page/selfManage/header/header')
         }
     };
 
