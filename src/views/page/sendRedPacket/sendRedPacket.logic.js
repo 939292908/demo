@@ -271,7 +271,7 @@ const logic = {
         Http.sendgift(params).then(function(arg) {
             if (arg.code === 0) {
                 logic.toShare({
-                    link: `/receiveRedPacket?gid=${arg.data.gid}`
+                    link: window.location.origin + window.location.pathname + `/#!/receiveRedPacket?gid=${arg.data.gid}`
                 });
                 console.log('发红包 success', arg.data);
             } else {
@@ -319,6 +319,7 @@ const logic = {
         this.initCoinList(); // 初始化 币种下拉列表
         this.setMaxTransfer(); // 设置 最大划转
         // m.redraw();
+        // console.log(this.contractList);
     },
     // 初始化 币种下拉列表
     initCoinList () {
@@ -366,13 +367,13 @@ const logic = {
                 this.initTransferInfo();
             }
         });
-        broadcast.onMsg({
-            key: "sendRedP",
-            cmd: broadcast.MSG_WLT_UPD,
-            cb: () => {
-                this.initTransferInfo();
-            }
-        });
+        // broadcast.onMsg({
+        //     key: "sendRedP",
+        //     cmd: broadcast.MSG_WLT_UPD,
+        //     cb: () => {
+        //         this.initTransferInfo();
+        //     }
+        // });
     },
     oncreate(vnode) {
     },

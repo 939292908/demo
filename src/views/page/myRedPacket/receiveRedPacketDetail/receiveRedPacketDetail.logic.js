@@ -33,7 +33,7 @@ const logic = {
                 const params = logic.redPacketTopOption;
                 // 生成二维码
                 logic.doShare({
-                    link: 'http://192.168.2.89:8888/register',
+                    link: window.location.origin + '/m/register/',
                     // textArr: ['手气最佳', '8 USDT', '我抢到了来自', '178****7894', '的拼手气红包', '下载注册APP，轻松交易']
                     textArr: [
                         `${logic.best === 1 ? '手气最佳' : '我抢到了'}`,
