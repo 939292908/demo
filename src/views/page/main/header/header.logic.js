@@ -30,8 +30,7 @@ const header = {
             utils.removeItem("ex-session");
             utils.setItem('loginState', false);
             globalModels.setAccount({});
-
-            window.router.checkRoute({ path: window.router.path });
+            window.router.checkRoute({ path: m.route.get().split('?')[0] || m.route.get() });
             broadcast.emit({
                 cmd: broadcast.MSG_LOG_OUT,
                 data: {

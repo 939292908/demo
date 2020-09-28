@@ -107,7 +107,10 @@ class Router {
         const info = this.getUrlInfo();
         this.path = info.path;
         this.params = info.params;
-        this.checkRoute(this.getUrlInfo());
+        this.checkRoute(this.getUrlInfo().path);
+        window.addEventListener("popstate", (e) => {
+            this.checkRoute({ path: this.getUrlInfo().path });
+        });
     }
 
     /**
@@ -199,7 +202,7 @@ class Router {
     checkRoute(param) {
         // console.log('ht', 'checkRoute ', param, this.routerList[param.path], !utils.getItem('loginState'));
         if (this.routerList[param.path] && this.routerList[param.path].requireAuth && !utils.getItem('loginState')) {
-            this.route.set('/login');
+            this.push('/login');
             return true;
         }
         return false;
