@@ -49,16 +49,16 @@ const logic = {
             gid: m.route.param().gid
         };
         Http.getgiftrec(params).then(arg => {
-            if (arg.code === 0) {
+            if (arg.result.code === 0) {
                 // 领取记录列表
-                redPacketUtils.buildGiftrecData(arg.data).then(data => {
+                redPacketUtils.buildGiftrecData(arg.result.data).then(data => {
                     logic.redPacketList = data;
                     m.redraw();
                 });
                 console.log('领取记录 success', arg);
             } else {
                 window.$message({
-                    content: errCode.getRedPacketErrorCode(arg.code),
+                    content: errCode.getRedPacketErrorCode(arg.result.code),
                     type: 'danger'
                 });
             }
@@ -72,8 +72,8 @@ const logic = {
             gid: m.route.param().gid
         };
         Http.getdetails(params).then(function(arg) {
-            if (arg.code === 0) {
-                const data = arg.data;
+            if (arg.result.code === 0) {
+                const data = arg.result.data;
                 logic.redPacketTopOption = JSON.parse(JSON.stringify(data)); // 红包top 组件配置
                 logic.redPacketTopOption.quota = m.route.param().quota; // 自定义金额(当前抢到)
                 switch (m.route.param().status * 1) {
@@ -97,7 +97,7 @@ const logic = {
                 console.log('红包详情 success', arg);
             } else {
                 window.$message({
-                    content: errCode.getRedPacketErrorCode(arg.code),
+                    content: errCode.getRedPacketErrorCode(arg.result.code),
                     type: 'danger'
                 });
             }

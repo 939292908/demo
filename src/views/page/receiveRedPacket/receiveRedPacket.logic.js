@@ -166,20 +166,20 @@ const logic = {
         }
 
         Http.recvgift(params).then(arg => {
-            if (arg.code === 0) {
+            if (arg.result.code === 0) {
                 console.log('领取 success', arg);
                 window.router.push({
                     path: "/receiveResult", // 跳转抢红包结果
                     data: {
-                        gid: arg.data.gid, // 红包id
-                        best: arg.data.best, // 手气最佳(0:否 1:是)
-                        quota: arg.data.quota, // 抢的金额
-                        status: arg.data.status // 红包状态
+                        gid: arg.result.data.gid, // 红包id
+                        best: arg.result.data.best, // 手气最佳(0:否 1:是)
+                        quota: arg.result.data.quota, // 抢的金额
+                        status: arg.result.data.status // 红包状态
                     }
                 }); // 领取结果页  receiveResult
             } else {
                 window.$message({
-                    content: errCode.getRedPacketErrorCode(arg.code),
+                    content: errCode.getRedPacketErrorCode(arg.result.code),
                     type: 'danger'
                 });
             }
@@ -207,16 +207,16 @@ const logic = {
             gid: m.route.param().gid
         };
         Http.getgiftrec(params).then(arg => {
-            if (arg.code === 0) {
+            if (arg.result.code === 0) {
                 // 领取记录列表
-                redPacketUtils.buildGiftrecData(arg.data).then(data => {
+                redPacketUtils.buildGiftrecData(arg.result.data).then(data => {
                     logic.redPacketList = data;
                     m.redraw();
                 });
                 console.log('领取记录 success', arg);
             } else {
                 window.$message({
-                    content: errCode.getRedPacketErrorCode(arg.code),
+                    content: errCode.getRedPacketErrorCode(arg.result.code),
                     type: 'danger'
                 });
             }
@@ -230,8 +230,8 @@ const logic = {
             gid: m.route.param().gid
         };
         Http.getdetails(params).then(function(arg) {
-            if (arg.code === 0) {
-                const data = arg.data;
+            if (arg.result.code === 0) {
+                const data = arg.result.data;
                 // 红包头部 组件配置
                 logic.redPacketTopOption = JSON.parse(JSON.stringify(data));
                 logic.redPacketTopOption.msg2 = "您有机会获得"; // msg2
@@ -242,7 +242,7 @@ const logic = {
                 console.log('红包详情 success', arg);
             } else {
                 window.$message({
-                    content: errCode.getRedPacketErrorCode(arg.code),
+                    content: errCode.getRedPacketErrorCode(arg.result.code),
                     type: 'danger'
                 });
             }

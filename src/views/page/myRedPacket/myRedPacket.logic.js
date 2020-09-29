@@ -94,12 +94,12 @@ const logic = {
             uid: globalModels.getAccount().uid
         };
         Http.getrecv(params).then(arg => {
-            if (arg.code === 0) {
-                this.buildReceiveRedPacketList(arg.data);
+            if (arg.result.code === 0) {
+                this.buildReceiveRedPacketList(arg.result.data);
                 console.log('领取记录 success', arg);
             } else {
                 window.$message({
-                    content: errCode.getRedPacketErrorCode(arg.code),
+                    content: errCode.getRedPacketErrorCode(arg.result.code),
                     type: 'danger'
                 });
             }
@@ -113,13 +113,12 @@ const logic = {
             uid: globalModels.getAccount().uid
         };
         Http.getsendrec(params).then(arg => {
-            console.log(arg, 999999999);
-            if (arg.code === 0) {
-                this.buildSendRedPacketList(arg.data);
+            if (arg.result.code === 0) {
+                this.buildSendRedPacketList(arg.result.data);
                 console.log('发送记录 success', arg);
             } else {
                 window.$message({
-                    content: errCode.getRedPacketErrorCode(arg.code),
+                    content: errCode.getRedPacketErrorCode(arg.result.code),
                     type: 'danger'
                 });
             }

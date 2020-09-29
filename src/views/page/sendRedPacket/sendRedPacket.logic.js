@@ -274,18 +274,18 @@ const logic = {
         };
         logic.shareLoading = true;
         Http.sendgift(params).then(function(arg) {
-            if (arg.code === 0) {
-                logic.gid = arg.data.gid;
+            if (arg.result.code === 0) {
+                logic.gid = arg.result.data.gid;
                 logic.toShare({
                     link: window.location.origin + window.location.pathname + `/#!/receiveRedPacket?gid=${logic.gid}`
                 });
-                console.log('发红包 success', arg.data);
+                console.log('发红包 success', arg.result.data);
             } else {
                 window.$message({
-                    content: errCode.getRedPacketErrorCode(arg.code),
+                    content: errCode.getRedPacketErrorCode(arg.result.code),
                     type: 'danger'
                 });
-                logic.passwordModel.updateErrMsg(arg.data.err_msg);
+                logic.passwordModel.updateErrMsg(arg.result.data.err_msg);
             }
         }).catch(function(err) {
             console.log('发红包 error', err);
