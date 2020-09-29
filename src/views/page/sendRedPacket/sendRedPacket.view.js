@@ -69,7 +69,8 @@ module.exports = {
                     value: logic.numberFormItem.value,
                     updateOption: params => {
                         logic.numberFormItem.updateOption(params); // 更新数据
-                        logic.formModel.verifyNumber(); // 校验表单
+                        const isPass = logic.formModel.verifyNumber(); // 校验表单
+                        if (isPass) logic.formModel.verifyMoney(); // 校验表单
                     }
                 }),
                 // 祝福信息
@@ -86,7 +87,7 @@ module.exports = {
                 // 表单错误提示
                 m('div', { class: `has-text-up has-text-centered mt-5` }, logic.formModel.errMsg),
                 // 显示总金额
-                m('div', { class: `has-text-centered mt-7 ${!logic.formModel.verifyFormData(false) ? 'is-hidden' : ''}` }, [
+                m('div', { class: `has-text-centered mt-7 ${!logic.formModel.verifyAll(false) ? 'is-hidden' : ''}` }, [
                     m('p', { class: `title-medium has-text-level-1` }, `共 ${logic.formModel.getTotalCoin()} ${logic.currentCoin}`),
                     m('p', { class: `has-text-level-3` }, ` ≈¥${logic.getRMBByCoinMoney()}`)
                 ]),
@@ -229,7 +230,7 @@ module.exports = {
                     label: "塞币进红包",
                     class: 'is-primary mt-3',
                     width: 1,
-                    disabled: !logic.formModel.verifyFormData(false),
+                    disabled: !logic.formModel.verifyAll(false),
                     onclick() {
                         logic.coinToRedPacketBtnClick();
                     }

@@ -756,6 +756,11 @@ export function getWalletPwdStatus (params = {}, options = { withCredentials: fa
     }
  */
 // http://192.168.1.81:3070/api/gift/bindgift
+
+// 红包配置
+export function getRedPackCfg (params = {}) {
+    return Http.get('v1/gift/getCfg', { params });
+}
 // 发红包 vp:0, guid:'123', coin:'USDT',type:0, quota:10, count:10,des:'留言', passd: CryptoJS.MD5('123456')
 export function sendgift (params = {}, options = { withCredentials: false }) {
     return Http.post('v1/gift/sendgift', params, options);

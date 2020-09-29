@@ -7,12 +7,18 @@ const m = require('mithril');
 const share = require('../main/share/share.logic.js');
 const { HtmlConst, GetBase64 } = require('@/models/plus/index.js');
 const wlt = require('@/models/wlt/wlt');
-const broadcast = require('@/broadcast/broadcast');
+// const broadcast = require('@/broadcast/broadcast');
 const utils = require('@/util/utils').default;
 const globalModels = require('@/models/globalModels');
 const errCode = require('@/util/errCode').default;
 
 const logic = {
+    // 红包校验配置
+    verifyCfg: {
+        maxcount: 20, // 单次红包最大个数
+        low: 0, // 单人领取的最低额
+        hight: 1 // 红包最高总金额
+    },
     gid: '', // 红包id
     // 币种按钮list
     coinBtnList: [],
@@ -33,11 +39,6 @@ const logic = {
     },
     // 分享按钮 loading
     shareLoading: false,
-    allWalletList: [],
-    contractList: [], // 合约钱包 币种list
-    bibiList: [], // 币币钱包 币种list
-    myWalletList: [], // 我的钱包 币种list
-    legalTenderList: [], // 法币钱包 币种list
     // 资金密码 模块
     passwordModel: {
         // 密码
@@ -76,18 +77,29 @@ const logic = {
         formErrMsg: "",
         // 校验金额
         verifyMoney(isUpdateMsg = true) {
-            // 钱包可用资产不足，请及时划转！
             // console.log(this.getTotalCoin(), logic.wltMoney, 999);
+
+            if (this.getTotalCoin() > logic.verifyCfg.hight) {
+                isUpdateMsg && this.updateErrMsg(`红包最高总金额${logic.verifyCfg.hight}${logic.currentCoin}`);
+                return false;
+            }
+
             if (this.getTotalCoin() > logic.wltMoney * 1) {
                 isUpdateMsg && this.updateErrMsg("钱包可用资产不足，请及时划转！");
                 return false;
             }
+
+            if (logic.moneyFormItem.value < logic.verifyCfg.low) {
+                isUpdateMsg && this.updateErrMsg(`单人领取的最低额${logic.verifyCfg.low}${logic.currentCoin}`);
+                return false;
+            }
+
             isUpdateMsg && this.updateErrMsg(''); // 清空提示
             return true;
         },
         // 校验红包个数
         verifyNumber(isUpdateMsg = true) {
-            const maxNum = parseInt(logic.wltMoney / logic.moneyFormItem.value); // 最多可发个数
+            const maxNum = parseInt(logic.wltMoney / logic.moneyFormItem.value); // 资金最多可发个数
 
             // 请输入红包个数
             if (!logic.numberFormItem.value || logic.numberFormItem.value === '0') {
@@ -97,14 +109,19 @@ const logic = {
 
             if (logic.redPacketType > 0) { // 普通
                 // 一次最多可发xx个红包
+                if (logic.numberFormItem.value > logic.verifyCfg.maxcount) {
+                    isUpdateMsg && this.updateErrMsg(`一次最多可发${logic.verifyCfg.maxcount}个红包`);
+                    return false;
+                }
+                // 账户金额最多可发
                 if (logic.numberFormItem.value > maxNum) {
                     isUpdateMsg && this.updateErrMsg(`一次最多可发${maxNum}个红包`);
                     return false;
                 }
             } else { // 拼手气
                 // 一次最多可发xx个红包
-                if (logic.numberFormItem.value > 10000) {
-                    isUpdateMsg && this.updateErrMsg(`一次最多可发${10000}个红包`);
+                if (logic.numberFormItem.value > logic.verifyCfg.maxcount) {
+                    isUpdateMsg && this.updateErrMsg(`一次最多可发${logic.verifyCfg.maxcount}个红包`);
                     return false;
                 }
             }
@@ -112,9 +129,7 @@ const logic = {
             return true;
         },
         // 校验表单 isUpdateMsg/是否更新错误消息
-        verifyFormData(isUpdateMsg = true) {
-            // eslint-disable-next-line no-debugger
-            // debugger;
+        verifyAll(isUpdateMsg = true) {
             if (!this.verifyMoney(isUpdateMsg)) return; // 钱包可用资产不足，请及时划转！
             if (!this.verifyNumber(isUpdateMsg)) return; // 校验红包个数
             return true;
@@ -135,26 +150,6 @@ const logic = {
     // 切换红包类型
     switchRedPacketType() {
         this.redPacketType = this.redPacketType > 0 ? 0 : (logic.numberFormItem.value || 1);
-    },
-    // 币种按钮list
-    buildCoinBtnList(list) {
-        const btnClick = function (item) {
-            logic.currentCoin = item.coin; // 更新选中币种
-            logic.setMaxTransfer(); // 设置最大划转
-            logic.formModel.verifyMoney(); // 校验表单
-        };
-        this.coinBtnList = list.map(item => {
-            const btnOption = {
-                label: item.coin,
-                class: () => `is-primary is-rounded mr-2 font-weight-bold ${logic.currentCoin === item.coin ? '' : 'is-outlined'}`,
-                size: 'size-2',
-                onclick() {
-                    btnClick(item);
-                }
-            };
-            return btnOption;
-        });
-        m.redraw();
     },
     // 头部 组件配置
     headerOption: {
@@ -221,11 +216,11 @@ const logic = {
     },
     // 塞币进红包 click
     coinToRedPacketBtnClick() {
-        // logic.initMustAuth();
-        logic.sendRedPModal.updateOption({ isShow: true }); // -------------- 临时发红包 跳过权限验证 --------------
+        logic.verifyMustAuth(); // 校验 需要的权限
+        // logic.sendRedPModal.updateOption({ isShow: true }); // -------------- 临时发红包 跳过权限验证 --------------
     },
-    // 初始化 需要的权限
-    initMustAuth() {
+    // 校验 需要的权限
+    verifyMustAuth() {
         const account = globalModels.getAccount();
         // 实名认证通过 iStatus: 9
         if (account.iStatus === 9) {
@@ -261,6 +256,57 @@ const logic = {
         if (logic.mustAuth.authentication && logic.mustAuth.moneyPassword) { // 实名认证/资金密码全部开通
             logic.sendRedPModal.updateOption({ isShow: true }); // 发红包弹框
         }
+    },
+    // 红包配置 接口
+    getRedPackCfg() {
+        const params = {};
+        Http.getRedPackCfg(params).then(arg => {
+            if (arg.result.code === 0) {
+                console.log('红包配置 success', arg);
+                logic.verifyCfg.maxcount = arg.result.cfgs.maxcount; // 单次红包最大个数
+                logic.buildCoinBtnList(arg.result.coincfgs);
+            } else {
+                window.$message({
+                    content: errCode.getRedPacketErrorCode(arg.result.code),
+                    type: 'danger'
+                });
+            }
+        }).catch(function(err) {
+            console.log('红包配置 error', err);
+        });
+    },
+    // 币种按钮list
+    buildCoinBtnList(obj) {
+        const list = [];
+        for (const key in obj) {
+            const item = obj[key];
+            item.label = key;
+            list.push(item);
+        }
+        // 按钮list
+        this.coinBtnList = list.map(item => {
+            const btnOption = {
+                label: item.label,
+                class: () => `is-primary is-rounded mr-2 font-weight-bold ${logic.currentCoin === item.label ? '' : 'is-outlined'}`,
+                size: 'size-2',
+                onclick() {
+                    logic.coinBtnClick(item);
+                }
+            };
+            return btnOption;
+        });
+        logic.currentCoin = logic.currentCoin ? logic.currentCoin : this.coinBtnList[0]?.label;
+        m.redraw();
+    },
+    // 币种按钮click
+    coinBtnClick(item) {
+        logic.verifyCfg.low = item.low;// 单人领取的最低额
+        logic.verifyCfg.hight = item.hight;// 红包最高总金额
+        console.log(logic.verifyCfg, 88888);
+
+        logic.currentCoin = item.label; // 更新选中币种
+        logic.setMaxTransfer(); // 设置最大划转
+        logic.formModel.verifyAll(); // 校验表单
     },
     // 发红包接口
     sendgift() {
@@ -312,59 +358,6 @@ const logic = {
         logic.passwordModel.value = ""; // 密码
         logic.passwordModel.updateErrMsg('');// 密码错误消息
     },
-    // 初始化划转
-    initTransferInfo () {
-        this.contractList = wlt.wallet['01'].filter(item => item.Setting.canTransfer); // 合约钱包 币种list
-        this.bibiList = wlt.wallet['02'].filter(item => item.Setting.canTransfer); // 币币钱包 币种list
-        this.myWalletList = wlt.wallet['03'].filter(item => item.Setting.canTransfer); // 我的钱包 币种list
-        this.legalTenderList = wlt.wallet['04'].filter(item => item.Setting.canTransfer); // 法币钱包 币种list
-        // 钱包列表
-        this.allWalletList = [
-            { // 我的钱包
-                id: "03",
-                list: this.myWalletList
-            },
-            { // 合约钱包
-                id: "01",
-                list: this.contractList
-            },
-            { // 币币钱包
-                id: "02",
-                list: this.bibiList
-            },
-            { // 法币钱包
-                id: "04",
-                list: this.legalTenderList
-            }
-        ];
-        this.initCoinList(); // 初始化 币种下拉列表
-        this.setMaxTransfer(); // 设置 最大划转
-        // m.redraw();
-        // console.log(this.contractList);
-    },
-    // 初始化 币种下拉列表
-    initCoinList () {
-        this.coinBtnList = [];
-        // this.coinBtnList：逻辑：每一项至少出现在2个钱包 且 列表去重
-        this.allWalletList.forEach((data, index) => {
-            // 遍历每个钱包的币种
-            data.list.forEach(item => {
-                // 币种是否重复
-                if (!this.coinBtnList.some(item3 => item3.wType === item.wType)) {
-                    item.id = item.wType;
-                    item.label = item.wType;
-                    item.coinName = wlt.wltFullName[item.wType].name;
-                    this.coinBtnList.push(item); // push
-                }
-            });
-        });
-        // 初始化 币种默认选中
-        if (this.coinBtnList[0]) {
-            this.currentCoin = m.route.param().currentCoin || this.currentCoin || this.coinBtnList[0].coin;
-        }
-        this.buildCoinBtnList(this.coinBtnList);
-        // console.log(this.coinBtnList, 9999999999);
-    },
     // 设置 最大划转 (依赖钱包名称, 币种)
     setMaxTransfer () {
         if (wlt.wallet) { // 所有钱包 和 从xx钱包id 都存在
@@ -380,14 +373,15 @@ const logic = {
         // console.log(this.wltMoney, 77777);
     },
     oninit(vnode) {
+        this.getRedPackCfg();
         wlt.init(); // 更新数据
-        broadcast.onMsg({
-            key: "sendRedP",
-            cmd: broadcast.MSG_WLT_READY,
-            cb: () => {
-                this.initTransferInfo();
-            }
-        });
+        // broadcast.onMsg({
+        //     key: "sendRedP",
+        //     cmd: broadcast.MSG_WLT_READY,
+        //     cb: () => {
+        //         // this.initTransferInfo();
+        //     }
+        // });
         // broadcast.onMsg({
         //     key: "sendRedP",
         //     cmd: broadcast.MSG_WLT_UPD,
@@ -402,16 +396,16 @@ const logic = {
     },
     onremove(vnode) {
         wlt.remove();
-        broadcast.offMsg({
-            key: "sendRedP",
-            cmd: broadcast.MSG_WLT_READY,
-            isall: true
-        });
-        broadcast.offMsg({
-            key: "sendRedP",
-            cmd: broadcast.MSG_WLT_UPD,
-            isall: true
-        });
+        // broadcast.offMsg({
+        //     key: "sendRedP",
+        //     cmd: broadcast.MSG_WLT_READY,
+        //     isall: true
+        // });
+        // broadcast.offMsg({
+        //     key: "sendRedP",
+        //     cmd: broadcast.MSG_WLT_UPD,
+        //     isall: true
+        // });
     },
     // 取消分享回调
     cancelCallback() {
