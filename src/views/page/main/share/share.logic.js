@@ -1,6 +1,8 @@
 const m = require('mithril');
 const { Share, Model } = require('@/models/plus/index.js');
 module.exports = {
+    isShare: false, // 是否分享了操作
+    shareMsg: "", // 提示
     options: {
         isShow: false,
         needShareImg: null,
@@ -48,7 +50,9 @@ module.exports = {
     cancelShareBtnClick() {
         this.options.isShow = false;
         this.options.needShareImg = null;
-        this.options.cancelCallback && this.options.cancelCallback();
+        this.options.cancelCallback && this.options.cancelCallback({ isShare: this.isShare });
+        this.isShare = false;
+        this.shareMsg = "";
         m.redraw();
     },
     doShare: function(param) {
@@ -72,13 +76,17 @@ module.exports = {
         case "CopyLink":
             console.log('WXSceneSession', param);
             Model.plusCopyToClipboard(this.options.link);
-            window.$message({ content: '已复制链接', type: 'success' });
+            that.isShare = true;
+            that.shareMsg = "链接已复制，快去分享给你的好友吧！";
+            // window.$message({ content: '已复制链接', type: 'success' });
             break;
         case "savePhoto":
             console.log('WXSceneSession', param);
             Share.photo(
                 this.options.needShareImg,
                 arg => {
+                    that.isShare = true;
+                    that.shareMsg = "图片已保存，快去分享给你的好友吧！";
                     // that.cancelShareBtnClick();
                 },
                 err => {
