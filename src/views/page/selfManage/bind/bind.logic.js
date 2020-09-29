@@ -123,7 +123,7 @@ module.exports = {
         validate.activeSms({
             securePhone: '00' + this.areaCode + '-' + this.bind, // 加密手机号带区号
             areaCode: '00' + this.areaCode, // 区号
-            phone: '00' + this.areaCode + '-' + this.bind, // 手机号
+            phoneNum: '00' + this.areaCode + '-' + this.bind, // 手机号
             lang: I18n.getLocale() // 语言
         }, () => {
             this.set2FA();
