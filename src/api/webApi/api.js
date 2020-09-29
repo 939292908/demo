@@ -741,27 +741,49 @@ export function getWalletPwdStatus (params = {}, options = { withCredentials: fa
 // ================ 红包活动 ================
 
 // const axios = require('axios');
+
 /**
- * 发红包接口
- * @param {Object} params {
-        opCode: 5 // 绑定类型，固定填5
-        opInfo: '354625@qq.com' // 邮箱
-        password: '9cbf8a4dcb8e30682b927f352d6559a0' // 用户密码
-    }
+ * 红包配置
+ * @param {Object} params {}
  * @param {Object} options axios请求配置
  * @returns {Object} {
-        "result":{
-            "code":0 // code为0则是成功，其他失败
+    "result":{
+        "code":0,
+        "coincfgs":{ // 可划币种列表
+            "BTC":{
+                "low":0.0000001, // 单人领取的最低额
+                "hight":1, // 红包最高总金额
+                "dayquota":100 // 单日金额限制
+            }
+        },
+        "cfgs":{
+            "maxcount":20, //单次红包最大个数
+            "daycount":100, //单次红包最大个数
+            "validity":86400000 //红包有效期
         }
     }
+}
  */
-// http://192.168.1.81:3070/api/gift/bindgift
-
-// 红包配置
 export function getRedPackCfg (params = {}) {
     return Http.get('v1/gift/getCfg', { params });
 }
-// 发红包 vp:0, guid:'123', coin:'USDT',type:0, quota:10, count:10,des:'留言', passd: CryptoJS.MD5('123456')
+
+/**
+ * 发红包
+ * @param {Object} params {
+    coin: "BTC"  //币种
+    type: 0  //红包类型:0拼手气，>0普通红包
+    quota: 1 //金额
+    count: 1 //红包个数
+    des: ""   //祝福语
+    passd: "" //密码
+ * }
+ * @param {Object} options axios请求配置
+ * @returns {Object} {
+
+}
+ */
+//  vp:0, guid:'123', coin:'USDT',type:0, quota:10, count:10,des:'留言', passd: CryptoJS.MD5('123456')
 export function sendgift (params = {}, options = { withCredentials: false }) {
     return Http.post('v1/gift/sendgift', params, options);
 }

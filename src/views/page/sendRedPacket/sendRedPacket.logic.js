@@ -7,7 +7,7 @@ const m = require('mithril');
 const share = require('../main/share/share.logic.js');
 const { HtmlConst, GetBase64 } = require('@/models/plus/index.js');
 const wlt = require('@/models/wlt/wlt');
-// const broadcast = require('@/broadcast/broadcast');
+const broadcast = require('@/broadcast/broadcast');
 const utils = require('@/util/utils').default;
 const globalModels = require('@/models/globalModels');
 const errCode = require('@/util/errCode').default;
@@ -202,7 +202,6 @@ const logic = {
     transferBtnClick() {
         transferLogic.updateOption({
             isShow: true,
-            // maxMoney: logic.wltMoney,
             coin: logic.currentCoin
         });
     },
@@ -238,6 +237,7 @@ const logic = {
                 logic.mustAuth.moneyPassword = res?.settingValue === '*';
                 if (logic.mustAuth.authentication && logic.mustAuth.moneyPassword) { // 实名认证和资金密码全部开通
                     logic.sendRedPModal.updateOption({ isShow: true }); // 发红包弹框
+                    m.redraw();
                 } else {
                     logic.isShowVerifyAuthModal = true; // 实名认证/资金密码 弹框
                 }
@@ -375,20 +375,14 @@ const logic = {
     oninit(vnode) {
         this.getRedPackCfg();
         wlt.init(); // 更新数据
-        // broadcast.onMsg({
-        //     key: "sendRedP",
-        //     cmd: broadcast.MSG_WLT_READY,
-        //     cb: () => {
-        //         // this.initTransferInfo();
-        //     }
-        // });
-        // broadcast.onMsg({
-        //     key: "sendRedP",
-        //     cmd: broadcast.MSG_WLT_UPD,
-        //     cb: () => {
-        //         this.initTransferInfo();
-        //     }
-        // });
+        broadcast.onMsg({
+            key: "sendRedP",
+            cmd: broadcast.MSG_WLT_READY,
+            cb: () => {
+                this.setMaxTransfer();
+                m.redraw();
+            }
+        });
     },
     oncreate(vnode) {
     },
@@ -396,16 +390,11 @@ const logic = {
     },
     onremove(vnode) {
         wlt.remove();
-        // broadcast.offMsg({
-        //     key: "sendRedP",
-        //     cmd: broadcast.MSG_WLT_READY,
-        //     isall: true
-        // });
-        // broadcast.offMsg({
-        //     key: "sendRedP",
-        //     cmd: broadcast.MSG_WLT_UPD,
-        //     isall: true
-        // });
+        broadcast.offMsg({
+            key: "sendRedP",
+            cmd: broadcast.MSG_WLT_READY,
+            isall: true
+        });
     },
     // 取消分享回调
     cancelCallback() {
@@ -416,7 +405,6 @@ const logic = {
         const link = param.link; // 需要分享的链接
         const img1 = window.location.origin + window.location.pathname + require('@/assets/img/shareBg.png').default;
         const img2 = window.location.origin + window.location.pathname + require('@/assets/img/logo.png').default;
-        const cancelCallback = logic.cancelCallback; // 取消分享回调
         console.log(img1, img2);
         if (window.plus) {
             Qrcode.toDataURL(link).then(base64 => {
@@ -428,7 +416,13 @@ const logic = {
                         H: 667
                     }, res => {
                         console.log('GetBase64 getWebView', res);
-                        share.openShare({ needShareImg: res, link: link, cancelCallback }); // 打开分享弹框
+                        share.openShare({
+                            needShareImg: res,
+                            link: link,
+                            cancelCallback() {
+                                logic.cancelCallback();
+                            }
+                        }); // 打开分享弹框
                         logic.sendRedPModal.updateOption({ isShow: false });// 关闭发红包弹框
                         logic.reset(); // 重置
                         logic.shareLoading = false;

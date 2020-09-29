@@ -132,7 +132,6 @@ module.exports = {
                                     value: logic.passwordModel.value,
                                     oninput(e) {
                                         logic.passwordModel.updateValue(e.target.value); // 更新密码
-                                        logic.passwordModel.verifyPassword(); // 校验
                                     }
                                 })
                             ]),

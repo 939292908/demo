@@ -79,7 +79,7 @@ module.exports = {
             Share.photo(
                 this.options.needShareImg,
                 arg => {
-                    that.cancelShareBtnClick();
+                    // that.cancelShareBtnClick();
                 },
                 err => {
                     console.log('err', err);
