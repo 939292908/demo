@@ -833,6 +833,16 @@ $primary-lighten: var(--c-primary-lighten);
     box-shadow: none !important;
 }
 
+.button.is-primary.is-outlined:hover {
+    background-color: initial !important;
+    color: $primary-lighten !important;
+}
+
+.button.is-primary.is-outlined:focus {
+    background-color: initial !important;
+    color: $primary-lighten !important;
+}
+
 .is-gradient-bg-primary {
     background-image: linear-gradient(359.82deg, #FFE294 24.29%, #FFFBEF 76.28%);
 }

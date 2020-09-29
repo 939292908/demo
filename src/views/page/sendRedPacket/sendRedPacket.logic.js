@@ -315,7 +315,7 @@ const logic = {
             type: logic.redPacketType > 0 ? logic.moneyFormItem.value : 0, // 类型 0:拼手气, >0:普通红包且数字是单个红包金额
             quota: logic.moneyFormItem.value, // 金额
             count: logic.numberFormItem.value, // 数量
-            des: logic.infoFormItem.value, // 留言
+            des: logic.infoFormItem.value || "大吉大利，全天盈利", // 留言
             passd: md5(logic.passwordModel.value) // 密码
         };
         logic.shareLoading = true;

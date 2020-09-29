@@ -29,7 +29,7 @@ module.exports = {
                 ]),
                 // 币种
                 m('div', { class: `has-border-bottom-1 py-3 has-line-level-4` }, [
-                    m('span', { class: `body-3 mr-2 has-text-level-4` }, '币种'),
+                    m('span', { class: `body-3 mr-2 has-text-level-4 body-5` }, '币种'),
                     m('span', { class: `title-small has-text-level-1` }, logic.currentCoin)
                 ]),
                 // 币种btnList 列表
@@ -78,7 +78,7 @@ module.exports = {
                     content: m('input', {
                         class: `input has-text-level-1`,
                         value: logic.infoFormItem.value,
-                        placeholder: "请输入祝福语",
+                        placeholder: "大吉大利，全天盈利",
                         oninput(e) {
                             logic.infoFormItem.updateOption({ value: e.target.value });
                         }
