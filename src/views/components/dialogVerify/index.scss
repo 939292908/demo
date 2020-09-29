@@ -89,16 +89,12 @@
 
         .itemBut {
           width: 47%;
-          color: #FF8B00;
+          //color: #FF8B00;
           cursor: pointer;
-          border: 1px solid #FF8B00;
+          border: 1px solid;
           text-align: center;
           padding: 12px;
           border-radius: 2px;
-        }
-        .bgBut {
-          color: #FFFFFF;
-          background-color: #FF8B00;
         }
       }
     }

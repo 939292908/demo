@@ -128,7 +128,7 @@ module.exports = {
     },
     doubleButtonVnode: function () {
         return m('div.butBox dis-flex', [
-            this.props.doubleButtonCof.map(item => m('div.itemBut', { class: item.issolid ? 'bgBut' : '', onclick: item.click }, item.text))
+            this.props.doubleButtonCof.map(item => m('div.itemBut has-line-primary', { class: item.issolid ? 'has-bg-primary' : 'has-text-primary', onclick: item.click }, item.text))
         ]);
     },
     verifyVnode: function (vNode) {
