@@ -16,13 +16,13 @@ const logic = {
     // 头部 组件配置
     headerOption: {
         left: {
-            label: m('i', { class: `iconfont icon-close has-text-level-1` }),
-            onclick() {
-                window.router.back();
-            }
+            // label: m('i', { class: `iconfont icon-close has-text-level-1` }),
+            // onclick() {
+            //     window.router.back();
+            // }
         },
         center: {
-            label: "抢红包"
+            // label: "抢红包"
         }
     },
     // 红包top 组件配置

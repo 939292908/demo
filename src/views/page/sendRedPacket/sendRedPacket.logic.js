@@ -397,8 +397,10 @@ const logic = {
         });
     },
     // 取消分享回调
-    cancelCallback() {
-        this.isShowNotShareModal = true;
+    cancelCallback(params) {
+        if (!params.isShare) {
+            this.isShowNotShareModal = true;
+        }
     },
     // 分享
     toShare: function(param) {

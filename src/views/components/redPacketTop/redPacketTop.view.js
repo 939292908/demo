@@ -1,6 +1,6 @@
 const m = require('mithril');
 const utils = require('@/util/utils').default;
-const globalModels = require('@/models/globalModels');
+// const globalModels = require('@/models/globalModels');
 
 // {
 //     gtel / gemail: "", // 来源
@@ -32,9 +32,10 @@ module.exports = {
         }
     },
     view(vnode) {
-        return m('div', { class: `${vnode.attrs.hiddenLine ? '' : 'has-border-bottom-1'} side-px pb-3 has-line-level-4 ${vnode.attrs.class || ''}` }, [
+        return m('div', { class: `${vnode.attrs.hiddenLine ? '' : 'has-border-bottom-1'} side-px pb-3 has-line-level-1 ${vnode.attrs.class || ''}` }, [
             // 来源
-            vnode.attrs.guid === globalModels.getAccount().uid ? m('div', { class: `pt-5 has-text-level-1` }, "您发送的")
+            vnode.attrs.guid ? m('div', { class: `pt-5 has-text-level-1` }, "您发送的")
+            // vnode.attrs.guid === globalModels.getAccount().uid ? m('div', { class: `pt-5 has-text-level-1` }, "您发送的")
                 : m('div', { class: `pt-5 has-text-level-1` }, [
                     m('span', { class: `` }, '来自'),
                     m('span', { class: `has-text-primary` }, vnode.state.getFromName(vnode)),
