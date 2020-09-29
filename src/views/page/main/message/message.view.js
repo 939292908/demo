@@ -40,24 +40,25 @@ const msg = {
         const that = this;
         const tm = Date.now();
         if (utils.isMobile()) {
-            return m('article', { class: "message " + (' is-' + type), key: tm }, [
-                m('div', { class: "message-header" }, [
-                    m('p', { class: "" }, [
-                        content
-                    ]),
-                    m('button', {
-                        class: "delete",
-                        "aria-label": "delete",
-                        onclick: function () {
-                            that.delMsg(tm);
-                        }
-                    })
+            return m('article', { class: "message ", key: tm }, [
+                m('div', { class: "message-header has-bg-level-2 has-line-level-2" }, [
+                    m('div', { class: "message-content has-text-centered " + (type === "danger" ? " has-text-tip-error" : " has-text-tip-success") }, [
+                        m('div', { class: `pb-3` }, content),
+                        m('div', { class: `message-line has-border-bottom-2 has-line-level-2 mb-2` })
+                    ])
+                    // m('button', {
+                    //     class: "delete",
+                    //     "aria-label": "delete",
+                    //     onclick: function () {
+                    //         that.delMsg(tm);
+                    //     }
+                    // })
                 ])
             ]);
         } else {
-            return m('article', { class: "message " + (' is-' + type), key: tm }, [
-                m('div', { class: "message-header" }, [
-                    m('p', { class: "" }, [
+            return m('article', { class: "message ", key: tm }, [
+                m('div', { class: "message-header has-bg-level-2" }, [
+                    m('p', { class: "message-content has-text-centered " + (type === "danger" ? " has-text-tip-error" : " has-text-tip-success") }, [
                         title
                     ]),
                     m('button', {
