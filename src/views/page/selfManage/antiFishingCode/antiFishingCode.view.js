@@ -138,7 +138,7 @@ const antiFCView = {
                         m('div', { class: `bot pt-6` }, [
                             m('div', { class: `block ml-5 mr-8 has-bg-level-4` }, []),
                             m('div', { class: `text pa-1 has-line-level-3` }, [
-                                m('span', { class: `has-text-level-3 body-4` }, '防钓鱼码'),
+                                m('span', { class: `has-text-level-3 body-4` }, I18n.$t(10232) /* '防钓鱼码' */),
                                 m('div', { class: `mx-2 has-line-level-1` }),
                                 m('span', { class: `has-text-primary body-4 fontW` }, '299701')
                             ])
