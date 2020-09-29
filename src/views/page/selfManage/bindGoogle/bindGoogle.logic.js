@@ -176,7 +176,7 @@ module.exports = {
                 secureEmail: that.email, // 邮箱地址
                 email: that.email, // 邮箱地址
                 host: config.official, // 域名
-                fn: 'be',
+                fn: that.currentOperation === 'bind' ? 'bgg' : 'ubgg',
                 lang: I18n.getLocale(),
                 fishCode: that.antiFishCode
             };
@@ -202,7 +202,7 @@ module.exports = {
                     secureEmail: that.email, // 邮箱地址
                     email: that.email, // 邮箱地址
                     host: config.official, // 域名
-                    fn: 'be',
+                    fn: that.currentOperation === 'bind' ? 'bgg' : 'ubgg',
                     lang: I18n.getLocale(),
                     fishCode: that.antiFishCode
                 },
