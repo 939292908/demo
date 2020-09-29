@@ -26,7 +26,7 @@ const logic = {
             label: "详情记录"
         },
         right: {
-            label: m('i', { class: `iconfont icon-otc-editName` }),
+            label: m('i', { class: `iconfont icon-otc-editName has-text-level-3` }),
             loading: false, // 分享按钮loading
             onclick() {
                 logic.headerOption.right.loading = true; // 分享按钮loading

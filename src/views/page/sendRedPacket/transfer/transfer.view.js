@@ -34,7 +34,7 @@ module.exports = {
                     // 下拉钱包
                     m('div', { class: `is-between is-align-center` }, [
                         m(Dropdown, logic.fromDropdown),
-                        m('i', { class: `iconfont icon-arrow-right mx-2 iconfont-min` }),
+                        m('i', { class: `iconfont icon-arrow-right mx-2 iconfont-min has-text-level-4` }),
                         m(Dropdown, logic.toDropdown)
                     ]),
                     m('div', { class: `mt-5 font-weight-bold body-6 mb-2 has-text-level-1` }, ["划转数量"]),

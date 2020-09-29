@@ -49,11 +49,11 @@ module.exports = {
                 // 领取概况
                 m(redPacketInfo, logic.redPacketInfoOption),
                 // 领取列表
-                m('div', { class: `has-text-left side-px pb-3` }, logic.redPacketList.map((item, index) => {
+                m('div', { class: `has-text-left side-px pb-3 has-text-level-1` }, logic.redPacketList.map((item, index) => {
                     return m('div', { class: `is-between py-5 has-border-bottom-1 has-line-level-4 has-last-child-border-none`, key: index }, [
                         m('div', { class: `` }, [
                             m('div', { class: `font-weight-bold` }, item.build_rtel),
-                            m('div', { class: `body-4` }, item.build_rtm)
+                            m('div', { class: `body-4 has-text-level-3` }, item.build_rtm)
                         ]),
                         m('div', { class: `font-weight-bold has-text-right` }, [
                             item.best * 1 === 1 ? m('i', { class: `iconfont icon-VipCrown iconfont-medium` }) : "",
@@ -88,7 +88,7 @@ module.exports = {
                                 // logic.closeSwitchLineView();
                             }
                         }, [
-                            m('i.iconfont.icon-Order')
+                            m('i.iconfont.icon-Order.has-text-level-3')
                         ]),
                         m('button.button.is-light.pa-3', {
                             onclick: function() {
@@ -109,7 +109,7 @@ module.exports = {
                                         apiLines.setLinesActive(item.Id);
                                     }
                                 }, [
-                                    m('i.iconfont.icon-dot' + (item.Id !== apiLines.activeLine.Id ? '.opacity-0' : '.has-text-primary')),
+                                    m('i.iconfont.icon-dot.has-text-level-3' + (item.Id !== apiLines.activeLine.Id ? '.opacity-0' : '.has-text-primary')),
                                     m('span', {}, [
                                         item.Name
                                     ]),

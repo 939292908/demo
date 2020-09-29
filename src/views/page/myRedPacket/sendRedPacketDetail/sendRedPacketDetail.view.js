@@ -27,7 +27,7 @@ module.exports = {
                             m('div', { class: `body-4 has-text-level-4` }, item.build_rtm)
                         ]),
                         m('div', { class: `has-text-right` }, [
-                            m('div', { class: `font-weight-bold` }, [
+                            m('div', { class: `font-weight-bold has-text-level-1` }, [
                                 item.best * 1 === 1 ? m('i', { class: `iconfont icon-VipCrown iconfont-medium` }) : "",
                                 m('span', { class: `` }, item.quota),
                                 m('span', { class: `` }, item.coin)
