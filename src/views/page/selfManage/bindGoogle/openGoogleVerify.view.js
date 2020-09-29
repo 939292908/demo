@@ -6,6 +6,7 @@ const broadcast = require('@/broadcast/broadcast');
 const VerifyView = require('@/views/components/dialogVerify/dialogVerify.view');
 const config = require('@/config.js');
 const header = require('@/views/page/selfManage/header/header');
+const Title = require('../goBackTitle/goBackTitle.view');
 const InputWithComponent = require('@/views/components/inputWithComponent/inputWithComponent.view');
 
 const openGView = {
@@ -86,13 +87,8 @@ const openGView = {
     view: () => {
         return m('div', { class: `views-page-accountSecurity-bindGoogle-open theme--light pb-8` }, [
             m(header),
-            m('div', { class: `operation mb-7 has-bg-level-2` }, [
-                m('div', { class: `content-width container` }, [
-                    m('i', { class: `iconfont icon-Return has-text-title cursor-pointer`, onclick: () => { window.router.go(-1); } }),
-                    m('span', { class: `has-text-title my-4 ml-4 title-medium` }, I18n.$t('10250') /* '您正在绑定谷歌验证' */)
-                ])
-            ]),
-            m('div', { class: `center content-width has-bg-level-2 margin-LRauto` }, [
+            m(Title, { title: I18n.$t('10250') /* '您正在绑定谷歌验证' */ }),
+            m('div.mt-7', { class: `center content-width has-bg-level-2 margin-LRauto` }, [
                 m('div', { class: `center-top` }, [
                     openGView.nav.map(item => {
                         return m('div', { class: `column my-7 ${item.id <= openGView.checkFlag ? `has-text-primary` : `has-line-level-4`}`, key: item.id }, [

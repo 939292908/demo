@@ -7,6 +7,7 @@ const AreaCodeSelect = require('@/views/page/user/login/areaCodeSelect/areaCodeS
 const header = require('@/views/page/selfManage/header/header');
 const regExp = require('@/models/validate/regExp');
 // const Modal = require('@/views/components/common/Modal');
+const Title = require('../goBackTitle/goBackTitle.view');
 const I18n = require('@/languages/I18n').default;
 require('./bind.scss');
 
@@ -16,25 +17,12 @@ module.exports = {
     view(vnode) {
         return m('div.bind-content', { class: `theme--light` }, [
             m(header),
+            m(Title, {
+                title: m.route.param().type === 'phone'
+                    ? I18n.$t('10267')/* "您正在绑定手机验证" */
+                    : I18n.$t('10268')/* "您正在绑定邮箱验证" */
+            }),
             m('div.has-bg-level-1.pb-7', {}, [
-                // 标题
-                m('div', { class: `bind-content-title has-bg-level-2 py-4` }, [
-                    m('p', { class: `container title-small has-text-level-1 ` }, [
-                        m('span.cursor-pointer', {
-                            class: `mr-7`,
-                            onclick: () => {
-                                window.router.push('/securityManage');
-                            }
-                        }, [
-                            m('i.iconfont.icon-Return.iconfont-medium', {}, [])
-                        ]),
-                        m('span', { class: `` }, [
-                            m.route.param().type === 'phone'
-                                ? I18n.$t('10267')/* "您正在绑定手机验证" */
-                                : I18n.$t('10268')/* "您正在绑定邮箱验证" */
-                        ])
-                    ])
-                ]),
                 // 内容
                 m('div', { class: `container has-bg-level-2 mt-7 py-8` }, [
                     m('div', { class: `bind-content-main my-form` }, [

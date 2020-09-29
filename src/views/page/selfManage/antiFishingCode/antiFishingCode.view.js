@@ -7,6 +7,7 @@ const VerifyView = require('@/views/components/dialogVerify/dialogVerify.view');
 const config = require('@/config.js');
 const theBindingOrNot = require('@/views/components/theBindingOrNot/theBindingOrNot.view');
 const header = require('@/views/page/selfManage/header/header');
+const Title = require('../goBackTitle/goBackTitle.view');
 
 const antiFCView = {
     totalFlag: false, /* 是否通过验证 */
@@ -67,13 +68,8 @@ const antiFCView = {
     view: () => {
         return m('div', { class: `views-page-selfManage-antiFishingCode theme--light pb-7` }, [
             m(header),
-            m('div', { class: `operation mb-7 has-bg-level-2` }, [
-                m('div', { class: `content-width container` }, [
-                    m('i', { class: `iconfont icon-Return has-text-title cursor-pointer`, onclick: () => { window.router.go(-1); } }),
-                    m('span', { class: `has-text-title my-4 ml-4 title-medium` }, !antiFCLogic.antiFishCodeFlag ? I18n.$t('10278') /* '您正在设置防钓鱼码' */ : I18n.$t('10285') /* '您正在修改防钓鱼码' */)
-                ])
-            ]),
-            m('div', { class: `center container content-width has-bg-level-2 pt-7` }, [
+            m(Title, { title: !antiFCLogic.antiFishCodeFlag ? I18n.$t('10278') /* '您正在设置防钓鱼码' */ : I18n.$t('10285') /* '您正在修改防钓鱼码' */ }),
+            m('div.mt-7', { class: `center container content-width has-bg-level-2 pt-7` }, [
                 m('div', { class: `leftDiv` }, [
                     m('div', { class: `mb-5 ${!antiFCLogic.antiFishCodeFlag ? `is-hidden` : ``}` }, [
                         m('span', { class: `body-5 weightSix mb-1` }, I18n.$t('10286') /* '原防钓鱼码' */),

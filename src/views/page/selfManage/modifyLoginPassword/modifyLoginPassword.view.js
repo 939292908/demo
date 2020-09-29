@@ -7,6 +7,7 @@ const VerifyView = require('@/views/components/dialogVerify/dialogVerify.view');
 const header = require('@/views/page/selfManage/header/header');
 const InputWithComponent = require('@/views/components/inputWithComponent/inputWithComponent.view');
 const regExp = require('@/models/validate/regExp');
+const Title = require('../goBackTitle/goBackTitle.view');
 const theBindingOrNot = require('@/views/components/theBindingOrNot/theBindingOrNot.view');
 
 const modifyLPView = {
@@ -91,13 +92,8 @@ const modifyLPView = {
     view: () => {
         return m('div', { class: `views-page-accountSecurity-modifyLoginPassword theme--light pb-7` }, [
             m(header),
-            m('div', { class: `operation mb-7 has-bg-level-2` }, [
-                m('div', { class: `content-width container` }, [
-                    m('i', { class: `iconfont icon-Return has-text-title cursor-pointer`, onclick: () => { window.router.go(-1); } }),
-                    m('span', { class: `has-text-title my-4 ml-4 title-medium` }, I18n.$t('10275') /* '您正在修改登录密码' */)
-                ])
-            ]),
-            m('div', { class: `center content-width container has-bg-level-2 pt-8 pb-8` }, [
+            m(Title, { title: I18n.$t('10275') /* '您正在修改登录密码' */ }),
+            m('div.mt-7', { class: `center content-width container has-bg-level-2 pt-8 pb-8` }, [
                 m('div', { class: `center-center margin-LRauto` }, [
                     m('div', { class: `oldPwdDiv mb-5` }, [
                         m('span', { class: `body-5` }, I18n.$t('10276') /* '原密码' */),

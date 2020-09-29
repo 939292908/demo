@@ -5,6 +5,7 @@ const I18n = require('@/languages/I18n').default;
 const VerifyView = require('@/views/components/dialogVerify/dialogVerify.view');
 const config = require('@/config.js');
 const header = require('@/views/page/selfManage/header/header');
+const Title = require('../goBackTitle/goBackTitle.view');
 const InputWithComponent = require('@/views/components/inputWithComponent/inputWithComponent.view');
 
 const closeGView = {
@@ -15,13 +16,8 @@ const closeGView = {
     view: () => {
         return m('div', { class: `views-page-accountSecurity-bindGoogle-close theme--light pb-7` }, [
             m(header),
-            m('div', { class: `operation mb-7 has-bg-level-2` }, [
-                m('div', { class: `content-width container` }, [
-                    m('i', { class: `iconfont icon-Return has-text-title cursor-pointer`, onclick: () => { window.router.go(-1); } }),
-                    m('span', { class: `has-text-title my-4 ml-4 title-medium` }, I18n.$t('10262') /* '您正在解绑谷歌验证' */)
-                ])
-            ]),
-            m('div', { class: `center content-width margin-LRauto` }, [
+            m(Title, { title: I18n.$t('10262') /* '您正在解绑谷歌验证' */ }),
+            m('div.mt-7', { class: `center content-width margin-LRauto` }, [
                 m('div', { class: `warning mb-3 pl-7` }, [
                     m('i', { class: `iconfont icon-Tooltip pr-2 has-text-primary cursor-pointer` }),
                     m('span', { class: `has-text-level-3` }, I18n.$t('10263') /* '出于安全考虑，修改账户安全项之后，24h内禁止提币' */)
