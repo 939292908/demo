@@ -6,6 +6,7 @@ const geetest = require('@/models/validate/geetest').default;
 const validate = require('@/models/validate/validate').default;
 const I18n = require('@/languages/I18n').default;
 const gM = require('@/models/globalModels');
+const { Conf } = require('@/api');
 const utils = require('@/util/utils').default;
 
 module.exports = {
@@ -15,6 +16,7 @@ module.exports = {
     newAntiFishingCodeValue: '', // 新防钓鱼码值
     phoneNum: '', // 用户手机号码
     googleId: '', // 谷歌id
+    logoSrc: '', // 钓鱼码提示框logo
     isShowVerifyView: false, // 安全校验弹框 show
     switchSafetyVerifyModal (type) { // 安全校验弹框 显示/隐藏
         this.isShowVerifyView = type;
@@ -136,6 +138,8 @@ module.exports = {
         }
     },
     initFn: function() {
+        // 钓鱼码提示框logo
+        this.logoSrc = require(`@/assets/img/logo/${Conf.exchName.toLowerCase()}.svg`).default;
         this.antiFishingCodeValue = '';// 初始化输入框
         this.newAntiFishingCodeValue = '';// 初始化输入框
         this.antiFishCodeFlag = null;// 初始化

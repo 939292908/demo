@@ -130,7 +130,20 @@ const antiFCView = {
                         m('span', { class: `body-5 weightSix mb-2` }, I18n.$t('10282') /* '防钓鱼码在哪显示？' */),
                         m('span', { class: `body-4` }, I18n.$t('10283') /* '设置好后，每一封本平台发给用户的邮件都会带此串字符。' */)
                     ]),
-                    m('img', { class: `mt-7`, src: require(`@/assets/img/selfManage/antiFishCode.svg`).default })
+                    // m('img', { class: `mt-7`, src: require(`@/assets/img/selfManage/antiFishCode.svg`).default })
+                    m('div', { class: `codeCard mt-7 has-line-level-3` }, [
+                        m('div', { class: `logo has-line-level-1 pl-5 pt-5` }, [
+                            m('img', { class: ``, src: antiFCLogic.logoSrc })
+                        ]),
+                        m('div', { class: `bot pt-6` }, [
+                            m('div', { class: `block ml-5 mr-8 has-bg-level-4` }, []),
+                            m('div', { class: `text pa-1 has-line-level-3` }, [
+                                m('span', { class: `has-text-level-3 body-4` }, '防钓鱼码'),
+                                m('div', { class: `mx-2 has-line-level-1` }),
+                                m('span', { class: `has-text-primary body-4 fontW` }, '299701')
+                            ])
+                        ])
+                    ])
                 ])
             ]),
             m(theBindingOrNot),

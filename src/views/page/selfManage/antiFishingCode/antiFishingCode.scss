@@ -27,6 +27,42 @@
             .weightSix{
                 font-weight: 600;
             }
+            .codeCard{
+                width: 272px;
+                height: 118px;
+                border-width: 1px;
+                border-style: dashed;
+                .logo{
+                    width: 100%;
+                    height: 47px;
+                    border-bottom-width: 1px;
+                    border-bottom-style: dashed;
+                }
+                .bot{
+                    display: flex;
+                    flex-direction: row;
+                }
+                .block{
+                    width: 59px;
+                    height: 14px;
+                    margin: auto 0;
+                }
+                .text{
+                    border-width: 1px;
+                    border-style: dashed;
+                    display: flex;
+                    flex-direction: row;
+                    .fontW{
+                        font-weight: 700;
+                    }
+                    div{
+                        height: 8px;
+                        border-width: 1px;
+                        border-style: solid;
+                        margin: auto;
+                    }
+                }
+            }
         }
     }
 }
