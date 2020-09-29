@@ -86,11 +86,6 @@ module.exports = {
                 }),
                 // 表单错误提示
                 m('div', { class: `has-text-up has-text-centered mt-5` }, logic.formModel.errMsg),
-                // 显示总金额
-                m('div', { class: `has-text-centered mt-7 ${!logic.formModel.verifyAll(false) ? 'is-hidden' : ''}` }, [
-                    m('p', { class: `title-medium has-text-level-1` }, `共 ${logic.formModel.getTotalCoin()} ${logic.currentCoin}`),
-                    m('p', { class: `has-text-level-3` }, ` ≈¥${logic.getRMBByCoinMoney()}`)
-                ]),
                 // 划转 Modal
                 m(transfer),
                 // 发红包确认 弹框
@@ -225,9 +220,14 @@ module.exports = {
             ]),
             // 塞币进红包 btn
             m('div', { class: `pub-footer side-px` }, [
+                // 显示总金额
+                m('div', { class: `has-text-centered ${!logic.formModel.verifyAll(false) ? 'is-hidden' : ''}` }, [
+                    m('p', { class: `title-medium has-text-level-1` }, `共 ${logic.formModel.getTotalCoin()} ${logic.currentCoin}`),
+                    m('p', { class: `has-text-level-3` }, ` ≈¥${logic.getRMBByCoinMoney()}`)
+                ]),
                 m(Button, {
                     label: "塞币进红包",
-                    class: 'is-primary mt-3',
+                    class: 'is-primary mt-3 mb-3',
                     width: 1,
                     disabled: !logic.formModel.verifyAll(false),
                     onclick() {
