@@ -74,6 +74,7 @@ const logic = {
                 // 红包top 组件配置
                 logic.redPacketTopOption = JSON.parse(JSON.stringify(data));
                 logic.redPacketTopOption.msg = logic.redPacketTopOption.status * 1 === 2 ? "红包已过期" : ""; // msg
+                logic.redPacketTopOption.guid = ""; // 空为来自自己
                 // 红包Info 组件配置
                 logic.redPacketInfoOption = JSON.parse(JSON.stringify(data));
                 m.redraw();
