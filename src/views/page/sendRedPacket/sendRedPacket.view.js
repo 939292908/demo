@@ -76,7 +76,7 @@ module.exports = {
                 // 祝福信息
                 m(FormItem, {
                     content: m('input', {
-                        class: `input has-text-level-1`,
+                        class: `input has-text-level-1 px-0`,
                         value: logic.infoFormItem.value,
                         placeholder: "大吉大利，全天盈利",
                         oninput(e) {

@@ -9,7 +9,7 @@ module.exports = {
         return m('div', { class: `pub-form-item is-between is-align-center border-radius-small px-3 has-bg-level-1 ${vnode.attrs.class || ''}` },
             vnode.attrs.content ? vnode.attrs.content : [
                 m('div', { class: `no-wrap has-text-level-1` }, typeof vnode.attrs.label === 'function' ? vnode.attrs.label() : (vnode.attrs.label || '')),
-                m('div', { class: `is-between is-align-center ` }, [
+                m('div', { class: `is-between is-align-center` }, [
                     m('input', {
                         class: `input has-text-right has-text-level-1`,
                         value: vnode.attrs.value,
@@ -19,7 +19,7 @@ module.exports = {
                             vnode.attrs.updateOption({ value: e.target.value });
                         }
                     }),
-                    m('div', { class: `no-wrap has-text-level-1`, onclick() { vnode.attrs.unitClick && vnode.attrs.unitClick(); } }, vnode.attrs.unit || '')
+                    m('div', { class: `pub-form-item-unit no-wrap has-text-level-1`, onclick() { vnode.attrs.unitClick && vnode.attrs.unitClick(); } }, vnode.attrs.unit || '')
                 ])
             ]);
     }
