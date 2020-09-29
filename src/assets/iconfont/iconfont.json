@@ -6,6 +6,139 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "17408989",
+      "name": "ex30-VbitWatermark",
+      "font_class": "ex30-VbitWatermark",
+      "unicode": "e68b",
+      "unicode_decimal": 59019
+    },
+    {
+      "icon_id": "17342071",
+      "name": "VerticalLine",
+      "font_class": "VerticalLine",
+      "unicode": "e68a",
+      "unicode_decimal": 59018
+    },
+    {
+      "icon_id": "17341964",
+      "name": "Fibona",
+      "font_class": "Fibona",
+      "unicode": "e679",
+      "unicode_decimal": 59001
+    },
+    {
+      "icon_id": "17341965",
+      "name": "Delete1",
+      "font_class": "Delete1",
+      "unicode": "e67a",
+      "unicode_decimal": 59002
+    },
+    {
+      "icon_id": "17341966",
+      "name": "HorizontalLine",
+      "font_class": "HorizontalLine",
+      "unicode": "e67b",
+      "unicode_decimal": 59003
+    },
+    {
+      "icon_id": "17341968",
+      "name": "HorizontalRays",
+      "font_class": "HorizontalRays",
+      "unicode": "e67c",
+      "unicode_decimal": 59004
+    },
+    {
+      "icon_id": "17341969",
+      "name": "HorizontalStraightLine",
+      "font_class": "HorizontalStraightLine",
+      "unicode": "e67d",
+      "unicode_decimal": 59005
+    },
+    {
+      "icon_id": "17341970",
+      "name": "LineSegment",
+      "font_class": "LineSegment",
+      "unicode": "e67e",
+      "unicode_decimal": 59006
+    },
+    {
+      "icon_id": "17341971",
+      "name": "ParallelLines",
+      "font_class": "ParallelLines",
+      "unicode": "e67f",
+      "unicode_decimal": 59007
+    },
+    {
+      "icon_id": "17341972",
+      "name": "PriceChannel",
+      "font_class": "PriceChannel",
+      "unicode": "e680",
+      "unicode_decimal": 59008
+    },
+    {
+      "icon_id": "17341973",
+      "name": "Ruler",
+      "font_class": "Ruler",
+      "unicode": "e681",
+      "unicode_decimal": 59009
+    },
+    {
+      "icon_id": "17341974",
+      "name": "Screenshot1",
+      "font_class": "Screenshot1",
+      "unicode": "e682",
+      "unicode_decimal": 59010
+    },
+    {
+      "icon_id": "17341975",
+      "name": "Rays",
+      "font_class": "Rays",
+      "unicode": "e683",
+      "unicode_decimal": 59011
+    },
+    {
+      "icon_id": "17341976",
+      "name": "PriceChannelLine",
+      "font_class": "PriceChannelLine",
+      "unicode": "e684",
+      "unicode_decimal": 59012
+    },
+    {
+      "icon_id": "17341977",
+      "name": "PriceLine",
+      "font_class": "PriceLine",
+      "unicode": "e685",
+      "unicode_decimal": 59013
+    },
+    {
+      "icon_id": "17341979",
+      "name": "StraightLine",
+      "font_class": "StraightLine",
+      "unicode": "e686",
+      "unicode_decimal": 59014
+    },
+    {
+      "icon_id": "17341980",
+      "name": "Trend",
+      "font_class": "Trend",
+      "unicode": "e687",
+      "unicode_decimal": 59015
+    },
+    {
+      "icon_id": "17341981",
+      "name": "VerticalLineSegment",
+      "font_class": "VerticalLineSegment",
+      "unicode": "e688",
+      "unicode_decimal": 59016
+    },
+    {
+      "icon_id": "17341982",
+      "name": "VerticalRays",
+      "font_class": "VerticalRays",
+      "unicode": "e689",
+      "unicode_decimal": 59017
+    },
+    {
       "icon_id": "17123699",
       "name": "Authentication",
       "font_class": "Authentication1",
@@ -361,6 +494,13 @@
       "font_class": "Shrink",
       "unicode": "e658",
       "unicode_decimal": 58968
+    },
+    {
+      "icon_id": "17288811",
+      "name": "Return",
+      "font_class": "Return-copy",
+      "unicode": "e934",
+      "unicode_decimal": 59700
     },
     {
       "icon_id": "12255667",
