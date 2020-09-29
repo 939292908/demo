@@ -82,7 +82,7 @@ const extract = {
             selectList[i].label = selectList[i].wType + ' | ' + wlt.wltFullName[selectList[i].wType].name;
             selectList[i].id = selectList[i].wType;
         }
-        const index = selectList.findIndex(item => item.wType === this.currentWType) > -1 ? selectList.findIndex(item => item.wType === this.currentWType) : 0;
+        const index = this.currentWType && selectList.findIndex(item => item.wType === this.currentWType) > -1 ? selectList.findIndex(item => item.wType === this.currentWType) : 0;
         this.selectList = selectList;
         this.currentSelect = this.selectList[index];
         this.checkIdcardVerify();
@@ -310,6 +310,7 @@ const extract = {
         });
         // 生命周期结束清空列表选中字段并关闭列表
         this.currentWType = '';
+        this.currenLinkBut = '';
         this.showCurrencyMenu = false;
         this.currentSelect = {};
         this.errCodeToNull();
