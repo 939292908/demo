@@ -73,7 +73,6 @@ const logic = {
                 const data = arg.data;
                 // 红包top 组件配置
                 logic.redPacketTopOption = JSON.parse(JSON.stringify(data));
-                logic.redPacketTopOption.guid = ""; // 红包来源 空为自己
                 logic.redPacketTopOption.msg = logic.redPacketTopOption.status * 1 === 2 ? "红包已过期" : ""; // msg
                 // 红包Info 组件配置
                 logic.redPacketInfoOption = JSON.parse(JSON.stringify(data));
