@@ -365,4 +365,38 @@ utils.copyTab = function(a, b) {
     }
 };
 
+// utils.switchTime = function(mss) { //秒转换时间
+//     let days = parseInt(mss / (1000  60  60 * 24));
+//     let hours = days * 24 +
+//         parseInt((mss % (1000  60  60  24)) / (1000  60 * 60));
+//     let minutes = parseInt((mss % (1000  60  60)) / (1000 * 60));
+//     let seconds = (mss % (1000 * 60)) / 1000;
+
+//     if (hours && !minutes && !seconds) {
+//         return vm.$t('11067', {value: hours}/*{value}小时*/);
+//     } else if (hours && !minutes && seconds) {
+//         return vm.$t('11067', {value: hours}/*{value}小时*/) +
+//             vm.$t('10896', {value: minutes}/*{value}分钟*/) +
+//             vm.$t('11066', {value: seconds}/*{value}秒*/);
+//     } else if (hours && minutes && !seconds) {
+//         return vm.$t('11067', {value: hours}/*{value}小时*/) +
+//             vm.$t('10896', {value: minutes}/*{value}分钟*/);
+//     } else if (hours && minutes && seconds) {
+//         return vm.$t('11067', {value: hours}/*{value}小时*/) +
+//             vm.$t('10896', {value: minutes}/*{value}分钟*/) +
+//             vm.$t('11066', {value: seconds}/*{value}秒*/);
+//     } else if (!hours && minutes && seconds) {
+//         return vm.$t('10896', {value: minutes}/*{value}分钟*/) +
+//             vm.$t('11066', {value: seconds}/*{value}秒*/);
+//     } else if (!hours && minutes && !seconds) {
+//         return vm.$t('10896', {value: minutes}/*{value}分钟*/);
+//     } else if (!hours && !minutes && seconds) {
+//         return vm.$t('11066', {value: seconds}/*{value}秒*/);
+//     } else if (!hours && !minutes && !seconds) {
+//         return vm.$t('11067', {value: hours}/*{value}小时*/) +
+//             vm.$t('10896', {value: minutes}/*{value}分钟*/) +
+//             vm.$t('11066', {value: seconds}/*{value}秒*/);
+//     }
+// };
+
 export default utils;

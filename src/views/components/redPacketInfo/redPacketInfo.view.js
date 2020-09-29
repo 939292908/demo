@@ -9,6 +9,9 @@ const utils = require('@/util/utils').default;
 //     quota2: "", // 未领额
 //     coin: "" // 币种
 // }
+const getTime = time => {
+
+};
 module.exports = {
     view(vnode) {
         // 待领取/红包到期
