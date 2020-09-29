@@ -1,6 +1,6 @@
 const m = require('mithril');
 const I18n = require('@/languages/I18n').default;
-const Header = require('@/views/components/indexHeader/indexHeader.view');
+const Header = require('@/views/page/selfManage/header/header');
 const APIManager = require('./apiManager.model');
 const config = require('@/config.js');
 const VerifyView = require('@/views/components/dialogVerify/dialogVerify.view');
@@ -40,16 +40,7 @@ module.exports = {
         }
         return m('div.theme--light.page-user-api-manager', {}, [
             m('div.has-bg-sub-level-1.header-bg', {}, [
-                m(Header, {
-                    highlightFlag: 2,
-                    navList: [
-                        { to: '/selfManage', title: I18n.$t('10051') } /* 个人总览 */,
-                        { to: '/securityManage', title: I18n.$t('10181') } /* 账户安全 */,
-                        // { to: '/selfManage', title: I18n.$t('10182') } /* 身份认证 */,
-                        { to: '/apiManager', title: I18n.$t('10183') } /* API管理 */
-                        // { to: '/selfManage', title: I18n.$t('10184') } /* 邀请返佣 */
-                    ]
-                }),
+                m(Header),
                 m('div.is-align-items-center', {}, [
                     m('div.mt-8.has-text-white.title-small.content-width', {}, [I18n.$t('10183')/* 'API管理' */])
                 ]),

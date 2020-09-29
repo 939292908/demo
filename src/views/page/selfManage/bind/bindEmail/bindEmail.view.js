@@ -3,7 +3,7 @@ const model = require('../bind.logic');
 const VerifyView = require('@/views/components/dialogVerify/dialogVerify.view');
 const config = require('@/config.js');
 const header = require('@/views/page/selfManage/header/header');
-require('@/views/page/user/bind/bind.scss');
+require('@/views/page/selfManage/bind/bind.scss');
 require('./bindEmail.scss');
 const regExp = require('@/models/validate/regExp');
 // const Modal = require('@/views/components/common/Modal');
