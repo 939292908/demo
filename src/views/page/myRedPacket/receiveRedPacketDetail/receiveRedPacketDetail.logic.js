@@ -10,11 +10,21 @@ const redPacketUtils = require('@/util/redPacketUtils').default;
 const { HtmlConst, GetBase64 } = require('@/models/plus/index.js');
 const share = require('../../main/share/share.logic.js');
 const errCode = require('@/util/errCode').default;
+const utils = require('@/util/utils').default;
 
 const logic = {
     best: 0, // 手气最佳(0:否 1:是)
     // 已抢红包列表
     redPacketList: [],
+    // 红包来源
+    getFromName(params) {
+        if (params.gtel) {
+            return utils.hideAccountNameInfo(params.gtel);
+        }
+        if (params.gemail) {
+            return utils.hideAccountNameInfo(params.gemail);
+        }
+    },
     // 头部 组件配置
     headerOption: {
         left: {
@@ -40,7 +50,7 @@ const logic = {
                         `${logic.best === 1 ? '手气最佳' : '我抢到了'}`,
                         `${params.quota} ${params.coin}`,
                         '我抢到了来自',
-                        `${params.guid}`,
+                        `${logic.getFromName(params)}`,
                         `的${params.type * 1 === 0 ? '拼手气红包' : '普通红包'}`,
                         `下载注册APP，轻松交易`]
                 });

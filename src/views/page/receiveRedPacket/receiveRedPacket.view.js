@@ -71,7 +71,7 @@ module.exports = {
                 },
                 content: m('div', { class: `my-modal-content px-5 has-bg-level-2 has-text-centered pb-7` }, [
                     m('div', { class: `title-small mb-3 mt-7` }, "安全验证"),
-                    m('div', { class: `mb-3` }, "如未使用手机号注册平台账号，请在注册后查收红包"),
+                    m('div', { class: `mb-3` }, `如未使用该${logic.getVerifyType() === 'email' ? '邮箱' : '手机号'}注册平台账号，请在注册后查收红包`),
                     m(Validate) // 安全验证组件
                 ])
             }),

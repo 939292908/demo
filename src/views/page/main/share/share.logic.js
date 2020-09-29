@@ -48,9 +48,10 @@ module.exports = {
     },
     // 取消 分享红包 click
     cancelShareBtnClick() {
+        const that = this;
         this.options.isShow = false;
         this.options.needShareImg = null;
-        this.options.cancelCallback && this.options.cancelCallback({ isShare: this.isShare });
+        this.options.cancelCallback && this.options.cancelCallback({ isShare: that.isShare });
         this.isShare = false;
         this.shareMsg = "";
         m.redraw();
