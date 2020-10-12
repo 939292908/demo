@@ -28,14 +28,14 @@ module.exports = {
         coin: [],
         contract: [],
         legal: [],
-        documentary: []
+        follow: []
     },
     tableData: { // 表格数据
         walletData: [],
         coinData: [],
         contractData: [],
         legalData: [],
-        documentaryData: []
+        followData: []
     },
     initOtherNavAry() {
         this.otherNavAry = [{ idx: '06', val: I18n.$t('10548') /* '跟单账户' */ }];
@@ -58,8 +58,8 @@ module.exports = {
             this.tableDateList = 'legalData';
             this.accountTitle = I18n.$t('10074'); /* '法币账户' */
         } else if (param === '06') {
-            this.coinType = 'documentary';
-            this.tableDateList = 'documentaryData';
+            this.coinType = 'follow';
+            this.tableDateList = 'followData';
             this.accountTitle = I18n.$t('10548'); /* '跟单账户' */
         } else if (param === '03') {
             this.coinType = 'wallet';
@@ -84,7 +84,7 @@ module.exports = {
         this.tableData.walletData = wlt.wallet['03']; // 我的钱包
         this.tableData.contractData = wlt.wallet['01']; // 合约
         this.tableData.coinData = wlt.wallet['02']; // 币币
-        this.tableData.documentaryData = wlt.wallet['06']; // 跟单
+        this.tableData.followData = wlt.wallet['06']; // 跟单
     },
     // 各账户表格字段
     initColumnData: function () {
@@ -126,7 +126,7 @@ module.exports = {
                 { col: I18n.$t('10068') /* '操作' */, val: [{ operation: I18n.$t('10071') /* '划转' */, to: '' }, { operation: I18n.$t('10079') /* '去交易' */, to: '' }] }
             ],
             // 跟单
-            documentary: [
+            follow: [
                 { col: I18n.$t('10063') /* '币种' */, val: 'wType' },
                 { col: I18n.$t('10076') /* '账户权益' */, val: 'MgnBal' },
                 { col: I18n.$t('10077') /* '未实现盈亏' */, val: 'UPNL' },
@@ -177,7 +177,6 @@ module.exports = {
     setHideZeroFlag: function () {
         this.hideZeroFlag = !this.hideZeroFlag;
         this.setTableNewAry();
-        // console.log(this.hideZeroFlag);
         localStorage.setItem("isHideZeroFlag", this.hideZeroFlag);
     },
     // 处理表格显示的数组
@@ -187,7 +186,7 @@ module.exports = {
         if (this.hideZeroFlag === true && value === '') { // 只隐藏
             // console.log('nzm', '只隐藏');
             for (const i of this.tableData[this.tableDateList]) {
-                if ((this.coinType !== 'contract' ? (i.TOTAL !== '0.00000000' && i.TOTAL !== '0.0000') : (i.MgnBal !== '0.00000000' && i.MgnBal !== '0.0000'))) {
+                if ((this.coinType !== 'contract' && this.coinType !== 'follow' ? (i.TOTAL !== '0.00000000' && i.TOTAL !== '0.0000') : (i.MgnBal !== '0.00000000' && i.MgnBal !== '0.0000'))) {
                     this.tableNewAry.push(i);
                 }
             }
@@ -209,7 +208,9 @@ module.exports = {
             // console.log('nzm', '无操作');
             this.tableNewAry = this.tableData[this.tableDateList];
         }
-        console.log(this.tableNewAry, '----------');
+        // if (this.tableNewAry.length !== 0) {
+        //     console.log(this.tableNewAry, '----------');
+        // }
         this.tableNewAry.length === 0 ? this.isShowNoneData = true : this.isShowNoneData = false;
     },
     initFlag: function () {
