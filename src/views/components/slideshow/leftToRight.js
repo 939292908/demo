@@ -64,7 +64,7 @@ module.exports = {
         });
     },
     handleNextEl: function () {
-        const index = this.mySwiper.activeIndex === 0 ? this.mySwiper.slides.length - slidesPerView : this.mySwiper.activeIndex - 1;
+        const index = this.mySwiper.activeIndex === 0 ? this.mySwiper.slides.length : this.mySwiper.activeIndex - 1;
         this.mySwiper.slideTo(index, 0, false);
     },
     handlePrevEl: function () {
