@@ -77,7 +77,6 @@ module.exports = {
     },
     showList: [], // 显示的列表
     tradeAccount: ['01', '02', '04'], // 交易账户
-    allAccount: ['01', '02', '03', '04'],
     aType: '03', // 子账户 默认为钱包
     filterTime: [],
     coinList: { // 币种列表

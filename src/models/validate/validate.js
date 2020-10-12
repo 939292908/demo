@@ -27,6 +27,9 @@ export default {
     activeEmail(params, callback) {
         this.validateType = 'email';
         this.emailConfig = params;
+        if (!this.emailConfig.fn) {
+            this.emailConfig.fn = 'main';
+        }
         if (callback) {
             this.callbackHandler = callback;
         }
@@ -172,6 +175,9 @@ export default {
         this.validateType = 'sms&email';
         this.smsConfig = params.smsconfig;
         this.emailConfig = params.emailconfig;
+        if (!this.emailConfig.fn) {
+            this.emailConfig.fn = 'main';
+        }
         if (callback) {
             this.callbackHandler = callback;
         }
@@ -184,6 +190,9 @@ export default {
     activeEmailAndGoogle(params, callback) {
         this.validateType = 'email&google';
         this.emailConfig = params;
+        if (!this.emailConfig.fn) {
+            this.emailConfig.fn = 'main';
+        }
         if (callback) {
             this.callbackHandler = callback;
         }
