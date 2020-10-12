@@ -121,6 +121,10 @@
         height: 17px;
         line-height: 17px;
         padding-top: 4px;
+        display: flex;
+        div:nth-child(3){ // 手续费
+          margin-left:auto;
+        }
       }
 
       .errorToTal { // 错误提示
