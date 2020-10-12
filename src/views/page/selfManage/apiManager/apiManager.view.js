@@ -174,6 +174,32 @@ module.exports = {
                 }
             }),
             m(Modal, {
+                isShow: APIManager.showBindPhoneOrGoogle, // 弹框显示/隐藏
+                onClose() {
+                    window.router.go(-1);
+                },
+                slot: {
+                    header: I18n.$t('10082'), // '温馨提示',
+                    body: I18n.$t('10624'), // '为了正常使用API功能，请先绑定手机或谷歌',
+                    footer: m('div.columns.w100', {}, [
+                        m('div.column.pr-2', {}, [
+                            m("button.button.is-primary.font-size-2.has-text-white.modal-default-btn.button-large", {
+                                onclick() {
+                                    window.router.push({ path: '/bind', data: { type: 'phone' } });
+                                }
+                            }, [I18n.$t('10228')/* '手机验证' */])
+                        ]),
+                        m('div.column.pl-2', {}, [
+                            m("button.button.is-primary.font-size-2.has-text-white.modal-default-btn.button-large", {
+                                onclick() {
+                                    window.router.push('/openGoogleVerify');
+                                }
+                            }, [I18n.$t('10227')/* '谷歌验证' */])
+                        ])
+                    ])
+                }
+            }),
+            m(Modal, {
                 isShow: APIManager.showAPIKey, // 弹框显示/隐藏
                 onClose () {
                     APIManager.showAPIKey = false;

@@ -107,9 +107,9 @@ class Router {
         const info = this.getUrlInfo();
         this.path = info.path;
         this.params = info.params;
-        this.checkRoute(this.getUrlInfo().path);
+        this.checkRoute(this.getUrlInfo());
         window.addEventListener("popstate", (e) => {
-            this.checkRoute({ path: this.getUrlInfo().path });
+            this.checkRoute(this.getUrlInfo());
         });
     }
 

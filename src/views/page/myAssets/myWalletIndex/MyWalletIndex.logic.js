@@ -31,9 +31,6 @@ const model = {
     },
     showCurrencyMenu: false, // show币种菜单
     selectOp: [{ id: 'BTC', label: 'BTC' }, { id: 'USDT', label: 'USDT' }], // 币种列表
-    form: {
-        wType: '' // 当前币种选中值
-    },
     // 币种 菜单配置
     option: {
         evenKey: "optionkey",
@@ -247,8 +244,6 @@ const model = {
                 self.setFirstNav();
             }
         });
-
-        self.form.wType = self.currency;
     },
     createFn: function() {
         const that = this;
