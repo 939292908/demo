@@ -15,6 +15,7 @@ module.exports = {
     loading: false,
     showKeyNameValid: false,
     showBindEmail: false,
+    showBindPhoneOrGoogle: false,
     keyName: '',
     ip: '',
     table: [],
@@ -49,7 +50,7 @@ module.exports = {
         this.validate(() => { this.createAPI(); });
     },
     validate(fn) {
-        if (globalModels.getAccount().loginType === 'phone') {
+        if (globalModels.getAccount().phone) {
             const smsParam = {
                 securePhone: globalModels.getAccount().nationNo + '-' + globalModels.getAccount().phone, // 加密手机号带区号
                 areaCode: globalModels.getAccount().nationNo, // 区号
@@ -59,32 +60,31 @@ module.exports = {
             };
             if (globalModels.getAccount().googleId) {
                 validate.activeSmsAndGoogle(smsParam, () => {
-                    fn();
+                    this.emailCheck(fn);
                 });
             } else {
                 validate.activeSms(smsParam, () => {
-                    fn();
+                    this.emailCheck(fn);
                 });
             }
         } else {
-            const emailParam = {
-                secureEmail: globalModels.getAccount().email, // 邮箱地址
-                email: utils.hideAccountNameInfo(globalModels.getAccount().email), // 邮箱地址
-                host: config.official, // 域名
-                fn: "be", // 邮箱模板
-                lang: I18n.getLocale() // 语言
-            };
-            if (globalModels.getAccount().googleId) {
-                validate.activeEmailAndGoogle(emailParam, () => {
-                    fn();
-                });
-            } else {
-                validate.activeEmail(emailParam, () => {
-                    fn();
-                });
-            }
+            validate.activeGoogle(() => {
+                this.emailCheck(fn);
+            });
         }
         this.showValid = true;
+    },
+    emailCheck(fn) {
+        const emailParam = {
+            secureEmail: globalModels.getAccount().email, // 邮箱地址
+            email: utils.hideAccountNameInfo(globalModels.getAccount().email), // 邮箱地址
+            host: config.official, // 域名
+            lang: I18n.getLocale() // 语言
+        };
+        validate.activeEmail(emailParam, () => {
+            fn();
+        });
+        broadcast.emit({ cmd: 'redrawValidate' });
     },
     getAPIList() {
         this.loading = true;
@@ -240,6 +240,8 @@ module.exports = {
     oninit() {
         if (Object.keys(globalModels.getAccount()).length && !globalModels.getAccount().email) {
             this.showBindEmail = true;
+        } else if (Object.keys(globalModels.getAccount()).length && !globalModels.getAccount().phone && !globalModels.getAccount().googleId) {
+            this.showBindPhoneOrGoogle = true;
         } else if (globalModels.getAccount().token) {
             this.getAPIList();
         }
@@ -251,6 +253,9 @@ module.exports = {
                 console.log(globalModels.getAccount());
                 if (Object.keys(globalModels.getAccount()).length && !globalModels.getAccount().email) {
                     this.showBindEmail = true;
+                    m.redraw();
+                } else if (Object.keys(globalModels.getAccount()).length && !globalModels.getAccount().phone && !globalModels.getAccount().googleId) {
+                    this.showBindPhoneOrGoogle = true;
                     m.redraw();
                 } else {
                     this.getAPIList();
@@ -266,6 +271,7 @@ module.exports = {
         this.loading = false;
         this.showKeyNameValid = false;
         this.showBindEmail = false;
+        this.showBindPhoneOrGoogle = false;
         this.table = [];
         this.keyName = '';
         this.ip = '';
