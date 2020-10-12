@@ -95,5 +95,7 @@ module.exports = {
     // 账户设置，设置防钓鱼码等
     ACCOUNT_SETTING: '/users/AccountSetting',
     // API管理接口
-    USER_API: '/users/api'
+    USER_API: '/users/api',
+    // 合约，交易对 排序
+    MARKETS_SORT: '/v1/markets/currencies/sort'
 };
