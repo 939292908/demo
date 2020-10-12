@@ -3,14 +3,10 @@ const Slideshow = require('@/views/components/slideshow/leftToRight');
 // const Slideshow2 = require('@/views/components/slideshow/leftToRight2');
 const broadcast = require('@/broadcast/broadcast');
 const { gMktApi } = require('@/api').wsApi;
+const { getSortMarkets } = require('@/api').webApi;
 require('@/views/page/home/picture/picture.scss');
 
 const market = require('@/models/market/market');
-
-const logic = {
-    length: 0,
-    nameList: []
-};
 
 module.exports = {
     oninit: function () {
@@ -18,11 +14,12 @@ module.exports = {
         broadcast.onMsg({
             key: "picture",
             cmd: broadcast.MSG_ASSETD_UPD,
-            cb: this.assetDCallBack
+            cb: this.assetDCallBack.bind(this)
         });
-        this.assetDCallBack();
+        gMktApi.displaySym.length > 0 && this.assetDCallBack();
     },
     assetDCallBack: function (arg) {
+        const self = this;
         // const data = arg.data.filter(item => item.TrdCls === 3 && (item.Flag & 1) !== 1);
         var syms = [];
         var list = {};
@@ -33,9 +30,17 @@ module.exports = {
                 list[item] = sys;
             }
         });
-        logic.length = syms.length;
-        logic.nameList = syms;
-        market.initHomeNeedSub(syms, list);
+
+        getSortMarkets({ vp: 30 }).then(res => {
+            if (res.result.code === 0) {
+                const data = res.result.data.symSort;
+                const sortsyms = syms.sort((a, b) => {
+                    return data[list[a].ToC] - data[list[b].ToC];
+                });
+                self.nameList = sortsyms;
+                market.initHomeNeedSub(sortsyms, list);
+            }
+        });
     },
     view: function () {
         return m('div.views-pages-home-picture', {
@@ -45,7 +50,7 @@ module.exports = {
                 m('img', { class: 'picture-layer border-radius-large', src: require("@/assets/img/home/layer-4.png").default }),
                 // 轮播2
                 m('div', { class: `rotationtwo-content container mt-8` }, [
-                    Object.keys(market.tickData).length > 0 && Object.keys(market.tickData).length === logic.length ? m(Slideshow, { list: logic.nameList }) : m(Slideshow, { list: ['a', 'b', 'c', 'd'] })
+                    Object.keys(market.tickData).length > 0 && Object.keys(market.tickData).length === this.nameList.length ? m(Slideshow, { list: this.nameList }) : m(Slideshow, { list: ['a', 'b', 'c', 'd'] })
                 ])
             ])
         ]);

@@ -5,6 +5,8 @@ const VerifyView = require('@/views/components/dialogVerify/dialogVerify.view');
 const Tooltip = require('@/views/components/common/Tooltip/Tooltip.view');
 const Dropdown = require('@/views/components/common/Dropdown/Dropdown.view');
 const l180n = require('@/languages/I18n').default;
+const transferLogic = require('@/views/page/myAssets/transfer/transfer.logic.js'); // 划转模块逻辑
+const Transfer = require('@/views/page/myAssets/transfer/transfer.view.js');
 
 module.exports = {
     oninit () {
@@ -47,6 +49,16 @@ module.exports = {
     },
     handleBack: function () {
         window.router.go(-1);
+    },
+    handleOpenTransfer: function () {
+        transferLogic.setTransferModalOption({
+            isShow: true,
+            coin: FromDataMode.currentWType, // 币种 默认选中
+            transferFrom: '03',
+            successCallback() { // 划转成功回调
+                console.log('划转成功。。。');
+            }
+        });
     },
     view: function () {
         return m('div.page-extract-coin-from border-radius-small has-bg-level-2', [
@@ -111,7 +123,8 @@ module.exports = {
                     ]),
                     FromDataMode.errorShow.unmber.show ? m('div.errorToTal body-4', FromDataMode.errorShow.unmber.text) : null,
                     m('div.dis-flex item-space charge body-4', [
-                        m('div', `${l180n.$t('10107') /* '可提' */}：${FromDataMode.currentExtractableNum}${FromDataMode.currentSelect.wType}`),
+                        m('div.mr-2', `${l180n.$t('10107') /* '可提' */}：${FromDataMode.currentExtractableNum}${FromDataMode.currentSelect.wType}`),
+                        m('div', { class: `has-text-primary cursor-pointer ${FromDataMode.currentSelect.Setting?.canTransfer ? `` : `is-hidden`}`, onclick: () => { this.handleOpenTransfer(); } }, `${l180n.$t('10071') /* '划转' */}`),
                         m('div', `${l180n.$t('10099') /* '手续费' */}：${FromDataMode.currentFees.withdrawFee}${FromDataMode.currentSelect.wType}`)
                     ])
                 ]),
@@ -122,7 +135,9 @@ module.exports = {
                 m('div.promptTitle body-5', l180n.$t('10082') /* '温馨提示' */),
                 // FromDataMode.promptText.split('*').map(item => m('div.rulesText body-4', '*' + item))
                 l180n.$t('10407').split('*').map(item => m('div.rulesText body-4', '*' + item))
-            ])
+            ]),
+            // 资金划转组件
+            m(Transfer)
         ]);
     },
     onremove: function() {

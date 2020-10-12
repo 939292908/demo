@@ -794,3 +794,12 @@ export function setFishCode (params = {}, options = { withCredentials: false }) 
 export function userAPI (params = {}, options = { withCredentials: false }) {
     return Http.post(API.USER_API, params, options);
 }
+/*
+* 获取排序后的 合约，币币交易对
+* @param params {
+*   vp: 30 渠道号
+* }
+* */
+export function getSortMarkets (params = {}, options = { withCredentials: false }) {
+    return Http.get(API.MARKETS_SORT, { params }, options);
+}
