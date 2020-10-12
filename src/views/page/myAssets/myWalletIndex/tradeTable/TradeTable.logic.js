@@ -127,6 +127,12 @@ module.exports = {
             ],
             // 跟单
             documentary: [
+                { col: I18n.$t('10063') /* '币种' */, val: 'wType' },
+                { col: I18n.$t('10076') /* '账户权益' */, val: 'MgnBal' },
+                { col: I18n.$t('10077') /* '未实现盈亏' */, val: 'UPNL' },
+                { col: I18n.$t('10078') /* '可用保证金' */, val: 'NL' },
+                { col: this.currency + I18n.$t('10516') /* '估值' */, val: this.currency === 'BTC' ? 'valueForBTC' : 'valueForUSDT' },
+                { col: I18n.$t('10068') /* '操作' */, val: [{ operation: I18n.$t('10071') /* '划转' */, to: '' }] }
             ]
         };
     },
@@ -203,7 +209,7 @@ module.exports = {
             // console.log('nzm', '无操作');
             this.tableNewAry = this.tableData[this.tableDateList];
         }
-        // console.log(this.tableNewAry, '----------');
+        console.log(this.tableNewAry, '----------');
         this.tableNewAry.length === 0 ? this.isShowNoneData = true : this.isShowNoneData = false;
     },
     initFlag: function () {
