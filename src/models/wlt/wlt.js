@@ -18,13 +18,15 @@ module.exports = {
         '01': {}, // 合约账户
         '02': {}, // 币币账户
         '03': {}, // 主钱包
-        '04': {} // 法币账户
+        '04': {}, // 法币账户
+        '06': {} // 跟单
     }, // 资产
     wallet: {
         '01': [], // 合约账户
         '02': [], // 币币账户
         '03': [], // 主钱包
-        '04': [] // 法币账户
+        '04': [], // 法币账户
+        '06': [] // 跟单
     },
     walletState: 0, // 资产获取状态，0:未获取，1:已获取
     // 总USDT估值
@@ -392,17 +394,30 @@ module.exports = {
         });
     },
     updWlt: function() {
-        const that = this;
         if (this.isWltReq) {
             return;
         }
         this.isWltReq = true;
+        this.getTheDocumentaryData(); // 获取跟单数据
+    },
+    getTheDocumentaryData: function () {
+        const that = this;
+        let data = null;
+        Http.subAssets({ exChannel: window.exchId, aType: '018' }).then(res => {
+            if (res.result.code === 0) {
+                data = res?.assetLists03;
+            }
+        }).finally(res => { that.getOtherWltData(data); });
+    },
+    getOtherWltData: function (assetLists06 = []) { // assetLists06：跟单数据
+        const that = this;
         Http.getWallet({
             exChannel: window.exchId
         }).then(function(arg) {
             console.log('ht', 'getWallet success', arg);
             if (arg.result.code === 0) {
                 // 初始化资产数据
+                arg.assetLists06 = assetLists06;
                 that.setWallet(arg);
                 that.initWlt();
                 broadcast.emit({
@@ -454,6 +469,7 @@ module.exports = {
         this.wallet['02'] = data.assetLists02; // 现货资产
         this.wallet['03'] = data.assetLists03; // 主钱包
         this.wallet['04'] = data.assetLists04; // 法币资产
+        this.wallet['06'] = data.assetLists06; // 跟单
 
         for (const item of data.assetLists01) {
             // 合约账户由于交易服务器在更新数据，所以此处只更新部分数据
@@ -492,6 +508,9 @@ module.exports = {
         }
         for (const item of data.assetLists04) {
             this.wallet_obj['04'][item.wType] = item;
+        }
+        for (const item of data.assetLists06) {
+            this.wallet_obj['06'][item.wType] = item;
         }
     },
     wltHandle: function (type, wlt) {

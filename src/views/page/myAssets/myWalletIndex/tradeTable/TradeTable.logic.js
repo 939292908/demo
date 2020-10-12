@@ -258,14 +258,19 @@ module.exports = {
         this.setNavAry();
     },
     updateFn: function(vnode) {
+        console.log(2222222);
+        // 阻止一直赋值 start
         if (this.oldValue !== vnode.attrs.swValue) {
             this.setPageFlag(vnode.attrs.swValue);
         }
         if (this.oldHideMoneyFlag !== vnode.attrs.hideMoneyFlag) {
             this.oldHideMoneyFlag = vnode.attrs.hideMoneyFlag;
+            m.redraw();
+            console.log(1111111111, 'table updata', vnode.attrs.hideMoneyFlag, vnode.attrs.swValue);
         }
         this.oldValue = vnode.attrs.swValue;
         this.oldHideMoneyFlag = vnode.attrs.hideMoneyFlag;
+        // 阻止一直赋值 end
     },
     removeFn: function () {
         broadcast.offMsg({
