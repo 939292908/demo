@@ -85,7 +85,6 @@ module.exports = {
             secureEmail: utils.hideAccountNameInfo(globalModels.getAccount().email), // 邮箱地址
             email: globalModels.getAccount().email, // 邮箱地址
             host: config.official, // 域名
-            fn: "be", // 邮箱模板
             lang: I18n.getLocale() // 语言
         }, () => {
             this.queryUserInfo();
@@ -111,7 +110,6 @@ module.exports = {
             secureEmail: utils.hideAccountNameInfo(globalModels.getAccount().email), // 邮箱地址
             email: globalModels.getAccount().email, // 邮箱地址
             host: config.official, // 域名
-            fn: "be", // 邮箱模板
             lang: I18n.getLocale() // 语言
         }, () => {
             this.queryUserInfo();
