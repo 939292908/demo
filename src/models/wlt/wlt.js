@@ -655,7 +655,7 @@ module.exports = {
             this.wltItemEx.UPNLToBTC = this.toFixedForFloor(Number(this.wltItemEx.UPNL * coinPrz / btcPrz) || 0, 8);
             // 为实现盈亏BTC估值
             this.wltItemEx.UPNLToBTC = this.toFixedForFloor(Number(this.wltItemEx.UPNL * coinPrz / btcPrz) || 0, 8);
-            break;diannap
+            break;
         }
         // 当前币种价格 start
         // const coinInitValue = Number(this.wltItemEx.initValue || 1);
