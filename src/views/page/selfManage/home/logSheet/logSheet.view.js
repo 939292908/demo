@@ -7,7 +7,6 @@ module.exports = {
         LogSheet.oninit();
     },
     view: function () { // self-manage-content-block 资产内的样式
-        console.log(LogSheet.logList, 'qewwwwwwwwwwwwwwwwwwwwww');
         return m('.self-manage-content-block logSheet-block', [
             // block header
             m('.asset-header dis-flex justify-between align-center  py-3 px-5', [
