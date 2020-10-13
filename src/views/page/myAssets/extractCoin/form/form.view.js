@@ -51,10 +51,12 @@ module.exports = {
         window.router.go(-1);
     },
     handleOpenTransfer: function () {
+        // currencyDataList: 从我的钱包/交易账户...过来
+        const currencyDataList = window.router.getUrlInfo().params.currencyDataList;
         transferLogic.setTransferModalOption({
             isShow: true,
             coin: FromDataMode.currentWType, // 币种 默认选中
-            transferFrom: '03',
+            transferFrom: currencyDataList,
             successCallback() { // 划转成功回调
                 console.log('划转成功。。。');
             }
