@@ -70,6 +70,10 @@ const model = {
             {
                 id: '04',
                 label: I18n.$t('10074') // '法币账户'
+            },
+            {
+                id: '06',
+                label: I18n.$t('10548') // 跟单
             }
         ];
     },
@@ -80,6 +84,7 @@ const model = {
         this.bibiList = wlt.wallet['02'].filter(item => item.Setting.canTransfer); // 币币钱包 币种list
         this.myWalletList = wlt.wallet['03'].filter(item => item.Setting.canTransfer); // 我的钱包 币种list
         this.legalTenderList = wlt.wallet['04'].filter(item => item.Setting.canTransfer); // 法币钱包 币种list
+        this.followList = wlt.wallet['06'].filter(item => item.Setting.canTransfer); //  跟单 币种list
         // 钱包列表
         this.allWalletList = [
             { // 我的钱包
@@ -97,6 +102,10 @@ const model = {
             { // 法币钱包
                 id: "04",
                 list: this.legalTenderList
+            },
+            {
+                id: '06',
+                list: this.followList
             }
         ];
         this.initCoinList(); // 初始化 币种下拉列表
@@ -194,7 +203,15 @@ const model = {
     initFromAndToWalletListByValue () {
         // this.fromWltList = this.authWltList.filter(item => item.id !== this.toMenuOption.currentId);
         this.fromWltList = this.authWltList;
-        this.toWltList = this.authWltList.filter(item => item.id !== this.fromMenuOption.currentId);
+        this.toWltList = this.authWltList.filter(item => {
+            if (item.id !== this.fromMenuOption.currentId) {
+                if (this.fromMenuOption.currentId === '06') {
+                    return item.id === '03';
+                }
+                return true;
+            }
+            return false;
+        });
         // console.log("this.authWltList", this.authWltList, "this.fromWltList", this.fromWltList, "this.toWltList", this.toWltList);
     },
     // handler 切换按钮click
@@ -309,14 +326,14 @@ const model = {
         model.setMaxTransfer(); // 设置 最大划转
         // api
         const params = {
-            aTypeFrom: this.fromMenuOption.currentId,
-            aTypeTo: this.toMenuOption.currentId,
+            aTypeFrom: this.fromMenuOption.currentId === '06' ? '018' : this.fromMenuOption.currentId,
+            aTypeTo: this.toMenuOption.currentId === '06' ? '018' : this.toMenuOption.currentId,
             wType: this.coinMenuOption.currentId,
             num: this.form.num
         };
         Http.postTransfer(params).then(res => {
             if (res.result.code === 0) {
-                model.setTransferModalOption({ isShow: false }); // 划转弹框隐藏
+                model.setTransferModalOption({ isShow: false }); // 划转弹框隐藏aqwdqqwwqwdqqwdf
                 this.reset(); // 重置
                 wlt.init(); // 更新数据
                 window.$message({ title: I18n.$t('10410' /** 提示 */), content: I18n.$t('10414' /** 资金划转成功！ */), type: 'success' });
