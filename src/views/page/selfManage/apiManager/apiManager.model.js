@@ -76,8 +76,8 @@ module.exports = {
     },
     emailCheck(fn) {
         const emailParam = {
-            secureEmail: globalModels.getAccount().email, // 邮箱地址
-            email: utils.hideAccountNameInfo(globalModels.getAccount().email), // 邮箱地址
+            secureEmail: utils.hideAccountNameInfo(globalModels.getAccount().email), // 邮箱地址
+            email: globalModels.getAccount().email, // 邮箱地址
             host: config.official, // 域名
             lang: I18n.getLocale() // 语言
         };

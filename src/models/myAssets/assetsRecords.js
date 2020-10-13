@@ -4,6 +4,7 @@ const utils = require('@/util/utils').default;
 const I18n = require('@/languages/I18n').default;
 const broadcast = require('@/broadcast/broadcast');
 const assetsRecordsType = require('./assetsRecordsType');
+const config = require('../../config');
 
 module.exports = {
     Record() {
@@ -28,13 +29,20 @@ module.exports = {
             transfer: [], // 资产划转
             otcSell: [] // 法币交易
         };
+        if (config.openFollow) {
+            this['06'] = { // 跟单账户
+                transfer: [], // 资产划转
+                other: [] // 其他类型
+            };
+        }
     },
     recordObj: null,
     walletLog: { // 原始数据
         '01': {},
         '02': {},
         '03': {},
-        '04': {}
+        '04': {},
+        '06': {}
     },
     recordName() {
         return {
@@ -47,7 +55,7 @@ module.exports = {
         };
     },
     recordTypeName() {
-        return {
+        const typeList = {
             '01': {
                 all: I18n.$t('10135'), /* '全部类型 */
                 transfer: I18n.$t('10346'), /* '资产划转 */
@@ -74,16 +82,26 @@ module.exports = {
                 otcSell: I18n.$t('10001')/* '法币交易' */
             }
         };
+        if (config.openFollow) {
+            typeList['06'] = {
+                all: I18n.$t('10135'), /* '全部类型  */
+                transfer: I18n.$t('10346'), /* '资产划转  */
+                other: I18n.$t('10140')/* '其他类型' */
+            };
+        }
+        return typeList;
     },
     showList: [], // 显示的列表
     tradeAccount: ['01', '02', '04'], // 交易账户
+    otherAccount: [],
     aType: '03', // 子账户 默认为钱包
     filterTime: [],
     coinList: { // 币种列表
         '01': [],
         '02': [],
         '03': [],
-        '04': []
+        '04': [],
+        '06': []
     },
     coin: 'all', // 币种
     type: 'all', // 类型 用于过滤
@@ -124,6 +142,13 @@ module.exports = {
         this.mhType = 'all';
         this.filterTime = [];
         this.showList = [];
+        this.walletLog = { // 清空原始数据
+            '01': {},
+            '02': {},
+            '03': {},
+            '04': {},
+            '06': {}
+        };
     },
     init(aType, type = 'all', mhType = 'all', length = -1) {
         this.aType = aType;
@@ -132,34 +157,58 @@ module.exports = {
         this.length = length;
         this.coin = 'all';
         this.filterTime = [];
+        this.walletLog = { // 初始化清空原始数据
+            '01': {},
+            '02': {},
+            '03': {},
+            '04': {},
+            '06': {}
+        };
+        if (config.openFollow) {
+            this.otherAccount.push('06');
+        }
         broadcast.emit({ cmd: 'assetsRecordOnInit' });
         this.getCoinList();
         this.getATypeRecords();
     },
     getCoinList() {
-        Http.getWallet().then(res => {
-            this.coinList['01'] = [];
-            for (const coin of res.assetLists01) {
-                this.coinList['01'].push(coin.wType);
-            }
-            this.coinList['02'] = [];
-            for (const coin of res.assetLists02) {
-                this.coinList['02'].push(coin.wType);
-            }
-            this.coinList['03'] = [];
-            for (const coin of res.assetLists03) {
-                this.coinList['03'].push(coin.wType);
-            }
-            this.coinList['04'] = [];
-            for (const coin of res.assetLists04) {
-                this.coinList['04'].push(coin.wType);
-            }
-            m.redraw();
-        }).catch(
-            err => {
-                console.log('error ', err);
-            }
-        );
+        if (this.aType === '06') {
+            Http.subAssets({ exChannel: window.exchId, aType: '018' }).then(res => {
+                if (res.result.code === 0) {
+                    for (const coin of res.assetLists03) {
+                        this.coinList['06'].push(coin.wType);
+                    }
+                }
+            }).catch(
+                err => {
+                    console.log('error ', err);
+                }
+            );
+        } else {
+            Http.getWallet().then(res => {
+                this.coinList['01'] = [];
+                for (const coin of res.assetLists01) {
+                    this.coinList['01'].push(coin.wType);
+                }
+                this.coinList['02'] = [];
+                for (const coin of res.assetLists02) {
+                    this.coinList['02'].push(coin.wType);
+                }
+                this.coinList['03'] = [];
+                for (const coin of res.assetLists03) {
+                    this.coinList['03'].push(coin.wType);
+                }
+                this.coinList['04'] = [];
+                for (const coin of res.assetLists04) {
+                    this.coinList['04'].push(coin.wType);
+                }
+                m.redraw();
+            }).catch(
+                err => {
+                    console.log('error ', err);
+                }
+            );
+        }
     },
     /**
      * 获取子账户记录
@@ -216,6 +265,19 @@ module.exports = {
                 this.loading = false;
                 this.walletLog[this.aType][4] = res[0].result.code === 0 ? res[0].history : [];
                 this.walletLog[this.aType][5] = res[1].result.code === 0 ? res[1].history : [];
+                this.fillDataAll();
+            }).catch(err => {
+                this.loading = false;
+                console.log('error ', err);
+            });
+            break;
+        case '06':
+            httpList = [
+                Http.assetRecords({ aType: '018', mhType: 5 }) // 其他
+            ];
+            Http.assetRecordsAll(httpList).then(res => {
+                this.loading = false;
+                this.walletLog[this.aType][5] = res[0].result.code === 0 ? res[0].history : [];
                 this.fillDataAll();
             }).catch(err => {
                 this.loading = false;
