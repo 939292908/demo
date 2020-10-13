@@ -33,6 +33,7 @@ const register = {
     checkbox: false, // 条款同意
     geetestCallBackType: '',
     canConfirm: false, // 发送验证码后才能点确定
+    loading: false,
     /**
      * 必须填写邀请码
      * @returns {boolean}
@@ -128,6 +129,7 @@ const register = {
      * 最终注册接口
      */
     register() {
+        this.loading = true;
         Http.usersRegister({
             loginType: register.type,
             loginName: register.loginName,
@@ -139,6 +141,7 @@ const register = {
             nationNo: '00' + register.areaCode,
             exChannel: config.exchId
         }).then(res => {
+            this.loading = false;
             if (res.result.code === 0) {
                 // 注册成功
                 window.$message({ content: I18n.$t('10539')/* '注册成功' */, type: 'success' });
@@ -153,6 +156,7 @@ const register = {
             //     geetest.verify();
             // }
         }).catch(() => {
+            this.loading = false;
             window.$message({ content: I18n.$t('10340')/* '网络异常，请稍后重试' */, type: 'danger' });
         });
     },

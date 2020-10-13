@@ -5,6 +5,7 @@ const AreaCodeSelect = require('../areaCodeSelect/areaCodeSelect.view');
 const config = require('@/config');
 const I18n = require('@/languages/I18n').default;
 const regExp = require('@/models/validate/regExp');
+const validate = require('@/models/validate/validate').default;
 
 import('../login.css');
 
@@ -64,6 +65,7 @@ module.exports = {
                             ]),
                             m('button.button.my-3.has-bg-primary.button-medium.is-fullwidth.has-text-white.mb-2',
                                 {
+                                    class: validate.loading || Register.loading ? 'is-loading' : '',
                                     disabled: !Register.canConfirm,
                                     onclick: () => { Register.checkCode(); }
                                 }, [I18n.$t('10007')/* '注册' */])

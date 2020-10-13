@@ -2,11 +2,13 @@ import { webApi } from '../../api';
 import errCode from '@/util/errCode';
 import I18n from '../../languages/I18n';
 import config from '@/config';
+import m from 'mithril';
 
 export default {
     callbackHandler: null, // 验证结果回调
     emailConfig: null, // 发送邮件配置
     smsConfig: null, // 发送短信配置
+    loading: false,
     /**
      * 激活短信验证弹窗
      * @param params
@@ -84,7 +86,11 @@ export default {
             });
             return;
         }
+        this.loading = true;
+        m.redraw();
         webApi.googleCheck({ code: code }).then(res => {
+            this.loading = false;
+            m.redraw();
             if (res.result.code === 0) {
                 this.finished();
             } else {
@@ -94,6 +100,8 @@ export default {
                 });
             }
         }).catch(err => {
+            this.loading = false;
+            m.redraw();
             console.log('tlh', err);
         });
     },
@@ -120,7 +128,11 @@ export default {
                 code: code
             };
         }
+        this.loading = true;
+        m.redraw();
         webApi.smsVerifyV2(param).then(res => {
+            this.loading = false;
+            m.redraw();
             if (res.result === 0) {
                 this.finished();
             } else {
@@ -129,6 +141,10 @@ export default {
                     type: 'danger'
                 });
             }
+        }).catch(err => {
+            this.loading = false;
+            m.redraw();
+            console.log('tlh', err);
         });
     },
     /**
@@ -143,7 +159,11 @@ export default {
             });
             return;
         }
+        this.loading = true;
+        m.redraw();
         webApi.emailCheckV2({ code: code }).then(res => {
+            this.loading = false;
+            m.redraw();
             if (res.result.code === 0) {
                 this.finished();
             } else {
@@ -152,6 +172,10 @@ export default {
                     type: 'danger'
                 });
             }
+        }).catch(err => {
+            this.loading = false;
+            m.redraw();
+            console.log('tlh', err);
         });
     },
     /**
