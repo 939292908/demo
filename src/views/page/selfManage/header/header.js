@@ -11,8 +11,7 @@ const model = {
             'securityManage',
             'openGoogleVerify',
             'closeGoogleVerify',
-            'bindPhone',
-            'bindEmail',
+            'bind',
             'antiFishingCode',
             'modifyFundPassword',
             'modifyLoginPassword'

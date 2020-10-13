@@ -83,6 +83,13 @@ module.exports = {
     // 合约交易总人民币估值
     contractTotalValueForCNY: 0,
 
+    // 跟单总USDT估值
+    followTotalValueForUSDT: 0,
+    // 跟单总BTC估值
+    followTotalValueForBTC: 0,
+    // 跟单总人民币估值
+    followTotalValueForCNY: 0,
+
     // 获取资产的接口是否正在请求
     isWltReq: false,
 
@@ -279,6 +286,10 @@ module.exports = {
         this.contractTotalValueForBTC = 0;
         this.contractTotalValueForCNY = 0;
 
+        this.followTotalValueForUSDT = 0;
+        this.followTotalValueForBTC = 0;
+        this.followTotalValueForCNY = 0;
+
         const wlt = this.wallet_obj;
 
         for (const type in wlt) {
@@ -336,6 +347,15 @@ module.exports = {
                         this.legalTotalValueForUSDT += Number(this.wallet[type][coin].valueForUSDT);
                     }
                 }
+            } else if (type === '06') {
+                for (const coin in this.wallet[type]) {
+                    if (this.wallet[type][coin].TOTAL === '0.00000000') {
+                        continue;
+                    } else {
+                        this.followTotalValueForUSDT += Number(this.wallet[type][coin].valueForBTC);
+                        this.followTotalValueForCNY += Number(this.wallet[type][coin].valueForUSDT);
+                    }
+                }
             }
         }
         this.tradingAccountTotalValueForBTC = Number(this.legalTotalValueForBTC) + Number(this.contractTotalValueForBTC) + Number(this.coinTotalValueForBTC);
@@ -369,6 +389,10 @@ module.exports = {
         this.contractTotalValueForUSDT = this.toFixedForFloor(this.contractTotalValueForUSDT, 4);
         this.contractTotalValueForBTC = this.toFixedForFloor(this.contractTotalValueForBTC, 8);
         this.contractTotalValueForCNY = this.toFixedForFloor(Number(this.contractTotalValueForUSDT) * this.prz, 2);
+
+        this.followTotalValueForUSDT = this.toFixedForFloor(this.followTotalValueForUSDT, 4);
+        this.followTotalValueForBTC = this.toFixedForFloor(this.followTotalValueForBTC, 8);
+        this.followTotalValueForCNY = this.toFixedForFloor(Number(this.followTotalValueForCNY) * this.prz, 2);
 
         this.totalCNYValue = this.toFixedForFloor(this.totalCNYValue, 2);
 
@@ -619,7 +643,14 @@ module.exports = {
             break;
         case '06':
             // 跟单钱包
-            console.log('ht', type, this.wltItemEx);
+            TOTAL = Number(this.wltItemEx.Num || 0) + Number(this.wltItemEx.PNL || 0) + Number(this.wltItemEx.PNLISO || 0) + Number(this.wltItemEx.UPNL || 0) + Number(this.wltItemEx.Gift || 0);
+            // 账户权益
+            this.wltItemEx.MgnBal = this.toFixedForFloor(TOTAL, 8);
+            // 可用保证金
+            NL = Number(this.wltItemEx.wdrawable || 0) + Number(this.wltItemEx.Gift || 0);
+            this.wltItemEx.NL = this.toFixedForFloor(NL, 8);
+            // 未实现盈亏
+            this.wltItemEx.UPNL = this.toFixedForFloor(this.wltItemEx.UPNL || 0, 8);
             break;
         }
         // 当前币种价格 start

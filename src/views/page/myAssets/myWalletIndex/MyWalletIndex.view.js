@@ -74,7 +74,7 @@ module.exports = {
                                 ])
                             ]),
                             m('div.trade border-radius-medium px-7 py-7 mx-5 column cursor-pointer', {
-                                class: (myWalletIndex.swValue !== '03' ? `has-bg-primary` : `has-bg-level-2`),
+                                class: (myWalletIndex.swValue !== '03' && myWalletIndex.swValue !== '06' ? `has-bg-primary` : `has-bg-level-2`),
                                 onclick: () => { window.router.push({ path: '/myWalletIndex', data: { id: "01" } }, true); }
                             }, [
                                 m('div.left', {}, [
@@ -116,7 +116,10 @@ module.exports = {
                                     })
                                 ])
                             ]),
-                            m('div.other border-radius-medium px-7 py-7 column cursor-pointer has-bg-level-2', { onclick: () => { myWalletIndex.switchChange('none'); } }, [
+                            m('div.other border-radius-medium px-7 py-7 column cursor-pointer has-bg-level-2', {
+                                class: (myWalletIndex.swValue === '06' ? `has-bg-primary` : ` has-bg-level-2`),
+                                onclick: () => { window.router.push({ path: '/myWalletIndex', data: { id: "06" } }, true); }
+                            }, [
                                 m('div', { class: `body-5 mb-1` }, [
                                     m('span', {}, I18n.$t('10061') /* `其他账户` */)
                                 ]),

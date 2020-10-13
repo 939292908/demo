@@ -12,9 +12,9 @@ module.exports = {
     },
     view(vnode) {
         return m('div', { class: `views-pages-Myassets-Table pt-7 px-5 has-bg-level-2` }, [
-            m('div.tradingAccount mb-7 tabs mb-0', { style: { display: vnode.attrs.swValue === '01' || vnode.attrs.swValue === '02' || vnode.attrs.swValue === '04' ? '' : 'none' } }, [
+            m('div.tradingAccount mb-7 tabs mb-0', { style: { display: vnode.attrs.swValue !== '03' ? '' : 'none' } }, [
                 m('ul.tradingAccount_nav', { }, [
-                    t.navAry.map((item) => {
+                    t[vnode.attrs.swValue === '06' ? `otherNavAry` : `tradeNavAry`].map((item) => {
                         return m('li', { class: t.pageFlag === item.idx ? 'is-active' : '' }, [
                             m('a', {
                                 onclick: e => {
@@ -23,7 +23,6 @@ module.exports = {
                             }, item.val)
                         ]);
                     })
-
                 ])
             ]),
             m('div', { class: `nav pr-5` }, [
