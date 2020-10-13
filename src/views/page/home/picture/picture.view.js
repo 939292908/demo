@@ -11,6 +11,7 @@ const market = require('@/models/market/market');
 module.exports = {
     oninit: function () {
         market.init();
+        this.nameList = []; // init nameList
         broadcast.onMsg({
             key: "picture",
             cmd: broadcast.MSG_ASSETD_UPD,
