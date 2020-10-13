@@ -138,13 +138,15 @@ module.exports = {
             '01': {}, // 合约账户
             '02': {}, // 币币账户
             '03': {}, // 主钱包
-            '04': {} // 法币账户
+            '04': {}, // 法币账户
+            '06': {} // 法币账户
         };
         this.wallet = {
             '01': [], // 合约账户
             '02': [], // 币币账户
             '03': [], // 主钱包
-            '04': [] // 法币账户
+            '04': [], // 法币账户
+            '06': {} // 跟单账户
         };
     },
 
@@ -674,6 +676,10 @@ module.exports = {
         this.wltItemEx.btcPrz = btcPrz;
         // 图标
         this.wltItemEx.icon = ActiveLine.WebAPI + this.wltItemEx.icon;
+
+        // for (const i in this.wltItemEx) {
+        //     console.log(isNaN(this.wltItemEx[i]) ? '非数字' : '数字', this.wltItemEx[i], 'nzm');
+        // }
 
         return this.wltItemEx;
     },
