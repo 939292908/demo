@@ -108,7 +108,7 @@ const model = {
             }
         ];
         if (config.openFollow) {
-            this.baseWltList.push({
+            this.allWalletList.push({
                 id: '06',
                 list: this.followList
             });
