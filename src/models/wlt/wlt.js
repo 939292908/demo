@@ -428,10 +428,10 @@ module.exports = {
     },
     getTheDocumentaryData: function () {
         const that = this;
-        let data = null;
+        let data = [];
         Http.subAssets({ exChannel: window.exchId, aType: '018' }).then(res => {
             if (res.result.code === 0 && config.openFollow) {
-                data = res?.assetLists03;
+                data = res?.assetLists03 || [];
             }
         }).finally(res => { that.getOtherWltData(data); });
     },
