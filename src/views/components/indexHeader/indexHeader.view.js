@@ -6,7 +6,7 @@ module.exports = {
     view: function (vnode) {
         const list = [];
         for (const i in vnode.attrs.navList) {
-            list.push(m('li', { class: vnode.attrs.highlightFlag === Number(i) ? 'has-line-primary' : '' }, [
+            list.push(m('li', { class: vnode.attrs.highlightFlag === Number(i) ? 'has-line-primary' : 'noneBorder' }, [
                 m('a', {
                     onclick: e => {
                         window.router.push(vnode.attrs.navList[i].to);
