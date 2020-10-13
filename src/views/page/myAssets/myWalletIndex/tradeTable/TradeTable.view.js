@@ -2,6 +2,7 @@ const m = require('mithril');
 const t = require('@/views/page/myAssets/myWalletIndex/tradeTable/TradeTable.logic');
 require('@/views/page/myAssets/myWalletIndex/tradeTable/TradeTable.scss');
 const I18n = require('@/languages/I18n').default;
+const Loading = require('@/views/components/loading/loading.view');
 
 module.exports = {
     oninit(vnode) {
@@ -75,30 +76,32 @@ module.exports = {
                         ])
                     ]),
                     m('tbody', {}, [
-                        // JSON.stringify(t.tableNewAry),
-                        // 循环表身
-                        t.tableNewAry.map((row) => {
-                            return m('tr', {
-                                key: row.wType
-                            }, [
-                                t.columnData[t.coinType].map((item, i) => {
-                                    if (i === t.columnData[t.coinType].length - 1) {
-                                        // 操作列
-                                        return m('td.py-4 has-text-level-1', {}, [
-                                            item.val.map(aHref => {
-                                                return m('a.mr-4 has-text-primary', { onclick: () => { t.jump(row, aHref); } }, aHref.operation);
-                                            })
-                                        ]);
-                                    } else if (i === t.columnData[t.coinType].length - 2) { // 估值列
-                                        return m('td.py-4 has-text-level-1', {}, isNaN(Number(row[item.val])) ? '--' : t.oldHideMoneyFlag ? '******' : row[item.val] + ` ` + t.currency);
-                                    } else if (i === 0) { // 第一列币种不需要隐藏
-                                        return m('td.py-4 has-text-level-1', {}, row[item.val]);
-                                    } else {
-                                        return m('td.py-4 has-text-level-1', {}, isNaN(Number(row[item.val])) ? '--' : t.oldHideMoneyFlag ? '******' : row[item.val]);
-                                    }
-                                })
-                            ]);
-                        }),
+                        // t.tableData[t.tableDateList] : 源数据
+                        // t.tableNewAry ： 处理后的数据
+                        t.tableData[t.tableDateList].length === 0
+                            ? m('tr', [m('td', { class: `tableLoading`, colspan: 6, style: { textAlign: `center` } }, m(Loading))])
+                            : t.tableNewAry.map((row) => {
+                                return m('tr', {
+                                    key: row.wType
+                                }, [
+                                    t.columnData[t.coinType].map((item, i) => {
+                                        if (i === t.columnData[t.coinType].length - 1) {
+                                            // 操作列
+                                            return m('td.py-4 has-text-level-1', {}, [
+                                                item.val.map(aHref => {
+                                                    return m('a.mr-4 has-text-primary', { onclick: () => { t.jump(row, aHref); } }, aHref.operation);
+                                                })
+                                            ]);
+                                        } else if (i === t.columnData[t.coinType].length - 2) { // 估值列
+                                            return m('td.py-4 has-text-level-1', {}, isNaN(Number(row[item.val])) ? '--' : t.oldHideMoneyFlag ? '******' : row[item.val] + ` ` + t.currency);
+                                        } else if (i === 0) { // 第一列币种不需要隐藏
+                                            return m('td.py-4 has-text-level-1', {}, row[item.val]);
+                                        } else {
+                                            return m('td.py-4 has-text-level-1', {}, isNaN(Number(row[item.val])) ? '--' : t.oldHideMoneyFlag ? '******' : row[item.val]);
+                                        }
+                                    })
+                                ]);
+                            }),
                         m('tr', { style: { display: t.isShowNoneData ? '' : 'none' } }, [
                             m('td', { colspan: 6, style: { textAlign: `center` } }, [
                                 m('div', { class: `noneData` }, [
