@@ -219,6 +219,7 @@ module.exports = {
             cmd: 'redrawValidate',
             cb: () => {
                 this.code = '';
+                this.canConfirm = false;
                 this.init();
                 m.redraw();
             }

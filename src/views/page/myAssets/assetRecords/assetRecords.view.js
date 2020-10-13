@@ -44,10 +44,14 @@ module.exports = {
                                         }
                                     }, [I18n.$t('10060')/* '交易账户' */])
                                 ]),
-                                m('li', {}, [
+                                m('li', { class: AssetRecords.otherAccount.includes(AssetRecords.aType) ? 'is-active' : '' }, [
                                     m('a.pa-0.mx-4', {
                                         onclick: e => {
-                                            window.$message({ title: I18n.$t('10410')/* '提示' */, content: I18n.$t('10513')/* '暂未开放' */, type: 'primary' });
+                                            if (AssetRecords.otherAccount.length) {
+                                                AssetRecords.init(AssetRecords.otherAccount[0]);
+                                            } else {
+                                                window.$message({ title: I18n.$t('10410')/* '提示' */, content: I18n.$t('10513')/* '暂未开放' */, type: 'primary' });
+                                            }
                                         }
                                     }, [I18n.$t('10061')/* '其他账户' */])
                                 ])
@@ -80,6 +84,22 @@ module.exports = {
                                             AssetRecords.init('04');
                                         }
                                     }, [I18n.$t('10074')/* '法币账户' */])
+                                ])
+                            ])
+                        ]),
+                        m('div.tabs.mb-0', {
+                            style: `display:${AssetRecords.otherAccount.includes(AssetRecords.aType) ? 'initial' : 'none'}`
+                        }, [
+                            m('ul', {
+                                style: `display:${AssetRecords.otherAccount.includes('06') ? 'flex' : 'none'}`
+                            }, [
+                                m('li', { class: AssetRecords.aType === '06' ? 'is-active' : '' }, [
+                                    m('a.pa-0.mx-4', {
+                                        onclick: e => {
+                                            if (AssetRecords.aType === '06') return;
+                                            AssetRecords.init('06');
+                                        }
+                                    }, [I18n.$t('10548')/* '跟单账户' */])
                                 ])
                             ])
                         ]),

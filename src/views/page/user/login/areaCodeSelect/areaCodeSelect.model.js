@@ -1,5 +1,6 @@
 const m = require('mithril');
 const pinyin = require('pinyin');
+const I18n = require('@/languages/I18n').default;
 
 module.exports = {
     selectList: [], // 选择列表
@@ -59,7 +60,7 @@ module.exports = {
      */
     itemClick(vnode, item) {
         if (item.support === '0') {
-            window.$message({ content: '该地区暂未开放，请选择其他区号', type: 'danger' });
+            window.$message({ content: I18n.$t('10625'), type: 'primary' });
         } else {
             vnode.attrs.onSelect(item.code);
             this.search = '';

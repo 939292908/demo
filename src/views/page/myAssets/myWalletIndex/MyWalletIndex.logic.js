@@ -210,8 +210,8 @@ const model = {
         wlt.init();
 
         const currencyIndex = window.router.getUrlInfo().params.id;
-        if (currencyIndex === '03' || currencyIndex === '02' || currencyIndex === '01' || currencyIndex === '04') {
-        // if (currencyIndex === '03' || currencyIndex === '02' || currencyIndex === '01') {
+        const whiteList = ['01', '02', '03', '04', '06'];
+        if (whiteList.includes(currencyIndex)) {
             this.switchChange(currencyIndex);
             this.setSwValue(currencyIndex);
         } else {
