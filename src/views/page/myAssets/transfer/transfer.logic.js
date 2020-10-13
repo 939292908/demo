@@ -9,6 +9,7 @@ const wlt = require('@/models/wlt/wlt');
 const I18n = require('@/languages/I18n').default;
 const Http = require('@/api').webApi;
 const errCode = require('@/util/errCode').default;
+const config = require('@/config.js');
 
 const model = {
     vnode: {},
@@ -70,12 +71,14 @@ const model = {
             {
                 id: '04',
                 label: I18n.$t('10074') // '法币账户'
-            },
-            {
-                id: '06',
-                label: I18n.$t('10548') // 跟单
             }
         ];
+        if (config.openFollow) {
+            this.baseWltList.push({
+                id: '06',
+                label: I18n.$t('10548') // 跟单
+            });
+        }
     },
     // 初始化 划转信息
     initTransferInfo () {
@@ -102,12 +105,14 @@ const model = {
             { // 法币钱包
                 id: "04",
                 list: this.legalTenderList
-            },
-            {
-                id: '06',
-                list: this.followList
             }
         ];
+        if (config.openFollow) {
+            this.baseWltList.push({
+                id: '06',
+                list: this.followList
+            });
+        }
         this.initCoinList(); // 初始化 币种下拉列表
         this.initCoinValue();// 初始化 币种下拉value
         this.initWalletListByWTypeAndValue(this.coinMenuOption.currentId); // 初始化钱包 list和value
