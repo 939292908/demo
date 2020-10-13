@@ -50,7 +50,7 @@ module.exports = {
                     )
                 ])
             ]),
-            m('div.has-bg-level-1.pb-8', {}, [
+            m('div.has-bg-level-1.mb-8', {}, [
                 m('div.content-width.has-bg-level-2.border-radius-medium.content-center.content-bg', {}, [
                     m('div.mx-5.py-3.title-small', {}, [I18n.$t('10614')/* '创建API' */]),
                     m('hr.ma-0'),
