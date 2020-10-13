@@ -192,12 +192,12 @@ module.exports = {
         }
         if (aType === '03') {
             for (const k in obj03) {
-                if (addr.includes(k)) return obj[k];
+                if (addr.includes(k)) return obj03[k];
             }
         }
         if (aType === '06') {
             for (const k in obj06) {
-                if (addr.includes(k)) return obj[k];
+                if (addr.includes(k)) return obj06[k];
             }
         }
         return '';
