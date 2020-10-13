@@ -138,13 +138,15 @@ module.exports = {
             '01': {}, // 合约账户
             '02': {}, // 币币账户
             '03': {}, // 主钱包
-            '04': {} // 法币账户
+            '04': {}, // 法币账户
+            '06': {} // 跟单
         };
         this.wallet = {
             '01': [], // 合约账户
             '02': [], // 币币账户
             '03': [], // 主钱包
-            '04': [] // 法币账户
+            '04': [], // 法币账户
+            '06': [] // 跟单
         };
     },
 
@@ -428,7 +430,7 @@ module.exports = {
         const that = this;
         let data = null;
         Http.subAssets({ exChannel: window.exchId, aType: '018' }).then(res => {
-            if (res.result.code === 0) {
+            if (res.result.code === 0 && config.openFollow) {
                 data = res?.assetLists03;
             }
         }).finally(res => { that.getOtherWltData(data); });
