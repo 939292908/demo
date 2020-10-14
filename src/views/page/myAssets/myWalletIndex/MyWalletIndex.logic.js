@@ -85,7 +85,7 @@ const model = {
     setTradingAccountTotalValue: function (param) {
         this.tradingAccountTotalValue = param;
     },
-    // 设置其他账户宗旨
+    // 设置其他账户总值
     setOtherTotalValue: function (param) {
         this.otherTotalValue = param;
     },
