@@ -49,9 +49,7 @@ module.exports = {
                                     return m(`button.button is-primary px-7 ml-6 py-3`, {
                                         class: item.title === I18n.$t('10056') /* `充币` */ ? `` : `is-outlined`,
                                         key: item.title,
-                                        onclick: () => { myWalletIndex.handlerClickNavBtn(item); },
-                                        onmouseover: () => { myWalletIndex.changeBtnSty(index, `show`); },
-                                        onmouseleave: () => { myWalletIndex.changeBtnSty(index, `hide`); }
+                                        onclick: () => { myWalletIndex.handlerClickNavBtn(item); }
                                     },
                                     [item.title]);
                                 })
