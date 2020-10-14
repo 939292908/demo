@@ -16,6 +16,7 @@ const globalModels = require('@/models/globalModels');
 
 const logic = {
     best: 0, // 手气最佳(0:否 1:是)
+    quota: 0, // 抢的金额
     // 已抢红包列表
     redPacketList: [],
     // 红包来源
@@ -44,14 +45,16 @@ const logic = {
                 logic.headerOption.right.loading = true; // 分享按钮loading
                 console.log(logic.redPacketTopOption, 65555);
                 const params = logic.redPacketTopOption;
+                const isLucky = logic.best === 1 && logic.redPacketTopOption.status === 1;
                 // 生成二维码
                 logic.doShare({
+                    isLucky: isLucky,
                     link: window.location.origin + '/m/register/#/?r=' + cryptoChar.encrypt(globalModels.getAccount().uid),
                     // textArr: ['手气最佳', '8 USDT', '我抢到了来自', '178****7894', '的拼手气红包', '下载注册APP，轻松交易']
                     textArr: [
-                        `${logic.best === 1 ? '手气最佳' : '我抢到了'}`,
-                        `${params.quota} ${params.coin}`,
-                        `${logic.best === 1 ? '我抢到了来自' : '来自'}`,
+                        `${isLucky ? '手气最佳' : '我抢到了'}`,
+                        `${logic.quota} ${params.coin}`,
+                        `${isLucky ? '我抢到了来自' : '来自'}`,
                         `${logic.getFromName(params)}`,
                         `的${params.type * 1 === 0 ? '拼手气红包' : '普通红包'}`,
                         `下载APP 轻松交易`]
@@ -125,7 +128,9 @@ const logic = {
     },
     doShare(param) {
         const link = param.link; // 需要分享的链接
-        const img1 = window.location.origin + window.location.pathname + require('@/assets/img/work.png').default;
+        const img1 = param.isLucky
+            ? window.location.origin + window.location.pathname + require('@/assets/img/lucky.png').default
+            : window.location.origin + window.location.pathname + require('@/assets/img/work.png').default;
         const img2 = window.location.origin + window.location.pathname + require('@/assets/img/logo.png').default;
         console.log(img1, img2);
         if (window.plus) {
@@ -152,6 +157,7 @@ const logic = {
         this.getdetails();// 红包详情
         this.getgiftrec();// 领取记录
         logic.best = m.route.param().best * 1; // 是否手气最佳
+        logic.quota = m.route.param().quota; // 抢的金额
     },
     oncreate(vnode) {
     },

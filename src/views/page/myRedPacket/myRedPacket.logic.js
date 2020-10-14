@@ -44,7 +44,8 @@ const logic = {
             path: "/receiveRedPacketDetail",
             data: {
                 gid: item.gid, // 红包id
-                best: item.best // 手气最佳(0:否 1:是)
+                best: item.best, // 手气最佳(0:否 1:是)
+                quota: item.quota // 抢到金额
             }
         });
     },

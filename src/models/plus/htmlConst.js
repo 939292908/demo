@@ -142,7 +142,7 @@ module.exports = {
         </html>`;
     },
     /**
-     * 分享红包
+     * 分享成果
      * @param {Array} textArr 文字列表
      * @param {Array} imgArr 图片列表，图片格式base64
      */
@@ -234,7 +234,7 @@ module.exports = {
                 <div class="top">
                     <div>
                         <div>
-                            <img src="${imgArr[0]}" width="48px" alt="">
+                            <img src="${imgArr[0]}" height="48px" alt="">
                             <br>
                             <h1 class="title">${textArr[0]}</h1>
                             <br>
