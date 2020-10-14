@@ -677,6 +677,10 @@ module.exports = {
         // 图标
         this.wltItemEx.icon = ActiveLine.WebAPI + this.wltItemEx.icon;
 
+        // for (const i in this.wltItemEx) {
+        //     console.log(isNaN(this.wltItemEx[i]) ? '非数字' : '数字', this.wltItemEx[i], 'nzm');
+        // }
+
         return this.wltItemEx;
     },
     /**

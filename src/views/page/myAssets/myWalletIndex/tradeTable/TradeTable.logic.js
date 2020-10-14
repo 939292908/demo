@@ -161,7 +161,8 @@ module.exports = {
             }
         } else if (item.operation === I18n.$t('10057') /* '提币' */) {
             if (this.withdrawFlag === 1 && row.Setting.canWithdraw) {
-                window.router.push({ path: item.to, data: { wType: row.wType } });
+                // currencyDataList: 从我的钱包/交易账户...去提币
+                window.router.push({ path: item.to, data: { wType: row.wType, currencyDataList: this.pageFlag } });
             } else {
                 return window.$message({ title: I18n.$t('10410') /* '提示' */, content: I18n.$t('10513') /* '暂未开放，敬请期待' */, type: 'primary' });
             }
