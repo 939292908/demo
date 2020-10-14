@@ -196,6 +196,7 @@ module.exports = {
         const temp = this.selectType;
         this.selectType = this.anotherType;
         this.anotherType = temp;
+        this.code = '';
         this.setName();
         m.redraw();
     },
