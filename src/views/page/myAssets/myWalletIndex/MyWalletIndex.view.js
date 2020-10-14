@@ -6,6 +6,7 @@ require('@/views/page/myAssets/myWalletIndex/MyWalletIndex.scss');
 const Dropdown = require('@/views/components/common/Dropdown/Dropdown.view');
 const I18n = require('@/languages/I18n').default;
 const Tooltip = require('@/views/components/common/Tooltip/Tooltip.view');
+const config = require('@/config.js');
 
 module.exports = {
     oninit() {
@@ -118,7 +119,7 @@ module.exports = {
                             ]),
                             m('div.other border-radius-medium px-7 py-7 column cursor-pointer has-bg-level-2', {
                                 class: (myWalletIndex.swValue === '06' ? `has-bg-primary` : ` has-bg-level-2`),
-                                onclick: () => { window.router.push({ path: '/myWalletIndex', data: { id: "06" } }, true); }
+                                onclick: () => { config.openFollow ? window.router.push({ path: '/myWalletIndex', data: { id: "06" } }, true) : myWalletIndex.switchChange('none'); }
                             }, [
                                 m('div', { class: `body-5 mb-1` }, [
                                     m('span', {}, I18n.$t('10061') /* `其他账户` */)
