@@ -184,17 +184,6 @@ const model = {
             window.router.push(item.to);
         }
     },
-    // 提币，内部转账，资金划转悬浮样式
-    changeBtnSty: function (index, type) {
-        if (index !== 0) {
-            const ele = document.getElementsByClassName('Operation' + index)[0];
-            if (type === 'show') {
-                ele.classList.value = ele.classList.value.replace('has-text-primary bgNone', 'has-bg-primary');
-            } else {
-                ele.classList.value = ele.classList.value.replace('has-bg-primary', 'has-text-primary bgNone has-line-level-2');
-            }
-        }
-    },
     // 设置各种估值
     sets: function () {
         this.currency === 'BTC' ? this.setTotalValue(wlt.totalValueForBTC) : this.setTotalValue(wlt.totalValueForUSDT);
