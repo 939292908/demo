@@ -170,7 +170,8 @@ const openGView = {
                                         openGLogic.LcCode = e.target.value;
                                     },
                                     onblur: () => { openGLogic.LcCodeCheck(); },
-                                    value: openGLogic.LcCode
+                                    value: openGLogic.LcCode,
+                                    maxlength: 6
                                 }
                             }),
                             m('span', { class: `has-text-tip-error`, style: { display: openGLogic.tip2 ? `` : `none` } }, openGLogic.tip2)
