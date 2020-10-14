@@ -75,12 +75,12 @@ module.exports = {
                             })
                         ])
                     ]),
-                    m('tbody', {}, [
-                        // t.tableData[t.tableDateList] : 源数据
-                        // t.tableNewAry ： 处理后的数据
-                        t.tableData[t.tableDateList].length === 0
-                            ? m('tr', [m('td', { class: `tableLoading`, colspan: 6, style: { textAlign: `center` } }, m(Loading))])
-                            : t.tableNewAry.map((row) => {
+                    // t.tableData[t.tableDateList] : 源数据
+                    // t.tableNewAry ： 处理后的数据
+                    t.tableData[t.tableDateList].length === 0
+                        ? m('tbody', {}, [m('tr', [m('td', { class: `tableLoading`, colspan: 6, style: { textAlign: `center` } }, m(Loading))])])
+                        : m('tbody', {}, [
+                            t.tableNewAry.map((row) => {
                                 return m('tr', {
                                     key: row.wType
                                 }, [
@@ -102,21 +102,21 @@ module.exports = {
                                     })
                                 ]);
                             }),
-                        m('tr', { style: { display: t.isShowNoneData ? '' : 'none' } }, [
-                            m('td', { colspan: 6, style: { textAlign: `center` } }, [
-                                m('div', { class: `noneData` }, [
-                                    m('div', { class: `noneDataDiv` }, [
-                                        m('div', { class: `has-bg-level-1 mb-3 imgDiv` }, [
-                                            m('img', { class: `mt-4`, src: require(`@/assets/img/myAssets/noneData.svg`).default })
-                                        ]),
-                                        m('div', { class: `spanDiv` }, [
-                                            m('span', { class: `has-text-level-4` }, I18n.$t('10515') /* '暂无数据' */)
+                            m('tr', { style: { display: t.isShowNoneData ? '' : 'none' } }, [
+                                m('td', { colspan: 6, style: { textAlign: `center` } }, [
+                                    m('div', { class: `noneData` }, [
+                                        m('div', { class: `noneDataDiv` }, [
+                                            m('div', { class: `has-bg-level-1 mb-3 imgDiv` }, [
+                                                m('img', { class: `mt-4`, src: require(`@/assets/img/myAssets/noneData.svg`).default })
+                                            ]),
+                                            m('div', { class: `spanDiv` }, [
+                                                m('span', { class: `has-text-level-4` }, I18n.$t('10515') /* '暂无数据' */)
+                                            ])
                                         ])
                                     ])
                                 ])
                             ])
                         ])
-                    ])
                 ])
             )
         ]);
