@@ -57,7 +57,7 @@ const logic = {
                         `${isLucky ? '我抢到了来自' : '来自'}`,
                         `${logic.getFromName(params)}`,
                         `的${params.type * 1 === 0 ? '拼手气红包' : '普通红包'}`,
-                        `下载APP 轻松交易`]
+                        `下载APP，轻松交易`]
                 });
             }
         }

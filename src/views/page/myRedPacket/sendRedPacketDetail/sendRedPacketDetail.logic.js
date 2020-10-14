@@ -121,7 +121,7 @@ const logic = {
                 GetBase64.loadImageUrlArray([img1, img2, base64], arg => {
                     console.log('GetBase64 loadImageUrlArray', arg);
                     GetBase64.getWebView({
-                        data: HtmlConst.shareRedPacket(['分享红包', '红包资产可用来提现，交易', '下载APP 轻松交易'], arg),
+                        data: HtmlConst.shareRedPacket(['分享红包', '红包资产可用来提现，交易', '下载APP，轻松交易'], arg),
                         W: 375,
                         H: 667
                     }, res => {

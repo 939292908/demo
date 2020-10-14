@@ -73,7 +73,7 @@ module.exports = {
                 m('iframe', { src: require("@/assets/img/logo2.svg").default, width: "48", height: "48", class: "mr-3" }),
                 m('div', { class: `spacer` }, [
                     m('div', { class: "title-small" }, config.exchNameCapital),
-                    m('div', { class: "has-text-level-3 body-4" }, "下载注册APP，轻松交易")
+                    m('div', { class: "has-text-level-3 body-4" }, "下载APP，轻松交易")
                 ]),
                 m('a', { href: redPacketUtils.getDownloadAppUrl() }, [
                     m(Button, {
