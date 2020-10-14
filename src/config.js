@@ -31,5 +31,5 @@ module.exports = {
         MMType: 1, // 保证金率公式选择，0: 默认，1: 开仓价值/杠杆
         PrzLiqType: 0 // 强平价计算公式选择，0: 默认，1: 默认公式中的MMR风险修改为MAX(MIRMy/2，MMR风险)
     },
-    openFollow: false // 跟单，资金记录，资产等显示
+    openFollow: true // 跟单，资金记录，资产等显示
 };
