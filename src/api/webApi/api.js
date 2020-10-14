@@ -814,12 +814,17 @@ export function followTransrer (params = {}, options = { withCredentials: false 
     return Http.post(API.FORDER_TRANSFER, params, options);
 }
 
-/*
-* 获取跟单持仓
-* @param params {
-*   positions:[] // 当前已存在的仓位pid，数组形式
-* }
-* */
+/**
+ * 获取跟单持仓
+ * @param {*} params {
+ *   positions:[] // 当前已存在的仓位pid，数组形式
+ * }
+ * @returns {Object} {
+        "code":0,
+        "data":[], // 新增的仓位
+        "delPos":[] // 删除的仓位
+    }
+ */
 export function getFollowPosition (params = {}, options = { withCredentials: false }) {
     return Http.post(API.FORDER_GETPOSITION_V1, params, options);
 }
