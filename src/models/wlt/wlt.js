@@ -653,6 +653,8 @@ module.exports = {
             this.wltItemEx.NL = this.toFixedForFloor(NL, 8);
             // 未实现盈亏
             this.wltItemEx.UPNL = this.toFixedForFloor(this.wltItemEx.UPNL || 0, 8);
+            // 账户可提金额，用于资产划转以及提现
+            this.wltItemEx.wdrawable = this.toFixedForFloor(this.wltItemEx.mainBal, 8);
             break;
         }
         // 当前币种价格 start
