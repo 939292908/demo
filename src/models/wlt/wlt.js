@@ -645,14 +645,15 @@ module.exports = {
             break;
         case '06':
             // 跟单钱包
-            TOTAL = Number(this.wltItemEx.Num || 0) + Number(this.wltItemEx.PNL || 0) + Number(this.wltItemEx.PNLISO || 0) + Number(this.wltItemEx.UPNL || 0) + Number(this.wltItemEx.Gift || 0);
+            TOTAL = Number(this.wltItemEx.mainBal || 0) + Number(this.wltItemEx.financeBal || 0) + Number(this.wltItemEx.mainLock || 0) + Number(this.wltItemEx.depositLock || 0) + Number(this.wltItemEx.pawnBal || 0) + Number(this.wltItemEx.creditNum || 0);
             // 账户权益
             this.wltItemEx.MgnBal = this.toFixedForFloor(TOTAL, 8);
             // 可用保证金
-            NL = Number(this.wltItemEx.wdrawable || 0) + Number(this.wltItemEx.Gift || 0);
-            this.wltItemEx.NL = this.toFixedForFloor(NL, 8);
-            // 未实现盈亏
-            this.wltItemEx.UPNL = this.toFixedForFloor(this.wltItemEx.UPNL || 0, 8);
+            this.wltItemEx.NL = this.toFixedForFloor(this.wltItemEx.mainBal, 8);
+            // // 未实现盈亏
+            // this.wltItemEx.UPNL = this.toFixedForFloor(this.wltItemEx.UPNL || 0, 8);
+            // 账户可提金额，用于资产划转以及提现
+            this.wltItemEx.wdrawable = this.toFixedForFloor(this.wltItemEx.mainBal, 8);
             break;
         }
         // 当前币种价格 start
@@ -713,10 +714,11 @@ module.exports = {
         const { Poss, Wlts, Orders, RS, trdInfoStatus } = gTrdApi;
         const { lastTick, AssetD } = gMktApi;
 
-        if ((trdInfoStatus.pos === 0 ||
-            trdInfoStatus.ord === 0 ||
-            trdInfoStatus.wlt === 0 ||
-            trdInfoStatus.rs === 0)) {
+        if ((trdInfoStatus.pos === 0 /* 仓位数据 */ ||
+            trdInfoStatus.ord === 0 /* 委托数据 */ ||
+            trdInfoStatus.wlt === 0 /* 资产数据 */ ||
+            trdInfoStatus.rs === 0 /* 风险限额数据 */
+        )) {
             return;
         }
         // 将仓位数据Poss、资产数据Wlts，以及委托数据Orders拷贝至新的对象或数组，防止后边计算影响原数据；

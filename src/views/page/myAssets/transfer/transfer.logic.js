@@ -256,6 +256,7 @@ const model = {
             const wallet = wlt.wallet[this.fromMenuOption.currentId]; // 对应钱包
             for (const item of wallet) {
                 if (item.wType === this.coinMenuOption.currentId) { // 找到对应币种
+                    console.log(item.wdrawable, item, '设置最大可以金额');
                     this.form.maxTransfer = item.wdrawable || 0; // 设置最大可以金额
                 }
             }
@@ -329,34 +330,55 @@ const model = {
             return window.$message({ title: I18n.$t('10410' /** 提示 */), content: I18n.$t('10413' /** 划转数量不能大于最大可划 */), type: 'danger' });
         }
         model.setMaxTransfer(); // 设置 最大划转
-        // api
-        const params = {
-            aTypeFrom: this.fromMenuOption.currentId === '06' ? '018' : this.fromMenuOption.currentId,
-            aTypeTo: this.toMenuOption.currentId === '06' ? '018' : this.toMenuOption.currentId,
-            wType: this.coinMenuOption.currentId,
-            num: this.form.num
-        };
-        Http.postTransfer(params).then(res => {
-            if (res.result.code === 0) {
-                model.setTransferModalOption({ isShow: false }); // 划转弹框隐藏aqwdqqwwqwdqqwdf
-                this.reset(); // 重置
-                wlt.init(); // 更新数据
-                window.$message({ title: I18n.$t('10410' /** 提示 */), content: I18n.$t('10414' /** 资金划转成功！ */), type: 'success' });
-                model.initFromAndToValueByAuthWalletList(); // 2. 钱包value  初始化
-            } else {
-                // 往法币划转
-                if (Number(res.result.code) === 9040) {
+
+        if (this.fromMenuOption.currentId === '06' || this.toMenuOption.currentId === '06') {
+            const params = {
+                num: this.form.num,
+                coin: this.coinMenuOption.currentId,
+                aTypeFrom: this.fromMenuOption.currentId === '06' ? '018' : this.fromMenuOption.currentId,
+                aTypeTo: this.toMenuOption.currentId === '06' ? '018' : this.toMenuOption.currentId
+            };
+            Http.followTransrer(params).then(res => {
+                if (res.code === 0) {
                     model.setTransferModalOption({ isShow: false }); // 划转弹框隐藏
-                    model.showlegalTenderModal = true; // 法币弹框显示
-                    m.redraw();
+                    this.reset(); // 重置
+                    wlt.init(); // 更新数据
+                    window.$message({ title: I18n.$t('10410' /** 提示 */), content: I18n.$t('10414' /** 资金划转成功！ */), type: 'success' });
+                    model.initFromAndToValueByAuthWalletList(); // 2. 钱包value  初始化
                 } else {
-                    window.$message({ title: I18n.$t('10410' /** 提示 */), content: errCode.getWebApiErrorCode(res.result.code), type: 'danger' });
+                    window.$message({ title: I18n.$t('10410' /** 提示 */), content: errCode.getWebApiErrorCode(res.code), type: 'danger' });
                 }
-            }
-            this.successCallback(); // 成功回调
-        }).catch(err => {
-            console.log(err);
-        });
+                this.successCallback(); // 成功回调
+            });
+        } else {
+            const params = {
+                aTypeFrom: this.fromMenuOption.currentId,
+                aTypeTo: this.toMenuOption.currentId,
+                wType: this.coinMenuOption.currentId,
+                num: this.form.num
+            };
+            Http.postTransfer(params).then(res => {
+                if (res.result.code === 0) {
+                    model.setTransferModalOption({ isShow: false }); // 划转弹框隐藏
+                    this.reset(); // 重置
+                    wlt.init(); // 更新数据
+                    window.$message({ title: I18n.$t('10410' /** 提示 */), content: I18n.$t('10414' /** 资金划转成功！ */), type: 'success' });
+                    model.initFromAndToValueByAuthWalletList(); // 2. 钱包value  初始化
+                } else {
+                    // 往法币划转
+                    if (Number(res.result.code) === 9040) {
+                        model.setTransferModalOption({ isShow: false }); // 划转弹框隐藏
+                        model.showlegalTenderModal = true; // 法币弹框显示
+                        m.redraw();
+                    } else {
+                        window.$message({ title: I18n.$t('10410' /** 提示 */), content: errCode.getWebApiErrorCode(res.result.code), type: 'danger' });
+                    }
+                }
+                this.successCallback(); // 成功回调
+            }).catch(err => {
+                console.log(err);
+            });
+        }
         // console.log("我提交了", this.form, 666);
     },
     // 重置

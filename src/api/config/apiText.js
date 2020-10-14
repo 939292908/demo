@@ -47,7 +47,7 @@ module.exports = {
     // 提现
     WITHDRAW: '/users/ReqWithdraw',
     // 提现和支付手续费
-    ACT_FEES: '/v1/exch/fees', // '/users/getFees';
+    ACT_FEES: '/v1/exch/fees', // '/users/getFees',
     // 获取钱包地址列表
     WALLET_ADDRESS_LIST: '/addressMg/getWalletList',
     // 钱包历史记录
@@ -97,5 +97,63 @@ module.exports = {
     // API管理接口
     USER_API: '/users/api',
     // 合约，交易对 排序
-    MARKETS_SORT: '/v1/markets/currencies/sort'
+    MARKETS_SORT: '/v1/markets/currencies/sort',
+    /**
+     * 跟单
+     */
+    // 划转 跟单
+    FORDER_TRANSFER: '/v2/forder/ccsTransfer',
+    // 申请老师
+    FORDER_APPLYLEADER_V1: `v1/forder/applyLeader`,
+    // 我的带单设置
+    FORDER_GETMYLD_V1: `v1/forder/getMyLd`,
+    // 我的申请记录
+    FORDER_GETMYAPPLY_V1: `v1/forder/getMyApply`,
+    // 开启/关闭带单
+    FORDER_OPENLEADER_V1: `v1/forder/openLeader`,
+    // 设置带单资料
+    FORDER_EDITLEADER_V1: `v1/forder/editLeader`,
+    // 设置带单
+    FORDER_LEADERCFG_V1: `v1/forder/leaderCfg`,
+    // 跟单者列表
+    FORDER_GETFOLLOWER_V1: `v1/forder/getFollower`,
+    // 开启跟单
+    FORDER_OPENFOLLOWER_V1: `v1/forder/openFollow`,
+    // 关闭跟单
+    FORDER_CLOSEFOLLOWER_V1: `v1/forder/closeFollow`,
+    // 修改跟单
+    FORDER_EDITFOLLOW_V1: `v1/forder/editFollow`,
+    // 我的跟单
+    FORDER_MYFOLLOW_V1: `v1/forder/myFollow`,
+    // 榜单及全部交易员
+    FORDER_SEARCHFOLLOW_V1: `v1/forder/searchFollow`,
+    // 获取所有委托
+    FORDER_GETORDERS_V1: `v1/forder/getOrders`,
+    // 获取所有持仓
+    FORDER_GETPOSITION_V1: `v1/forder/getPosition`,
+    // 平仓
+    FORDER_CLOSEPOS_V1: `v1/forder/closePos`,
+    // 止盈止损
+    FORDER_STOPPOS_V1: `v1/forder/stopPos`,
+    // 收益明细
+    FORDER_GETPNLREC_V1: `v1/forder/getPNLRec`,
+    // 获取交易员信息
+    FORDER_GETFOLLOWINFO_V1: `v1/forder/getFollowInfo`,
+    // 获取跟单配置
+    FORDER_GETCOMMONCFG_V1: `v1/forder/getCommonCfg`,
+    // 获取推荐
+    FORDER_GETRECOMMOND_V1: `v1/forder/getRecommond`,
+    // 同意协议接口
+    FORDER_SETAGREEMENT_V1: `v1/forder/setAgreement`,
+    // 获取老师平仓记录
+    FORDER_GETLDREC_V1: `v1/forder/ldRec`,
+    // 获取站内信公告消息列表
+    GET_MAIL_NOTICE_V1: '/v1/msgcenter/notice',
+    // 获取站内信个人消息列表
+    GET_MAIL_NOTIFY_V1: '/v1/msgcenter/notify',
+    // 获取站内信消息已读数据
+    GET_MAIL_ID_V1: '/v1/msgcenter/message/markstatus/list',
+    // 储存站内信消息已读数据
+    SAV_MAIL_ID_V1: '/v1/msgcenter/message/markstatus/update',
+    GET_MAIL_MEASSAGE_LIST: '/v1/msgcenter/message/list'
 };
