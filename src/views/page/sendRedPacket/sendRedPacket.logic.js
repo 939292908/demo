@@ -101,8 +101,12 @@ const logic = {
             // const maxNum = parseInt(logic.wltMoney / logic.moneyFormItem.value); // 资金最多可发个数
 
             // 请输入红包个数
-            if (!logic.numberFormItem.value || logic.numberFormItem.value === '0') {
+            if (logic.numberFormItem.value === '0') {
                 isUpdateMsg && this.updateErrMsg("请输入红包个数");
+                return false;
+            }
+            // 红包个数为空（不提示）
+            if (!logic.numberFormItem.value) {
                 return false;
             }
 
@@ -125,6 +129,11 @@ const logic = {
                 // 一次最多可发xx个红包
                 if (logic.numberFormItem.value > logic.verifyCfg.maxcount) {
                     isUpdateMsg && this.updateErrMsg(`一次最多可发${logic.verifyCfg.maxcount}个红包`);
+                    return false;
+                }
+                //
+                if (logic.numberFormItem.value * logic.verifyCfg.low > logic.moneyFormItem.value) {
+                    isUpdateMsg && this.updateErrMsg(`单笔最低发送${utils.getNormalNumber(logic.verifyCfg.low)}${logic.currentCoin}`);
                     return false;
                 }
             }
@@ -168,6 +177,7 @@ const logic = {
         },
         right: {
             label: '我的红包',
+            class: 'has-text-level-1',
             onclick() {
                 window.router.push('/myRedPacket');
             }

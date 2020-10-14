@@ -56,6 +56,8 @@ module.exports = {
                     },
                     updateOption(params) {
                         logic.moneyFormItem.updateOption(params); // 更新数据
+                        // const isPass = logic.formModel.verifyMoney(); // 校验金额
+                        // if (isPass) logic.formModel.verifyNumber(); // 校验个数
                     }
                 }),
                 // 切换 普通/拼手气红包
@@ -73,11 +75,13 @@ module.exports = {
                     inputId: 'numberFormItem',
                     value: logic.numberFormItem.value,
                     onblur: value => {
-                        const isPass = logic.formModel.verifyNumber(); // 校验个数
-                        if (isPass) logic.formModel.verifyMoney(); // 校验金额
+                        // const isPass = logic.formModel.verifyNumber(); // 校验个数
+                        // if (isPass) logic.formModel.verifyMoney(); // 校验金额
                     },
                     updateOption: params => {
                         logic.numberFormItem.updateOption(params); // 更新数据
+                        const isPass = logic.formModel.verifyNumber(); // 校验个数
+                        if (isPass) logic.formModel.verifyMoney(); // 校验金额
                     }
                 }),
                 // 祝福信息
