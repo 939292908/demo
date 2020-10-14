@@ -715,10 +715,11 @@ module.exports = {
         const { Poss, Wlts, Orders, RS, trdInfoStatus } = gTrdApi;
         const { lastTick, AssetD } = gMktApi;
 
-        if ((trdInfoStatus.pos === 0 ||
-            trdInfoStatus.ord === 0 ||
-            trdInfoStatus.wlt === 0 ||
-            trdInfoStatus.rs === 0)) {
+        if ((trdInfoStatus.pos === 0 /* 仓位数据 */ ||
+            trdInfoStatus.ord === 0 /* 委托数据 */ ||
+            trdInfoStatus.wlt === 0 /* 资产数据 */ ||
+            trdInfoStatus.rs === 0 /* 风险限额数据 */
+        )) {
             return;
         }
         // 将仓位数据Poss、资产数据Wlts，以及委托数据Orders拷贝至新的对象或数组，防止后边计算影响原数据；
