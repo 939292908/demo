@@ -32,8 +32,10 @@ const logic = {
             label: "法币账户"
         }
     ],
+    // 更新划转弹框数据
     updateOption(params) {
         Object.keys(params).forEach(key => (this[key] = params[key]));
+        this.reset(); // 重置
         this.init();
     },
     onOk() {
@@ -128,8 +130,11 @@ const logic = {
     },
     // 设置 最大划转 (依赖钱包名称, 币种)
     setMaxTransfer () {
-        if (wlt.wallet) { // 所有钱包 和 从xx钱包id 都存在
-            const wallet = wlt.wallet[logic.fromDropdown.currentId]; // 对应钱包
+        // 所有钱包 和 从xx钱包id 都存在
+        if (wlt.wallet) {
+            // 对应钱包
+            const wallet = wlt.wallet[logic.fromDropdown.currentId];
+            // 对应币种
             const arr = wallet.filter(t => {
                 return t.wType === logic.coin;
             });
@@ -176,6 +181,7 @@ const logic = {
     // 重置
     reset() {
         this.transferMoney = "";
+        this.fromDropdown.currentId = "01";
     },
     oninit(vnode) {
         wlt.init(); // 更新数据
