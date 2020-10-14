@@ -817,7 +817,7 @@ export function followTransrer (params = {}, options = { withCredentials: false 
 /**
  * 获取跟单持仓
  * @param {*} params {
- *   positions:[] // 当前已存在的仓位pid，数组形式
+ *   positions:"[]" // (当前已存在的仓位pid，数组字符串) 转String
  * }
  * @returns {Object} {
         "code":0,

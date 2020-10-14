@@ -398,8 +398,8 @@ export function calcfutureWallet(wallets, posArr, UPNLPrzActive, sumMI, UsedWltB
 /**
  * 跟单数据计算主函数
  * @param {Array} posArr 持仓数据，数组
- * @param {Array} wallets 合约钱包数据，数组
- * @param {Array} orderArr 合约未完成报单数据，数组
+ * @param {Array} wallets 跟单钱包数据，数组
+ * @param {Array} orderArr 跟单未完成报单数据，数组  (使用默认值： [])
  * @param {Object} RSObj 基础风险限额数据，Sym做key
  * @param {Object} assetD 合约详情，Sym做key
  * @param {Object} lastTick 最新tick行情，Sym做key
