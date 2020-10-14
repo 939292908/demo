@@ -11,6 +11,8 @@ const { HtmlConst, GetBase64 } = require('@/models/plus/index.js');
 const share = require('../../main/share/share.logic.js');
 const errCode = require('@/util/errCode').default;
 const utils = require('@/util/utils').default;
+const cryptoChar = require('@/util/cryptoChar');
+const globalModels = require('@/models/globalModels');
 
 const logic = {
     best: 0, // 手气最佳(0:否 1:是)
@@ -36,7 +38,7 @@ const logic = {
             label: "详情记录"
         },
         right: {
-            label: m('i', { class: `iconfont icon-otc-editName has-text-level-3` }),
+            label: m('i', { class: `iconfont icon-fenxiang has-text-level-3` }),
             loading: false, // 分享按钮loading
             onclick() {
                 logic.headerOption.right.loading = true; // 分享按钮loading
@@ -44,15 +46,15 @@ const logic = {
                 const params = logic.redPacketTopOption;
                 // 生成二维码
                 logic.doShare({
-                    link: window.location.origin + '/m/register/',
+                    link: window.location.origin + '/m/register/#/?r=' + cryptoChar.encrypt(globalModels.getAccount().uid),
                     // textArr: ['手气最佳', '8 USDT', '我抢到了来自', '178****7894', '的拼手气红包', '下载注册APP，轻松交易']
                     textArr: [
                         `${logic.best === 1 ? '手气最佳' : '我抢到了'}`,
                         `${params.quota} ${params.coin}`,
-                        '我抢到了来自',
+                        `${logic.best === 1 ? '我抢到了来自' : '来自'}`,
                         `${logic.getFromName(params)}`,
                         `的${params.type * 1 === 0 ? '拼手气红包' : '普通红包'}`,
-                        `下载注册APP，轻松交易`]
+                        `下载APP 轻松交易`]
                 });
             }
         }
@@ -107,8 +109,6 @@ const logic = {
             if (arg.result.code === 0) {
                 const data = arg.result.data;
                 logic.redPacketTopOption = JSON.parse(JSON.stringify(data)); // 红包top 组件配置
-                logic.redPacketTopOption.quota = m.route.param().quota; // 自定义修改当前抢到金额
-
                 logic.redPacketInfoOption = JSON.parse(JSON.stringify(data)); // 红包Info 组件配置
 
                 m.redraw();
@@ -135,7 +135,7 @@ const logic = {
                     GetBase64.getWebView({
                         data: HtmlConst.shareLucky(param.textArr, arg),
                         W: 276,
-                        H: 390
+                        H: 362
                     }, res => {
                         console.log('GetBase64 getWebView', res);
                         share.openShare({ needShareImg: res, link: link });
@@ -148,6 +148,7 @@ const logic = {
         }
     },
     oninit(vnode) {
+        this.redPacketList = [];
         this.getdetails();// 红包详情
         this.getgiftrec();// 领取记录
         logic.best = m.route.param().best * 1; // 是否手气最佳

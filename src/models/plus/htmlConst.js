@@ -48,6 +48,7 @@ module.exports = {
                     width: 100%;
                     display: flex;
                     flex-direction: column;
+                    border-radius: 2px;
                 }
                 .box .top {
                     height: 70%;
@@ -157,7 +158,7 @@ module.exports = {
                     box-sizing: border-box;
                     padding: 0;
                     margin: 0;
-                    font-family: PingFang SC;
+                    font-family: "Arial";
                     font-style: normal;
                 }
                 html,
@@ -169,6 +170,7 @@ module.exports = {
                 }
                 .box {
                     padding: 32px;
+                    padding-bottom: 0;
                 }
                 .box .top > div {
                     display: flex;
@@ -214,16 +216,16 @@ module.exports = {
                     padding: 20px 0;
                 }
                 .box .bottom-content>div:first-child {
-                    width: calc(100% - 68px);
-                    height: 68px;
+                    width: calc(100% - 58px);
+                    height: 58px;
                     font-size: 12px;
                     display: flex;
                     align-items: center;
                     color: #9EA2AF;
                 }
                 .box .bottom-content>div:last-child {
-                    width: 68px;
-                    height: 68px;
+                    width: 58px;
+                    height: 58px;
                 }
             </style>
         </head>
@@ -232,7 +234,7 @@ module.exports = {
                 <div class="top">
                     <div>
                         <div>
-                            <img src="${imgArr[0]}" width="60px" alt="">
+                            <img src="${imgArr[0]}" width="48px" alt="">
                             <br>
                             <h1 class="title">${textArr[0]}</h1>
                             <br>

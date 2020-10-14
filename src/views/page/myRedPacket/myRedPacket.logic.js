@@ -44,8 +44,7 @@ const logic = {
             path: "/receiveRedPacketDetail",
             data: {
                 gid: item.gid, // 红包id
-                best: item.best, // 手气最佳(0:否 1:是)
-                quota: item.quota // 抢的金额
+                best: item.best // 手气最佳(0:否 1:是)
             }
         });
     },
@@ -58,34 +57,46 @@ const logic = {
             }
         });
     },
+    // 获取领红包累计金额
+    getReceiveMoneySum() {
+        this.receiveMoneySum = 0; // 清零
+        this.receiveRedPacketList.map(item => { // 累加
+            this.receiveMoneySum += (wlt.getPrz(item.coin) * item.quota);
+        });
+        this.receiveMoneySum = utils.toFixedForFloor(this.receiveMoneySum, 4); // 保留小数
+        m.redraw();
+    },
+    // 获取发红包累计金额
+    getSendMoneySum() {
+        this.sendMoneySum = 0; // 总金额 清零
+        this.sendMoneySumBack = 0; // 退回总金额 清零
+
+        this.sendRedPacketList.map(item => { // 累加
+            this.sendMoneySum += (wlt.getPrz(item.coin) * item.quota);
+            this.sendMoneySumBack += (item.status === 3 ? (wlt.getPrz(item.coin) * item.quota2) : 0);
+        });
+        this.sendMoneySum = utils.toFixedForFloor(this.sendMoneySum, 4);
+        this.sendMoneySumBack = utils.toFixedForFloor(this.sendMoneySumBack, 4); // 保留小数
+        m.redraw();
+    },
     // 构建已领红包列表
     buildReceiveRedPacketList(list = []) {
-        this.receiveMoneySum = 0; // 计算领取总金额
-
         this.receiveRedPacketList = list.map(item => {
-            this.receiveMoneySum += (wlt.getPrz(item.coin) * item.quota); // 计算领取总金额
             item.time = utils.formatDate(item.rtm, 'yyyy-MM-dd hh:mm'); // 领取时间
-            item.phone = utils.hideAccountNameInfo(item.rtel); // 领取人手机号
+            item.rtel_bulid = utils.hideAccountNameInfo(item.rtel); // 领取人手机号
+            item.remail_bulid = utils.hideAccountNameInfo(item.remail); // 领取人邮箱
+            item.quota = utils.toFixedForFloor(item.quota, 4); // 币金额
             return item;
         });
-
-        this.receiveMoneySum = utils.toFixedForFloor(this.receiveMoneySum, 4);
         m.redraw();
     },
     // 构建已发红包列表
     buildSendRedPacketList(list = []) {
-        this.sendMoneySum = 0; // 发送总金额
-        this.sendMoneySumBack = 0; // 发送退回总金额
-
         this.sendRedPacketList = list.map(item => {
-            this.sendMoneySum += (wlt.getPrz(item.coin) * item.quota); // 发送总金额
-            this.sendMoneySumBack += item.status === 2 ? (wlt.getPrz(item.coin) * item.quota2) : 0; // 发送退回总金额
             item.time = utils.formatDate(item.ctm, 'yyyy-MM-dd hh:mm'); // 领取时间
+            item.quota2 = utils.toFixedForFloor(item.quota2, 4); // 币金额
             return item;
         });
-
-        this.sendMoneySum = utils.toFixedForFloor(this.sendMoneySum, 4);
-        this.sendMoneySumBack = utils.toFixedForFloor(this.sendMoneySumBack, 4);
         m.redraw();
     },
     // 获取领取记录
@@ -128,12 +139,22 @@ const logic = {
     },
     oninit(vnode) {
         wlt.init();
+        // wlt完成 广播
         broadcast.onMsg({
-            key: "myRedP",
+            key: "myRedP_MSG_WLT_READY",
             cmd: broadcast.MSG_WLT_READY,
             cb: () => {
                 this.getrecv();// 获取领取记录
                 this.getsendrec();// 获取发送记录
+            }
+        });
+        // wlt更新 广播
+        broadcast.onMsg({
+            key: "myRedP_MSG_WLT_UPD",
+            cmd: broadcast.MSG_WLT_UPD,
+            cb: () => {
+                logic.getReceiveMoneySum(); // 获取领红包累计金额
+                logic.getSendMoneySum(); // 获取发红包累计金额
             }
         });
     },
@@ -144,8 +165,13 @@ const logic = {
     onremove(vnode) {
         wlt.remove();
         broadcast.offMsg({
-            key: "myRedP",
-            cmd: broadcast.MSG_WLT_READY,
+            key: "myRedP_MSG_WLT_READY",
+            cmd: broadcast.MSG_WLT_UPD,
+            isall: true
+        });
+        broadcast.offMsg({
+            key: "myRedP_MSG_WLT_UPD",
+            cmd: broadcast.MSG_WLT_UPD,
             isall: true
         });
     }

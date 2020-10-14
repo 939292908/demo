@@ -738,8 +738,7 @@ export function getWalletPwdStatus (params = {}, options = { withCredentials: fa
     return Http.post(API.FAVORITE_SETTING_V1, params, options);
 }
 
-// ================ 红包活动 ================
-
+// ============================= 红包活动 =============================
 // const axios = require('axios');
 
 /**
@@ -771,43 +770,183 @@ export function getRedPackCfg (params = {}) {
 /**
  * 发红包
  * @param {Object} params {
-    coin: "BTC"  //币种
-    type: 0  //红包类型:0拼手气，>0普通红包
-    quota: 1 //金额
-    count: 1 //红包个数
-    des: ""   //祝福语
+    coin: "BTC", //币种
+    type: 0, //红包类型:0拼手气，>0普通红包
+    quota: 1, //金额
+    count: 1, //红包个数
+    des: "",   //祝福语
     passd: "" //密码
  * }
  * @param {Object} options axios请求配置
  * @returns {Object} {
-
-}
+        bestq: 0, //拼手气最高金额
+        bkquota: 0, //红包退回金额
+        coin: "ETH", //币种
+        count: 8, //红包个数
+        count2: 8, //未领取红包个数
+        ctm: 1602643367524, //发送时间
+        des: "大吉大利，全天盈利", //祝福语
+        gemail: "", //邮箱
+        gid: "a9aa8bea20dd4caa6bc9b3b1491f97bb", //红包id
+        gtel: "15155395909", //手机
+        guid: "11138726", //红包发送人uid
+        low: 0.0001, //单个红包最低金额
+        ltm: 0, //
+        otm: 1602643967524, //到期时间
+        quota: 3, //金额
+        quota2: 3, //未领取金额
+        status: 0, //状态：0待领取，1已领完，3红包到期
+        type: 0, //红包类型:0拼手气，>0普通红包，数值代表单个红包金额
+        vp: "21" //渠道
+    }
  */
-//  vp:0, guid:'123', coin:'USDT',type:0, quota:10, count:10,des:'留言', passd: CryptoJS.MD5('123456')
 export function sendgift (params = {}, options = { withCredentials: false }) {
     return Http.post('v1/gift/sendgift', params, options);
 }
-// 绑定 uid tel email
-export function bindgift (params = {}, options = { withCredentials: false }) {
-    return Http.post('v1/gift/bindgift', params, options);
-}
-// 领红包 rtype gid ruid rtel remail
+
+/**
+ * 领红包
+ * @param {Object} params {
+    gid: "BTC", //红包id
+    rtel: "", //手机
+    remail: "" //邮箱
+ * }
+ * @param {Object} options axios请求配置
+ * @returns {Object} {
+        best: 1, //手气最佳:0否，1是
+        coin: "USDT", //币种
+        ftm: 1602645594378, //失效时间
+        gid: "8b41fb31baea2d209cb78618cfecc06d", //红包id
+        guid: "11138726", //红包发送人uid
+        quota: "0.1837594", //金额
+        remail: "", //邮箱
+        rid: "98f68238f1642371a66fbf2b1fbf4bf7", //记录id
+        rtel: "15155395909", //手机
+        rtm: 1602644994378, //领取时间
+        rtype: 4, //领取方式，1：已注册通过uid领取，2：未注册邮箱领取，3：未注册手机领取,4:注册后领取2,3状态到ruid,5:已失效
+        ruid: "11138726", //领取人uid
+        type: 0, //红包类型:0拼手气，>0普通红包，数值代表单个红包金额
+        vp: "21" //渠道
+    }
+ */
 export function recvgift (params = {}, options = { withCredentials: false }) {
     return Http.post('v1/gift/recvgift', params, options);
 }
-// 发送记录 uid
+
+/**
+ * 发送记录
+ * @param {Object} params {
+    uid: "" //用户uid
+ * }
+ * @param {Object} options axios请求配置
+ * @returns {Object} {
+        bestq: "0.1837594", //拼手气最高金额
+        bkquota: 0, //红包退回金额
+        coin: "USDT", //币种
+        count: 10, //红包个数
+        count2: 9, //未领取红包个数
+        ctm: 1602644972968, //发送时间
+        des: "大吉大利，全天盈利", //祝福语
+        gemail: "", //邮箱
+        gid: "a9aa8bea20dd4caa6bc9b3b1491f97bb", //红包id
+        gtel: "15155395909", //手机
+        guid: "11138726", //红包发送人uid
+        low: 0.0001, //单个红包最低金额
+        ltm: 0, //
+        otm: 1602643967524, //到期时间
+        quota: 3, //金额
+        quota2: 3, //未领取金额
+        status: 0, //状态：0待领取，1已领完，3红包到期
+        type: 0, //红包类型:0拼手气，>0普通红包，数值代表单个红包金额
+        vp: "21" //渠道
+    }
+ */
 export function getsendrec (params = {}, options = { withCredentials: false }) {
     return Http.post('v1/gift/getsendrec', params, options);
 }
-// 领取记录 uid
+
+/**
+ * 领取记录
+ * @param {Object} params {
+    uid: "" //用户uid
+ * }
+ * @param {Object} options axios请求配置
+ * @returns {Object} {
+        best: 1, //手气最佳:0否，1是
+        coin: "USDT", //币种
+        ftm: 1602645594378, //失效时间
+        gid: "8b41fb31baea2d209cb78618cfecc06d", //红包id
+        guid: "11138726", //红包发送人uid
+        quota: "0.1837594", //金额
+        remail: "", //邮箱
+        rid: "98f68238f1642371a66fbf2b1fbf4bf7", //记录id
+        rtel: "15155395909", //手机
+        rtm: 1602644994378, //领取时间
+        rtype: 4, //领取方式，1：已注册通过uid领取，2：未注册邮箱领取，3：未注册手机领取,4:注册后领取2,3状态到ruid,5:已失效
+        ruid: "11138726", //领取人uid
+        type: 0, //红包类型:0拼手气，>0普通红包，数值代表单个红包金额
+        vp: "21" //渠道
+    }
+ */
 export function getrecv (params = {}, options = { withCredentials: false }) {
     return Http.post('v1/gift/getrecv', params, options);
 }
-// 红包领取情况 gid
+
+/**
+ * 红包领取情况列表
+ * @param {Object} params {
+    gid: "" //红包id
+ * }
+ * @param {Object} options axios请求配置
+ * @returns {Object} {
+        best: 1, //手气最佳:0否，1是
+        coin: "USDT", //币种
+        ftm: 1602645594378, //失效时间
+        gid: "8b41fb31baea2d209cb78618cfecc06d", //红包id
+        guid: "11138726", //红包发送人uid
+        quota: "0.1837594", //金额
+        remail: "", //邮箱
+        rid: "98f68238f1642371a66fbf2b1fbf4bf7", //记录id
+        rtel: "15155395909", //手机
+        rtm: 1602644994378, //领取时间
+        rtype: 4, //领取方式，1：已注册通过uid领取，2：未注册邮箱领取，3：未注册手机领取,4:注册后领取2,3状态到ruid,5:已失效
+        ruid: "11138726", //领取人uid
+        type: 0, //红包类型:0拼手气，>0普通红包，数值代表单个红包金额
+        vp: "21" //渠道
+    }
+ */
 export function getgiftrec (params = {}, options = { withCredentials: false }) {
     return Http.post('v1/gift/getgiftrec', params, options);
 }
-// 红包详情 gid
+
+/**
+ * 红包详情
+ * @param {Object} params {
+    gid: "" //红包id
+ * }
+ * @param {Object} options axios请求配置
+ * @returns {Object} {
+        bestq: 0, //拼手气最高金额
+        bkquota: 0, //红包退回金额
+        coin: "ETH", //币种
+        count: 8, //红包个数
+        count2: 8, //未领取红包个数
+        ctm: 1602643367524, //发送时间
+        des: "大吉大利，全天盈利", //祝福语
+        gemail: "", //邮箱
+        gid: "a9aa8bea20dd4caa6bc9b3b1491f97bb", //红包id
+        gtel: "15155395909", //手机
+        guid: "11138726", //红包发送人uid
+        low: 0.0001, //单个红包最低金额
+        ltm: 0, //
+        otm: 1602643967524, //到期时间
+        quota: 3, //金额
+        quota2: 3, //未领取金额
+        status: 0, //状态：0待领取，1已领完，3红包到期
+        type: 0, //红包类型:0拼手气，>0普通红包，数值代表单个红包金额
+        vp: "21" //渠道
+    }
+ */
 export function getdetails (params = {}, options = { withCredentials: false }) {
     return Http.post('v1/gift/getdetails', params, options);
 }

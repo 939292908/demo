@@ -21,7 +21,7 @@ share.photo = function(img, cb, errcb) {
                 window.plus.gallery.save(path, function() {
                     bitmap.clear();
                     cb && cb();
-                    window.$message({ content: '保存图片成功', type: 'success' });
+                    // window.$message({ content: '保存图片成功', type: 'success' });
                 });
             }, function(e1) {
                 errcb && errcb();

@@ -1,7 +1,7 @@
 const wlt = require('@/models/wlt/wlt');
 const Http = require('@/api').webApi;
 const broadcast = require('@/broadcast/broadcast');
-// const m = require('mithril');
+const utils = require('@/util/utils').default;
 
 const logic = {
     isShow: false, // 显示划转弹框
@@ -134,7 +134,7 @@ const logic = {
                 return t.wType === logic.coin;
             });
             if (arr.length > 0) {
-                this.maxMoney = arr[0].wdrawable || 0; // 设置最大可以金额
+                this.maxMoney = utils.toFixedForFloor(arr[0].wdrawable || 0, 4); // 设置最大可以金额
             } else {
                 this.maxMoney = "--";
             }

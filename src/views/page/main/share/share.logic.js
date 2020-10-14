@@ -3,6 +3,7 @@ const { Share, Model } = require('@/models/plus/index.js');
 module.exports = {
     isShare: false, // 是否分享了操作
     shareMsg: "", // 提示
+    timeoutId: null, // 三秒清除提示消息 延时器id
     options: {
         isShow: false,
         needShareImg: null,
@@ -79,6 +80,11 @@ module.exports = {
             Model.plusCopyToClipboard(this.options.link);
             that.isShare = true;
             that.shareMsg = "链接已复制，快去分享给你的好友吧！";
+            window.clearTimeout(that.timeoutId);
+            that.timeoutId = window.setTimeout(() => {
+                that.shareMsg = "";
+                m.redraw();
+            }, 3000);
             // window.$message({ content: '已复制链接', type: 'success' });
             break;
         case "savePhoto":
@@ -88,6 +94,12 @@ module.exports = {
                 arg => {
                     that.isShare = true;
                     that.shareMsg = "图片已保存，快去分享给你的好友吧！";
+                    m.redraw();
+                    window.clearTimeout(that.timeoutId);
+                    that.timeoutId = window.setTimeout(() => {
+                        that.shareMsg = "";
+                        m.redraw();
+                    }, 3000);
                     // that.cancelShareBtnClick();
                 },
                 err => {

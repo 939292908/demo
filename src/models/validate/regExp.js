@@ -1,11 +1,13 @@
 const I18n = require('@/languages/I18n').default;
 module.exports = {
     email: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-    phone: /^[0-9]{5,11}$/,
+    // phone: /^[0-9]{5,11}$/,
+    phone: /^\d{11}$/,
     password: /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,}$/,
     code: /^[0-9]{6}$/,
     validAccount(loginType, account) {
-        if (!account) {
+        console.log(loginType, this.phone.test(account));
+        if (!account.trim()) {
             // return '该字段不能为空'; /* '该字段不能为空' */
             return I18n.$t('10416');
         } else if (loginType === 'phone' && !this.phone.test(account)) {
@@ -13,7 +15,8 @@ module.exports = {
             return I18n.$t('10533');
         } else if (loginType === 'email' && !this.email.test(account)) {
             // return '邮箱格式不正确'; /* '邮箱格式不正确' */
-            return I18n.$t('10441');
+            // return I18n.$t('10441');
+            return "邮箱格式不正确";
         } else {
             return '';
         }

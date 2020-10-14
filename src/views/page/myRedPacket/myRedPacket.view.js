@@ -38,7 +38,7 @@ module.exports = {
             const status = item.status * 1;
             if (status === 0) return m('span', { class: `has-text-primary no-select` }, "未抢完");
             if (status === 1) return m('span', { class: `has-text-level-3 no-select` }, "已抢完");
-            if (status === 2) {
+            if (status === 3) {
                 if (item.quota === item.quota2) {
                     return m('span', { class: `has-text-level-3` }, "已全额退款");
                 } else {
@@ -66,7 +66,7 @@ module.exports = {
                 }),
                 logic.receiveRedPacketList.map((item, index) => {
                     return m('div', {
-                        class: `is-between py-5 has-border-bottom-1 has-line-level-4 has-last-child-border-none`,
+                        class: `is-between py-5 has-border-bottom-1 has-line-level-1 has-last-child-border-none`,
                         key: index,
                         onclick() {
                             logic.toReceiveRedPacketDetail(item); // 跳转领的红包详情
@@ -75,7 +75,7 @@ module.exports = {
                         // 左边
                         m('div', { class: `` }, [
                             m('div', { class: `font-weight-bold` }, [
-                                m('span', { class: `has-text-level-1` }, item.phone),
+                                m('span', { class: `has-text-level-1` }, item.rtel_bulid || item.remail_bulid),
                                 m('span', { class: `has-text-primary body-4` }, ' ' + item.type > 0 ? "普通红包" : "拼手气红包")
                             ]),
                             m('div', { class: `body-4 has-text-level-4` }, item.time)
@@ -83,7 +83,7 @@ module.exports = {
                         // 右边
                         m('div', { class: `` }, [
                             m('div', { class: `has-text-primary font-weight-bold has-text-right` }, [
-                                item.best * 1 === 1 ? m('i', { class: `iconfont icon-VipCrown iconfont-medium` }) : "",
+                                item.best * 1 === 1 && logic.redPacketTopOption?.status === 1 ? m('i', { class: `iconfont icon-VipCrown has-text-primary iconfont-medium` }) : "",
                                 m('span', { class: `` }, item.quota),
                                 m('span', { class: `` }, item.coin)
                             ])
@@ -113,7 +113,7 @@ module.exports = {
                 }),
                 logic.sendRedPacketList.map((item, index) => {
                     return m('div', {
-                        class: `is-between py-5 has-border-bottom-1 has-line-level-4 has-last-child-border-none`,
+                        class: `is-between py-5 has-border-bottom-1 has-line-level-1 has-last-child-border-none`,
                         key: index,
                         onclick() {
                             logic.toSendRedPacketDetail(item); // 跳转发的红包详情

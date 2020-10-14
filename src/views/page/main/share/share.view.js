@@ -16,7 +16,7 @@ module.exports = {
                 // 底部分享
                 m('div', { class: `view-share-footer bottom-sheet has-bg-level-2 border-radius-large-2-top` }, [
                     m('div', { class: `pt-7 has-text-centered has-text-level-3` }, logic.shareMsg),
-                    m('div', { class: `is-around has-border-bottom-1 has-line-level-4 pa-5` }, logic.shareBtnList.map((item, index) => {
+                    m('div', { class: `is-around has-border-bottom-1 has-line-level-1 pa-5` }, logic.shareBtnList.map((item, index) => {
                         return m('button', {
                             class: `button is-light has-text-centered`,
                             key: index,

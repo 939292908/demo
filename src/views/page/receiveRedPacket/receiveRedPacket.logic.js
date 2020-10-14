@@ -55,7 +55,7 @@ const logic = {
     // 输入账户input
     numberOnInput(e) {
         logic.account = e.target.value;
-        logic.errText = regExp.validAccount(true, logic.account); // 错误提示
+        logic.errText = regExp.validAccount(false, logic.account); // 错误提示
     },
     // 已抢红包列表
     redPacketList: [],
@@ -69,7 +69,10 @@ const logic = {
     },
     // 抢红包 click
     receiveClick() {
-        geetest.verify(() => {});
+        logic.errText = regExp.validAccount(logic.getVerifyType(), logic.account); // 错误提示
+        if (!logic.errText) {
+            geetest.verify(() => {});
+        }
     },
     // 初始化安全验证
     initVerifyView() {
@@ -88,21 +91,20 @@ const logic = {
                 console.log("successPhone");
                 this.recvgift();// 领红包
                 // this.queryUserInfo();
-                // this.bindgift(); // 绑红包
             });
         // 邮箱
         } else if (logic.getVerifyType() === "email") {
             const params = {
-                secureEmail: logic.account,
-                host: "www.baidu.com",
-                fn: 'be',
-                lang: I18n.getLocale()
+                secureEmail: utils.hideAccountNameInfo(logic.account), // 邮箱地址**隐藏
+                email: logic.account, // 邮箱地址
+                host: config.official, // 域名
+                fn: 'be', // 邮箱模板
+                lang: I18n.getLocale() // 语言
             };
             validate.activeEmail(params, () => {
                 console.log("successEmail");
                 this.recvgift(); // 领红包
                 // this.queryUserInfo();
-                // this.bindgift(); // 绑红包
             });
         }
         // 更新组件
@@ -141,7 +143,6 @@ const logic = {
                     this.recvgift();// 领红包
                 }
                 if (arg.exists === 2) { // 不存在
-                    // this.bindgift();// 绑红包
                     this.recvgift();// 绑红包
                 }
                 console.log('查询账号是否注册 success', arg);
@@ -187,20 +188,6 @@ const logic = {
             console.log('领取 error', err);
         });
     },
-    // 绑红包 接口
-    // bindgift() {
-    //     // const that = this;
-    //     const params = {
-    //         uid: globalModels.getAccount().uid,
-    //         tel: logic.account, // 电话
-    //         email: logic.account // 邮箱
-    //     };
-    //     Http.bindgift(params).then(function(arg) {
-    //         console.log('绑红包 success', arg);
-    //     }).catch(function(err) {
-    //         console.log('绑红包 error', err);
-    //     });
-    // },
     // 红包领取记录 接口
     getgiftrec() {
         const params = {
@@ -234,7 +221,8 @@ const logic = {
                 const data = arg.result.data;
                 // 红包头部 组件配置
                 logic.redPacketTopOption = JSON.parse(JSON.stringify(data));
-                logic.redPacketTopOption.msg2 = "您有机会获得"; // msg2
+                logic.redPacketTopOption.msg2 = logic.redPacketTopOption.status === 0 ? '您有机会获得' : ''; // msg2
+                logic.redPacketTopOption.quota = logic.redPacketTopOption.status === 0 ? logic.redPacketTopOption.quota : null; // 金额
                 logic.redPacketTopOption.hiddenLine = true; // 隐藏底部线条
                 // 红包Info 组件配置
                 logic.redPacketInfoOption = JSON.parse(JSON.stringify(data));

@@ -6,6 +6,7 @@ const Button = require('@/views/components/common/Button/Button.view');
 const redPacketTop = require('@/views/components/redPacketTop/redPacketTop.view');
 const redPacketInfo = require('@/views/components/redPacketInfo/redPacketInfo.view');
 const redPacketUtils = require('@/util/redPacketUtils').default;
+const globalModels = require('@/models/globalModels');
 
 module.exports = {
     oninit: vnode => logic.oninit(vnode),
@@ -22,14 +23,18 @@ module.exports = {
                 m(redPacketInfo, logic.redPacketInfoOption),
                 // 领取列表
                 m('div', { class: `has-text-left px-6` }, logic.redPacketList.map((item, index) => {
-                    return m('div', { class: `is-between py-5 has-border-bottom-1 has-line-level-4 has-last-child-border-none`, key: index }, [
+                    return m('div', { class: `is-between py-5 has-border-bottom-1 has-line-level-1 has-last-child-border-none`, key: index }, [
                         m('div', { class: `` }, [
-                            m('div', { class: `font-weight-bold has-text-primary` }, item.build_rtel),
+                            m('div', {
+                                class: `font-weight-bold ${globalModels.getAccount().uid === item.ruid ? 'has-text-primary' : 'has-text-level-1'}`
+                            }, item.build_rtel || item.build_remail),
                             m('div', { class: `body-4` }, item.build_rtm)
                         ]),
                         m('div', { class: `has-text-right` }, [
-                            m('div', { class: `font-weight-bold has-text-primary` }, [
-                                item.best * 1 === 1 ? m('i', { class: `iconfont icon-VipCrown iconfont-medium` }) : "",
+                            m('div', {
+                                class: `font-weight-bold ${globalModels.getAccount().uid === item.ruid ? 'has-text-primary' : 'has-text-level-1'}`
+                            }, [
+                                item.best * 1 === 1 && logic.redPacketTopOption?.status === 1 ? m('i', { class: `iconfont icon-VipCrown has-text-primary iconfont-medium` }) : "",
                                 m('span', { class: `` }, item.quota),
                                 m('span', { class: `` }, item.coin)
                             ]),

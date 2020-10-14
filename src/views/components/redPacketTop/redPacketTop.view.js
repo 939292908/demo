@@ -1,5 +1,6 @@
 const m = require('mithril');
 const utils = require('@/util/utils').default;
+
 // const globalModels = require('@/models/globalModels');
 
 // {
@@ -11,6 +12,7 @@ const utils = require('@/util/utils').default;
 //     msg: "" // 提示消息 (空不显示)
 //     msg2: "" // 提示2 (空不显示)
 
+//     guid: "" // 没有guid则自己发的红包
 //     hiddenLine: "" // 隐藏底部线条
 // }
 module.exports = {
@@ -33,7 +35,7 @@ module.exports = {
     },
     view(vnode) {
         return m('div', { class: `${vnode.attrs.hiddenLine ? '' : 'has-border-bottom-1'} side-px pb-3 has-line-level-1 ${vnode.attrs.class || ''}` }, [
-            // 来源
+            // 来源 没有guid则自己发的红包
             !vnode.attrs.guid ? m('div', { class: `pt-5 has-text-level-1` }, "您发送的")
             // vnode.attrs.guid === globalModels.getAccount().uid ? m('div', { class: `pt-5 has-text-level-1` }, "您发送的")
                 : m('div', { class: `pt-5 has-text-level-1` }, [
@@ -44,13 +46,13 @@ module.exports = {
             // 红包类型 type 0:为拼手气 / >0:普通红包
             m('div', { class: `title-medium mb-3 has-text-level-1` }, vnode.state.getType(vnode)),
             // 留言 des
-            m('div', { class: `mb-5 has-text-level-3` }, vnode.attrs.des),
+            m('div', { class: `has-text-level-3 ${(vnode.attrs.msg2 || vnode.attrs.quota) ? 'mb-5' : ''}` }, vnode.attrs.des),
             // img
             // m('iframe', { src: require("@/assets/img/people.svg").default, width: "110", height: "110", class: "mt-3 mb-7" }),
             // 提示2
-            vnode.attrs.msg2 ? m('div', { class: `has-text-level-4` }, vnode.attrs.msg2) : '',
+            vnode.attrs.msg2 ? m('div', { class: ` has-text-level-4` }, vnode.attrs.msg2) : '',
             // 金额
-            (vnode.attrs.quota && vnode.attrs.coin) ? m('div', { class: `has-text-primary title-medium` }, `${vnode.attrs.quota} ${vnode.attrs.coin}`) : '',
+            (vnode.attrs.quota && vnode.attrs.coin) ? m('div', { class: `has-text-primary title-medium` }, `${utils.toFixedForFloor(vnode.attrs.quota, 4)} ${vnode.attrs.coin}`) : '',
             // 提示消息
             vnode.attrs.msg ? m('div', { class: `has-text-level-4` }, vnode.attrs.msg) : ''
         ]);

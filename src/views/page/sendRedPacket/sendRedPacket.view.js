@@ -15,7 +15,7 @@ module.exports = {
     view(vnode) {
         return m('div', { class: `pub-view views-give-red-packet` }, [
             m(Header, logic.headerOption),
-            m('div', { class: `pub-content has-pub-footer side-px` }, [
+            m('div', { class: `pub-content side-px` }, [
                 // title
                 m('div', { class: `views-give-red-packet-title pt-7 mb-0 columns is-mobile` }, [
                     m('div', { class: `column is-7` }, [
@@ -40,7 +40,7 @@ module.exports = {
                 // 划转
                 m('div', { class: `has-text-right mt-7 mb-2` }, [
                     m('span', { class: `has-text-level-4` }, `钱包可用：${logic.wltMoney}${logic.currentCoin} `),
-                    m('span', { class: `has-text-primary`, onclick() { logic.transferBtnClick(); } }, ' 划转')
+                    m('span', { class: `has-text-primary font-weight-bold`, onclick() { logic.transferBtnClick(); } }, ' 划转')
                 ]),
                 // 单个金额/总金额
                 m(FormItem, {
@@ -48,16 +48,20 @@ module.exports = {
                     unit: logic.currentCoin,
                     placeholder: '输入红包金额',
                     type: 'number',
+                    inputId: 'moneyFormItem',
                     value: logic.moneyFormItem.value,
+                    onblur: value => {
+                        const isPass = logic.formModel.verifyMoney(); // 校验金额
+                        if (isPass) logic.formModel.verifyNumber(); // 校验个数
+                    },
                     updateOption(params) {
                         logic.moneyFormItem.updateOption(params); // 更新数据
-                        logic.formModel.verifyMoney(); // 校验表单
                     }
                 }),
                 // 切换 普通/拼手气红包
                 m('div', { class: `mt-2 mb-7 has-text-level-4` }, [
                     m('span', { class: `` }, [`当前为${logic.redPacketType > 0 ? '普通红包' : '拼手气红包'}，改为 `]),
-                    m('span', { class: `has-text-primary`, onclick() { logic.switchRedPacketType(); } }, [logic.redPacketType > 0 ? '拼手气红包' : '普通红包'])
+                    m('span', { class: `has-text-primary font-weight-bold`, onclick() { logic.switchRedPacketType(); } }, [logic.redPacketType > 0 ? '拼手气红包' : '普通红包'])
                 ]),
                 // 红包个数
                 m(FormItem, {
@@ -66,11 +70,14 @@ module.exports = {
                     unit: '个',
                     placeholder: '输入红包个数',
                     type: 'number',
+                    inputId: 'numberFormItem',
                     value: logic.numberFormItem.value,
+                    onblur: value => {
+                        const isPass = logic.formModel.verifyNumber(); // 校验个数
+                        if (isPass) logic.formModel.verifyMoney(); // 校验金额
+                    },
                     updateOption: params => {
                         logic.numberFormItem.updateOption(params); // 更新数据
-                        const isPass = logic.formModel.verifyNumber(); // 校验表单
-                        if (isPass) logic.formModel.verifyMoney(); // 校验表单
                     }
                 }),
                 // 祝福信息
@@ -84,11 +91,11 @@ module.exports = {
                         }
                     })
                 }),
-                // 表单错误提示
-                m('div', { class: `has-text-up has-text-centered mt-5` }, logic.formModel.errMsg),
+                // // 表单错误提示
+                // m('div', { class: `has-text-up has-text-centered mt-5` }, logic.formModel.errMsg),
                 // 划转 Modal
                 m(transfer),
-                // 发红包确认 弹框
+                // 发红包输入密码 弹框
                 m(Modal, {
                     isShow: logic.sendRedPModal.isShow,
                     class: "bottom-sheet",
@@ -123,15 +130,15 @@ module.exports = {
                                 m('input', {
                                     class: `input has-border-none`,
                                     type: "password",
-                                    placeholder: "资金密码",
+                                    placeholder: "请输入资金密码",
                                     value: logic.passwordModel.value,
                                     oninput(e) {
                                         logic.passwordModel.updateValue(e.target.value); // 更新密码
                                     }
                                 })
-                            ]),
-                            // 密码错误提示
-                            m('div', { class: `has-text-up mt-3` }, logic.passwordModel.errMsg)
+                            ])
+                            // // 密码错误提示
+                            // m('div', { class: `has-text-up mt-3` }, logic.passwordModel.errMsg)
                         ]
                     },
                     ok: {

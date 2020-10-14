@@ -364,7 +364,27 @@ utils.copyTab = function(a, b) {
         a[key] = b[key];
     }
 };
-
+// 保留小数
+utils.toFixed2 = function (num, n) {
+    var num2 = Number(num).toFixed(n + 1);
+    if (!num.toString().split(".")[1] || num.toString().split(".")[1].length <= n) {
+        return num;
+    } else if (n === 0) {
+        return num2.substring(0, num2.lastIndexOf('.') + n);
+    } else {
+        return num2.substring(0, num2.lastIndexOf('.') + n + 1);
+    }
+};
+// 转科学计数法
+utils.getNormalNumber = function(value) {
+    const e = String(value);
+    const rex = /^([0-9])\.?([0-9]*)e-([0-9])/;
+    if (!rex.test(e)) return value;
+    const numArr = e.match(rex);
+    const n = Number('' + numArr[1] + (numArr[2] || ''));
+    const num = '0.' + String(Math.pow(10, Number(numArr[3]) - 1)).substr(1) + n;
+    return num.replace(/0*$/, '');
+};
 // utils.switchTime = function(mss) { //秒转换时间
 //     let days = parseInt(mss / (1000  60  60 * 24));
 //     let hours = days * 24 +

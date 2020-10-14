@@ -1,5 +1,4 @@
 const transferLogic = require('@/views/page/sendRedPacket/transfer/transfer.logic');
-// const globalModels = require('@/models/globalModels');
 const Qrcode = require('qrcode');
 const Http = require('@/api').webApi;
 const md5 = require('md5');
@@ -25,7 +24,7 @@ const logic = {
     // 当前选中币种
     currentCoin: '',
     // 红包类型 // >1：普通/ 0：拼手气
-    redPacketType: 1,
+    redPacketType: 0,
     // 钱包可用金额
     wltMoney: '',
     // 取消分享提示 弹框
@@ -43,8 +42,6 @@ const logic = {
     passwordModel: {
         // 密码
         value: "",
-        // 错误提示
-        errMsg: "",
         // 更新密码
         updateValue(password) {
             this.value = password;
@@ -58,7 +55,10 @@ const logic = {
         },
         // 更新提示
         updateErrMsg(msg) {
-            this.errMsg = msg;
+            msg && window.$message({
+                content: msg,
+                type: 'danger'
+            });
         }
     },
     // 发红包表单 模块
@@ -73,8 +73,6 @@ const logic = {
                 password: logic.passwordModel.value // 密码
             };
         },
-        // 错误提示
-        formErrMsg: "",
         // 校验金额
         verifyMoney(isUpdateMsg = true) {
             // console.log(this.getTotalCoin(), logic.wltMoney, 999);
@@ -90,7 +88,8 @@ const logic = {
             }
 
             if (logic.moneyFormItem.value < logic.verifyCfg.low) {
-                isUpdateMsg && this.updateErrMsg(`单人领取的最低额${logic.verifyCfg.low}${logic.currentCoin}`);
+                // isUpdateMsg && this.updateErrMsg(`单笔最低发送${logic.verifyCfg.low}${logic.currentCoin}`);
+                isUpdateMsg && this.updateErrMsg(`单笔最低发送${utils.getNormalNumber(logic.verifyCfg.low)}${logic.currentCoin}`);
                 return false;
             }
 
@@ -99,7 +98,7 @@ const logic = {
         },
         // 校验红包个数
         verifyNumber(isUpdateMsg = true) {
-            const maxNum = parseInt(logic.wltMoney / logic.moneyFormItem.value); // 资金最多可发个数
+            // const maxNum = parseInt(logic.wltMoney / logic.moneyFormItem.value); // 资金最多可发个数
 
             // 请输入红包个数
             if (!logic.numberFormItem.value || logic.numberFormItem.value === '0') {
@@ -113,11 +112,15 @@ const logic = {
                     isUpdateMsg && this.updateErrMsg(`一次最多可发${logic.verifyCfg.maxcount}个红包`);
                     return false;
                 }
-                // 账户金额最多可发
-                if (logic.numberFormItem.value > maxNum) {
-                    isUpdateMsg && this.updateErrMsg(`一次最多可发${maxNum}个红包`);
+                if (this.getTotalCoin() > logic.wltMoney * 1) {
+                    isUpdateMsg && this.updateErrMsg("钱包可用资产不足，请及时划转！");
                     return false;
                 }
+                // // 账户金额最多可发
+                // if (logic.numberFormItem.value > maxNum) {
+                //     isUpdateMsg && this.updateErrMsg(`一次最多可发${maxNum}个红包`);
+                //     return false;
+                // }
             } else { // 拼手气
                 // 一次最多可发xx个红包
                 if (logic.numberFormItem.value > logic.verifyCfg.maxcount) {
@@ -136,20 +139,25 @@ const logic = {
         },
         // 更新提示
         updateErrMsg(msg) {
-            this.errMsg = msg;
+            msg && window.$message({
+                content: msg,
+                type: 'danger'
+            });
         },
         // 获取总金额
         getTotalCoin() {
             if (logic.redPacketType > 0) { // 普通红包
-                return utils.toFixedForFloor((logic.numberFormItem.value * logic.moneyFormItem.value || '0'), 3);
+                return utils.toFixedForFloor((logic.numberFormItem.value * logic.moneyFormItem.value || '0'), 4);
             } else { // 拼手气红包
-                return logic.moneyFormItem.value || '0';
+                return utils.toFixedForFloor(logic.moneyFormItem.value || '0', 4);
             }
         }
     },
     // 切换红包类型
     switchRedPacketType() {
         this.redPacketType = this.redPacketType > 0 ? 0 : (logic.numberFormItem.value || 1);
+        const isPass = logic.formModel.verifyNumber(); // 校验个数
+        if (isPass) logic.formModel.verifyMoney(); // 校验金额
     },
     // 头部 组件配置
     headerOption: {
@@ -170,6 +178,11 @@ const logic = {
         value: '',
         updateOption(params) {
             Object.keys(params).forEach(key => (this[key] = params[key]));
+            if (this.value < 0) {
+                this.value = "";
+            } else if (this.value > 0) {
+                this.value = utils.toFixed2(this.value, 4);
+            }
         }
     },
     // 红包个数 fomeItem组件配置
@@ -208,9 +221,11 @@ const logic = {
     // 获取币种的人民币估值
     getRMBByCoinMoney() {
         if (logic.redPacketType * 1 === 0) { // 拼手气红包
-            return wlt.getPrz(logic.currentCoin) * logic.moneyFormItem.value * wlt.prz;
+            const rmb = wlt.getPrz(logic.currentCoin) * logic.moneyFormItem.value * wlt.prz;
+            return utils.toFixedForFloor(rmb, 2);
         } else { // 普通红包
-            return wlt.getPrz(logic.currentCoin) * logic.moneyFormItem.value * logic.numberFormItem.value * wlt.prz;
+            const rmb = wlt.getPrz(logic.currentCoin) * logic.moneyFormItem.value * logic.numberFormItem.value * wlt.prz;
+            return utils.toFixedForFloor(rmb, 2);
         }
     },
     // 塞币进红包 click
@@ -281,7 +296,11 @@ const logic = {
         for (const key in obj) {
             const item = obj[key];
             item.label = key;
-            list.push(item);
+            if (key === 'USDT') {
+                list.unshift(item);
+            } else {
+                list.push(item);
+            }
         }
         // 按钮list
         this.coinBtnList = list.map(item => {
@@ -289,24 +308,31 @@ const logic = {
                 label: item.label,
                 class: () => `is-primary is-rounded mr-2 font-weight-bold ${logic.currentCoin === item.label ? '' : 'is-outlined'}`,
                 size: 'size-2',
+                data: item,
                 onclick() {
                     logic.coinBtnClick(item);
                 }
             };
             return btnOption;
         });
-        logic.currentCoin = logic.currentCoin ? logic.currentCoin : this.coinBtnList[0]?.label;
+        const coin = logic.currentCoin ? logic.currentCoin : this.coinBtnList[0]?.label;
+        logic.setCurrentCoin(coin); // 设置选中币种及相关配置
         m.redraw();
+    },
+    // 设置选中币种及相关配置
+    setCurrentCoin(coin) {
+        const currentItem = logic.coinBtnList.find(item => item.label === coin); // 当前币种对象
+        logic.currentCoin = currentItem.label; // 当前选中币种
+        logic.verifyCfg.low = currentItem.data.low;// 单人领取的最低额
+        logic.verifyCfg.hight = currentItem.data.hight;// 红包最高总金额
     },
     // 币种按钮click
     coinBtnClick(item) {
-        logic.verifyCfg.low = item.low;// 单人领取的最低额
-        logic.verifyCfg.hight = item.hight;// 红包最高总金额
-        console.log(logic.verifyCfg, 88888);
-
-        logic.currentCoin = item.label; // 更新选中币种
+        logic.setCurrentCoin(item.label); // 设置选中币种及相关配置
+        // console.log(logic.verifyCfg);
         logic.setMaxTransfer(); // 设置最大划转
         logic.formModel.verifyAll(); // 校验表单
+        logic.reset(); // 重置
     },
     // 发红包接口
     sendgift() {
@@ -318,9 +344,14 @@ const logic = {
             des: logic.infoFormItem.value || "大吉大利，全天盈利", // 留言
             passd: md5(logic.passwordModel.value) // 密码
         };
+        // const account = globalModels.getAccount();
+        // if (account.email) params.gemail = account.email;
+        // if (account.phone) params.gtel = account.phone;
+
         logic.shareLoading = true;
         Http.sendgift(params).then(function(arg) {
             if (arg.result.code === 0) {
+                wlt.init();
                 logic.gid = arg.result.data.gid;
                 logic.toShare({
                     link: window.location.origin + window.location.pathname + `/#!/receiveRedPacket?gid=${logic.gid}`
@@ -331,6 +362,7 @@ const logic = {
                     content: errCode.getRedPacketErrorCode(arg.result.code),
                     type: 'danger'
                 });
+                logic.shareLoading = false;
                 logic.passwordModel.updateErrMsg(arg.result.data.err_msg);
             }
         }).catch(function(err) {
@@ -351,7 +383,7 @@ const logic = {
     // 重置
     reset() {
         // logic.currentCoin = "";// 币种
-        logic.redPacketType = 1;// 红包类型
+        logic.redPacketType = 0;// 红包类型
         logic.moneyFormItem.value = ""; // 金额
         logic.numberFormItem.value = ""; // 数量
         logic.infoFormItem.value = "大吉大利，全天盈利"; // 祝福
@@ -364,7 +396,7 @@ const logic = {
             const wallet = wlt.wallet["03"]; // 对应钱包
             for (const item of wallet) {
                 if (item.coin === this.currentCoin) { // 找到对应币种
-                    this.wltMoney = item.wdrawable || 0; // 设置最大可以金额
+                    this.wltMoney = utils.toFixedForFloor(item.wdrawable || 0, 4); // 设置最大可以金额
                 }
             }
         } else {
@@ -400,20 +432,28 @@ const logic = {
     cancelCallback(params) {
         if (!params.isShare) {
             this.isShowNotShareModal = true;
+            m.redraw();
         }
     },
     // 分享
     toShare: function(param) {
         const link = param.link; // 需要分享的链接
-        const img1 = window.location.origin + window.location.pathname + require('@/assets/img/shareBg.png').default;
+        const img1 = window.location.origin + window.location.pathname + require('@/assets/img/shareBg.jpg').default;
         const img2 = window.location.origin + window.location.pathname + require('@/assets/img/logo.png').default;
         console.log(img1, img2);
+        // share.openShare({
+        //     needShareImg: null,
+        //     link: link,
+        //     cancelCallback(params) {
+        //         logic.cancelCallback(params);
+        //     }
+        // }); // 打开分享弹框
         if (window.plus) {
             Qrcode.toDataURL(link).then(base64 => {
                 GetBase64.loadImageUrlArray([img1, img2, base64], arg => {
                     console.log('GetBase64 loadImageUrlArray', arg);
                     GetBase64.getWebView({
-                        data: HtmlConst.shareRedPacket(['分享红包', '红包资产可用来提现，交易', '下载注册APP，轻松交易'], arg),
+                        data: HtmlConst.shareRedPacket(['分享红包', '红包资产可用来提现，交易', '下载APP 轻松交易'], arg),
                         W: 375,
                         H: 667
                     }, res => {
@@ -421,8 +461,8 @@ const logic = {
                         share.openShare({
                             needShareImg: res,
                             link: link,
-                            cancelCallback() {
-                                logic.cancelCallback();
+                            cancelCallback(params) {
+                                logic.cancelCallback(params);
                             }
                         }); // 打开分享弹框
                         logic.sendRedPModal.updateOption({ isShow: false });// 关闭发红包弹框
@@ -432,6 +472,8 @@ const logic = {
                     });
                 });
             }).catch(err => {
+                logic.shareLoading = false;
+                m.redraw();
                 console.log(err);
             });
         }

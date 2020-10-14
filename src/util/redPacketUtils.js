@@ -18,7 +18,9 @@ const redPacketUtils = {
                         item.build_rtm = utils.formatDate(item.rtm, 'yyyy-MM-dd hh:mm'); // 领取时间 格式化
                         item.build_ftm = utils.formatDate(item.ftm, 'yyyy-MM-dd hh:mm'); // 失效时间 格式化
                         item.build_rtel = utils.hideAccountNameInfo(item.rtel); // 领取人手机号 **隐藏
-                        item.build_rmb = (wlt.getPrz(item.coin) * item.quota) * wlt.prz; // 人民币
+                        item.build_remail = utils.hideAccountNameInfo(item.remail); // 领取人邮箱 **隐藏
+                        item.build_rmb = utils.toFixedForFloor((wlt.getPrz(item.coin) * item.quota) * wlt.prz, 2); // 人民币
+                        item.quota = utils.toFixedForFloor(item.quota, 4); // 币金额
                         return item;
                     });
                     resolve(newData);
@@ -36,6 +38,30 @@ const redPacketUtils = {
     // 获取下载app地址
     getDownloadAppUrl() {
         return ActiveLine.INVITE + "/m/#/downloadApp";
+    },
+    // 获取红包领完用时
+    getEndTime(time) {
+        // const s = 2 * 60 * 60 + 5 * 60 + 40;
+        const s = time / 1000;
+        // 秒
+        if (s < 60) {
+            return utils.toFixedForFloor(s, 0) + "秒";
+        }
+        // 分钟
+        if (s >= 60 && s < 3600) {
+            const m = s / 60;
+            return utils.toFixedForFloor(m, 0) + "分钟";
+        }
+        // 时 / 分钟
+        if (s >= 3600) {
+            const h = s / 3600;
+            const m = (s % 3600) / 60;
+            if (m >= 1) {
+                return utils.toFixedForFloor(h, 0) + "小时" + utils.toFixedForFloor(m, 0) + "分钟";
+            } else {
+                return utils.toFixedForFloor(h, 0) + "小时";
+            }
+        }
     }
 };
 export default redPacketUtils;

@@ -94,13 +94,14 @@ const logic = {
         if (logic.redPacketInfoOption.status === 0) { // 继续发送该红包
             logic.shareLoading = true;
             logic.toShare({
-                link: window.location.origin + window.location.pathname + `/#!/receiveRedPacket?gid=${logic.gid}`
+                link: window.location.origin + window.location.pathname + `/#!/receiveRedPacket?gid=${m.route.param().gid}`
             });
         } else { // 知道了
             window.router.back();
         }
     },
     oninit(vnode) {
+        this.redPacketList = [];
         this.getgiftrec(); // 红包已领取记录
         this.getdetails(); // 红包详情
     },
@@ -112,7 +113,7 @@ const logic = {
     },
     toShare: function(param) {
         const link = param.link; // 需要分享的链接
-        const img1 = window.location.origin + window.location.pathname + require('@/assets/img/shareBg.png').default;
+        const img1 = window.location.origin + window.location.pathname + require('@/assets/img/shareBg.jpg').default;
         const img2 = window.location.origin + window.location.pathname + require('@/assets/img/logo.png').default;
         console.log(img1, img2);
         if (window.plus) {
@@ -120,7 +121,7 @@ const logic = {
                 GetBase64.loadImageUrlArray([img1, img2, base64], arg => {
                     console.log('GetBase64 loadImageUrlArray', arg);
                     GetBase64.getWebView({
-                        data: HtmlConst.shareRedPacket(['分享红包', '红包资产可用来提现，交易', '下载注册APP，轻松交易'], arg),
+                        data: HtmlConst.shareRedPacket(['分享红包', '红包资产可用来提现，交易', '下载APP 轻松交易'], arg),
                         W: 375,
                         H: 667
                     }, res => {

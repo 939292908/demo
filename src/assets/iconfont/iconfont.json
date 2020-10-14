@@ -6,6 +6,20 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "15019015",
+      "name": "fenxiang",
+      "font_class": "fenxiang",
+      "unicode": "e7011",
+      "unicode_decimal": 946193
+    },
+    {
+      "icon_id": "14396187",
+      "name": "下拉",
+      "font_class": "xiala",
+      "unicode": "e625",
+      "unicode_decimal": 58917
+    },
+    {
       "icon_id": "17479583",
       "name": "CopyLink",
       "font_class": "CopyLink",
