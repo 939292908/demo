@@ -803,3 +803,13 @@ export function userAPI (params = {}, options = { withCredentials: false }) {
 export function getSortMarkets (params = {}, options = { withCredentials: false }) {
     return Http.get(API.MARKETS_SORT, { params }, options);
 }
+/*
+* 跟单数据划转
+* @param params {
+*   uid,vp,num,coin,
+*   aTypeFrom,aTypeTo: '01' 合约 '02'币币 '03'主钱包 '018'跟单 '04' 法币 (两个参数中必须有一个是'018' )
+* }
+* */
+export function followTransrer (params = {}, options = { withCredentials: false }) {
+    return Http.post(API.FORDER_TRANSFER, params, options);
+}

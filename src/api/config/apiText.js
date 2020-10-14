@@ -97,5 +97,7 @@ module.exports = {
     // API管理接口
     USER_API: '/users/api',
     // 合约，交易对 排序
-    MARKETS_SORT: '/v1/markets/currencies/sort'
+    MARKETS_SORT: '/v1/markets/currencies/sort',
+    // 划转 跟单
+    FORDER_TRANSFER: '/v2/forder/ccsTransfer'
 };
