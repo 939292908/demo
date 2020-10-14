@@ -87,14 +87,15 @@ const manageAssetData = {
         return { UPNLToBTC, UPNLToCRN, NLToBTC, NLToCRN };
     },
     getWltData: function () {
-        /* eslint-disable */
-        // debugger
         this.pirData = [
-            { name: l180n.$t('10055') /* '我的钱包' */, value: Number(wlt.walletTotalValueForBTC) },
-            { name: l180n.$t('10072') /* '合约账户' */, value: Number(wlt.contractTotalValueForBTC) },
-            { name: l180n.$t('10073') /* '币币账户' */, value: Number(wlt.coinTotalValueForBTC) },
-            { name: l180n.$t('10074') /* '法币账户' */, value: Number(wlt.legalTotalValueForBTC) }
+            { name: l180n.$t('10055') /* '我的钱包' */, value: Number(wlt.walletTotalValueForBTC) || '' },
+            { name: l180n.$t('10072') /* '合约账户' */, value: Number(wlt.contractTotalValueForBTC) || '' },
+            { name: l180n.$t('10073') /* '币币账户' */, value: Number(wlt.coinTotalValueForBTC) || '' },
+            { name: l180n.$t('10074') /* '法币账户' */, value: Number(wlt.legalTotalValueForBTC) || '' }
         ];
+        if (!Number(wlt.walletTotalValueForBTC) && !Number(wlt.contractTotalValueForBTC) && !Number(wlt.coinTotalValueForBTC) && !Number(wlt.legalTotalValueForBTC)) {
+            this.pirData.forEach(item => { item.value = 0; });
+        }
         this.handleChangeWallet();
     },
     initList: function () {
