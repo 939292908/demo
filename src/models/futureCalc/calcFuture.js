@@ -486,16 +486,15 @@ export function calcFutureWltAndPosAndMIFollow(posArr, wallets, orderArr, RSObj,
     }
 
     calcfutureWalletFollow(wallets, posArr, UPNLPrzActive, assetD);
-    const param = { posArr };
+    const param = { posArr, wallets };
     cb && cb(param);
 }
 
 /**
  * 跟单钱包数据计算
- * @param {Array} wallets
- * @param {Array} posArr
- * @param {Object} sumMI
- * @param {Object} UsedWltBal
+ * @param {Array} wallets 资产
+ * @param {Array} posArr 仓位
+ * @param {String} UPNLPrzActive
  * @param {Object} assetD
  * 计算后钱包数据新增字段，MgnBal:保证金余额，aMM:总仓位保证金 , aMI:总委托保证金, aUPNL: 总未实现盈亏, aGift可用赠金, aWdrawable可用保证金， maxTransfer最大划转
  */

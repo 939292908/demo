@@ -4,10 +4,12 @@ const ActiveLine = require('@/api').ActiveLine;
 const { gMktApi, gTrdApi } = require('@/api').wsApi;
 const utils = require('@/util/utils').default;
 const { calcFutureWltAndPosAndMIFollow } = require('../futureCalc/calcFuture');
+const { getRiskLimits } = require('@/models/market/model');
 const config = require('@/config.js');
 
 module.exports = {
     name: 'FOLLOW_DATA',
+    wltItemEx: {}, // 数据处理中间量
     entrepotS: [], // 当前持仓数据
     entrepotIds: [], // 当前已存在的仓位pid
     wallet_obj: {}, // 跟单 数据
@@ -19,23 +21,41 @@ module.exports = {
 
     prz: 7,
 
+    walletState: 0, // 资产获取状态，0:未获取，1:已获取
+    entrepotState: 0, // 持仓获取状态，0:未获取，1:已获取
+
     // 最后一次计算交易资产的时间
     calcTrdWltLastTm: 0,
     // 计算交易资产的时间间隔
     calcTrdWltInterval: 1000,
+    // 跟单数据刷新间隔
+    entrepotDataInterval: 15000,
+    // 定时器
+    TIME_INTERVER: null,
 
     init: function () {
         // 初始化
         const that = this;
+        that.walletState = 0;
+        that.entrepotState = 0;
+
+        // 获取钱包计算所需风险限额
+        getRiskLimits();
+
         that.updWlt();
 
-        // 添加ASSETD全局广播，用于资产估值计算
+        if (!that.TIME_INTERVER) clearInterval(that.TIME_INTERVER);
+
+        that.TIME_INTERVER = setInterval(() => {
+            that.updWlt();
+        }, that.entrepotDataInterval);
+
+        // 添加ASSETD全局广播，用于资产估值计算 和合约 仓位 数据计算
         broadcast.onMsg({
             key: this.name,
             cmd: broadcast.MSG_ASSETD_UPD,
             cb: function () {
-                that.initWlt();
-                // that.getRiskLimits();
+                that.calcTrdWlt();
             }
         });
         // 交易风险限额数据获取完成广播
@@ -44,7 +64,7 @@ module.exports = {
             cmd: broadcast.EV_GET_RS_READY,
             cb: function (arg) {
                 // console.log('EV_GET_RS_READY', arg);
-                that.trdDataOnFun();
+                that.calcTrdWlt();
             }
         });
         // tick行情全局广播
@@ -57,24 +77,26 @@ module.exports = {
             }
         });
     },
-
+    // 获取跟单数据
     updWlt: function () {
         const that = this;
         Http.subAssets({ exChannel: window.exchId, aType: '018' }).then(res => {
             if (res.result.code === 0) {
+                that.walletState = 1;
                 that.setWallet(res.assetLists03);
             }
         }).finally(res => { that.getFollowPosition(); });
     },
-
+    // 获取跟单持仓数据
     getFollowPosition: function () {
         const that = this;
         Http.getFollowPosition({ positions: JSON.stringify(that.entrepotIds) }).then(res => {
             if (res.code === 0) {
-                const list = that.entrepotS.map(item => res.delPos.find(del => del.AId === item.AId) < 0);
-                that.entrepotS = [...that.entrepotS, ...res.data];
-                that.entrepotIds = that.entrepotS.map(item => item.AId);
-                console.log(list, that.entrepotIds);
+                that.entrepotState = 1;
+                const list = that.entrepotS.map(item => res.delPos.find(del => del === item.PId) < 0);
+                that.entrepotS = [...list, ...res.data];
+                that.entrepotIds = that.entrepotS.map(item => item.PId);
+                that.checkPosNeedSubSym();
             }
         });
     },
@@ -139,6 +161,9 @@ module.exports = {
         this.wltItemEx.NL = this.toFixedForFloor(this.wltItemEx.mainBal, 8);
         // 账户可提金额，用于资产划转以及提现
         this.wltItemEx.wdrawable = this.toFixedForFloor(this.wltItemEx.mainBal, 8);
+        // MgnBal:账户权益 aUPNL: 总未实现盈亏
+        this.wltItemEx.aUPNL = this.toFixedForFloor(Number(this.wltItemEx.aUPNL) || 0, 8);
+        this.wltItemEx.MgnBal = this.toFixedForFloor(Number(this.wltItemEx.mainBal) + Number(this.wltItemEx.depositLock) + Number(this.wltItemEx.mainLock) + Number(this.wltItemEx.aUPNL) || 0, 8);
 
         // 当前币种价格 start
         // const coinInitValue = Number(this.wltItemEx.initValue || 1);
@@ -188,33 +213,33 @@ module.exports = {
     },
 
     // 获取钱包计算所需风险限额
-    getRiskLimits: function() {
-        // ReqTrdGetRiskLimits
-        const that = this;
-        const Authrized = gTrdApi.RT.Authrized;// aObj.AUTH_ST_OK
-        const AssetD = gMktApi.AssetD;
-        if (Authrized === gTrdApi.AUTH_ST_OK && Object.keys(AssetD).length > 0) {
-            const aymArr = [];
-            for (const key in AssetD) {
-                const item = AssetD[key];
-                if (item.TrdCls !== 1) {
-                    aymArr.push(item.Sym);
-                }
-            }
-            if (aymArr.length > 0) {
-                if (this.isReqRiskLimits) {
-                    return;
-                }
-                this.isReqRiskLimits = true;
-                gTrdApi.ReqTrdGetRiskLimits({
-                    AId: gTrdApi.RT.UserId + "01",
-                    Sym: aymArr.join(',')
-                }, function() {
-                    that.isReqRiskLimits = false;
-                });
-            }
-        }
-    },
+    // getRiskLimits: function() {
+    //     // ReqTrdGetRiskLimits
+    //     const that = this;
+    //     const Authrized = gTrdApi.RT.Authrized;// aObj.AUTH_ST_OK
+    //     const AssetD = gMktApi.AssetD;
+    //     if (Authrized === gTrdApi.AUTH_ST_OK && Object.keys(AssetD).length > 0) {
+    //         const aymArr = [];
+    //         for (const key in AssetD) {
+    //             const item = AssetD[key];
+    //             if (item.TrdCls !== 1) {
+    //                 aymArr.push(item.Sym);
+    //             }
+    //         }
+    //         if (aymArr.length > 0) {
+    //             if (this.isReqRiskLimits) {
+    //                 return;
+    //             }
+    //             this.isReqRiskLimits = true;
+    //             gTrdApi.ReqTrdGetRiskLimits({
+    //                 AId: gTrdApi.RT.UserId + "01",
+    //                 Sym: aymArr.join(',')
+    //             }, function() {
+    //                 that.isReqRiskLimits = false;
+    //             });
+    //         }
+    //     }
+    // },
 
     toFixedForFloor (value, n) {
         if (isNaN(value)) {
@@ -245,7 +270,7 @@ module.exports = {
     trdDataOnFun: function() {
         const tm = Date.now();
         if (tm - this.calcTrdWltLastTm > this.calcTrdWltInterval) {
-            this.checkPosNeedSubSym();
+            // this.checkPosNeedSubSym();
             this.calcTrdWlt();
             this.calcTrdWltLastTm = tm;
         }
@@ -272,30 +297,29 @@ module.exports = {
     },
 
     calcTrdWlt: function(arg) {
-        // const that = this;
-        const { Poss, Wlts, Orders, RS, trdInfoStatus } = gTrdApi;
+        const that = this;
+        const { Orders, RS, trdInfoStatus } = gTrdApi;
         const { lastTick, AssetD } = gMktApi;
 
-        if ((trdInfoStatus.pos === 0 /* 仓位数据 */ ||
-            trdInfoStatus.ord === 0 /* 委托数据 */ ||
-            trdInfoStatus.wlt === 0 /* 资产数据 */ ||
+        if ((that.walletState === 0 /* 跟单仓位数据 */ ||
+            that.entrepotState === 0 /* 跟单资产数据 */ ||
             trdInfoStatus.rs === 0 /* 风险限额数据 */
         )) {
             return;
         }
         // 将仓位数据Poss、资产数据Wlts，以及委托数据Orders拷贝至新的对象或数组，防止后边计算影响原数据；
         const posArr = [];
-        for (const key in Poss) {
+        for (const key in this.entrepotS) {
             const item = {};
-            utils.copyTab(item, Poss[key]);
+            utils.copyTab(item, this.entrepotS[key]);
             posArr.push(item);
         }
         // console.log('posArr', posArr, gTrdApi);
 
         const wallets = [];
-        for (const key in Wlts['01']) {
+        for (const key in this.wallet_obj) {
             const item = {};
-            utils.copyTab(item, Wlts['01'][key]);
+            utils.copyTab(item, this.wallet_obj[key]);
             wallets.push(item);
         }
         // console.log('wallets', wallets);
@@ -320,13 +344,18 @@ module.exports = {
             config.future.MMType,
             config.future.PrzLiqType,
             arg => {
-                console.log('calcFutureWltAndPosAndMI CallBack', arg);
-                // that.updTrdWlt(arg.wallets);
+                that.setWallet(arg.wallets);
+                that.initWlt();
+                console.log(this);
             });
         // console.log('calcFutureWltAndPosAndMI', calcFutureWltAndPosAndMI, Poss, Wlts, Orders, RS, lastTick, AssetD);
     },
 
     remove: function () {
+        !this.TIME_INTERVER && clearInterval(this.TIME_INTERVER);
+        this.TIME_INTERVER = null;
+        this.walletState = 0;
+        this.entrepotState = 0;
         broadcast.offMsg({
             key: this.name,
             isall: true
