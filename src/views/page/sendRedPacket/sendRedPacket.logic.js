@@ -200,7 +200,11 @@ const logic = {
     numberFormItem: {
         value: '',
         updateOption(params) {
-            Object.keys(params).forEach(key => (this[key] = params[key]));
+            // 有值且没用小数点 更新value
+            if (params.value && params.value.split('.').length <= 1) {
+                this.value = params.value;
+            }
+            // console.log(this.value);
         }
     },
     // info信息 fomeItem组件配置
