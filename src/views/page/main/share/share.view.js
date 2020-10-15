@@ -1,6 +1,7 @@
 const m = require('mithril');
 const Modal = require('@/views/components/common/Modal/Modal.view');
 const logic = require('./share.logic.js');
+const I18n = require('@/languages/I18n').default;
 require('./share.scss');
 
 module.exports = {
@@ -41,7 +42,7 @@ module.exports = {
                         onclick() {
                             logic.cancelShareBtnClick();
                         }
-                    }, "取消")
+                    }, I18n.$t('20035')/* 取消 */)
                 ])
             ])
         });

@@ -1,3 +1,4 @@
+const I18n = require('@/languages/I18n').default;
 const share = {
     sinaweibo: null,
     tencentweibo: null,
@@ -25,11 +26,11 @@ share.photo = function(img, cb, errcb) {
                 });
             }, function(e1) {
                 errcb && errcb();
-                window.$message({ content: '保存图片失败', type: 'danger' });
+                window.$message({ content: I18n.$t('20001'/* 保存图片失败 */), type: 'danger' });
             });
         }, function(err) {
             errcb && errcb();
-            window.$message({ content: `加载Base64图片数据失败${err.code + err.message}`, type: 'danger' });
+            window.$message({ content: `${I18n.$t('20002'/* 加载Base64图片数据失败 */)}${err.code + err.message}`, type: 'danger' });
         });
     } else {
         errcb && errcb();
@@ -55,7 +56,7 @@ share.ShareImgForUrl = function(id, img, type, cb, errcb) {
 
     if (!share[id]) {
         errcb && errcb();
-        window.plus.nativeUI.alert('当前环境不支持微信操作!');
+        window.plus.nativeUI.alert(I18n.$t('20003'/* '当前环境不支持微信操作!' */));
     }
     var msg = {
         pictures: [img],
@@ -75,7 +76,7 @@ share.ShareImgForUrl = function(id, img, type, cb, errcb) {
         }, function(e) {
             errcb && errcb();
             if (e.code === -8) {
-                window.$message({ content: `客户端未安装`, type: 'danger' });
+                window.$message({ content: I18n.$t('20004'/* `客户端未安装` */), type: 'danger' });
             } else {
                 window.$message({ content: e.message, type: 'danger' });
             }
@@ -112,7 +113,7 @@ share.ShareBase64 = function(id, img, type, cb, errcb) {
 
             if (!share[id]) {
                 errcb && errcb();
-                window.plus.nativeUI.alert('当前环境不支持微信操作!');
+                window.plus.nativeUI.alert(I18n.$t('20003'/* '当前环境不支持微信操作!' */));
             }
             var msg = {
                 pictures: [path],
@@ -132,7 +133,7 @@ share.ShareBase64 = function(id, img, type, cb, errcb) {
                 }, function(e) {
                     errcb && errcb();
                     if (e.code === -8) {
-                        window.$message({ content: `客户端未安装`, type: 'danger' });
+                        window.$message({ content: I18n.$t('20004'/* `客户端未安装` */), type: 'danger' });
                     } else {
                         window.$message({ content: e.message, type: 'danger' });
                     }
@@ -141,11 +142,11 @@ share.ShareBase64 = function(id, img, type, cb, errcb) {
             // });
         }, function(e1) {
             errcb && errcb(e1);
-            window.$message({ content: '保存图片失败', type: 'danger' });
+            window.$message({ content: I18n.$t('20001'/* 保存图片失败 */), type: 'danger' });
         });
     }, (err) => {
         errcb && errcb(err);
-        window.$message({ content: `加载Base64图片数据失败${err.code + err.message}`, type: 'danger' });
+        window.$message({ content: `${I18n.$t('20002'/* 加载Base64图片数据失败 */)}${err.code + err.message}`, type: 'danger' });
     });
 };
 share.ShareService = function(id, img, type, cb, errcb) { // 获取可用的分享列表
@@ -160,7 +161,7 @@ share.ShareService = function(id, img, type, cb, errcb) { // 获取可用的分�
         },
         function(err) {
             errcb && errcb();
-            window.$message({ content: `获取分享服务列表失败：: ${err.code + err.message}`, type: 'danger' });
+            window.$message({ content: `${I18n.$t('20005'/* 获取分享服务列表失败 */)}：: ${err.code + err.message}`, type: 'danger' });
         });
     } else {
         errcb && errcb();
@@ -178,7 +179,7 @@ share.ShareServiceForUrl = function(id, img, type, cb, errcb) { // 获取可用�
         },
         function(err) {
             errcb && errcb();
-            window.$message({ content: `获取分享服务列表失败：: ${err.code + err.message}`, type: 'danger' });
+            window.$message({ content: `${I18n.$t('20005'/* 获取分享服务列表失败 */)}：: ${err.code + err.message}`, type: 'danger' });
         });
     } else {
         errcb && errcb();

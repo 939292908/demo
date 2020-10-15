@@ -12,6 +12,7 @@ const apiLines = require('@/models/network/lines.js');
 const redPacketUtils = require('@/util/redPacketUtils').default;
 const config = require('@/config.js');
 const globalModels = require('@/models/globalModels');
+const I18n = require('@/languages/I18n').default;
 
 module.exports = {
     oninit: vnode => logic.oninit(vnode),
@@ -28,7 +29,7 @@ module.exports = {
                     m(FormItem, {
                         class: "is-around mb-3",
                         content: m('input.input[type=text].has-text-centered', {
-                            placeholder: "输入您的手机号/邮箱",
+                            placeholder: I18n.$t('20062')/* 输入您的手机号/邮箱 */,
                             oninput: e => {
                                 logic.numberOnInput(e);
                             },
@@ -41,14 +42,14 @@ module.exports = {
                 m('div.body-3.mb-3.mx-6.has-text-up', { hidden: false }, logic.errText),
                 // 抢
                 m('div', { class: `side-px ${logic.redPacketTopOption.status === 0 ? '' : 'is-hidden'}` }, m(Button, {
-                    label: "抢",
+                    label: I18n.$t('20063')/* 抢 */,
                     class: 'is-primary',
                     width: 1,
                     onclick() {
                         logic.receiveClick();
                     }
                 })),
-                m('div', { class: `has-text-level-4` }, [logic.redPacketTopOption.status === 1 ? '很遗憾，红包已抢完' : logic.redPacketTopOption.status === 3 ? '很遗憾，红包已过期' : '']),
+                m('div', { class: `has-text-level-4` }, [logic.redPacketTopOption.status === 1 ? I18n.$t('20055')/* 很遗憾，红包已抢完 */ : logic.redPacketTopOption.status === 3 ? I18n.$t('20056')/* 很遗憾，红包已过期 */ : '']),
                 // m('div', { class: `has-text-primary mt-5` }, "已经在APP登录账号？点击前往直接抢 >>"),
                 m('div', { class: `has-border-bottom-1 has-line-level-1 mt-3` }), // 线条
                 // 领取概况
@@ -73,11 +74,11 @@ module.exports = {
                 m('iframe', { src: require("@/assets/img/logo2.svg").default, width: "48", height: "48", class: "mr-3" }),
                 m('div', { class: `spacer` }, [
                     m('div', { class: "title-small" }, config.exchNameCapital),
-                    m('div', { class: "has-text-level-3 body-4" }, "下载APP，轻松交易")
+                    m('div', { class: "has-text-level-3 body-4" }, I18n.$t('20064')/* 下载APP，轻松交易 */)
                 ]),
                 m('a', { href: redPacketUtils.getDownloadAppUrl() }, [
                     m(Button, {
-                        label: "下载",
+                        label: I18n.$t('20065')/* 下载 */,
                         class: 'is-primary px-6',
                         size: 'size-2',
                         onclick() {}
@@ -92,8 +93,10 @@ module.exports = {
                     logic.isShowVerifyView = params.isShow;
                 },
                 content: m('div', { class: `my-modal-content px-5 has-bg-level-2 has-text-centered pb-7` }, [
-                    m('div', { class: `title-small mb-3 mt-7` }, "安全验证"),
-                    m('div', { class: `mb-3` }, `如未使用该${logic.getVerifyType() === 'email' ? '邮箱' : '手机号'}注册平台账号，请在注册后查收红包`),
+                    m('div', { class: `title-small mb-3 mt-7` }, I18n.$t('20066')/* 安全验证 */),
+                    m('div', { class: `mb-3` },
+                        I18n.$t('20067', { value: logic.getVerifyType() === 'email' ? I18n.$t('20068')/* 邮箱 */ : I18n.$t('20069')/* 手机号 */ })/* 如未使用该{value}注册平台账号，请在注册后查收红包 */
+                    ),
                     m(Validate) // 安全验证组件
                 ])
             }),
@@ -103,7 +106,7 @@ module.exports = {
                 m('div.modal-card.w80.border-radius-small', {}, [
                     m('header.modal-card-head.border-radius-small-top.has-bg-level-2.border-0.side-pa', {}, [
                         m('p.modal-card-title.body-5.has-text-title.font-weight-medium', {}, [
-                            `线路切换(${apiLines.netLines.length})`
+                            `${I18n.$t('20070')/* 线路切换 */}(${apiLines.netLines.length})`
                         ]),
                         m('button.button.is-light.pa-3', {
                             onclick: function() {
@@ -136,11 +139,11 @@ module.exports = {
                                         item.Name
                                     ]),
                                     m('span.pl-2' + (item.Id !== apiLines.activeLine.Id ? '.opacity-0' : '.has-text-primary'), {}, [
-                                        '当前'
+                                        I18n.$t('20071')/* 当前 */
                                     ]),
                                     m('span.spacer'),
                                     m('span.has-text-left' + (item.Id !== apiLines.activeLine.Id ? '' : '.has-text-primary'), {}, [
-                                        '延迟 ' + apiLines.wsResponseSpeed[i] + '/' + apiLines.apiResponseSpeed[i] + 'ms'
+                                        `${I18n.$t('20072')/* 延迟 */} ` + apiLines.wsResponseSpeed[i] + '/' + apiLines.apiResponseSpeed[i] + 'ms'
                                         // I18n.$t('10155') + ' ' + (apiLines.wsResponseSpeed[i] || '--') + '/' + (apiLines.apiResponseSpeed[i] || '--') + 'ms'
                                     ])
                                 ]),

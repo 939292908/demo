@@ -5,6 +5,7 @@ const share = require('@/views/page/main/share/share.logic');
 const { HtmlConst, GetBase64 } = require('@/models/plus/index.js');
 const Qrcode = require('qrcode');
 const errCode = require('@/util/errCode').default;
+const I18n = require('@/languages/I18n').default;
 
 const logic = {
     shareLoading: false, // 分享按钮loading
@@ -16,7 +17,7 @@ const logic = {
             }
         },
         center: {
-            label: "详情记录"
+            label: I18n.$t('20046')/* 详情记录 */
         }
     },
     // 红包top 组件配置
@@ -121,7 +122,7 @@ const logic = {
                 GetBase64.loadImageUrlArray([img1, img2, base64], arg => {
                     console.log('GetBase64 loadImageUrlArray', arg);
                     GetBase64.getWebView({
-                        data: HtmlConst.shareRedPacket(['分享红包', '红包资产可用来提现，交易', '下载APP，轻松交易'], arg),
+                        data: HtmlConst.shareRedPacket([I18n.$t('20050')/* 分享红包 */, I18n.$t('20051')/* 红包资产可用来提现，交易 */, I18n.$t('20064')/* 下载APP，轻松交易 */], arg),
                         W: 375,
                         H: 667
                     }, res => {

@@ -103,7 +103,7 @@ module.exports = {
                 maxlength: '6',
                 value: Validate.code
             }),
-            m('.right-click-but', { onclick: () => { Validate.smsCd <= 0 && Validate.sendSmsCode(); } }, m('div.has-text-primary', Validate.smsCd > 0 ? `${Validate.smsCd} s` : I18n.$t('10117')/* '获取验证码' */))
+            m('.right-click-but', { onclick: () => { Validate.smsCd <= 0 && Validate.sendSmsCode(); } }, m('div.has-text-primary', Validate.smsCd > 0 ? `${Validate.smsCd} s` : I18n.$t('20016')/* '获取验证码' */))
         ]);
     },
     emailVerifyContent: function () {
@@ -118,7 +118,7 @@ module.exports = {
                 onclick: () => {
                     Validate.emailCd <= 0 && Validate.sendEmailCode();
                 }
-            }, m('div', Validate.emailCd > 0 ? `${Validate.emailCd} s` : I18n.$t('10117')/* '获取验证码' */))
+            }, m('div', Validate.emailCd > 0 ? `${Validate.emailCd} s` : I18n.$t('20016')/* '获取验证码' */))
         ]);
     },
     doubleButtonVnode: function () {
@@ -155,7 +155,7 @@ module.exports = {
         validInput.push(m('div.butBox', { onclick: () => { Validate.check(); } },
             m('button.button is-fullwidth has-bg-primary', {
                 class: vNode.attrs.loading ? 'is-loading' : ''
-            }, this.props.buttonText || I18n.$t('10337')/* '确定' */)));
+            }, this.props.buttonText || I18n.$t('20006'/* 确定 */))));
         return m('div.mainPrompt', validInput);
     },
     view: function (vNode) {

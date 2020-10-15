@@ -6,6 +6,7 @@
 // size (选填) size-1 / size-2
 // class: 'is-rounded'(半圆按钮) 'is-outlined'(镂空)
 var m = require("mithril");
+const I18n = require('@/languages/I18n').default;
 require('./Button.scss');
 const logic = {
     // class
@@ -39,6 +40,6 @@ module.exports = {
             onclick() {
                 vnode.attrs.onclick && vnode.attrs.onclick(vnode.attrs);
             }
-        }, vnode.attrs.label || '确定');
+        }, vnode.attrs.label || I18n.$t('20006'/* 确定 */));
     }
 };

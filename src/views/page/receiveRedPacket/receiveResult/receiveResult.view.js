@@ -7,6 +7,7 @@ const redPacketTop = require('@/views/components/redPacketTop/redPacketTop.view'
 const redPacketInfo = require('@/views/components/redPacketInfo/redPacketInfo.view');
 const redPacketUtils = require('@/util/redPacketUtils').default;
 const globalModels = require('@/models/globalModels');
+const I18n = require('@/languages/I18n').default;
 
 module.exports = {
     oninit: vnode => logic.oninit(vnode),
@@ -45,11 +46,11 @@ module.exports = {
             ]),
             m('div', { class: `views-receive-result-footer px-6 pb-3 has-text-centered` }, [
                 m('a', { href: redPacketUtils.getDownloadAppUrl() }, m(Button, {
-                    label: "查看我的红包",
+                    label: I18n.$t('20057')/* 查看我的红包 */,
                     class: 'is-primary',
                     width: 1
                 })),
-                m('a', { class: `pt-2 body-4 has-text-level-3`, href: redPacketUtils.getDownloadAppUrl() }, "下载APP  收发红包 小事一桩")
+                m('a', { class: `pt-2 body-4 has-text-level-3`, href: redPacketUtils.getDownloadAppUrl() }, I18n.$t('20058')/* 下载APP 收发红包 小事一桩 */)
             ])
         ]);
     }

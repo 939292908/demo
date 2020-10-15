@@ -1,5 +1,6 @@
 const m = require('mithril');
 const { Share, Model } = require('@/models/plus/index.js');
+const I18n = require('@/languages/I18n').default;
 module.exports = {
     isShare: false, // 是否分享了操作
     shareMsg: "", // 提示
@@ -14,22 +15,22 @@ module.exports = {
     shareBtnList: [
         {
             key: "WXSceneSession",
-            label: "微信好友",
+            label: I18n.$t('20029')/* 微信好友 */,
             icon: "#icon-color-wechat"
         },
         {
             key: "WXSceneTimeline",
-            label: "朋友圈",
+            label: I18n.$t('20030')/* 朋友圈 */,
             icon: "#icon-shareFriends"
         },
         {
             key: "CopyLink",
-            label: "复制链接",
+            label: I18n.$t('20031')/* 复制链接 */,
             icon: "#icon-CopyLink"
         },
         {
             key: "savePhoto",
-            label: "保存图片",
+            label: I18n.$t('20032')/* 保存图片 */,
             icon: "#icon-sharePhoto"
         }
     ],
@@ -79,7 +80,7 @@ module.exports = {
             console.log('WXSceneSession', param);
             Model.plusCopyToClipboard(this.options.link);
             that.isShare = true;
-            that.shareMsg = "链接已复制，快去分享给你的好友吧！";
+            that.shareMsg = I18n.$t('20033')/* 链接已复制，快去分享给你的好友吧！ */;
             window.clearTimeout(that.timeoutId);
             that.timeoutId = window.setTimeout(() => {
                 that.shareMsg = "";
@@ -93,7 +94,7 @@ module.exports = {
                 this.options.needShareImg,
                 arg => {
                     that.isShare = true;
-                    that.shareMsg = "图片已保存，快去分享给你的好友吧！";
+                    that.shareMsg = I18n.$t('20034')/* 图片已保存，快去分享给你的好友吧！ */;
                     m.redraw();
                     window.clearTimeout(that.timeoutId);
                     that.timeoutId = window.setTimeout(() => {

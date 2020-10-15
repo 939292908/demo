@@ -4,6 +4,7 @@ const logic = require('./myRedPacket.logic');
 const Header = require('@/views/components/common/Header/Header.view');
 const FormItem = require('@/views/components/common/FormItem/FormItem.view');
 // const Button = require('@/views/components/common/Button/Button.view');
+const I18n = require('@/languages/I18n').default;
 
 module.exports = {
     oninit: vnode => logic.oninit(vnode),
@@ -36,13 +37,13 @@ module.exports = {
         // 红包状态获取
         const getTextByStatus = function (item) {
             const status = item.status * 1;
-            if (status === 0) return m('span', { class: `has-text-primary no-select` }, "未抢完");
-            if (status === 1) return m('span', { class: `has-text-level-3 no-select` }, "已抢完");
+            if (status === 0) return m('span', { class: `has-text-primary no-select` }, I18n.$t('20039')/* 未抢完 */);
+            if (status === 1) return m('span', { class: `has-text-level-3 no-select` }, I18n.$t('20040')/* 已抢完 */);
             if (status === 3) {
                 if (item.quota === item.quota2) {
-                    return m('span', { class: `has-text-level-3` }, "已全额退款");
+                    return m('span', { class: `has-text-level-3` }, I18n.$t('20041')/* 已全额退款 */);
                 } else {
-                    return m('span', { class: `has-text-level-3` }, `已退款 ${item.quota2} ${item.coin}`);
+                    return m('span', { class: `has-text-level-3` }, `${I18n.$t('20042')/* 已退款 */} ${item.quota2} ${item.coin}`);
                 }
             }
         };
@@ -56,7 +57,7 @@ module.exports = {
                     content: [
                         // 左边
                         m('div', { class: `` }, [
-                            m('p', { class: `has-text-level-3` }, "领取红包总金额"),
+                            m('p', { class: `has-text-level-3` }, I18n.$t('20043')/* 领取红包总金额 */),
                             m('p', { class: `title-small has-text-level-1` }, `${logic.receiveMoneySum} USDT`)
                         ]),
                         // 右边
@@ -76,7 +77,7 @@ module.exports = {
                         m('div', { class: `` }, [
                             m('div', { class: `font-weight-bold` }, [
                                 m('span', { class: `has-text-level-1` }, item.rtel_bulid || item.remail_bulid),
-                                m('span', { class: `has-text-primary body-4` }, ' ' + item.type > 0 ? "普通红包" : "拼手气红包")
+                                m('span', { class: `has-text-primary body-4` }, ' ' + item.type > 0 ? I18n.$t('20010'/* 普通红包 */) : I18n.$t('20011'/* 拼手气红包 */))
                             ]),
                             m('div', { class: `body-4 has-text-level-4` }, item.time)
                         ]),
@@ -101,12 +102,12 @@ module.exports = {
                     content: [
                         // 左边
                         m('div', { class: `` }, [
-                            m('p', { class: `no-wrap has-text-level-3` }, "已经发送红包总金额"),
+                            m('p', { class: `no-wrap has-text-level-3` }, I18n.$t('20044')/* 已经发送红包总金额 */),
                             m('p', { class: `title-small no-wrap has-text-level-1` }, `${logic.sendMoneySum} USDT`)
                         ]),
                         // 右边
                         m('div', { class: `has-text-right` }, [
-                            m('p', { class: `no-wrap has-text-level-3` }, "已退回红包总金额"),
+                            m('p', { class: `no-wrap has-text-level-3` }, I18n.$t('20045')/* 已退回红包总金额 */),
                             m('p', { class: `title-small no-wrap has-text-level-1` }, `${logic.sendMoneySumBack} USDT`)
                         ])
                     ]
@@ -121,7 +122,7 @@ module.exports = {
                     }, [
                         // 左边
                         m('div', { class: `` }, [
-                            m('div', { class: `has-text-primary font-weight-bold` }, item.type > 0 ? "普通红包" : "拼手气红包"),
+                            m('div', { class: `has-text-primary font-weight-bold` }, item.type > 0 ? I18n.$t('20010'/* 普通红包 */) : I18n.$t('20011'/* 拼手气红包 */)),
                             m('div', { class: `body-4 has-text-level-3` }, item.time)
                         ]),
                         // 右边

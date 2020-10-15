@@ -5,6 +5,7 @@ const wlt = require('@/models/wlt/wlt');
 const broadcast = require('@/broadcast/broadcast');
 const globalModels = require('@/models/globalModels');
 const errCode = require('@/util/errCode').default;
+const I18n = require('@/languages/I18n').default;
 
 const logic = {
     receiveMoneySum: 0, // 领取总金额
@@ -19,19 +20,19 @@ const logic = {
             }
         },
         center: {
-            label: "我的红包"
+            label: I18n.$t('20036')/* 我的红包 */
         }
     },
     currentNavId: 1,
     navList: [
         {
             id: 1,
-            label: "已领取",
+            label: I18n.$t('20037')/* 已领取 */,
             class: "mr-7"
         },
         {
             id: 2,
-            label: "已发送"
+            label: I18n.$t('20038')/* 已发送 */
         }
     ],
     // 已领红包列表

@@ -1,6 +1,7 @@
 
 var m = require("mithril");
 const Button = require('@/views/components/common/Button/Button.view');
+const I18n = require('@/languages/I18n').default;
 
 const obj = {
     option1: {
@@ -17,7 +18,7 @@ const obj = {
     },
     option3: {
         width: 400,
-        label: '取消',
+        label: I18n.$t('20035')/* 取消 */,
         onclick(params) {
             console.log(params);
         }

@@ -26,7 +26,7 @@ const logic = {
             // }
         },
         right: {
-            label: '线路',
+            label: I18n.$t('20059')/* 线路 */,
             onclick() {
                 logic.openSwitchLineView();
             }
@@ -147,7 +147,7 @@ const logic = {
                 }
                 console.log('查询账号是否注册 success', arg);
             } else {
-                window.$message({ content: '查询账号是否注册失败', type: 'danger' });
+                window.$message({ content: I18n.$t('20060')/* 查询账号是否注册失败 */, type: 'danger' });
             }
         }).catch(function(err) {
             console.log('查询账号是否注册 error', err);
@@ -221,7 +221,7 @@ const logic = {
                 const data = arg.result.data;
                 // 红包头部 组件配置
                 logic.redPacketTopOption = JSON.parse(JSON.stringify(data));
-                logic.redPacketTopOption.msg2 = logic.redPacketTopOption.status === 0 ? '您有机会获得' : ''; // msg2
+                logic.redPacketTopOption.msg2 = logic.redPacketTopOption.status === 0 ? I18n.$t('20061')/* 您有机会获得 */ : ''; // msg2
                 logic.redPacketTopOption.quota = logic.redPacketTopOption.status === 0 ? logic.redPacketTopOption.quota : null; // 金额
                 logic.redPacketTopOption.hiddenLine = true; // 隐藏底部线条
                 // 红包Info 组件配置

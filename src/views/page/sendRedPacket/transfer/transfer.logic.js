@@ -2,6 +2,7 @@ const wlt = require('@/models/wlt/wlt');
 const Http = require('@/api').webApi;
 const broadcast = require('@/broadcast/broadcast');
 const utils = require('@/util/utils').default;
+const I18n = require('@/languages/I18n').default;
 
 const logic = {
     isShow: false, // 显示划转弹框
@@ -17,19 +18,19 @@ const logic = {
     baseWltList: [
         {
             id: "01",
-            label: "合约账户"
+            label: I18n.$t('20073')/* 合约账户 */
         },
         {
             id: "02",
-            label: "币币账户"
+            label: I18n.$t('20074')/* 币币账户 */
         },
         {
             id: "03",
-            label: "我的钱包"
+            label: I18n.$t('20075')/* 我的钱包 */
         },
         {
             id: "04",
-            label: "法币账户"
+            label: I18n.$t('20076')/* 法币账户 */
         }
     ],
     // 更新划转弹框数据
@@ -50,7 +51,7 @@ const logic = {
     toWltList: [
         {
             id: "03",
-            label: "我的钱包"
+            label: I18n.$t('20075')/* 我的钱包 */
         }
     ],
     // form钱包 下拉组件配置
@@ -162,9 +163,9 @@ const logic = {
                 this.updateOption({ isShow: !this.isShow });// 划转弹框隐藏
                 this.reset(); // 重置
                 wlt.init(); // 更新数据
-                window.$message({ content: "资金划转成功！", type: 'success' });
+                window.$message({ content: I18n.$t('10414')/* 资金划转成功！ */, type: 'success' });
             } else {
-                window.$message({ content: "资金划转失败！", type: 'danger' });
+                window.$message({ content: I18n.$t('20077')/* 资金划转失败！ */, type: 'danger' });
             }
         }).catch(err => {
             console.log(err);

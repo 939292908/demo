@@ -8,6 +8,7 @@ const m = require('mithril');
 const Http = require('@/api').webApi;
 const redPacketUtils = require('@/util/redPacketUtils').default;
 const errCode = require('@/util/errCode').default;
+const I18n = require('@/languages/I18n').default;
 
 const logic = {
     // isLucky: true, // 是否是手气最佳
@@ -78,15 +79,15 @@ const logic = {
                 logic.redPacketTopOption.quota = m.route.param().quota; // 自定义金额(当前抢到)
                 switch (m.route.param().status * 1) {
                 case 0:
-                    logic.redPacketTopOption.msg = "已存入钱包账户，可直接提现、交易"; // msg
+                    logic.redPacketTopOption.msg = I18n.$t('20054')/* 已存入钱包账户，可直接提现、交易 */; // msg
                     break;
 
                 case 1:
-                    logic.redPacketTopOption.msg = "很遗憾，红包已抢完"; // msg
+                    logic.redPacketTopOption.msg = I18n.$t('20055')/* 很遗憾，红包已抢完 */; // msg
                     break;
 
                 case 2:
-                    logic.redPacketTopOption.msg = "很遗憾，红包已过期"; // msg
+                    logic.redPacketTopOption.msg = I18n.$t('20056')/* 很遗憾，红包已过期 */; // msg
                     break;
 
                 default:

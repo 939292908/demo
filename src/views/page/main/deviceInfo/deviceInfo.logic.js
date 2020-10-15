@@ -8,31 +8,31 @@ const deviceInfo = {
     modalOpen: false,
     info: {
         userAgent: {
-            name: '设备信息(userAgent)',
+            name: `${I18n.$t('20019')/* 设备信息 */}userAgent)`,
             value: ''
         },
         platform: {
-            name: '操作系统(Platform)',
+            name: `${I18n.$t('20020')/* 操作系统 */}(Platform)`,
             value: ''
         },
         language: {
-            name: '浏览器语言(Language)',
+            name: `${I18n.$t('20021')/* 浏览器语言 */}(Language)`,
             value: ''
         },
         explore: {
-            name: '使用浏览器(Explore)',
+            name: `${I18n.$t('20022')/* 使用浏览器 */}(Explore)`,
             value: ''
         },
         ip: {
-            name: '用户IP(IP)',
+            name: `${I18n.$t('20023')/* 用户IP */}(IP)`,
             value: ''
         },
         location: {
-            name: '用户所在地(Location)',
+            name: `${I18n.$t('20024')/* 用户所在地 */}(Location)`,
             value: ''
         },
         isp: {
-            name: '网络运营商(ISP)',
+            name: `${I18n.$t('20025')/* 网络运营商 */}(ISP)`,
             value: ''
         }
     },

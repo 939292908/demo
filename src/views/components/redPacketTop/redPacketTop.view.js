@@ -1,5 +1,6 @@
 const m = require('mithril');
 const utils = require('@/util/utils').default;
+const I18n = require('@/languages/I18n').default;
 
 // const globalModels = require('@/models/globalModels');
 
@@ -28,20 +29,20 @@ module.exports = {
     // 红包类型
     getType(vnode) {
         if (vnode.attrs.type * 1 > 0) {
-            return "普通红包";
+            return I18n.$t('20010'/* 普通红包 */);
         } else {
-            return "拼手气红包";
+            return I18n.$t('20011'/* 拼手气红包 */);
         }
     },
     view(vnode) {
         return m('div', { class: `${vnode.attrs.hiddenLine ? '' : 'has-border-bottom-1'} side-px pb-3 has-line-level-1 ${vnode.attrs.class || ''}` }, [
             // 来源 没有guid则自己发的红包
-            !vnode.attrs.guid ? m('div', { class: `pt-5 has-text-level-1` }, "您发送的")
+            !vnode.attrs.guid ? m('div', { class: `pt-5 has-text-level-1` }, I18n.$t('20012'/* 您发送的 */))
             // vnode.attrs.guid === globalModels.getAccount().uid ? m('div', { class: `pt-5 has-text-level-1` }, "您发送的")
                 : m('div', { class: `pt-5 has-text-level-1` }, [
-                    m('span', { class: `` }, '来自'),
+                    m('span', { class: `` }, I18n.$t('20013'/* 来自 */)),
                     m('span', { class: `has-text-primary` }, vnode.state.getFromName(vnode)),
-                    m('span', { class: `` }, '的')
+                    m('span', { class: `` }, I18n.$t('20014'/* 的 */))
                 ]),
             // 红包类型 type 0:为拼手气 / >0:普通红包
             m('div', { class: `title-medium mb-3 has-text-level-1` }, vnode.state.getType(vnode)),

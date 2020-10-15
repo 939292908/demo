@@ -6,6 +6,7 @@ const Button = require('@/views/components/common/Button/Button.view');
 const redPacketTop = require('@/views/components/redPacketTop/redPacketTop.view');
 const redPacketInfo = require('@/views/components/redPacketInfo/redPacketInfo.view');
 const globalModels = require('@/models/globalModels');
+const I18n = require('@/languages/I18n').default;
 
 module.exports = {
     oninit: vnode => logic.oninit(vnode),
@@ -42,14 +43,14 @@ module.exports = {
             m('div', { class: `side-px pt-3` }, [
                 m(Button, {
                     class: 'is-primary',
-                    label: logic.redPacketInfoOption.status === 0 ? "继续发送该红包" : "知道了",
+                    label: logic.redPacketInfoOption.status === 0 ? I18n.$t('20052')/* 继续发送该红包 */ : I18n.$t('10415')/* 知道了 */,
                     width: 1,
                     loading: logic.shareLoading,
                     onclick() {
                         logic.footerBtnClick();
                     }
                 }),
-                m('div', { class: `pt-2 body-4 has-text-centered has-text-level-3` }, "24小时未领取红包，资产将会返还到您的钱包账户")
+                m('div', { class: `pt-2 body-4 has-text-centered has-text-level-3` }, I18n.$t('20053')/* 24小时未领取红包，资产将会返还到您的钱包账户 */)
             ])
         ]);
     }

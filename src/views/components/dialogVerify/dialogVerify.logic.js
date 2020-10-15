@@ -153,10 +153,10 @@ module.exports = {
     setName() {
         switch (this.selectType) {
         case 'sms':
-            this.selectName = I18n.$t('10118')/* '短信验证码' */;
+            this.selectName = I18n.$t('20015')/* '短信验证码' */;
             break;
         case 'email':
-            this.selectName = I18n.$t('10116')/* '邮箱验证码' */;
+            this.selectName = I18n.$t('20017')/* '邮箱验证码' */;
             break;
         case 'google':
             this.selectName = I18n.$t('10119')/* '谷歌验证码' */;

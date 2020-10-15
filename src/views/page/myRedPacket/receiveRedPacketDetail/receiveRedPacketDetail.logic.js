@@ -13,6 +13,7 @@ const errCode = require('@/util/errCode').default;
 const utils = require('@/util/utils').default;
 const cryptoChar = require('@/util/cryptoChar');
 const globalModels = require('@/models/globalModels');
+const I18n = require('@/languages/I18n').default;
 
 const logic = {
     best: 0, // 手气最佳(0:否 1:是)
@@ -36,7 +37,7 @@ const logic = {
             }
         },
         center: {
-            label: "详情记录"
+            label: I18n.$t('20046')/* 详情记录 */
         },
         right: {
             label: m('i', { class: `iconfont icon-fenxiang has-text-level-3` }),
@@ -52,12 +53,12 @@ const logic = {
                     link: window.location.origin + '/m/register/#/?r=' + cryptoChar.encrypt(globalModels.getAccount().uid),
                     // textArr: ['手气最佳', '8 USDT', '我抢到了来自', '178****7894', '的拼手气红包', '下载注册APP，轻松交易']
                     textArr: [
-                        `${isLucky ? '手气最佳' : '我抢到了'}`,
+                        `${isLucky ? I18n.$t('20047')/* 手气最佳 */ : I18n.$t('20048')/* 我抢到了 */}`,
                         `${logic.quota} ${params.coin}`,
-                        `${isLucky ? '我抢到了来自' : '来自'}`,
+                        `${isLucky ? I18n.$t('20049')/* 我抢到了来自 */ : I18n.$t('20013'/* 来自 */)}`,
                         `${logic.getFromName(params)}`,
-                        `的${params.type * 1 === 0 ? '拼手气红包' : '普通红包'}`,
-                        `下载APP，轻松交易`]
+                        `${I18n.$t('20014'/* 的 */)}${params.type * 1 === 0 ? I18n.$t('20011'/* 拼手气红包 */) : I18n.$t('20010'/* 普通红包 */)}`,
+                        I18n.$t('20064')/* 下载APP，轻松交易 */]
                 });
             }
         }

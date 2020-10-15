@@ -10,6 +10,7 @@ const broadcast = require('@/broadcast/broadcast');
 const utils = require('@/util/utils').default;
 const globalModels = require('@/models/globalModels');
 const errCode = require('@/util/errCode').default;
+const I18n = require('@/languages/I18n').default;
 
 const logic = {
     // 红包校验配置
@@ -49,7 +50,7 @@ const logic = {
         // 校验密码
         verifyPassword() {
             if (this.value === "") {
-                return this.updateErrMsg("资金密码输入错误，请重新输入");
+                return this.updateErrMsg(I18n.$t('20083')/* 资金密码输入错误，请重新输入 */);
             }
             return true;
         },
@@ -78,18 +79,18 @@ const logic = {
             // console.log(this.getTotalCoin(), logic.wltMoney, 999);
 
             if (this.getTotalCoin() > logic.verifyCfg.hight) {
-                isUpdateMsg && this.updateErrMsg(`红包最高总金额${logic.verifyCfg.hight}${logic.currentCoin}`);
+                isUpdateMsg && this.updateErrMsg(`${I18n.$t('20084')/* 红包最高总金额 */}${logic.verifyCfg.hight}${logic.currentCoin}`);
                 return false;
             }
 
             if (this.getTotalCoin() > logic.wltMoney * 1) {
-                isUpdateMsg && this.updateErrMsg("钱包可用资产不足，请及时划转！");
+                isUpdateMsg && this.updateErrMsg(I18n.$t('20085')/* 钱包可用资产不足，请及时划转！ */);
                 return false;
             }
 
             if (logic.moneyFormItem.value < logic.verifyCfg.low) {
                 // isUpdateMsg && this.updateErrMsg(`单笔最低发送${logic.verifyCfg.low}${logic.currentCoin}`);
-                isUpdateMsg && this.updateErrMsg(`单笔最低发送${utils.getNormalNumber(logic.verifyCfg.low)}${logic.currentCoin}`);
+                isUpdateMsg && this.updateErrMsg(`${I18n.$t('20086')/* 单笔最低发送 */}${utils.getNormalNumber(logic.verifyCfg.low)}${logic.currentCoin}`);
                 return false;
             }
 
@@ -102,7 +103,7 @@ const logic = {
 
             // 请输入红包个数
             if (logic.numberFormItem.value === '0') {
-                isUpdateMsg && this.updateErrMsg("请输入红包个数");
+                isUpdateMsg && this.updateErrMsg(I18n.$t('20087')/* 请输入红包个数 */);
                 return false;
             }
             // 红包个数为空（不提示）
@@ -113,11 +114,11 @@ const logic = {
             if (logic.redPacketType > 0) { // 普通
                 // 一次最多可发xx个红包
                 if (logic.numberFormItem.value > logic.verifyCfg.maxcount) {
-                    isUpdateMsg && this.updateErrMsg(`一次最多可发${logic.verifyCfg.maxcount}个红包`);
+                    isUpdateMsg && this.updateErrMsg(I18n.$t('20088', { value: logic.verifyCfg.maxcount })/* 一次最多可发{value}个红包 */);
                     return false;
                 }
                 if (this.getTotalCoin() > logic.wltMoney * 1) {
-                    isUpdateMsg && this.updateErrMsg("钱包可用资产不足，请及时划转！");
+                    isUpdateMsg && this.updateErrMsg(I18n.$t('20085')/* 钱包可用资产不足，请及时划转！ */);
                     return false;
                 }
                 // // 账户金额最多可发
@@ -128,12 +129,12 @@ const logic = {
             } else { // 拼手气
                 // 一次最多可发xx个红包
                 if (logic.numberFormItem.value > logic.verifyCfg.maxcount) {
-                    isUpdateMsg && this.updateErrMsg(`一次最多可发${logic.verifyCfg.maxcount}个红包`);
+                    isUpdateMsg && this.updateErrMsg(I18n.$t('20088', { value: logic.verifyCfg.maxcount })/* 一次最多可发{value}个红包 */);
                     return false;
                 }
                 //
                 if (logic.numberFormItem.value * logic.verifyCfg.low > logic.moneyFormItem.value) {
-                    isUpdateMsg && this.updateErrMsg(`单笔最低发送${utils.getNormalNumber(logic.verifyCfg.low)}${logic.currentCoin}`);
+                    isUpdateMsg && this.updateErrMsg(`${I18n.$t('20086')/* 单笔最低发送 */}${utils.getNormalNumber(logic.verifyCfg.low)}${logic.currentCoin}`);
                     return false;
                 }
             }
@@ -176,7 +177,7 @@ const logic = {
             }
         },
         right: {
-            label: '我的红包',
+            label: I18n.$t('20036'), // '我的红包'
             class: 'has-text-level-1',
             onclick() {
                 window.router.push('/myRedPacket');
@@ -204,7 +205,7 @@ const logic = {
     },
     // info信息 fomeItem组件配置
     infoFormItem: {
-        value: "大吉大利，全天盈利",
+        value: I18n.$t('20089')/* 大吉大利，全天盈利 */,
         updateOption(params) {
             Object.keys(params).forEach(key => (this[key] = params[key]));
         }
@@ -351,7 +352,7 @@ const logic = {
             type: logic.redPacketType > 0 ? logic.moneyFormItem.value : 0, // 类型 0:拼手气, >0:普通红包且数字是单个红包金额
             quota: logic.moneyFormItem.value, // 金额
             count: logic.numberFormItem.value, // 数量
-            des: logic.infoFormItem.value || "大吉大利，全天盈利", // 留言
+            des: logic.infoFormItem.value || I18n.$t('20089')/* 大吉大利，全天盈利 */, // 留言
             passd: md5(logic.passwordModel.value) // 密码
         };
         // const account = globalModels.getAccount();
@@ -396,7 +397,7 @@ const logic = {
         logic.redPacketType = 0;// 红包类型
         logic.moneyFormItem.value = ""; // 金额
         logic.numberFormItem.value = ""; // 数量
-        logic.infoFormItem.value = "大吉大利，全天盈利"; // 祝福
+        logic.infoFormItem.value = I18n.$t('20089')/* 大吉大利，全天盈利 */; // 祝福
         logic.passwordModel.value = ""; // 密码
         logic.passwordModel.updateErrMsg('');// 密码错误消息
     },
@@ -463,7 +464,7 @@ const logic = {
                 GetBase64.loadImageUrlArray([img1, img2, base64], arg => {
                     console.log('GetBase64 loadImageUrlArray', arg);
                     GetBase64.getWebView({
-                        data: HtmlConst.shareRedPacket(['分享红包', '红包资产可用来提现，交易', '下载APP 轻松交易'], arg),
+                        data: HtmlConst.shareRedPacket([I18n.$t('20050')/* 分享红包 */, I18n.$t('20051')/* 红包资产可用来提现，交易 */, I18n.$t('20064')/* 下载APP，轻松交易 */], arg),
                         W: 375,
                         H: 667
                     }, res => {

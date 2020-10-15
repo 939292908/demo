@@ -2,13 +2,14 @@ const m = require('mithril');
 const config = require('@/config.js');
 const deviceInfo = require('./deviceInfo.logic.js');
 const apiLines = require('@/models/network/lines.js');
+const I18n = require('@/languages/I18n').default;
 
 module.exports = {
     view: function() {
         return m('div', {}, [
             m('div.has-text-level-1.font-weight-bold.body-5.mb-7', {}, [
                 m('p', {}, [
-                    `${config.exchName} 基础信息检测`
+                    `${config.exchName} ${I18n.$t('20026')/* 基础信息检测 */}`
                 ]),
                 m('p', {}, [
                     '(Basic information Monitoring)'
@@ -26,7 +27,7 @@ module.exports = {
             }),
             m('div.has-text-level-1.font-weight-bold.body-5.mb-7', {}, [
                 m('p', {}, [
-                    `Ws响应速度(Ws response speed)`
+                    `${I18n.$t('20027')/* Ws响应速度 */}(Ws response speed)`
                 ]),
                 m('p.has-text-level-2.font-weight-regular.body-4', {}, [
                     apiLines.netLines.map((item, i) => {
@@ -43,7 +44,7 @@ module.exports = {
             ]),
             m('div.has-text-level-1.font-weight-bold.body-5', {}, [
                 m('p', {}, [
-                    `Api响应速度(Api response speed)`
+                    `${I18n.$t('20028')/* Api响应速度 */}(Api response speed)`
                 ]),
                 m('p.has-text-level-2.font-weight-regular.body-4', {}, [
                     apiLines.netLines.map((item, i) => {

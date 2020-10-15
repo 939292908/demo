@@ -4,6 +4,7 @@ const Validate = require('./validate.model');
 const validateModel = require('@/models/validate/validate').default;
 const utils = require('@/util/utils').default;
 const Button = require('@/views/components/common/Button/Button.view');
+const I18n = require('@/languages/I18n').default;
 
 /**
  * 验证码
@@ -35,7 +36,7 @@ module.exports = {
                     onkeyup: e => {
                         if (e.keyCode === 13) Validate.check();
                     },
-                    placeholder: "短信验证码",
+                    placeholder: I18n.$t('20015')/* '短信验证码' */,
                     maxlength: '6',
                     value: Validate.code
                 },
@@ -48,7 +49,7 @@ module.exports = {
                     }, [
                         Validate.smsCd > 0
                             ? `${Validate.smsCd} s`
-                            : '获取验证码'])
+                            : I18n.$t('20016')/* '获取验证码' */])
             }));
             break;
         case 'email':
@@ -60,7 +61,7 @@ module.exports = {
                     onkeyup: e => {
                         if (e.keyCode === 13) Validate.check();
                     },
-                    placeholder: "邮箱验证码",
+                    placeholder: I18n.$t('20017')/* '邮箱验证码' */,
                     maxlength: '6',
                     value: Validate.code
                 },
@@ -73,7 +74,7 @@ module.exports = {
                     }, [
                         Validate.emailCd > 0
                             ? `${Validate.emailCd} s`
-                            : '获取验证码'])
+                            : I18n.$t('20016')/* '获取验证码' */])
             }));
             break;
         case 'google':
@@ -100,7 +101,7 @@ module.exports = {
 
         validInput.push(
             m(Button, {
-                label: "领取",
+                label: I18n.$t('20018')/* 领取 */,
                 class: `is-primary mt-5 ${Validate.loading ? 'is-loading' : ''}`,
                 width: 1,
                 onclick() {
