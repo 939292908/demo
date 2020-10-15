@@ -210,15 +210,14 @@ const model = {
         this.currency === 'BTC' ? this.setOtherTotalValue(follow.followTotalValueForBTC) : this.setOtherTotalValue(follow.followTotalValueForUSDT);
 
         this.currency === 'BTC'
-            ? this.setTotalValue(config.openFollow ? this.numberHandle(wlt.otherAccountTotalValueForBTC, follow.followTotalValueForBTC, 8) : wlt.otherAccountTotalValueForBTC)
-            : this.setTotalValue(config.openFollow ? this.numberHandle(wlt.otherAccountTotalValueForUSDT, follow.followTotalValueForUSDT, 4) : wlt.otherAccountTotalValueForUSDT);
+            ? this.setOtherTotalValue(config.openFollow ? this.numberHandle(wlt.otherAccountTotalValueForBTC, follow.followTotalValueForBTC, 8) : wlt.otherAccountTotalValueForBTC)
+            : this.setOtherTotalValue(config.openFollow ? this.numberHandle(wlt.otherAccountTotalValueForUSDT, follow.followTotalValueForUSDT, 4) : wlt.otherAccountTotalValueForUSDT);
 
         this.currency === 'BTC' ? this.setCoinTotal(wlt.coinTotalValueForBTC) : this.setCoinTotal(wlt.coinTotalValueForUSDT);
         this.currency === 'BTC' ? this.setLegalTotal(wlt.legalTotalValueForBTC) : this.setLegalTotal(wlt.legalTotalValueForUSDT);
         this.currency === 'BTC' ? this.setContractTotal(wlt.contractTotalValueForBTC) : this.setContractTotal(wlt.contractTotalValueForUSDT);
 
-        console.log(wlt.totalCNYValue, follow.followTotalValueForCNY);
-        config.openFollow ? this.setTotalCNY((Number(wlt.totalCNYValue) * 100 + Number(follow.followTotalValueForCNY) * 100) / 100) : this.setTotalCNY(wlt.totalCNYValue);
+        config.openFollow ? this.setTotalCNY(this.numberHandle(wlt.totalCNYValue, follow.followTotalValueForCNY, 2)) : this.setTotalCNY(wlt.totalCNYValue);
         m.redraw();
     },
     initFn: function() {
