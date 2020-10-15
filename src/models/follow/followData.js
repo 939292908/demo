@@ -84,6 +84,7 @@ module.exports = {
             if (res.result.code === 0) {
                 that.walletState = 1;
                 that.setWallet(res.assetLists03);
+                that.initWlt();
             }
         }).finally(res => { that.getFollowPosition(); });
     },

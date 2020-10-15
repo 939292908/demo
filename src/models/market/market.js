@@ -2,12 +2,20 @@ const m = require('mithril');
 const broadcast = require('@/broadcast/broadcast');
 const utils = require('@/util/utils').default;
 const { gMktApi } = require('@/api').wsApi;
+const { getSortMarkets } = require('@/api').webApi;
 
 const I18n = require('@/languages/I18n').default;
 
 module.exports = {
     sortDisplaySym: {
-        main: {},
+        main: {
+            cashSale: [], // 现货 Trdcls = 1
+            futures: [], // 期货 Trdcls = 2
+            swap: { // 永续 Trdcls = 3
+                forward: [], // 正向
+                reverse: [] // 反向
+            }
+        },
         ACF: [],
         DeFi: [],
         inv: [],
@@ -87,6 +95,15 @@ module.exports = {
     // 全部行情排序
     assetDCallBack: function (res) {
         console.log(res, '00000000000000000');
+        res.data.forEach(item => {
+            // if (!this.sortDisplaySym.hasOwnProperty(item.Lbl)) this.sortDisplaySym[item.Lbl] = [];
+            this.sortDisplaySym[item.Lbl].push(item);
+        });
+    },
+    sortAssetD: function () {
+        getSortMarkets({ vp: 30 }).then(res => {
+            console.log(res);
+        });
     },
     //  订阅行情
     subTick: function (subArr) {
