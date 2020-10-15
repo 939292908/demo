@@ -5,6 +5,7 @@ const I18n = require('@/languages/I18n').default;
 const gM = require('@/models/globalModels');
 const m = require('mithril');
 const config = require('@/config.js');
+const follow = require('@/models/follow/followData');
 
 module.exports = {
     vnode: {},
@@ -72,7 +73,9 @@ module.exports = {
     },
     // 交易账户 导航 右侧 金额
     initAccountBanlance: function() {
-        this.accountBanlance = this.currency === 'BTC' ? wlt[this.coinType + 'TotalValueForBTC'] : wlt[this.coinType + 'TotalValueForUSDT'];
+        this.pageFlag !== '06'
+            ? this.accountBanlance = this.currency === 'BTC' ? wlt[this.coinType + 'TotalValueForBTC'] : wlt[this.coinType + 'TotalValueForUSDT']
+            : this.accountBanlance = this.currency === 'BTC' ? follow[this.coinType + 'TotalValueForBTC'] : follow[this.coinType + 'TotalValueForUSDT'];
     },
     // 设置当前选中币种
     setCurrency: function(param) {
@@ -85,7 +88,7 @@ module.exports = {
         this.tableData.walletData = wlt.wallet['03']; // 我的钱包
         this.tableData.contractData = wlt.wallet['01']; // 合约
         this.tableData.coinData = wlt.wallet['02']; // 币币
-        this.tableData.followData = wlt.wallet['06']; // 跟单
+        this.tableData.followData = follow.wallet; // 跟单
     },
     // 各账户表格字段
     initColumnData: function () {
@@ -130,7 +133,7 @@ module.exports = {
             follow: [
                 { col: I18n.$t('10063') /* '币种' */, val: 'wType' },
                 { col: I18n.$t('10076') /* '账户权益' */, val: 'MgnBal' },
-                { col: I18n.$t('10077') /* '未实现盈亏' */, val: 'UPNL' },
+                { col: I18n.$t('10077') /* '未实现盈亏' */, val: 'aUPNL' },
                 { col: I18n.$t('10078') /* '可用保证金' */, val: 'NL' },
                 { col: this.currency + I18n.$t('10516') /* '估值' */, val: this.currency === 'BTC' ? 'valueForBTC' : 'valueForUSDT' },
                 { col: I18n.$t('10068') /* '操作' */, val: [{ operation: I18n.$t('10071') /* '划转' */, to: '' }] }
@@ -211,9 +214,10 @@ module.exports = {
             this.tableNewAry = this.tableData[this.tableDateList];
         }
         // if (this.tableNewAry.length !== 0) {
-        //     console.log(this.tableNewAry, '----------');
+        //     console.log(this.tableNewAry[0], '----------');
         // }
         this.tableNewAry.length === 0 ? this.isShowNoneData = true : this.isShowNoneData = false;
+        m.redraw();
     },
     initFlag: function () {
         const fun = gM.getFunctions();
@@ -237,6 +241,16 @@ module.exports = {
         broadcast.onMsg({
             key: 'view-pages-Myassets-TablegB',
             cmd: broadcast.MSG_WLT_UPD,
+            cb: function () {
+                self.initTableData();
+                self.setTableNewAry();
+            }
+        });
+
+        // 跟单资产数据变化
+        broadcast.onMsg({
+            key: 'view-pages-Myassets-TablegB',
+            cmd: broadcast.MSG_FOLLOW_UPD,
             cb: function () {
                 self.initTableData();
                 self.setTableNewAry();

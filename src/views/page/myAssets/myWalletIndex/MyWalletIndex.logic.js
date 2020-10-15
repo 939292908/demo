@@ -1,11 +1,13 @@
 const m = require('mithril');
 const wlt = require('@/models/wlt/wlt');
+const follow = require('@/models/follow/followData');
 const broadcast = require('@/broadcast/broadcast');
 const table = require('@/views/page/myAssets/myWalletIndex/tradeTable/TradeTable.view');
 const transferLogic = require('@/views/page/myAssets/transfer/transfer.logic.js'); // 划转模块逻辑
 const I18n = require('@/languages/I18n').default;
 const gM = require('@/models/globalModels');
 const config = require('@/config.js');
+console.log(follow);
 
 const model = {
     currency: 'BTC',
@@ -186,10 +188,15 @@ const model = {
     },
     // 设置各种估值
     sets: function () {
-        this.currency === 'BTC' ? this.setTotalValue(wlt.totalValueForBTC) : this.setTotalValue(wlt.totalValueForUSDT);
+        console.log(Number(Number(wlt.totalValueForBTC) + Number(follow.followTotalValueForBTC)), '-----');
+        console.log(Number(follow.followTotalValueForBTC), '-----');
+        console.log(Number(wlt.totalValueForBTC), '-----');
+        this.currency === 'BTC'
+            ? this.setTotalValue(config.openFollow ? Number(Number(wlt.totalValueForBTC) + Number(follow.followTotalValueForBTC)) : Number(wlt.totalValueForBTC))
+            : this.setTotalValue(config.openFollow ? Number(wlt.totalValueForUSDT) + Number(follow.followTotalValueForUSDT) : Number(wlt.totalValueForUSDT));
         this.currency === 'BTC' ? this.setWalletTotalValue(wlt.walletTotalValueForBTC) : this.setWalletTotalValue(wlt.walletTotalValueForUSDT);
         this.currency === 'BTC' ? this.setTradingAccountTotalValue(wlt.tradingAccountTotalValueForBTC) : this.setTradingAccountTotalValue(wlt.tradingAccountTotalValueForUSDT);
-        this.currency === 'BTC' ? this.setOtherTotalValue(wlt.otherAccountTotalValueForBTC) : this.setOtherTotalValue(wlt.otherAccountTotalValueForUSDT);
+        this.currency === 'BTC' ? this.setOtherTotalValue(follow.followTotalValueForBTC) : this.setOtherTotalValue(follow.followTotalValueForUSDT);
         this.currency === 'BTC' ? this.setCoinTotal(wlt.coinTotalValueForBTC) : this.setCoinTotal(wlt.coinTotalValueForUSDT);
         this.currency === 'BTC' ? this.setLegalTotal(wlt.legalTotalValueForBTC) : this.setLegalTotal(wlt.legalTotalValueForUSDT);
         this.currency === 'BTC' ? this.setContractTotal(wlt.contractTotalValueForBTC) : this.setContractTotal(wlt.contractTotalValueForUSDT);
@@ -198,6 +205,7 @@ const model = {
     },
     initFn: function() {
         wlt.init();
+        follow.init();
 
         const currencyIndex = window.router.getUrlInfo().params.id;
         const whiteList = ['01', '02', '03', '04'];
@@ -223,6 +231,15 @@ const model = {
         broadcast.onMsg({
             key: this.currency,
             cmd: broadcast.MSG_WLT_UPD,
+            cb: function () {
+                self.sets();
+            }
+        });
+
+        // 跟单资产数据变化
+        broadcast.onMsg({
+            key: this.currency,
+            cmd: broadcast.MSG_FOLLOW_UPD,
             cb: function () {
                 self.sets();
             }
@@ -260,22 +277,6 @@ const model = {
     removeFn: function() {
         broadcast.offMsg({
             key: this.currency,
-            cmd: broadcast.MSG_WLT_READY,
-            isall: true
-        });
-        broadcast.offMsg({
-            key: this.currency,
-            cmd: broadcast.MSG_WLT_UPD,
-            isall: true
-        });
-        broadcast.offMsg({
-            key: this.currency,
-            cmd: broadcast.MSG_LANGUAGE_UPD,
-            isall: true
-        });
-        broadcast.offMsg({
-            key: this.currency,
-            cmd: broadcast.GET_FUNLIST_READY,
             isall: true
         });
         wlt.remove();
