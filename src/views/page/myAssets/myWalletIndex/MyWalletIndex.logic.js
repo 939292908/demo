@@ -7,6 +7,7 @@ const transferLogic = require('@/views/page/myAssets/transfer/transfer.logic.js'
 const I18n = require('@/languages/I18n').default;
 const gM = require('@/models/globalModels');
 const config = require('@/config.js');
+console.log(wlt);
 console.log(follow);
 
 const model = {
@@ -186,21 +187,38 @@ const model = {
             window.router.push(item.to);
         }
     },
+    numberHandle: function (num1, num2, digit) {
+        console.log(num1, num2, digit);
+        let newNum;
+        digit === 4 ? newNum = (Number(num1) * 10000 + Number(num2) * 10000) / 10000 : newNum = (Number(num1) * 100000000 + Number(num2) * 100000000) / 100000000;
+        const len = newNum.toString().split('.')[1]?.length;
+        if (len < digit) {
+            for (let i = 0; i < digit - len; i++) {
+                newNum = newNum.toString() + '0';
+            }
+        }
+        return newNum;
+    },
     // 设置各种估值
     sets: function () {
         this.currency === 'BTC'
-            ? this.setTotalValue(config.openFollow ? wlt.totalValueForBTC + follow.followTotalValueForBTC : wlt.totalValueForBTC)
-            : this.setTotalValue(config.openFollow ? wlt.totalValueForUSDT + follow.followTotalValueForUSDT : wlt.totalValueForUSDT);
+            ? this.setTotalValue(config.openFollow ? this.numberHandle(wlt.totalValueForBTC, follow.followTotalValueForBTC, 8) : wlt.totalValueForBTC)
+            : this.setTotalValue(config.openFollow ? this.numberHandle(wlt.totalValueForUSDT, follow.followTotalValueForUSDT, 4) : wlt.totalValueForUSDT);
+
         this.currency === 'BTC' ? this.setWalletTotalValue(wlt.walletTotalValueForBTC) : this.setWalletTotalValue(wlt.walletTotalValueForUSDT);
         this.currency === 'BTC' ? this.setTradingAccountTotalValue(wlt.tradingAccountTotalValueForBTC) : this.setTradingAccountTotalValue(wlt.tradingAccountTotalValueForUSDT);
         this.currency === 'BTC' ? this.setOtherTotalValue(follow.followTotalValueForBTC) : this.setOtherTotalValue(follow.followTotalValueForUSDT);
+
         this.currency === 'BTC'
-            ? this.setOtherTotalValue(config.openFollow ? wlt.otherAccountTotalValueForBTC + follow.followTotalValueForBTC : wlt.otherAccountTotalValueForBTC)
-            : this.setOtherTotalValue(config.openFollow ? wlt.otherAccountTotalValueForUSDT + follow.followTotalValueForUSDT : wlt.otherAccountTotalValueForUSDT);
+            ? this.setTotalValue(config.openFollow ? this.numberHandle(wlt.otherAccountTotalValueForBTC, follow.followTotalValueForBTC, 8) : wlt.otherAccountTotalValueForBTC)
+            : this.setTotalValue(config.openFollow ? this.numberHandle(wlt.otherAccountTotalValueForUSDT, follow.followTotalValueForUSDT, 4) : wlt.otherAccountTotalValueForUSDT);
+
         this.currency === 'BTC' ? this.setCoinTotal(wlt.coinTotalValueForBTC) : this.setCoinTotal(wlt.coinTotalValueForUSDT);
         this.currency === 'BTC' ? this.setLegalTotal(wlt.legalTotalValueForBTC) : this.setLegalTotal(wlt.legalTotalValueForUSDT);
         this.currency === 'BTC' ? this.setContractTotal(wlt.contractTotalValueForBTC) : this.setContractTotal(wlt.contractTotalValueForUSDT);
-        this.setTotalCNY(wlt.totalCNYValue);
+
+        console.log(wlt.totalCNYValue, follow.followTotalValueForCNY);
+        config.openFollow ? this.setTotalCNY((Number(wlt.totalCNYValue) * 100 + Number(follow.followTotalValueForCNY) * 100) / 100) : this.setTotalCNY(wlt.totalCNYValue);
         m.redraw();
     },
     initFn: function() {
