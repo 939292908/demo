@@ -6,6 +6,15 @@ const { gMktApi } = require('@/api').wsApi;
 const I18n = require('@/languages/I18n').default;
 
 module.exports = {
+    sortDisplaySym: {
+        main: {},
+        ACF: [],
+        DeFi: [],
+        inv: [],
+        ETF: [],
+        Act: [],
+        third: []
+    },
     //  行情数据
     tickData: {},
     //  已订阅列表
@@ -61,6 +70,11 @@ module.exports = {
                 that.onTick(arg);
             }
         });
+        broadcast.onMsg({
+            key: "market",
+            cmd: broadcast.MSG_ASSETD_UPD,
+            cb: this.assetDCallBack.bind(this)
+        });
     },
     remove: function () {
         broadcast.offMsg({
@@ -69,6 +83,10 @@ module.exports = {
         });
 
         this.unSubTick([...this.subList]);
+    },
+    // 全部行情排序
+    assetDCallBack: function (res) {
+        console.log(res, '00000000000000000');
     },
     //  订阅行情
     subTick: function (subArr) {
