@@ -188,15 +188,15 @@ const model = {
     },
     // 设置各种估值
     sets: function () {
-        console.log(Number(Number(wlt.totalValueForBTC) + Number(follow.followTotalValueForBTC)), '-----');
-        console.log(Number(follow.followTotalValueForBTC), '-----');
-        console.log(Number(wlt.totalValueForBTC), '-----');
         this.currency === 'BTC'
-            ? this.setTotalValue(config.openFollow ? Number(Number(wlt.totalValueForBTC) + Number(follow.followTotalValueForBTC)) : Number(wlt.totalValueForBTC))
-            : this.setTotalValue(config.openFollow ? Number(wlt.totalValueForUSDT) + Number(follow.followTotalValueForUSDT) : Number(wlt.totalValueForUSDT));
+            ? this.setTotalValue(config.openFollow ? wlt.totalValueForBTC + follow.followTotalValueForBTC : wlt.totalValueForBTC)
+            : this.setTotalValue(config.openFollow ? wlt.totalValueForUSDT + follow.followTotalValueForUSDT : wlt.totalValueForUSDT);
         this.currency === 'BTC' ? this.setWalletTotalValue(wlt.walletTotalValueForBTC) : this.setWalletTotalValue(wlt.walletTotalValueForUSDT);
         this.currency === 'BTC' ? this.setTradingAccountTotalValue(wlt.tradingAccountTotalValueForBTC) : this.setTradingAccountTotalValue(wlt.tradingAccountTotalValueForUSDT);
         this.currency === 'BTC' ? this.setOtherTotalValue(follow.followTotalValueForBTC) : this.setOtherTotalValue(follow.followTotalValueForUSDT);
+        this.currency === 'BTC'
+            ? this.setOtherTotalValue(config.openFollow ? wlt.otherAccountTotalValueForBTC + follow.followTotalValueForBTC : wlt.otherAccountTotalValueForBTC)
+            : this.setOtherTotalValue(config.openFollow ? wlt.otherAccountTotalValueForUSDT + follow.followTotalValueForUSDT : wlt.otherAccountTotalValueForUSDT);
         this.currency === 'BTC' ? this.setCoinTotal(wlt.coinTotalValueForBTC) : this.setCoinTotal(wlt.coinTotalValueForUSDT);
         this.currency === 'BTC' ? this.setLegalTotal(wlt.legalTotalValueForBTC) : this.setLegalTotal(wlt.legalTotalValueForUSDT);
         this.currency === 'BTC' ? this.setContractTotal(wlt.contractTotalValueForBTC) : this.setContractTotal(wlt.contractTotalValueForUSDT);
