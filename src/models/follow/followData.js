@@ -1,6 +1,10 @@
 const Http = require('@/api').webApi;
+const broadcast = require('@/broadcast/broadcast');
 const ActiveLine = require('@/api').ActiveLine;
-// const broadcast = require('@/broadcast/broadcast');
+const { gMktApi, gTrdApi } = require('@/api').wsApi;
+const utils = require('@/util/utils').default;
+const { calcFutureWltAndPosAndMIFollow } = require('../futureCalc/calcFuture');
+const config = require('@/config.js');
 
 module.exports = {
     name: 'FOLLOW_DATA',
@@ -8,42 +12,49 @@ module.exports = {
     wallet_obj: {}, // 跟单 数据
     wallet: [], // 跟单 数据
 
+    totalValueForUSDT: 0, // 总USDT估值
+    totalValueForBTC: 0, // 总BTC估值
+    totalValueForCNY: 0, // 总CNY估值
+
+    prz: 7,
+
+    // 最后一次计算交易资产的时间
+    calcTrdWltLastTm: 0,
+    // 计算交易资产的时间间隔
+    calcTrdWltInterval: 1000,
+
     init: function () {
         // 初始化
         const that = this;
         that.updWlt();
 
-        // if (this.isInitOnMsg) {
-        //     return;
-        // }
-        // this.isInitOnMsg = true;
-        // // 添加ASSETD全局广播，用于资产估值计算
-        // broadcast.onMsg({
-        //     key: this.name,
-        //     cmd: broadcast.MSG_ASSETD_UPD,
-        //     cb: function () {
-        //         that.initWlt();
-        //         that.getRiskLimits();
-        //     }
-        // });
-        // // 交易风险限额数据获取完成广播
-        // broadcast.onMsg({
-        //     key: this.name,
-        //     cmd: broadcast.EV_GET_RS_READY,
-        //     cb: function (arg) {
-        //         // console.log('EV_GET_RS_READY', arg);
-        //         that.trdDataOnFun();
-        //     }
-        // });
-        // // tick行情全局广播
-        // broadcast.onMsg({
-        //     key: this.name,
-        //     cmd: broadcast.MSG_TICK_UPD,
-        //     cb: function (arg) {
-        //         // console.log('MSG_TICK_UPD', arg);
-        //         that.trdDataOnFun();
-        //     }
-        // });
+        // 添加ASSETD全局广播，用于资产估值计算
+        broadcast.onMsg({
+            key: this.name,
+            cmd: broadcast.MSG_ASSETD_UPD,
+            cb: function () {
+                that.initWlt();
+                // that.getRiskLimits();
+            }
+        });
+        // 交易风险限额数据获取完成广播
+        broadcast.onMsg({
+            key: this.name,
+            cmd: broadcast.EV_GET_RS_READY,
+            cb: function (arg) {
+                // console.log('EV_GET_RS_READY', arg);
+                that.trdDataOnFun();
+            }
+        });
+        // tick行情全局广播
+        broadcast.onMsg({
+            key: this.name,
+            cmd: broadcast.MSG_TICK_UPD,
+            cb: function (arg) {
+                // console.log('MSG_TICK_UPD', arg);
+                that.trdDataOnFun();
+            }
+        });
     },
 
     updWlt: function () {
@@ -51,7 +62,6 @@ module.exports = {
         Http.subAssets({ exChannel: window.exchId, aType: '018' }).then(res => {
             if (res.result.code === 0) {
                 that.setWallet(res.assetLists03);
-                console.log(this);
             }
         }).finally(res => { that.getFollowPosition(); });
     },
@@ -59,8 +69,15 @@ module.exports = {
     getFollowPosition: function () {
         const that = this;
         Http.getFollowPosition({ positions: JSON.stringify(that.entrepotIds) }).then(res => {
-            console.log(res);
+            console.log(res, '仓位数据');
         });
+    },
+
+    setWallet: function (data = []) {
+        this.wallet = data;
+        for (const item of data) {
+            this.wallet_obj[item.wType] = item;
+        }
     },
 
     initWlt: function () {
@@ -69,35 +86,28 @@ module.exports = {
         this.totalValueForBTC = 0;
         this.totalValueForCNY = 0;
 
-        // for (const item in this.wallet) {
-        //
-        // }
+        this.wallet = [];
 
-        // for (const type in this.wallet_obj) {
-        //     // this.wallet_obj[type] = this.wallet_obj[type] ? this.wallet_obj[type] : {};
-        //     this.wallet[type] = [];
-        //     for (const coin in wlt[type]) {
-        //         this.wallet_obj[type][coin] = this.wltHandle(type, wlt[type][coin]);
-        //         this.wallet[type].push(this.wallet_obj[type][coin]);
-        //
-        //         wlt[type][coin].valueForUSDT = this.toFixedForFloor(wlt[type][coin].valueForUSDT, 4);
-        //         wlt[type][coin].valueForBTC = this.toFixedForFloor(wlt[type][coin].valueForBTC, 8);
-        //
-        //         // 总USDT估值
-        //         this.totalValueForUSDT += Number(this.wallet_obj[type][coin].valueForUSDT);
-        //         // 总BTC估值
-        //         this.totalValueForBTC += Number(this.wallet_obj[type][coin].valueForBTC);
-        //     }
-        // }
+        for (const coin in this.wallet_obj) {
+            this.wallet_obj[coin] = this.wltHandle(this.wallet_obj[coin]);
+
+            this.wallet.push(this.wallet_obj[coin]);
+
+            this.wallet_obj[coin].valueForUSDT = this.toFixedForFloor(this.wallet_obj[coin].valueForUSDT, 4);
+            this.wallet_obj[coin].valueForBTC = this.toFixedForFloor(this.wallet_obj[coin].valueForBTC, 8);
+
+            // 总USDT估值
+            this.totalValueForUSDT += Number(this.wallet_obj[coin].valueForUSDT);
+            // 总BTC估值
+            this.totalValueForBTC += Number(this.wallet_obj[coin].valueForBTC);
+        }
+
+        this.totalCNYValue = Number(this.totalValueForUSDT) * this.prz;
     },
 
-    wltHandle: function (type, wlt) {
+    wltHandle: function (wlt) {
         this.wltItemEx = {};
         this.wltItemEx = Object.assign({}, wlt);
-        let TOTAL = 0;
-        let NL = 0;
-        let valueForUSDT = 0;
-        let valueForBTC = 0;
         const coinPrz = this.getPrz(this.wltItemEx.wType);
         // console.log('ht', AssetD);
         // 取BTC的价格 start
@@ -107,107 +117,23 @@ module.exports = {
         const btcPrz = this.getPrz('BTC');
         // console.log('ht', 'btc prz', btcSymName, btcInitValue, AssetD[btcSymName] && AssetD[btcSymName].PrzLatest, btcPrz);
         // 取BTC的价格 end
-        switch (type) {
-        case '01':
-            // 合约账户
-            // console.log('ht', type, this.wltItemEx);
-            TOTAL = Number(this.wltItemEx.Num || 0) + Number(this.wltItemEx.PNL || 0) + Number(this.wltItemEx.PNLISO || 0) + Number(this.wltItemEx.UPNL || 0) + Number(this.wltItemEx.Gift || 0);
-            // 账户权益
-            this.wltItemEx.MgnBal = this.toFixedForFloor(TOTAL, 8);
-            // 可用赠金
-            this.wltItemEx.Gift = this.toFixedForFloor(this.wltItemEx.Gift || 0, 8);
-            // 可用保证金
-            NL = Number(this.wltItemEx.wdrawable || 0) + Number(this.wltItemEx.Gift || 0);
-            this.wltItemEx.NL = this.toFixedForFloor(NL, 8);
-            // 可用保证金人民币估值
-            // const NLToCRN = this.wltItemEx.NL * coinPrz;
-            this.wltItemEx.NLToCRN = this.toFixedForFloor(Number(this.wltItemEx.NL * coinPrz) * this.prz, 2);
-            // 可用保证金BTC估值
-            this.wltItemEx.NLToBTC = this.toFixedForFloor(Number(this.wltItemEx.NL * coinPrz / btcPrz) * this.prz || 0, 8);
-            // 委托保证金
-            this.wltItemEx.MI = this.toFixedForFloor(this.wltItemEx.MI || 0, 8);
-            // 仓位保证金
-            this.wltItemEx.MM = this.toFixedForFloor(this.wltItemEx.MM || 0, 8);
-            // 已实现盈亏
-            this.wltItemEx.PNL = this.toFixedForFloor(this.wltItemEx.PNL || 0, 8);
-            // 未实现盈亏
-            this.wltItemEx.UPNL = this.toFixedForFloor(this.wltItemEx.UPNL || 0, 8);
-            // 为实现盈亏人民币估值
-            this.wltItemEx.UPNLToCRN = this.toFixedForFloor(Number(this.wltItemEx.UPNL * coinPrz) * this.prz, 2);
-            // 为实现盈亏BTC估值
-            this.wltItemEx.UPNLToBTC = this.toFixedForFloor(Number(this.wltItemEx.UPNL * coinPrz / btcPrz) || 0, 8);
-            // 账户可提金额，用于资产划转
-            this.wltItemEx.wdrawable = this.toFixedForFloor(this.wltItemEx.wdrawable || 0, 8);
-            break;
-        case '02':
-            // 币币账户
-            // console.log('ht', type, this.wltItemEx); c
-            TOTAL = Number(this.wltItemEx.wdrawable || 0) + Number(this.wltItemEx.Frz || 0);
-            // 账户总额
-            this.wltItemEx.TOTAL = this.toFixedForFloor(TOTAL, 8);
 
-            // 冻结金额
-            // console.log('nzm', 'this.wltItemEx.Gift   ', this.wltItemEx.Gift);
-            this.wltItemEx.Frz = this.toFixedForFloor(this.wltItemEx.Frz || 0, 8);
+        const TOTAL = Number(this.wltItemEx.mainBal || 0) + Number(this.wltItemEx.financeBal || 0) + Number(this.wltItemEx.mainLock || 0) + Number(this.wltItemEx.depositLock || 0) + Number(this.wltItemEx.pawnBal || 0) + Number(this.wltItemEx.creditNum || 0);
+        // 账户总额
+        this.wltItemEx.TOTAL = this.toFixedForFloor(TOTAL, 8);
+        // 矿池
+        this.wltItemEx.mainLock = this.toFixedForFloor(this.wltItemEx.mainLock || 0, 8);
+        // 锁定
+        this.wltItemEx.depositLock = this.toFixedForFloor(this.wltItemEx.depositLock || 0, 8);
+        // 理财
+        this.wltItemEx.financeBal = this.toFixedForFloor(this.wltItemEx.financeBal || 0, 8);
+        // 质押
+        this.wltItemEx.pawnBal = this.toFixedForFloor(this.wltItemEx.pawnBal || 0, 8);
+        // 可用金额
+        this.wltItemEx.NL = this.toFixedForFloor(this.wltItemEx.mainBal, 8);
+        // 账户可提金额，用于资产划转以及提现
+        this.wltItemEx.wdrawable = this.toFixedForFloor(this.wltItemEx.mainBal, 8);
 
-            // 可用金额
-            this.wltItemEx.NL = this.toFixedForFloor(this.wltItemEx.wdrawable, 8);
-            // 账户可提金额，用于资产划转
-            this.wltItemEx.wdrawable = this.toFixedForFloor(this.wltItemEx.wdrawable, 8);
-            break;
-        case '03':
-            // 主钱包
-            // console.log('ht', type, this.wltItemEx);
-            TOTAL = Number(this.wltItemEx.mainBal || 0) + Number(this.wltItemEx.financeBal || 0) + Number(this.wltItemEx.mainLock || 0) + Number(this.wltItemEx.depositLock || 0) + Number(this.wltItemEx.pawnBal || 0) + Number(this.wltItemEx.creditNum || 0);
-            // 账户总额
-            this.wltItemEx.TOTAL = this.toFixedForFloor(TOTAL, 8);
-            // 矿池
-            this.wltItemEx.mainLock = this.toFixedForFloor(this.wltItemEx.mainLock || 0, 8);
-            // 锁定
-            this.wltItemEx.depositLock = this.toFixedForFloor(this.wltItemEx.depositLock || 0, 8);
-            // 理财
-            this.wltItemEx.financeBal = this.toFixedForFloor(this.wltItemEx.financeBal || 0, 8);
-            // 质押
-            this.wltItemEx.pawnBal = this.toFixedForFloor(this.wltItemEx.pawnBal || 0, 8);
-            // 可用金额
-            this.wltItemEx.NL = this.toFixedForFloor(this.wltItemEx.mainBal, 8);
-            // 账户可提金额，用于资产划转以及提现
-            this.wltItemEx.wdrawable = this.toFixedForFloor(this.wltItemEx.mainBal, 8);
-            break;
-        case '04':
-            // 法币钱包
-            // console.log('ht', type, this.wltItemEx);
-            TOTAL = Number(this.wltItemEx.otcLock || 0) + Number(this.wltItemEx.otcBal || 0);
-            // 账户总额
-            this.wltItemEx.TOTAL = this.toFixedForFloor(TOTAL, 8);
-            // 锁定(冻结)
-            this.wltItemEx.otcLock = this.toFixedForFloor(this.wltItemEx.otcLock || 0, 8);
-            // 理财
-            this.wltItemEx.financeBal = this.toFixedForFloor(this.wltItemEx.financeBal || 0, 8);
-            // 质押
-            this.wltItemEx.pawnBal = this.toFixedForFloor(this.wltItemEx.pawnBal || 0, 8);
-            // 可用金额
-            this.wltItemEx.NL = this.toFixedForFloor(this.wltItemEx.otcBal, 8);
-            // 账户可提金额，用于资产划转以及提现
-            this.wltItemEx.wdrawable = this.toFixedForFloor(this.wltItemEx.otcBal, 8);
-            break;
-        case '05':
-            // 算力钱包
-            console.log('ht', type, this.wltItemEx);
-            break;
-        case '06':
-            // 跟单钱包
-            TOTAL = Number(this.wltItemEx.mainBal || 0) + Number(this.wltItemEx.financeBal || 0) + Number(this.wltItemEx.mainLock || 0) + Number(this.wltItemEx.depositLock || 0) + Number(this.wltItemEx.pawnBal || 0) + Number(this.wltItemEx.creditNum || 0);
-            // 账户权益
-            this.wltItemEx.MgnBal = this.toFixedForFloor(TOTAL, 8);
-            // 可用保证金
-            this.wltItemEx.NL = this.toFixedForFloor(this.wltItemEx.mainBal, 8);
-            // // 未实现盈亏
-            // this.wltItemEx.UPNL = this.toFixedForFloor(this.wltItemEx.UPNL || 0, 8);
-            // 账户可提金额，用于资产划转以及提现
-            this.wltItemEx.wdrawable = this.toFixedForFloor(this.wltItemEx.mainBal, 8);
-            break;
-        }
         // 当前币种价格 start
         // const coinInitValue = Number(this.wltItemEx.initValue || 1);
         // const coinSym = utils.getSpotName(AssetD, this.wltItemEx.wType, 'USDT');
@@ -215,11 +141,11 @@ module.exports = {
         // console.log('ht', 'value', coinPrz);
         // 当前币种价格 end
         // USDT估值
-        valueForUSDT = TOTAL * coinPrz;
+        const valueForUSDT = TOTAL * coinPrz;
         // console.log('ht', 'usdt value', TOTAL, coinPrz, TOTAL * coinPrz);
         this.wltItemEx.valueForUSDT = this.toFixedForFloor(valueForUSDT, 8);
         // BTC估值
-        valueForBTC = TOTAL * coinPrz / btcPrz;
+        const valueForBTC = TOTAL * coinPrz / btcPrz;
         // console.log('ht', 'btc value', TOTAL, coinPrz, btcPrz, TOTAL * coinPrz);
         this.wltItemEx.valueForBTC = this.toFixedForFloor(valueForBTC, 8);
         // console.log('ht', 'btc value', valueForUSDT, valueForBTC);
@@ -237,11 +163,161 @@ module.exports = {
         return this.wltItemEx;
     },
 
-    setWallet: function (data = []) {
-        this.wallet = data;
-        for (const item of data) {
-            this.wallet_obj[item.wType] = item;
+    /**
+     * 获取币种的价值
+     * @param {*|string} coin 需要获取价值的币种
+     * @returns {*|number}
+     */
+    getPrz(coin) {
+        if (coin === 'USDT') {
+            const InitValue = (this.wallet_obj['03'] && this.wallet_obj['03'][coin] && this.wallet_obj['03'][coin].initValue) || 0;
+            return InitValue;
+        } else {
+            const AssetD = gMktApi.AssetD;
+            const SymName = utils.getSpotName(AssetD, coin, 'USDT');
+            const InitValue = (this.wallet_obj['03'] && this.wallet_obj['03'][coin] && this.wallet_obj['03'][coin].initValue) || 0;
+            const Prz = (AssetD[SymName] && AssetD[SymName].PrzLatest) || InitValue;
+            return Prz;
         }
+    },
+
+    // 获取钱包计算所需风险限额
+    getRiskLimits: function() {
+        // ReqTrdGetRiskLimits
+        const that = this;
+        const Authrized = gTrdApi.RT.Authrized;// aObj.AUTH_ST_OK
+        const AssetD = gMktApi.AssetD;
+        if (Authrized === gTrdApi.AUTH_ST_OK && Object.keys(AssetD).length > 0) {
+            const aymArr = [];
+            for (const key in AssetD) {
+                const item = AssetD[key];
+                if (item.TrdCls !== 1) {
+                    aymArr.push(item.Sym);
+                }
+            }
+            if (aymArr.length > 0) {
+                if (this.isReqRiskLimits) {
+                    return;
+                }
+                this.isReqRiskLimits = true;
+                gTrdApi.ReqTrdGetRiskLimits({
+                    AId: gTrdApi.RT.UserId + "01",
+                    Sym: aymArr.join(',')
+                }, function() {
+                    that.isReqRiskLimits = false;
+                });
+            }
+        }
+    },
+
+    toFixedForFloor (value, n) {
+        if (isNaN(value)) {
+            return 0;
+        }
+        // 处理浮点数
+        let num = value;
+        // 处理科学计数法数字
+        const str = num.toString();
+        if (/e/i.test(str)) {
+            num = Number(num).toFixed(18).replace(/\.?0+$/, "");
+        }
+        const index = num.toString().split('.')[1]?.length;
+        if (index < n) {
+            for (let i = 0; i < n - index; i++) {
+                num += '0';
+            }
+            return num;
+        }
+        const pow = Math.pow(10, n);
+        num = Number(num) * pow;
+        num = Math.floor(num);
+        num = num / pow;
+        num = num.toFixed(n);
+        return num;
+    },
+
+    trdDataOnFun: function() {
+        const tm = Date.now();
+        if (tm - this.calcTrdWltLastTm > this.calcTrdWltInterval) {
+            this.checkPosNeedSubSym();
+            this.calcTrdWlt();
+            this.calcTrdWltLastTm = tm;
+        }
+    },
+
+    checkPosNeedSubSym: function() {
+        const Pos = []; // 跟单仓位信息
+        let needSubSymArr = [];
+        // 检查仓位列表内仓位数量不为0的仓位，并订阅对应跟单的行情，用于未实现盈亏计算
+        for (const key in Pos) {
+            const item = Pos[key];
+            if (item.Sz !== 0) {
+                if (needSubSymArr.includes(item.Sym) === false) {
+                    needSubSymArr.push(item.Sym);
+                }
+            }
+        }
+        needSubSymArr = utils.setSubArrType('tick', needSubSymArr);
+        if (needSubSymArr.length > 0) {
+            for (const item of needSubSymArr) {
+                gMktApi.TpcAdd(item);
+            }
+        }
+    },
+
+    calcTrdWlt: function(arg) {
+        const that = this;
+        const { Poss, Wlts, Orders, RS, trdInfoStatus } = gTrdApi;
+        const { lastTick, AssetD } = gMktApi;
+
+        if ((trdInfoStatus.pos === 0 /* 仓位数据 */ ||
+            trdInfoStatus.ord === 0 /* 委托数据 */ ||
+            trdInfoStatus.wlt === 0 /* 资产数据 */ ||
+            trdInfoStatus.rs === 0 /* 风险限额数据 */
+        )) {
+            return;
+        }
+        // 将仓位数据Poss、资产数据Wlts，以及委托数据Orders拷贝至新的对象或数组，防止后边计算影响原数据；
+        const posArr = [];
+        for (const key in Poss) {
+            const item = {};
+            utils.copyTab(item, Poss[key]);
+            posArr.push(item);
+        }
+        // console.log('posArr', posArr);
+
+        const wallets = [];
+        for (const key in Wlts['01']) {
+            const item = {};
+            utils.copyTab(item, Wlts['01'][key]);
+            wallets.push(item);
+        }
+        // console.log('wallets', wallets);
+
+        const orderArr = [];
+        for (const key in Orders['01']) {
+            const item = {};
+            if (Orders['01'][key].OType === 1 || Orders['01'][key].OType === 2) {
+                utils.copyTab(item, Orders['01'][key]);
+                orderArr.push(item);
+            }
+        }
+
+        calcFutureWltAndPosAndMIFollow(
+            posArr,
+            wallets,
+            orderArr,
+            RS,
+            AssetD,
+            lastTick,
+            config.future.UPNLPrzActive,
+            config.future.MMType,
+            config.future.PrzLiqType,
+            arg => {
+                console.log('calcFutureWltAndPosAndMI CallBack', arg);
+                that.updTrdWlt(arg.wallets);
+            });
+        // console.log('calcFutureWltAndPosAndMI', calcFutureWltAndPosAndMI, Poss, Wlts, Orders, RS, lastTick, AssetD);
     },
 
     remove: function () {

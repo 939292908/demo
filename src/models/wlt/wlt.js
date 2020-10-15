@@ -354,8 +354,8 @@ module.exports = {
                     if (this.wallet[type][coin].TOTAL === '0.00000000') {
                         continue;
                     } else {
-                        this.followTotalValueForUSDT += Number(this.wallet[type][coin].valueForBTC);
-                        this.followTotalValueForCNY += Number(this.wallet[type][coin].valueForUSDT);
+                        this.followTotalValueForUSDT += Number(this.wallet[type][coin].valueForUSDT);
+                        this.followTotalValueForBTC += Number(this.wallet[type][coin].valueForBTC);
                     }
                 }
             }
