@@ -131,6 +131,13 @@ module.exports = {
         }
 
         this.totalCNYValue = Number(this.totalValueForUSDT) * this.prz;
+        broadcast.emit({
+            cmd: broadcast.MSG_FOLLOW_UPD,
+            data: {
+                wallet_obj: this.wallet_obj, // 资产
+                wallet: this.wallet
+            }
+        });
     },
 
     wltHandle: function (wlt) {

@@ -52,6 +52,8 @@ module.exports = {
     EV_GET_RS_READY: 'EV_GET_RS_READY',
     // 切换线路全局广播
     MSG_NET_LINES_UPD: 'MSG_NET_LINES_UPD',
+    // 跟单数据更广播
+    MSG_FOLLOW_UPD: 'MSG_FOLLOW_UPD',
     /**
      * 发送广播
      * @param {string} cmd
