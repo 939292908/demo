@@ -131,7 +131,10 @@ module.exports = {
             this.followTotalValueForBTC += Number(this.wallet_obj[coin].valueForBTC);
         }
 
-        this.followTotalValueForCNY = Number(this.followTotalValueForCNY) * this.prz;
+        this.followTotalValueForUSDT = this.toFixedForFloor(this.followTotalValueForUSDT, 4);
+        this.followTotalValueForBTC = this.toFixedForFloor(this.followTotalValueForBTC, 8);
+        this.followTotalValueForCNY = this.toFixedForFloor(Number(this.followTotalValueForUSDT) * this.prz, 2);
+
         broadcast.emit({
             cmd: broadcast.MSG_FOLLOW_UPD,
             data: {
