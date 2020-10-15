@@ -5,6 +5,7 @@ const table = require('@/views/page/myAssets/myWalletIndex/tradeTable/TradeTable
 const transferLogic = require('@/views/page/myAssets/transfer/transfer.logic.js'); // 划转模块逻辑
 const I18n = require('@/languages/I18n').default;
 const gM = require('@/models/globalModels');
+const config = require('@/config.js');
 
 const model = {
     currency: 'BTC',
@@ -85,7 +86,7 @@ const model = {
     setTradingAccountTotalValue: function (param) {
         this.tradingAccountTotalValue = param;
     },
-    // 设置其他账户宗旨
+    // 设置其他账户总值
     setOtherTotalValue: function (param) {
         this.otherTotalValue = param;
     },
@@ -183,17 +184,6 @@ const model = {
             window.router.push(item.to);
         }
     },
-    // 提币，内部转账，资金划转悬浮样式
-    changeBtnSty: function (index, type) {
-        if (index !== 0) {
-            const ele = document.getElementsByClassName('Operation' + index)[0];
-            if (type === 'show') {
-                ele.classList.value = ele.classList.value.replace('has-text-primary bgNone', 'has-bg-primary');
-            } else {
-                ele.classList.value = ele.classList.value.replace('has-bg-primary', 'has-text-primary bgNone has-line-level-2');
-            }
-        }
-    },
     // 设置各种估值
     sets: function () {
         this.currency === 'BTC' ? this.setTotalValue(wlt.totalValueForBTC) : this.setTotalValue(wlt.totalValueForUSDT);
@@ -210,7 +200,10 @@ const model = {
         wlt.init();
 
         const currencyIndex = window.router.getUrlInfo().params.id;
-        const whiteList = ['01', '02', '03', '04', '06'];
+        const whiteList = ['01', '02', '03', '04'];
+        if (config.openFollow) {
+            whiteList.push('06');
+        }
         if (whiteList.includes(currencyIndex)) {
             this.switchChange(currencyIndex);
             this.setSwValue(currencyIndex);
