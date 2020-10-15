@@ -55,7 +55,8 @@ const closeGView = {
                                     closeGLogic.LcCode = e.target.value;
                                 },
                                 onblur: () => { closeGLogic.LcCodeCheck(); },
-                                value: closeGLogic.LcCode
+                                value: closeGLogic.LcCode,
+                                maxlength: 6
                             }
                         }),
                         m('span', { class: `has-text-tip-error`, style: { display: closeGLogic.tip2 ? `` : `none` } }, closeGLogic.tip2)

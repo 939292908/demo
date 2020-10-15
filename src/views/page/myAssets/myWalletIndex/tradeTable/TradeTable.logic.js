@@ -4,6 +4,7 @@ const transferLogic = require('@/views/page/myAssets/transfer/transfer.logic.js'
 const I18n = require('@/languages/I18n').default;
 const gM = require('@/models/globalModels');
 const m = require('mithril');
+const config = require('@/config.js');
 
 module.exports = {
     vnode: {},
@@ -273,7 +274,11 @@ module.exports = {
         this.initAccountBanlance();
 
         const currencyIndex = window.router.getUrlInfo().params.id;
-        if (currencyIndex === '03' || currencyIndex === '02' || currencyIndex === '01' || currencyIndex === '06' || currencyIndex === '04') {
+        const whiteList = ['01', '02', '03', '04'];
+        if (config.openFollow) {
+            whiteList.push('06');
+        }
+        if (whiteList.includes(currencyIndex)) {
             this.setPageFlag(currencyIndex);
         } else {
             this.setPageFlag('03');
