@@ -28,11 +28,11 @@
       cursor: pointer;
     }
     .imgBox {
+      flex: 0 0 auto;
       margin-right: 20px;
       border-radius: 10px;
       box-sizing: border-box;
       width: 33%;
-      max-width: 375px;
     }
   }
 
