@@ -8,6 +8,7 @@ const config = require('@/config.js');
 
 module.exports = {
     name: 'FOLLOW_DATA',
+    entrepotS: [], // 当前持仓数据
     entrepotIds: [], // 当前已存在的仓位pid
     wallet_obj: {}, // 跟单 数据
     wallet: [], // 跟单 数据
@@ -69,7 +70,12 @@ module.exports = {
     getFollowPosition: function () {
         const that = this;
         Http.getFollowPosition({ positions: JSON.stringify(that.entrepotIds) }).then(res => {
-            console.log(res, '仓位数据');
+            if (res.code === 0) {
+                const list = that.entrepotS.map(item => res.delPos.find(del => del.AId === item.AId) < 0);
+                that.entrepotS = [...that.entrepotS, ...res.data];
+                that.entrepotIds = that.entrepotS.map(item => item.AId);
+                console.log(list, that.entrepotIds);
+            }
         });
     },
 
@@ -246,7 +252,7 @@ module.exports = {
     },
 
     checkPosNeedSubSym: function() {
-        const Pos = []; // 跟单仓位信息
+        const Pos = this.entrepotS; // 跟单仓位信息
         let needSubSymArr = [];
         // 检查仓位列表内仓位数量不为0的仓位，并订阅对应跟单的行情，用于未实现盈亏计算
         for (const key in Pos) {
@@ -266,7 +272,7 @@ module.exports = {
     },
 
     calcTrdWlt: function(arg) {
-        const that = this;
+        // const that = this;
         const { Poss, Wlts, Orders, RS, trdInfoStatus } = gTrdApi;
         const { lastTick, AssetD } = gMktApi;
 
@@ -284,7 +290,7 @@ module.exports = {
             utils.copyTab(item, Poss[key]);
             posArr.push(item);
         }
-        // console.log('posArr', posArr);
+        // console.log('posArr', posArr, gTrdApi);
 
         const wallets = [];
         for (const key in Wlts['01']) {
@@ -315,11 +321,15 @@ module.exports = {
             config.future.PrzLiqType,
             arg => {
                 console.log('calcFutureWltAndPosAndMI CallBack', arg);
-                that.updTrdWlt(arg.wallets);
+                // that.updTrdWlt(arg.wallets);
             });
         // console.log('calcFutureWltAndPosAndMI', calcFutureWltAndPosAndMI, Poss, Wlts, Orders, RS, lastTick, AssetD);
     },
 
     remove: function () {
+        broadcast.offMsg({
+            key: this.name,
+            isall: true
+        });
     }
 };
