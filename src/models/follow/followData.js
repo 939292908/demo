@@ -44,7 +44,7 @@ module.exports = {
 
         that.updWlt();
 
-        if (!that.TIME_INTERVER) clearInterval(that.TIME_INTERVER);
+        if (that.TIME_INTERVER) clearInterval(that.TIME_INTERVER);
 
         that.TIME_INTERVER = setInterval(() => {
             that.updWlt();
@@ -357,13 +357,12 @@ module.exports = {
             arg => {
                 that.setWallet(arg.wallets);
                 that.initWlt();
-                console.log(this);
             });
         // console.log('calcFutureWltAndPosAndMI', calcFutureWltAndPosAndMI, Poss, Wlts, Orders, RS, lastTick, AssetD);
     },
 
     remove: function () {
-        !this.TIME_INTERVER && clearInterval(this.TIME_INTERVER);
+        if (this.TIME_INTERVER) clearInterval(this.TIME_INTERVER);
         this.TIME_INTERVER = null;
         this.walletState = 0;
         this.entrepotState = 0;

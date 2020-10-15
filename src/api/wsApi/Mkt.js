@@ -218,7 +218,7 @@ class Mkt {
                                     }
                                     */
                                     const d = aRaw.data;
-                                    console.log("ReqTrdLogin", aRaw);
+                                    // console.log("ReqTrdLogin", aRaw);
                                     switch (aRaw.code) {
                                     case 0:
 
@@ -278,7 +278,7 @@ class Mkt {
                             aObj.ReqTrdGetPositions({
                                 AId: aObj.RT.UserId + "01"
                             }, function (aTrd, aRaw) {
-                                console.log("ReqTrdGetPositions 03", aRaw);
+                                // console.log("ReqTrdGetPositions 03", aRaw);
                                 aObj.PossReplace(aTrd, aRaw);
                             });
                             // 现货
@@ -471,7 +471,7 @@ class Mkt {
         try {
             s.ws.send(msgStr);
         } catch (e) {
-            console(API_TAG, e);
+            // console(API_TAG, e);
         }
         msg.cb = aFunc;
         s.Reqs[msg.rid] = msg;
@@ -667,7 +667,7 @@ class Mkt {
         try {
             s.ws.send(msgStr);
         } catch (e) {
-            console.log(e);
+            // console.log(e);
         }
         msg.cb = aFunc;
         s.Reqs[msg.rid] = msg;
