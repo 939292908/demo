@@ -18,15 +18,13 @@ module.exports = {
         '01': {}, // 合约账户
         '02': {}, // 币币账户
         '03': {}, // 主钱包
-        '04': {}, // 法币账户
-        '06': {} // 跟单
+        '04': {} // 法币账户
     }, // 资产
     wallet: {
         '01': [], // 合约账户
         '02': [], // 币币账户
         '03': [], // 主钱包
-        '04': [], // 法币账户
-        '06': [] // 跟单
+        '04': [] // 法币账户
     },
     walletState: 0, // 资产获取状态，0:未获取，1:已获取
     // 总USDT估值
@@ -131,15 +129,13 @@ module.exports = {
             '01': {}, // 合约账户
             '02': {}, // 币币账户
             '03': {}, // 主钱包
-            '04': {}, // 法币账户
-            '06': {} // 跟单
+            '04': {} // 法币账户
         };
         this.wallet = {
             '01': [], // 合约账户
             '02': [], // 币币账户
             '03': [], // 主钱包
-            '04': [], // 法币账户
-            '06': [] // 跟单
+            '04': [] // 法币账户
         };
     },
 
@@ -400,18 +396,18 @@ module.exports = {
             return;
         }
         this.isWltReq = true;
-        this.getTheDocumentaryData(); // 获取跟单数据
+        this.getOtherWltData();
     },
-    getTheDocumentaryData: function () {
-        const that = this;
-        let data = [];
-        Http.subAssets({ exChannel: window.exchId, aType: '018' }).then(res => {
-            if (res.result.code === 0 && config.openFollow) {
-                data = res?.assetLists03 || [];
-            }
-        }).finally(res => { that.getOtherWltData(data); });
-    },
-    getOtherWltData: function (assetLists06 = []) { // assetLists06：跟单数据
+    // getTheDocumentaryData: function () {
+    //     const that = this;
+    //     let data = [];
+    //     Http.subAssets({ exChannel: window.exchId, aType: '018' }).then(res => {
+    //         if (res.result.code === 0 && config.openFollow) {
+    //             data = res?.assetLists03 || [];
+    //         }
+    //     }).finally(res => { that.getOtherWltData(data); });
+    // },
+    getOtherWltData: function () {
         const that = this;
         Http.getWallet({
             exChannel: window.exchId
@@ -419,7 +415,6 @@ module.exports = {
             console.log('ht', 'getWallet success', arg);
             if (arg.result.code === 0) {
                 // 初始化资产数据
-                arg.assetLists06 = assetLists06;
                 that.setWallet(arg);
                 that.initWlt();
                 broadcast.emit({
@@ -471,7 +466,6 @@ module.exports = {
         this.wallet['02'] = data.assetLists02; // 现货资产
         this.wallet['03'] = data.assetLists03; // 主钱包
         this.wallet['04'] = data.assetLists04; // 法币资产
-        this.wallet['06'] = data.assetLists06; // 跟单
 
         for (const item of data.assetLists01) {
             // 合约账户由于交易服务器在更新数据，所以此处只更新部分数据
@@ -510,9 +504,6 @@ module.exports = {
         }
         for (const item of data.assetLists04) {
             this.wallet_obj['04'][item.wType] = item;
-        }
-        for (const item of data.assetLists06) {
-            this.wallet_obj['06'][item.wType] = item;
         }
     },
     wltHandle: function (type, wlt) {
@@ -618,18 +609,6 @@ module.exports = {
         case '05':
             // 算力钱包
             console.log('ht', type, this.wltItemEx);
-            break;
-        case '06':
-            // 跟单钱包
-            TOTAL = Number(this.wltItemEx.mainBal || 0) + Number(this.wltItemEx.financeBal || 0) + Number(this.wltItemEx.mainLock || 0) + Number(this.wltItemEx.depositLock || 0) + Number(this.wltItemEx.pawnBal || 0) + Number(this.wltItemEx.creditNum || 0);
-            // 账户权益
-            this.wltItemEx.MgnBal = this.toFixedForFloor(TOTAL, 8);
-            // 可用保证金
-            this.wltItemEx.NL = this.toFixedForFloor(this.wltItemEx.mainBal, 8);
-            // // 未实现盈亏
-            // this.wltItemEx.UPNL = this.toFixedForFloor(this.wltItemEx.UPNL || 0, 8);
-            // 账户可提金额，用于资产划转以及提现
-            this.wltItemEx.wdrawable = this.toFixedForFloor(this.wltItemEx.mainBal, 8);
             break;
         }
         // 当前币种价格 start
