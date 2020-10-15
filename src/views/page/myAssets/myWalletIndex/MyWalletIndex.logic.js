@@ -7,7 +7,6 @@ const transferLogic = require('@/views/page/myAssets/transfer/transfer.logic.js'
 const I18n = require('@/languages/I18n').default;
 const gM = require('@/models/globalModels');
 const config = require('@/config.js');
-console.log(follow);
 
 const model = {
     currency: 'BTC',
@@ -205,7 +204,7 @@ const model = {
     },
     initFn: function() {
         wlt.init();
-        follow.init();
+        config.openFollow && follow.init();
 
         const currencyIndex = window.router.getUrlInfo().params.id;
         const whiteList = ['01', '02', '03', '04'];

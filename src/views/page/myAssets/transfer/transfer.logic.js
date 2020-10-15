@@ -88,7 +88,7 @@ const model = {
         this.bibiList = wlt.wallet['02'].filter(item => item.Setting.canTransfer); // 币币钱包 币种list
         this.myWalletList = wlt.wallet['03'].filter(item => item.Setting.canTransfer); // 我的钱包 币种list
         this.legalTenderList = wlt.wallet['04'].filter(item => item.Setting.canTransfer); // 法币钱包 币种list
-        this.followList = follow.wallet.filter(item => item.Setting.canTransfer); //  跟单 币种list
+        this.followList = config.openFollow ? follow.wallet.filter(item => item.Setting.canTransfer) : []; //  跟单 币种list
         // 钱包列表
         this.allWalletList = [
             { // 我的钱包
