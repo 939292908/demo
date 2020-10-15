@@ -15,9 +15,9 @@ module.exports = {
     wallet_obj: {}, // 跟单 数据
     wallet: [], // 跟单 数据
 
-    totalValueForUSDT: 0, // 总USDT估值
-    totalValueForBTC: 0, // 总BTC估值
-    totalValueForCNY: 0, // 总CNY估值
+    followTotalValueForUSDT: 0, // 总USDT估值
+    followTotalValueForBTC: 0, // 总BTC估值
+    followTotalValueForCNY: 0, // 总CNY估值
 
     prz: 7,
 
@@ -111,9 +111,9 @@ module.exports = {
 
     initWlt: function () {
         // 计算之前先将估值归0
-        this.totalValueForUSDT = 0;
-        this.totalValueForBTC = 0;
-        this.totalValueForCNY = 0;
+        this.followTotalValueForUSDT = 0;
+        this.followTotalValueForBTC = 0;
+        this.followTotalValueForCNY = 0;
 
         this.wallet = [];
 
@@ -126,12 +126,12 @@ module.exports = {
             this.wallet_obj[coin].valueForBTC = this.toFixedForFloor(this.wallet_obj[coin].valueForBTC, 8);
 
             // 总USDT估值
-            this.totalValueForUSDT += Number(this.wallet_obj[coin].valueForUSDT);
+            this.followTotalValueForUSDT += Number(this.wallet_obj[coin].valueForUSDT);
             // 总BTC估值
-            this.totalValueForBTC += Number(this.wallet_obj[coin].valueForBTC);
+            this.followTotalValueForBTC += Number(this.wallet_obj[coin].valueForBTC);
         }
 
-        this.totalCNYValue = Number(this.totalValueForUSDT) * this.prz;
+        this.followTotalValueForCNY = Number(this.followTotalValueForCNY) * this.prz;
         broadcast.emit({
             cmd: broadcast.MSG_FOLLOW_UPD,
             data: {
