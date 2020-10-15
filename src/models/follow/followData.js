@@ -84,6 +84,7 @@ module.exports = {
             if (res.result.code === 0) {
                 that.walletState = 1;
                 that.setWallet(res.assetLists03);
+                that.initWlt();
             }
         }).finally(res => { that.getFollowPosition(); });
     },
@@ -131,6 +132,13 @@ module.exports = {
         }
 
         this.totalCNYValue = Number(this.totalValueForUSDT) * this.prz;
+        broadcast.emit({
+            cmd: broadcast.MSG_FOLLOW_UPD,
+            data: {
+                wallet_obj: this.wallet_obj, // 资产
+                wallet: this.wallet
+            }
+        });
     },
 
     wltHandle: function (wlt) {
@@ -201,12 +209,12 @@ module.exports = {
      */
     getPrz(coin) {
         if (coin === 'USDT') {
-            const InitValue = (this.wallet_obj['03'] && this.wallet_obj['03'][coin] && this.wallet_obj['03'][coin].initValue) || 0;
+            const InitValue = (this.wallet_obj && this.wallet_obj[coin] && this.wallet_obj[coin].initValue) || 0;
             return InitValue;
         } else {
             const AssetD = gMktApi.AssetD;
             const SymName = utils.getSpotName(AssetD, coin, 'USDT');
-            const InitValue = (this.wallet_obj['03'] && this.wallet_obj['03'][coin] && this.wallet_obj['03'][coin].initValue) || 0;
+            const InitValue = (this.wallet_obj && this.wallet_obj[coin] && this.wallet_obj[coin].initValue) || 0;
             const Prz = (AssetD[SymName] && AssetD[SymName].PrzLatest) || InitValue;
             return Prz;
         }

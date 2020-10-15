@@ -2,10 +2,28 @@ const m = require('mithril');
 const broadcast = require('@/broadcast/broadcast');
 const utils = require('@/util/utils').default;
 const { gMktApi } = require('@/api').wsApi;
+const { getSortMarkets } = require('@/api').webApi;
 
 const I18n = require('@/languages/I18n').default;
 
 module.exports = {
+    sortState: 0, // 行情排序状态： 0未排序 1已排序
+    sortDisplaySym: {
+        // mian
+        cashSale: [], // 现货 Trdcls = 1
+        futures: [], // 期货 Trdcls = 2
+        // swap: { // 永续 Trdcls = 3
+        forward: [], // 正向
+        reverse: [], // 反向
+        // },
+        // ...name
+        ACF: [],
+        DeFi: [],
+        inv: [],
+        ETF: [],
+        Act: [],
+        third: []
+    },
     //  行情数据
     tickData: {},
     //  已订阅列表
@@ -61,6 +79,13 @@ module.exports = {
                 that.onTick(arg);
             }
         });
+        if (!this.sortState) {
+            broadcast.onMsg({
+                key: "market",
+                cmd: broadcast.MSG_ASSETD_UPD,
+                cb: this.assetDCallBack.bind(this)
+            });
+        }
     },
     remove: function () {
         broadcast.offMsg({
@@ -69,6 +94,51 @@ module.exports = {
         });
 
         this.unSubTick([...this.subList]);
+    },
+    // 全部行情排序
+    assetDCallBack: function (res) {
+        const displaySym = {};
+        res.data.forEach(item => {
+            let key = item.Lbl;
+            if (item.Lbl === 'main') {
+                switch (item.TrdCls) {
+                case 1: key = 'cashSale';
+                    break;
+                case 2: key = 'futures';
+                    break;
+                case 3:
+                    key = (item.Flag & 1) === 1 ? 'reverse' : 'forward';
+                    break;
+                }
+            }
+            if (!Object.prototype.hasOwnProperty.call(displaySym, key)) {
+                displaySym[key] = [];
+            }
+            displaySym[key].push(item);
+        });
+        this.sortAssetD(displaySym);
+    },
+    sortAssetD: function (displaySym) {
+        const self = this;
+        getSortMarkets({ vp: window.exchId }).then(res => {
+            if (res.result.code === 0) {
+                this.sortState = 1;
+                const data = res.result.data.symSort;
+                for (const key in displaySym) {
+                    const item = displaySym[key];
+                    self.sortDisplaySym[key] = item.sort((a, b) => {
+                        return (data[a.ToC] || 9999) - (data[b.ToC] || 999);
+                    });
+                }
+                broadcast.emit({
+                    cmd: broadcast.MSG_SORT_ASSETD,
+                    data: {
+                        key: '排序后的全部AssetD',
+                        sortDisplaySym: self.sortDisplaySym // 所有排序后的行情
+                    }
+                });
+            }
+        });
     },
     //  订阅行情
     subTick: function (subArr) {
@@ -201,7 +271,8 @@ module.exports = {
     },
     //  初始化首页需要请阅的行情
     initHomeNeedSub: function (syms, list) {
+        const tickList = JSON.parse(JSON.stringify(list));
         this.subTick(utils.setSubArrType('tick', [...syms]));
-        this.tickData = list;
+        this.tickData = tickList;
     }
 };
