@@ -209,12 +209,12 @@ module.exports = {
      */
     getPrz(coin) {
         if (coin === 'USDT') {
-            const InitValue = (this.wallet_obj['03'] && this.wallet_obj['03'][coin] && this.wallet_obj['03'][coin].initValue) || 0;
+            const InitValue = (this.wallet_obj && this.wallet_obj[coin] && this.wallet_obj[coin].initValue) || 0;
             return InitValue;
         } else {
             const AssetD = gMktApi.AssetD;
             const SymName = utils.getSpotName(AssetD, coin, 'USDT');
-            const InitValue = (this.wallet_obj['03'] && this.wallet_obj['03'][coin] && this.wallet_obj['03'][coin].initValue) || 0;
+            const InitValue = (this.wallet_obj && this.wallet_obj[coin] && this.wallet_obj[coin].initValue) || 0;
             const Prz = (AssetD[SymName] && AssetD[SymName].PrzLatest) || InitValue;
             return Prz;
         }
