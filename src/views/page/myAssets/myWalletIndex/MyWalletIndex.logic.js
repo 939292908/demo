@@ -186,7 +186,6 @@ const model = {
         }
     },
     numberHandle: function (num1, num2, digit) {
-        console.log(num1, num2, digit);
         let newNum;
         digit === 4 ? newNum = (Number(num1) * 10000 + Number(num2) * 10000) / 10000 : newNum = (Number(num1) * 100000000 + Number(num2) * 100000000) / 100000000;
         const len = newNum.toString().split('.')[1]?.length;

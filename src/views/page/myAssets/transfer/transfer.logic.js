@@ -203,7 +203,6 @@ const model = {
         this.fromMenuOption.currentId = buildFromWalletValue(this.fromMenuOption.currentId || '03');
         // 到xx钱包
         this.toMenuOption.currentId = buildToWalletValue(this.toMenuOption.currentId);
-        console.log(this.fromMenuOption.currentId, this.toMenuOption.currentId);
     },
     // 初始化 2个钱包list （依赖钱包value 和 coin）
     initFromAndToWalletListByValue () {
@@ -253,6 +252,19 @@ const model = {
     },
     // 设置 最大划转 (依赖钱包名称, 币种)
     setMaxTransfer () {
+        if (this.fromMenuOption.currentId === '06') {
+            if (follow.wallet) {
+                for (let i = 0; i < follow.wallet.length; i++) {
+                    const item = follow.wallet[i];
+                    if (item.wType === this.coinMenuOption.currentId) { // 找到对应币种
+                        this.form.maxTransfer = item.wdrawable || 0; // 设置最大可以金额
+                    }
+                }
+            } else {
+                this.form.maxTransfer = "--";
+            }
+            return;
+        }
         if (wlt.wallet && this.fromMenuOption.currentId) { // 所有钱包 和 从xx钱包id 都存在
             const wallet = wlt.wallet[this.fromMenuOption.currentId]; // 对应钱包
             for (const item of wallet) {
