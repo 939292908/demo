@@ -97,9 +97,10 @@ module.exports = {
         Http.getFollowPosition({ positions: that.entrepotIds }).then(res => {
             if (res.code === 0) {
                 that.entrepotState = 1;
-                const list = that.entrepotS.map(item => {
+                const list = [];
+                that.entrepotS.map(item => {
                     if (res.delPos.findIndex(del => del === item.PId) < 0) {
-                        return item;
+                        list.push(item);
                     }
                 });
                 that.entrepotS = [...list, ...res.data];
