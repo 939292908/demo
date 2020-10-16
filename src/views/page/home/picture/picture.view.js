@@ -19,9 +19,13 @@ module.exports = {
         });
     },
     assetDCallBack: function (arg) {
-        this.list = [...arg.sortDisplaySym.forward];
-        this.nameList = this.list.map(item => item.Sym);
-        market.initHomeNeedSub(this.nameList, this.list);
+        const list = [...arg.sortDisplaySym.forward];
+        const tickData = {};
+        list.forEach(item => {
+            tickData[item.Sym] = item;
+        });
+        this.nameList = list.map(item => item.Sym);
+        market.initHomeNeedSub(this.nameList, tickData);
     },
     view: function () {
         return m('div.views-pages-home-picture', {
