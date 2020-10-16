@@ -17,9 +17,10 @@ module.exports = {
             cmd: broadcast.MSG_SORT_ASSETD,
             cb: this.assetDCallBack.bind(this)
         });
+        market.sortState && this.assetDCallBack();
     },
     assetDCallBack: function (arg) {
-        const list = [...arg.sortDisplaySym.forward];
+        const list = [...market.sortDisplaySym.forward];
         const tickData = {};
         list.forEach(item => {
             tickData[item.Sym] = item;
