@@ -133,7 +133,7 @@ module.exports = {
 
         this.followTotalValueForUSDT = this.toFixedForFloor(this.followTotalValueForUSDT, 4);
         this.followTotalValueForBTC = this.toFixedForFloor(this.followTotalValueForBTC, 8);
-        this.followTotalValueForCNY = this.toFixedForFloor(Number(this.followTotalValueForUSDT) * this.prz, 2);
+        this.followTotalValueForCNY = this.toFixedForFloor(this.followTotalValueForUSDT * this.prz, 2);
 
         broadcast.emit({
             cmd: broadcast.MSG_FOLLOW_UPD,
