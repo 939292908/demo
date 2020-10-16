@@ -102,12 +102,12 @@ module.exports = {
                     content: [
                         // 左边
                         m('div', { class: `` }, [
-                            m('p', { class: `no-wrap has-text-level-3` }, I18n.$t('20044')/* 已经发送红包总金额 */),
+                            m('p', { class: `has-text-level-3` }, I18n.$t('20044')/* 已发送红包总金额 */),
                             m('p', { class: `title-small no-wrap has-text-level-1` }, `${logic.sendMoneySum} USDT`)
                         ]),
                         // 右边
                         m('div', { class: `has-text-right` }, [
-                            m('p', { class: `no-wrap has-text-level-3` }, I18n.$t('20045')/* 已退回红包总金额 */),
+                            m('p', { class: `has-text-level-3` }, I18n.$t('20045')/* 已退回红包总金额 */),
                             m('p', { class: `title-small no-wrap has-text-level-1` }, `${logic.sendMoneySumBack} USDT`)
                         ])
                     ]

@@ -3,6 +3,8 @@ const utils = require('@/util/utils').default;
 const wlt = require('@/models/wlt/wlt');
 const broadcast = require('@/broadcast/broadcast');
 const ActiveLine = require('@/api').ActiveLine;
+const I18n = require('@/languages/I18n').default;
+
 const redPacketUtils = {
     // 构建红包领取记录 接口返回的数据
     buildGiftrecData(list) {
@@ -45,21 +47,21 @@ const redPacketUtils = {
         const s = time / 1000;
         // 秒
         if (s < 60) {
-            return utils.toFixedForFloor(s, 0) + "秒";
+            return utils.toFixedForFloor(s, 0) + I18n.$t('20122')/* 秒 */;
         }
         // 分钟
         if (s >= 60 && s < 3600) {
             const m = s / 60;
-            return utils.toFixedForFloor(m, 0) + "分钟";
+            return utils.toFixedForFloor(m, 0) + I18n.$t('20123')/* 分钟 */;
         }
         // 时 / 分钟
         if (s >= 3600) {
             const h = s / 3600;
             const m = (s % 3600) / 60;
             if (m >= 1) {
-                return utils.toFixedForFloor(h, 0) + "小时" + utils.toFixedForFloor(m, 0) + "分钟";
+                return utils.toFixedForFloor(h, 0) + I18n.$t('20124')/* 小时 */ + utils.toFixedForFloor(m, 0) + I18n.$t('20123')/* 分钟 */;
             } else {
-                return utils.toFixedForFloor(h, 0) + "小时";
+                return utils.toFixedForFloor(h, 0) + I18n.$t('20124')/* 小时 */;
             }
         }
     }

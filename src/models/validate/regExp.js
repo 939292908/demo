@@ -8,15 +8,11 @@ module.exports = {
     validAccount(loginType, account) {
         console.log(loginType, this.phone.test(account));
         if (!account.trim()) {
-            // return '该字段不能为空'; /* '该字段不能为空' */
-            return I18n.$t('10416');
+            return I18n.$t('10416')/* '该字段不能为空' */;
         } else if (loginType === 'phone' && !this.phone.test(account)) {
-            // return '手机号码不正确'; /* '手机号码不正确' */
-            return I18n.$t('10533');
+            return I18n.$t('20119')/* '手机号码不正确' */;
         } else if (loginType === 'email' && !this.email.test(account)) {
-            // return '邮箱格式不正确'; /* '邮箱格式不正确' */
-            // return I18n.$t('10441');
-            return "邮箱格式不正确";
+            return I18n.$t('20120')/* '邮箱格式不正确' */;
         } else {
             return '';
         }
@@ -27,7 +23,7 @@ module.exports = {
             return I18n.$t('10416');
         } else if (!this.password.test(password)) {
             // return '至少6个字符，必须是字母和数字';
-            return I18n.$t('10532');
+            return I18n.$t('20121');
         } else {
             return '';
         }

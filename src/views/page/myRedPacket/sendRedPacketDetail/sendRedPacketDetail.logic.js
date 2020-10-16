@@ -135,6 +135,15 @@ const logic = {
             }).catch(err => {
                 console.log(err);
             });
+        } else {
+            logic.shareLoading = false;
+            // h5分享红包
+            window.router.push({
+                path: "/shareH5", // h5分享红包
+                data: {
+                    link: link // 链接
+                }
+            });
         }
     }
 };

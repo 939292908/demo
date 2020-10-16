@@ -63,7 +63,10 @@ module.exports = {
                 }),
                 // 切换 普通/拼手气红包
                 m('div', { class: `mt-2 mb-7 has-text-level-4` }, [
-                    m('span', { class: `` }, [`${I18n.$t('20096')/* 当前为 */}${logic.redPacketType > 0 ? I18n.$t('20010'/* 普通红包 */) : I18n.$t('20011'/* 拼手气红包 */)}，${I18n.$t('20097')/* 改为 */} `]),
+                    m('span', { class: `` }, [
+                        // 英文不显示
+                        vnode.state.getSendRedpacketText() + (I18n.$t('20097')/* 改为 */ + ' ')
+                    ]),
                     m('span', { class: `has-text-primary font-weight-bold`, onclick() { logic.switchRedPacketType(); } }, [logic.redPacketType > 0 ? I18n.$t('20011'/* 拼手气红包 */) : I18n.$t('20010'/* 普通红包 */)])
                 ]),
                 // 红包个数
@@ -72,7 +75,6 @@ module.exports = {
                     label: I18n.$t('20098')/* 红包个数 */,
                     unit: I18n.$t('20104')/* 个 */,
                     placeholder: I18n.$t('20099')/* 输入红包个数 */,
-                    type: 'number',
                     inputId: 'numberFormItem',
                     value: logic.numberFormItem.value,
                     onblur: value => {
@@ -134,11 +136,17 @@ module.exports = {
                                 m('div', { class: `no-wrap` }, I18n.$t('20103')/* 资金密码 */),
                                 m('input', {
                                     class: `input has-border-none`,
-                                    type: "password",
+                                    type: logic.isShowPassWord ? "text" : "password",
                                     placeholder: I18n.$t('20105')/* 请输入资金密码 */,
                                     value: logic.passwordModel.value,
                                     oninput(e) {
                                         logic.passwordModel.updateValue(e.target.value); // 更新密码
+                                    }
+                                }),
+                                m('i', {
+                                    class: `iconfont ${logic.isShowPassWord ? 'icon-xianshimima' : 'icon-buxianshimima'}`,
+                                    onclick() {
+                                        logic.isShowPassWord = !logic.isShowPassWord;
                                     }
                                 })
                             ])
@@ -195,30 +203,8 @@ module.exports = {
                             m('i', { class: `iconfont icon-about-us has-text-primary` })
                         ]),
                         m('div', { class: `title-small mb-3` }, I18n.$t('20109')/* 需要完成以下设置 */),
-                        // 实名认证
-                        m('div', { class: `is-between mb-2` }, [
-                            m('div', { class: `` }, I18n.$t('20110')/* 实名认证 */),
-                            m('div', { class: `` }, [
-                                logic.mustAuth.authentication ? m('span', { class: `` }, I18n.$t('20111')/* 已认证 */) : m('span', {
-                                    class: `has-text-primary`,
-                                    onclick() {
-                                        // alert("去认证");
-                                    }
-                                }, I18n.$t('20112')/* 去认证 */)
-                            ])
-                        ]),
-                        // 资金密码
-                        m('div', { class: `is-between` }, [
-                            m('div', { class: `` }, I18n.$t('20103')/* 资金密码 */),
-                            m('div', { class: `` }, [
-                                logic.mustAuth.moneyPassword ? m('span', { class: `` }, I18n.$t('20113')/* 已设置 */) : m('span', {
-                                    class: `has-text-primary`,
-                                    onclick() {
-                                        // alert("去设置");
-                                    }
-                                }, I18n.$t('20114')/* 去设置 */)
-                            ])
-                        ]),
+                        // app和浏览器打开 内容不同
+                        vnode.state.getShowVerifyAuthModalContent(),
                         m(Button, {
                             class: 'is-primary font-weight-bold my-5',
                             width: 1,
@@ -248,5 +234,57 @@ module.exports = {
                 })
             ])
         ]);
+    },
+    // 验证权限弹框内容
+    getShowVerifyAuthModalContent() {
+        if (window.plus) {
+            // app中打开
+            return m('', { class: `` }, [
+                // 实名认证
+                m('div', { class: `is-between mb-2` }, [
+                    m('div', { class: `` }, I18n.$t('20110')/* 实名认证 */),
+                    m('div', { class: `` }, [
+                        logic.mustAuth.authentication ? m('span', { class: `` }, I18n.$t('20111')/* 已认证 */) : m('span', {
+                            class: `has-text-primary`,
+                            onclick() {
+                                // alert("去认证");
+                            }
+                        }, I18n.$t('20112')/* 去认证 */)
+                    ])
+                ]),
+                // 资金密码
+                m('div', { class: `is-between` }, [
+                    m('div', { class: `` }, I18n.$t('20103')/* 资金密码 */),
+                    m('div', { class: `` }, [
+                        logic.mustAuth.moneyPassword ? m('span', { class: `` }, I18n.$t('20113')/* 已设置 */) : m('span', {
+                            class: `has-text-primary`,
+                            onclick() {
+                                // alert("去设置");
+                            }
+                        }, I18n.$t('20114')/* 去设置 */)
+                    ])
+                ])
+            ]);
+        } else {
+            // 浏览器中打开
+            const getText = () => {
+                if (!logic.mustAuth.authentication && !logic.mustAuth.moneyPassword) {
+                    return I18n.$t('20135')/* 请至个人中心完成身份验证并设置资金密码 */;
+                }
+                if (!logic.mustAuth.authentication) {
+                    return I18n.$t('20136')/* 请至个人中心-身份验证处完成实名认证 */;
+                }
+                if (!logic.mustAuth.moneyPassword) {
+                    return I18n.$t('20137')/* 请至个人中心-安全设置处设置资金密码 */;
+                }
+            };
+            return m('div', { class: `` }, getText());
+        }
+    },
+    // 切换 普通/拼手气红包
+    getSendRedpacketText() {
+        if (I18n.getLocale() !== 'en') {
+            return I18n.$t('20096')/* 当前为 */ + (logic.redPacketType > 0 ? I18n.$t('20010'/* 普通红包 */) : I18n.$t('20011'/* 拼手气红包 */)) + '，';
+        }
     }
 };

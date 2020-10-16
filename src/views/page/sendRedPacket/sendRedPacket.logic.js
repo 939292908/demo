@@ -11,13 +11,16 @@ const utils = require('@/util/utils').default;
 const globalModels = require('@/models/globalModels');
 const errCode = require('@/util/errCode').default;
 const I18n = require('@/languages/I18n').default;
+const models = require('@/models');
 
 const logic = {
+    isShowPassWord: false, // 显示密码
     // 红包校验配置
     verifyCfg: {
         maxcount: 20, // 单次红包最大个数
         low: 0, // 单人领取的最低额
-        hight: 1 // 红包最高总金额
+        hight: 1, // 红包最高总金额
+        dayquota: 100 // 单日金额限制
     },
     gid: '', // 红包id
     // 币种按钮list
@@ -79,7 +82,7 @@ const logic = {
             // console.log(this.getTotalCoin(), logic.wltMoney, 999);
 
             if (this.getTotalCoin() > logic.verifyCfg.hight) {
-                isUpdateMsg && this.updateErrMsg(`${I18n.$t('20084')/* 红包最高总金额 */}${logic.verifyCfg.hight}${logic.currentCoin}`);
+                isUpdateMsg && this.updateErrMsg(`${I18n.$t('20084')/* 单个红包最高发送金额 */}${logic.verifyCfg.hight}${logic.currentCoin}`);
                 return false;
             }
 
@@ -89,8 +92,8 @@ const logic = {
             }
 
             if (logic.moneyFormItem.value < logic.verifyCfg.low) {
-                // isUpdateMsg && this.updateErrMsg(`单笔最低发送${logic.verifyCfg.low}${logic.currentCoin}`);
-                isUpdateMsg && this.updateErrMsg(`${I18n.$t('20086')/* 单笔最低发送 */}${utils.getNormalNumber(logic.verifyCfg.low)}${logic.currentCoin}`);
+                // isUpdateMsg && this.updateErrMsg(`${I18n.$t('20086')/* 单笔最低发送 */}${utils.getNormalNumber(logic.verifyCfg.low)}${logic.currentCoin}`);
+                isUpdateMsg && this.updateErrMsg(I18n.$t('20128', { value: utils.getNormalNumber(logic.verifyCfg.low) + logic.currentCoin })/* 单个红包最低发送金额{value} */);
                 return false;
             }
 
@@ -134,7 +137,7 @@ const logic = {
                 }
                 //
                 if (logic.numberFormItem.value * logic.verifyCfg.low > logic.moneyFormItem.value) {
-                    isUpdateMsg && this.updateErrMsg(`${I18n.$t('20086')/* 单笔最低发送 */}${utils.getNormalNumber(logic.verifyCfg.low)}${logic.currentCoin}`);
+                    isUpdateMsg && this.updateErrMsg(I18n.$t('20128', { value: utils.getNormalNumber(logic.verifyCfg.low) + logic.currentCoin })/* 单个红包最低发送金额{value} */);
                     return false;
                 }
             }
@@ -200,9 +203,13 @@ const logic = {
     numberFormItem: {
         value: '',
         updateOption(params) {
-            // 有值且没用小数点 更新value
-            if (params.value && params.value.split('.').length <= 1) {
+            // 输入数字 更新value
+            if (/^[0-9]*$/.test(params.value)) {
                 this.value = params.value;
+            }
+            // 一下情况清空value
+            if (params.value === '' || params.value.substr(0, 1) === '.' || params.value.substr(0, 1) === '0') {
+                this.value = "";
             }
             // console.log(this.value);
         }
@@ -332,6 +339,7 @@ const logic = {
         });
         const coin = logic.currentCoin ? logic.currentCoin : this.coinBtnList[0]?.label;
         logic.setCurrentCoin(coin); // 设置选中币种及相关配置
+        this.setMaxTransfer(); // 设置最大划转
         m.redraw();
     },
     // 设置选中币种及相关配置
@@ -340,6 +348,7 @@ const logic = {
         logic.currentCoin = currentItem.label; // 当前选中币种
         logic.verifyCfg.low = currentItem.data.low;// 单人领取的最低额
         logic.verifyCfg.hight = currentItem.data.hight;// 红包最高总金额
+        logic.verifyCfg.dayquota = currentItem.data.dayquota;// 单日金额限制
     },
     // 币种按钮click
     coinBtnClick(item) {
@@ -373,8 +382,25 @@ const logic = {
                 });
                 console.log('发红包 success', arg.result.data);
             } else {
+                let msgValue = "";
+                // 单个红包最高发送金额{value}
+                if (arg.result.code === "-1001") {
+                    msgValue = logic.verifyCfg.hight + logic.currentCoin;
+                }
+                // 单个红包最低发送金额{value}
+                if (arg.result.code === "-1006") {
+                    msgValue = logic.verifyCfg.low + logic.currentCoin;
+                }
+                // 已超出单日发送限额{value}
+                if (arg.result.code === "-1010") {
+                    msgValue = logic.verifyCfg.dayquota + logic.currentCoin;
+                }
+                // 一次最多可发{value}个红包
+                if (arg.result.code === "-1011") {
+                    msgValue = logic.verifyCfg.maxcount;
+                }
                 window.$message({
-                    content: errCode.getRedPacketErrorCode(arg.result.code),
+                    content: errCode.getRedPacketErrorCode(arg.result.code, msgValue),
                     type: 'danger'
                 });
                 logic.shareLoading = false;
@@ -409,6 +435,7 @@ const logic = {
     setMaxTransfer () {
         if (wlt.wallet) { // 所有钱包 和 从xx钱包id 都存在
             const wallet = wlt.wallet["03"]; // 对应钱包
+            console.log(77777, this.currentCoin, wallet);
             for (const item of wallet) {
                 if (item.coin === this.currentCoin) { // 找到对应币种
                     this.wltMoney = utils.toFixedForFloor(item.wdrawable || 0, 4); // 设置最大可以金额
@@ -420,18 +447,50 @@ const logic = {
         // console.log(this.wltMoney, 77777);
     },
     oninit(vnode) {
-        this.getRedPackCfg();
+        // utils.getItem('loginState')
+        // console.log(utils.getItem('loginState'), 77777777);
+        if (!utils.getItem('ex-session')) {
+            // window.open('/m/login/', '_self');
+            window.open('/m/#/userLogin', '_self');
+        }
         wlt.init(); // 更新数据
         broadcast.onMsg({
             key: "sendRedP",
-            cmd: broadcast.MSG_WLT_READY,
+            cmd: broadcast.MSG_WLT_UPD,
             cb: () => {
                 this.setMaxTransfer();
                 m.redraw();
             }
         });
+        // 获取用户信息 成功
+        broadcast.onMsg({
+            key: "sendRedP_GET_USER_INFO_READY",
+            cmd: broadcast.GET_USER_INFO_READY,
+            cb: () => {
+                console.log(555555, "// 获取用户信息 成功");
+                this.getRedPackCfg();
+            }
+        });
+        // 获取用户信息 失败
+        broadcast.onMsg({
+            key: "sendRedP_GET_USER_INFO_ERROR",
+            cmd: broadcast.GET_USER_INFO_ERROR,
+            cb: () => {
+                console.log(6666666, "// 获取用户信息 失败");
+                window.open('/m/#/userLogin', '_self');
+            }
+        });
+
+        models.getUserInfo();
     },
     oncreate(vnode) {
+        // share.openShare({
+        //     needShareImg: null,
+        //     link: "link",
+        //     cancelCallback(params) {
+        //         logic.cancelCallback(params);
+        //     }
+        // }); // 打开分享弹框
     },
     onupdate(vnode) {
     },
@@ -439,7 +498,17 @@ const logic = {
         wlt.remove();
         broadcast.offMsg({
             key: "sendRedP",
-            cmd: broadcast.MSG_WLT_READY,
+            cmd: broadcast.MSG_WLT_UPD,
+            isall: true
+        });
+        broadcast.offMsg({
+            key: "sendRedP_GET_USER_INFO_ERROR",
+            cmd: broadcast.GET_USER_INFO_ERROR,
+            isall: true
+        });
+        broadcast.offMsg({
+            key: "sendRedP_GET_USER_INFO_READY",
+            cmd: broadcast.GET_USER_INFO_READY,
             isall: true
         });
     },
@@ -490,6 +559,17 @@ const logic = {
                 logic.shareLoading = false;
                 m.redraw();
                 console.log(err);
+            });
+        } else {
+            logic.sendRedPModal.updateOption({ isShow: false });// 关闭发红包弹框
+            logic.reset(); // 重置
+            logic.shareLoading = false;
+            // h5分享红包
+            window.router.push({
+                path: "/shareH5", // h5分享红包
+                data: {
+                    link: link // 链接
+                }
             });
         }
     }

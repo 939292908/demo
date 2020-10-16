@@ -12,28 +12,30 @@ module.exports = {
         cancelCallback: () => {} // 取消按钮回调
     },
     // 分享按钮list
-    shareBtnList: [
-        {
-            key: "WXSceneSession",
-            label: I18n.$t('20029')/* 微信好友 */,
-            icon: "#icon-color-wechat"
-        },
-        {
-            key: "WXSceneTimeline",
-            label: I18n.$t('20030')/* 朋友圈 */,
-            icon: "#icon-shareFriends"
-        },
-        {
-            key: "CopyLink",
-            label: I18n.$t('20031')/* 复制链接 */,
-            icon: "#icon-CopyLink"
-        },
-        {
-            key: "savePhoto",
-            label: I18n.$t('20032')/* 保存图片 */,
-            icon: "#icon-sharePhoto"
-        }
-    ],
+    shareBtnList () {
+        return [
+            {
+                key: "WXSceneSession",
+                label: I18n.$t('20029')/* 微信好友 */,
+                icon: "#icon-color-wechat"
+            },
+            {
+                key: "WXSceneTimeline",
+                label: I18n.$t('20030')/* 朋友圈 */,
+                icon: "#icon-shareFriends"
+            },
+            {
+                key: "CopyLink",
+                label: I18n.$t('20031')/* 复制链接 */,
+                icon: "#icon-CopyLink"
+            },
+            {
+                key: "savePhoto",
+                label: I18n.$t('20032')/* 保存图片 */,
+                icon: "#icon-sharePhoto"
+            }
+        ];
+    },
     /**
      * 打开分享弹框
      * @param {Object} param {

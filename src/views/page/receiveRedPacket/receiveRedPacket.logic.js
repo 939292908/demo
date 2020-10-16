@@ -169,6 +169,7 @@ const logic = {
         Http.recvgift(params).then(arg => {
             if (arg.result.code === 0) {
                 console.log('领取 success', arg);
+                logic.account = "";
                 window.router.push({
                     path: "/receiveResult", // 跳转抢红包结果
                     data: {

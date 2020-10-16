@@ -1,8 +1,8 @@
 // 主题色
 const primary = Object.freeze({
-    lighten: '#FF6F1E',
+    lighten: '#FE871E',
 
-    darken: '#FF6F1E'
+    darken: '#FE871E'
 });
 // 辅助色
 const sub = Object.freeze({

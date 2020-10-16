@@ -35,6 +35,7 @@ module.exports = {
                 // window.router.push('/home');
             } else {
                 utils.setItem('loginState', false);
+                broadcast.emit({ cmd: broadcast.GET_USER_INFO_ERROR, data: {} });
                 if (needTip) {
                     window.$message({
                         content: errCode.getWebApiErrorCode(data.result.code),

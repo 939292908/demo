@@ -189,7 +189,7 @@ module.exports = {
                 }
                 .box .top .lucky {
                     font-size: 24px;
-                    color: #FF6F1E;
+                    color: #FE871E;
                 }
                 .box .top .sub-title {
                     font-size: 14px;
@@ -198,7 +198,7 @@ module.exports = {
                     padding-bottom: 32px;
                 }
                 .box .top .sub-title > span {
-                    color: #FF6F1E;
+                    color: #FE871E;
                 }
                 .box hr {
                     background-color: #F5F5F5;

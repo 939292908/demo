@@ -159,6 +159,9 @@ const logic = {
         this.getgiftrec();// 领取记录
         logic.best = m.route.param().best * 1; // 是否手气最佳
         logic.quota = m.route.param().quota; // 抢的金额
+        if (!window.plus) { // 非app中打开，隐藏右边分享按钮
+            logic.headerOption.right = {};
+        }
     },
     oncreate(vnode) {
     },

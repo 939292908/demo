@@ -4,6 +4,8 @@ module.exports = {
     GET_FUNLIST_READY: 'get_funlist_ready',
     // 获取用户信息
     GET_USER_INFO_READY: 'get_user_info_ready',
+    // 获取用户信息失败
+    GET_USER_INFO_ERROR: 'GET_USER_INFO_ERROR',
     // 退出登录
     MSG_LOG_OUT: 'msg_log_out',
     // 页面大小改变

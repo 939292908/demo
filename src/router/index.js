@@ -51,6 +51,14 @@ class Router {
             onmatch: function () {
                 return import('@/views/page/myRedPacket/receiveRedPacketDetail/receiveRedPacketDetail.view');
             }
+        },
+        // h5分享红包
+        '/shareH5': {
+            // 是否需要需要身份验证
+            requireAuth: false,
+            onmatch: function () {
+                return import('@/views/page/sendRedPacket/shareH5/shareH5.view');
+            }
         }
     };
 
