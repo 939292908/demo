@@ -356,6 +356,7 @@ const model = {
                     model.setTransferModalOption({ isShow: false }); // 划转弹框隐藏
                     this.reset(); // 重置
                     wlt.init(); // 更新数据
+                    follow.init();
                     window.$message({ title: I18n.$t('10410' /** 提示 */), content: I18n.$t('10414' /** 资金划转成功！ */), type: 'success' });
                     model.initFromAndToValueByAuthWalletList(); // 2. 钱包value  初始化
                 } else {
@@ -409,6 +410,7 @@ const model = {
     oninit (vnode) {
         this.vnode = vnode;
         wlt.init();
+        config.openFollow && follow.init();
         this.initTransferInfo();
         this.initLanguage();
     },
@@ -420,6 +422,7 @@ const model = {
     },
     onremove (vnode) {
         wlt.remove();
+        config.openFollow && follow.remove();
         this.rmEVBUS();
     }
 };
