@@ -622,7 +622,7 @@ module.exports = {
         // console.log('ht', 'usdt value', TOTAL, coinPrz, TOTAL * coinPrz);
         this.wltItemEx.valueForUSDT = this.toFixedForFloor(valueForUSDT, 8);
         // BTC估值
-        valueForBTC = TOTAL * coinPrz / btcPrz;
+        valueForBTC = btcPrz === 0 ? 0 : TOTAL * coinPrz / btcPrz;
         // console.log('ht', 'btc value', TOTAL, coinPrz, btcPrz, TOTAL * coinPrz);
         this.wltItemEx.valueForBTC = this.toFixedForFloor(valueForBTC, 8);
         // console.log('ht', 'btc value', valueForUSDT, valueForBTC);

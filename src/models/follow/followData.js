@@ -195,7 +195,7 @@ module.exports = {
         // console.log('ht', 'usdt value', TOTAL, coinPrz, TOTAL * coinPrz);
         this.wltItemEx.valueForUSDT = this.toFixedForFloor(valueForUSDT, 8);
         // BTC估值
-        const valueForBTC = TOTAL * coinPrz / btcPrz;
+        const valueForBTC = btcPrz === 0 ? 0 : TOTAL * coinPrz / btcPrz;
         // console.log('ht', 'btc value', TOTAL, coinPrz, btcPrz, TOTAL * coinPrz);
         this.wltItemEx.valueForBTC = this.toFixedForFloor(valueForBTC, 8);
         // console.log('ht', 'btc value', valueForUSDT, valueForBTC);
@@ -225,7 +225,7 @@ module.exports = {
         } else {
             const AssetD = gMktApi.AssetD;
             const SymName = utils.getSpotName(AssetD, coin, 'USDT');
-            const InitValue = (this.wallet_obj && this.wallet_obj[coin] && this.wallet_obj[coin].initValue) || 1;
+            const InitValue = (this.wallet_obj && this.wallet_obj[coin] && this.wallet_obj[coin].initValue) || 0;
             const Prz = (AssetD[SymName] && AssetD[SymName].PrzLatest) || InitValue;
             return Prz;
         }
