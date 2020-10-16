@@ -640,7 +640,7 @@ class Mkt {
 
     WSCallTrade (aCmd, aParam, aFunc) {
         const s = this;
-        if (DBG_WSCALL) { console.log(__filename, "WSCallTrade", aCmd, aParam); }
+        // if (DBG_WSCALL) { console.log(__filename, "WSCallTrade", aCmd, aParam); }
         const tm = Date.now();
         s.lastSendTm = tm;
 
