@@ -192,7 +192,7 @@ const model = {
         //     : (digit === 8
         //         ? newNum = (Number(num1) * 100000000 + Number(num2) * 100000000) / 100000000
         //         : newNum = (Number(num1) * 100 + Number(num2) * 100) / 100);
-        console.log(num1, num2, digit);
+        // console.log(num1, num2, digit);
         switch (digit) {
         case 2:
             newNum = (Number(num1) * 100 + Number(num2) * 100) / 100;

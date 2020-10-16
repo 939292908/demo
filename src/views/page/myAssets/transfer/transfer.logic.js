@@ -269,7 +269,6 @@ const model = {
             const wallet = wlt.wallet[this.fromMenuOption.currentId]; // 对应钱包
             for (const item of wallet) {
                 if (item.wType === this.coinMenuOption.currentId) { // 找到对应币种
-                    console.log(item.wdrawable, item, '设置最大可以金额');
                     this.form.maxTransfer = item.wdrawable || 0; // 设置最大可以金额
                 }
             }

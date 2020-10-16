@@ -9,6 +9,7 @@ const config = require('@/config.js');
 
 module.exports = {
     name: 'FOLLOW_DATA',
+    isInitTime: false,
     wltItemEx: {}, // 数据处理中间量
     entrepotS: [], // 当前持仓数据
     entrepotIds: [], // 当前已存在的仓位pid
@@ -36,8 +37,10 @@ module.exports = {
     init: function () {
         // 初始化
         const that = this;
-        that.walletState = 0;
-        that.entrepotState = 0;
+        if (this.isInitTime) {
+            return;
+        }
+        this.isInitTime = true;
 
         // 获取钱包计算所需风险限额
         getRiskLimits();
@@ -91,12 +94,16 @@ module.exports = {
     // 获取跟单持仓数据
     getFollowPosition: function () {
         const that = this;
-        Http.getFollowPosition({ positions: JSON.stringify(that.entrepotIds) }).then(res => {
+        Http.getFollowPosition({ positions: that.entrepotIds }).then(res => {
             if (res.code === 0) {
                 that.entrepotState = 1;
-                const list = that.entrepotS.map(item => res.delPos.find(del => del === item.PId) < 0);
+                const list = that.entrepotS.map(item => {
+                    if (res.delPos.findIndex(del => del === item.PId) < 0) {
+                        return item;
+                    }
+                });
                 that.entrepotS = [...list, ...res.data];
-                that.entrepotIds = that.entrepotS.map(item => item.PId);
+                that.entrepotIds = that.entrepotS.map(item => { return { pid: item.PId, sz: item.Sz }; });
                 that.checkPosNeedSubSym();
             }
         });
@@ -364,7 +371,9 @@ module.exports = {
     remove: function () {
         if (this.TIME_INTERVER) clearInterval(this.TIME_INTERVER);
         this.TIME_INTERVER = null;
+        this.isInitTime = false;
         this.walletState = 0;
+        this.entrepotIds = [];
         this.entrepotState = 0;
         broadcast.offMsg({
             key: this.name,
