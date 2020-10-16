@@ -186,9 +186,24 @@ const model = {
         }
     },
     numberHandle: function (num1, num2, digit) {
-        console.log(num1, num2, digit);
         let newNum;
-        digit === 4 ? newNum = (Number(num1) * 10000 + Number(num2) * 10000) / 10000 : newNum = (Number(num1) * 100000000 + Number(num2) * 100000000) / 100000000;
+        // digit === 4
+        //     ? newNum = (Number(num1) * 10000 + Number(num2) * 10000) / 10000
+        //     : (digit === 8
+        //         ? newNum = (Number(num1) * 100000000 + Number(num2) * 100000000) / 100000000
+        //         : newNum = (Number(num1) * 100 + Number(num2) * 100) / 100);
+        console.log(num1, num2, digit);
+        switch (digit) {
+        case 2:
+            newNum = (Number(num1) * 100 + Number(num2) * 100) / 100;
+            break;
+        case 4:
+            newNum = (Number(num1) * 10000 + Number(num2) * 10000) / 10000;
+            break;
+        case 8:
+            newNum = (Number(num1) * 100000000 + Number(num2) * 100000000) / 100000000;
+            break;
+        }
         const len = newNum.toString().split('.')[1]?.length;
         if (len < digit) {
             for (let i = 0; i < digit - len; i++) {
@@ -199,22 +214,25 @@ const model = {
     },
     // 设置各种估值
     sets: function () {
+        // 总估值
         this.currency === 'BTC'
             ? this.setTotalValue(config.openFollow ? this.numberHandle(wlt.totalValueForBTC, follow.followTotalValueForBTC, 8) : wlt.totalValueForBTC)
             : this.setTotalValue(config.openFollow ? this.numberHandle(wlt.totalValueForUSDT, follow.followTotalValueForUSDT, 4) : wlt.totalValueForUSDT);
-
+        // 主钱包总估值
         this.currency === 'BTC' ? this.setWalletTotalValue(wlt.walletTotalValueForBTC) : this.setWalletTotalValue(wlt.walletTotalValueForUSDT);
+        // 交易账户总估值
         this.currency === 'BTC' ? this.setTradingAccountTotalValue(wlt.tradingAccountTotalValueForBTC) : this.setTradingAccountTotalValue(wlt.tradingAccountTotalValueForUSDT);
-        this.currency === 'BTC' ? this.setOtherTotalValue(follow.followTotalValueForBTC) : this.setOtherTotalValue(follow.followTotalValueForUSDT);
-
+        // 其他账户总估值
         this.currency === 'BTC'
             ? this.setOtherTotalValue(config.openFollow ? this.numberHandle(wlt.otherAccountTotalValueForBTC, follow.followTotalValueForBTC, 8) : wlt.otherAccountTotalValueForBTC)
             : this.setOtherTotalValue(config.openFollow ? this.numberHandle(wlt.otherAccountTotalValueForUSDT, follow.followTotalValueForUSDT, 4) : wlt.otherAccountTotalValueForUSDT);
-
+        // 币币总估值
         this.currency === 'BTC' ? this.setCoinTotal(wlt.coinTotalValueForBTC) : this.setCoinTotal(wlt.coinTotalValueForUSDT);
+        // 法币总估值
         this.currency === 'BTC' ? this.setLegalTotal(wlt.legalTotalValueForBTC) : this.setLegalTotal(wlt.legalTotalValueForUSDT);
+        // 合约总估值
         this.currency === 'BTC' ? this.setContractTotal(wlt.contractTotalValueForBTC) : this.setContractTotal(wlt.contractTotalValueForUSDT);
-
+        // 人民币总估值
         config.openFollow ? this.setTotalCNY(this.numberHandle(wlt.totalCNYValue, follow.followTotalValueForCNY, 2)) : this.setTotalCNY(wlt.totalCNYValue);
         m.redraw();
     },
