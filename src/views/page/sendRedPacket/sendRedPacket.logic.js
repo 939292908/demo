@@ -435,7 +435,7 @@ const logic = {
     setMaxTransfer () {
         if (wlt.wallet) { // 所有钱包 和 从xx钱包id 都存在
             const wallet = wlt.wallet["03"]; // 对应钱包
-            console.log(77777, this.currentCoin, wallet);
+            // console.log(77777, this.currentCoin, wallet);
             for (const item of wallet) {
                 if (item.coin === this.currentCoin) { // 找到对应币种
                     this.wltMoney = utils.toFixedForFloor(item.wdrawable || 0, 4); // 设置最大可以金额

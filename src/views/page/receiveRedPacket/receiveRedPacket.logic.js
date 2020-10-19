@@ -98,7 +98,7 @@ const logic = {
                 secureEmail: utils.hideAccountNameInfo(logic.account), // 邮箱地址**隐藏
                 email: logic.account, // 邮箱地址
                 host: config.official, // 域名
-                fn: 'be', // 邮箱模板
+                fn: 'main', // 邮箱模板
                 lang: I18n.getLocale() // 语言
             };
             validate.activeEmail(params, () => {
