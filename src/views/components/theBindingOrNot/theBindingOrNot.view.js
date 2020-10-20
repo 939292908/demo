@@ -51,7 +51,7 @@ module.exports = {
             return this.handleTotalShow({ content: l180n.$t('10610') /* '为了您的账户安全，请先绑定邮箱' */, buttonText: l180n.$t('10229') /* '邮箱验证' */, buttonClick: () => { window.router.push({ path: '/bind', data: { type: "email" } }); } });
         }
         const doubleButtonCof = [
-            { text: l180n.$t('10227') /* '谷歌验证' */, issolid: false, click: () => { m.route.set("/openGoogleVerify"); } },
+            { text: l180n.$t('10227') /* '谷歌验证' */, issolid: false, click: () => { m.route.set("/bindGoogle"); } },
             { text: l180n.$t('10228') /* '手机验证' */, issolid: true, click: () => { window.router.push({ path: '/bind', data: { type: "phone" } }); } }
         ];
         if (!data?.googleId && !data?.phone) {

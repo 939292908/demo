@@ -24,7 +24,7 @@ module.exports = {
     email: '', // 用户邮箱
     nationNo: null, // 区号
     phoneNum: '', // 手机号码
-    currentOperation: 'bind', // 当前为解绑/绑定操作
+    currentOperation: '', // 当前为解绑/绑定操作
     isShowVerifyView: false, // 安全校验弹框 show
     IOSDLAddQrCodeSrc: null, // IOS下载二维码地址
     AndroidDLAddQrCodeSrc: null, // Android Q下载二维码地址
@@ -298,20 +298,20 @@ module.exports = {
         this.nationNo = account.nationNo; // 区号
         this.phoneNum = account.phone; // 用户手机号码
         this.antiFishCode = account.antiFishCode; // 钓鱼码
+        this.currentOperation = account.googleId ? 'unbind' : 'bind';
         m.redraw();
     },
     initFn: function() {
+        this.tip1 = ''; // 提示初始化
+        this.tip2 = ''; // 提示初始化
         this.LcPWd = ''; // 登录密码值初始化
         this.LcCode = ''; // 谷歌验证码值初始化
         this.showPassword = false;
         this.totalFlag = false;
-        this.tip1 = '';
-        this.tip2 = '';
         broadcast.onMsg({
             key: 'index',
             cmd: broadcast.GET_USER_INFO_READY,
             cb: () => {
-                // console.log(gM.getAccount());
                 this.getUserInfo();
             }
         });

@@ -192,7 +192,7 @@ module.exports = {
                         m('div.column.pl-2', {}, [
                             m("button.button.is-primary.font-size-2.has-text-white.modal-default-btn.button-large", {
                                 onclick() {
-                                    window.router.push('/openGoogleVerify');
+                                    window.router.push('/bindGoogle');
                                 }
                             }, [I18n.$t('10227')/* '谷歌验证' */])
                         ])

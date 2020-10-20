@@ -52,10 +52,6 @@ class Router {
             requireAuth: true,
             onmatch: () => import('@/views/page/myAssets/extractCoin/index')
         },
-        '/closeGoogleVerify': {
-            requireAuth: true,
-            onmatch: () => import('@/views/page/selfManage/bindGoogle/closeGoogleVerify.view')
-        },
         '/accountSecurity': {
             requireAuth: true,
             onmatch: () => import('@/views/page/accountSecurity/modifyLoginPassword/changePassword.view')
@@ -64,9 +60,9 @@ class Router {
             requireAuth: true,
             onmatch: () => import('@/views/page/selfManage/bind/bind.view')
         },
-        '/openGoogleVerify': {
+        '/bindGoogle': {
             requireAuth: true,
-            onmatch: () => import('@/views/page/selfManage/bindGoogle/openGoogleVerify.view')
+            onmatch: () => import('@/views/page/selfManage/bindGoogle/bindGoogle.view')
         },
         '/modifyLoginPassword': {
             requireAuth: true,

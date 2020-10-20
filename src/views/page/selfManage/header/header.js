@@ -9,8 +9,7 @@ const model = {
         // console.log(key);
         const indexZero = [
             'securityManage',
-            'openGoogleVerify',
-            'closeGoogleVerify',
+            'bindGoogle',
             'bind',
             'antiFishingCode',
             'modifyFundPassword',

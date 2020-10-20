@@ -27,7 +27,7 @@ module.exports = {
             m('div.liftingBox content-width dis-flex justify-between align-stretch', [
                 m('div.leftBox', [
                     m('div', m(Block, { Icon: m('i.iconfont icon-GoogleVerification'), title: l180n.$t('10227') /* '谷歌验证' */, subhead: l180n.$t('10243') /* '用于提现和修改安全设置' */ }, m('div.dis-flex', [
-                        mainLogic.user?.googleId ? m('div.but has-bg-primary py-1 px-4', { onclick: this.handleToUrl.bind(this, '/closeGoogleVerify') }, l180n.$t('10245') /* '解绑' */) : m('div.but has-bg-primary py-1 px-4', { onclick: this.handleToUrl.bind(this, '/openGoogleVerify') }, l180n.$t('10231') /* '绑定' */)
+                        mainLogic.user?.googleId ? m('div.but has-bg-primary py-1 px-4', { onclick: this.handleToUrl.bind(this, '/bindGoogle') }, l180n.$t('10245') /* '解绑' */) : m('div.but has-bg-primary py-1 px-4', { onclick: this.handleToUrl.bind(this, '/bindGoogle') }, l180n.$t('10231') /* '绑定' */)
                     ]))),
                     m('div.addPadding py-5', m(Block, { Icon: m('i.iconfont icon-PhoneVerification'), title: l180n.$t('10228') /* '手机验证' */, subhead: l180n.$t('10243') /* '用于提现和修改安全设置' */ }, m('div.dis-flex', [
                         mainLogic.user?.phone ? m('div.has-text-primary', utils.hideAccountNameInfo(mainLogic.user?.phone)) : mainLogic.user?.phone + '' ? null : m('div.but has-bg-primary py-1 px-4', { onclick: this.handleToUrl.bind(this, { path: '/bind', data: { type: 'phone' } }) }, l180n.$t('10231') /* '绑定' */)
