@@ -79,12 +79,14 @@ module.exports = {
                 that.onTick(arg);
             }
         });
-        if (!this.sortState) {
+        if (gMktApi.displaySym.length < 1) {
             broadcast.onMsg({
                 key: "market",
                 cmd: broadcast.MSG_ASSETD_UPD,
                 cb: this.assetDCallBack.bind(this)
             });
+        } else {
+            !this.sortState && this.assetDCallBack();
         }
     },
     remove: function () {
@@ -92,13 +94,16 @@ module.exports = {
             key: 'market',
             isall: true
         });
+        // this.sortState = 0;
 
         this.unSubTick([...this.subList]);
     },
     // 全部行情排序
     assetDCallBack: function (res) {
         const displaySym = {};
-        res.data.forEach(item => {
+        const AssetD = gMktApi.AssetD;
+        gMktApi.displaySym.forEach(sym => {
+            const item = AssetD[sym];
             let key = item.Lbl;
             if (item.Lbl === 'main') {
                 switch (item.TrdCls) {

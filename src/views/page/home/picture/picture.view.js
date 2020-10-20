@@ -19,7 +19,7 @@ module.exports = {
         });
         market.sortState && this.assetDCallBack();
     },
-    assetDCallBack: function (arg) {
+    assetDCallBack: function () {
         const list = [...market.sortDisplaySym.forward];
         const tickData = {};
         list.forEach(item => {
