@@ -117,7 +117,7 @@ module.exports = {
                         m(Tooltip, { label: m('i.iconfont icon-Tooltip'), content: l180n.$t('10406') })
                     ]),
                     m('div.control extract-num', [
-                        m('input.input body-5 border-radius-small', { type: 'number', placeholder: `${l180n.$t('10105') /* '最小提币量' */}：${FromDataMode.currentFees.withdrawMin}`, onchange: this.handleExtractCoinNameVal, value: FromDataMode.extractCoin.coinNum }),
+                        m('input.input body-5 border-radius-small', { type: 'number', placeholder: `${l180n.$t('10105') /* '最小提币量' */}：${FromDataMode.currentFees.withdrawMin || '--'}`, onchange: this.handleExtractCoinNameVal, value: FromDataMode.extractCoin.coinNum }),
                         m('div.icon-right-all', [
                             m('span', FromDataMode.currentSelect.wType),
                             m('span.clickAll', { onclick: this.handleClickAll }, l180n.$t('10106') /* '全部' */)
@@ -125,9 +125,9 @@ module.exports = {
                     ]),
                     FromDataMode.errorShow.unmber.show ? m('div.errorToTal body-4', FromDataMode.errorShow.unmber.text) : null,
                     m('div.dis-flex item-space charge body-4', [
-                        m('div.mr-2', `${l180n.$t('10107') /* '可提' */}：${FromDataMode.currentExtractableNum}${FromDataMode.currentSelect.wType}`),
+                        m('div.mr-2', `${l180n.$t('10107') /* '可提' */}：${FromDataMode.currentExtractableNum || '--'}${FromDataMode.currentSelect.wType || '--'}`),
                         m('div', { class: `has-text-primary cursor-pointer ${FromDataMode.currentSelect.Setting?.canTransfer ? `` : `is-hidden`}`, onclick: () => { this.handleOpenTransfer(); } }, `${l180n.$t('10071') /* '划转' */}`),
-                        m('div', `${l180n.$t('10099') /* '手续费' */}：${FromDataMode.currentFees.withdrawFee}${FromDataMode.currentSelect.wType}`)
+                        m('div', `${l180n.$t('10099') /* '手续费' */}：${FromDataMode.currentFees.withdrawFee || '--'}${FromDataMode.currentSelect.wType || '--'}`)
                     ])
                 ]),
                 m('button.button is-info is-fullwidth', { onclick: () => { FromDataMode.handleSubmit(); } }, l180n.$t('10337') /* '确定' */)
