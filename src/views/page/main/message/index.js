@@ -33,6 +33,7 @@ const msg = {
                 this.delMsg(item.key);
             }
         }
+        document.getElementById('messageDiv').style.display = '';
         m.redraw();
     },
     createMsg: function ({ title, content, type }) {
@@ -83,7 +84,8 @@ const msg = {
             }
             this.messageContent.splice(i, 1);
         }
-        m.redraw();
+        // m.redraw();
+        document.getElementById('messageDiv').style.display = 'none';
     }
 };
 module.exports = {
@@ -94,7 +96,7 @@ module.exports = {
         msg.initMsg();
     },
     view: function (vnode) {
-        return m('div', { class: "window-message-box ma-6" }, msg.messageContent);
+        return m('div', { class: "window-message-box ma-6", id: "messageDiv" }, msg.messageContent);
     },
     onremove: function () {
     }

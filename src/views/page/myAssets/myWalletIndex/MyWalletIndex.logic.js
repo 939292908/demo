@@ -186,12 +186,9 @@ const model = {
         }
     },
     numberHandle: function (num1, num2, digit) {
+        /* eslint-disable */
+        // debugger;
         let newNum;
-        // digit === 4
-        //     ? newNum = (Number(num1) * 10000 + Number(num2) * 10000) / 10000
-        //     : (digit === 8
-        //         ? newNum = (Number(num1) * 100000000 + Number(num2) * 100000000) / 100000000
-        //         : newNum = (Number(num1) * 100 + Number(num2) * 100) / 100);
         // console.log(num1, num2, digit);
         switch (digit) {
         case 2:
@@ -204,12 +201,20 @@ const model = {
             newNum = (Number(num1) * 100000000 + Number(num2) * 100000000) / 100000000;
             break;
         }
-        const len = newNum.toString().split('.')[1]?.length;
+        /* 补零 start */
+        let len = newNum.toString().split('.')[1]?.length;
+        // 无小数情况
+        if(!len){
+            len = 0;
+            newNum = newNum.toString() + '.';
+        }
         if (len < digit) {
             for (let i = 0; i < digit - len; i++) {
                 newNum = newNum.toString() + '0';
             }
         }
+        if (newNum === 0) this.currency === 'BTC' ? newNum = '0.00000000' : newNum = '0.0000';
+        /* 补零 end */
         return newNum;
     },
     // 设置各种估值

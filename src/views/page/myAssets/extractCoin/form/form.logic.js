@@ -245,7 +245,7 @@ const extract = {
             return this.handleTotalShow({ content: l180n.$t('10404') /* '提币需邮件确认，请先绑定邮箱' */, buttonText: l180n.$t('10229') /* '邮箱验证' */, buttonClick: () => { window.router.push({ path: '/bind', data: { type: 'email' } }); } });
         }
         const doubleButtonCof = [
-            { text: l180n.$t('10227') /* '谷歌验证' */, issolid: false, click: () => { window.router.push({ path: '/openGoogleVerify' }); } },
+            { text: l180n.$t('10227') /* '谷歌验证' */, issolid: false, click: () => { window.router.push({ path: '/bindGoogle' }); } },
             { text: l180n.$t('10228') /* '手机验证' */, issolid: true, click: () => { window.router.push({ path: '/bind', data: { type: 'phone' } }); } }
         ];
         if (this.UserInfo.setting2fa.google !== 1 && this.UserInfo.setting2fa.phone !== 1) {
