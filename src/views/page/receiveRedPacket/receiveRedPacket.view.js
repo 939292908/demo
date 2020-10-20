@@ -76,9 +76,10 @@ module.exports = {
                     m('div', { class: "title-small" }, config.exchNameCapital),
                     m('div', { class: "has-text-level-3 body-4" }, I18n.$t('20064')/* 下载APP，轻松交易 */)
                 ]),
-                m('a', { href: redPacketUtils.getDownloadAppUrl() }, [
+                m('a', { href: redPacketUtils.getRegisterUrl(m.route.param().r) }, [
                     m(Button, {
-                        label: I18n.$t('20065')/* 下载 */,
+                        // label: I18n.$t('20065')/* 下载 */,
+                        label: I18n.$t('20141')/* 注册 */,
                         class: 'is-primary px-6',
                         size: 'size-2',
                         onclick() {}

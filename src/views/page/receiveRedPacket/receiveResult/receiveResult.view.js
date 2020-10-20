@@ -45,12 +45,12 @@ module.exports = {
                 }))
             ]),
             m('div', { class: `views-receive-result-footer px-6 pb-3 has-text-centered` }, [
-                m('a', { href: redPacketUtils.getDownloadAppUrl() }, m(Button, {
+                m('a', { href: redPacketUtils.getRegisterUrl(m.route.param().r) }, m(Button, {
                     label: I18n.$t('20057')/* 查看我的红包 */,
                     class: 'is-primary',
                     width: 1
                 })),
-                m('a', { class: `pt-2 body-4 has-text-level-3`, href: redPacketUtils.getDownloadAppUrl() }, I18n.$t('20058')/* 下载APP 收发红包 小事一桩 */)
+                m('a', { class: `pt-2 body-4 has-text-level-3`, href: redPacketUtils.getRegisterUrl(m.route.param().r) }, I18n.$t('20058')/* 下载APP 收发红包 小事一桩 */)
             ])
         ]);
     }

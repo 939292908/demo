@@ -4,6 +4,8 @@ const wlt = require('@/models/wlt/wlt');
 const broadcast = require('@/broadcast/broadcast');
 const ActiveLine = require('@/api').ActiveLine;
 const I18n = require('@/languages/I18n').default;
+const cryptoChar = require('@/util/cryptoChar');
+const globalModels = require('@/models/globalModels');
 
 const redPacketUtils = {
     // 构建红包领取记录 接口返回的数据
@@ -40,6 +42,13 @@ const redPacketUtils = {
     // 获取下载app地址
     getDownloadAppUrl() {
         return ActiveLine.INVITE + "/m/#/downloadApp";
+    },
+    // 获取注册地址 uid （邀请码）
+    getRegisterUrl(uid = globalModels.getAccount().uid || '') {
+        if (uid) {
+            uid = cryptoChar.encrypt(uid);
+        }
+        return window.location.origin + '/m/register/#/?r=' + uid;
     },
     // 获取红包领完用时
     getEndTime(time) {

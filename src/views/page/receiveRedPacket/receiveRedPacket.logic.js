@@ -173,6 +173,7 @@ const logic = {
                 window.router.push({
                     path: "/receiveResult", // 跳转抢红包结果
                     data: {
+                        r: m.route.param().r, // uid
                         gid: arg.result.data.gid, // 红包id
                         best: arg.result.data.best, // 手气最佳(0:否 1:是)
                         quota: arg.result.data.quota, // 抢的金额

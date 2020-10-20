@@ -11,8 +11,8 @@ const { HtmlConst, GetBase64 } = require('@/models/plus/index.js');
 const share = require('../../main/share/share.logic.js');
 const errCode = require('@/util/errCode').default;
 const utils = require('@/util/utils').default;
-const cryptoChar = require('@/util/cryptoChar');
-const globalModels = require('@/models/globalModels');
+// const cryptoChar = require('@/util/cryptoChar');
+// const globalModels = require('@/models/globalModels');
 const I18n = require('@/languages/I18n').default;
 
 const logic = {
@@ -50,7 +50,8 @@ const logic = {
                 // 生成二维码
                 logic.doShare({
                     isLucky: isLucky,
-                    link: window.location.origin + '/m/register/#/?r=' + cryptoChar.encrypt(globalModels.getAccount().uid),
+                    // link: window.location.origin + '/m/register/#/?r=' + cryptoChar.encrypt(globalModels.getAccount().uid),
+                    link: redPacketUtils.getRegisterUrl(),
                     // textArr: ['手气最佳', '8 USDT', '我抢到了来自', '178****7894', '的拼手气红包', '下载注册APP，轻松交易']
                     textArr: [
                         `${isLucky ? I18n.$t('20047')/* 手气最佳 */ : I18n.$t('20048')/* 我抢到了 */}`,

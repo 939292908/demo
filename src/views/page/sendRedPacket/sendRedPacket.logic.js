@@ -378,7 +378,7 @@ const logic = {
                 wlt.init();
                 logic.gid = arg.result.data.gid;
                 logic.toShare({
-                    link: window.location.origin + window.location.pathname + `/#!/receiveRedPacket?gid=${logic.gid}`
+                    link: window.location.origin + window.location.pathname + `/#!/receiveRedPacket?gid=${logic.gid}&r=${globalModels.getAccount().uid}`
                 });
                 console.log('发红包 success', arg.result.data);
             } else {
