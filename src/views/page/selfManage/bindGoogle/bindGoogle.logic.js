@@ -308,11 +308,16 @@ module.exports = {
         this.LcCode = ''; // 谷歌验证码值初始化
         this.showPassword = false;
         this.totalFlag = false;
+        console.log();
         broadcast.onMsg({
             key: 'index',
             cmd: broadcast.GET_USER_INFO_READY,
             cb: () => {
                 this.getUserInfo();
+                // console.log(window.router.getUrlInfo().params.type, this.currentOperation);
+                if (window.router.getUrlInfo().params.type !== this.currentOperation) {
+                    window.router.push('/securityManage');
+                }
             }
         });
         this.getUserInfo();
