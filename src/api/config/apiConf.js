@@ -92,38 +92,72 @@ class Conf {
         this.BUILD_ENV = aKey;
         this.isPlusApp = window.navigator.userAgent.includes('Html5Plus');
         // 设置默认线路
-        if (this.isPlusApp) {
-            // 如果是在app内部，则读本地储存的线路信息
-            const activeLine = utils.getItem('networks.svrline');
-            console.log('app当前选中的线路', activeLine, window.plus);
-            if (activeLine) {
-                this.Active = {
-                    Id: 0,
-                    Name: activeLine.name,
-                    WebAPI: activeLine.node,
-                    WSMKT: activeLine.market,
-                    WSTRD: activeLine.trade,
-                    // 邀请链接
-                    INVITE: activeLine.inviteUrl,
-                    // 网站地址
-                    WEBSITE: activeLine.webSite
-                };
-            } else {
-                this.Active = this.M[aKey].netLines[0];
-            }
+        const activeLine = utils.getItem('networks.svrline');
+        console.log('app当前选中的线路', activeLine, window.plus);
+        // 如果本地有app或者网页的线路存储，则读本地储存的线路信息
+        if (activeLine) {
+            this.Active = {
+                Id: 0,
+                Name: activeLine.name,
+                WebAPI: activeLine.node,
+                WSMKT: activeLine.market,
+                WSTRD: activeLine.trade,
+                // 邀请链接
+                INVITE: activeLine.inviteUrl,
+                // 网站地址
+                WEBSITE: activeLine.webSite
+            };
         } else {
+            // 否则，默认线路的第一条，网页的话读红包项目本地存储
             this.Active = this.M[aKey].netLines[0];
+            if (!this.isPlusApp) {
+                let active = window.localStorage.getItem('net_lines_active_web');
+                if (active) {
+                    active = JSON.parse(active);
+                    this.Active = active;
+                }
+            }
+        }
+        // 如果不是app，线路列表取本地存储
+        if (!this.isPlusApp) {
             let lines = window.localStorage.getItem('net_lines_config_web');
             if (lines) {
                 lines = JSON.parse(lines);
                 this.M[aKey].netLines = lines;
             }
-            let active = window.localStorage.getItem('net_lines_active_web');
-            if (active) {
-                active = JSON.parse(active);
-                this.Active = active;
-            }
         }
+        // if (this.isPlusApp) {
+        //     // 如果是在app内部，则读本地储存的线路信息
+        //     const activeLine = utils.getItem('networks.svrline');
+        //     console.log('app当前选中的线路', activeLine, window.plus);
+        //     if (activeLine) {
+        //         this.Active = {
+        //             Id: 0,
+        //             Name: activeLine.name,
+        //             WebAPI: activeLine.node,
+        //             WSMKT: activeLine.market,
+        //             WSTRD: activeLine.trade,
+        //             // 邀请链接
+        //             INVITE: activeLine.inviteUrl,
+        //             // 网站地址
+        //             WEBSITE: activeLine.webSite
+        //         };
+        //     } else {
+        //         this.Active = this.M[aKey].netLines[0];
+        //     }
+        // } else {
+        //     this.Active = this.M[aKey].netLines[0];
+        //     let lines = window.localStorage.getItem('net_lines_config_web');
+        //     if (lines) {
+        //         lines = JSON.parse(lines);
+        //         this.M[aKey].netLines = lines;
+        //     }
+        //     let active = window.localStorage.getItem('net_lines_active_web');
+        //     if (active) {
+        //         active = JSON.parse(active);
+        //         this.Active = active;
+        //     }
+        // }
     }
 
     GetActive() {
