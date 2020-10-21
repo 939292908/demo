@@ -10,7 +10,7 @@ module.exports = {
         return m('div.views-pages-home-footer pt-7', [
             m('div', { class: `container` }, [
                 // 底部
-                m('div', { class: `pub-footer columns pt-7 pb-6` }, [
+                m('div', { class: `pub-footer columns py-8` }, [
                     // 左边width
                     m('div', { class: `footer-left column is-6 pr-9` }, [
                         // logo
