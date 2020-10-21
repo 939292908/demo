@@ -5,13 +5,11 @@ module.exports = {
     exchNameCapital: 'LFSX',
     DOCTitle: "LFSX",
     DOCTitleEn: "",
-    themeDark: false,
-    exchInfo: {
-        exchCoin: "",
-        exchLogo: "",
-        helpCenter: {
-            langs: { zh: "zh-cn", tw: "zh-cn", en: "en-001" },
-            website: "https://gmex-help.zendesk.com"
-        }
-    }
+    themeDark: false
+    // exchInfo: {
+    //     helpCenter: {
+    //         langs: { zh: "zh-cn", tw: "zh-cn", en: "en-001" },
+    //         website: "https://gmex-help.zendesk.com"
+    //     }
+    // }
 };
