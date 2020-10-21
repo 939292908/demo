@@ -6,6 +6,7 @@ const { HtmlConst, GetBase64 } = require('@/models/plus/index.js');
 const Qrcode = require('qrcode');
 const errCode = require('@/util/errCode').default;
 const I18n = require('@/languages/I18n').default;
+const globalModels = require('@/models/globalModels');
 
 const logic = {
     shareLoading: false, // 分享按钮loading
@@ -95,7 +96,7 @@ const logic = {
         if (logic.redPacketInfoOption.status === 0) { // 继续发送该红包
             logic.shareLoading = true;
             logic.toShare({
-                link: window.location.origin + window.location.pathname + `/#!/receiveRedPacket?gid=${m.route.param().gid}`
+                link: window.location.origin + window.location.pathname + `/#!/receiveRedPacket?gid=${m.route.param().gid}&r=${globalModels.getAccount().uid}`
             });
         } else { // 知道了
             window.router.back();
