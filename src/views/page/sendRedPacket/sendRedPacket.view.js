@@ -93,6 +93,7 @@ module.exports = {
                         class: `input has-text-level-1 px-0`,
                         value: logic.infoFormItem.value,
                         placeholder: I18n.$t('20089')/* 大吉大利，全天盈利 */,
+                        maxlength: "22",
                         oninput(e) {
                             logic.infoFormItem.updateOption({ value: e.target.value });
                         }
