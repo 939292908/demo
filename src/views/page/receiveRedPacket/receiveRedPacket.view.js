@@ -144,7 +144,7 @@ module.exports = {
                                     ]),
                                     m('span.spacer'),
                                     m('span.has-text-left' + (item.Id !== apiLines.activeLine.Id ? '' : '.has-text-primary'), {}, [
-                                        `${I18n.$t('20072')/* 延迟 */} ` + (apiLines.wsResponseSpeed[i] || "--") + '/' + (apiLines.apiResponseSpeed[i] || "--") + 'ms'
+                                        `${I18n.$t('20072')/* 延迟 */} ` + /* (apiLines.wsResponseSpeed[i] || "--") + '/' + */(apiLines.apiResponseSpeed[i] || "--") + 'ms'
                                         // I18n.$t('10155') + ' ' + (apiLines.wsResponseSpeed[i] || '--') + '/' + (apiLines.apiResponseSpeed[i] || '--') + 'ms'
                                     ])
                                 ]),

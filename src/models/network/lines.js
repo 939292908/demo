@@ -44,7 +44,7 @@ const lines = {
         if (tm - this.testStartTime < 60 * 1000) return;
         this.testStartTime = Date.now();
         // ws测速
-        this.testTradeNetSpeed();
+        // this.testTradeNetSpeed();
         // api测速
         this.testHttpNetSpeed();
     },
