@@ -71,7 +71,7 @@ module.exports = {
             ]),
             // 底部
             m('div', { class: `views-receive-red-packet-footer mx-4 my-3 has-bg-level-2 border-radius-small pa-5 is-flex is-align-center` }, [
-                m('iframe', { src: require("@/assets/img/logo2.svg").default, width: "48", height: "48", class: "mr-3" }),
+                m('img', { src: require("@/assets/img/logo2.svg").default, width: "48", height: "48", class: "mr-3 logo2" }),
                 m('div', { class: `spacer` }, [
                     m('div', { class: "title-small" }, config.exchNameCapital),
                     m('div', { class: "has-text-level-3 body-4" }, I18n.$t('20064')/* 下载APP，轻松交易 */)
