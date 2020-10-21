@@ -5,7 +5,7 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const Uglifyjs = require('uglifyjs-webpack-plugin');
 
-const publicPath = "https://static.abkjl.com/vp3/m/";
+const publicPath = "https://static.abkjl.com/vp3/m/redpacket/";
 
 module.exports = {
     mode: "production",
