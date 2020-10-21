@@ -38,6 +38,7 @@ const logic = {
         Object.keys(params).forEach(key => (this[key] = params[key]));
         this.reset(); // 重置
         this.init();
+        logic.setMaxTransfer(); // 设置 最大划转
     },
     onOk() {
         this.submit();
