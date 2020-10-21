@@ -171,6 +171,7 @@
 
     img {
       vertical-align: middle;
+      height: 100%;
     }
 
     span {
@@ -192,11 +193,15 @@
         cursor: pointer;
       }
     }
+    div div{
+      line-height: 25px;
+    }
   }
 
   .slideshow-trumpet-more {
     color: var(--c-primary-darken);
     cursor: pointer;
+    line-height: 25px;
 
     &:after {
       content: '';
@@ -206,7 +211,7 @@
       display: inline-block;
       border-top: 2px solid var(--c-primary-darken);
       border-right: 2px solid var(--c-primary-darken);
-      transform: rotate(45deg)
+      transform: rotate(45deg);
     }
   }
 }
