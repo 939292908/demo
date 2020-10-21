@@ -444,11 +444,10 @@ const logic = {
         } else {
             this.wltMoney = "--";
         }
-        // console.log(this.wltMoney, 77777);
+        // console.log(this.wltMoney, "最大划转");
     },
     oninit(vnode) {
         // utils.getItem('loginState')
-        // console.log(utils.getItem('loginState'), 77777777);
         if (!utils.getItem('ex-session')) {
             // window.open('/m/login/', '_self');
             window.open('/m/#/userLogin', '_self');
@@ -467,7 +466,7 @@ const logic = {
             key: "sendRedP_GET_USER_INFO_READY",
             cmd: broadcast.GET_USER_INFO_READY,
             cb: () => {
-                console.log(555555, "// 获取用户信息 成功");
+                // console.log(555555, "// 获取用户信息 成功");
                 this.getRedPackCfg();
             }
         });
@@ -476,7 +475,7 @@ const logic = {
             key: "sendRedP_GET_USER_INFO_ERROR",
             cmd: broadcast.GET_USER_INFO_ERROR,
             cb: () => {
-                console.log(6666666, "// 获取用户信息 失败");
+                // console.log("// 获取用户信息 失败");
                 window.open('/m/#/userLogin', '_self');
             }
         });
