@@ -7,7 +7,7 @@
 # 渠道名称数组
 exch_arr=(gmex ucex ukex lfsx cointobe xstar b20 gaar mememex xtoken btcex stcex gdex boex bma bseedex vp16 vp17 ooex cmex vp20 xmex vp22 vp23 vp24 vp25 bmex wjex vp28 vp29 vbit amberex vp32 umex vp34 vp35 kmex rockbit vp38 webi)
 
-exchId=21
+exchId=3
 exchName=${exch_arr[$exchId]}
 env=$1
 publicPath="https\:\/\/static.abkjl.com\/vp$exchId\/m\/redpacket\/"
