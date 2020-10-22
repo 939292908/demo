@@ -14,6 +14,7 @@ import(`./resource/${locale}.json`).then(arg =>{
     const msg = {}
     msg[locale] = arg.default
     di18n.setMessages(msg)
+    broadcast.emit({cmd:broadcast.MSG_LANGUAGE_UPD});
 });
 
 export default {

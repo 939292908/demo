@@ -450,6 +450,10 @@ const logic = {
         }
         // console.log(this.wltMoney, 77777);
     },
+    // 初始化语言
+    initLang() {
+        logic.infoFormItem.value = I18n.$t('20089')/* 大吉大利，全天盈利 */; // 祝福
+    },
     oninit(vnode) {
         // utils.getItem('loginState')
         // console.log(utils.getItem('loginState'), 77777777);
@@ -487,13 +491,13 @@ const logic = {
 
         models.getUserInfo();
         // 多语言文件更新
-        // broadcast.onMsg({
-        //     key: "sendRedP_MSG_LANGUAGE_UPD",
-        //     cmd: broadcast.MSG_LANGUAGE_UPD,
-        //     cb: function () {
-        //         console.log(666666, "多语言文件更新");
-        //     }
-        // });
+        broadcast.onMsg({
+            key: "sendRedP_MSG_LANGUAGE_UPD",
+            cmd: broadcast.MSG_LANGUAGE_UPD,
+            cb: function () {
+                logic.initLang();
+            }
+        });
     },
     oncreate(vnode) {
         // share.openShare({
@@ -523,11 +527,11 @@ const logic = {
             cmd: broadcast.GET_USER_INFO_READY,
             isall: true
         });
-        // broadcast.offMsg({
-        //     key: "sendRedP_MSG_LANGUAGE_UPD",
-        //     cmd: broadcast.MSG_LANGUAGE_UPD,
-        //     isall: true
-        // });
+        broadcast.offMsg({
+            key: "sendRedP_MSG_LANGUAGE_UPD",
+            cmd: broadcast.MSG_LANGUAGE_UPD,
+            isall: true
+        });
     },
     // 取消分享回调
     cancelCallback(params) {
