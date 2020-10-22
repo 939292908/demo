@@ -14,13 +14,17 @@ const logic = {
     // 头部 组件配置
     headerOption: {
         class: "",
-        left: {
-            onclick() {
-                window.router.back();
-            }
+        left() {
+            return {
+                onclick() {
+                    window.router.back();
+                }
+            };
         },
-        center: {
-            label: I18n.$t('20036')/* 我的红包 */
+        center() {
+            return {
+                label: I18n.$t('20036')/* 我的红包 */
+            };
         }
     },
     currentNavId: 1,

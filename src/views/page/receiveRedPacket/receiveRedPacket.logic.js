@@ -19,17 +19,21 @@ const logic = {
     isShowSwitchLinesView: false, // 线路切换 弹框
     // 头部 组件配置
     headerOption: {
-        left: {
-            label: m('div')
-            // onclick() {
-            //     window.router.back();
-            // }
+        left() {
+            return {
+                label: m('div')
+                // onclick() {
+                //     window.router.back();
+                // }
+            };
         },
-        right: {
-            label: I18n.$t('20059')/* 线路 */,
-            onclick() {
-                logic.openSwitchLineView();
-            }
+        right() {
+            return {
+                label: I18n.$t('20059')/* 线路 */,
+                onclick() {
+                    logic.openSwitchLineView();
+                }
+            };
         }
     },
     // 红包top 组件配置

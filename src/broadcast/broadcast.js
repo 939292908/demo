@@ -34,7 +34,7 @@ module.exports = {
     MSG_WLT_UPD: 'MSG_WLT_UPD',
     // 资产界面切换估值币种
     CHANGE_SW_CURRENCY: 'CHANGE_SW_CURRENCY',
-    // 资产界面切换估值币种
+    // 多语言文件更新
     MSG_LANGUAGE_UPD: 'MSG_LANGUAGE_UPD',
     // 刷新资产记录
     MSG_ASSET_RECORD_UPD: 'MSG_ASSET_RECORD_UPD',
