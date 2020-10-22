@@ -48,12 +48,12 @@ else
     _dir=$exchName
 fi
 
-dir=$_dir/vpall/w/redpacket
+dir=$_dir/vpall/m/redpacket
 echo $dir
 
 mkdir $_dir
 mkdir $_dir/vpall/
-mkdir $_dir/vpall/w/
+mkdir $_dir/vpall/m/
 mkdir $dir
 
 echo mkdir $dir
