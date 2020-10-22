@@ -94,6 +94,8 @@ const logic = {
             item.quota = utils.toFixedForFloor(item.quota, 4); // 币金额
             return item;
         });
+        // console.log(444444, wlt.wallet);
+        // logic.sumData(); // 求和数据
         m.redraw();
     },
     // 构建已发红包列表
@@ -103,6 +105,8 @@ const logic = {
             item.quota2 = utils.toFixedForFloor(item.quota2, 4); // 币金额
             return item;
         });
+        // console.log(444444, wlt.wallet);
+        // logic.sumData(); // 求和数据
         m.redraw();
     },
     // 获取领取记录
@@ -143,6 +147,11 @@ const logic = {
             console.log('发送记录 error', err);
         });
     },
+    // 求和数据
+    sumData() {
+        logic.getReceiveMoneySum(); // 获取领红包累计金额
+        logic.getSendMoneySum(); // 获取发红包累计金额
+    },
     oninit(vnode) {
         wlt.init();
         // wlt完成 广播
@@ -152,17 +161,26 @@ const logic = {
             cb: () => {
                 this.getrecv();// 获取领取记录
                 this.getsendrec();// 获取发送记录
+                logic.sumData(); // 求和数据
             }
         });
-        // wlt更新 广播
+        // 添加ASSETD全局广播，用于资产估值计算
         broadcast.onMsg({
-            key: "myRedP_MSG_WLT_UPD",
-            cmd: broadcast.MSG_WLT_UPD,
-            cb: () => {
-                logic.getReceiveMoneySum(); // 获取领红包累计金额
-                logic.getSendMoneySum(); // 获取发红包累计金额
+            key: "myRedP_MSG_ASSETD_UPD",
+            cmd: broadcast.MSG_ASSETD_UPD,
+            cb: function () {
+                logic.sumData(); // 求和数据
             }
         });
+        // // wlt更新 广播
+        // broadcast.onMsg({
+        //     key: "myRedP_MSG_WLT_UPD",
+        //     cmd: broadcast.MSG_WLT_UPD,
+        //     cb: () => {
+        //         logic.getReceiveMoneySum(); // 获取领红包累计金额
+        //         logic.getSendMoneySum(); // 获取发红包累计金额
+        //     }
+        // });
     },
     oncreate(vnode) {
     },
@@ -176,8 +194,8 @@ const logic = {
             isall: true
         });
         broadcast.offMsg({
-            key: "myRedP_MSG_WLT_UPD",
-            cmd: broadcast.MSG_WLT_UPD,
+            key: "myRedP_MSG_ASSETD_UPD",
+            cmd: broadcast.MSG_ASSETD_UPD,
             isall: true
         });
     }
