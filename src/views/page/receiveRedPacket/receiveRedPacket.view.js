@@ -13,7 +13,7 @@ const redPacketUtils = require('@/util/redPacketUtils').default;
 const config = require('@/config.js');
 const globalModels = require('@/models/globalModels');
 const I18n = require('@/languages/I18n').default;
-// const Loading = require('@/views/components/common/Loading/Loading.view');
+const Loading = require('@/views/components/common/Loading/Loading.view');
 
 module.exports = {
     oninit: vnode => logic.oninit(vnode),
@@ -22,7 +22,7 @@ module.exports = {
     onremove: vnode => logic.onremove(vnode),
     view(vnode) {
         return m('div', { class: `pub-view views-receive-red-packet` }, [
-            // m(Loading, "红包准备中..."),
+            m(Loading, { label: "红包准备中..." }),
             m(Header, logic.headerOption),
             m('div', { class: `pub-content has-text-centered` }, [
                 // 抢红包头部

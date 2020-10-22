@@ -1,9 +1,9 @@
 # 打包命令:
 # 渠道:30
 # 环境:prod
-# ./build_zip.sh
+# ./build_zip_linux.sh
 # 环境:test
-# ./build_zip.sh test
+# ./build_zip_linux.sh test
 # 渠道名称数组
 exch_arr=(gmex ucex ukex lfsx cointobe xstar b20 gaar mememex xtoken btcex stcex gdex boex bma bseedex vp16 vp17 ooex cmex vp20 xmex vp22 vp23 vp24 vp25 bmex wjex vp28 vp29 vbit amberex vp32 umex vp34 vp35 kmex rockbit vp38 webi)
 
