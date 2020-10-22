@@ -22,7 +22,7 @@ module.exports = {
     onremove: vnode => logic.onremove(vnode),
     view(vnode) {
         return m('div', { class: `pub-view views-receive-red-packet` }, [
-            m(Loading, { label: "红包准备中..." }),
+            m(Loading, { loading: true, label: "红包准备中..." }),
             m(Header, logic.headerOption),
             m('div', { class: `pub-content has-text-centered` }, [
                 // 抢红包头部
