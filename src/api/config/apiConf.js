@@ -99,7 +99,7 @@ class Conf {
             this.Active = {
                 Id: 0,
                 Name: activeLine.name,
-                WebAPI: activeLine.node,
+                WebAPI: activeLine.apihost + activeLine.node,
                 WSMKT: activeLine.market,
                 WSTRD: activeLine.trade,
                 // 邀请链接

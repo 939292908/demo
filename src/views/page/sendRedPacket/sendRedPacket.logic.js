@@ -174,17 +174,21 @@ const logic = {
     },
     // 头部 组件配置
     headerOption: {
-        left: {
-            onclick() {
-                window.router.back();
-            }
+        left() {
+            return {
+                onclick() {
+                    window.router.back();
+                }
+            };
         },
-        right: {
-            label: I18n.$t('20036'), // '我的红包'
-            class: 'has-text-level-1',
-            onclick() {
-                window.router.push('/myRedPacket');
-            }
+        right() {
+            return {
+                label: I18n.$t('20036'), // '我的红包'
+                class: 'has-text-level-1',
+                onclick() {
+                    window.router.push('/myRedPacket');
+                }
+            };
         }
     },
     // 金额 fomeItem组件配置
@@ -446,6 +450,10 @@ const logic = {
         }
         // console.log(this.wltMoney, "最大划转");
     },
+    // 初始化语言
+    initLang() {
+        logic.infoFormItem.value = I18n.$t('20089')/* 大吉大利，全天盈利 */; // 祝福
+    },
     oninit(vnode) {
         // utils.getItem('loginState')
         if (!utils.getItem('ex-session')) {
@@ -481,6 +489,14 @@ const logic = {
         });
 
         models.getUserInfo();
+        // 多语言文件更新
+        broadcast.onMsg({
+            key: "sendRedP_MSG_LANGUAGE_UPD",
+            cmd: broadcast.MSG_LANGUAGE_UPD,
+            cb: function () {
+                logic.initLang();
+            }
+        });
     },
     oncreate(vnode) {
         // share.openShare({
@@ -508,6 +524,11 @@ const logic = {
         broadcast.offMsg({
             key: "sendRedP_GET_USER_INFO_READY",
             cmd: broadcast.GET_USER_INFO_READY,
+            isall: true
+        });
+        broadcast.offMsg({
+            key: "sendRedP_MSG_LANGUAGE_UPD",
+            cmd: broadcast.MSG_LANGUAGE_UPD,
             isall: true
         });
     },

@@ -32,7 +32,7 @@ const logic = {
             id: "04",
             label: I18n.$t('20076')/* 法币账户 */
         }
-    ],
+    ], // 所有钱包账户
     // 更新划转弹框数据
     updateOption(params) {
         Object.keys(params).forEach(key => (this[key] = params[key]));
@@ -184,6 +184,35 @@ const logic = {
         this.transferMoney = "";
         this.fromDropdown.currentId = "01";
     },
+    // 初始化语言
+    initLang() {
+        // 所有钱包账户
+        logic.baseWltList = [
+            {
+                id: "01",
+                label: I18n.$t('20073')/* 合约账户 */
+            },
+            {
+                id: "02",
+                label: I18n.$t('20074')/* 币币账户 */
+            },
+            {
+                id: "03",
+                label: I18n.$t('20075')/* 我的钱包 */
+            },
+            {
+                id: "04",
+                label: I18n.$t('20076')/* 法币账户 */
+            }
+        ];
+        // to钱包 列表
+        logic.toWltList = [
+            {
+                id: "03",
+                label: I18n.$t('20075')/* 我的钱包 */
+            }
+        ];
+    },
     oninit(vnode) {
         wlt.init(); // 更新数据
         broadcast.onMsg({
@@ -200,6 +229,14 @@ const logic = {
                 // this.initTransferInfo();
             }
         });
+        // 多语言文件更新
+        broadcast.onMsg({
+            key: "transfer_MSG_LANGUAGE_UPD",
+            cmd: broadcast.MSG_LANGUAGE_UPD,
+            cb: function () {
+                logic.initLang();
+            }
+        });
     },
     onremove(vnode) {
         wlt.remove();
@@ -211,6 +248,11 @@ const logic = {
         broadcast.offMsg({
             key: "Transfer",
             cmd: broadcast.MSG_WLT_UPD,
+            isall: true
+        });
+        broadcast.offMsg({
+            key: "transfer_MSG_LANGUAGE_UPD",
+            cmd: broadcast.MSG_LANGUAGE_UPD,
             isall: true
         });
     }

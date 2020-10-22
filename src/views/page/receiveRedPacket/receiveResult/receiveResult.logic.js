@@ -16,14 +16,18 @@ const logic = {
     redPacketList: [],
     // 头部 组件配置
     headerOption: {
-        left: {
-            label: m('div')
-            // onclick() {
-            //     window.router.back();
-            // }
+        left() {
+            return {
+                label: m('div')
+                // onclick() {
+                //     window.router.back();
+                // }
+            };
         },
-        center: {
-            // label: "抢红包"
+        center() {
+            return {
+                // label: "抢红包"
+            };
         }
     },
     // 红包top 组件配置

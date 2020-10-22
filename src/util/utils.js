@@ -2,7 +2,7 @@ const utils = {};
 const I18n = require('@/languages/I18n').default;
 
 utils.setItem = function(key, val) {
-    if (window.window.plus) {
+    if (window.plus) {
         try {
             window.plus.storage.setItem(key, JSON.stringify(val));
         } catch (e) {
@@ -17,7 +17,7 @@ utils.setItem = function(key, val) {
 };
 
 utils.getItem = function(key) {
-    if (window.window.plus) {
+    if (window.plus) {
         try {
             return JSON.parse(window.plus.storage.getItem(key));
         } catch (e) {
@@ -32,7 +32,7 @@ utils.getItem = function(key) {
     }
 };
 utils.removeItem = function(key) {
-    if (window.window.plus) {
+    if (window.plus) {
         try {
             window.plus.storage.removeItem(key);
         } catch (e) {

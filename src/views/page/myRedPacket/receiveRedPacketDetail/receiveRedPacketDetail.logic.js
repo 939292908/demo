@@ -18,6 +18,7 @@ const I18n = require('@/languages/I18n').default;
 const logic = {
     best: 0, // 手气最佳(0:否 1:是)
     quota: 0, // 抢的金额
+    shareLoading: false, // 分享按钮loading
     // 已抢红包列表
     redPacketList: [],
     // 红包来源
@@ -31,37 +32,43 @@ const logic = {
     },
     // 头部 组件配置
     headerOption: {
-        left: {
-            onclick() {
-                window.router.back();
-            }
+        left() {
+            return {
+                onclick() {
+                    window.router.back();
+                }
+            };
         },
-        center: {
-            label: I18n.$t('20046')/* 详情记录 */
+        center() {
+            return {
+                label: I18n.$t('20046')/* 详情记录 */
+            };
         },
-        right: {
-            label: m('i', { class: `iconfont icon-fenxiang has-text-level-3` }),
-            loading: false, // 分享按钮loading
-            onclick() {
-                logic.headerOption.right.loading = true; // 分享按钮loading
-                console.log(logic.redPacketTopOption, 65555);
-                const params = logic.redPacketTopOption;
-                const isLucky = logic.best === 1 && logic.redPacketTopOption.status === 1;
-                // 生成二维码
-                logic.doShare({
-                    isLucky: isLucky,
-                    // link: window.location.origin + '/m/register/#/?r=' + cryptoChar.encrypt(globalModels.getAccount().uid),
-                    link: redPacketUtils.getRegisterUrl(),
-                    // textArr: ['手气最佳', '8 USDT', '我抢到了来自', '178****7894', '的拼手气红包', '下载注册APP，轻松交易']
-                    textArr: [
-                        `${isLucky ? I18n.$t('20047')/* 手气最佳 */ : I18n.$t('20048')/* 我抢到了 */}`,
-                        `${logic.quota} ${params.coin}`,
-                        `${isLucky ? I18n.$t('20049')/* 我抢到了来自 */ : I18n.$t('20013'/* 来自 */)}`,
-                        `${logic.getFromName(params)}`,
-                        `${I18n.$t('20014'/* 的 */)}${params.type * 1 === 0 ? I18n.$t('20011'/* 拼手气红包 */) : I18n.$t('20010'/* 普通红包 */)}`,
-                        I18n.$t('20064')/* 下载APP，轻松交易 */]
-                });
-            }
+        right() {
+            return {
+                label: m('i', { class: `iconfont icon-fenxiang has-text-level-3` }),
+                loading: logic.shareLoading, // 分享按钮loading
+                onclick() {
+                    logic.shareLoading = true; // 分享按钮loading
+                    console.log(logic.redPacketTopOption, 65555);
+                    const params = logic.redPacketTopOption;
+                    const isLucky = logic.best === 1 && logic.redPacketTopOption.status === 1;
+                    // 生成二维码
+                    logic.doShare({
+                        isLucky: isLucky,
+                        // link: window.location.origin + '/m/register/#/?r=' + cryptoChar.encrypt(globalModels.getAccount().uid),
+                        link: redPacketUtils.getRegisterUrl(),
+                        // textArr: ['手气最佳', '8 USDT', '我抢到了来自', '178****7894', '的拼手气红包', '下载注册APP，轻松交易']
+                        textArr: [
+                            `${isLucky ? I18n.$t('20047')/* 手气最佳 */ : I18n.$t('20048')/* 我抢到了 */}`,
+                            `${logic.quota} ${params.coin}`,
+                            `${isLucky ? I18n.$t('20049')/* 我抢到了来自 */ : I18n.$t('20013'/* 来自 */)}`,
+                            `${logic.getFromName(params)}`,
+                            `${I18n.$t('20014'/* 的 */)}${params.type * 1 === 0 ? I18n.$t('20011'/* 拼手气红包 */) : I18n.$t('20010'/* 普通红包 */)}`,
+                            I18n.$t('20064')/* 下载APP，轻松交易 */]
+                    });
+                }
+            };
         }
     },
     // 红包top 组件配置
@@ -146,7 +153,7 @@ const logic = {
                     }, res => {
                         console.log('GetBase64 getWebView', res);
                         share.openShare({ needShareImg: res, link: link });
-                        logic.headerOption.right.loading = false; // 分享按钮loading
+                        logic.shareLoading = false; // 分享按钮loading
                     });
                 });
             }).catch(err => {
@@ -161,7 +168,7 @@ const logic = {
         logic.best = m.route.param().best * 1; // 是否手气最佳
         logic.quota = m.route.param().quota; // 抢的金额
         if (!window.plus) { // 非app中打开，隐藏右边分享按钮
-            logic.headerOption.right = {};
+            logic.headerOption.right = "";
         }
     },
     oncreate(vnode) {
