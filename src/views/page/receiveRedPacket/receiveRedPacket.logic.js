@@ -36,6 +36,11 @@ const logic = {
             };
         }
     },
+    loadingOption: {
+        type: 1,
+        loading: false,
+        label: "红包准备中..."
+    },
     // 红包top 组件配置
     redPacketTopOption: {
         hiddenLine: true
