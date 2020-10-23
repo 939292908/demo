@@ -551,8 +551,8 @@ const logic = {
     // 分享
     toShare: function(param) {
         const link = param.link; // 需要分享的链接
-        const img1 = window.location.origin + window.location.pathname + require('@/assets/img/shareBg.jpg').default;
-        const img2 = window.location.origin + window.location.pathname + require('@/assets/img/logo.png').default;
+        const img1 = require('@/assets/img/shareBg.jpg').default;
+        const img2 = require('@/assets/img/logo.png').default;
         console.log(img1, img2);
         // share.openShare({
         //     needShareImg: null,

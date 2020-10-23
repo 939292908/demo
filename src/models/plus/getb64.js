@@ -196,7 +196,7 @@ getb64.loadImageUrlArray = (urlArray, cb) => {
             bitmapLoadImg(mUrl, next, close);
         } else if (mUrl.indexOf('https://') > -1 || mUrl.indexOf('http://') > -1) {
             loadImg(mUrl, next, close);
-        } else {
+        } else if (mUrl.includes('base64') && mUrl.includes('data:image')) {
             urlBase64[idx] = mUrl;
             if (i === urlArray.length - 1) {
                 cb(urlBase64);
@@ -204,6 +204,16 @@ getb64.loadImageUrlArray = (urlArray, cb) => {
                 i++;
                 load(urlArray[i], i);
             }
+        } else if (
+            !mUrl.includes('base64') &&
+            !mUrl.includes('data:image') &&
+            !mUrl.includes('file://') &&
+            !mUrl.includes('https://') &&
+            !mUrl.indexOf('http://')
+        ) {
+            loadImg(window.location.origin + window.location.pathname + mUrl, next, close);
+        } else {
+            //
         }
     };
 
