@@ -12,13 +12,17 @@ const logic = {
     shareLoading: false, // 分享按钮loading
     // 头部 组件配置
     headerOption: {
-        left: {
-            onclick() {
-                window.router.back();
-            }
+        left() {
+            return {
+                onclick() {
+                    window.router.back();
+                }
+            };
         },
-        center: {
-            label: I18n.$t('20046')/* 详情记录 */
+        center() {
+            return {
+                label: I18n.$t('20046')/* 详情记录 */
+            };
         }
     },
     // 红包top 组件配置

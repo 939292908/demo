@@ -1,0 +1,72 @@
+// 动画1
+@keyframes loadingAnimation1 {
+    0% {
+        opacity: .5;
+    }
+
+    50% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: .5;
+    }
+}
+// 动画2
+@keyframes loadingAnimation2 {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.loading-animation-1 {
+    animation: loadingAnimation1 3s infinite;
+}
+
+.loading-animation-2 {
+    animation: loadingAnimation2 .4s infinite linear;
+}
+
+.pub-loading-bg {
+    position: fixed;
+    z-index: 999999;
+    width: 100%;
+    height: 100%;
+    
+    .pub-loading-content {
+        position: absolute;
+        bottom: 50%;
+        left: 50%;
+        transform: translateX(-50%);
+        text-align: center;
+
+        .pub-loading-img {
+            width: 92px;
+            height: 72px;
+    
+        }
+    
+        .pub-loading-label {
+        }
+    }
+
+    .pub-loading-content-default {
+        width: 48px;
+        height: 32px;
+        background: rgba(34, 36, 43, 0.5);
+        border-radius: 4px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        .pub-loading-img {
+            width: 24px;
+            height: 24px;
+        }
+    }
+
+}
