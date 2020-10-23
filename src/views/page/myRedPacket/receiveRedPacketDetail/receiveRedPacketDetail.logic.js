@@ -152,9 +152,9 @@ const logic = {
     doShare(param) {
         const link = param.link; // 需要分享的链接
         const img1 = param.isLucky
-            ? window.location.origin + window.location.pathname + require('@/assets/img/lucky.png').default
-            : window.location.origin + window.location.pathname + require('@/assets/img/work.png').default;
-        const img2 = window.location.origin + window.location.pathname + require('@/assets/img/logo.png').default;
+            ? require('@/assets/img/lucky.png').default
+            : require('@/assets/img/work.png').default;
+        const img2 = require('@/assets/img/logo.png').default;
         console.log(img1, img2);
         if (window.plus) {
             Qrcode.toDataURL(link).then(base64 => {
