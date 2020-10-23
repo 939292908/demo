@@ -28,7 +28,7 @@ module.exports = {
                         drop_console: true
                     }
                 },
-                sourceMap: true,
+                sourceMap: false,
                 parallel: true
             })
         ]
