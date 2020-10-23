@@ -38,7 +38,7 @@ const logic = {
     },
     loadingOption: {
         type: 1,
-        loading: false,
+        loading: true,
         label: "红包准备中..."
     },
     // 红包top 组件配置
