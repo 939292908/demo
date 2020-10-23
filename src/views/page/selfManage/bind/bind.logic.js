@@ -68,11 +68,12 @@ module.exports = {
     },
 
     firstValidateSmsAndGoogle() {
+        const areaCode = globalModels.getAccount()?.nationNo || '0086';
         validate.activeSmsAndGoogle({
-            securePhone: '00' + this.areaCode + '-' + globalModels.getAccount().phone, // 加密手机号带区号
-            areaCode: '00' + this.areaCode, // 区号
+            securePhone: areaCode + '-' + globalModels.getAccount().phone, // 加密手机号带区号
+            areaCode: areaCode, // 区号
             phone: globalModels.getAccount().phone, // 手机号
-            phoneNum: '00' + this.areaCode + '-' + globalModels.getAccount().phone, // 手机号
+            phoneNum: areaCode + '-' + globalModels.getAccount().phone, // 手机号
             lang: I18n.getLocale() // 语言
         }, () => {
             this.queryUserInfo();
@@ -93,11 +94,12 @@ module.exports = {
     },
 
     firstValidateSms() {
+        const areaCode = globalModels.getAccount()?.nationNo || '0086';
         validate.activeSms({
-            securePhone: '00' + this.areaCode + '-' + globalModels.getAccount().phone, // 加密手机号带区号
-            areaCode: '00' + this.areaCode, // 区号
+            securePhone: areaCode + '-' + globalModels.getAccount().phone, // 加密手机号带区号
+            areaCode: areaCode, // 区号
             phone: globalModels.getAccount().phone, // 手机号
-            phoneNum: '00' + this.areaCode + '-' + globalModels.getAccount().phone, // 手机号
+            phoneNum: areaCode + '-' + globalModels.getAccount().phone, // 手机号
             lang: I18n.getLocale() // 语言
         }, () => {
             this.queryUserInfo();
