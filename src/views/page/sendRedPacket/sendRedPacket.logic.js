@@ -321,6 +321,7 @@ const logic = {
                 });
             }
         }).catch(function(err) {
+            logic.loadingOption.isShow.isShow1 = false;
             console.log('红包配置 error', err);
         });
     },
