@@ -21,8 +21,8 @@ const logic = {
     loadingOption: {
         type: 1,
         isShow: {
-            isShow1: true,
-            isShow2: true
+            isShow1: false,
+            isShow2: false
         }
     },
     // 头部 组件配置
@@ -209,8 +209,8 @@ const logic = {
         };
         logic.loadingOption.isShow.isShow1 = true;
         Http.getgiftrec(params).then(arg => {
+            logic.loadingOption.isShow.isShow1 = false;
             if (arg.result.code === 0) {
-                logic.loadingOption.isShow.isShow1 = false;
                 // 领取记录列表
                 redPacketUtils.buildGiftrecData(arg.result.data).then(data => {
                     logic.redPacketList = data;
@@ -224,6 +224,7 @@ const logic = {
                 });
             }
         }).catch(function(err) {
+            logic.loadingOption.isShow.isShow1 = false;
             console.log('领取记录 error', err);
         });
     },
@@ -234,8 +235,8 @@ const logic = {
         };
         logic.loadingOption.isShow.isShow2 = true;
         Http.getdetails(params).then(function(arg) {
+            logic.loadingOption.isShow.isShow2 = false;
             if (arg.result.code === 0) {
-                logic.loadingOption.isShow.isShow2 = false;
                 const data = arg.result.data;
                 // 红包头部 组件配置
                 logic.redPacketTopOption = JSON.parse(JSON.stringify(data));
@@ -253,6 +254,7 @@ const logic = {
                 });
             }
         }).catch(function(err) {
+            logic.loadingOption.isShow.isShow2 = false;
             console.log('红包详情 error', err);
         });
     },

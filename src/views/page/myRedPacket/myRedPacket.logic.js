@@ -15,8 +15,8 @@ const logic = {
     // loading 配置
     loadingOption: {
         isShow: {
-            isShow1: true,
-            isShow2: true
+            isShow1: false,
+            isShow2: false
         }
     },
     // 头部 组件配置
@@ -128,8 +128,8 @@ const logic = {
         };
         logic.loadingOption.isShow.isShow1 = true;
         Http.getrecv(params).then(arg => {
+            logic.loadingOption.isShow.isShow1 = false;
             if (arg.result.code === 0) {
-                logic.loadingOption.isShow.isShow1 = false;
                 this.buildReceiveRedPacketList(arg.result.data);
                 console.log('领取记录 success', arg);
             } else {
@@ -139,6 +139,7 @@ const logic = {
                 });
             }
         }).catch(function(err) {
+            logic.loadingOption.isShow.isShow1 = false;
             console.log('领取记录 error', err);
         });
     },
@@ -149,8 +150,8 @@ const logic = {
         };
         logic.loadingOption.isShow.isShow2 = true;
         Http.getsendrec(params).then(arg => {
+            logic.loadingOption.isShow.isShow2 = false;
             if (arg.result.code === 0) {
-                logic.loadingOption.isShow.isShow2 = false;
                 this.buildSendRedPacketList(arg.result.data);
                 console.log('发送记录 success', arg);
             } else {
@@ -160,6 +161,7 @@ const logic = {
                 });
             }
         }).catch(function(err) {
+            logic.loadingOption.isShow.isShow2 = false;
             console.log('发送记录 error', err);
         });
     },
