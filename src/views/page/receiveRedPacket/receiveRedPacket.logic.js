@@ -17,6 +17,10 @@ const logic = {
     errText: "", // 错误提示
     isShowVerifyView: false, // 安全验证 弹框
     isShowSwitchLinesView: false, // 线路切换 弹框
+    loading: {
+        loading1: true,
+        loading2: true
+    },
     // 头部 组件配置
     headerOption: {
         left() {
@@ -35,11 +39,6 @@ const logic = {
                 }
             };
         }
-    },
-    loadingOption: {
-        type: 1,
-        loading: true,
-        label: "红包准备中..."
     },
     // 红包top 组件配置
     redPacketTopOption: {
@@ -206,6 +205,7 @@ const logic = {
         };
         Http.getgiftrec(params).then(arg => {
             if (arg.result.code === 0) {
+                // window.$loading({ loading: true, type: 1 });
                 // 领取记录列表
                 redPacketUtils.buildGiftrecData(arg.result.data).then(data => {
                     logic.redPacketList = data;

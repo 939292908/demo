@@ -8,11 +8,11 @@ module.exports = {
     onupdate: vnode => logic.onupdate(vnode),
     onremove: vnode => logic.onremove(vnode),
     view(vnode) {
-        if (vnode.attrs.type === 1) {
+        if (logic.type === 1) {
             return m('div', { class: `pub-loading-bg has-bg-level-2 ${logic.loading ? '' : 'is-hidden'}` }, [
                 m('div', { class: `pub-loading-content loading-animation-1` }, [
                     m('img', { class: `pub-loading-img`, src: require("@/assets/img/loading.svg").default }),
-                    m('div', { class: `pub-loading-label` }, vnode.attrs.label || "加载中...")
+                    m('div', { class: `pub-loading-label` }, vnode.attrs.label || "红包准备中...")
                 ])
             ]);
         } else {
