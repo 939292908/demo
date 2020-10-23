@@ -17,8 +17,8 @@ const logic = {
     // loading 配置
     loadingOption: {
         isShow: {
-            isShow1: true,
-            isShow2: true
+            isShow1: false,
+            isShow2: false
         }
     },
     // 头部 组件配置
@@ -77,6 +77,7 @@ const logic = {
                 });
             }
         }).catch(function(err) {
+            logic.loadingOption.isShow.isShow1 = false;
             console.log('领取记录 error', err);
         });
     },
@@ -87,8 +88,8 @@ const logic = {
         };
         logic.loadingOption.isShow.isShow2 = true;
         Http.getdetails(params).then(function(arg) {
+            logic.loadingOption.isShow.isShow2 = false;
             if (arg.result.code === 0) {
-                logic.loadingOption.isShow.isShow2 = false;
                 const data = arg.result.data;
                 logic.redPacketTopOption = JSON.parse(JSON.stringify(data)); // 红包top 组件配置
                 logic.redPacketTopOption.quota = m.route.param().quota; // 自定义金额(当前抢到)
@@ -118,6 +119,7 @@ const logic = {
                 });
             }
         }).catch(function(err) {
+            logic.loadingOption.isShow.isShow2 = false;
             console.log('红包详情 error', err);
         });
     },
