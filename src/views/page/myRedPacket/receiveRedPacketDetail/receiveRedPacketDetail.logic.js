@@ -22,8 +22,8 @@ const logic = {
     // loading 配置
     loadingOption: {
         isShow: {
-            isShow1: false,
-            isShow2: false,
+            isShow1: true,
+            isShow2: true,
             shareLoading: false // 分享按钮loading
         }
     },

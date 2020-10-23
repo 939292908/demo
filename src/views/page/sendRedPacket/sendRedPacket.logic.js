@@ -45,7 +45,8 @@ const logic = {
     // loading 配置
     loadingOption: {
         isShow: {
-            isShow1: false
+            isShow1: true,
+            isShow2: true
         }
     },
     // 资金密码 模块
@@ -479,6 +480,13 @@ const logic = {
                 m.redraw();
             }
         });
+        broadcast.onMsg({
+            key: "sendRedP_MSG_WLT_READY",
+            cmd: broadcast.MSG_WLT_READY,
+            cb: () => {
+                logic.loadingOption.isShow.isShow2 = false;
+            }
+        });
         // 获取用户信息 成功
         broadcast.onMsg({
             key: "sendRedP_GET_USER_INFO_READY",
@@ -538,6 +546,11 @@ const logic = {
         });
         broadcast.offMsg({
             key: "sendRedP_MSG_LANGUAGE_UPD",
+            cmd: broadcast.MSG_LANGUAGE_UPD,
+            isall: true
+        });
+        broadcast.offMsg({
+            key: "sendRedP_MSG_WLT_READY",
             cmd: broadcast.MSG_LANGUAGE_UPD,
             isall: true
         });

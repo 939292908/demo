@@ -21,8 +21,8 @@ const logic = {
     loadingOption: {
         type: 1,
         isShow: {
-            isShow1: false,
-            isShow2: false
+            isShow1: true,
+            isShow2: true
         }
     },
     // 头部 组件配置
