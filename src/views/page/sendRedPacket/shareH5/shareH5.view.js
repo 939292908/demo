@@ -10,7 +10,7 @@ module.exports = {
             m('div', { class: `share-h5-title-box` }, [
                 m('div', { class: `share-h5-title-2 has-text-level-1 px-7 mt-2` }, I18n.$t('20051')/* 红包资产可用来提现，交易 */)
             ]),
-            m('iframe', { class: "mt-7", src: require("@/assets/img/shareBgH5.svg").default }),
+            m('img', { class: "mt-7", src: require("@/assets/img/shareBgH5.svg").default }),
             // m('img', { class: ``, src: require("@/assets/img/shareBgH5.png").default }),
             m('div', { class: `share-h5-link-box mt-8 mb-7 pa-3 mx-6 border-radius-small` }, [
                 m('div', { class: `share-h5-link-content pa-7 has-bg-level-1 has-text-level-3 body-4` }, [

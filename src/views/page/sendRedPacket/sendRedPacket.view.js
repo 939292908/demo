@@ -27,7 +27,7 @@ module.exports = {
                     ]),
                     // 图片
                     m('div', { class: `column is-5 has-text-right` }, [
-                        m('iframe', { src: require("@/assets/img/people.svg").default, width: "106", height: "106" })
+                        m('img', { src: require("@/assets/img/people.svg").default, width: "106", height: "106" })
                     ])
                 ]),
                 // 币种
