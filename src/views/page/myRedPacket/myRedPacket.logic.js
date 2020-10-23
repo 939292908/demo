@@ -6,6 +6,7 @@ const broadcast = require('@/broadcast/broadcast');
 const globalModels = require('@/models/globalModels');
 const errCode = require('@/util/errCode').default;
 const I18n = require('@/languages/I18n').default;
+const { gMktApi } = require('@/api/wsApi');
 
 const logic = {
     receiveMoneySum: 0, // 领取总金额
@@ -94,8 +95,10 @@ const logic = {
             item.quota = utils.toFixedForFloor(item.quota, 4); // 币金额
             return item;
         });
-        // console.log(444444, wlt.wallet);
-        // logic.sumData(); // 求和数据
+        // 资产 和 AssetD 都有值
+        if (wlt.walletState === 1 && Object.keys(gMktApi.AssetD).length > 0) {
+            logic.sumData(); // 求和数据
+        }
         m.redraw();
     },
     // 构建已发红包列表
@@ -105,8 +108,10 @@ const logic = {
             item.quota2 = utils.toFixedForFloor(item.quota2, 4); // 币金额
             return item;
         });
-        // console.log(444444, wlt.wallet);
-        // logic.sumData(); // 求和数据
+        // 资产 和 AssetD 都有值
+        if (wlt.walletState === 1 && Object.keys(gMktApi.AssetD).length > 0) {
+            logic.sumData(); // 求和数据
+        }
         m.redraw();
     },
     // 获取领取记录
