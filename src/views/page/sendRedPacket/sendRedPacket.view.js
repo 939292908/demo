@@ -7,6 +7,7 @@ const Button = require('@/views/components/common/Button/Button.view');
 const Modal = require('@/views/components/common/Modal/Modal.view');
 const transfer = require('@/views/page/sendRedPacket/transfer/transfer.view');
 const I18n = require('@/languages/I18n').default;
+const Loading = require('@/views/components/common/Loading/Loading.view');
 
 module.exports = {
     oninit: vnode => logic.oninit(vnode),
@@ -15,6 +16,7 @@ module.exports = {
     onremove: vnode => logic.onremove(vnode),
     view(vnode) {
         return m('div', { class: `pub-view views-give-red-packet` }, [
+            m(Loading, logic.loadingOption),
             m(Header, logic.headerOption),
             m('div', { class: `pub-content side-px` }, [
                 // title

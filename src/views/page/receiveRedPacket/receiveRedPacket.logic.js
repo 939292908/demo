@@ -17,9 +17,13 @@ const logic = {
     errText: "", // 错误提示
     isShowVerifyView: false, // 安全验证 弹框
     isShowSwitchLinesView: false, // 线路切换 弹框
-    loading: {
-        loading1: true,
-        loading2: true
+    // loading 配置
+    loadingOption: {
+        type: 1,
+        isShow: {
+            isShow1: true,
+            isShow2: true
+        }
     },
     // 头部 组件配置
     headerOption: {
@@ -203,9 +207,10 @@ const logic = {
         const params = {
             gid: m.route.param().gid
         };
+        logic.loadingOption.isShow.isShow1 = true;
         Http.getgiftrec(params).then(arg => {
             if (arg.result.code === 0) {
-                // window.$loading({ loading: true, type: 1 });
+                logic.loadingOption.isShow.isShow1 = false;
                 // 领取记录列表
                 redPacketUtils.buildGiftrecData(arg.result.data).then(data => {
                     logic.redPacketList = data;
@@ -227,8 +232,10 @@ const logic = {
         const params = {
             gid: m.route.param().gid
         };
+        logic.loadingOption.isShow.isShow2 = true;
         Http.getdetails(params).then(function(arg) {
             if (arg.result.code === 0) {
+                logic.loadingOption.isShow.isShow2 = false;
                 const data = arg.result.data;
                 // 红包头部 组件配置
                 logic.redPacketTopOption = JSON.parse(JSON.stringify(data));

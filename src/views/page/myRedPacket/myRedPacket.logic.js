@@ -12,6 +12,13 @@ const logic = {
     receiveMoneySum: 0, // 领取总金额
     sendMoneySum: 0, // 发送总金额
     sendMoneySumBack: 0, // 发送退回总金额
+    // loading 配置
+    loadingOption: {
+        isShow: {
+            isShow1: true,
+            isShow2: true
+        }
+    },
     // 头部 组件配置
     headerOption: {
         class: "",
@@ -119,8 +126,10 @@ const logic = {
         const params = {
             uid: globalModels.getAccount().uid
         };
+        logic.loadingOption.isShow.isShow1 = true;
         Http.getrecv(params).then(arg => {
             if (arg.result.code === 0) {
+                logic.loadingOption.isShow.isShow1 = false;
                 this.buildReceiveRedPacketList(arg.result.data);
                 console.log('领取记录 success', arg);
             } else {
@@ -138,8 +147,10 @@ const logic = {
         const params = {
             uid: globalModels.getAccount().uid
         };
+        logic.loadingOption.isShow.isShow2 = true;
         Http.getsendrec(params).then(arg => {
             if (arg.result.code === 0) {
+                logic.loadingOption.isShow.isShow2 = false;
                 this.buildSendRedPacketList(arg.result.data);
                 console.log('发送记录 success', arg);
             } else {

@@ -10,6 +10,13 @@ const globalModels = require('@/models/globalModels');
 
 const logic = {
     shareLoading: false, // 分享按钮loading
+    // loading 配置
+    loadingOption: {
+        isShow: {
+            isShow1: false,
+            isShow2: false
+        }
+    },
     // 头部 组件配置
     headerOption: {
         left() {
@@ -51,8 +58,10 @@ const logic = {
         const params = {
             gid: m.route.param().gid
         };
+        logic.loadingOption.isShow.isShow1 = true;
         Http.getgiftrec(params).then(arg => {
             if (arg.result.code === 0) {
+                logic.loadingOption.isShow.isShow1 = false;
                 redPacketUtils.buildGiftrecData(arg.result.data).then(data => {
                     logic.redPacketList = data;
                     m.redraw();
@@ -74,8 +83,10 @@ const logic = {
         const params = {
             gid: m.route.param().gid
         };
+        logic.loadingOption.isShow.isShow2 = true;
         Http.getdetails(params).then(function(arg) {
             if (arg.result.code === 0) {
+                logic.loadingOption.isShow.isShow2 = false;
                 const data = arg.result.data;
                 // 红包top 组件配置
                 logic.redPacketTopOption = JSON.parse(JSON.stringify(data));

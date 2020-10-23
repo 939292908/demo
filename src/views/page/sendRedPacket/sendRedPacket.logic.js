@@ -42,6 +42,12 @@ const logic = {
     },
     // 分享按钮 loading
     shareLoading: false,
+    // loading 配置
+    loadingOption: {
+        isShow: {
+            isShow1: false
+        }
+    },
     // 资金密码 模块
     passwordModel: {
         // 密码
@@ -301,7 +307,9 @@ const logic = {
     // 红包配置 接口
     getRedPackCfg() {
         const params = {};
+        logic.loadingOption.isShow.isShow1 = true;
         Http.getRedPackCfg(params).then(arg => {
+            logic.loadingOption.isShow.isShow1 = false;
             if (arg.result.code === 0) {
                 console.log('红包配置 success', arg);
                 logic.verifyCfg.maxcount = arg.result.cfgs.maxcount; // 单次红包最大个数
