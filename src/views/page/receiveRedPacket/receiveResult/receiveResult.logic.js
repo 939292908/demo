@@ -14,6 +14,13 @@ const logic = {
     // isLucky: true, // 是否是手气最佳
     // 已抢红包列表
     redPacketList: [],
+    // loading 配置
+    loadingOption: {
+        isShow: {
+            isShow1: true,
+            isShow2: true
+        }
+    },
     // 头部 组件配置
     headerOption: {
         left() {
@@ -53,7 +60,9 @@ const logic = {
         const params = {
             gid: m.route.param().gid
         };
+        logic.loadingOption.isShow.isShow1 = true;
         Http.getgiftrec(params).then(arg => {
+            logic.loadingOption.isShow.isShow1 = false;
             if (arg.result.code === 0) {
                 // 领取记录列表
                 redPacketUtils.buildGiftrecData(arg.result.data).then(data => {
@@ -76,8 +85,10 @@ const logic = {
         const params = {
             gid: m.route.param().gid
         };
+        logic.loadingOption.isShow.isShow2 = true;
         Http.getdetails(params).then(function(arg) {
             if (arg.result.code === 0) {
+                logic.loadingOption.isShow.isShow2 = false;
                 const data = arg.result.data;
                 logic.redPacketTopOption = JSON.parse(JSON.stringify(data)); // 红包top 组件配置
                 logic.redPacketTopOption.quota = m.route.param().quota; // 自定义金额(当前抢到)

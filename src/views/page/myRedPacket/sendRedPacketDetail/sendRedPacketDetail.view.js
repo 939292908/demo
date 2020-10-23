@@ -7,6 +7,7 @@ const redPacketTop = require('@/views/components/redPacketTop/redPacketTop.view'
 const redPacketInfo = require('@/views/components/redPacketInfo/redPacketInfo.view');
 const globalModels = require('@/models/globalModels');
 const I18n = require('@/languages/I18n').default;
+const Loading = require('@/views/components/common/Loading/Loading.view');
 
 module.exports = {
     oninit: vnode => logic.oninit(vnode),
@@ -15,6 +16,7 @@ module.exports = {
     onremove: vnode => logic.onremove(vnode),
     view(vnode) {
         return m('div', { class: `pub-view views-give-red-packet-detail` }, [
+            m(Loading, logic.loadingOption),
             m(Header, logic.headerOption),
             m('div', { class: `pub-content has-text-centered` }, [
                 // 红包头部

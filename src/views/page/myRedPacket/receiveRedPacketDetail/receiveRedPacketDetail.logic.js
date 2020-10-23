@@ -18,7 +18,15 @@ const I18n = require('@/languages/I18n').default;
 const logic = {
     best: 0, // 手气最佳(0:否 1:是)
     quota: 0, // 抢的金额
-    shareLoading: false, // 分享按钮loading
+    // shareLoading: false, // 分享按钮loading
+    // loading 配置
+    loadingOption: {
+        isShow: {
+            isShow1: false,
+            isShow2: false,
+            shareLoading: false // 分享按钮loading
+        }
+    },
     // 已抢红包列表
     redPacketList: [],
     // 红包来源
@@ -45,11 +53,11 @@ const logic = {
             };
         },
         right() {
-            return {
+            // 非app中打开，隐藏右边分享按钮
+            return window.plus ? {
                 label: m('i', { class: `iconfont icon-fenxiang has-text-level-3` }),
-                loading: logic.shareLoading, // 分享按钮loading
                 onclick() {
-                    logic.shareLoading = true; // 分享按钮loading
+                    logic.loadingOption.isShow.shareLoading = true; // 分享按钮loading
                     console.log(logic.redPacketTopOption, 65555);
                     const params = logic.redPacketTopOption;
                     const isLucky = logic.best === 1 && logic.redPacketTopOption.status === 1;
@@ -68,7 +76,7 @@ const logic = {
                             I18n.$t('20064')/* 下载APP，轻松交易 */]
                     });
                 }
-            };
+            } : "";
         }
     },
     // 红包top 组件配置
@@ -94,8 +102,10 @@ const logic = {
         const params = {
             gid: m.route.param().gid
         };
+        logic.loadingOption.isShow.isShow1 = true;
         Http.getgiftrec(params).then(arg => {
             if (arg.result.code === 0) {
+                logic.loadingOption.isShow.isShow1 = false;
                 // 领取记录列表
                 redPacketUtils.buildGiftrecData(arg.result.data).then(data => {
                     logic.redPacketList = data;
@@ -117,8 +127,10 @@ const logic = {
         const params = {
             gid: m.route.param().gid
         };
+        logic.loadingOption.isShow.isShow2 = true;
         Http.getdetails(params).then(function(arg) {
             if (arg.result.code === 0) {
+                logic.loadingOption.isShow.isShow2 = false;
                 const data = arg.result.data;
                 logic.redPacketTopOption = JSON.parse(JSON.stringify(data)); // 红包top 组件配置
                 logic.redPacketInfoOption = JSON.parse(JSON.stringify(data)); // 红包Info 组件配置
@@ -153,7 +165,7 @@ const logic = {
                     }, res => {
                         console.log('GetBase64 getWebView', res);
                         share.openShare({ needShareImg: res, link: link });
-                        logic.shareLoading = false; // 分享按钮loading
+                        logic.loadingOption.isShow.shareLoading = false; // 分享按钮loading
                     });
                 });
             }).catch(err => {
@@ -167,9 +179,6 @@ const logic = {
         this.getgiftrec();// 领取记录
         logic.best = m.route.param().best * 1; // 是否手气最佳
         logic.quota = m.route.param().quota; // 抢的金额
-        if (!window.plus) { // 非app中打开，隐藏右边分享按钮
-            logic.headerOption.right = "";
-        }
     },
     oncreate(vnode) {
     },

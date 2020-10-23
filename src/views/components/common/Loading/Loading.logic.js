@@ -5,20 +5,10 @@
 const logic = {
     loading: false, // loading 状态
     type: null, // loading 样式
+    option: {},
     oninit(vnode) {
-        window.$loading = option => {
-            // loading 样式
-            logic.type = option.type;
-
-            // 布尔类型直接赋值loading
-            if (typeof option.loading === 'boolean') {
-                logic.loading = option.loading;
-            }
-
-            // 对象或数组 每一项为true才打开loading
-            if (typeof option.loading === 'object') {
-                logic.loading = Object.values(option.loading).every(item => item);
-            }
+        window.$loadingInit = option => {
+            logic.option = option;
         };
     },
     oncreate(vnode) {
