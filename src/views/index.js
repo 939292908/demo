@@ -7,6 +7,7 @@ import broadcast from '../broadcast/broadcast';
 import config from '../config';
 import l180n from '@/languages/I18n';
 const share = require('@/views/page/main/share/share.view');
+const Loading = require('@/views/components/common/Loading/Loading.view');
 
 export default {
     name: 'views_index',
@@ -52,6 +53,7 @@ export default {
             m('div.route-box'),
             // m(footer),
             m(message),
+            m(Loading),
             m(share)
         ]);
     }
