@@ -288,6 +288,8 @@ module.exports = {
     getSendRedpacketText() {
         if (I18n.getLocale() !== 'en') {
             return I18n.$t('20096')/* 当前为 */ + (logic.redPacketType > 0 ? I18n.$t('20010'/* 普通红包 */) : I18n.$t('20011'/* 拼手气红包 */)) + '，';
+        } else {
+            return "";
         }
     }
 };
