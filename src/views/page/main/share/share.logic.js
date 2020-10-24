@@ -71,7 +71,7 @@ module.exports = {
                 this.options.needShareImg,
                 param.key,
                 arg => {
-                    that.cancelShareBtnClick();
+                    // that.cancelShareBtnClick();
                 },
                 err => {
                     console.log('err', err);
