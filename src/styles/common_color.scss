@@ -110,26 +110,26 @@ body,
 
 /* 提示颜色 */
 .theme--dark .has-bg-tip-error {
-    background-color: var(--c-tip-errordarken);
-    border-color: var(--c-tip-errordarken);
+    background-color: var(--c-tip-errorDarken);
+    border-color: var(--c-tip-errorDarken);
     color: var(--c-fontwhite-base);
 }
 
 .theme--dark .has-bg-tip-warning {
-    background-color: var(--c-tip-warningdarken);
-    border-color: var(--c-tip-warningdarken);
+    background-color: var(--c-tip-warningDarken);
+    border-color: var(--c-tip-warningDarken);
     color: var(--c-fontwhite-base);
 }
 
 .theme--dark .has-bg-tip-success {
-    background-color: var(--c-tip-successdarken);
-    border-color: var(--c-tip-successdarken);
+    background-color: var(--c-tip-successDarken);
+    border-color: var(--c-tip-successDarken);
     color: var(--c-fontwhite-base);
 }
 
 .theme--dark .has-bg-tip-fail {
-    background-color: var(--c-tip-faildarken);
-    border-color: var(--c-tip-faildarken);
+    background-color: var(--c-tip-failDarken);
+    border-color: var(--c-tip-failDarken);
     color: var(--c-fontwhite-base);
 }
 
@@ -219,19 +219,19 @@ body,
 
 /* 提示文字颜色 */
 .theme--dark .has-text-tip-error {
-    color: var(--c-tip-errordarken);
+    color: var(--c-tip-errorDarken);
 }
 
 .theme--dark .has-text-tip-warning {
-    color: var(--c-tip-warningdarken);
+    color: var(--c-tip-warningDarken);
 }
 
 .theme--dark .has-text-tip-success {
-    color: var(--c-tip-successdarken);
+    color: var(--c-tip-successDarken);
 }
 
 .theme--dark .has-text-tip-fail {
-    color: var(--c-tip-faildarken);
+    color: var(--c-tip-failDarken);
 }
 
 /* 标记文字颜色 */
@@ -301,19 +301,19 @@ body,
 
 /* 提示颜色 */
 .theme--dark .has-line-tip-error {
-    border-color: var(--c-tip-errordarken);
+    border-color: var(--c-tip-errorDarken);
 }
 
 .theme--dark .has-line-tip-warning {
-    border-color: var(--c-tip-warningdarken);
+    border-color: var(--c-tip-warningDarken);
 }
 
 .theme--dark .has-line-tip-success {
-    border-color: var(--c-tip-successdarken);
+    border-color: var(--c-tip-successDarken);
 }
 
 .theme--dark .has-line-tip-fail {
-    border-color: var(--c-tip-faildarken);
+    border-color: var(--c-tip-failDarken);
 }
 
 /* 标记文字颜色 */
