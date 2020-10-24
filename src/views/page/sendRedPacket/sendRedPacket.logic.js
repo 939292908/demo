@@ -557,7 +557,7 @@ const logic = {
     },
     // 取消分享回调
     cancelCallback(params) {
-        if (!params.isShare) {
+        if (!params.isShare) { // 未点击分享
             this.isShowNotShareModal = true;
             m.redraw();
         }

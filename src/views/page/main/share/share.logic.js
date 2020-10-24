@@ -62,6 +62,7 @@ module.exports = {
     },
     doShare: function(param) {
         const that = this;
+        that.isShare = true;
         switch (param.key) {
         case "WXSceneSession":
         case "WXSceneTimeline":
@@ -81,7 +82,6 @@ module.exports = {
         case "CopyLink":
             console.log('WXSceneSession', param);
             Model.plusCopyToClipboard(this.options.link);
-            that.isShare = true;
             that.shareMsg = I18n.$t('20033')/* 链接已复制，快去分享给你的好友吧！ */;
             window.clearTimeout(that.timeoutId);
             that.timeoutId = window.setTimeout(() => {
@@ -95,7 +95,6 @@ module.exports = {
             Share.photo(
                 this.options.needShareImg,
                 arg => {
-                    that.isShare = true;
                     that.shareMsg = I18n.$t('20034')/* 图片已保存，快去分享给你的好友吧！ */;
                     m.redraw();
                     window.clearTimeout(that.timeoutId);
