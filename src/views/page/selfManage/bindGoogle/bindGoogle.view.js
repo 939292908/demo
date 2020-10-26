@@ -107,7 +107,7 @@ const googleView = {
                                         m('div', { class: `qrcodeIOS mb-3` }, [
                                             m('img', { class: ``, src: googleLogic.IOSDLAddQrCodeSrc })
                                         ]),
-                                        m('span', {}, 'IOS')
+                                        m('span', {}, 'iOS')
                                     ]),
                                     m('div', { class: `stepOne-qrcode-right` }, [
                                         m('div', { class: `qrcodeAndroid mb-3` }, [
