@@ -221,8 +221,8 @@ const model = {
     sets: function () {
         // 总估值
         this.currency === 'BTC'
-            ? this.setTotalValue(config.openFollow ? this.numberHandle(wlt.totalValueForBTC, follow.followTotalValueForBTC, 8) : wlt.totalValueForBTC)
-            : this.setTotalValue(config.openFollow ? this.numberHandle(wlt.totalValueForUSDT, follow.followTotalValueForUSDT, 4) : wlt.totalValueForUSDT);
+            ? this.setTotalValue(config.openFollow ? wlt.toFixedForFloor(this.numberHandle(wlt.totalValueForBTC, follow.followTotalValueForBTC, 8), 8) : wlt.toFixedForFloor(wlt.totalValueForBTC, 8))
+            : this.setTotalValue(config.openFollow ? wlt.toFixedForFloor(this.numberHandle(wlt.totalValueForUSDT, follow.followTotalValueForUSDT, 4), 4) : wlt.toFixedForFloor(wlt.totalValueForUSDT, 4));
         // 主钱包总估值
         this.currency === 'BTC' ? this.setWalletTotalValue(wlt.walletTotalValueForBTC) : this.setWalletTotalValue(wlt.walletTotalValueForUSDT);
         // 交易账户总估值
